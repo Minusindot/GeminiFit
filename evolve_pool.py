@@ -40,6 +40,7 @@ STYLE_POOL = POOL_DIR / "gakumas_style"
 SHINY_STYLE_POOL = POOL_DIR / "shiny_style"
 SD_CHIBI_POOL = POOL_DIR / "sd_chibi_style"
 MORIKINOKO_SD_POOL = POOL_DIR / "morikinoko_sd"
+MENT_STYLE_POOL = POOL_DIR / "ment_style"
 
 FIREFOX_EXE = r"C:\Program Files\Mozilla Firefox\firefox.exe"
 PROFILE_DIR = BASE_DIR / ".grok_profile"
@@ -276,6 +277,7 @@ def show_status() -> None:
         ("샤니마스 미소녀 (ref_pool/shiny_style)", SHINY_STYLE_POOL),
         ("SD 치비 캐릭터  (ref_pool/sd_chibi_style)", SD_CHIBI_POOL),
         ("모리키노코 SD    (ref_pool/morikinoko_sd)", MORIKINOKO_SD_POOL),
+        ("ment 미소녀 화풍 (ref_pool/ment_style)", MENT_STYLE_POOL),
     ]:
         files = list_survivors(folder)
         print(f"\n📂 {label} — {len(files)}장:")
