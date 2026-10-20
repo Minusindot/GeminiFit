@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-10-20T11:23:34.329Z",
+  "updatedAt": "2026-10-20T11:23:56.062Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
   "bondRank": 2,
-  "bondExp": 75,
+  "bondExp": 95,
   "activeTrainer": "gemini",
-  "activeMode": "gemini",
+  "activeMode": "dual",
   "currentSituation": "ev5",
   "absDone": false,
   "runDone": false,
@@ -27,11 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "프로듀서! 오늘 17:7 단식 잘 지키고 있지? 딴생각 말고 나만 딱 믿고 따라오라고!"
-    },
     {
       "sender": "mio",
       "name": "미오",
@@ -103,6 +98,21 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "안 돼요 프로듀서님! 지금 참으시면 내일 코토네가 카페 데이트 가서 애교 백 번 보여드릴게요, 꾹 참기예요! 🍰"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "체중 65.7kg, 체지방 21.5% 반영 완료! 목표 52kg까지 방심 금물이야! 🐾"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "헤헤, 프로듀서님 인바디 기록 완료! 목표 달성하시면 코토네랑 테라스 카페 데이트 잊지 마세요~! 💛"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "와아~ 꾸준히 기록 챙기는 프로듀서 너무 멋있어! 이 기세로 계속 함께 가자~ 🌟"
     }
   ]
 }
