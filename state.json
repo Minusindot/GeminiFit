@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T11:06:43.734Z",
+  "updatedAt": "2026-10-20T11:06:48.523Z",
   "theme": "dark",
   "weight": 53.8,
   "fat": 21.5,
@@ -7,7 +7,7 @@
   "bondExp": 0,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev5",
+  "currentSituation": "ev4",
   "absDone": false,
   "runDone": false,
   "runDist": 5,
