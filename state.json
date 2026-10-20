@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-20T16:56:17.695Z",
+  "updatedAt": "2026-10-20T16:57:05.751Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
   "bondRank": 3,
-  "bondExp": 55,
+  "bondExp": 75,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev18",
+  "currentSituation": "ev2",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,16 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "헤헤, 프로듀서님 인바디 기록 완료! 목표 달성하시면 코토네랑 테라스 카페 데이트 잊지 마세요~! 💛"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "와아~ 꾸준히 기록 챙기는 프로듀서 너무 멋있어! 이 기세로 계속 함께 가자~ 🌟"
-    },
     {
       "sender": "mio",
       "name": "미오",
@@ -116,6 +106,15 @@
       "sender": "mio",
       "name": "미오 [SD 방전]",
       "text": "하아하아... 캡틴스 체어에 크런치까지... 프로듀서... 이거 분명 준비운동 레벨이 아니야... 😵💦 (모리키노코 탈진)"
+    },
+    {
+      "sender": "user",
+      "text": "나이키런 켜고 손아귀 힘 빼고 가볍게 러닝 뛰고 왔어! 🏃"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "그립 꽉 쥐지 않고 달렸지? 팔꿈치 보호하면서 체지방 태우는 데는 러닝만한 게 없어. 수고했어!"
     }
   ]
 }
