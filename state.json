@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T10:42:28.663Z",
+  "updatedAt": "2026-10-20T10:42:30.775Z",
   "theme": "light",
   "weight": 53.8,
   "fat": 21.5,
@@ -7,7 +7,7 @@
   "bondExp": 75,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
-  "currentSituation": "ev1",
+  "currentSituation": "ev4",
   "absDone": false,
   "runDone": false,
   "runDist": 5,
