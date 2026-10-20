@@ -354,7 +354,7 @@
 
         <!-- Direct Message Input Bar -->
         <div class="px-3 py-2 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center gap-2">
-          <input type="text" id="directChatInput" placeholder="제미니 / 코토네 / 미오에게 메시지 보내기..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-sky-400" onkeydown="if(event.key==='Enter') sendDirectMessage()">
+          <input type="text" id="directChatInput" placeholder="메시지 보내기..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-sky-400" onkeydown="if(event.key==='Enter') sendDirectMessage()">
           <button onclick="sendDirectMessage()" class="px-3 py-1.5 rounded-xl bg-[#4a89dc] hover:bg-sky-500 text-white text-xs font-extrabold shadow-sm shrink-0">
             전송
           </button>
@@ -371,19 +371,6 @@
         <div id="choicesContainer" class="space-y-1.5 max-h-[210px] overflow-y-auto clean-scroll pr-0.5">
           <!-- Populated dynamically -->
         </div>
-      </div>
-
-      <!-- Visual Novel Bond Event Box (| 인연 이벤트) -->
-      <div class="p-3 rounded-2xl bg-[#fde8ef] dark:bg-pink-950/30 border border-[#f9d5e2] dark:border-pink-500/30 flex items-center justify-between shadow-sm">
-        <div>
-          <div class="text-[11px] font-extrabold text-[#d65c7a] dark:text-pink-300 flex items-center gap-1">
-            <span class="font-black">|</span> 미연시 인연 스토리 (캐릭터별 5종 CG)
-          </div>
-          <p id="bondEventDesc" class="text-[10px] text-[#b85d74] dark:text-pink-200/80 mt-0.5">장소·의상·시츄에이션이 달라지는 다음 인연 에피소드를 감상하세요</p>
-        </div>
-        <button onclick="triggerBondStory()" id="btnBondStory" class="px-3.5 py-2 rounded-xl bg-[#f4869d] hover:bg-[#ec6e89] text-white text-xs font-extrabold shadow-sm transition-all shrink-0">
-          제미니 인연스토리 ➔
-        </button>
       </div>
 
     </div>
@@ -2335,35 +2322,68 @@
       `).join('');
     }
 
+    // Helper: KakaoTalk-style Korean 12-hour timestamp string (e.g. "오전 1:04")
+    function getKakaoTimeStr() {
+      const now = new Date();
+      const h = now.getHours();
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const period = h < 12 ? '오전' : '오후';
+      const displayH = h % 12 === 0 ? 12 : h % 12;
+      return `${period} ${displayH}:${m}`;
+    }
+
+    let activeTypingIndicator = null; // { sender: 'gemini'|'kotone'|'mio'|'dual', name: '...' }
+
+    function triggerTrainerTypingReply(replyFn, customDelay = 850) {
+      let typingSender = state.activeTrainer || 'gemini';
+      let typingName = typingSender === 'kotone' ? '코토네' : typingSender === 'mio' ? '미오' : '제미니';
+      if (state.activeMode === 'dual') {
+        typingSender = 'dual';
+        typingName = '제미니 · 코토네 · 미오';
+      }
+
+      activeTypingIndicator = { sender: typingSender, name: typingName };
+      renderChat();
+
+      setTimeout(() => {
+        activeTypingIndicator = null;
+        if (typeof replyFn === 'function') {
+          replyFn();
+        }
+        playBeep(880, 0.08);
+        renderChat();
+      }, customDelay);
+    }
+
     function selectTopicOption(topicKey, idx) {
       const list = TOPIC_CHOICES[topicKey];
       if (!list || !list[idx]) return;
       const item = list[idx];
       playBeep(660, 0.08);
 
-      state.chatHistory.push({ sender: 'user', text: item.text });
+      state.chatHistory.push({ sender: 'user', text: item.text, time: getKakaoTimeStr() });
       renderChat();
 
       if (item.sit) {
         setTrainerMode(state.activeMode, item.sit);
       }
 
-      setTimeout(() => {
+      triggerTrainerTypingReply(() => {
+        const curTime = getKakaoTimeStr();
         if (item.dualReply || state.activeMode === 'dual') {
-          if (item.gem) state.chatHistory.push({ sender: 'gemini', name: '제미니', text: item.gem });
-          if (item.kot) state.chatHistory.push({ sender: 'kotone', name: '코토네', text: item.kot });
-          if (item.mio) state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio });
+          if (item.gem) state.chatHistory.push({ sender: 'gemini', name: '제미니', text: item.gem, time: curTime });
+          if (item.kot) state.chatHistory.push({ sender: 'kotone', name: '코토네', text: item.kot, time: curTime });
+          if (item.mio) state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio, time: curTime });
         } else if (state.activeTrainer === 'kotone') {
-          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: item.kot });
+          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: item.kot, time: curTime });
         } else if (state.activeTrainer === 'mio') {
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio });
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio, time: curTime });
         } else {
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: item.gem });
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: item.gem, time: curTime });
         }
         addBondExp(item.exp || 15);
         saveState();
-        renderChat();
-      }, 420);
+      }, 850);
     }
 
     function sendDirectMessage() {
@@ -2373,46 +2393,43 @@
       input.value = '';
       playBeep(640, 0.07);
 
-      state.chatHistory.push({ sender: 'user', text });
+      state.chatHistory.push({ sender: 'user', text, time: getKakaoTimeStr() });
       renderChat();
 
-      setTimeout(() => {
+      triggerTrainerTypingReply(() => {
         let gemObj = window.getSmartReply ? window.getSmartReply('gemini', text) : { text: "흥, 바보 프로듀서! 목표 52kg까지 나만 믿고 따라와! 🐾", sit: 'ev1' };
         let kotObj = window.getSmartReply ? window.getSmartReply('kotone', text) : { text: "헤헤~ 프로듀서님! 코토네가 1등으로 응원할게요! 💛", sit: 'ev1' };
         let mioObj = window.getSmartReply ? window.getSmartReply('mio', text) : { text: "프로듀서 목소리 들으니까 기운 펄펄! 오늘도 파이팅이야~ 🌟", sit: 'ev1' };
 
-        let gemReply = gemObj.text;
-        let kotReply = kotObj.text;
-        let mioReply = mioObj.text;
-
+        const curTime = getKakaoTimeStr();
         if (state.activeMode === 'dual') {
           setTrainerMode('dual', gemObj.sit || 'ev1');
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: gemReply });
-          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: kotReply });
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: mioReply });
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: gemObj.text, time: curTime });
+          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: kotObj.text, time: curTime });
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: mioObj.text, time: curTime });
         } else if (state.activeTrainer === 'kotone') {
           setTrainerMode('kotone', kotObj.sit || 'ev1');
-          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: kotReply });
+          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: kotObj.text, time: curTime });
         } else if (state.activeTrainer === 'mio') {
           setTrainerMode('mio', mioObj.sit || 'ev1');
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: mioReply });
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: mioObj.text, time: curTime });
         } else {
           setTrainerMode('gemini', gemObj.sit || 'ev1');
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: gemReply });
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: gemObj.text, time: curTime });
         }
         addBondExp(15);
         saveState();
-        renderChat();
-      }, 420);
+      }, 900);
     }
 
     function triggerBondStory() {
       playBeep(780, 0.12);
+      const curTime = getKakaoTimeStr();
       if (state.activeMode === 'dual') {
         setTrainerMode('dual');
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '💖 [3인 합동 에피소드] "흥, 프로듀서가 매일 식단이랑 재활 챙기는 거... 사실 우리 셋이 단톡방에서 엄청 칭찬하고 있었거든! 🐾"' });
-        state.chatHistory.push({ sender: 'kotone', name: '코토네', text: '💖 "맞아요 맞아요! 제미니 짱이 프로듀서님 기록 올라올 때마다 고양이 귀 쫑긋거리는 거 제가 다 봤다구요~ 헤헤! 💛"' });
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: '💖 "에헤헤, 우리 셋이 프로듀서 평생 전담 파트너니까 52kg 달성할 때까지 매일매일 즐겁게 달리자! 🌟"' });
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '💖 [3인 합동 에피소드] "흥, 프로듀서가 매일 식단이랑 재활 챙기는 거... 사실 우리 셋이 단톡방에서 엄청 칭찬하고 있었거든! 🐾"', time: curTime });
+        state.chatHistory.push({ sender: 'kotone', name: '코토네', text: '💖 "맞아요 맞아요! 제미니 짱이 프로듀서님 기록 올라올 때마다 고양이 귀 쫑긋거리는 거 제가 다 봤다구요~ 헤헤! 💛"', time: curTime });
+        state.chatHistory.push({ sender: 'mio', name: '미오', text: '💖 "에헤헤, 우리 셋이 프로듀서 평생 전담 파트너니까 52kg 달성할 때까지 매일매일 즐겁게 달리자! 🌟"', time: curTime });
       } else {
         const heroine = state.activeTrainer || 'gemini';
         const events = getEventsForHeroine(heroine);
@@ -2421,7 +2438,7 @@
         const hName = heroine === 'kotone' ? '코토네' : heroine === 'mio' ? '미오' : '제미니';
 
         setTrainerMode(heroine, nextEv.key);
-        state.chatHistory.push({ sender: heroine, name: hName, text: nextEv.story });
+        state.chatHistory.push({ sender: heroine, name: hName, text: nextEv.story, time: curTime });
       }
       addBondExp(25);
       saveState();
@@ -2430,7 +2447,7 @@
 
     function clearChatLog() {
       state.chatHistory = [
-        { sender: 'gemini', name: '제미니', text: '대화 기록 깔끔하게 정리했어! 자, 오늘 루틴이랑 단식 현황부터 다시 체크해 볼까? 🐾' }
+        { sender: 'gemini', name: '제미니', text: '대화 기록 깔끔하게 정리했어! 자, 오늘 루틴이랑 단식 현황부터 다시 체크해 볼까? 🐾', time: getKakaoTimeStr() }
       ];
       saveState();
       renderChat();
@@ -2440,12 +2457,17 @@
       const container = document.getElementById('chatContainer');
       if (!container) return;
 
-      container.innerHTML = state.chatHistory.map(msg => {
+      const fallbackTime = getKakaoTimeStr();
+
+      let chatHtml = state.chatHistory.map(msg => {
+        const timeStr = msg.time || fallbackTime;
         const imgBlock = msg.image ? `<img src="${msg.image}" class="mt-2 rounded-xl max-h-36 w-auto object-cover border border-white/25">` : '';
+
         if (msg.sender === 'user') {
           return `
-            <div class="flex justify-end">
-              <div class="max-w-[78%] px-3.5 py-2.5 bubble-right text-xs font-medium leading-relaxed">
+            <div class="flex justify-end items-end gap-1.5">
+              <span class="text-[9px] text-slate-400 dark:text-slate-500 font-medium select-none mb-0.5 shrink-0">${timeStr}</span>
+              <div class="max-w-[78%] px-3.5 py-2.5 bubble-right text-xs font-medium leading-relaxed shadow-xs">
                 <div>${msg.text}</div>
                 ${imgBlock}
               </div>
@@ -2459,8 +2481,12 @@
               </div>
               <div class="max-w-[76%] space-y-1">
                 <div class="text-xs font-extrabold text-yellow-700 dark:text-yellow-300">코토네</div>
-                <div class="px-3.5 py-2.5 bubble-left-kotone text-xs font-medium leading-relaxed">
-                  ${msg.text}
+                <div class="flex items-end gap-1.5">
+                  <div class="px-3.5 py-2.5 bubble-left-kotone text-xs font-medium leading-relaxed shadow-xs">
+                    ${msg.text}
+                    ${imgBlock}
+                  </div>
+                  <span class="text-[9px] text-slate-400 dark:text-slate-500 font-medium select-none mb-0.5 shrink-0">${timeStr}</span>
                 </div>
               </div>
             </div>
@@ -2472,9 +2498,13 @@
                 <img src="./avatar_mio.png" alt="미오" class="w-full h-full object-cover" onerror="this.src='./trainer_mio.png'">
               </div>
               <div class="max-w-[76%] space-y-1">
-                <div class="text-xs font-extrabold text-amber-700 dark:text-amber-300">미오</div>
-                <div class="px-3.5 py-2.5 bubble-left-mio text-xs font-medium leading-relaxed">
-                  ${msg.text}
+                <div class="text-xs font-extrabold text-amber-700 dark:text-amber-300">${msg.name || '미오'}</div>
+                <div class="flex items-end gap-1.5">
+                  <div class="px-3.5 py-2.5 bubble-left-mio text-xs font-medium leading-relaxed shadow-xs">
+                    ${msg.text}
+                    ${imgBlock}
+                  </div>
+                  <span class="text-[9px] text-slate-400 dark:text-slate-500 font-medium select-none mb-0.5 shrink-0">${timeStr}</span>
                 </div>
               </div>
             </div>
@@ -2487,14 +2517,51 @@
               </div>
               <div class="max-w-[76%] space-y-1">
                 <div class="text-xs font-extrabold text-pink-600 dark:text-pink-300">${msg.name || '제미니'}</div>
-                <div class="px-3.5 py-2.5 bubble-left text-xs font-medium leading-relaxed">
-                  ${msg.text}
+                <div class="flex items-end gap-1.5">
+                  <div class="px-3.5 py-2.5 bubble-left text-xs font-medium leading-relaxed shadow-xs">
+                    ${msg.text}
+                    ${imgBlock}
+                  </div>
+                  <span class="text-[9px] text-slate-400 dark:text-slate-500 font-medium select-none mb-0.5 shrink-0">${timeStr}</span>
                 </div>
               </div>
             </div>
           `;
         }
       }).join('');
+
+      // KakaoTalk Typing Indicator Bubble (작성 중... 효과)
+      if (activeTypingIndicator) {
+        const sender = activeTypingIndicator.sender;
+        const name = activeTypingIndicator.name;
+        const avatarSrc = (sender === 'kotone') ? './avatar_kotone.png' :
+                          (sender === 'mio') ? './avatar_mio.png' : './avatar_gemini.png';
+        const ringColor = (sender === 'kotone') ? 'ring-yellow-400/70' :
+                          (sender === 'mio') ? 'ring-amber-400/60' : 'ring-pink-400/60';
+        const nameColor = (sender === 'kotone') ? 'text-yellow-700 dark:text-yellow-300' :
+                          (sender === 'mio') ? 'text-amber-700 dark:text-amber-300' : 'text-pink-600 dark:text-pink-300';
+
+        chatHtml += `
+          <div class="flex items-start gap-2.5 transition-all duration-200">
+            <div class="w-10 h-10 rounded-full overflow-hidden ring-2 ${ringColor} bg-white shrink-0 shadow-sm animate-pulse">
+              <img src="${avatarSrc}" alt="${name}" class="w-full h-full object-cover">
+            </div>
+            <div class="space-y-1">
+              <div class="text-xs font-extrabold ${nameColor}">
+                ${name}
+                <span class="text-[9px] font-normal text-slate-400 ml-1">작성 중...</span>
+              </div>
+              <div class="px-3.5 py-2.5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/90 dark:border-slate-700 shadow-xs flex items-center gap-1.5 w-fit">
+                <span class="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500 animate-bounce" style="animation-delay: 0ms"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500 animate-bounce" style="animation-delay: 150ms"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500 animate-bounce" style="animation-delay: 300ms"></span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = chatHtml;
       container.scrollTop = container.scrollHeight;
     }
 
