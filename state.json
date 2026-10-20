@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-20T15:59:01.961Z",
+  "updatedAt": "2026-10-20T15:59:19.368Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
   "bondRank": 3,
-  "bondExp": 70,
+  "bondExp": 85,
   "activeTrainer": "mio",
   "activeMode": "mio",
-  "currentSituation": "ev6",
+  "currentSituation": "ev1",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,15 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "user",
-      "text": "📸 [17:00 저녁 식단 인증 사진]"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "맛있어 보인다~ 단백질도 채소도 완벽해! 이 기세로 저녁까지 가자!"
-    },
     {
       "sender": "user",
       "text": "[홈카페] 에스프레소 샷 ☕ 1잔을 기록했습니다."
@@ -111,6 +102,15 @@
       "sender": "mio",
       "name": "미오",
       "text": "💖 [미오 EP.6 · 소나기 속 하나의 우산] \"언제나 활발하던 미오였지만... 이 좁은 투명 우산 속에서 프로듀서 숨결이 닿을 때만큼은 숨이 멎는 줄 알았어.\""
+    },
+    {
+      "sender": "user",
+      "text": "낼 일어나서 보자"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "프로듀서 목소리 들으니까 나도 기운이 펄펄 나! 오늘도 우리 신나게 파이팅이야~ 🌟"
     }
   ]
 }
