@@ -3032,8 +3032,7 @@ ${err.message}
       const promptWithContext = `[프로듀서 현재 피트니스 상태]\n- 현재 시각: ${context.timeStr}\n- 현재 체중: ${context.weight}kg (목표 ${context.targetWeight}kg까지 ${remaining}kg 남음)\n- 오늘 5km 러닝: ${context.runDone ? '완료' : '미완료'}\n- 오늘 헬스장 루틴: 5개 종목 중 ${context.gymCompletedCount}개 완료\n- 음료: 말차 ${context.teaLog?.matcha || 0}잔, 커피 ${context.teaLog?.espresso || 0}잔, 단백질 ${context.teaLog?.tea || 0}잔\n\n[프로듀서의 메시지]\n${userText}`;
 
       const data = await fetchGeminiWithFallback(apiKey, {
-        contents: [{ role: 'user', parts: [{ text: promptWithContext }] }],
-        systemInstruction: { parts: [{ text: systemPrompt }] },
+        contents: [{ role: 'user', parts: [{ text: systemPrompt + '\n\n' + promptWithContext }] }],
         generationConfig: { temperature: 0.85, maxOutputTokens: 350 }
       });
 
