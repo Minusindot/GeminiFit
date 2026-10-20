@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-10-20T10:41:39.833Z",
+  "updatedAt": "2026-10-20T10:42:19.498Z",
   "theme": "light",
   "weight": 53.8,
   "fat": 21.5,
   "bondRank": 1,
   "bondExp": 75,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
+  "activeTrainer": "kotone",
+  "activeMode": "kotone",
   "currentSituation": "ev2",
   "absDone": false,
   "runDone": false,
@@ -66,6 +66,11 @@
       "sender": "mio",
       "name": "미오",
       "text": "나이키런 켜고 출발할 준비 됐어? 하이파이브! 🖐️"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "목표 52kg 달성하시면 코토네랑 테라스 카페 데이트 가기예요! 약속~ 🍰"
     }
   ]
 }
