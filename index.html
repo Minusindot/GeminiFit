@@ -568,7 +568,7 @@
             </div>
           </label>
           <div class="flex items-center gap-1.5 shrink-0">
-            <a id="linkAbsVideo" href="https://www.youtube.com/results?search_query=14%EB%B6%84+%EB%B3%B5%EA%B7%BC+%EC%9A%B4%EB%8F%99" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-red-600 hover:bg-red-700 text-white text-[11px] font-black shadow-xs transition-all active:scale-95" title="YouTube에서 복근 운동 영상 바로 열기">
+            <a id="linkAbsVideo" href="https://www.youtube.com/watch?v=EnToE4ezGsQ" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-red-600 hover:bg-red-700 text-white text-[11px] font-black shadow-xs transition-all active:scale-95" title="YouTube에서 복근 운동 영상 바로 열기">
               <span class="text-[10px]">▶</span>
               <span>영상 보기</span>
             </a>
@@ -2737,7 +2737,7 @@
       setVal('currentFatInput', state.fat);
       setChk('chkAbs', state.absDone);
       const absLink = document.getElementById('linkAbsVideo');
-      if (absLink && state.absVideoUrl) absLink.href = state.absVideoUrl;
+      if (absLink) absLink.href = state.absVideoUrl || 'https://www.youtube.com/watch?v=EnToE4ezGsQ';
       setChk('chkRun', state.runDone);
       setVal('runDistInput', state.runDist);
       setChk('chkMeal1', state.meals ? state.meals[0] : false);
@@ -4460,7 +4460,7 @@ ${err.message}
     }
 
     function editAbsVideoUrl() {
-      const current = state.absVideoUrl || 'https://www.youtube.com/results?search_query=14%EB%B6%84+%EB%B3%B5%EA%B7%BC+%EC%9A%B4%EB%8F%99';
+      const current = state.absVideoUrl || 'https://www.youtube.com/watch?v=EnToE4ezGsQ';
       const custom = prompt('매일 시청하시는 복근 운동 YouTube 영상 링크를 입력해 주세요:', current);
       if (custom && custom.trim()) {
         state.absVideoUrl = custom.trim();
