@@ -115,7 +115,14 @@ def pick_evolution_refs(trainer: str) -> list[Path]:
     if trainer == "mio":
         feature_refs = list_survivors(REF_MIO_FEATURE_POOL)
         standing_ref = [p for p in feature_refs if "07_mio_official_standing" in p.name]
-        ssr_refs = [p for p in feature_refs if "03_mio_ssr" in p.name or "04_mio_ssr" in p.name or "05_mio_ssr" in p.name or "06_mio_ssr" in p.name]
+        ssr_refs = [
+            p for p in feature_refs
+            if "03_mio_ssr" in p.name
+            or "04_mio_ssr" in p.name
+            or "05_mio_ssr" in p.name
+            or "06_mio_ssr" in p.name
+            or "10_mio_shine" in p.name
+        ]
         chosen: list[Path] = []
         # Always attach official Honda Mio standing sprite for exact facial proportions & hair flips
         if standing_ref:
