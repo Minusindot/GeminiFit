@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-20T11:06:20.710Z",
+  "updatedAt": "2026-10-20T11:06:39.158Z",
   "theme": "dark",
   "weight": 53.8,
   "fat": 21.5,
-  "bondRank": 1,
-  "bondExp": 75,
+  "bondRank": 2,
+  "bondExp": 0,
   "activeTrainer": "mio",
   "activeMode": "mio",
-  "currentSituation": "ev3",
+  "currentSituation": "ev4",
   "absDone": false,
   "runDone": false,
   "runDist": 5,
@@ -31,6 +31,11 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "대화 기록 깔끔하게 정리했어! 자, 오늘 루틴이랑 단식 현황부터 다시 체크해 볼까? 🐾"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "💖 [미오 EP.4 · 나이트 스타디움] \"프로듀서만을 위한 단독 치어리딩 스테이지야! 지치고 포기하고 싶은 순간이 와도 언제나 미오의 목소리를 떠올려 줘!\""
     }
   ]
 }
