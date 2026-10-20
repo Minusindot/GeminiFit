@@ -888,7 +888,7 @@
         <div class="space-y-2.5 text-xs">
           <div>
             <label class="text-[11px] font-bold text-slate-500 block mb-1">📁 GitHub 저장소 (Owner/Repo)</label>
-            <input type="text" id="ghRepoInput" value="Minusindot/GitHubPrivate" class="w-full sub-box px-3 py-2 text-xs font-mono focus:outline-none focus:border-emerald-400">
+            <input type="text" id="ghRepoInput" value="Minusindot/GeminiFit" class="w-full sub-box px-3 py-2 text-xs font-mono focus:outline-none focus:border-emerald-400">
           </div>
 
           <div>
@@ -1158,7 +1158,7 @@
     const GH_CONFIG_KEY = 'gemini_fit_gh_sync_v1';
 
     let ghConfig = {
-      repo: 'Minusindot/GitHubPrivate',
+      repo: 'Minusindot/GeminiFit',
       path: 'state.json',
       token: '',
       autoSync: true,
@@ -2285,7 +2285,7 @@
     }
 
     function openGithubSyncModal() {
-      document.getElementById('ghRepoInput').value = ghConfig.repo || 'Minusindot/GitHubPrivate';
+      document.getElementById('ghRepoInput').value = ghConfig.repo || 'Minusindot/GeminiFit';
       document.getElementById('ghPathInput').value = ghConfig.path || 'state.json';
       document.getElementById('ghTokenInput').value = ghConfig.token || '';
       document.getElementById('ghAutoSyncChk').checked = ghConfig.autoSync !== false;
@@ -2297,7 +2297,7 @@
     }
 
     async function saveGithubSyncConfig() {
-      ghConfig.repo = (document.getElementById('ghRepoInput').value || 'Minusindot/GitHubPrivate').trim();
+      ghConfig.repo = (document.getElementById('ghRepoInput').value || 'Minusindot/GeminiFit').trim();
       ghConfig.path = (document.getElementById('ghPathInput').value || 'state.json').trim();
       ghConfig.token = (document.getElementById('ghTokenInput').value || '').trim();
       ghConfig.autoSync = document.getElementById('ghAutoSyncChk').checked;
