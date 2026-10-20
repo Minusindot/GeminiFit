@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Gemini Fit - 제미니톡 & 트레이닝</title>
+  <title>Gemini Fit - 제미니 & 미오 듀얼 트레이닝</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -23,9 +23,10 @@
               card: '#1d2334',
               border: '#2a344d',
               userMsg: '#4d88ff',
-              trainerMsg: '#242b3e',
-              accent: '#ff6699',
-              gold: '#f6ad55'
+              geminiMsg: '#242b3e',
+              mioMsg: '#2e2520',
+              geminiPink: '#ff6699',
+              mioOrange: '#f59e0b'
             }
           }
         }
@@ -111,11 +112,6 @@
       font-weight: 600;
       transition: all 0.15s ease;
     }
-    .tag-chip.active {
-      background: #34d399/20;
-      border-color: #34d399;
-      color: #34d399;
-    }
   </style>
 </head>
 <body class="min-h-screen selection:bg-blue-500 selection:text-white">
@@ -140,7 +136,7 @@
       </label>
     </div>
 
-    <!-- 1. Header (GeminiTalk Bar) -->
+    <!-- 1. Header (GeminiTalk Bar & Double Trainers Profile) -->
     <header class="flex items-center justify-between pt-1 pb-3">
       <div class="flex items-center gap-2.5">
         <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-white text-base font-black shadow-sm">
@@ -149,14 +145,13 @@
         <div>
           <h1 class="text-sm font-black text-white flex items-center gap-1.5">
             <span>GeminiTalk</span>
-            <span id="dayBadge" class="text-[10px] text-sky-400 font-bold bg-sky-500/10 px-1.5 py-0.2 rounded border border-sky-500/20">화요일 피드</span>
+            <span class="text-[10px] text-amber-400 font-bold bg-amber-500/10 px-1.5 py-0.2 rounded border border-amber-500/20">DUAL COACH</span>
           </h1>
-          <p id="inbodyDdayText" class="text-[11px] text-slate-400">제미니 트레이너와의 대화</p>
+          <p id="inbodyDdayText" class="text-[11px] text-slate-400">제미니 & 미오 트레이너와의 대화</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2">
-        <!-- InBody OCR Scan Button -->
         <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-app-card border border-sky-500/30 text-sky-400 text-xs font-bold flex items-center gap-1 cursor-pointer hover:bg-sky-500/10">
           <span>📷 인바디 스캔</span>
         </label>
@@ -171,7 +166,7 @@
     <!-- 2. Interactive Navigation Tabs (MomoTalk / Today's Routine / Fasting & Health) -->
     <div class="flex rounded-2xl bg-[#141926] p-1 border border-[#232b3f] mb-3 text-xs font-semibold">
       <button onclick="switchMainTab('talk')" id="tabTalkBtn" class="nav-tab active flex-1 py-2 rounded-xl text-center transition-all">
-        💬 제미니톡
+        💬 제미니톡 (더블 코칭)
       </button>
       <button onclick="switchMainTab('health')" id="tabHealthBtn" class="nav-tab flex-1 py-2 rounded-xl text-center text-slate-400 transition-all">
         📊 루틴 & 식단 관리
@@ -179,63 +174,62 @@
     </div>
 
     <!-- ========================================================
-         VIEW A: MomoTalk & Daily Insta Feed
+         VIEW A: MomoTalk & Dual Trainers Showcase
          ======================================================== -->
     <div id="viewTalk" class="space-y-3">
-      <!-- Daily Insta Feed & Bond Rank Card (인스타 감성 데일리 카드) -->
-      <div class="app-card overflow-hidden bg-gradient-to-b from-[#1b2234] to-[#151a28] border-sky-500/20 shadow-md">
-        <!-- Story / Feed Header -->
+      <!-- Dual Trainers Showcase Card (제미니 & 미오 나란히 등장!) -->
+      <div class="app-card overflow-hidden bg-gradient-to-b from-[#1c2438] via-[#161d2d] to-[#121622] border-sky-500/20 shadow-md">
+        <!-- Dual Header with Bond Status -->
         <div class="p-3 border-b border-[#252e46] flex items-center justify-between">
-          <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-full ring-2 ring-pink-400/50 p-0.5 overflow-hidden bg-black shrink-0 cursor-pointer" onclick="pokeTrainer()">
-              <img id="talkProfileImg" src="./trainer_gemini.png" alt="Gemini" class="w-full h-full object-cover object-top rounded-full" onerror="this.src='./trainer_gemini.png'">
-            </div>
-            <div>
-              <div class="flex items-center gap-1.5">
-                <span class="text-xs font-black text-white">gemini_trainer</span>
-                <span class="text-[9px] bg-sky-500/20 text-sky-300 font-bold px-1.5 py-0.2 rounded-full">TRAINER</span>
-              </div>
-              <p id="instaLocation" class="text-[10px] text-slate-400">제미니 트레이너와의 대화</p>
-            </div>
+          <div class="flex items-center gap-2">
+            <!-- Gemini Avatar Chip -->
+            <button onclick="switchTrainerFocus('gemini')" id="btnFocusGemini" class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs font-bold transition-all">
+              <span class="w-2 h-2 rounded-full bg-pink-400"></span>
+              <span>제미니 (츤데레)</span>
+            </button>
+
+            <!-- Mio Avatar Chip -->
+            <button onclick="switchTrainerFocus('mio')" id="btnFocusMio" class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-amber-400/50 transition-all">
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              <span>미오 (치어리더)</span>
+            </button>
           </div>
 
           <div class="text-right">
             <span id="bondRankBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/30">인연 Lv.1 ❤️</span>
-            <div class="w-16 bg-black/40 rounded-full h-1 mt-1 border border-white/10 ml-auto">
-              <div id="bondExpBar" class="h-full rounded-full bg-pink-400 transition-all duration-500" style="width: 75%;"></div>
-            </div>
           </div>
         </div>
 
-        <!-- Daily Insta Photo Showcase (대형 일상 룩) -->
-        <div class="relative w-full h-52 bg-black/60 overflow-hidden cursor-pointer group" onclick="pokeTrainer()">
-          <img id="dailyInstaImg" src="./trainer_gemini.png" alt="Today's Look" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" onerror="this.src='./trainer_gemini.png'">
-          <!-- Mood Sticker -->
-          <div class="absolute top-2.5 right-2.5 bg-black/60 backdrop-blur-md px-2 py-1 rounded-xl border border-white/10 text-[10px] font-bold text-sky-300" id="feedSticker">
-            ☕ Daily Mood
+        <!-- Large Dual Illustration Stage (제미니 & 미오) -->
+        <div class="relative w-full h-56 bg-black/60 overflow-hidden flex items-end justify-around px-2 pt-2">
+          <!-- Gemini Image (Left) -->
+          <div id="stageGemini" class="w-44 h-full relative shrink-0 cursor-pointer group transition-all duration-300" onclick="pokeTrainer('gemini')">
+            <img id="imgGemini" src="./trainer_gemini.png" alt="Gemini" class="w-full h-full object-cover object-top filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)] group-hover:scale-105 transition-transform" onerror="this.src='./trainer_gemini.png'">
+            <div class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded-lg border border-pink-500/30 text-[10px] font-bold text-pink-300">
+              제미니 코치
+            </div>
           </div>
-          <!-- Caption Overlay -->
-          <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-3 pt-6">
-            <p id="instaCaption" class="text-xs font-semibold text-slate-100 leading-snug">
-              "오늘 17:7 단식 잘 지키고 있지? 딴생각 말고 나만 딱 믿고 따라오라고, 프로듀서!"
+
+          <!-- Mio Image (Right) -->
+          <div id="stageMio" class="w-36 h-full relative shrink-0 cursor-pointer group transition-all duration-300 opacity-90 hover:opacity-100" onclick="pokeTrainer('mio')">
+            <img id="imgMio" src="./trainer_mio.png" alt="Mio" class="w-full h-full object-cover object-top filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)] group-hover:scale-105 transition-transform" onerror="this.src='./trainer_mio.png'">
+            <div class="absolute bottom-2 right-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded-lg border border-amber-500/30 text-[10px] font-bold text-amber-300">
+              미오 파트너
+            </div>
+          </div>
+
+          <!-- Dual Caption Bar -->
+          <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent p-2.5 pt-6 text-center">
+            <p id="trainerDialogue" class="text-xs font-semibold text-slate-100 leading-snug">
+              "제미니: 프로듀서! 오늘 17:7 단식 제대로 지킬 거지? | 미오: 힘내힘내~!"
             </p>
           </div>
         </div>
       </div>
 
-      <!-- GeminiTalk Messenger Log Screen -->
-      <div class="app-card p-3 min-h-[160px] max-h-[200px] overflow-y-auto space-y-2.5 bg-[#121622] border-[#22293d]" id="chatContainer">
-        <div class="flex items-start gap-2.5">
-          <div class="w-8 h-8 rounded-full overflow-hidden ring-1 ring-sky-400/30 bg-black shrink-0">
-            <img src="./trainer_gemini.png" class="w-full h-full object-cover object-top">
-          </div>
-          <div class="max-w-[75%] space-y-1">
-            <div class="text-[11px] font-bold text-slate-400">제미니</div>
-            <div class="p-2.5 rounded-2xl rounded-tl-sm bg-[#1e2538] text-slate-100 text-xs leading-relaxed border border-[#2b354e]">
-              프로듀서! 오늘 17:7 단식 잘 지키고 있지? 딴생각 말고 나만 딱 믿고 따라오라고!
-            </div>
-          </div>
-        </div>
+      <!-- GeminiTalk Messenger Log Screen (3자 그룹 메신저) -->
+      <div class="app-card p-3 min-h-[170px] max-h-[220px] overflow-y-auto space-y-2.5 bg-[#121622] border-[#22293d]" id="chatContainer">
+        <!-- Message stream dynamically populated -->
       </div>
 
       <!-- GeminiTalk Response Choice Box (| 답장하기) -->
@@ -251,11 +245,11 @@
             <span class="text-xs text-sky-400 shrink-0 ml-1">➔</span>
           </button>
           <button onclick="chooseOption(2)" class="momo-choice-btn">
-            <span>2. 사실... 라면 끓여먹으려다 제미니 생각나서 참았어.</span>
-            <span class="text-xs text-sky-400 shrink-0 ml-1">➔</span>
+            <span>2. 미오야, 제미니가 너무 팩폭 날려서 기죽을 뻔했어 ㅠㅠ</span>
+            <span class="text-xs text-amber-400 shrink-0 ml-1">➔</span>
           </button>
           <button onclick="chooseOption(3)" class="momo-choice-btn">
-            <span>3. 제미니한테 혼나는 게 좋아서 일부러 굶는 중인데?</span>
+            <span>3. 둘 다 나 챙겨줘서 너무 든든해! 오늘 러닝도 달릴게!</span>
             <span class="text-xs text-pink-400 shrink-0 ml-1">➔</span>
           </button>
         </div>
@@ -267,7 +261,7 @@
          ======================================================== -->
     <div id="viewHealth" class="space-y-3 hidden">
 
-      <!-- 1. 🍵 Tea & Coffee 홈카페 / 말차 로그 카드 (NEW!) -->
+      <!-- 1. 🍵 Tea & Coffee 홈카페 / 말차 로그 카드 -->
       <div class="app-card p-3.5 bg-gradient-to-br from-[#1a2332] to-[#151c28] border-emerald-500/30">
         <div class="flex items-center justify-between pb-2 border-b border-[#253246]">
           <div class="flex items-center gap-1.5">
@@ -283,21 +277,20 @@
           다기 말차 격불 🍵, 머신 에스프레소 ☕, 무당 허브티는 단식 중 수분 보충 & 지방 연소에 최고의 파트너입니다!
         </p>
 
-        <!-- One-Touch Quick Tea Chips -->
         <div class="grid grid-cols-3 gap-2 mt-2.5">
-          <button onclick="logTea('matcha')" id="btnMatcha" class="tag-chip text-center flex flex-col items-center py-2 hover:border-emerald-400">
+          <button onclick="logTea('matcha')" class="tag-chip text-center flex flex-col items-center py-2 hover:border-emerald-400">
             <span class="text-sm">🍵</span>
             <span class="text-[11px] mt-0.5">말차 다기 격불</span>
             <span id="matchaCount" class="text-[10px] text-emerald-400 font-mono mt-0.5 font-bold">0회</span>
           </button>
 
-          <button onclick="logTea('espresso')" id="btnEspresso" class="tag-chip text-center flex flex-col items-center py-2 hover:border-amber-400">
+          <button onclick="logTea('espresso')" class="tag-chip text-center flex flex-col items-center py-2 hover:border-amber-400">
             <span class="text-sm">☕</span>
             <span class="text-[11px] mt-0.5">에스프레소 샷</span>
             <span id="espressoCount" class="text-[10px] text-amber-400 font-mono mt-0.5 font-bold">0회</span>
           </button>
 
-          <button onclick="logTea('tea')" id="btnHerbTea" class="tag-chip text-center flex flex-col items-center py-2 hover:border-sky-400">
+          <button onclick="logTea('tea')" class="tag-chip text-center flex flex-col items-center py-2 hover:border-sky-400">
             <span class="text-sm">🫖</span>
             <span class="text-[11px] mt-0.5">무당 허브티</span>
             <span id="teaCount" class="text-[10px] text-sky-400 font-mono mt-0.5 font-bold">0회</span>
@@ -307,7 +300,7 @@
         <div class="mt-2.5 pt-2 border-t border-[#253246] flex items-center justify-between text-[11px]">
           <span class="text-slate-400">찻잔 사진 인증하기:</span>
           <label for="teaPhotoInput" class="px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold cursor-pointer hover:bg-emerald-500/30">
-            📷 찻잔 촬영
+            📷 찻잔 촬영 / 갤러리
           </label>
           <input type="file" id="teaPhotoInput" accept="image/*" class="hidden" onchange="handleTeaPhoto(event)">
         </div>
@@ -371,11 +364,11 @@
         </div>
       </div>
 
-      <!-- 4. 17:7 Meal Photo Cards -->
+      <!-- 4. 17:7 Meal Photo Cards (갤러리 / 카메라 자유 첨부) -->
       <div class="space-y-2">
         <div class="text-xs font-bold text-slate-300 flex items-center justify-between">
           <span>🍱 오늘 식단 사진 인증</span>
-          <span class="text-[11px] text-sky-400">촬영 시 제미니톡 자동 공유</span>
+          <span class="text-[11px] text-sky-400">촬영/갤러리 시 톡방 자동 공유</span>
         </div>
 
         <!-- Breakfast -->
@@ -389,7 +382,7 @@
               </div>
             </label>
             <label for="photo1" class="px-2 py-1 rounded-lg bg-[#20273c] border border-slate-700 text-[11px] font-bold text-slate-200 cursor-pointer hover:border-sky-400">
-              📷 사진
+              📷 사진 첨부
             </label>
             <input type="file" id="photo1" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 1)">
           </div>
@@ -409,7 +402,7 @@
               </div>
             </label>
             <label for="photo2" class="px-2 py-1 rounded-lg bg-[#20273c] border border-slate-700 text-[11px] font-bold text-slate-200 cursor-pointer hover:border-sky-400">
-              📷 사진
+              📷 사진 첨부
             </label>
             <input type="file" id="photo2" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 2)">
           </div>
@@ -429,7 +422,7 @@
               </div>
             </label>
             <label for="photo3" class="px-2 py-1 rounded-lg bg-[#20273c] border border-slate-700 text-[11px] font-bold text-slate-200 cursor-pointer hover:border-rose-400">
-              📷 사진
+              📷 사진 첨부
             </label>
             <input type="file" id="photo3" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 3)">
           </div>
@@ -479,8 +472,8 @@
     <!-- 3. Bottom Sticky Action Bar (디스코드 전송) -->
     <div class="fixed bottom-0 left-0 right-0 p-3 bg-[#0f121c]/90 backdrop-blur-md border-t border-[#242c42] z-30">
       <div class="max-w-md mx-auto">
-        <button onclick="dispatchDiscord()" id="btnDispatch" class="w-full py-3 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2">
-          <span>🚀 디스코드에 오늘 리포트 & 식단 전송하기</span>
+        <button onclick="dispatchDiscord()" id="btnDispatch" class="w-full py-3 rounded-2xl bg-gradient-to-r from-sky-500 via-indigo-600 to-amber-500 hover:from-sky-400 hover:to-amber-400 text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2">
+          <span>🚀 디스코드에 더블 코치 브리핑 전송하기</span>
         </button>
       </div>
     </div>
@@ -517,25 +510,45 @@
       osc.stop(audioCtx.currentTime + duration);
     }
 
-    // 7-Day Daily Instagram Feed System
-    const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-    const dailyFeeds = {
-      0: { title: "일요일 산책 룩", img: "./trainer_cafe.png", sticker: "🌿 Weekend Walk", loc: "센트럴 파크 산책로", caption: "한 주 동안 고생 많았어, 프로듀서! 가볍게 산책하면서 몸 풀어두자고!" },
-      1: { title: "월요일 모닝 루틴", img: "./trainer_cafe.png", sticker: "☕ Monday Coffee", loc: "테라스 카페", caption: "월요일이라고 축 처져 있지 마! 따뜻한 커피 한 잔 마시고 슬림핏 향해 달려야지!" },
-      2: { title: "화요일 러닝 데이", img: "./trainer_gemini.png", sticker: "🏃 Jogging Time", loc: "야외 조깅 트랙", caption: "손아귀 힘 빼고 달리는 거 잊지 마! 오늘 5km 완주할 때까지 감시할 거야!" },
-      3: { title: "수요일 인바디 데이", img: "./trainer_wednesday.png", sticker: "📊 InBody Check", loc: "헬스장 측정실", caption: "오늘은 대망의 수요일 인바디 데이야! 체지방률 20% 진입했는지 이 몸이 똑똑히 볼 테니까 긴장해!" },
-      4: { title: "목요일 말차 티타임", img: "./trainer_tea.png", sticker: "🍵 Matcha Session", loc: "홈카페 다실", caption: "다기로 말차 격불해 봤어? EGCG 카테킨이 지방 연소에 최고라고! 17시 넘기 전 마셔!" },
-      5: { title: "금요일 불금 클린식단", img: "./trainer_gemini.png", sticker: "🥗 Clean Dinner", loc: "피트니스 라운지", caption: "불금이라고 치맥 먹으면 지금까지 한 거 다 물거품이야! 17시 칼마감 지켜, 바보야!" },
-      6: { title: "토요일 홈트레이닝", img: "./trainer_tea.png", sticker: "✨ Cozy Weekend", loc: "홈 피트니스 룸", caption: "주말이라고 늦잠만 자지 말고 14분 복근 루틴부터 끝내자. 흥, 기다리고 있을게!" }
-    };
+    // Image Compressor for Fast Mobile Storage & Discord Webhook
+    function compressImage(file, maxSide = 960, quality = 0.75) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let w = img.width;
+            let h = img.height;
+            if (w > maxSide || h > maxSide) {
+              if (w > h) {
+                h = Math.round((h * maxSide) / w);
+                w = maxSide;
+              } else {
+                w = Math.round((w * maxSide) / h);
+                h = maxSide;
+              }
+            }
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
 
     // State
-    const STORAGE_KEY = 'gemini_fit_momotalk_v5';
+    const STORAGE_KEY = 'gemini_fit_dual_v6';
     let state = {
       weight: 53.8,
       fat: 21.5,
       bondRank: 1,
       bondExp: 75,
+      activeTrainer: 'gemini', // 'gemini' or 'mio'
       absDone: false,
       runDone: false,
       runDist: 5.0,
@@ -545,7 +558,8 @@
       teaLog: { matcha: 0, espresso: 0, tea: 0 },
       webhookUrl: '',
       chatHistory: [
-        { sender: 'gemini', text: '프로듀서! 오늘 17:7 단식 잘 지키고 있지? 딴생각 말고 나만 딱 믿고 따라오라고!' }
+        { sender: 'gemini', name: '제미니', text: '프로듀서! 오늘 17:7 단식 잘 지키고 있지? 딴생각 말고 나만 딱 믿고 따라오라고!' },
+        { sender: 'mio', name: '미오', text: '아하하, 제미니 짱 잔소리 시작이네~ 프로듀서! 오늘도 우리랑 같이 파이팅이야! 🌟' }
       ]
     };
 
@@ -554,7 +568,7 @@
         const s = localStorage.getItem(STORAGE_KEY);
         if (s) state = { ...state, ...JSON.parse(s) };
       } catch (e) {}
-      applyDayFeed();
+      checkWednesdayBanner();
       syncUI();
       renderChat();
     }
@@ -563,29 +577,43 @@
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
     }
 
-    function applyDayFeed() {
-      const now = new Date();
-      const dayIdx = now.getDay(); // 0(일) ~ 6(토)
-      const feed = dailyFeeds[dayIdx];
-
-      document.getElementById('dayBadge').textContent = `${daysOfWeek[dayIdx]} 피드`;
-      document.getElementById('dailyInstaImg').src = feed.img;
-      document.getElementById('feedSticker').textContent = feed.sticker;
-      document.getElementById('instaLocation').textContent = feed.loc;
-      document.getElementById('instaCaption').textContent = `"${feed.caption}"`;
-
-      // Wednesday InBody Day Banner Trigger
-      const inbodyBanner = document.getElementById('inbodyDayBanner');
+    function checkWednesdayBanner() {
+      const day = new Date().getDay();
+      const banner = document.getElementById('inbodyDayBanner');
       const ddayText = document.getElementById('inbodyDdayText');
-      if (dayIdx === 3) {
-        inbodyBanner.classList.remove('hidden');
-        ddayText.textContent = "⭐ 오늘은 인바디 데이! (인연 EXP 2배)";
+      if (day === 3) {
+        banner.classList.remove('hidden');
+        ddayText.textContent = "⭐ 오늘은 인바디 측정 데이! (인연 EXP 2배)";
         ddayText.className = "text-[11px] text-amber-400 font-bold font-mono";
       } else {
-        inbodyBanner.classList.add('hidden');
-        const diff = (3 - dayIdx + 7) % 7;
+        banner.classList.add('hidden');
+        const diff = (3 - day + 7) % 7;
         ddayText.textContent = `다음 인바디 데이: ${diff === 1 ? '내일(수요일)!' : `D-${diff} (수요일)`}`;
       }
+    }
+
+    function switchTrainerFocus(trainer) {
+      state.activeTrainer = trainer;
+      const btnG = document.getElementById('btnFocusGemini');
+      const btnM = document.getElementById('btnFocusMio');
+      const stG = document.getElementById('stageGemini');
+      const stM = document.getElementById('stageMio');
+
+      if (trainer === 'gemini') {
+        btnG.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs font-bold transition-all";
+        btnM.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-amber-400/50 transition-all";
+        stG.style.transform = "scale(1.05)";
+        stM.style.transform = "scale(0.95)";
+        document.getElementById('trainerDialogue').textContent = `"제미니: 프로듀서, 슬림핏 52kg 될 때까지 긴장 늦추지 마!"`;
+      } else {
+        btnM.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all";
+        btnG.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-pink-400/50 transition-all";
+        stM.style.transform = "scale(1.05)";
+        stG.style.transform = "scale(0.95)";
+        document.getElementById('trainerDialogue').textContent = `"미오: 에헤헤, 프로듀서! 오늘도 나랑 힘차게 달려보자구~ 🏃‍♀️✨"`;
+      }
+      playBeep(650);
+      saveState();
     }
 
     function syncUI() {
@@ -640,12 +668,15 @@
       renderChat();
 
       setTimeout(() => {
-        let reply = type === 'matcha' 
-          ? "오... 다기로 말차 거품 낸 거야? EGCG 성분으로 지방 팍팍 태우자고!"
-          : type === 'espresso'
-          ? "공복 에스프레소! 카페인 받아서 러닝 페이스 올릴 준비 완료네?"
-          : "따뜻한 차 마시면서 수분 보충! 17시 이후 배고픔 참는 데는 차가 최고야.";
-        state.chatHistory.push({ sender: 'gemini', text: reply });
+        if (type === 'matcha') {
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '오... 다기로 말차 격불한 거야? 거품 고운 것 좀 봐. 17시 넘겨서 배고프다고 징징대지 말고 차나 마셔, 바보야!' });
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: '우와~ 말차 냄새 좋다! 프로듀서 차분하게 차 마시는 모습 멋있어!' });
+        } else if (type === 'espresso') {
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: '에스프레소 마셨으니까 이제 나랑 같이 신나게 5km 러닝 달릴 거지? 🏃‍♀️' });
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '손아귀 힘 빼고 뛰라고 전해둬, 미오!' });
+        } else {
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '17시 이후 배고플 땐 따뜻한 허브티로 달래는 게 정석이야. 훌륭해.' });
+        }
         state.bondExp += 10;
         updateBondUI();
         saveState();
@@ -662,7 +693,8 @@
       renderChat();
 
       setTimeout(() => {
-        state.chatHistory.push({ sender: 'gemini', text: "찻잔 예쁘네! 감성 챙기면서 단식 유지하는 건 아주 훌륭해, 흥!" });
+        state.chatHistory.push({ sender: 'mio', name: '미오', text: "찻잔 너무 예쁘다 프로듀서! 나도 나중에 한 잔 타줘~ ☕✨" });
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: "흥, 미오 넌 또 얻어마실 생각만 하지! 그래도 감성 챙기면서 단식 유지하는 건 인정해 줄게." });
         state.bondExp += 15;
         updateBondUI();
         saveState();
@@ -671,33 +703,42 @@
       e.target.value = '';
     }
 
-    // MomoTalk Messaging Logic
+    // MomoTalk Dual Messaging Story Tree
     const storyTree = {
       1: {
         userText: "닭가슴살이랑 쉐이크로 단백질 든든하게 채웠어!",
-        geminiReply: "오... 진짜로 제대로 먹었잖아? 단백질 30g 이상 보충 확인! 이번만큼은 인정해 줄게요, 흥!",
+        replies: [
+          { sender: 'gemini', name: '제미니', text: '오... 진짜로 제대로 먹었잖아? 단백질 30g 이상 보충 확인! 이번만큼은 인정해 줄게요, 흥!' },
+          { sender: 'mio', name: '미오', text: '나이스 프로듀서! 잘 챙겨 먹어야 근손실 안 오지~ 완전 최고야!' }
+        ],
         exp: 15,
         nextChoices: [
           "이제 14분 복근 루틴 하러 갈게!",
-          "제미니가 칭찬해주니까 힘난다 ㅎㅎ"
+          "둘이 같이 칭찬해주니까 진짜 힘난다 ㅎㅎ"
         ]
       },
       2: {
-        userText: "사실... 라면 끓여먹으려다 제미니 생각나서 참았어.",
-        geminiReply: "바보야! 🤬 라면 같은 소리 하네! 나트륨 폭탄 맞고 내일 퉁퉁 부을 셈이야?! 그래도 참았다니... 잘했어.",
+        userText: "미오야, 제미니가 너무 팩폭 날려서 기죽을 뻔했어 ㅠㅠ",
+        replies: [
+          { sender: 'mio', name: '미오', text: '에헤헤, 제미니 짱이 원래 츤데레라 말이 뾰루퉁해서 그래~ 속으로는 엄청 챙겨주고 있다구!' },
+          { sender: 'gemini', name: '제미니', text: '야! 미오! 쓸데없는 소리 하지 마! 바보 프로듀서가 17시 넘어서 먹을까 봐 미리 경고한 거잖아! 💢' }
+        ],
         exp: 20,
         nextChoices: [
-          "혼내줘서 고마워, 말차 한잔 마실게!",
-          "제미니가 감시해주니까 참게 되네."
+          "알았어 알았어, 17시 셧다운 칼같이 지킬게!",
+          "둘이 티격태격하는 거 진짜 귀엽네 ㅋㅋㅋ"
         ]
       },
       3: {
-        userText: "제미니한테 혼나는 게 좋아서 일부러 굶는 중인데?",
-        geminiReply: "변태 프로듀서! 뭐라는 거야 진짜! 💢 안 뛰어가면 진짜 주거주거! 지금 당장 두유 마셔!",
-        exp: 10,
+        userText: "둘 다 나 챙겨줘서 너무 든든해! 오늘 러닝도 달릴게!",
+        replies: [
+          { sender: 'mio', name: '미오', text: '응응! 나도 옆에서 페이스 맞춰서 같이 달리는 기분으로 응원할게! 5km 가보자구!' },
+          { sender: 'gemini', name: '제미니', text: '손아귀 힘 100% 빼고 달리는 거 잊지 마! 팔꿈치 아프면 즉시 멈춰야 돼, 바보야!' }
+        ],
+        exp: 20,
         nextChoices: [
-          "알았어 알았어 마실게 ㅋㅋㅋ",
-          "화내는 것도 귀여워"
+          "손목에 힘 빼고 가볍게 뛸게!",
+          "러닝 끝나고 보고할게!"
         ]
       }
     };
@@ -711,13 +752,13 @@
       renderChat();
 
       setTimeout(() => {
-        state.chatHistory.push({ sender: 'gemini', text: data.geminiReply });
+        data.replies.forEach(r => state.chatHistory.push(r));
         state.bondExp += data.exp;
         if (state.bondExp >= 100) {
           state.bondRank += 1;
           state.bondExp = state.bondExp - 100;
           playBeep(880, 0.25);
-          alert(`🎉 [인연 랭크 UP!] 제미니 코치와의 인연 레벨이 Lv.${state.bondRank}로 상승했습니다!`);
+          alert(`🎉 [인연 랭크 UP!] 제미니 & 미오와의 인연 레벨이 Lv.${state.bondRank}로 상승했습니다!`);
         } else {
           playBeep(750, 0.1);
         }
@@ -745,13 +786,8 @@
       renderChat();
 
       setTimeout(() => {
-        const replies = [
-          "흥, 말만 앞서지 말고 몸을 움직여! 17시 되기 전에 저녁 클린하게 먹고!",
-          "손아귀 힘 빼고 달리는 거 잊지 마! 팔꿈치 다치면 진짜 가만 안 둬!",
-          "내일 아침 체중 52kg 진입할 때까지 나만 딱 믿고 따라오라고, 바보야!"
-        ];
-        const r = replies[Math.floor(Math.random() * replies.length)];
-        state.chatHistory.push({ sender: 'gemini', text: r });
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '말만 앞서지 말고 바로 실천해! 오늘 루틴 다 끝낼 때까지 똑똑히 감시할 거니까!' });
+        state.chatHistory.push({ sender: 'mio', name: '미오', text: '화이팅 화이팅 프로듀서~! 완주하면 하이파이브야! 🖐️✨' });
         state.bondExp += 10;
         updateBondUI();
         saveState();
@@ -770,14 +806,28 @@
               </div>
             </div>
           `;
+        } else if (msg.sender === 'mio') {
+          return `
+            <div class="flex items-start gap-2.5">
+              <div class="w-8 h-8 rounded-full overflow-hidden ring-1 ring-amber-400/40 bg-black shrink-0">
+                <img src="./trainer_mio.png" class="w-full h-full object-cover object-top">
+              </div>
+              <div class="max-w-[75%] space-y-1">
+                <div class="text-[11px] font-bold text-amber-300">미오</div>
+                <div class="p-2.5 rounded-2xl rounded-tl-sm bg-[#2e2520] text-amber-100 text-xs leading-relaxed border border-amber-500/25">
+                  ${msg.text}
+                </div>
+              </div>
+            </div>
+          `;
         } else {
           return `
             <div class="flex items-start gap-2.5">
-              <div class="w-8 h-8 rounded-full overflow-hidden ring-1 ring-pink-400/30 bg-black shrink-0">
+              <div class="w-8 h-8 rounded-full overflow-hidden ring-1 ring-pink-400/40 bg-black shrink-0">
                 <img src="./trainer_gemini.png" class="w-full h-full object-cover object-top">
               </div>
               <div class="max-w-[75%] space-y-1">
-                <div class="text-[11px] font-bold text-slate-400">제미니</div>
+                <div class="text-[11px] font-bold text-pink-300">제미니</div>
                 <div class="p-2.5 rounded-2xl rounded-tl-sm bg-[#1e2538] text-slate-100 text-xs leading-relaxed border border-[#2b354e]">
                   ${msg.text}
                 </div>
@@ -791,53 +841,21 @@
 
     function updateBondUI() {
       document.getElementById('bondRankBadge').textContent = `인연 Lv.${state.bondRank} ❤️`;
-      document.getElementById('bondExpBar').style.width = `${state.bondExp}%`;
     }
 
-    function pokeTrainer() {
+    function pokeTrainer(who = 'gemini') {
       playBeep(700, 0.08);
-      const quotes = [
-        "아야! 어딜 만지는 거야, 바보야! 💢",
-        "운동 안 하고 딴짓하면 진짜 주거주거! 😈",
-        "흥... 오늘 루틴 다 끝내면 머리 쓰다듬게 해줄게."
-      ];
-      const q = quotes[Math.floor(Math.random() * quotes.length)];
-      state.chatHistory.push({ sender: 'gemini', text: q });
+      if (who === 'gemini') {
+        const q = ["아야! 어딜 만지는 거야, 바보야! 💢", "운동 안 하고 딴짓하면 진짜 주거주거! 😈", "흥... 오늘 루틴 다 끝내면 머리 쓰다듬게 해줄게."];
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: q[Math.floor(Math.random() * q.length)] });
+      } else {
+        const q = ["와앗! 간지러워 프로듀서~ ㅋㅋㅋ", "헤헤, 오늘도 기운차게 같이 달려볼까?", "프로듀서가 힘내면 나도 엄청 힘이 난다구!"];
+        state.chatHistory.push({ sender: 'mio', name: '미오', text: q[Math.floor(Math.random() * q.length)] });
+      }
       renderChat();
     }
 
-    // Image Compressor for Fast Mobile Storage & Discord Webhook
-    function compressImage(file, maxSide = 960, quality = 0.75) {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            let w = img.width;
-            let h = img.height;
-            if (w > maxSide || h > maxSide) {
-              if (w > h) {
-                h = Math.round((h * maxSide) / w);
-                w = maxSide;
-              } else {
-                w = Math.round((w * maxSide) / h);
-                h = maxSide;
-              }
-            }
-            canvas.width = w;
-            canvas.height = h;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, w, h);
-            resolve(canvas.toDataURL('image/jpeg', quality));
-          };
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
-    // Meal Photo (Gallery / Camera Compatible)
+    // Meal Photo
     async function uploadMealPhoto(e, idx) {
       const file = e.target.files[0];
       if (!file) return;
@@ -855,10 +873,8 @@
       renderChat();
 
       setTimeout(() => {
-        state.chatHistory.push({
-          sender: 'gemini',
-          text: `식단 사진 확인! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 입에 칼로리 넣지 마!`
-        });
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '식단 사진 확인! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 입에 칼로리 넣지 마!' });
+        state.chatHistory.push({ sender: 'mio', name: '미오', text: '맛있어 보인다~ 단백질도 채소도 완벽해! 이 기세로 저녁까지 가자!' });
         state.bondExp += 15;
         updateBondUI();
         saveState();
@@ -888,7 +904,6 @@
         }
         updateMetrics();
 
-        // Wednesday Bonus
         const isWed = (new Date().getDay() === 3);
         const bonusExp = isWed ? 40 : 20;
         state.bondExp += bonusExp;
@@ -898,7 +913,8 @@
         const bonusMsg = isWed ? "\n⭐ [수요일 보너스] 인연 EXP 2배 적립!" : "";
         alert(`🎯 스캔 완료!\n체중: ${state.weight}kg / 체지방: ${state.fat}% 자동 반영되었습니다!${bonusMsg}`);
 
-        state.chatHistory.push({ sender: 'gemini', text: `인바디 스캔 완료! 체중 ${state.weight}kg, 체지방 ${state.fat}% 확인했어. 수요일 목표 달성까지 파이팅이야!` });
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: `인바디 스캔 확인! 체중 ${state.weight}kg, 체지방 ${state.fat}%. 52kg 진입할 때까지 방심 금물이야!` });
+        state.chatHistory.push({ sender: 'mio', name: '미오', text: `수치 확실하게 줄고 있어! 프로듀서 매일 노력한 보람이 있네~ 진짜 멋있어!` });
         renderChat();
       } catch (err) {
         alert("스캔 중 오류가 발생했습니다.");
@@ -1033,13 +1049,12 @@
 
       const rehabCnt = state.rehab.filter(Boolean).length;
       const photoCnt = state.mealPhotos.filter(Boolean).length;
-      const quote = "흥! 식단이랑 운동 잘 챙기고 있는지 이 몸이 지켜보고 있어!";
 
       const payload = {
-        username: "Gemini Trainer",
+        username: "Gemini & Mio Dual Coaches",
         embeds: [{
-          title: "💌 [GeminiTalk] 데일리 브리핑 보고서",
-          description: `**제미니 트레이너 (인연 Lv.${state.bondRank}):**\n> "${quote}"`,
+          title: "💌 [Gemini Fit] 더블 트레이너 데일리 브리핑 보고서",
+          description: `**제미니:** "17:7 단식이랑 운동 끝까지 해내는지 지켜보고 있어!"\n**미오:** "프로듀서 오늘 하루도 수고 많았어! 완전 짱이야~ 🌟"`,
           color: 0x4d88ff,
           fields: [
             { name: "⚖️ 체중 / 체지방", value: `• 체중: **${state.weight} kg**\n• 체지방률: **${state.fat} %**`, inline: true },
@@ -1058,13 +1073,13 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        if (res.ok) alert('🚀 디스코드 채널로 모모톡 브리핑이 성공적으로 전송되었습니다!');
+        if (res.ok) alert('🚀 디스코드 채널로 더블 트레이너 브리핑이 성공적으로 전송되었습니다!');
         else throw new Error(`응답 코드: ${res.status}`);
       } catch (e) {
         alert(`전송 실패: ${e.message}`);
       } finally {
         btn.disabled = false;
-        btn.textContent = "🚀 디스코드에 오늘 리포트 & 식단 전송하기";
+        btn.textContent = "🚀 디스코드에 더블 코치 브리핑 전송하기";
       }
     }
 
