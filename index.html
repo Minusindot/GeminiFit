@@ -2221,6 +2221,20 @@
         state.chatHistory.push({ sender: 'gemini', name: '제미니 · 코토네 · 미오', text: q });
       } else {
         const hKey = state.activeTrainer || 'gemini';
+
+        // 🌟 Rare Morikinoko SD Easter Egg (아주 가끔씩 발동하는 모리키노코 SD 연출)
+        if (hKey === 'mio' && Math.random() < 0.12) {
+          const isSmug = Math.random() < 0.5;
+          const sdImg = isSmug ? './sd_mio_bean.png' : './sd_mio_melt.png';
+          const sdText = isSmug
+            ? "어라~? 미오짱의 각선미에 반해버리셨나요 프로듀서?! 미오짱 그런 점이에요! (모리키노코풍 콩눈 🌟)"
+            : "하아하아... 프로듀서... 이거 절대 준비운동 레벨이 아니야... 살려줘어어 😵💦 (모리키노코 방전 모드)";
+          document.getElementById('trainerDialogue').textContent = `"미오: ${sdText}"`;
+          state.chatHistory.push({ sender: 'mio', name: '미오 [SD 콩눈]', text: sdText, image: sdImg });
+          renderChat();
+          return;
+        }
+
         let pool = (window.HEROINE_DIALOGUES && window.HEROINE_DIALOGUES[hKey]) ? window.HEROINE_DIALOGUES[hKey] : null;
         let q = "";
         if (pool && pool.length > 0) {
@@ -2725,6 +2739,12 @@
         sender: 'kotone',
         name: '코토네',
         text: '우와아~ 헬스장 풀코스 완주 대박이에요 프로듀서님! 11자 복근이랑 슬림핏에 한 걸음 더 가까워졌어요! 💛'
+      });
+      state.chatHistory.push({
+        sender: 'mio',
+        name: '미오 [SD 방전]',
+        text: '하아하아... 캡틴스 체어에 크런치까지... 프로듀서... 이거 분명 준비운동 레벨이 아니야... 😵💦 (모리키노코 탈진)',
+        image: './sd_mio_melt.png'
       });
       renderChat();
       playBeep(980, 0.25);
