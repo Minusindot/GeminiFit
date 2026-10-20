@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T15:08:53.950Z",
+  "updatedAt": "2026-10-20T15:09:14.163Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
@@ -7,7 +7,7 @@
   "bondExp": 15,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev8",
+  "currentSituation": "ev7",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,16 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "에스프레소 마셨으니까 이제 나랑 같이 신나게 5km 러닝 달릴 거지? 🏃‍♀️"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "💖 [제미니 EP.5 · 야경 발코니] \"낮에는 엄격하게 굴었지만... 사실 매일 포기하지 않고 노력하는 프로듀서 모습, 내가 제일 좋아하는 거 알지? 내일도 내가 1등으로 응원할게.\""
-    },
     {
       "sender": "gemini",
       "name": "제미니",
@@ -115,6 +105,16 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "향긋한 얼그레이 티 한 잔으로 오후 식곤증 날려버려! 나랑 눈 마주치면서 마셔."
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "말차 거품 위에 라떼아트로 고양이 얼굴 그려보려다 실패했어... 보지 마 바보야!"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "따뜻한 무가당 허브티 한 잔 우렸어. 저녁 공복에 속 달래는 덴 이게 최고야."
     }
   ]
 }
