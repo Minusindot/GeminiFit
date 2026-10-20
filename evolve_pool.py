@@ -59,13 +59,17 @@ BASE_STYLE_PROMPT = {
         "ultra-clean delicate fine lineart, luminous soft sunlight rendering, masterpiece 2D bishoujo game event CG, aspect ratio 9:16."
     ),
     "mio": (
-        "CRITICAL STYLE RULE: Draw strictly in the Gakuen Idolmaster (학원 아이돌마스터) high-end mobile game "
-        "illustration art style of the attached reference images — ultra-delicate fine tinted lineart, "
-        "soft luminous skin rendering with warm coral cheek blush, detailed jewel-like amber eyes with fine eyelashes, "
-        "silky hair strands catching warm golden light. "
-        "Character: 19yo athletic idol trainer girl Honda Mio, short layered warm caramel-brown hair with cute side bangs "
-        "and fluffy outward-flipped hair tips, expressive golden-amber eyes, slender toned athletic idol proportions, masterpiece 2D bishoujo game event CG, aspect ratio 9:16."
-    ),
+        "CRITICAL CHARACTER & STYLE RULE: Strictly maintain the exact official character identity, face structure, "
+        "and signature hairstyle of Honda Mio (혼다 미오) from the attached official reference images (07_mio_official_standing & official SSR cards), "
+        "rendered in the Gakuen Idolmaster (학원 아이돌마스터) high-end mobile game illustration art style — "
+        "ultra-delicate tinted fine lineart, luminous soft porcelain skin with natural peach-coral blush, "
+        "detailed multi-tonal honey-amber jewel eyes catching sunlight, airy dynamic lighting and depth of field. "
+        "EXACT HONDA MIO CHARACTER TRAITS: 19yo sunshine idol trainer girl, "
+        "signature warm caramel-brown short layered bob haircut with distinct outward-flipped feathery hair ends around her neck and ears, "
+        "soft textured bangs parted over forehead, delicate ahoge cowlick curl on top of head, "
+        "large expressive round golden-amber eyes full of warmth and vitality, radiant infectious smile, "
+        "tomboyish yet incredibly charming idol aura, slender toned athletic curves, masterpiece 2D bishoujo game event CG, aspect ratio 9:16."
+    ),
     "gemini": (
         "CRITICAL STYLE RULE: Draw strictly in the Gakuen Idolmaster (학원 아이돌마스터) high-end mobile game "
         "illustration art style of the attached style reference images — ultra-delicate fine tinted lineart, "
@@ -109,22 +113,23 @@ def pick_evolution_refs(trainer: str) -> list[Path]:
         return chosen
 
     if trainer == "mio":
-        mio_survivors = list_survivors(MIO_POOL)
         feature_refs = list_survivors(REF_MIO_FEATURE_POOL)
+        standing_ref = [p for p in feature_refs if "07_mio_official_standing" in p.name]
+        ssr_refs = [p for p in feature_refs if "03_mio_ssr" in p.name or "04_mio_ssr" in p.name or "05_mio_ssr" in p.name or "06_mio_ssr" in p.name]
         chosen: list[Path] = []
-        if mio_survivors:
-            chosen.append(mio_survivors[0])
-            if kotone_survivors:
-                chosen.append(kotone_survivors[0])
-            if style_survivors:
-                chosen.append(style_survivors[0])
-        else:
-            if style_survivors:
-                chosen.extend(style_survivors[:2])
-            if feature_refs:
-                chosen.append(feature_refs[-1])
-        return chosen
-
+        # Always attach official Honda Mio standing sprite for exact facial proportions & hair flips
+        if standing_ref:
+            chosen.append(standing_ref[0])
+        elif feature_refs:
+            chosen.append(feature_refs[0])
+        # Attach official high-end SSR card for expression & vibrant lighting
+        if ssr_refs:
+            chosen.append(random.choice(ssr_refs))
+        # Attach Gakumas style survivor for mobile game illustration rendering
+        if style_survivors:
+            chosen.append(style_survivors[0])
+        return chosen
+
     # trainer == "gemini" (신규 흑발 롱헤어 제미니)
     gem_survivors = list_survivors(GEMINI_POOL)
     gem_features = list_survivors(REF_GEMINI_FEATURE_POOL)
