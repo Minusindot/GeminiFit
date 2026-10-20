@@ -2886,17 +2886,30 @@
       const cleanKey = (apiKey || '').trim();
       if (!cleanKey) throw new Error('API 키가 입력되지 않았습니다.');
 
-      // 1. Check cached working model
-      let candidateEndpoints = [];
+      // 1. Try cached working model first for lightning-fast response (<1s)
       const cached = localStorage.getItem('GEMINI_WORKING_MODEL');
       if (cached) {
-        candidateEndpoints.push(`https://generativelanguage.googleapis.com/v1beta/models/${cached}:generateContent`);
+        try {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${cached}:generateContent?key=${cleanKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bodyPayload)
+          });
+          if (res.ok) {
+            const data = await res.json();
+            data._workingModel = cached;
+            return data;
+          }
+        } catch (e) {
+          console.warn('Cached model failed, discovering fallback models...', e.message);
+        }
       }
 
-      // 2. Discover available models dynamically from Google
+      // 2. Discover available models dynamically from Google (limit to top 3 Flash models)
+      let candidateEndpoints = [];
       const discovered = await discoverGeminiModels(cleanKey);
       if (discovered && discovered.length > 0) {
-        for (const m of discovered) {
+        for (const m of discovered.slice(0, 3)) {
           const ep = `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`;
           if (!candidateEndpoints.includes(ep)) {
             candidateEndpoints.push(ep);
@@ -2904,16 +2917,11 @@
         }
       }
 
-      // 3. Fallback static candidate endpoints if discovery is empty
+      // 3. Fallback static candidate endpoints if discovery was empty
       const staticFallbacks = [
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent',
         'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
-        'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent',
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-8b:generateContent',
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent',
-        'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent'
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
       ];
       for (const ep of staticFallbacks) {
         if (!candidateEndpoints.includes(ep)) candidateEndpoints.push(ep);
