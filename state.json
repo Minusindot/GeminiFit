@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T15:09:14.163Z",
+  "updatedAt": "2026-10-20T15:49:33.499Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
@@ -7,7 +7,7 @@
   "bondExp": 15,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev7",
+  "currentSituation": "ev6",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,11 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "💖 [제미니 EP.4 · 프라이빗 풀사이드] \"흥, 프로듀서가 이번 주 식단 잘 지킨 상으로 특별히 어울려 주는 거야! 물장구치기 시합해서 지는 사람이 이따 에스프레소 쏘기다?\""
-    },
     {
       "sender": "mio",
       "name": "미오",
@@ -115,6 +110,11 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "따뜻한 무가당 허브티 한 잔 우렸어. 저녁 공복에 속 달래는 덴 이게 최고야."
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "식단 관리 실패하면 내일 덤벨 컬 5세트 추가야. 협박 아니고 진짜니까 조심해."
     }
   ]
 }
