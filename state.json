@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-20T15:57:54.786Z",
+  "updatedAt": "2026-10-20T15:59:01.961Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
   "bondRank": 3,
-  "bondExp": 45,
+  "bondExp": 70,
   "activeTrainer": "mio",
   "activeMode": "mio",
-  "currentSituation": "ev5",
+  "currentSituation": "ev6",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,11 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "와아~ 프로듀서 매일매일 노력한 결실이 나오고 있어! 이 기세로 계속 함께 가자~ 💖✨"
-    },
     {
       "sender": "user",
       "text": "📸 [17:00 저녁 식단 인증 사진]"
@@ -111,6 +106,11 @@
       "sender": "mio",
       "name": "미오",
       "text": "오늘 하루 완벽 클리어 나이스! 푹 자고 내일 아침 트랙에서 환한 얼굴로 다시 만나자! 🌙🌟"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "💖 [미오 EP.6 · 소나기 속 하나의 우산] \"언제나 활발하던 미오였지만... 이 좁은 투명 우산 속에서 프로듀서 숨결이 닿을 때만큼은 숨이 멎는 줄 알았어.\""
     }
   ]
 }
