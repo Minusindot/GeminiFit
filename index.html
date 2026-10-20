@@ -2861,16 +2861,16 @@
 
         if (!supported.length) return null;
 
-        // Rank by priority
+        // Rank by priority: 1.5-flash & 2.0-flash have the largest free-tier quotas (15 RPM / 1500 RPD)
         const rank = (name) => {
           const n = name.toLowerCase();
-          if (n === 'gemini-2.5-flash') return 1;
+          if (n === 'gemini-1.5-flash') return 1;
           if (n === 'gemini-2.0-flash') return 2;
-          if (n.startsWith('gemini-2') && n.includes('flash')) return 3;
-          if (n === 'gemini-1.5-flash') return 4;
+          if (n === 'gemini-2.5-flash') return 3;
+          if (n.startsWith('gemini-2') && n.includes('flash')) return 4;
           if (n.includes('flash')) return 5;
-          if (n.startsWith('gemini-2')) return 6;
-          if (n === 'gemini-1.5-pro') return 7;
+          if (n === 'gemini-1.5-pro') return 6;
+          if (n.startsWith('gemini-2')) return 7;
           if (n.includes('pro')) return 8;
           return 9;
         };
@@ -2941,12 +2941,14 @@
           const errMsg = errData.error?.message || ('HTTP ' + res.status);
           lastError = new Error(errMsg);
 
-          // If invalid key or quota exceeded, throw immediately rather than looping
-          if (errMsg.toLowerCase().includes('api key not valid') || res.status === 400 && errMsg.includes('API_KEY_INVALID')) {
+          // If invalid key, throw immediately
+          if (errMsg.toLowerCase().includes('api key not valid') || (res.status === 400 && errMsg.includes('API_KEY_INVALID'))) {
             throw new Error('API 키가 올바르지 않습니다. Google AI Studio에서 새로 복사해 주세요.');
           }
-          if (res.status === 429 || errMsg.toLowerCase().includes('quota')) {
-            throw new Error('API 사용량 초과(429 Quota Exceeded) 상태입니다. 잠시 후 다시 시도해 주세요.');
+          // If 429 quota on this specific model, keep trying other models (quotas differ per model)
+          if (res.status === 429 || errMsg.toLowerCase().includes('quota') || errMsg.toLowerCase().includes('resource_exhausted')) {
+            lastError = new Error('해당 키의 API 사용량(Quota)이 일시 제한되었습니다 (429 Quota Exceeded).');
+            continue;
           }
 
           // If 404 or not found, continue to next candidate
@@ -2956,10 +2958,10 @@
           throw lastError;
         } catch (e) {
           lastError = e;
-          if (e.message && (e.message.includes('API 키가 올바르지 않습니다') || e.message.includes('사용량 초과'))) {
+          if (e.message && e.message.includes('API 키가 올바르지 않습니다')) {
             throw e;
           }
-          if (e.message && (e.message.toLowerCase().includes('not found') || e.message.toLowerCase().includes('not supported'))) {
+          if (e.message && (e.message.toLowerCase().includes('not found') || e.message.toLowerCase().includes('not supported') || e.message.includes('Quota Exceeded'))) {
             continue;
           }
           throw e;
@@ -2999,10 +3001,12 @@
           statusEl.textContent = "🔴 연결 실패";
           statusEl.className = "text-[9px] px-2 py-0.5 rounded-full font-black bg-rose-500/20 text-rose-600";
         }
-        alert(`❌ Gemini AI 연결 실패:
+        alert(`❌ Gemini AI 연결 안내:
 ${err.message}
 
-Google AI Studio (https://aistudio.google.com/)에서 새 API 키를 발급받아 입력해 주세요!`);
+💡 해결 방법:
+1. [일시적 분당 제한(RPM)]: 약 30초~1분 후 다시 [연결 테스트]를 누르면 정상 작동합니다.
+2. [새 쿼터 발급]: Google AI Studio (https://aistudio.google.com/)에서 'Create API key' 누를 때 [Create API key in NEW project]를 선택해 새 키를 발급받으면 100% 무료 쿼터로 즉시 사용 가능합니다!`);
       }
     }
 
