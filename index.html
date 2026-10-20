@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Gemini Fit - MomoTalk & Health</title>
+  <title>Gemini Fit - 제미니톡 & 트레이닝</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -39,6 +39,8 @@
       font-family: 'Pretendard', -apple-system, sans-serif;
       -webkit-tap-highlight-color: transparent;
       padding-bottom: env(safe-area-inset-bottom, 24px);
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
     }
 
     .app-card {
@@ -119,7 +121,7 @@
 <body class="min-h-screen selection:bg-blue-500 selection:text-white">
 
   <!-- Mobile Container (Max width 460px) -->
-  <div class="max-w-md mx-auto min-h-screen flex flex-col justify-between p-3.5 sm:p-4 pb-28 relative">
+  <div class="max-w-md mx-auto min-h-screen flex flex-col justify-between p-3.5 sm:p-4 pb-44 relative">
 
     <!-- Wednesday InBody Day Special Banner -->
     <div id="inbodyDayBanner" class="hidden mb-3 p-3 rounded-2xl bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-amber-500/20 border border-amber-500/40 flex items-center justify-between shadow-sm animate-pulse">
@@ -138,7 +140,7 @@
       </label>
     </div>
 
-    <!-- 1. Header (MomoTalk Style Bar) -->
+    <!-- 1. Header (GeminiTalk Bar) -->
     <header class="flex items-center justify-between pt-1 pb-3">
       <div class="flex items-center gap-2.5">
         <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-white text-base font-black shadow-sm">
@@ -146,10 +148,10 @@
         </div>
         <div>
           <h1 class="text-sm font-black text-white flex items-center gap-1.5">
-            <span>Gemini Fit</span>
+            <span>GeminiTalk</span>
             <span id="dayBadge" class="text-[10px] text-sky-400 font-bold bg-sky-500/10 px-1.5 py-0.2 rounded border border-sky-500/20">화요일 피드</span>
           </h1>
-          <p id="inbodyDdayText" class="text-[11px] text-slate-400">다음 인바디 데이: 내일(수요일)!</p>
+          <p id="inbodyDdayText" class="text-[11px] text-slate-400">제미니 트레이너와의 대화</p>
         </div>
       </div>
 
@@ -190,10 +192,10 @@
             </div>
             <div>
               <div class="flex items-center gap-1.5">
-                <span class="text-xs font-black text-white">gemini_coach</span>
-                <span class="text-[9px] bg-sky-500/20 text-sky-300 font-bold px-1.5 py-0.2 rounded-full">OFFICIAL</span>
+                <span class="text-xs font-black text-white">gemini_trainer</span>
+                <span class="text-[9px] bg-sky-500/20 text-sky-300 font-bold px-1.5 py-0.2 rounded-full">TRAINER</span>
               </div>
-              <p id="instaLocation" class="text-[10px] text-slate-400">피트니스 라운지 & 홈카페</p>
+              <p id="instaLocation" class="text-[10px] text-slate-400">제미니 트레이너와의 대화</p>
             </div>
           </div>
 
@@ -221,8 +223,8 @@
         </div>
       </div>
 
-      <!-- MomoTalk Messenger Log Screen (블루아카 모모톡 감성) -->
-      <div class="app-card p-3 min-h-[220px] max-h-[280px] overflow-y-auto space-y-3 bg-[#121622] border-[#22293d]" id="chatContainer">
+      <!-- GeminiTalk Messenger Log Screen -->
+      <div class="app-card p-3 min-h-[160px] max-h-[200px] overflow-y-auto space-y-2.5 bg-[#121622] border-[#22293d]" id="chatContainer">
         <div class="flex items-start gap-2.5">
           <div class="w-8 h-8 rounded-full overflow-hidden ring-1 ring-sky-400/30 bg-black shrink-0">
             <img src="./trainer_gemini.png" class="w-full h-full object-cover object-top">
@@ -236,25 +238,25 @@
         </div>
       </div>
 
-      <!-- MomoTalk Response Choice Box (미연시 선택지 UI: | 답장하기) -->
-      <div class="app-card p-3 bg-[#151b2a] border-sky-500/30 space-y-2">
+      <!-- GeminiTalk Response Choice Box (| 답장하기) -->
+      <div class="app-card p-3 bg-[#151b2a] border-sky-500/30 space-y-2 mb-2">
         <div class="text-[11px] font-bold text-sky-400 flex items-center justify-between">
           <span>| 답장하기</span>
           <span class="text-[10px] text-slate-500 font-normal">선택지를 터치해 대화하세요</span>
         </div>
 
-        <div id="choicesContainer" class="space-y-1.5">
+        <div id="choicesContainer" class="space-y-1.5 max-h-[220px] overflow-y-auto pr-0.5">
           <button onclick="chooseOption(1)" class="momo-choice-btn">
             <span>1. 닭가슴살이랑 쉐이크로 단백질 든든하게 채웠어!</span>
-            <span class="text-xs text-sky-400">➔</span>
+            <span class="text-xs text-sky-400 shrink-0 ml-1">➔</span>
           </button>
           <button onclick="chooseOption(2)" class="momo-choice-btn">
             <span>2. 사실... 라면 끓여먹으려다 제미니 생각나서 참았어.</span>
-            <span class="text-xs text-sky-400">➔</span>
+            <span class="text-xs text-sky-400 shrink-0 ml-1">➔</span>
           </button>
           <button onclick="chooseOption(3)" class="momo-choice-btn">
             <span>3. 제미니한테 혼나는 게 좋아서 일부러 굶는 중인데?</span>
-            <span class="text-xs text-pink-400">➔</span>
+            <span class="text-xs text-pink-400 shrink-0 ml-1">➔</span>
           </button>
         </div>
       </div>
@@ -730,7 +732,7 @@
       container.innerHTML = choices.map((c, idx) => `
         <button onclick="chooseCustomOption('${c}')" class="momo-choice-btn">
           <span>${idx + 1}. ${c}</span>
-          <span class="text-xs text-sky-400">➔</span>
+          <span class="text-xs text-sky-400 shrink-0 ml-1">➔</span>
         </button>
       `).join('');
     }
@@ -1002,10 +1004,10 @@
       const quote = "흥! 식단이랑 운동 잘 챙기고 있는지 이 몸이 지켜보고 있어!";
 
       const payload = {
-        username: "Gemini MomoTalk Coach",
+        username: "Gemini Trainer",
         embeds: [{
-          title: "💌 [Gemini MomoTalk] 데일리 브리핑 보고서",
-          description: `**제미니 코치 (인연 Lv.${state.bondRank}):**\n> "${quote}"`,
+          title: "💌 [GeminiTalk] 데일리 브리핑 보고서",
+          description: `**제미니 트레이너 (인연 Lv.${state.bondRank}):**\n> "${quote}"`,
           color: 0x4d88ff,
           fields: [
             { name: "⚖️ 체중 / 체지방", value: `• 체중: **${state.weight} kg**\n• 체지방률: **${state.fat} %**`, inline: true },
