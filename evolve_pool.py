@@ -30,7 +30,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 BASE_DIR = Path(r"d:\OneDrive\WorkSpace\02 AI 작업물\Health")
-POOL_DIR = BASE_DIR / "ref_pool"
+POOL_DIR = BASE_DIR / "image" / "90 repository"
 KOTONE_POOL = POOL_DIR / "kotone"
 MIO_POOL = POOL_DIR / "mio"
 GEMINI_POOL = POOL_DIR / "gemini"
@@ -73,7 +73,8 @@ BASE_STYLE_PROMPT = {
         "soft textured bangs parted over forehead, delicate ahoge cowlick curl on top of head, "
         "large expressive round golden-amber eyes full of warmth and vitality, radiant infectious smile, "
         "tomboyish yet incredibly charming idol aura, slender toned athletic curves, masterpiece 2D bishoujo game event CG, aspect ratio 9:16."
-    ),
+    ),
+
     "gemini": (
         "CRITICAL STYLE RULE: Draw strictly in the Gakuen Idolmaster (학원 아이돌마스터) high-end mobile game "
         "illustration art style of the attached style reference images — ultra-delicate fine tinted lineart, "
@@ -139,8 +140,10 @@ def pick_evolution_refs(trainer: str) -> list[Path]:
         # Attach Gakumas style survivor for mobile game illustration rendering
         if style_survivors:
             chosen.append(style_survivors[0])
-        return chosen
-
+        return chosen
+
+
+
     # trainer == "gemini" (신규 흑발 롱헤어 제미니)
     gem_survivors = list_survivors(GEMINI_POOL)
     gem_features = list_survivors(REF_GEMINI_FEATURE_POOL)
