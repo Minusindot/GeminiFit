@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-20T15:57:46.292Z",
+  "updatedAt": "2026-10-20T15:57:54.786Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
   "bondRank": 3,
-  "bondExp": 30,
+  "bondExp": 45,
   "activeTrainer": "mio",
   "activeMode": "mio",
-  "currentSituation": "ev1",
+  "currentSituation": "ev5",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,16 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "아야! 어딜 만지는 거야, 바보야! 💢"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "체중 65.7kg, 체지방 21.5% 확인 완료! 목표 52kg까지 끝까지 방심 금물이야!"
-    },
     {
       "sender": "mio",
       "name": "미오",
@@ -112,6 +102,15 @@
       "sender": "mio",
       "name": "미오",
       "text": "언제 어디서든 미오는 프로듀서 편인 거 알지? 하이파이브 딱 치고 에너지 끌어올리자구! 🖐️"
+    },
+    {
+      "sender": "user",
+      "text": "그래 잘자"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "오늘 하루 완벽 클리어 나이스! 푹 자고 내일 아침 트랙에서 환한 얼굴로 다시 만나자! 🌙🌟"
     }
   ]
 }
