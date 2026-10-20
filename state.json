@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-20T16:57:05.751Z",
+  "updatedAt": "2026-10-20T16:57:09.703Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
   "bondRank": 3,
-  "bondExp": 75,
+  "bondExp": 90,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev2",
+  "currentSituation": "ev1",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,16 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "나이키런 7km 완주 대박! 벚꽃 산책로 페이스 완전 좋았어 프로듀서~ 최고야! 🏃‍♀️🌸"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "메~롱! 그렇게 쳐다본다고 내가 봐줄 줄 알아? 오늘 17시 단식 칼같이 지켜! 😈"
-    },
     {
       "sender": "gemini",
       "name": "제미니",
@@ -115,6 +105,15 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "그립 꽉 쥐지 않고 달렸지? 팔꿈치 보호하면서 체지방 태우는 데는 러닝만한 게 없어. 수고했어!"
+    },
+    {
+      "sender": "user",
+      "text": "흠?"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "흥, 바보 프로듀서! 네가 무슨 말 하는지 다 듣고 있거든? 목표 52kg까지 나만 믿고 따라와! 🐾"
     }
   ]
 }
