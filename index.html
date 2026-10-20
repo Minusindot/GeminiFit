@@ -285,27 +285,30 @@
             </button>
           </div>
 
-          <!-- Row 2: Stage Sub-actions (상황 체인지 / 캐릭터 랜덤 / 전체보기) & Compact Bond Badge -->
-          <div class="flex items-center justify-between px-0.5">
-            <div class="flex items-center gap-1">
-              <button onclick="randomizeSituation()" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[11px] font-bold text-slate-700 dark:text-slate-200 hover:border-pink-400 transition-all shadow-xs" title="현재 캐릭터의 상황만 랜덤 전환">
-                <span>상황 체인지</span>
+          <!-- Row 2: Stage Sub-actions (랜덤 -> 체인지 -> 도감 -> SD) & Bond Badge -->
+          <div class="flex items-center justify-between gap-1 px-0.5 overflow-x-auto clean-scroll py-0.5">
+            <div class="flex items-center gap-1 shrink-0">
+              <button onclick="randomizeHeroineAndSituation()" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[11px] font-bold text-slate-700 dark:text-slate-200 hover:border-purple-400 transition-all shadow-xs whitespace-nowrap shrink-0 flex items-center gap-1" title="캐릭터와 상황 모두 랜덤 전환">
+                <span>🔀</span>
+                <span>랜덤</span>
               </button>
-              <button onclick="randomizeHeroineAndSituation()" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[11px] font-bold text-slate-700 dark:text-slate-200 hover:border-purple-400 transition-all shadow-xs" title="캐릭터와 상황 모두 랜덤 전환">
-                <span>캐릭터 랜덤</span>
+              <button onclick="randomizeSituation()" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[11px] font-bold text-slate-700 dark:text-slate-200 hover:border-pink-400 transition-all shadow-xs whitespace-nowrap shrink-0 flex items-center gap-1" title="현재 캐릭터의 상황만 랜덤 전환">
+                <span>🔄</span>
+                <span>체인지</span>
               </button>
-              <button onclick="toggleFullCgView()" id="btnToggleCrop" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[11px] font-bold text-slate-700 dark:text-slate-200 hover:border-sky-400 transition-all shadow-xs" title="전체보기 / 카드뷰">
-                <span>전체보기</span>
+              <button onclick="openGalleryModal()" id="btnToggleCrop" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[11px] font-bold text-slate-700 dark:text-slate-200 hover:border-sky-400 transition-all shadow-xs whitespace-nowrap shrink-0 flex items-center gap-1" title="90종 도감 전체보기">
+                <span>📖</span>
+                <span>도감</span>
               </button>
-              <button onclick="toggleSdMode()" id="btnToggleSd" class="px-2 py-1 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 border border-pink-400/40 text-[11px] font-bold text-pink-600 dark:text-pink-300 transition-all shadow-xs" title="모리키노코 SD 치비 모드 전환">
+              <button onclick="toggleSdMode()" id="btnToggleSd" class="px-2 py-1 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 border border-pink-400/40 text-[11px] font-bold text-pink-600 dark:text-pink-300 transition-all shadow-xs whitespace-nowrap shrink-0" title="모리키노코 SD 치비 모드 전환">
                 <span>🐣 SD</span>
               </button>
             </div>
 
             <!-- Bond Rank Pill -->
-            <div class="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-pink-50 dark:bg-pink-950/30 border border-pink-200/60 dark:border-pink-800/40 shrink-0">
+            <div class="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-pink-50 dark:bg-pink-950/30 border border-pink-200/60 dark:border-pink-800/40 whitespace-nowrap shrink-0">
               <span id="bondRankBadge" class="text-[11px] font-black text-pink-600 dark:text-pink-300">인연 Lv.1 ❤️</span>
-              <div class="w-10 sm:w-12 h-1.5 bg-pink-200/60 dark:bg-slate-700 rounded-full overflow-hidden">
+              <div class="w-8 sm:w-12 h-1.5 bg-pink-200/60 dark:bg-slate-700 rounded-full overflow-hidden">
                 <div id="bondExpBar" class="h-full bg-gradient-to-r from-pink-500 to-rose-500 rounded-full transition-all duration-300" style="width: 75%"></div>
               </div>
             </div>
@@ -336,44 +339,30 @@
         </div>
       </div>
 
-      <!-- Dialogue & Training Stream Window -->
+      <!-- Dialogue & Training Stream Window (Clean AI Messenger) -->
       <div class="game-card overflow-hidden">
-        <!-- Sub-Header with Topic Switcher -->
-        <div class="px-3 py-2 bg-slate-50/90 dark:bg-slate-800/70 border-b border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-1 overflow-x-auto clean-scroll">
-          <div class="flex items-center gap-1 shrink-0">
-            <span class="text-[10px] font-extrabold text-slate-400 mr-1">주제:</span>
-            <button onclick="loadTopic('diet')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-sky-400">🥗 식단/단식</button>
-            <button onclick="loadTopic('tea')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-emerald-400">🍵 말차/카페</button>
-            <button onclick="loadTopic('workout')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-amber-400">🏃 러닝/재활</button>
-            <button onclick="loadTopic('gym')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-indigo-400">🏋️ 헬스 풀코스</button>
-            <button onclick="loadTopic('date')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-pink-400">💘 미연시 데이트</button>
+        <!-- Clean Chat Header -->
+        <div class="px-3.5 py-2 bg-slate-50/90 dark:bg-slate-800/70 border-b border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between">
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs">💬</span>
+            <span class="text-[11px] font-black text-slate-700 dark:text-slate-200">트레이너 실시간 1:1 톡</span>
           </div>
-          <button onclick="clearChatLog()" class="text-[10px] text-slate-400 hover:text-rose-400 shrink-0 px-1" title="대화 기록 정리">지우기</button>
+          <button onclick="clearChatLog()" class="text-[10px] text-slate-400 hover:text-rose-400 font-bold px-1.5 py-0.5 rounded hover:bg-slate-200/60 dark:hover:bg-slate-700 transition-all" title="대화 기록 정리">
+            대화 지우기
+          </button>
         </div>
 
-        <!-- Chat Stream -->
-        <div class="p-3.5 min-h-[300px] max-h-[360px] overflow-y-auto clean-scroll space-y-3 bg-[var(--chat-bg)]" id="chatContainer">
+        <!-- Chat Stream (Expanded Roomy Height) -->
+        <div class="p-3.5 min-h-[340px] max-h-[460px] overflow-y-auto clean-scroll space-y-3 bg-[var(--chat-bg)]" id="chatContainer">
           <!-- Dynamically populated -->
         </div>
 
         <!-- Direct Message Input Bar -->
         <div class="px-3 py-2 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center gap-2">
           <input type="text" id="directChatInput" placeholder="메시지 보내기..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-sky-400" onkeydown="if(event.key==='Enter') sendDirectMessage()">
-          <button onclick="sendDirectMessage()" class="px-3 py-1.5 rounded-xl bg-[#4a89dc] hover:bg-sky-500 text-white text-xs font-extrabold shadow-sm shrink-0">
+          <button onclick="sendDirectMessage()" class="px-3.5 py-1.5 rounded-xl bg-[#4a89dc] hover:bg-sky-500 text-white text-xs font-extrabold shadow-sm shrink-0 transition-all">
             전송
           </button>
-        </div>
-      </div>
-
-      <!-- Quick Reply Box (| 답장하기) -->
-      <div class="p-3 rounded-2xl bg-[#eef5ff] dark:bg-[#192236] border border-[#cfe0fc] dark:border-sky-500/30 space-y-2 shadow-sm">
-        <div class="text-[11px] font-extrabold text-[#3b76c4] dark:text-sky-400 flex items-center justify-between">
-          <span class="flex items-center gap-1"><span class="text-sky-500 font-black">|</span> 답장하기</span>
-          <span class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">선택지를 터치해 미연시 이벤트와 대화를 진행하세요</span>
-        </div>
-
-        <div id="choicesContainer" class="space-y-1.5 max-h-[210px] overflow-y-auto clean-scroll pr-0.5">
-          <!-- Populated dynamically -->
         </div>
       </div>
 
@@ -570,12 +559,16 @@
               <span class="text-[9px] text-sky-500 font-bold block">기본 20회×4세트 · 레그레이즈 50회×1세트 · 크런치 50회×2세트</span>
             </div>
           </div>
-          <div class="flex items-center gap-1.5">
-            <button onclick="openWorkoutGraphModal()" class="px-2 py-1 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-600 dark:text-sky-300 border border-sky-400/30 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all" title="운동 세트 & 횟수 비교 그래프">
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="openWorkoutGraphModal()" class="px-2 py-1 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-600 dark:text-sky-300 border border-sky-400/30 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all whitespace-nowrap shrink-0" title="운동 세트 & 횟수 비교 그래프">
               <span>📊</span>
-              <span>세트 비교 그래프</span>
+              <span>세트 그래프</span>
             </button>
-            <span id="gymProgressBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 font-black border border-sky-400/30">
+            <button onclick="syncGymStateCloud()" id="btnGymCloudSync" class="p-1 px-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-400/30 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all whitespace-nowrap shrink-0" title="PC/모바일 운동 기록 즉시 클라우드 동기화">
+              <span>🔄</span>
+              <span>동기화</span>
+            </button>
+            <span id="gymProgressBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 font-black border border-sky-400/30 whitespace-nowrap shrink-0">
               0 / 5 완료
             </span>
           </div>
@@ -584,12 +577,12 @@
         <!-- 1) Upper 1 (20회 x 4세트) -->
         <div class="p-2.5 rounded-xl sub-box space-y-2">
           <div class="flex items-center justify-between">
-            <div class="flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
-              <span class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-wide">상체 1</span>
-              <input type="text" id="gymUpper1Name" value="체스트 프레스" class="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-100 border-b border-dashed border-slate-300 dark:border-slate-600 focus:outline-none focus:border-sky-500 px-1 py-0.5" onchange="saveGymRoutineConfig()">
+            <div class="flex items-center gap-1.5 flex-1 min-w-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0"></span>
+              <span class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-wide whitespace-nowrap shrink-0">상체 1</span>
+              <input type="text" id="gymUpper1Name" value="체스트 프레스" class="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-100 border-b border-dashed border-slate-300 dark:border-slate-600 focus:outline-none focus:border-sky-500 px-1 py-0.5 flex-1 min-w-[70px] truncate" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
             </div>
-            <input type="text" id="gymUpper1Weight" value="40kg × 20회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-24" onchange="saveGymRoutineConfig()">
+            <input type="text" id="gymUpper1Weight" value="40kg × 20회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-20 shrink-0" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
           </div>
           <div class="grid grid-cols-4 gap-1.5">
             <button onclick="toggleGymSet('upper1', 0)" id="gymSet_upper1_0" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트(20회)</button>
@@ -602,12 +595,12 @@
         <!-- 2) Upper 2 (20회 x 4세트) -->
         <div class="p-2.5 rounded-xl sub-box space-y-2">
           <div class="flex items-center justify-between">
-            <div class="flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
-              <span class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-wide">상체 2</span>
-              <input type="text" id="gymUpper2Name" value="시티드 케이블 로우" class="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-100 border-b border-dashed border-slate-300 dark:border-slate-600 focus:outline-none focus:border-sky-500 px-1 py-0.5" onchange="saveGymRoutineConfig()">
+            <div class="flex items-center gap-1.5 flex-1 min-w-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0"></span>
+              <span class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-wide whitespace-nowrap shrink-0">상체 2</span>
+              <input type="text" id="gymUpper2Name" value="시티드 케이블 로우" class="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-100 border-b border-dashed border-slate-300 dark:border-slate-600 focus:outline-none focus:border-sky-500 px-1 py-0.5 flex-1 min-w-[70px] truncate" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
             </div>
-            <input type="text" id="gymUpper2Weight" value="35kg × 20회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-24" onchange="saveGymRoutineConfig()">
+            <input type="text" id="gymUpper2Weight" value="35kg × 20회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-20 shrink-0" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
           </div>
           <div class="grid grid-cols-4 gap-1.5">
             <button onclick="toggleGymSet('upper2', 0)" id="gymSet_upper2_0" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트(20회)</button>
@@ -620,12 +613,12 @@
         <!-- 3) Lower 1 (20회 x 4세트) -->
         <div class="p-2.5 rounded-xl sub-box space-y-2">
           <div class="flex items-center justify-between">
-            <div class="flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-              <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">하체 1</span>
-              <input type="text" id="gymLowerName" value="레그 프레스" class="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-100 border-b border-dashed border-slate-300 dark:border-slate-600 focus:outline-none focus:border-emerald-500 px-1 py-0.5" onchange="saveGymRoutineConfig()">
+            <div class="flex items-center gap-1.5 flex-1 min-w-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+              <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-wide whitespace-nowrap shrink-0">하체 1</span>
+              <input type="text" id="gymLowerName" value="레그 프레스" class="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-100 border-b border-dashed border-slate-300 dark:border-slate-600 focus:outline-none focus:border-emerald-500 px-1 py-0.5 flex-1 min-w-[70px] truncate" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
             </div>
-            <input type="text" id="gymLowerWeight" value="80kg × 20회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-24" onchange="saveGymRoutineConfig()">
+            <input type="text" id="gymLowerWeight" value="80kg × 20회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-20 shrink-0" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
           </div>
           <div class="grid grid-cols-4 gap-1.5">
             <button onclick="toggleGymSet('lower', 0)" id="gymSet_lower_0" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트(20회)</button>
@@ -2750,6 +2743,7 @@
       currentTopic = topicKey;
       const list = TOPIC_CHOICES[topicKey] || TOPIC_CHOICES.diet;
       const container = document.getElementById('choicesContainer');
+      if (!container) return;
       container.innerHTML = list.map((item, idx) => `
         <button onclick="selectTopicOption('${topicKey}', ${idx})" class="momo-choice-btn">
           <span>${idx + 1}. ${item.text}</span>
@@ -3901,10 +3895,38 @@
       playBeep(980, 0.25);
     }
 
+    async function syncGymStateCloud() {
+      const btn = document.getElementById('btnGymCloudSync');
+      if (btn) btn.innerHTML = '<span>⏳</span><span>동기화중</span>';
+      saveGymRoutineConfig(false);
+      saveState(true);
+      await pushStateToGitHub(true);
+      if (btn) {
+        btn.innerHTML = '<span>✅</span><span>완료</span>';
+        setTimeout(() => {
+          btn.innerHTML = '<span>🔄</span><span>동기화</span>';
+        }, 1800);
+      }
+    }
+
     function renderGymUI() {
       initGymRoutine();
       const gr = state.gymRoutine;
       let completedExCount = 0;
+
+      // Restore custom exercise names & weights
+      const u1 = document.getElementById('gymUpper1Name');
+      const u1w = document.getElementById('gymUpper1Weight');
+      const u2 = document.getElementById('gymUpper2Name');
+      const u2w = document.getElementById('gymUpper2Weight');
+      const l = document.getElementById('gymLowerName');
+      const lw = document.getElementById('gymLowerWeight');
+      if (u1 && gr.upper1?.name) u1.value = gr.upper1.name;
+      if (u1w && gr.upper1?.weight) u1w.value = gr.upper1.weight;
+      if (u2 && gr.upper2?.name) u2.value = gr.upper2.name;
+      if (u2w && gr.upper2?.weight) u2w.value = gr.upper2.weight;
+      if (l && gr.lower?.name) l.value = gr.lower.name;
+      if (lw && gr.lower?.weight) lw.value = gr.lower.weight;
 
       // 1. Upper 1
       let u1Done = gr.upper1.sets.every(Boolean);
