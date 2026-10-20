@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T11:36:44.749Z",
+  "updatedAt": "2026-10-20T11:36:49.697Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
@@ -7,7 +7,7 @@
   "bondExp": 15,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev4",
+  "currentSituation": "ev3",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,10 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "user",
-      "text": "📸 [17:00 저녁 식단 인증 사진]"
-    },
     {
       "sender": "mio",
       "name": "미오",
@@ -113,6 +109,11 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "냐앗?! 고, 고양이 귀는 갑자기 만지지 말라고 바보야! 😳🐾"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "따뜻한 루이보스티 마시면서 오늘 하루 식단 복기해 봐. 완벽했지?"
     }
   ]
 }
