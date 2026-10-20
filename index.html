@@ -145,7 +145,7 @@
         <div>
           <h1 class="text-sm font-black text-white flex items-center gap-1.5">
             <span>GeminiTalk</span>
-            <span class="text-[10px] text-amber-400 font-bold bg-amber-500/10 px-1.5 py-0.2 rounded border border-amber-500/20">DUAL COACH</span>
+            <span class="text-[10px] text-amber-400 font-bold bg-amber-500/10 px-1.5 py-0.2 rounded border border-amber-500/20">IDOL COACH</span>
           </h1>
           <p id="inbodyDdayText" class="text-[11px] text-slate-400">제미니 & 미오 트레이너와의 대화</p>
         </div>
@@ -153,7 +153,7 @@
 
       <div class="flex items-center gap-2">
         <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-app-card border border-sky-500/30 text-sky-400 text-xs font-bold flex items-center gap-1 cursor-pointer hover:bg-sky-500/10">
-          <span>📷 인바디 스캔</span>
+          <span id="inbodyScanBtnText">📷 인바디 스캔</span>
         </label>
         <input type="file" id="inbodyOcrInput" accept="image/*" class="hidden" onchange="handleInbodyScan(event)">
 
@@ -166,7 +166,7 @@
     <!-- 2. Interactive Navigation Tabs (MomoTalk / Today's Routine / Fasting & Health) -->
     <div class="flex rounded-2xl bg-[#141926] p-1 border border-[#232b3f] mb-3 text-xs font-semibold">
       <button onclick="switchMainTab('talk')" id="tabTalkBtn" class="nav-tab active flex-1 py-2 rounded-xl text-center transition-all">
-        💬 제미니톡 (더블 코칭)
+        💬 제미니톡
       </button>
       <button onclick="switchMainTab('health')" id="tabHealthBtn" class="nav-tab flex-1 py-2 rounded-xl text-center text-slate-400 transition-all">
         📊 루틴 & 식단 관리
@@ -174,54 +174,63 @@
     </div>
 
     <!-- ========================================================
-         VIEW A: MomoTalk & Dual Trainers Showcase
+         VIEW A: MomoTalk & Trainers Showcase
          ======================================================== -->
     <div id="viewTalk" class="space-y-3">
-      <!-- Dual Trainers Showcase Card (제미니 & 미오 나란히 등장!) -->
-      <div class="app-card overflow-hidden bg-gradient-to-b from-[#1c2438] via-[#161d2d] to-[#121622] border-sky-500/20 shadow-md">
-        <!-- Dual Header with Bond Status -->
+      <!-- Trainer Showcase Card -->
+      <div id="trainerCardContainer" class="app-card overflow-hidden bg-gradient-to-b from-[#1c2438] via-[#161d2d] to-[#121622] border-sky-500/20 shadow-md">
+        <!-- Header with Trainer Tabs & Situation Pill -->
         <div class="p-3 border-b border-[#252e46] flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <!-- Gemini Avatar Chip -->
-            <button onclick="switchTrainerFocus('gemini')" id="btnFocusGemini" class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs font-bold transition-all">
+          <div class="flex items-center gap-1.5">
+            <!-- Gemini Button -->
+            <button onclick="setTrainerMode('gemini')" id="btnFocusGemini" class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs font-bold transition-all">
               <span class="w-2 h-2 rounded-full bg-pink-400"></span>
-              <span>제미니 (츤데레)</span>
+              <span>제미니</span>
             </button>
 
-            <!-- Mio Avatar Chip -->
-            <button onclick="switchTrainerFocus('mio')" id="btnFocusMio" class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-amber-400/50 transition-all">
+            <!-- Mio Button -->
+            <button onclick="setTrainerMode('mio')" id="btnFocusMio" class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-amber-400/50 transition-all">
               <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-              <span>미오 (치어리더)</span>
+              <span>미오</span>
+            </button>
+
+            <!-- Joint Event Button -->
+            <button onclick="setTrainerMode('dual')" id="btnFocusDual" class="flex items-center gap-1.5 px-2 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-[11px] font-bold hover:border-amber-400/50 transition-all" title="특수 합동 이벤트">
+              <span>⭐ 합동</span>
             </button>
           </div>
 
-          <div class="text-right">
+          <div class="flex items-center gap-1.5">
+            <span id="situationTag" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-300 border border-pink-500/20">✨ 데일리</span>
             <span id="bondRankBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/30">인연 Lv.1 ❤️</span>
           </div>
         </div>
 
-        <!-- Large Dual Illustration Stage (제미니 & 미오) -->
-        <div class="relative w-full h-56 bg-black/60 overflow-hidden flex items-end justify-around px-2 pt-2">
-          <!-- Gemini Image (Left) -->
-          <div id="stageGemini" class="w-44 h-full relative shrink-0 cursor-pointer group transition-all duration-300" onclick="pokeTrainer('gemini')">
-            <img id="imgGemini" src="./trainer_gemini.png" alt="Gemini" class="w-full h-full object-cover object-top filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)] group-hover:scale-105 transition-transform" onerror="this.src='./trainer_gemini.png'">
-            <div class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded-lg border border-pink-500/30 text-[10px] font-bold text-pink-300">
-              제미니 코치
+        <!-- Grand Showcase Stage: 1 Trainer prominently (or Joint Event) -->
+        <div class="relative w-full h-72 bg-gradient-to-b from-black/80 via-black/50 to-black/95 overflow-hidden cursor-pointer group" onclick="pokeCurrentTrainer()">
+          
+          <!-- Single Trainer View (Default: Gemini or Mio) -->
+          <div id="singleStageView" class="w-full h-full relative transition-all duration-300">
+            <img id="mainTrainerImg" src="./trainer_gemini.png" alt="Trainer" class="w-full h-full object-cover object-top filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] group-hover:scale-102 transition-transform duration-300" onerror="this.src='./trainer_gemini.png'">
+            <div id="mainTrainerTag" class="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-pink-500/30 text-[11px] font-bold text-pink-300 flex items-center gap-1.5 shadow-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse"></span>
+              <span id="mainTrainerTagName">제미니 코치</span>
             </div>
           </div>
 
-          <!-- Mio Image (Right) -->
-          <div id="stageMio" class="w-36 h-full relative shrink-0 cursor-pointer group transition-all duration-300 opacity-90 hover:opacity-100" onclick="pokeTrainer('mio')">
-            <img id="imgMio" src="./trainer_mio.png" alt="Mio" class="w-full h-full object-cover object-top filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)] group-hover:scale-105 transition-transform" onerror="this.src='./trainer_mio.png'">
-            <div class="absolute bottom-2 right-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded-lg border border-amber-500/30 text-[10px] font-bold text-amber-300">
-              미오 파트너
+          <!-- Dual Event Stage View (Only visible on Wednesday InBody or Dual Event) -->
+          <div id="dualStageView" class="w-full h-full relative hidden transition-all duration-300">
+            <img id="dualStageImg" src="./dual_inbody.png" alt="Dual Event" class="w-full h-full object-cover object-top filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]" onerror="this.src='./trainer_wednesday.png'">
+            <div class="absolute top-2.5 left-2.5 bg-gradient-to-r from-amber-500/30 to-pink-500/30 backdrop-blur-md px-2.5 py-1 rounded-xl border border-amber-400/40 text-[11px] font-bold text-amber-200 flex items-center gap-1.5 shadow-md">
+              <span>⭐</span>
+              <span>제미니 & 미오 합동 스페셜 코칭</span>
             </div>
           </div>
 
-          <!-- Dual Caption Bar -->
-          <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent p-2.5 pt-6 text-center">
+          <!-- Bottom Dialogue Caption Bar -->
+          <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/75 to-transparent p-3 pt-8 text-center">
             <p id="trainerDialogue" class="text-xs font-semibold text-slate-100 leading-snug">
-              "제미니: 프로듀서! 오늘 17:7 단식 제대로 지킬 거지? | 미오: 힘내힘내~!"
+              "제미니: 프로듀서, 슬림핏 52kg 될 때까지 긴장 늦추지 마!"
             </p>
           </div>
         </div>
@@ -493,6 +502,63 @@
       </div>
     </div>
 
+    <!-- OCR Result Modal (삼성헬스 / 인바디 스캔 확인) -->
+    <div id="ocrResultModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+      <div class="app-card max-w-sm w-full p-5 space-y-4 border-sky-500/40 shadow-2xl">
+        <div class="flex justify-between items-center pb-2 border-b border-[#263148]">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🎯</span>
+            <div>
+              <h3 class="text-sm font-bold text-white">삼성헬스 / 인바디 스캔 결과</h3>
+              <p class="text-[10px] text-sky-400">인식된 수치를 확인하고 바로 반영하세요</p>
+            </div>
+          </div>
+          <button onclick="closeOcrModal()" class="text-slate-400 hover:text-white text-base">✕</button>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Weight Input Card -->
+          <div class="bg-[#121622] p-3 rounded-xl border border-[#232b3e]">
+            <label class="text-[11px] font-bold text-slate-400 flex justify-between">
+              <span>⚖️ 현재 체중 (kg)</span>
+              <span id="ocrWeightConfidence" class="text-[10px] text-emerald-400 font-bold">자동 인식</span>
+            </label>
+            <div class="flex items-center gap-2 mt-1">
+              <input type="number" id="ocrWeightInput" step="0.1" class="w-full bg-[#1a2133] border border-sky-500/30 rounded-lg px-3 py-2 text-xl font-bold font-mono text-white focus:outline-none focus:border-sky-400">
+              <span class="text-sm font-bold text-slate-300">kg</span>
+            </div>
+          </div>
+
+          <!-- Body Fat Input Card -->
+          <div class="bg-[#121622] p-3 rounded-xl border border-[#232b3e]">
+            <label class="text-[11px] font-bold text-slate-400 flex justify-between">
+              <span>💧 체지방률 (%)</span>
+              <span id="ocrFatConfidence" class="text-[10px] text-purple-400 font-bold">선택 사항</span>
+            </label>
+            <div class="flex items-center gap-2 mt-1">
+              <input type="number" id="ocrFatInput" step="0.1" class="w-full bg-[#1a2133] border border-purple-500/30 rounded-lg px-3 py-2 text-xl font-bold font-mono text-white focus:outline-none focus:border-purple-400">
+              <span class="text-sm font-bold text-slate-300">%</span>
+            </div>
+          </div>
+
+          <!-- Raw text accordion -->
+          <details class="text-[11px] text-slate-400 bg-black/40 p-2.5 rounded-xl border border-slate-800">
+            <summary class="cursor-pointer font-semibold text-slate-300 hover:text-sky-300">🔍 OCR 인식 텍스트 원문 보기</summary>
+            <pre id="ocrRawText" class="mt-2 text-[10px] text-slate-400 whitespace-pre-wrap max-h-28 overflow-y-auto font-mono bg-black/60 p-2 rounded"></pre>
+          </details>
+        </div>
+
+        <div class="flex gap-2 pt-1">
+          <button onclick="closeOcrModal()" class="flex-1 py-2.5 rounded-xl bg-[#20273c] text-slate-300 text-xs font-bold hover:bg-slate-700">
+            취소
+          </button>
+          <button onclick="applyOcrResult()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-xs font-bold shadow-md hover:from-sky-400 hover:to-indigo-500">
+            ✅ 대시보드 반영
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
@@ -592,28 +658,99 @@
       }
     }
 
-    function switchTrainerFocus(trainer) {
-      state.activeTrainer = trainer;
+    const SITUATIONS = {
+      gemini: {
+        idle: { img: './trainer_gemini.png', tag: '✨ 일상 코칭', text: '프로듀서, 슬림핏 52kg 될 때까지 긴장 늦추지 마!' },
+        morning: { img: './gemini_morning.png', tag: '☀️ 모닝 스트레칭', text: '공복 유산소 전 시원한 물 한 잔! 오늘 10시 첫 식사 전까지 지방 불태우자.' },
+        tea: { img: './trainer_tea.png', tag: '🍵 홈카페 말차 타임', text: '다기로 정성껏 격불한 말차야. 카테킨 성분이 지방 연소를 돕는 거 알지?' },
+        cafe: { img: './trainer_cafe.png', tag: '☕ 테라스 에스프레소', text: '카페인 부스팅 완료! 오늘도 활기차게 식단 지켜보자구.' },
+        workout: { img: './gemini_workout.png', tag: '💪 코어 & 엘보 재활', text: '2kg 덤벨 익센트릭 컬이랑 14분 복근! 손아귀 힘 절대 주지 말고!' },
+        inbody: { img: './trainer_wednesday.png', tag: '📊 인바디 데이', text: '수요일 측정 완료! 골격근 지키고 체지방만 쏙 빠졌는지 볼까?' }
+      },
+      mio: {
+        idle: { img: './trainer_mio.png', tag: '✨ 파트너 미오', text: '에헤헤, 프로듀서! 오늘도 나랑 기운차게 하루를 시작해볼까? 🏃‍♀️' },
+        running: { img: './mio_running.png', tag: '🏃 야외 트랙 러닝', text: '5km 가뿐하게 완주! 나이키런 페이스 완벽했어! 하이파이브~ 🖐️' },
+        tea: { img: './trainer_mio.png', tag: '☕ 티 브레이크', text: '향긋한 차 한 잔으로 에너지 충전 완료! 다시 파이팅!' },
+        workout: { img: './trainer_mio.png', tag: '💪 파워 트레이닝', text: '복근 쥐어짜는 느낌 그대로! 프로듀서 진짜 대단해!' },
+        inbody: { img: './trainer_mio.png', tag: '📊 인바디 응원', text: '와아~ 체지방 내려간 거 보여? 프로듀서 노력은 배신하지 않는다구!' }
+      },
+      dual: {
+        inbody: { img: './dual_inbody.png', tag: '⭐ 합동 스페셜', text: '제미니 & 미오: 인바디 목표 52kg 달성을 향해 함께 달려가자! 💖' }
+      }
+    };
+
+    function setTrainerMode(mode, situation = null) {
+      state.activeMode = mode;
+      if (situation) state.currentSituation = situation;
+      if (mode === 'gemini' || mode === 'mio') state.activeTrainer = mode;
+
       const btnG = document.getElementById('btnFocusGemini');
       const btnM = document.getElementById('btnFocusMio');
-      const stG = document.getElementById('stageGemini');
-      const stM = document.getElementById('stageMio');
+      const btnD = document.getElementById('btnFocusDual');
+      const singleView = document.getElementById('singleStageView');
+      const dualView = document.getElementById('dualStageView');
+      const mainImg = document.getElementById('mainTrainerImg');
+      const mainTag = document.getElementById('mainTrainerTagName');
+      const sitTag = document.getElementById('situationTag');
+      const dialogue = document.getElementById('trainerDialogue');
 
-      if (trainer === 'gemini') {
-        btnG.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs font-bold transition-all";
-        btnM.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-amber-400/50 transition-all";
-        stG.style.transform = "scale(1.05)";
-        stM.style.transform = "scale(0.95)";
-        document.getElementById('trainerDialogue').textContent = `"제미니: 프로듀서, 슬림핏 52kg 될 때까지 긴장 늦추지 마!"`;
+      if (mode === 'dual') {
+        if (btnD) btnD.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-amber-500/30 border border-amber-400 text-amber-200 text-xs font-bold shadow-sm transition-all";
+        if (btnG) btnG.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-pink-400/50 transition-all";
+        if (btnM) btnM.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-amber-400/50 transition-all";
+
+        if (singleView) singleView.classList.add('hidden');
+        if (dualView) dualView.classList.remove('hidden');
+        if (sitTag) {
+          sitTag.textContent = "⭐ 합동 코칭";
+          sitTag.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40";
+        }
+        if (dialogue) dialogue.textContent = `"제미니 & 미오: 인바디 목표 52kg 달성을 향해 함께 달려가자! 💖"`;
+      } else if (mode === 'mio') {
+        if (btnM) btnM.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all";
+        if (btnG) btnG.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-pink-400/50 transition-all";
+        if (btnD) btnD.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-[11px] font-bold hover:border-amber-400/50 transition-all";
+
+        if (singleView) singleView.classList.remove('hidden');
+        if (dualView) dualView.classList.add('hidden');
+
+        const sit = (SITUATIONS.mio && SITUATIONS.mio[state.currentSituation]) || SITUATIONS.mio.idle;
+        if (mainImg) mainImg.src = sit.img;
+        if (mainTag) {
+          mainTag.textContent = "미오";
+          mainTag.parentElement.className = "absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-amber-500/30 text-[11px] font-bold text-amber-300 flex items-center gap-1.5 shadow-sm";
+        }
+        if (sitTag) {
+          sitTag.textContent = sit.tag;
+          sitTag.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20";
+        }
+        if (dialogue) dialogue.textContent = `"미오: ${sit.text}"`;
       } else {
-        btnM.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all";
-        btnG.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-pink-400/50 transition-all";
-        stM.style.transform = "scale(1.05)";
-        stG.style.transform = "scale(0.95)";
-        document.getElementById('trainerDialogue').textContent = `"미오: 에헤헤, 프로듀서! 오늘도 나랑 힘차게 달려보자구~ 🏃‍♀️✨"`;
+        if (btnG) btnG.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs font-bold transition-all";
+        if (btnM) btnM.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-amber-400/50 transition-all";
+        if (btnD) btnD.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-[11px] font-bold hover:border-yellow-400/50 transition-all";
+
+        if (singleView) singleView.classList.remove('hidden');
+        if (dualView) dualView.classList.add('hidden');
+
+        const sit = (SITUATIONS.gemini && SITUATIONS.gemini[state.currentSituation]) || SITUATIONS.gemini.idle;
+        if (mainImg) mainImg.src = sit.img;
+        if (mainTag) {
+          mainTag.textContent = "제미니";
+          mainTag.parentElement.className = "absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-pink-500/30 text-[11px] font-bold text-pink-300 flex items-center gap-1.5 shadow-sm";
+        }
+        if (sitTag) {
+          sitTag.textContent = sit.tag;
+          sitTag.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-300 border border-pink-500/20";
+        }
+        if (dialogue) dialogue.textContent = `"제미니: ${sit.text}"`;
       }
       playBeep(650);
       saveState();
+    }
+
+    function switchTrainerFocus(trainer) {
+      setTrainerMode(trainer);
     }
 
     function syncUI() {
@@ -639,6 +776,7 @@
       }
       updateMetrics();
       updateBondUI();
+      setTrainerMode(state.activeMode || state.activeTrainer || 'gemini');
     }
 
     function switchMainTab(tab) {
@@ -669,12 +807,13 @@
 
       setTimeout(() => {
         if (type === 'matcha') {
+          setTrainerMode('gemini', 'tea');
           state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '오... 다기로 말차 격불한 거야? 거품 고운 것 좀 봐. 17시 넘겨서 배고프다고 징징대지 말고 차나 마셔, 바보야!' });
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: '우와~ 말차 냄새 좋다! 프로듀서 차분하게 차 마시는 모습 멋있어!' });
         } else if (type === 'espresso') {
+          setTrainerMode('gemini', 'cafe');
           state.chatHistory.push({ sender: 'mio', name: '미오', text: '에스프레소 마셨으니까 이제 나랑 같이 신나게 5km 러닝 달릴 거지? 🏃‍♀️' });
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '손아귀 힘 빼고 뛰라고 전해둬, 미오!' });
         } else {
+          setTrainerMode('gemini', 'tea');
           state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '17시 이후 배고플 땐 따뜻한 허브티로 달래는 게 정석이야. 훌륭해.' });
         }
         state.bondExp += 10;
@@ -693,8 +832,11 @@
       renderChat();
 
       setTimeout(() => {
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: "찻잔 너무 예쁘다 프로듀서! 나도 나중에 한 잔 타줘~ ☕✨" });
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: "흥, 미오 넌 또 얻어마실 생각만 하지! 그래도 감성 챙기면서 단식 유지하는 건 인정해 줄게." });
+        if (state.activeTrainer === 'mio') {
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: "찻잔 너무 예쁘다 프로듀서! 나도 나중에 한 잔 타줘~ ☕✨" });
+        } else {
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: "흥... 그래도 감성 챙기면서 17:7 단식 룰 유지하는 건 인정해 줄게." });
+        }
         state.bondExp += 15;
         updateBondUI();
         saveState();
@@ -714,13 +856,13 @@
         exp: 15,
         nextChoices: [
           "이제 14분 복근 루틴 하러 갈게!",
-          "둘이 같이 칭찬해주니까 진짜 힘난다 ㅎㅎ"
+          "칭찬 고마워! 오늘 루틴 끝까지 간다!"
         ]
       },
       2: {
         userText: "미오야, 제미니가 너무 팩폭 날려서 기죽을 뻔했어 ㅠㅠ",
         replies: [
-          { sender: 'mio', name: '미오', text: '에헤헤, 제미니 짱이 원래 츤데레라 말이 뾰루퉁해서 그래~ 속으로는 엄청 챙겨주고 있다구!' },
+          { sender: 'mio', name: '미오', text: '에헤헤, 제미니 짱이 말이 뾰루퉁해서 그래~ 속으로는 엄청 챙겨주고 있다구!' },
           { sender: 'gemini', name: '제미니', text: '야! 미오! 쓸데없는 소리 하지 마! 바보 프로듀서가 17시 넘어서 먹을까 봐 미리 경고한 거잖아! 💢' }
         ],
         exp: 20,
@@ -752,13 +894,28 @@
       renderChat();
 
       setTimeout(() => {
-        data.replies.forEach(r => state.chatHistory.push(r));
+        if (num === 3) {
+          setTrainerMode('dual', 'inbody');
+          data.replies.forEach(r => state.chatHistory.push(r));
+        } else if (num === 2) {
+          setTrainerMode('mio', 'idle');
+          data.replies.forEach(r => state.chatHistory.push(r));
+        } else {
+          if (state.activeMode === 'dual') {
+            data.replies.forEach(r => state.chatHistory.push(r));
+          } else if (state.activeTrainer === 'mio') {
+            state.chatHistory.push({ sender: 'mio', name: '미오', text: '나이스 프로듀서! 잘 챙겨 먹어야 근손실 안 오지~ 완전 최고야! 🌟' });
+          } else {
+            state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '오... 진짜로 제대로 먹었잖아? 단백질 30g 이상 보충 확인! 이번만큼은 인정해 줄게요, 흥!' });
+          }
+        }
+
         state.bondExp += data.exp;
         if (state.bondExp >= 100) {
           state.bondRank += 1;
           state.bondExp = state.bondExp - 100;
           playBeep(880, 0.25);
-          alert(`🎉 [인연 랭크 UP!] 제미니 & 미오와의 인연 레벨이 Lv.${state.bondRank}로 상승했습니다!`);
+          alert(`🎉 [인연 랭크 UP!] 인연 레벨이 Lv.${state.bondRank}로 상승했습니다!`);
         } else {
           playBeep(750, 0.1);
         }
@@ -786,8 +943,14 @@
       renderChat();
 
       setTimeout(() => {
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '말만 앞서지 말고 바로 실천해! 오늘 루틴 다 끝낼 때까지 똑똑히 감시할 거니까!' });
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: '화이팅 화이팅 프로듀서~! 완주하면 하이파이브야! 🖐️✨' });
+        if (state.activeMode === 'dual') {
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '말만 앞서지 말고 바로 실천해! 오늘 루틴 다 끝낼 때까지 똑똑히 감시할 거니까!' });
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: '화이팅 화이팅 프로듀서~! 완주하면 하이파이브야! 🖐️✨' });
+        } else if (state.activeTrainer === 'mio') {
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: '화이팅 화이팅 프로듀서~! 완주하면 하이파이브야! 🖐️✨' });
+        } else {
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '말만 앞서지 말고 바로 실천해! 오늘 루틴 다 끝낼 때까지 똑똑히 감시할 거니까!' });
+        }
         state.bondExp += 10;
         updateBondUI();
         saveState();
@@ -843,16 +1006,44 @@
       document.getElementById('bondRankBadge').textContent = `인연 Lv.${state.bondRank} ❤️`;
     }
 
-    function pokeTrainer(who = 'gemini') {
+    function pokeCurrentTrainer() {
       playBeep(700, 0.08);
-      if (who === 'gemini') {
-        const q = ["아야! 어딜 만지는 거야, 바보야! 💢", "운동 안 하고 딴짓하면 진짜 주거주거! 😈", "흥... 오늘 루틴 다 끝내면 머리 쓰다듬게 해줄게."];
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: q[Math.floor(Math.random() * q.length)] });
+      if (state.activeMode === 'dual') {
+        const dualQuotes = [
+          "제미니 & 미오: 둘이서 프로듀서 꼭 52kg 슬림핏 만들어 줄게!",
+          "제미니: 잠깐, 둘 다 건드리지 마! | 미오: 에헤헤 간지러워~ 🌟",
+          "제미니 & 미오: 이번 주 인바디 측정까지 함께 달리는 거야!"
+        ];
+        const q = dualQuotes[Math.floor(Math.random() * dualQuotes.length)];
+        document.getElementById('trainerDialogue').textContent = `"${q}"`;
+        state.chatHistory.push({ sender: 'gemini', name: '제미니 & 미오', text: q });
+      } else if (state.activeTrainer === 'mio') {
+        const mioQuotes = [
+          "와앗! 간지러워 프로듀서~ ㅋㅋㅋ",
+          "헤헤, 오늘도 기운차게 같이 5km 달려볼까?",
+          "프로듀서가 힘내면 나도 엄청 힘이 난다구! 🌟",
+          "나이키런 켜고 출발할 준비 됐어? 하이파이브! 🖐️"
+        ];
+        const q = mioQuotes[Math.floor(Math.random() * mioQuotes.length)];
+        document.getElementById('trainerDialogue').textContent = `"미오: ${q}"`;
+        state.chatHistory.push({ sender: 'mio', name: '미오', text: q });
       } else {
-        const q = ["와앗! 간지러워 프로듀서~ ㅋㅋㅋ", "헤헤, 오늘도 기운차게 같이 달려볼까?", "프로듀서가 힘내면 나도 엄청 힘이 난다구!"];
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: q[Math.floor(Math.random() * q.length)] });
+        const geminiQuotes = [
+          "아야! 어딜 만지는 거야, 바보야! 💢",
+          "운동 안 하고 딴짓하면 진짜 주거주거! 😈",
+          "흥... 오늘 17시 단식이랑 루틴 다 끝내면 머리 쓰다듬게 해줄게.",
+          "말차랑 허브티 마시면서 단식 끝까지 버텨봐!"
+        ];
+        const q = geminiQuotes[Math.floor(Math.random() * geminiQuotes.length)];
+        document.getElementById('trainerDialogue').textContent = `"제미니: ${q}"`;
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: q });
       }
       renderChat();
+    }
+
+    function pokeTrainer(who) {
+      if (who) state.activeTrainer = who;
+      pokeCurrentTrainer();
     }
 
     // Meal Photo
@@ -873,8 +1064,11 @@
       renderChat();
 
       setTimeout(() => {
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '식단 사진 확인! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 입에 칼로리 넣지 마!' });
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: '맛있어 보인다~ 단백질도 채소도 완벽해! 이 기세로 저녁까지 가자!' });
+        if (state.activeTrainer === 'mio') {
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: '맛있어 보인다~ 단백질도 채소도 완벽해! 이 기세로 저녁까지 가자!' });
+        } else {
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '식단 사진 확인! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 입에 칼로리 넣지 마!' });
+        }
         state.bondExp += 15;
         updateBondUI();
         saveState();
@@ -883,43 +1077,189 @@
       e.target.value = '';
     }
 
-    // AI Vision OCR
+    // Canvas Preprocessing for High-Accuracy Samsung Health OCR
+    function preprocessOcrImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let w = img.width;
+            let h = img.height;
+            const maxW = 1600;
+            if (w > maxW) {
+              h = Math.round((h * maxW) / w);
+              w = maxW;
+            }
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+
+            try {
+              const imgData = ctx.getImageData(0, 0, w, h);
+              const d = imgData.data;
+              for (let i = 0; i < d.length; i += 4) {
+                const gray = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+                const factor = 1.35;
+                let cVal = (gray - 128) * factor + 128;
+                cVal = cVal < 0 ? 0 : cVal > 255 ? 255 : cVal;
+                d[i] = cVal;
+                d[i + 1] = cVal;
+                d[i + 2] = cVal;
+              }
+              ctx.putImageData(imgData, 0, 0);
+              canvas.toBlob((blob) => resolve(blob || file), 'image/png');
+            } catch (err) {
+              resolve(file);
+            }
+          };
+          img.onerror = () => resolve(file);
+          img.src = e.target.result;
+        };
+        reader.onerror = () => resolve(file);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Robust Samsung Health & InBody Text Parser
+    function parseHealthImageText(text) {
+      const unified = text
+        .replace(/(\d)[,.](\d)/g, '$1.$2')
+        .replace(/\r?\n/g, ' ');
+
+      let weight = null;
+      let fat = null;
+
+      // 1. Proximity to '체중', '몸무게', 'Weight'
+      const labelMatch = unified.match(/(?:체중|몸무게|Weight|체\s*중)[\s:：]*([4-9]\d(?:\.\d{1,2})?)/i);
+      if (labelMatch) {
+        const val = parseFloat(labelMatch[1]);
+        if (val >= 40 && val <= 120) weight = val;
+      }
+
+      // 2. Number followed by kg / KG
+      if (weight === null) {
+        const kgMatches = [...unified.matchAll(/([4-9]\d(?:\.\d{1,2})?)\s*(?:kg|KG)\b/gi)];
+        for (const m of kgMatches) {
+          const val = parseFloat(m[1]);
+          if (val >= 40 && val <= 120) {
+            weight = val;
+            break;
+          }
+        }
+      }
+
+      // 3. Prominent standalone decimal near target weight zone (45~85kg)
+      if (weight === null) {
+        const decimalMatches = [...unified.matchAll(/\b([4-8]\d\.\d{1,2})\b/g)];
+        for (const m of decimalMatches) {
+          const val = parseFloat(m[1]);
+          if (val >= 45 && val <= 85) {
+            weight = val;
+            break;
+          }
+        }
+      }
+
+      // Body Fat parsing
+      const fatLabelMatch = unified.match(/(?:체지방률?|체지방량?|Fat)[\s:：]*([1-4]\d(?:\.\d{1,2})?)/i);
+      if (fatLabelMatch) {
+        const val = parseFloat(fatLabelMatch[1]);
+        if (val >= 10 && val <= 45) fat = val;
+      }
+
+      if (fat === null) {
+        const pctMatches = [...unified.matchAll(/([1-4]\d(?:\.\d{1,2})?)\s*%/g)];
+        for (const m of pctMatches) {
+          const val = parseFloat(m[1]);
+          if (val >= 10 && val <= 45) {
+            fat = val;
+            break;
+          }
+        }
+      }
+
+      return { weight, fat };
+    }
+
+    // AI Vision OCR Trigger
     async function handleInbodyScan(e) {
       const file = e.target.files[0];
       if (!file) return;
-      alert("AI 비전: 인바디/삼성헬스 캡처 이미지를 스캔 중입니다...");
+
+      const scanBtnText = document.getElementById('inbodyScanBtnText');
+      if (scanBtnText) scanBtnText.textContent = "⌛ 스캔 분석 중...";
+
       try {
-        const res = await Tesseract.recognize(file, 'eng');
-        const text = res.data.text;
-        const wMatch = text.match(/(\d{2}\.\d)\s*(kg|KG)?/);
-        const fMatch = text.match(/(\d{2}\.\d)\s*%/);
+        const processedBlob = await preprocessOcrImage(file);
+        const res = await Tesseract.recognize(processedBlob, 'kor+eng');
+        const text = res.data.text || "";
+        const parsed = parseHealthImageText(text);
 
-        if (wMatch && parseFloat(wMatch[1]) >= 40 && parseFloat(wMatch[1]) <= 100) {
-          state.weight = parseFloat(wMatch[1]);
-          document.getElementById('currentWeightInput').value = state.weight;
+        // Pre-fill Modal
+        document.getElementById('ocrWeightInput').value = parsed.weight !== null ? parsed.weight : state.weight;
+        document.getElementById('ocrFatInput').value = parsed.fat !== null ? parsed.fat : state.fat;
+        document.getElementById('ocrRawText').textContent = text.trim() || "(인식된 텍스트가 없습니다. 사진이 흐리거나 해상도가 낮을 수 있습니다.)";
+
+        const badge = document.getElementById('ocrWeightConfidence');
+        if (parsed.weight !== null) {
+          badge.textContent = "✨ 체중 감지 성공";
+          badge.className = "text-[10px] text-emerald-400 font-bold";
+        } else {
+          badge.textContent = "직접 입력/수정 가능";
+          badge.className = "text-[10px] text-amber-400 font-bold";
         }
-        if (fMatch && parseFloat(fMatch[1]) >= 10 && parseFloat(fMatch[1]) <= 45) {
-          state.fat = parseFloat(fMatch[1]);
-          document.getElementById('currentFatInput').value = state.fat;
-        }
-        updateMetrics();
 
-        const isWed = (new Date().getDay() === 3);
-        const bonusExp = isWed ? 40 : 20;
-        state.bondExp += bonusExp;
-        updateBondUI();
-        saveState();
-
-        const bonusMsg = isWed ? "\n⭐ [수요일 보너스] 인연 EXP 2배 적립!" : "";
-        alert(`🎯 스캔 완료!\n체중: ${state.weight}kg / 체지방: ${state.fat}% 자동 반영되었습니다!${bonusMsg}`);
-
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: `인바디 스캔 확인! 체중 ${state.weight}kg, 체지방 ${state.fat}%. 52kg 진입할 때까지 방심 금물이야!` });
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: `수치 확실하게 줄고 있어! 프로듀서 매일 노력한 보람이 있네~ 진짜 멋있어!` });
-        renderChat();
+        document.getElementById('ocrResultModal').classList.remove('hidden');
+        playBeep(880, 0.15);
       } catch (err) {
-        alert("스캔 중 오류가 발생했습니다.");
+        console.error("OCR scan error:", err);
+        document.getElementById('ocrWeightInput').value = state.weight;
+        document.getElementById('ocrFatInput').value = state.fat;
+        document.getElementById('ocrRawText').textContent = "OCR 스캔 오류: " + err.message + "\n직접 수치를 입력하여 저장할 수 있습니다.";
+        document.getElementById('ocrResultModal').classList.remove('hidden');
+      } finally {
+        if (scanBtnText) scanBtnText.textContent = "📷 인바디 스캔";
+        e.target.value = '';
       }
-      e.target.value = '';
+    }
+
+    function closeOcrModal() {
+      document.getElementById('ocrResultModal').classList.add('hidden');
+    }
+
+    function applyOcrResult() {
+      const wVal = parseFloat(document.getElementById('ocrWeightInput').value);
+      const fVal = parseFloat(document.getElementById('ocrFatInput').value);
+
+      if (!isNaN(wVal) && wVal >= 35 && wVal <= 150) {
+        state.weight = wVal;
+        document.getElementById('currentWeightInput').value = state.weight;
+      }
+      if (!isNaN(fVal) && fVal >= 5 && fVal <= 60) {
+        state.fat = fVal;
+        document.getElementById('currentFatInput').value = state.fat;
+      }
+
+      updateMetrics();
+      const isWed = (new Date().getDay() === 3);
+      const bonusExp = isWed ? 40 : 20;
+      state.bondExp += bonusExp;
+      updateBondUI();
+      saveState();
+
+      // Trigger Joint Special Event CG & Dialogues
+      setTrainerMode('dual', 'inbody');
+
+      const wedBonusNote = isWed ? " (수요일 보너스 EXP 2배!)" : "";
+      state.chatHistory.push({ sender: 'gemini', name: '제미니', text: `체중 ${state.weight}kg, 체지방 ${state.fat}% 확인 완료! 목표 52kg까지 끝까지 방심 금물이야!${wedBonusNote}` });
+      state.chatHistory.push({ sender: 'mio', name: '미오', text: `와아~ 프로듀서 매일매일 노력한 결실이 나오고 있어! 이 기세로 계속 함께 가자~ 💖✨` });
+      renderChat();
+
+      closeOcrModal();
+      playBeep(900, 0.2);
     }
 
     // Fasting Clock
@@ -993,9 +1333,21 @@
     }
 
     function updateRoutine() {
+      const prevRun = state.runDone;
+      const prevAbs = state.absDone;
       state.absDone = document.getElementById('chkAbs').checked;
       state.runDone = document.getElementById('chkRun').checked;
       state.runDist = parseFloat(document.getElementById('runDistInput').value) || 5.0;
+
+      if (!prevRun && state.runDone) {
+        setTrainerMode('mio', 'running');
+        state.chatHistory.push({ sender: 'mio', name: '미오', text: `나이키런 ${state.runDist}km 완주 대박! 페이스 잘 조절했어 프로듀서~ 진짜 최고야! 🏃‍♀️✨` });
+        renderChat();
+      } else if (!prevAbs && state.absDone) {
+        setTrainerMode('gemini', 'workout');
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '14분 복근 루틴 완료! 코어 제대로 쪼이는 느낌 받았지? 내일도 똑같이 하는 거야!' });
+        renderChat();
+      }
       playBeep(600);
       saveState();
     }
@@ -1004,6 +1356,13 @@
       const idx = num - 1;
       state.rehab[idx] = !state.rehab[idx];
       updateRehabBtnUI(num, state.rehab[idx]);
+      if (state.rehab[idx]) {
+        setTrainerMode('gemini', 'workout');
+        if (state.rehab.filter(Boolean).length === 3) {
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '2kg 덤벨 익센트릭 재활 3세트 완벽하게 끝냈네. 팔꿈치 건 절대 무리하지 말고 아이싱 잊지 마!' });
+          renderChat();
+        }
+      }
       playBeep(state.rehab[idx] ? 650 : 350);
       saveState();
     }
