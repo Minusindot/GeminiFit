@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T11:36:49.697Z",
+  "updatedAt": "2026-10-20T11:42:26.929Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
@@ -7,7 +7,7 @@
   "bondExp": 15,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev3",
+  "currentSituation": "ev10",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,15 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "맛있어 보인다~ 단백질도 채소도 완벽해! 이 기세로 저녁까지 가자!"
-    },
-    {
-      "sender": "user",
-      "text": "[홈카페] 에스프레소 샷 ☕ 1잔을 기록했습니다."
-    },
     {
       "sender": "mio",
       "name": "미오",
@@ -114,6 +105,16 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "따뜻한 루이보스티 마시면서 오늘 하루 식단 복기해 봐. 완벽했지?"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "내 덧니가 그렇게 신기해? 자꾸 쳐다보면 살짝 깨물어버린다? 🐾"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "향긋한 얼그레이 티 한 잔으로 오후 식곤증 날려버려! 나랑 눈 마주치면서 마셔."
     }
   ]
 }
