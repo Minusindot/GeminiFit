@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-20T11:05:41.802Z",
+  "updatedAt": "2026-10-20T11:05:45.400Z",
   "theme": "light",
   "weight": 53.8,
   "fat": 21.5,
   "bondRank": 1,
   "bondExp": 75,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
-  "currentSituation": "ev1",
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev5",
   "absDone": false,
   "runDone": false,
   "runDist": 5,
@@ -96,6 +96,16 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "목표 52kg 달성하시면 코토네랑 테라스 카페 데이트 가기예요! 약속~ 🍰"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "프로듀서님이 웃어주시면 코토네는 알바 피로가 싹 날아가요! 오늘도 힘내요 우리!"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "헤헤, 프로듀서님! 이 코토네 님이 정말 그렇게 귀여워요?! 더 칭찬해 주셔도 돼요~! 💛"
     }
   ]
 }
