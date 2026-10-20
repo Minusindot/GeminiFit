@@ -55,8 +55,8 @@ BASE_STYLE_PROMPT = {
         "illustration art style of the attached reference images — ultra-delicate fine tinted lineart, "
         "soft luminous skin rendering with warm coral cheek blush, detailed jewel-like amber eyes with fine eyelashes, "
         "silky hair strands catching warm golden light. "
-        "Character: 19yo cheerful idol trainer girl Honda Mio, short layered warm caramel-brown hair with cute side bangs "
-        "and fluffy outward-flipped hair tips, bright golden-amber eyes, radiant charming smile, masterpiece 2D bishoujo game event CG, aspect ratio 9:16."
+        "Character: 19yo athletic idol trainer girl Honda Mio, short layered warm caramel-brown hair with cute side bangs "
+        "and fluffy outward-flipped hair tips, expressive golden-amber eyes, slender toned athletic idol proportions, masterpiece 2D bishoujo game event CG, aspect ratio 9:16."
     ),
     "gemini": (
         "CRITICAL STYLE RULE: Draw strictly in the Gakuen Idolmaster (학원 아이돌마스터) high-end mobile game "

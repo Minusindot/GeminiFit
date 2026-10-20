@@ -3,3 +3,5 @@ __pycache__/
 *$py.class
 .grok_profile/
 .env
+
+ref_pool/mio_old_backup/

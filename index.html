@@ -618,7 +618,7 @@
     </div>
 
     <!-- ========================================================
-         MODAL 1: 15-CG Visual Novel Event Gallery
+         MODAL 1: 30-CG Visual Novel Event Gallery
          ======================================================== -->
     <div id="galleryModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
       <div class="game-card max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden border-pink-400/40 shadow-2xl">
@@ -634,10 +634,10 @@
         </div>
 
         <div class="px-4 py-2 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex gap-1.5">
-          <button onclick="renderGalleryGrid('all')" id="galTabAll" class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-[#4a89dc] text-white">전체 (15)</button>
-          <button onclick="renderGalleryGrid('gemini')" id="galTabGemini" class="px-2.5 py-1 rounded-lg text-xs font-bold sub-box">🐾 제미니 (5)</button>
-          <button onclick="renderGalleryGrid('kotone')" id="galTabKotone" class="px-2.5 py-1 rounded-lg text-xs font-bold sub-box">💛 코토네 (5)</button>
-          <button onclick="renderGalleryGrid('mio')" id="galTabMio" class="px-2.5 py-1 rounded-lg text-xs font-bold sub-box">🌟 미오 (5)</button>
+          <button onclick="renderGalleryGrid('all')" id="galTabAll" class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-[#4a89dc] text-white">전체 (30)</button>
+          <button onclick="renderGalleryGrid('gemini')" id="galTabGemini" class="px-2.5 py-1 rounded-lg text-xs font-bold sub-box">🐾 제미니 (10)</button>
+          <button onclick="renderGalleryGrid('kotone')" id="galTabKotone" class="px-2.5 py-1 rounded-lg text-xs font-bold sub-box">💛 코토네 (10)</button>
+          <button onclick="renderGalleryGrid('mio')" id="galTabMio" class="px-2.5 py-1 rounded-lg text-xs font-bold sub-box">🌟 미오 (10)</button>
         </div>
 
         <div id="galleryGridContainer" class="p-3.5 overflow-y-auto clean-scroll grid grid-cols-2 gap-2.5">
@@ -784,6 +784,7 @@
 
   </div>
 
+  <script src="./dialogue_pool.js"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -865,6 +866,9 @@
     // ============================================================================
     // 15 VISUAL-NOVEL EVENT CGs (3 Heroines x 5 CGs with Distinct Poses & Angles)
     // ============================================================================
+    // ============================================================================
+    // 30 VISUAL-NOVEL EVENT CGs (3 Heroines x 10 Dynamic CGs with Distinct Angles)
+    // ============================================================================
     const HEROINE_EVENTS = {
       gemini: [
         {
@@ -911,6 +915,51 @@
           pos: 'center 14%',
           text: '오늘 17시 단식 셧다운 완벽 성공이야, 프로듀서. 시원한 레몬 탄산수 마시면서 나랑 밤바람 좀 쐬자. 🌙',
           story: '💖 [제미니 EP.5 · 야경 발코니] "낮에는 짓궂게 굴었지만... 사실 매일 포기하지 않고 노력하는 프로듀서 모습, 내가 세상에서 제일 좋아해. 건배!"'
+        },
+        {
+          key: 'ev6',
+          tag: '🪞 거울 앞 기립근 스트레칭',
+          locOutfit: '📍 전신 거울 앞 · 백리스 슈트 뒤태 & 거울 속 도발 눈빛',
+          img: './gemini_06_mirror_stretch.png',
+          pos: 'center 15%',
+          text: '어딜 멍하니 보고 있는 거야, 바보 프로듀서? 척추 기립근 정렬을 보랬지 내 허리라인 감상하랬어? 🐾',
+          story: '💖 [제미니 EP.6 · 전신 거울 스트레칭] "거울 너머로 프로듀서 시선 다 느껴지거든... 흥, 그렇게 넋 놓고 볼 만큼 내 흑발이랑 뒤태가 예뻤단 말이지?"'
+        },
+        {
+          key: 'ev7',
+          tag: '☕ 테라스 카페 뾰로통 턱괴기',
+          locOutfit: '📍 카페 테라스 · 턱 괴고 삐진 척 볼 찌푸린 소악마',
+          img: './gemini_07_cafe_pout.png',
+          pos: 'center 15%',
+          text: '방금 저 쇼케이스에 버터 크루아상 쳐다봤지?! 오늘 17시 단식 골든타임인데 한눈팔면... 삐질 거야, 흥! ☕',
+          story: '💖 [제미니 EP.7 · 테라스 카페 데이트] "프로듀서 입술에 묻은 아메리카노 거품이나 닦아. 딴 디저트 말고 내 얼굴이나 계속 보라구!"'
+        },
+        {
+          key: 'ev8',
+          tag: '📊 안경 쓴 인바디 분석표 검토',
+          locOutfit: '📍 벨벳 소파 · 안경 너머 칭찬 눈빛 & 웅크려 앉은 앵글',
+          img: './gemini_08_inbody_sheet.png',
+          pos: 'center 15%',
+          text: '골격근량 +0.4kg, 체지방률 20% 진입 목전... 흥, 내 코칭을 제법 성실하게 들었잖아? 쓰담쓰담 해줄게. 👓',
+          story: '💖 [제미니 EP.8 · 소파 인바디 분석] "안경 쓴 내 모습이 그렇게 지적여 보여? ...얼굴 빨개지게 하지 마. 오늘만큼은 네가 제일 기특해."'
+        },
+        {
+          key: 'ev9',
+          tag: '🌧️ 락커룸 타월 드라이 밀착',
+          locOutfit: '📍 촉촉한 락커룸 · 수건 머리 털기 & 쇄골에 맺힌 물방울',
+          img: './gemini_09_rain_locker.png',
+          pos: 'center 14%',
+          text: '비 오는데 나랑 운동하려고 이렇게 젖어서 온 거야? 바보... 이리 가까이 와. 내 수건으로 머리 말려줄게.',
+          story: '💖 [제미니 EP.9 · 락커룸 타월 케어] "어깨에 닿는 프로듀서 체온이 너무 따뜻해서... 나 지금 심장 엄청 빨리 뛰고 있거든. 들켰으려나."'
+        },
+        {
+          key: 'ev10',
+          tag: '☀️ 아침 침대 부스스 잠투정',
+          locOutfit: '📍 햇살 침실 · 실크 파자마 흩날리는 롱헤어 & 하품',
+          img: './gemini_10_morning_bed.png',
+          pos: 'center 15%',
+          text: '흐아암... 5분만 더 잘래... 프로듀서가 직접 다기로 거품 낸 따뜻한 말차 라떼 가져오면 일어날게... 🐾',
+          story: '💖 [제미니 EP.10 · 아침 햇살 침실] "이불 밖으로 나오기 싫은데... 프로듀서가 다정하게 깨워주니까 기분은 좋네. 오늘도 하루 종일 내 옆에 딱 붙어 있어!"'
         }
       ],
       kotone: [
@@ -958,56 +1007,147 @@
           pos: 'center 14%',
           text: '프로듀서님, 저기 밤하늘 불꽃 좀 보세요! 오늘만큼은 알바 생각도 잊고 프로듀서님이랑 단둘이 있어서 너무 행복해요! 🎆',
           story: '💖 [코토네 EP.5 · 여름밤 불꽃놀이] "헤헤, 유카타 입은 코토네는 몇 점인가요? ...100점 만점에 1000점이라구요?! 에헤헤, 평생 프로듀서님 전담 파트너 해드릴래요!"'
+        },
+        {
+          key: 'ev6',
+          tag: '🫠 마룻바닥 버터 방전',
+          locOutfit: '📍 스튜디오 마루 · 대자로 뻗어 빙글빙글 눈 된 코토네',
+          img: './kotone_06_floor_melt.png',
+          pos: 'center 15%',
+          text: '프... 프로듀서니임... 코토네는 완전히 녹아내렸어요... 당장 달콤한 포상 칭찬을 투여해 주지 않으시면 못 일어나요... 😵💸',
+          story: '💖 [코토네 EP.6 · 스튜디오 방전] "14분 복근 코어 루틴 진짜 지옥이에요오... 그래도 프로듀서님이 카운트 세어 주셔서 끝까지 버텼답니다! 저 머리 쓰다듬어 주세요!"'
+        },
+        {
+          key: 'ev7',
+          tag: '🥗 샐러드 볼 빵빵 햄스터',
+          locOutfit: '📍 식단 테이블 · 방울토마토 물고 부끄러운 볼',
+          img: './kotone_07_salad_hamster.png',
+          pos: 'center 15%',
+          text: '음믑?! 웃지 마세요 프로듀서님! 코토네는 지금 완벽한 슬림 아이돌 몸매를 위해 단백질 보충 중이라구요! 🍅🐹',
+          story: '💖 [코토네 EP.7 · 식단 데이트] "볼 빵빵하다고 귀여워해 주시니까 왠지 기분 좋긴 한데... 엣헴! 프로듀서님도 닭가슴살 남기지 말고 싹 드셔야 해요!"'
+        },
+        {
+          key: 'ev8',
+          tag: '🪞 거울 앞 머리핀 양갈래 정돈',
+          locOutfit: '📍 분장실 조명대 · 머리핀 입에 물고 올려다보는 곁눈질',
+          img: './kotone_08_mirror_hairpin.png',
+          pos: 'center 15%',
+          text: '으음... (잠깐만요 프로듀서님! 머리핀 마저 꽂을 때까지 보지 마세요! 완성되면 제일 먼저 보여드릴게요!) 💛',
+          story: '💖 [코토네 EP.8 · 대기실 거울 앞] "프로듀서님 앞에서는 언제나 제일 예쁘고 완벽한 코토네로 보이고 싶단 말이에요. ...헤헤, 양갈래 예쁘게 땋아졌나요?"'
+        },
+        {
+          key: 'ev9',
+          tag: '💤 다이어리 꾸벅꾸벅 천사',
+          locOutfit: '📍 자정 스탠드 조명 책상 · 볼 찌그러져 잠든 곰인형 잠옷',
+          img: './kotone_09_desk_nap.png',
+          pos: 'center 15%',
+          text: '쿨... 프로듀서님... 52kg 성공하면... 딸기 파르페 세 개... 사주기예요... zzz 🍓',
+          story: '💖 [코토네 EP.9 · 야간 책상 잠투정] "인바디 체지방 그래프를 꼼꼼하게 적다가 잠들어버렸어요... 살짝 흘린 침 닦아주시는 프로듀서님 손길이 꿈에서도 따뜻했어요."'
+        },
+        {
+          key: 'ev10',
+          tag: '🏐 비치 발리볼 파워 스파이크',
+          locOutfit: '📍 푸른 바다 백사장 · 옐로우 비키니 하이 점프 & 스파이크',
+          img: './kotone_10_beach_volleyball.png',
+          pos: 'center 15%',
+          text: '받아라 프로듀서님!! 후지타 코토네의 칼로리 폭탄 박살 파워 스파이크예요~! 🏐✨',
+          story: '💖 [코토네 EP.10 · 해변 비치 발리볼] "푸른 바다 바람 맞으면서 프로듀서님이랑 땀 흘리니까 알바 스트레스가 싹 날아가요! 승리의 포옹은 당연히 코토네 차지죠!"'
         }
       ],
       mio: [
         {
           key: 'ev1',
-          tag: '✨ 텐션 만점 파트너',
-          locOutfit: '📍 스튜디오 · 옐로우 & 오렌지 스타 트랙 자켓',
+          tag: '🏃 트랙 바닥 숨가쁜 휴식',
+          locOutfit: '📍 스타디움 트랙 · 바닥에 주저앉아 수건으로 목 닦는 로우 앵글',
           img: './mio_01_main.png',
-          pos: 'center 15%',
-          text: '에헤헤, 프로듀서! 오늘도 미오랑 같이 신나게 땀 흘리고 기분 좋게 목표 달성해보자! 🌟',
-          story: '💖 [미오 EP.1 · 스튜디오] "혼자 하면 힘든 운동도 미오가 옆에서 응원해 주면 에너지가 200% 충전되지? 자, 하이파이브 한 번 하고 시작하자구!"'
+          pos: 'center 14%',
+          text: '하아... 5km 인터벌 완주 나이스!! 프로듀서 오늘 페이스 완전 대박이었어! 나 아직 안 지쳤으니까 더 뛰어도 돼~ 🌟',
+          story: '💖 [미오 EP.1 · 스타디움 트랙] "바닥에 털썩 주저앉아서 숨 고르는데, 프로듀서가 건네준 물병이 세상에서 제일 달콤했어! 내일도 나랑 트랙 달리기다!"'
         },
         {
           key: 'ev2',
-          tag: '🌸 벚꽃 공원 모닝 조깅',
-          locOutfit: '📍 봄날 벚꽃 산책로 · 화이트 스포츠 크롭탑 & 헤어밴드',
+          tag: '🖐️ 1인칭 POV 손잡아 일으켜주기',
+          locOutfit: '📍 공원 산책로 · 위에서 활짝 웃으며 손 내미는 하이 앵글',
           img: './mio_02_park_run.png',
           pos: 'center 14%',
-          text: '프로듀서, 나이키런 5km 완주 나이스!! 손목 힘 빼고 달리는 폼 완전 멋졌어! 여기 시원한 물 마셔~ 🏃‍♀️🌸',
-          story: '💖 [미오 EP.2 · 벚꽃 공원 조깅] "벚꽃잎 흩날리는 공원을 프로듀서랑 나란히 달리니까 마치 청춘 드라마 주인공이 된 기분이야! 내일 아침에도 같이 뛸 거지?"'
+          text: '자, 손 잡아 프로듀서!! 여기서 주저앉으면 목표 체중 52kg이 도망간다구! 미오가 힘껏 당겨줄 테니까 일어서자! 🖐️',
+          story: '💖 [미오 EP.2 · 벚꽃 산책로 POV] "프로듀서 손을 꽉 잡았을 때, 심장이 쿵쿵 울렸던 건 달리기 때문만은 아니었을지도 몰라... 에헤헤!"'
         },
         {
           key: 'ev3',
-          tag: '🏖️ 리조트 풀사이드 바캉스',
-          locOutfit: '📍 야외 리조트 풀장 · 옐로우 프릴 비키니 & 시스루 파카',
+          tag: '💦 실내 풀장 물장구 윙크',
+          locOutfit: '📍 수영장 물속 · 물 튀기며 장난치는 워터 스플래시',
           img: './mio_03_poolside.png',
           pos: 'center 14%',
-          text: '야호~! 물이 진짜 시원해 프로듀서! 유산소 운동엔 수영이랑 물놀이가 최고라구! 빨리 들어와~ 💦',
-          story: '💖 [미오 EP.3 · 리조트 풀사이드] "에헤헤, 새로 산 노란색 수영복 어때? 프로듀서가 열심히 식단 관리하는 거 보고 나도 더 예뻐 보이고 싶어서 신경 좀 썼다구!"'
+          text: '에헤헷~! 시원하지 프로듀서?! 넋 놓고 서 있으면 물장구 폭탄 또 날아간다~ 얍! 💦😉',
+          story: '💖 [미오 EP.3 · 실내 수영장 스플래시] "물속에서 유산소 하니까 칼로리도 팍팍 타고 시원하지? 젖은 내 머리카락 예쁘다고 해줘서 두근거렸어!"'
         },
         {
           key: 'ev4',
-          tag: '📣 나이트 스타디움 치어리더',
-          locOutfit: '📍 야간 스타디움 · 옐로우 & 네이비 치어리더 유니폼',
+          tag: '🙃 벤치프레스 거꾸로 눕기',
+          locOutfit: '📍 체육관 벤치 · 위아래 반전 시점의 장난스런 눈맞춤',
           img: './mio_04_cheer_stage.png',
           pos: 'center 14%',
-          text: '플레이~ 플레이~ 프로듀서!! 17시 단식 셧다운도, 11자 복근도 미오가 전력으로 응원할게! 파이팅~! 📣✨',
-          story: '💖 [미오 EP.4 · 나이트 스타디움] "프로듀서만을 위한 단독 치어리딩 스테이지야! 지치고 포기하고 싶은 순간이 와도 언제나 미오의 목소리를 떠올려 줘!"'
+          text: '어라, 프로듀서? 나를 거꾸로 쳐다보니까 복근 코어에 힘이 두 배로 들어가지? 에헤헤, 딱 걸렸다! 🙃💪',
+          story: '💖 [미오 EP.4 · 거꾸로 보는 벤치프레스] "벤치에 누워서 머리 뒤로 쏟아진 채 눈 마주치니까... 평소보다 열 배는 더 부끄러웠지만 눈 못 뗐어!"'
         },
         {
           key: 'ev5',
-          tag: '🌅 노을빛 해변 산책 데이트',
-          locOutfit: '📍 노을 지는 바닷가 · 화이트 레이스 선드레스 & 밀짚모자',
+          tag: '🌅 황혼빛 해변 딥 스쿼트',
+          locOutfit: '📍 노을빛 파도 앞 · 실루엣 역광 딥 스쿼트 집중 모드',
           img: './mio_05_sunset_beach.png',
           pos: 'center 14%',
-          text: '바닷바람 진짜 시원하다~ 오늘 하루도 열심히 달린 프로듀서랑 이렇게 노을을 보니까 마음이 간질간질해... 🌅💕',
-          story: '💖 [미오 EP.5 · 석양 해변 산책] "운동할 때 장난치던 모습 말고, 가끔은 이렇게 원피스 입은 차분한 미오도 좋아해 줄 거지? 앞으로도 계속 내 옆에 있어 줘, 프로듀서!"'
+          text: '파도 소리 들으면서 노을 아래 스쿼트 마지막 10개... 후우! 프로듀서 시선이 느껴지니까 절대 무너질 수 없지! 🔥',
+          story: '💖 [미오 EP.5 · 황혼빛 해변 스쿼트] "주황빛 석양에 비친 프로듀서 얼굴이 너무 멋있어서 나도 모르게 입술을 꽉 깨물고 힘을 냈어. 우리 둘 다 진짜 멋지다!"'
+        },
+        {
+          key: 'ev6',
+          tag: '☔ 비 오는 정류장 하나의 우산',
+          locOutfit: '📍 소나기 정류장 투명 우산 · 어깨가 닿는 두근거림',
+          img: './mio_06_shared_umbrella.png',
+          pos: 'center 14%',
+          text: '우, 우산 같이 써줘서 고마워 프로듀서... 어깨가 닿아서... 빗소리보다 내 심장 소리가 더 크게 들리는 것 같아... 😳☔',
+          story: '💖 [미오 EP.6 · 소나기 속 하나의 우산] "언제나 활발하던 미오였지만... 이 좁은 투명 우산 속에서 프로듀서 숨결이 닿을 때만큼은 숨이 멎는 줄 알았어."'
+        },
+        {
+          key: 'ev7',
+          tag: '🍫 편의점 앞 단백질바 냠냠',
+          locOutfit: '📍 야간 편의점 벤치 · 입에 에너지바 문 볼 빵빵 프로필',
+          img: './mio_07_convenience_bar.png',
+          pos: 'center 14%',
+          text: '음믑? (프로듀서도 초코 프로틴바 반 잘라줄까? 러닝 후 30분 골든타임이니까 얼른 입 벌려!) 🍫✨',
+          story: '💖 [미오 EP.7 · 야간 편의점 벤치] "달밤에 나란히 벤치에 앉아서 단백질바 나눠 먹는 이 시간... 세상 어떤 고급 레스토랑 데이트보다 행복해!"'
+        },
+        {
+          key: 'ev8',
+          tag: '⭐ 스타디움 잔디밭 대자 눕기',
+          locOutfit: '📍 푸른 잔디밭 버즈아이 · 하늘 보며 평화롭게 방전',
+          img: './mio_08_zenith_rest.png',
+          pos: 'center 14%',
+          text: '하늘 진짜 푸르다... 프로듀서도 내 옆에 나란히 누워봐. 바람 솔솔 불고 천국이 따로 없어~ zzz 🌿☁️',
+          story: '💖 [미오 EP.8 · 잔디밭 위 하늘 바라보기] "위에서 내려다보는 햇살도 좋고, 내 곁에서 숨 고르는 프로듀서 옆얼굴도 좋고... 이대로 시간이 멈췄으면 좋겠어."'
+        },
+        {
+          key: 'ev9',
+          tag: '🥊 복싱 링 글러브 가드 스파링',
+          locOutfit: '📍 사각 링 어안 앵글 · 빨간 글러브 올린 파이팅 스마일',
+          img: './mio_09_boxing_sparring.png',
+          pos: 'center 14%',
+          text: '원-투! 원-투! 가드 내리지 마 프로듀서! 아이돌이라고 안 봐줄 거니까 전력으로 펀치 날려봐! 🥊🔥',
+          story: '💖 [미오 EP.9 · 복싱 스파링 링] "글러브 맞부딪힐 때마다 터져 나오는 땀방울이랑 아드레날린! 프로듀서의 뜨거운 눈빛에 미오는 심쿵 KO 당할 뻔했어!"'
+        },
+        {
+          key: 'ev10',
+          tag: '🎆 여름 축제 유카타 볼 콕콕',
+          locOutfit: '📍 등불 축제 밤하늘 · 해바라기 유카타 입고 볼 콕콕',
+          img: './mio_10_festival_date.png',
+          pos: 'center 14%',
+          text: '에헤헤! 프로듀서, 불꽃놀이보다 내 얼굴을 더 뚫어져라 쳐다봤지? 딱 걸렸네~ 볼 콕콕 벌칙이야! ❤️🎆',
+          story: '💖 [미오 EP.10 · 여름밤 등불 축제] "해바라기 유카타 입은 나 예쁘다고 속삭여준 순간, 밤하늘 불꽃보다 내 마음이 수천만 배 더 화려하게 터졌어. 사랑해 프로듀서!"'
         }
       ]
     };
+
 
     const DUAL_EVENT = {
       img: './dual_inbody.png',
@@ -1476,7 +1616,7 @@
     }
 
     // ============================================================================
-    // 15-CG GALLERY MODAL FUNCTIONS
+    // 30-CG GALLERY MODAL FUNCTIONS
     // ============================================================================
     function openGalleryModal(filter = 'all') {
       playBeep(700, 0.08);
@@ -1795,43 +1935,30 @@
       if (state.activeMode === 'dual') {
         const dualQuotes = [
           "제미니 · 코토네 · 미오: 셋이서 프로듀서 꼭 52kg 슬림핏 만들어 줄게! 💖",
-          "제미니: 앗, 고양이 귀 건드리지 마! | 코토네: 헤헤, 쓰담쓰담은 언제나 환영이에요~! | 미오: 간지러워 프로듀서~ 🌟"
+          "제미니: 앗, 고양이 귀 건드리지 마! | 코토네: 헤헤, 쓰담쓰담은 언제나 환영이에요~! | 미오: 간지러워 프로듀서~ 🌟",
+          "제미니: 오늘 17시 셧다운 알지? | 코토네: 치팅데이는 52kg 찍고 가요! | 미오: 내일 5km 러닝도 파이팅이야! 🏃‍♀️"
         ];
         const q = dualQuotes[Math.floor(Math.random() * dualQuotes.length)];
         document.getElementById('trainerDialogue').textContent = `"${q}"`;
         state.chatHistory.push({ sender: 'gemini', name: '제미니 · 코토네 · 미오', text: q });
-      } else if (state.activeTrainer === 'kotone') {
-        const kotoneQuotes = [
-          "헤헤, 프로듀서님! 이 코토네 님이 정말 그렇게 귀여워요?! 더 칭찬해 주셔도 돼요~! 💛",
-          "앗! 머리 쓰다듬어 주시는 건 무료지만... 특별 애교는 인바디 목표 달성 보너스라구요! 💸✨",
-          "프로듀서님이 웃어주시면 코토네는 알바 피로가 싹 날아가요! 오늘도 힘내요 우리!",
-          "목표 52kg 달성하시면 코토네랑 테라스 카페 데이트 가기예요! 약속~ 🍰"
-        ];
-        const q = kotoneQuotes[Math.floor(Math.random() * kotoneQuotes.length)];
-        document.getElementById('trainerDialogue').textContent = `"코토네: ${q}"`;
-        state.chatHistory.push({ sender: 'kotone', name: '코토네', text: q });
-        randomizeSituation();
-      } else if (state.activeTrainer === 'mio') {
-        const mioQuotes = [
-          "와앗! 간지러워 프로듀서~ 에헤헤 ㅋㅋㅋ",
-          "오늘도 미오랑 기운차게 5km 달려볼까? 하이파이브! 🖐️",
-          "프로듀서가 힘내면 나도 에너지가 200% 충전된다구! 🌟",
-          "운동 끝나고 나랑 노을 지는 바닷가 산책 가자! 약속이야~ 🌅"
-        ];
-        const q = mioQuotes[Math.floor(Math.random() * mioQuotes.length)];
-        document.getElementById('trainerDialogue').textContent = `"미오: ${q}"`;
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: q });
-        randomizeSituation();
       } else {
-        const geminiQuotes = [
-          "냐앗?! 고, 고양이 귀는 갑자기 만지지 말라고 바보야! 😳🐾",
-          "메~롱! 그렇게 쳐다본다고 내가 봐줄 줄 알아? 오늘 17시 단식 칼같이 지켜! 😈",
-          "테니스 엘보 2kg 재활이랑 복근 다 끝내면... 이따 밤에 특별히 칭찬해 줄게.",
-          "다기로 정성껏 격불한 말차 마시면서 공복 골든타임 끝까지 유지하자! 🍵"
-        ];
-        const q = geminiQuotes[Math.floor(Math.random() * geminiQuotes.length)];
-        document.getElementById('trainerDialogue').textContent = `"제미니: ${q}"`;
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: q });
+        const hKey = state.activeTrainer || 'gemini';
+        let pool = (window.HEROINE_DIALOGUES && window.HEROINE_DIALOGUES[hKey]) ? window.HEROINE_DIALOGUES[hKey] : null;
+        let q = "";
+        if (pool && pool.length > 0) {
+          q = pool[Math.floor(Math.random() * pool.length)];
+        } else {
+          const fallbacks = {
+            kotone: "헤헤, 프로듀서님! 이 코토네 님이 정말 그렇게 귀여워요?! 더 칭찬해 주셔도 돼요~! 💛",
+            mio: "오늘도 미오랑 기운차게 5km 달려볼까? 하이파이브! 🖐️",
+            gemini: "냐앗?! 고, 고양이 귀는 갑자기 만지지 말라고 바보야! 😳🐾"
+          };
+          q = fallbacks[hKey] || fallbacks.gemini;
+        }
+        const names = { gemini: '제미니', kotone: '코토네', mio: '미오' };
+        const heroName = names[hKey] || '제미니';
+        document.getElementById('trainerDialogue').textContent = `"${heroName}: ${q}"`;
+        state.chatHistory.push({ sender: hKey, name: heroName, text: q });
         randomizeSituation();
       }
       renderChat();
