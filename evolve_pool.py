@@ -67,8 +67,9 @@ BASE_STYLE_PROMPT = {
         "very long waist-length silky raven-black hair (흑발 롱헤어), straight blunt-cut bangs (hime cut bangs) "
         "with straight cheek-length sidelocks framing her face, a cute little ahoge strand on top, "
         "and cute fluffy black cat ears (nekomimi) with a tiny ribbon pin. "
-        "FACE: Alluring teasing tsundere-mesugaki expression, cute single sharp fang (yaeba) peeking out, "
-        "warm blush on cheeks and nose tip. Slender glamorous idol proportions, masterpiece 2D bishoujo game event CG, aspect ratio 9:16."
+        "Slender glamorous idol proportions, masterpiece 2D bishoujo game event CG, aspect ratio 9:16. "
+        "CRITICAL NEGATIVE RESTRICTION: ABSOLUTELY DO NOT stick tongue out! Keep mouth naturally closed or smiling/speaking, "
+        "and avoid repetitive frontal head tilts. Expressions and camera angles must vary dynamically per scene!"
     ),
 }
 
@@ -121,13 +122,15 @@ def pick_evolution_refs(trainer: str) -> list[Path]:
     gem_features = list_survivors(REF_GEMINI_FEATURE_POOL)
     black_ref = [p for p in gem_features if "06_black_hair" in p.name]
     chosen = []
-    if gem_survivors:
-        chosen.append(gem_survivors[0])
-        if black_ref:
-            chosen.append(black_ref[0])
-        elif kotone_survivors:
-            chosen.append(kotone_survivors[0])
-    else:
+    # Pick clean reference sheet first, avoiding fixed tongue-out poses
+    if black_ref:
+        chosen.append(black_ref[0])
+    if style_survivors:
+        chosen.append(style_survivors[0])
+    if gem_survivors and len(chosen) < 3:
+        # Pick latest non-first survivor or clean pose
+        chosen.append(gem_survivors[-1])
+    if not chosen:
         if black_ref:
             chosen.append(black_ref[0])
         if style_survivors:
