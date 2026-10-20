@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>GeminiTalk - 제미니 & 미오 피트니스 코칭</title>
+  <title>GeminiTalk - 제미니 · 코토네 · 미오 피트니스 코칭</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -86,7 +86,6 @@
       border-radius: 1rem;
     }
 
-    /* Skewed Subculture Badge (Blue Archive / Gakumas Style) */
     .skew-badge {
       transform: skewX(-10deg);
       display: inline-flex;
@@ -97,7 +96,6 @@
       transform: skewX(10deg);
     }
 
-    /* Sleek Custom Scrollbar (No ugly Windows gray bar!) */
     .clean-scroll::-webkit-scrollbar {
       width: 5px;
       height: 5px;
@@ -117,7 +115,6 @@
       scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
     }
 
-    /* Navigation Pill Active State */
     .nav-tab {
       color: var(--text-sub);
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -129,7 +126,6 @@
       box-shadow: 0 4px 14px rgba(74, 137, 220, 0.35);
     }
 
-    /* MomoTalk Choice Button */
     .momo-choice-btn {
       width: 100%;
       text-align: left;
@@ -160,11 +156,17 @@
       transform: scale(0.985);
     }
 
-    /* Speech Bubble Tails */
     .bubble-left {
       position: relative;
       background: #4c5b70;
       color: #ffffff;
+      border-radius: 0.35rem 1.1rem 1.1rem 1.1rem;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+    .bubble-left-kotone {
+      position: relative;
+      background: #4b553a;
+      color: #fefce8;
       border-radius: 0.35rem 1.1rem 1.1rem 1.1rem;
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
     }
@@ -183,7 +185,6 @@
       box-shadow: 0 2px 8px rgba(74, 137, 220, 0.22);
     }
 
-    /* Stage Image Smooth Transition */
     #mainTrainerImg, #dualStageImg {
       transition: object-position 0.35s ease, transform 0.35s ease, opacity 0.25s ease;
     }
@@ -212,102 +213,109 @@
     </div>
 
     <!-- 1. Top MomoTalk / Schale Style Header -->
-    <header class="game-card px-3.5 py-2.5 flex items-center justify-between border-t-4 border-t-[#f4869d]">
-      <div class="flex items-center gap-2.5">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#f4869d] to-[#fb7185] flex items-center justify-center text-white text-base font-black shadow-sm shrink-0">
+    <header class="game-card px-3 py-2.5 flex items-center justify-between border-t-4 border-t-[#f4869d]">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#f4869d] to-[#fb7185] flex items-center justify-center text-white text-sm font-black shadow-sm shrink-0">
           💌
         </div>
         <div>
-          <div class="flex items-center gap-1.5">
+          <div class="flex items-center gap-1">
             <h1 class="text-sm font-black tracking-tight">GeminiTalk</h1>
             <span class="skew-badge bg-sky-500/15 border border-sky-400/40 text-sky-600 dark:text-sky-300 text-[9px] font-extrabold px-1.5 py-0.5 rounded">
-              <span>SCHALE FIT</span>
+              <span>GAKUMAS FIT</span>
             </span>
           </div>
-          <p id="inbodyDdayText" class="text-[11px] font-medium text-slate-500 dark:text-slate-400">제미니 & 미오 트레이너와의 대화</p>
+          <p id="inbodyDdayText" class="text-[10px] font-medium text-slate-500 dark:text-slate-400">제미니 · 코토네 · 미오 밀착 코칭</p>
         </div>
       </div>
 
-      <div class="flex items-center gap-1.5">
-        <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-600 dark:text-sky-300 text-xs font-extrabold flex items-center gap-1 cursor-pointer hover:bg-sky-500/20 transition-all shadow-sm" title="삼성헬스/인바디 캡처 스캔">
+      <div class="flex items-center gap-1">
+        <!-- GitHub Cloud Sync Button -->
+        <button onclick="openGithubSyncModal()" id="githubSyncHeaderBtn" class="px-2 py-1.5 rounded-xl sub-box text-[11px] font-extrabold flex items-center gap-1 hover:border-emerald-400 transition-all" title="PC ↔ 폰 GitHub state.json 실시간 연동">
+          <span id="syncStatusDot" class="w-2 h-2 rounded-full bg-slate-400"></span>
+          <span id="syncStatusLabel">☁️ 연동</span>
+        </button>
+
+        <!-- InBody OCR Scan -->
+        <label for="inbodyOcrInput" class="px-2 py-1.5 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-600 dark:text-sky-300 text-[11px] font-extrabold flex items-center gap-1 cursor-pointer hover:bg-sky-500/20 transition-all shadow-sm" title="삼성헬스/인바디 캡처 스캔">
           <span id="inbodyScanBtnText">📷 스캔</span>
         </label>
         <input type="file" id="inbodyOcrInput" accept="image/*" class="hidden" onchange="handleInbodyScan(event)">
 
-        <button onclick="toggleTheme()" id="themeToggleBtn" class="p-2 rounded-xl sub-box text-xs hover:border-sky-400 transition-all" title="라이트/다크 테마 전환">
+        <button onclick="toggleTheme()" id="themeToggleBtn" class="p-1.5 rounded-xl sub-box text-xs hover:border-sky-400 transition-all" title="라이트/다크 테마 전환">
           ☀️
         </button>
 
-        <button onclick="openWebhookModal()" class="p-2 rounded-xl sub-box text-xs hover:border-sky-400 transition-all" title="디스코드 Webhook 설정">
+        <button onclick="openWebhookModal()" class="p-1.5 rounded-xl sub-box text-xs hover:border-sky-400 transition-all" title="디스코드 Webhook 설정">
           ⚙️
         </button>
       </div>
     </header>
 
-    <!-- 2. Main Navigation Tabs (MomoTalk / Routine & Diet) -->
-    <div class="game-card p-1 flex text-xs font-bold">
-      <button onclick="switchMainTab('talk')" id="tabTalkBtn" class="nav-tab active flex-1 py-2 rounded-xl text-center flex items-center justify-center gap-1.5">
-        <span>💬 제미니톡</span>
-        <span id="unreadBadge" class="text-[9px] bg-white/25 text-white px-1.5 py-0.2 rounded-full font-extrabold">LIVE</span>
+    <!-- 2. Main Navigation Tabs (MomoTalk / Routine & Diet / Event Gallery) -->
+    <div class="game-card p-1 flex text-xs font-bold gap-1">
+      <button onclick="switchMainTab('talk')" id="tabTalkBtn" class="nav-tab active flex-1 py-2 rounded-xl text-center flex items-center justify-center gap-1">
+        <span>💬 모모톡 & 코칭</span>
+        <span id="unreadBadge" class="text-[8px] bg-white/25 text-white px-1.5 py-0.2 rounded-full font-extrabold">3인</span>
       </button>
-      <button onclick="switchMainTab('health')" id="tabHealthBtn" class="nav-tab flex-1 py-2 rounded-xl text-center flex items-center justify-center gap-1.5">
-        <span>📊 루틴 & 식단 관리</span>
+      <button onclick="switchMainTab('health')" id="tabHealthBtn" class="nav-tab flex-1 py-2 rounded-xl text-center flex items-center justify-center gap-1">
+        <span>📊 루틴 & 식단</span>
+      </button>
+      <button onclick="openGalleryModal()" class="px-2.5 py-2 rounded-xl bg-gradient-to-r from-pink-500/15 to-amber-500/15 border border-pink-400/30 text-pink-600 dark:text-pink-300 text-[11px] font-extrabold hover:border-pink-400 transition-all shrink-0">
+        🖼️ CG도감(15)
       </button>
     </div>
 
     <!-- ========================================================
-         VIEW A: MomoTalk & Subculture Trainer Showcase
+         VIEW A: MomoTalk & 3-Heroine Subculture Showcase
          ======================================================== -->
     <div id="viewTalk" class="space-y-2.5">
 
       <!-- Trainer Showcase Card -->
       <div id="trainerCardContainer" class="game-card overflow-hidden">
         
-        <!-- Top Bar: Trainer Selection + Bond Rank & EXP Bar -->
-        <div class="px-3 py-2.5 border-b border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-2">
-          <div class="flex items-center gap-1.5">
-            <!-- Gemini Tab -->
-            <button onclick="setTrainerMode('gemini')" id="btnFocusGemini" class="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-pink-500 text-white text-xs font-extrabold shadow-sm transition-all">
-              <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
-              <span>제미니</span>
+        <!-- Top Bar: 3 Heroines Selection + Bond Rank & EXP Bar -->
+        <div class="px-2.5 py-2 border-b border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-1.5">
+          <div class="flex items-center gap-1 overflow-x-auto clean-scroll">
+            <!-- New Gemini Tab (Cat-ear Tsundere/Koakuma Personal Coach) -->
+            <button onclick="setTrainerMode('gemini')" id="btnFocusGemini" class="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-[#f4869d] text-white text-xs font-extrabold shadow-sm transition-all shrink-0">
+              <span>🐾 제미니</span>
             </button>
 
-            <!-- Mio Tab -->
-            <button onclick="setTrainerMode('mio')" id="btnFocusMio" class="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold hover:border-amber-400 transition-all">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              <span>미오</span>
+            <!-- Kotone Tab (Gakumas Fujita Kotone) -->
+            <button onclick="setTrainerMode('kotone')" id="btnFocusKotone" class="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold hover:border-yellow-400 transition-all shrink-0">
+              <span>💛 코토네</span>
+            </button>
+
+            <!-- Mio Tab (Honda Mio) -->
+            <button onclick="setTrainerMode('mio')" id="btnFocusMio" class="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold hover:border-amber-400 transition-all shrink-0">
+              <span>🌟 미오</span>
             </button>
 
             <!-- Joint Event Tab -->
-            <button onclick="setTrainerMode('dual')" id="btnFocusDual" class="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[11px] font-bold hover:border-amber-400 transition-all" title="특수 합동 이벤트">
+            <button onclick="setTrainerMode('dual')" id="btnFocusDual" class="flex items-center gap-1 px-2 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[11px] font-bold hover:border-amber-400 transition-all shrink-0" title="3인 합동 스페셜">
               <span>⭐ 합동</span>
             </button>
           </div>
 
           <!-- Bond Level & EXP Gauge -->
-          <div class="flex items-center gap-2 shrink-0">
+          <div class="flex items-center gap-1.5 shrink-0">
             <div class="text-right">
               <div class="flex items-center justify-end gap-1">
-                <span id="bondRankBadge" class="text-[11px] font-extrabold text-[#f4869d]">인연 Lv.1 ❤️</span>
+                <span id="bondRankBadge" class="text-[10px] font-extrabold text-[#f4869d]">인연 Lv.1 ❤️</span>
                 <span id="bondExpText" class="text-[9px] font-mono text-slate-400">75%</span>
               </div>
-              <div class="w-20 h-1.5 bg-pink-100 dark:bg-slate-700 rounded-full overflow-hidden mt-0.5">
+              <div class="w-16 h-1.5 bg-pink-100 dark:bg-slate-700 rounded-full overflow-hidden mt-0.5">
                 <div id="bondExpBar" class="h-full bg-gradient-to-r from-[#f4869d] to-[#fb7185] rounded-full transition-all duration-300" style="width: 75%"></div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Situation / Outfit Quick Selector Bar (Lets user freely enjoy all event CGs!) -->
-        <div class="px-3 py-1.5 bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-200/60 dark:border-slate-700/50 flex items-center justify-between gap-1 overflow-x-auto clean-scroll">
+        <!-- 5 Visual-Novel Event Scenarios / Outfit Quick Selector Bar -->
+        <div class="px-2.5 py-1.5 bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-200/60 dark:border-slate-700/50 flex items-center justify-between gap-1 overflow-x-auto clean-scroll">
           <div class="flex items-center gap-1 shrink-0" id="situationPills">
-            <button onclick="changeSituation('idle')" data-sit="idle" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-bold bg-sky-500 text-white shadow-sm">✨ 일상</button>
-            <button onclick="changeSituation('morning')" data-sit="morning" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60">☀️ 모닝 스트레칭</button>
-            <button onclick="changeSituation('tea')" data-sit="tea" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60">🍵 말차 다도</button>
-            <button onclick="changeSituation('cafe')" data-sit="cafe" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60">☕ 홈카페</button>
-            <button onclick="changeSituation('running')" data-sit="running" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60">🏃 야외 러닝</button>
-            <button onclick="changeSituation('night')" data-sit="night" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60">🌙 단식 마감</button>
-            <button onclick="changeSituation('inbody')" data-sit="inbody" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60">📊 인바디</button>
+            <!-- Dynamically rendered for current heroine's 5 distinct event CGs -->
           </div>
           <button onclick="toggleFullCgView()" id="btnToggleCrop" class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 shrink-0 hover:border-sky-400" title="일러스트 전체보기 / 카드뷰 전환">
             🔍 전체보기
@@ -319,33 +327,34 @@
           
           <!-- Single Trainer View -->
           <div id="singleStageView" class="w-full h-full relative">
-            <img id="mainTrainerImg" src="./trainer_gemini.png" alt="Trainer" class="w-full h-full object-cover" style="object-position: center 18%;" onerror="this.src='./trainer_gemini.png'">
+            <img id="mainTrainerImg" src="./gemini_01_main.png" alt="Trainer" class="w-full h-full object-cover" style="object-position: center 14%;" onerror="this.src='./trainer_gemini.png'">
             
-            <!-- Floating Character Name & Situation Badge -->
-            <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+            <!-- Floating Character Name & Location/Outfit Badge -->
+            <div class="absolute top-2.5 left-2.5 flex flex-wrap items-center gap-1.5 pr-2">
               <div id="mainTrainerTag" class="bg-white/90 dark:bg-slate-900/85 backdrop-blur-md px-2.5 py-1 rounded-xl border border-pink-400/50 text-[11px] font-extrabold text-pink-600 dark:text-pink-300 flex items-center gap-1.5 shadow-sm">
                 <span id="mainTrainerDot" class="w-2 h-2 rounded-full bg-pink-500 animate-pulse"></span>
                 <span id="mainTrainerTagName">제미니</span>
               </div>
-              <span id="situationTag" class="text-[10px] font-bold px-2.5 py-1 rounded-xl bg-sky-500/90 text-white backdrop-blur-md shadow-sm">✨ 일상 코칭</span>
+              <span id="situationTag" class="text-[10px] font-bold px-2.5 py-1 rounded-xl bg-sky-500/90 text-white backdrop-blur-md shadow-sm">✨ EP.1 밀착 PT 코칭</span>
+              <span id="outfitLocationTag" class="text-[9px] font-bold px-2 py-0.5 rounded-lg bg-slate-900/70 text-amber-200 backdrop-blur-md">📍 VIP 스튜디오 · 오프숄더 크롭탑</span>
             </div>
           </div>
 
-          <!-- Dual Event Stage View -->
+          <!-- 3-Heroine Joint Event Stage View -->
           <div id="dualStageView" class="w-full h-full relative hidden">
-            <img id="dualStageImg" src="./dual_inbody.png" alt="Dual Event" class="w-full h-full object-cover" style="object-position: center 20%;" onerror="this.src='./trainer_gemini.png'">
-            <div class="absolute top-2.5 left-2.5 bg-gradient-to-r from-amber-500/90 to-pink-500/90 backdrop-blur-md px-3 py-1 rounded-xl text-[11px] font-extrabold text-white flex items-center gap-1.5 shadow-md">
+            <img id="dualStageImg" src="./dual_inbody.png" alt="Triple Heroines Event" class="w-full h-full object-cover" style="object-position: center 15%;" onerror="this.src='./trainer_gemini.png'">
+            <div class="absolute top-2.5 left-2.5 bg-gradient-to-r from-pink-500/90 via-amber-500/90 to-sky-500/90 backdrop-blur-md px-3 py-1 rounded-xl text-[11px] font-extrabold text-white flex items-center gap-1.5 shadow-md">
               <span>⭐</span>
-              <span>제미니 & 미오 합동 스페셜 코칭</span>
+              <span>제미니 · 코토네 · 미오 3인 합동 코칭</span>
             </div>
           </div>
 
           <!-- Visual Novel Style Dialogue Overlay Bar -->
-          <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-950/90 via-slate-900/70 to-transparent p-3 pt-8 text-center">
+          <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-950/95 via-slate-900/75 to-transparent p-3 pt-8 text-center">
             <p id="trainerDialogue" class="text-xs font-bold text-white leading-snug drop-shadow-sm">
-              "제미니: 프로듀서, 슬림핏 52kg 될 때까지 긴장 늦추지 마!"
+              "제미니: 흥, 바보 프로듀서! 내 눈엔 다 보이거든? 슬림핏 52kg 될 때까지 나만 딱 믿고 따라와! 🐾"
             </p>
-            <p class="text-[9px] text-sky-200/80 mt-0.5">💡 캐릭터를 터치하면 반응합니다</p>
+            <p class="text-[9px] text-sky-200/80 mt-0.5">💡 캐릭터를 터치하면 대사와 표정이 반응합니다 · 상단 EP 버튼으로 미연시 이벤트 전환</p>
           </div>
         </div>
       </div>
@@ -359,19 +368,19 @@
             <button onclick="loadTopic('diet')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-sky-400">🥗 식단/단식</button>
             <button onclick="loadTopic('tea')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-emerald-400">🍵 말차/카페</button>
             <button onclick="loadTopic('workout')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-amber-400">🏃 러닝/재활</button>
-            <button onclick="loadTopic('smalltalk')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-pink-400">💖 일상토크</button>
+            <button onclick="loadTopic('date')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-pink-400">💘 미연시 데이트</button>
           </div>
           <button onclick="clearChatLog()" class="text-[10px] text-slate-400 hover:text-rose-400 shrink-0 px-1" title="대화 기록 정리">지우기</button>
         </div>
 
-        <!-- Chat Stream (3~4+ Speech Bubbles Clearly Visible, Clean Custom Scrollbar) -->
-        <div class="p-3.5 min-h-[310px] max-h-[370px] overflow-y-auto clean-scroll space-y-3 bg-[var(--chat-bg)]" id="chatContainer">
+        <!-- Chat Stream -->
+        <div class="p-3.5 min-h-[300px] max-h-[360px] overflow-y-auto clean-scroll space-y-3 bg-[var(--chat-bg)]" id="chatContainer">
           <!-- Dynamically populated -->
         </div>
 
         <!-- Direct Message Input Bar -->
         <div class="px-3 py-2 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center gap-2">
-          <input type="text" id="directChatInput" placeholder="제미니/미오에게 직접 메시지 보내기..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-sky-400" onkeydown="if(event.key==='Enter') sendDirectMessage()">
+          <input type="text" id="directChatInput" placeholder="제미니 / 코토네 / 미오에게 메시지 보내기..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-sky-400" onkeydown="if(event.key==='Enter') sendDirectMessage()">
           <button onclick="sendDirectMessage()" class="px-3 py-1.5 rounded-xl bg-[#4a89dc] hover:bg-sky-500 text-white text-xs font-extrabold shadow-sm shrink-0">
             전송
           </button>
@@ -382,7 +391,7 @@
       <div class="p-3 rounded-2xl bg-[#eef5ff] dark:bg-[#192236] border border-[#cfe0fc] dark:border-sky-500/30 space-y-2 shadow-sm">
         <div class="text-[11px] font-extrabold text-[#3b76c4] dark:text-sky-400 flex items-center justify-between">
           <span class="flex items-center gap-1"><span class="text-sky-500 font-black">|</span> 답장하기</span>
-          <span class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">선택지를 터치해 대화하세요</span>
+          <span class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">선택지를 터치해 미연시 이벤트와 대화를 진행하세요</span>
         </div>
 
         <div id="choicesContainer" class="space-y-1.5 max-h-[210px] overflow-y-auto clean-scroll pr-0.5">
@@ -394,12 +403,12 @@
       <div class="p-3 rounded-2xl bg-[#fde8ef] dark:bg-pink-950/30 border border-[#f9d5e2] dark:border-pink-500/30 flex items-center justify-between shadow-sm">
         <div>
           <div class="text-[11px] font-extrabold text-[#d65c7a] dark:text-pink-300 flex items-center gap-1">
-            <span class="font-black">|</span> 인연 이벤트
+            <span class="font-black">|</span> 미연시 인연 이벤트 (캐릭터별 5종 CG)
           </div>
-          <p id="bondEventDesc" class="text-[10px] text-[#b85d74] dark:text-pink-200/80 mt-0.5">트레이너와의 특별한 1:1 에피소드를 감상해보세요</p>
+          <p id="bondEventDesc" class="text-[10px] text-[#b85d74] dark:text-pink-200/80 mt-0.5">장소·의상·시츄에이션이 달라지는 다음 인연 에피소드를 감상하세요</p>
         </div>
         <button onclick="triggerBondStory()" id="btnBondStory" class="px-3.5 py-2 rounded-xl bg-[#f4869d] hover:bg-[#ec6e89] text-white text-xs font-extrabold shadow-sm transition-all shrink-0">
-          제미니의 인연스토리로 ➔
+          제미니 인연스토리 ➔
         </button>
       </div>
 
@@ -560,7 +569,7 @@
         </div>
       </div>
 
-      <!-- 5. Meal Photo Camera & Gallery Log (Supports both Camera & Photo Library!) -->
+      <!-- 5. Meal Photo Camera & Gallery Log -->
       <div class="game-card p-3.5 space-y-2.5 border-l-4 border-l-pink-400">
         <div class="flex items-center justify-between pb-1.5 border-b border-slate-200/80 dark:border-slate-700/60">
           <div class="flex items-center gap-1.5">
@@ -626,10 +635,108 @@
 
     <!-- 3. Bottom Sticky Action Bar (디스코드 전송) -->
     <div class="fixed bottom-0 left-0 right-0 p-3 bg-white/85 dark:bg-[#111622]/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 z-30">
-      <div class="max-w-md mx-auto">
-        <button onclick="dispatchDiscord()" id="btnDispatch" class="w-full py-3 rounded-2xl bg-gradient-to-r from-[#4a89dc] via-[#5b7cfa] to-[#f4869d] hover:opacity-95 text-white font-extrabold text-xs shadow-lg transition-all flex items-center justify-center gap-2">
-          <span>🚀 디스코드에 트레이너 일일 브리핑 전송하기</span>
+      <div class="max-w-md mx-auto flex gap-2">
+        <button onclick="dispatchDiscord()" id="btnDispatch" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-[#4a89dc] via-[#5b7cfa] to-[#f4869d] hover:opacity-95 text-white font-extrabold text-xs shadow-lg transition-all flex items-center justify-center gap-2">
+          <span>🚀 디스코드에 3인 트레이너 브리핑 전송</span>
         </button>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         MODAL 1: 15-CG Visual Novel Event Gallery (3 Heroines x 5 CGs)
+         ======================================================== -->
+    <div id="galleryModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
+      <div class="game-card max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden border-pink-400/40 shadow-2xl">
+        <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div>
+            <h3 class="text-sm font-black flex items-center gap-1.5">
+              <span>🖼️ 미연시 이벤트 CG 도감</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-pink-500 text-white font-extrabold">총 15종</span>
+            </h3>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">카드를 터치하면 메인 스테이지에 해당 이벤트와 의상이 즉시 적용됩니다</p>
+          </div>
+          <button onclick="closeGalleryModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold px-1">✕</button>
+        </div>
+
+        <!-- Gallery Filter Tabs -->
+        <div class="px-4 py-2 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex gap-1.5">
+          <button onclick="renderGalleryGrid('all')" id="galTabAll" class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-[#4a89dc] text-white">전체 (15)</button>
+          <button onclick="renderGalleryGrid('gemini')" id="galTabGemini" class="px-2.5 py-1 rounded-lg text-xs font-bold sub-box">🐾 제미니 (5)</button>
+          <button onclick="renderGalleryGrid('kotone')" id="galTabKotone" class="px-2.5 py-1 rounded-lg text-xs font-bold sub-box">💛 코토네 (5)</button>
+          <button onclick="renderGalleryGrid('mio')" id="galTabMio" class="px-2.5 py-1 rounded-lg text-xs font-bold sub-box">🌟 미오 (5)</button>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div id="galleryGridContainer" class="p-3.5 overflow-y-auto clean-scroll grid grid-cols-2 gap-2.5">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         MODAL 2: GitHub state.json Free Cloud Sync Modal
+         ======================================================== -->
+    <div id="githubSyncModal" class="fixed inset-0 bg-slate-950/65 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+      <div class="game-card max-w-sm w-full p-5 space-y-3.5 border-emerald-400/50 shadow-2xl">
+        <div class="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-slate-700">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">☁️</span>
+            <div>
+              <h3 class="text-sm font-extrabold">GitHub `state.json` 실시간 자동 연동</h3>
+              <p class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">PC ↔ 스마트폰 100% 무료 영구 클라우드 동기화</p>
+            </div>
+          </div>
+          <button onclick="closeGithubSyncModal()" class="text-slate-400 hover:text-slate-600 text-base">✕</button>
+        </div>
+
+        <div class="space-y-2.5 text-xs">
+          <div>
+            <label class="text-[11px] font-bold text-slate-500 block mb-1">📁 GitHub 저장소 (Owner/Repo)</label>
+            <input type="text" id="ghRepoInput" value="Minusindot/GitHubPrivate" class="w-full sub-box px-3 py-2 text-xs font-mono focus:outline-none focus:border-emerald-400">
+          </div>
+
+          <div>
+            <label class="text-[11px] font-bold text-slate-500 block mb-1">📄 상태 파일 경로 (Branch: main)</label>
+            <input type="text" id="ghPathInput" value="state.json" class="w-full sub-box px-3 py-2 text-xs font-mono focus:outline-none focus:border-emerald-400">
+          </div>
+
+          <div>
+            <label class="text-[11px] font-bold text-slate-500 flex justify-between mb-1">
+              <span>🔑 GitHub Personal Access Token (PAT)</span>
+              <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" class="text-sky-500 underline font-extrabold">토큰 발급 ↗</a>
+            </label>
+            <input type="password" id="ghTokenInput" placeholder="github_pat_... 또는 ghp_..." class="w-full sub-box px-3 py-2 text-xs font-mono focus:outline-none focus:border-emerald-400">
+            <p class="text-[10px] text-slate-400 mt-1 leading-snug">
+              ※ 토큰은 이 기기의 브라우저(`localStorage`)에만 안전하게 보관되며 외부나 GitHub 코드에 절대 노출되지 않습니다. (`Contents: Read & Write` 권한만 부여)
+            </p>
+          </div>
+
+          <label class="flex items-center justify-between p-2.5 rounded-xl sub-box cursor-pointer">
+            <div>
+              <div class="text-xs font-extrabold">⚡ 체크/수정 시 자동 클라우드 동기화</div>
+              <div class="text-[10px] text-slate-400">앱 실행 시 자동 Pull · 기록 변경 시 자동 Push</div>
+            </div>
+            <input type="checkbox" id="ghAutoSyncChk" checked class="w-4 h-4 rounded accent-emerald-500">
+          </label>
+
+          <div id="ghSyncStatusMsg" class="text-[11px] font-mono text-center py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+            토큰을 입력하고 저장하면 PC ↔ 폰 실시간 연동이 활성화됩니다.
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button onclick="pullStateFromGitHub(true)" class="py-2 rounded-xl sub-box hover:border-sky-400 text-xs font-extrabold text-sky-600 dark:text-sky-400">
+            📥 지금 불러오기 (Pull)
+          </button>
+          <button onclick="pushStateToGitHub(true)" class="py-2 rounded-xl sub-box hover:border-emerald-400 text-xs font-extrabold text-emerald-600 dark:text-emerald-400">
+            📤 지금 저장하기 (Push)
+          </button>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-1 border-t border-slate-200 dark:border-slate-700">
+          <button onclick="closeGithubSyncModal()" class="px-3 py-1.5 text-xs text-slate-500 font-bold">닫기</button>
+          <button onclick="saveGithubSyncConfig()" class="px-4 py-1.5 text-xs font-extrabold bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl shadow-sm">설정 저장 & 연동</button>
+        </div>
       </div>
     </div>
 
@@ -648,7 +755,7 @@
       </div>
     </div>
 
-    <!-- OCR Result Modal (삼성헬스 / 인바디 스캔 확인 및 수동 보정) -->
+    <!-- OCR Result Modal -->
     <div id="ocrResultModal" class="fixed inset-0 bg-slate-950/65 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
       <div class="game-card max-w-sm w-full p-5 space-y-4 border-sky-400/50 shadow-2xl">
         <div class="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-slate-700">
@@ -663,7 +770,6 @@
         </div>
 
         <div class="space-y-3">
-          <!-- Weight Input Card -->
           <div class="sub-box p-3">
             <label class="text-[11px] font-bold text-slate-500 flex justify-between">
               <span>⚖️ 현재 체중 (kg)</span>
@@ -675,7 +781,6 @@
             </div>
           </div>
 
-          <!-- Body Fat Input Card -->
           <div class="sub-box p-3">
             <label class="text-[11px] font-bold text-slate-500 flex justify-between">
               <span>💧 체지방률 (%)</span>
@@ -687,7 +792,6 @@
             </div>
           </div>
 
-          <!-- Raw text accordion -->
           <details class="text-[11px] text-slate-500 sub-box p-2.5">
             <summary class="cursor-pointer font-bold hover:text-sky-500">🔍 OCR 인식 텍스트 원문 보기</summary>
             <pre id="ocrRawText" class="mt-2 text-[10px] text-slate-500 whitespace-pre-wrap max-h-28 overflow-y-auto font-mono bg-slate-100 dark:bg-slate-900 p-2 rounded"></pre>
@@ -747,20 +851,29 @@
       });
     }
 
-    // Persistent State (Migrates seamlessly from v6)
-    const STORAGE_KEY = 'gemini_fit_dual_v7';
-    const LEGACY_KEY = 'gemini_fit_dual_v6';
+    const STORAGE_KEY = 'gemini_fit_triple_v8';
+    const LEGACY_KEYS = ['gemini_fit_dual_v7', 'gemini_fit_dual_v6'];
+    const GH_CONFIG_KEY = 'gemini_fit_gh_sync_v1';
+
+    let ghConfig = {
+      repo: 'Minusindot/GitHubPrivate',
+      path: 'state.json',
+      token: '',
+      autoSync: true,
+      lastSha: ''
+    };
 
     let state = {
-      theme: 'light', // 'light' (Blue Archive / Gakumas Airy) or 'dark' (Wuthering Waves / Genshin Night)
+      updatedAt: new Date().toISOString(),
+      theme: 'light',
       fullCgView: false,
       weight: 53.8,
       fat: 21.5,
       bondRank: 1,
       bondExp: 75,
-      activeTrainer: 'gemini',
-      activeMode: 'gemini',
-      currentSituation: 'idle',
+      activeTrainer: 'gemini', // 'gemini' | 'kotone' | 'mio'
+      activeMode: 'gemini',    // 'gemini' | 'kotone' | 'mio' | 'dual'
+      currentSituation: 'ev1',
       absDone: false,
       runDone: false,
       runDist: 5.0,
@@ -770,106 +883,507 @@
       teaLog: { matcha: 0, espresso: 0, tea: 0 },
       webhookUrl: '',
       chatHistory: [
-        { sender: 'gemini', name: '제미니', text: '프로듀서! 오늘 17:7 단식 잘 지키고 있지? 딴생각 말고 나만 딱 믿고 따라오라고!' },
-        { sender: 'mio', name: '미오', text: '에헤헤, 프로듀서! 오늘도 우리랑 같이 기분 좋게 파이팅이야! 🌟' }
+        { sender: 'gemini', name: '제미니', text: '흥, 바보 프로듀서! 오늘 17:7 단식이랑 엘보 2kg 재활 빼먹지 않았겠지? 이 제미니가 24시간 밀착 마크할 거니까 각오해! 🐾' },
+        { sender: 'kotone', name: '코토네', text: '헤헤~ 프로듀서님! 오늘 목표 달성하시면 이 코토네 님이 특급 칭찬 서비스 해드릴게요! (소곤소곤) 인센티브도 기대할게요~? 💛💸' },
+        { sender: 'mio', name: '미오', text: '에헤헤, 프로듀서! 우리 셋이랑 함께라면 52kg 슬림핏 무조건 성공이야! 오늘도 기분 좋게 파이팅~! 🌟' }
       ]
     };
 
-    // Per-Image Smart Focal Coordinates (Ensures faces are NEVER cut off!)
-    const SITUATIONS = {
-      gemini: {
-        idle:    { img: './trainer_gemini.png',    pos: 'center 16%', tag: '✨ 일상 코칭',      text: '프로듀서, 슬림핏 52kg 될 때까지 긴장 늦추지 마!' },
-        morning: { img: './gemini_morning.png',    pos: 'center 42%', tag: '☀️ 모닝 스트레칭',  text: '창가로 들어오는 아침 햇살 받으면서 기지개 쭉! 10시 첫 식사 전까지 공복 유지하자.' },
-        tea:     { img: './trainer_tea.png',       pos: 'center 24%', tag: '🍵 말차 다도 타임', text: '다기로 정성껏 격불한 말차야. 카테킨 성분이 지방 연소를 돕는 거 알지?' },
-        cafe:    { img: './trainer_cafe.png',      pos: 'center 22%', tag: '☕ 홈카페 브레이크', text: '향긋한 에스프레소 한 잔으로 대사 부스팅 완료! 오늘도 식단 깔끔하게 가자.' },
-        running: { img: './trainer_gemini.png',    pos: 'center 16%', tag: '🏃 러닝 코칭',      text: '손아귀 힘 100% 빼고 달리는 거 잊지 마! 팔꿈치에 무리 가면 바로 멈춰야 해.' },
-        workout: { img: './trainer_wednesday.png', pos: 'center 20%', tag: '💪 코어 & 엘보케어', text: '2kg 덤벨 익센트릭 컬이랑 14분 복근! 정확한 자세로 천천히 자극을 느껴봐.' },
-        night:   { img: './gemini_evening.png',    pos: 'center 22%', tag: '🌙 17:00 단식 마감', text: '오늘 17:00 셧다운 완벽 성공! 따뜻한 허브티 마시면서 푹 쉬자, 기특하네.' },
-        inbody:  { img: './trainer_wednesday.png', pos: 'center 20%', tag: '📊 인바디 체크',    text: '인바디 측정 완료! 골격근은 지키고 체지방만 쏙 빠졌는지 확인해 볼까?' }
-      },
-      mio: {
-        idle:    { img: './trainer_mio.png',       pos: 'center 25%', tag: '✨ 파트너 미오',    text: '에헤헤, 프로듀서! 오늘도 나랑 기운차게 하루를 시작해볼까? 🏃‍♀️' },
-        morning: { img: './trainer_mio.png',       pos: 'center 25%', tag: '☀️ 상쾌한 아침',    text: '좋은 아침이야 프로듀서! 시원한 물 한 잔 마시고 활기차게 출발하자!' },
-        running: { img: './mio_running.png',       pos: 'center 18%', tag: '🏃 야외 트랙 러닝', text: '나이키런 켜고 5km 가뿐하게 완주! 페이스 완전 좋았어, 하이파이브~ 🖐️' },
-        tea:     { img: './trainer_mio.png',       pos: 'center 25%', tag: '☕ 티 브레이크',    text: '따뜻한 차 향기 너무 좋다~ 잠깐 숨 돌리고 오후도 힘내자구!' },
-        cafe:    { img: './trainer_mio.png',       pos: 'center 25%', tag: '☕ 에너지 충전',    text: '에스프레소 마셨으니까 이제 나랑 신나게 트랙 달리러 갈 준비 됐지?' },
-        workout: { img: './mio_running.png',       pos: 'center 18%', tag: '💪 코어 트레이닝',  text: '복근 14분 루틴 마지막까지 하나, 둘! 프로듀서 진짜 멋있어!' },
-        night:   { img: './trainer_mio.png',       pos: 'center 25%', tag: '🌙 오늘 하루 완주', text: '오늘 하루도 단식이랑 운동 정말 수고 많았어! 푹 자고 내일 또 만나자~ 🌟' },
-        inbody:  { img: './trainer_mio.png',       pos: 'center 25%', tag: '📊 인바디 응원',    text: '와아~ 수치 내려간 거 보여? 프로듀서의 노력은 절대 배신하지 않는다구!' }
-      },
-      dual: {
-        inbody:  { img: './dual_inbody.png',       pos: 'center 20%', tag: '⭐ 합동 스페셜',    text: '제미니 & 미오: 목표 52kg 슬림핏 달성을 향해 우리 셋이 함께 달려가자! 💖' }
-      }
+    // ============================================================================
+    // 15 VISUAL-NOVEL EVENT CGs (5 per Heroine: Distinct Location, Situation, Outfit)
+    // ============================================================================
+    const HEROINE_EVENTS = {
+      gemini: [
+        {
+          key: 'ev1',
+          pill: '✨ EP.1 스튜디오 PT',
+          tag: '✨ EP.1 밀착 PT 코칭',
+          locOutfit: '📍 VIP 스튜디오 · 오프숄더 크롭 집업 & 방울 초커',
+          img: './gemini_01_main.png',
+          pos: 'center 14%',
+          text: '흥, 바보 프로듀서! 내 눈엔 다 보이거든? 슬림핏 52kg 될 때까지 이 제미니만 딱 믿고 따라와! 🐾',
+          story: '💖 [제미니 EP.1 · VIP 스튜디오] "자, 거울 똑바로 봐! 복근에 힘 빡 주고! 흥... 내가 이렇게 가까이서 코칭해 주는데 딴데 한눈팔면 가만 안 둬!"'
+        },
+        {
+          key: 'ev2',
+          pill: '🍵 EP.2 다실 말차',
+          tag: '🍵 EP.2 다실 말차 다도',
+          locOutfit: '📍 햇살 다다미 다실 · 네코 하오리 기모노 & 말차 다완',
+          img: './gemini_02_matcha.png',
+          pos: 'center 15%',
+          text: '17시 단식 셧다운 후엔 내가 직접 격불한 이 말차 한 잔만 마시는 거야! 카테킨이 지방 태워주는 거 알지? 🍵',
+          story: '💖 [제미니 EP.2 · 전통 다실] "프로듀서 주려고 일부러 다기 데워서 곱게 격불했어. 거품 예쁘게 올라왔지? ...마, 맛있게 마셔주면 기분은 좋겠네."'
+        },
+        {
+          key: 'ev3',
+          pill: '🩹 EP.3 손목 스킨십',
+          tag: '🩹 EP.3 노을빛 손목 스킨십',
+          locOutfit: '📍 석양 필라테스룸 · 홀터넥 & 루즈 가디건 · 손목 케어',
+          img: './gemini_03_rehab_touch.png',
+          pos: 'center 15%',
+          text: '잠깐, 손목 각도 흔들렸잖아! 이리 줘봐, 내가 직접 잡아줄 테니까 3초 동안 천천히 버티면서 내려봐.',
+          story: '💖 [제미니 EP.3 · 석양 필라테스룸] "바보야, 테니스 엘보 다 나을 때까지 무거운 거 잡지 말랬지... 가만히 있어 봐, 내가 팔꿈치랑 손목 힘줄 부드럽게 풀어줄게."'
+        },
+        {
+          key: 'ev4',
+          pill: '🏖️ EP.4 풀사이드 비키니',
+          tag: '🏖️ EP.4 서머 풀사이드 바캉스',
+          locOutfit: '📍 에메랄드 풀장 · 블랙 홀터넥 비키니 & 하트 헤어핀',
+          img: './gemini_04_pool_bikini.png',
+          pos: 'center 14%',
+          text: '뭐, 뭐야... 왜 그렇게 뚫어져라 쳐다봐?! 프로듀서도 빨리 11자 복근 만들어서 나랑 수영장 와야지! 🏖️',
+          story: '💖 [제미니 EP.4 · 프라이빗 풀사이드] "흥, 프로듀서가 이번 주 식단 잘 지킨 상으로 특별히 어울려 주는 거야! 물장구치기 시합해서 지는 사람이 이따 에스프레소 쏘기다?"'
+        },
+        {
+          key: 'ev5',
+          pill: '🌙 EP.5 밤 발코니 비밀',
+          tag: '🌙 EP.5 17시 이후의 비밀 야경',
+          locOutfit: '📍 도심 야경 발코니 · 버건디 오프숄더 나이트 슬립',
+          img: './gemini_05_night_secret.png',
+          pos: 'center 14%',
+          text: '밤늦게 배고플까 봐 무가당 레몬 탄산수 챙겨왔어. 오늘 하루도 내 잔소리 따라오느라... 고생 많았어, 프로듀서. 🌙',
+          story: '💖 [제미니 EP.5 · 야경 발코니] "낮에는 엄격하게 굴었지만... 사실 매일 포기하지 않고 노력하는 프로듀서 모습, 내가 제일 좋아하는 거 알지? 내일도 내가 1등으로 응원할게."'
+        }
+      ],
+      kotone: [
+        {
+          key: 'ev1',
+          pill: '✨ EP.1 일일 트레이너',
+          tag: '✨ EP.1 코토네의 PT 알바',
+          locOutfit: '📍 댄스 스튜디오 · 학원마스 민트 트랙 저지',
+          img: './kotone_01_studio.png',
+          pos: 'center 15%',
+          text: '헤헤~ 프로듀서님! 이 코토네 님이 전담 트레이너로 왔으니까 목표 52kg은 따놓은 당상이에요! 💛',
+          story: '💖 [코토네 EP.1 · 학원 스튜디오] "엣헴! 이 코토네 님을 그렇게 귀엽다고 칭찬해 주시면... 특별히 오늘 복근 루틴 카운트는 제가 애교 듬뿍 담아서 세어 드릴게요~!"'
+        },
+        {
+          key: 'ev2',
+          pill: '☀️ EP.2 아침 모닝콜',
+          tag: '☀️ EP.2 눈부신 아침 모닝콜',
+          locOutfit: '📍 아침 햇살 침실 창가 · 화이트 슬리브리스 홈웨어',
+          img: './kotone_02_morning.png',
+          pos: 'center 28%',
+          text: '프로듀서님~ 아침이에요! 10시 첫 식사 전까지 공복 유산소 가볍게 하시면 코토네가 특급 칭찬 해드릴게요! ☀️',
+          story: '💖 [코토네 EP.2 · 아침 창가] "흐아암~ 일찍 일어나는 새가 시급도... 아니아니, 체지방도 더 빨리 태우는 법이라구요! 자, 미지근한 물 한 잔부터 같이 마셔요!"'
+        },
+        {
+          key: 'ev3',
+          pill: '🍰 EP.3 카페 데이트',
+          tag: '🍰 EP.3 포상 테라스 카페 데이트',
+          locOutfit: '📍 오픈 테라스 카페 · 크림 오프숄더 니트 & 핑크 베레모',
+          img: './kotone_03_cafe_date.png',
+          pos: 'center 14%',
+          text: '와아~ 프로듀서님! 파르페는 제가 대신 맛있게 먹어드릴 테니까 프로듀서님은 깔끔한 아이스 아메리카노 드세요! 헤헤~ 🍓',
+          story: '💖 [코토네 EP.3 · 테라스 카페 데이트] "프로듀서님이 사주시는 디저트라니 최고예요! 아, 대신 목표 체중 52kg 달성하시는 날엔 우리 둘이서 같이 치팅데이 파티 하는 거예요, 약속!"'
+        },
+        {
+          key: 'ev4',
+          pill: '🌧️ EP.4 비 오는 락커룸',
+          tag: '🌧️ EP.4 비 오는 날 락커룸',
+          locOutfit: '📍 비 내리는 저녁 락커룸 · 오버핏 화이트 셔츠 & 타월',
+          img: './kotone_04_rain_locker.png',
+          pos: 'center 14%',
+          text: '으앙, 갑자기 소나기가 내려서 다 젖어버렸어요... 프로듀서님 셔츠 조금 크긴 한데 빌려주셔서 정말 고마워요... 😳',
+          story: '💖 [코토네 EP.4 · 비 오는 저녁 락커룸] "비 오는 날에도 빼먹지 않고 운동하러 오신 프로듀서님 보니까... 저도 괜히 가슴이 두근거리잖아요. 감기 걸리지 않게 얼른 머리 말려요!"'
+        },
+        {
+          key: 'ev5',
+          pill: '🎆 EP.5 불꽃놀이 유카타',
+          tag: '🎆 EP.5 여름밤 불꽃놀이 축제',
+          locOutfit: '📍 여름밤 불꽃놀이 축제 · 핑크 플로럴 유카타 & 사과사탕',
+          img: './kotone_05_festival_yukata.png',
+          pos: 'center 14%',
+          text: '프로듀서님, 저기 밤하늘 불꽃 좀 보세요! 오늘만큼은 알바 생각도 잊고 프로듀서님이랑 단둘이 있어서 너무 행복해요! 🎆',
+          story: '💖 [코토네 EP.5 · 여름밤 불꽃놀이] "헤헤, 유카타 입은 코토네는 몇 점인가요? ...100점 만점에 1000점이라구요?! 에헤헤, 평생 프로듀서님 전담 파트너 해드릴래요!"'
+        }
+      ],
+      mio: [
+        {
+          key: 'ev1',
+          pill: '✨ EP.1 파트너 미오',
+          tag: '✨ EP.1 텐션 만점 파트너',
+          locOutfit: '📍 스튜디오 · 옐로우 & 오렌지 스타 트랙 자켓',
+          img: './mio_01_main.png',
+          pos: 'center 15%',
+          text: '에헤헤, 프로듀서! 오늘도 미오랑 같이 신나게 땀 흘리고 기분 좋게 목표 달성해보자! 🌟',
+          story: '💖 [미오 EP.1 · 스튜디오] "혼자 하면 힘든 운동도 미오가 옆에서 응원해 주면 에너지가 200% 충전되지? 자, 하이파이브 한 번 하고 시작하자구!"'
+        },
+        {
+          key: 'ev2',
+          pill: '🌸 EP.2 벚꽃 모닝조깅',
+          tag: '🌸 EP.2 벚꽃 공원 모닝 조깅',
+          locOutfit: '📍 봄날 벚꽃 산책로 · 화이트 스포츠 크롭탑 & 헤어밴드',
+          img: './mio_02_park_run.png',
+          pos: 'center 14%',
+          text: '프로듀서, 나이키런 5km 완주 나이스!! 손목 힘 빼고 달리는 폼 완전 멋졌어! 여기 시원한 물 마셔~ 🏃‍♀️🌸',
+          story: '💖 [미오 EP.2 · 벚꽃 공원 조깅] "벚꽃잎 흩날리는 공원을 프로듀서랑 나란히 달리니까 마치 청춘 드라마 주인공이 된 기분이야! 내일 아침에도 같이 뛸 거지?"'
+        },
+        {
+          key: 'ev3',
+          pill: '🏖️ EP.3 리조트 워터파크',
+          tag: '🏖️ EP.3 리조트 풀사이드 바캉스',
+          locOutfit: '📍 야외 리조트 풀장 · 옐로우 프릴 비키니 & 시스루 파카',
+          img: './mio_03_poolside.png',
+          pos: 'center 14%',
+          text: '야호~! 물이 진짜 시원해 프로듀서! 유산소 운동엔 수영이랑 물놀이가 최고라구! 빨리 들어와~ 💦',
+          story: '💖 [미오 EP.3 · 리조트 풀사이드] "에헤헤, 새로 산 노란색 수영복 어때? 프로듀서가 열심히 식단 관리하는 거 보고 나도 더 예뻐 보이고 싶어서 신경 좀 썼다구!"'
+        },
+        {
+          key: 'ev4',
+          pill: '📣 EP.4 스타디움 치어리딩',
+          tag: '📣 EP.4 나이트 스타디움 치어리더',
+          locOutfit: '📍 야간 스타디움 · 옐로우 & 네이비 치어리더 유니폼',
+          img: './mio_04_cheer_stage.png',
+          pos: 'center 14%',
+          text: '플레이~ 플레이~ 프로듀서!! 17시 단식 셧다운도, 11자 복근도 미오가 전력으로 응원할게! 파이팅~! 📣✨',
+          story: '💖 [미오 EP.4 · 나이트 스타디움] "프로듀서만을 위한 단독 치어리딩 스테이지야! 지치고 포기하고 싶은 순간이 와도 언제나 미오의 목소리를 떠올려 줘!"'
+        },
+        {
+          key: 'ev5',
+          pill: '🌅 EP.5 석양 해변 데이트',
+          tag: '🌅 EP.5 노을빛 해변 산책 데이트',
+          locOutfit: '📍 노을 지는 바닷가 · 화이트 레이스 선드레스 & 밀짚모자',
+          img: './mio_05_sunset_beach.png',
+          pos: 'center 14%',
+          text: '바닷바람 진짜 시원하다~ 오늘 하루도 열심히 달린 프로듀서랑 이렇게 노을을 보니까 마음이 간질간질해... 🌅💕',
+          story: '💖 [미오 EP.5 · 석양 해변 산책] "운동할 때 장난치던 모습 말고, 가끔은 이렇게 원피스 입은 차분한 미오도 좋아해 줄 거지? 앞으로도 계속 내 옆에 있어 줘, 프로듀서!"'
+        }
+      ]
     };
 
-    // Multi-Topic MomoTalk Choice Sets
+    const DUAL_EVENT = {
+      img: './dual_inbody.png',
+      pos: 'center 15%',
+      tag: '⭐ 3인 합동 스페셜',
+      text: '제미니 · 코토네 · 미오: 프로듀서의 52kg 슬림핏 & 체지방 20% 미만을 위해 우리 셋이 끝까지 함께할게! 💖'
+    };
+
+    // Multi-Topic MomoTalk Choice Sets (Tailored for all 3 heroines!)
     const TOPIC_CHOICES = {
       diet: [
-        { text: "닭가슴살이랑 쉐이크로 단백질 든든하게 채웠어!", sit: 'idle', exp: 15,
-          gem: "오... 진짜로 제대로 챙겨 먹었잖아? 단백질 보충 확인! 이번만큼은 칭찬해 줄게, 흥!",
-          mio: "나이스 프로듀서! 잘 챙겨 먹어야 근손실 없이 예쁘게 빠지지~ 완전 최고야! 🌟" },
-        { text: "17시 칼같이 식사 마감 완료! 이제 물이랑 차만 마실게.", sit: 'night', exp: 20,
-          gem: "훌륭해! 17시 이후 공복 시간이 지방을 태우는 골든타임이야. 이 기세 그대로 유지해!",
-          mio: "와아~ 역시 프로듀서 의지력 대단해! 내일 아침 체중계가 기대되는걸? ✨" },
-        { text: "솔직히 저녁에 살짝 배고픈데 어떡하지 ㅠㅠ", sit: 'tea', exp: 10,
-          gem: "바보야, 여기서 무너지면 아깝잖아! 얼른 따뜻한 허브티나 말차 한 잔 우려서 마셔!",
-          mio: "맞아맞아! 따뜻한 차 마시면 속도 든든해지고 기분도 차분해질 거야. 조금만 참자~!" }
+        {
+          text: "닭가슴살이랑 단백질 쉐이크로 클린하게 식사 챙겼어!",
+          sit: 'ev1', exp: 15,
+          gem: "오... 바보 프로듀서 치고는 꽤 제법인데? 근손실 없이 체지방만 쏙 빼려면 단백질은 필수야, 흥! 🐾",
+          kot: "와아~ 프로듀서님 성실하셔라! 이렇게 완벽하게 식단 지키시면 코토네가 특별 칭찬 도장 두 개 찍어드릴게요! 💛",
+          mio: "나이스 프로듀서! 역시 잘 챙겨 먹어야 달릴 때도 힘이 나지~ 완전 최고야! 🌟"
+        },
+        {
+          text: "17시 칼같이 식사 마감 완료! 이제 공복 골든타임 시작할게.",
+          sit: 'ev5', exp: 20,
+          gem: "칭찬해 줄게! 17시 이후부터 내일 오전 10시까지가 체지방이 불타는 진짜 승부처야. 내 손 잡고 끝까지 버텨! 🌙",
+          kot: "헤헤, 프로듀서님 의지력 대박이에요! 오늘 야식 참으신 만큼 식비도 아끼고 살도 빠지고 일석이조네요~! 💸✨",
+          mio: "와아~ 역시 우리 프로듀서! 내일 아침 체중계 숫자가 내려가 있을 거 생각하니까 벌써 설렌다! 💕"
+        },
+        {
+          text: "솔직히 저녁에 살짝 입이 심심한데 어떡하지 ㅠㅠ",
+          sit: 'ev2', exp: 10,
+          gem: "바보야, 여기서 무너지면 낮에 고생한 게 아깝잖아! 얼른 다기 꺼내서 내가 알려준 말차나 따뜻한 허브티 우려 마셔! 🍵",
+          kot: "안 돼요 프로듀서님! 지금 참으시면 내일 코토네가 카페 데이트 가서 애교 백 번 보여드릴게요, 꾹 참기예요! 🍰",
+          mio: "으앙 배고프겠다 ㅠㅠ 하지만 지금 물 한 잔 마시고 나랑 스트레칭하면서 기분 전환하자! 파이팅!"
+        }
       ],
       tea: [
-        { text: "다기로 말차 격불해서 곱게 거품 내서 마셨어 🍵", sit: 'tea', exp: 15,
-          gem: "오~ 다기로 직접 격불한 거야? 초록빛 거품 고운 것 좀 봐. 카테킨 덕분에 지방도 잘 타겠네!",
-          mio: "우와~ 말차 향기 여기까지 나는 것 같아! 프로듀서 다도하는 모습 진짜 멋있다~ 🍵" },
-        { text: "머신으로 에스프레소 한 잔 뽑아서 마셨어 ☕", sit: 'cafe', exp: 15,
-          gem: "크레마 제대로 올라왔네! 시럽 안 넣은 순수 에스프레소 맞지? 합격이야.",
-          mio: "에스프레소 충전 완료! 카페인 부스팅도 됐으니까 이따 나랑 가볍게 러닝 어때? 🏃‍♀️" },
-        { text: "17시 넘어서 따뜻한 무가당 허브티 마시는 중이야 🫖", sit: 'night', exp: 15,
-          gem: "단식 셧다운 시간에 정석대로 잘하고 있네. 몸도 따뜻해지고 수면 질도 좋아질 거야.",
-          mio: "포근하고 좋다~ 나도 프로듀서 옆에서 같이 한 잔 마시고 싶어! 에헤헤 💕" }
+        {
+          text: "다기로 말차 격불해서 초록빛 거품 곱게 내서 마셨어 🍵",
+          sit: 'ev2', exp: 15,
+          gem: "오~ 차센으로 직접 격불한 거야? 거품 고운 것 좀 봐! 카테킨 성분이 체지방 연소를 도와줄 거야, 합격! 🐾",
+          kot: "우와~ 프로듀서님 다도까지 하시다니 완전 고급 취미네요! 저도 옆에서 한 모금만 얻어마셔도 돼요? 헤헤~ 💛",
+          mio: "말차 향기 여기까지 솔솔 나는 것 같아! 마음까지 차분해지는 최고의 티타임이네~ 🍵✨"
+        },
+        {
+          text: "홈카페 머신으로 에스프레소 한 잔 진하게 뽑았어 ☕",
+          sit: 'ev3', exp: 15,
+          gem: "크레마 제대로 올라왔네! 시럽이나 설탕 안 넣은 순수 에스프레소 맞지? 대사 부스팅 완료야!",
+          kot: "카페에서 사 마시면 5천 원인데 홈카페로 아끼시다니! 역시 경제관념 투철한 프로듀서님 멋져요~! 💸☕",
+          mio: "에스프레소로 에너지 충전 완료! 이제 나랑 신나게 공원 달리러 나갈 준비 됐지? 🏃‍♀️"
+        },
+        {
+          text: "17시 넘어서 따뜻한 무가당 허브티 마시며 쉬는 중이야 🫖",
+          sit: 'ev5', exp: 15,
+          gem: "단식 셧다운 시간에 정석대로 잘하고 있네. 몸도 따뜻해지고 숙면에도 도움 될 거야, 기특하네. 🌙",
+          kot: "포근하고 너무 좋아요~ 오늘 하루 열심히 일하고 운동하신 프로듀서님께 딱 어울리는 힐링 타임이에요!",
+          mio: "나도 프로듀서 옆에 나란히 앉아서 별 보면서 같이 차 마시고 싶다~ 에헤헤 💕"
+        }
       ],
       workout: [
-        { text: "나이키런 켜고 손목 힘 빼고 가볍게 러닝 뛰고 왔어! 🏃", sit: 'running', exp: 20,
-          gem: "그립 안 쥐고 달렸지? 유산소로 체지방 태우는 데는 러닝만한 게 없어. 수고했어!",
-          mio: "완주 축하해 프로듀서!! 바람 가르면서 달릴 때 진짜 상쾌했지? 하이파이브! 🖐️✨" },
-        { text: "2kg 덤벨 손목 편심성 재활 컬 3세트 완료! 🩹", sit: 'workout', exp: 20,
-          gem: "잘했어! 내릴 때 3~4초 동안 천천히 버티는 게 핵심이야. 팔꿈치 힘줄이 한결 튼튼해질 거야.",
-          mio: "꾸준히 재활 챙기는 프로듀서 칭찬해~! 아프지 않고 건강하게 운동하는 게 1순위야!" },
-        { text: "14분 아이돌 11자 복근 루틴 불태웠다! 🔥", sit: 'workout', exp: 20,
-          gem: "코어에 힘 빡 들어갔지? 당기는 기구 없이도 복근은 얼마든지 탄탄하게 만들 수 있어!",
-          mio: "와아~ 14분 동안 쉬지 않고 해내다니 대단해! 11자 복근 금방 선명해지겠는걸?" }
+        {
+          text: "나이키런 켜고 손아귀 힘 빼고 가볍게 러닝 뛰고 왔어! 🏃",
+          sit: 'ev2', exp: 20,
+          gem: "그립 꽉 쥐지 않고 달렸지? 팔꿈치 보호하면서 체지방 태우는 데는 러닝만한 게 없어. 수고했어!",
+          kot: "헉, 5km나 뛰고 오셨어요?! 프로듀서님 체력 진짜 아이돌급이에요! 수건이랑 시원한 물 여기 대령했습니다~! 💛",
+          mio: "완주 축하해 프로듀서!! 벚꽃 바람 가르면서 나랑 함께 달릴 때 진짜 상쾌했지? 하이파이브! 🖐️🌸"
+        },
+        {
+          text: "2kg 덤벨 손목 편심성 재활 컬 3세트 완료! 🩹",
+          sit: 'ev3', exp: 20,
+          gem: "잘했어! 내릴 때 3~4초 동안 천천히 버티는 게 핵심이야. 이리 와 봐, 손목 무리 안 갔는지 내가 직접 만져줄게. 🐾",
+          kot: "테니스 엘보 재활까지 빼먹지 않다니 역시 프로듀서님! 아프지 않고 건강해야 코토네랑도 오래오래 함께하죠!",
+          mio: "꾸준히 재활 챙기는 프로듀서 칭찬해~! 팔꿈치 100% 완쾌될 때까지 조심조심 달리는 거야!"
+        },
+        {
+          text: "14분 아이돌 11자 복근 루틴 불태웠다! 🔥",
+          sit: 'ev4', exp: 20,
+          gem: "코어에 힘 빡 들어갔지? 이 기세면 올여름 풀사이드에서 선명한 11자 복근 자랑할 수 있겠어! 🏖️",
+          kot: "와아~ 아이돌 11자 복근이라니! 이 코토네 님도 질 수 없겠는데요?! 같이 센터급 몸매 만들어봐요! ✨",
+          mio: "14분 동안 쉬지 않고 해내다니 대단해! 내가 옆에서 치어리딩 해준 보람이 있는걸? 📣🌟"
+        }
       ],
-      smalltalk: [
-        { text: "미오야, 제미니가 너무 팩폭 날려서 기죽을 뻔했어 ㅋㅋ", sit: 'idle', exp: 15, dualReply: true,
-          mio: "에헤헤, 제미니 짱이 말이 살짝 뾰루퉁해서 그렇지 속으로는 프로듀서 엄청 아낀다구!",
-          gem: "야! 미오! 쓸데없는 폭로 하지 마! 난 그냥 프로듀서가 52kg 목표 달성하길 바라서 그런 거거든! 💢" },
-        { text: "둘 다 매일 챙겨줘서 식단이랑 운동 할 맛이 난다 고마워!", sit: 'idle', exp: 20, dualReply: true,
-          gem: "흥... 그렇게 솔직하게 고맙다고 하면 뭐라 답해야 할지 모르겠잖아. 끝까지 함께 가줄게!",
-          mio: "와아~ 감동이야 프로듀서! 우리 셋이면 52kg 슬림핏 무조건 성공이야! 사랑해~ 💖" },
-        { text: "오늘 컨디션 최고야! 목표 체중까지 흔들리지 않고 가보자!", sit: 'morning', exp: 15,
-          gem: "그 눈빛 마음에 드네! 오늘 루틴도 하나씩 깔끔하게 클리어해 보자고.",
-          mio: "좋았어~! 텐션 최고조! 오늘도 프로듀서의 전담 파트너가 전력으로 응원할게! 🌟" }
+      date: [
+        {
+          text: "오늘 루틴 완벽 클리어한 기념으로 주말에 단둘이 데이트 갈래?",
+          sit: 'ev3', exp: 25,
+          gem: "뭐, 뭐야 갑자기...?! 흥, 프로듀서가 이번 주 내내 단식이랑 운동 성실히 했으니까 특별히 손잡고 어울려 줄게! 🐾💘",
+          kot: "네에에?! 데이트요?! 헤헤, 이 코토네 님이 최고로 예쁜 베레모 쓰고 나설 테니까 맛있는 디저트 카페 데려가 주세요~! 🍰💛",
+          mio: "우와아~ 진짜지 프로듀서?! 나 완전 신나!! 예쁜 원피스 입고 기다릴 테니까 노을 지는 바닷가 같이 걷자! 🌅💕"
+        },
+        {
+          text: "요즘 너희 셋 덕분에 운동이랑 식단 관리하는 게 매일 설레고 즐거워!",
+          sit: 'ev5', exp: 25, dualReply: true,
+          gem: "흥... 그렇게 솔직하게 말하면 부끄럽잖아 바보야! 앞으로도 내가 제일 가까이서 챙겨줄 테니까 한눈팔지 마! 🐾",
+          kot: "에헤헤~ 프로듀서님 말씀 한마디에 코토네 심장이 보너스 탄 것처럼 두근거려요! 평생 전담 코치 할래요! 💛",
+          mio: "감동이야 프로듀서~! 우리 넷이 함께라면 어떤 목표든 즐겁게 이룰 수 있을 거야! 사랑해~ 🌟💖"
+        },
+        {
+          text: "코토네야, 오늘 정말 세상에서 제일 귀엽고 예쁘다!",
+          sit: 'ev5', exp: 20,
+          gem: "잠깐만! 내 앞에서 대놓고 코토네만 칭찬하기야?! 이 제미니의 고양이 귀도 귀여워해 달라고! 💢🐾",
+          kot: "헤헤헤~! 프로듀서님, 방금 이 코토네 님이 세상에서 제일 귀엽다고 하셨죠?! 녹음해 뒀으니까 무르기 없기예요~! 🎆💛",
+          mio: "와하하, 코토네 짱 얼굴 완전 빨개졌어! 프로듀서, 미오한테도 귀엽다고 해줘~! 🌟"
+        }
       ]
     };
 
     let currentTopic = 'diet';
+    let currentGalleryFilter = 'all';
+    let syncTimeout = null;
+
+    function getEventsForHeroine(heroine) {
+      return HEROINE_EVENTS[heroine] || HEROINE_EVENTS.gemini;
+    }
+
+    function findEventObj(heroine, sitKey) {
+      const list = getEventsForHeroine(heroine);
+      return list.find(e => e.key === sitKey) || list[0];
+    }
 
     function loadState() {
       try {
-        const s = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_KEY);
+        const savedGh = localStorage.getItem(GH_CONFIG_KEY);
+        if (savedGh) ghConfig = { ...ghConfig, ...JSON.parse(savedGh) };
+      } catch (e) {}
+
+      try {
+        let s = localStorage.getItem(STORAGE_KEY);
+        if (!s) {
+          for (const k of LEGACY_KEYS) {
+            if (localStorage.getItem(k)) { s = localStorage.getItem(k); break; }
+          }
+        }
         if (s) {
           const parsed = JSON.parse(s);
           state = { ...state, ...parsed };
+          if (!['gemini', 'kotone', 'mio'].includes(state.activeTrainer)) state.activeTrainer = 'gemini';
+          if (!['ev1', 'ev2', 'ev3', 'ev4', 'ev5'].includes(state.currentSituation)) state.currentSituation = 'ev1';
         }
       } catch (e) {}
+
       applyTheme();
       checkWednesdayBanner();
       syncUI();
       loadTopic('diet');
       renderChat();
+      updateGithubHeaderIndicator();
+
+      // Auto-pull from GitHub state.json on startup if token or public repo is configured
+      if (ghConfig.autoSync && ghConfig.repo) {
+        pullStateFromGitHub(false);
+      }
     }
 
-    function saveState() {
+    function saveState(triggerCloud = true) {
+      state.updatedAt = new Date().toISOString();
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+      if (triggerCloud && ghConfig.autoSync && ghConfig.token) {
+        clearTimeout(syncTimeout);
+        syncTimeout = setTimeout(() => pushStateToGitHub(false), 1200);
+      }
     }
+
+    // ============================================================================
+    // GITHUB STATE.JSON REAL-TIME CLOUD SYNC (100% Free Serverless Sync)
+    // ============================================================================
+    function updateGithubHeaderIndicator(status = 'idle') {
+      const dot = document.getElementById('syncStatusDot');
+      const label = document.getElementById('syncStatusLabel');
+      if (!dot || !label) return;
+
+      if (status === 'syncing') {
+        dot.className = "w-2 h-2 rounded-full bg-amber-400 animate-ping";
+        label.textContent = "☁️ 동기화중";
+      } else if (status === 'ok' || ghConfig.token) {
+        dot.className = "w-2 h-2 rounded-full bg-emerald-500";
+        label.textContent = "☁️ 연동됨";
+      } else if (status === 'error') {
+        dot.className = "w-2 h-2 rounded-full bg-rose-500";
+        label.textContent = "☁️ 오류";
+      } else {
+        dot.className = "w-2 h-2 rounded-full bg-slate-400";
+        label.textContent = "☁️ 연동";
+      }
+    }
+
+    function openGithubSyncModal() {
+      document.getElementById('ghRepoInput').value = ghConfig.repo || 'Minusindot/GitHubPrivate';
+      document.getElementById('ghPathInput').value = ghConfig.path || 'state.json';
+      document.getElementById('ghTokenInput').value = ghConfig.token || '';
+      document.getElementById('ghAutoSyncChk').checked = ghConfig.autoSync !== false;
+      document.getElementById('githubSyncModal').classList.remove('hidden');
+    }
+
+    function closeGithubSyncModal() {
+      document.getElementById('githubSyncModal').classList.add('hidden');
+    }
+
+    async function saveGithubSyncConfig() {
+      ghConfig.repo = (document.getElementById('ghRepoInput').value || 'Minusindot/GitHubPrivate').trim();
+      ghConfig.path = (document.getElementById('ghPathInput').value || 'state.json').trim();
+      ghConfig.token = (document.getElementById('ghTokenInput').value || '').trim();
+      ghConfig.autoSync = document.getElementById('ghAutoSyncChk').checked;
+      localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(ghConfig));
+      updateGithubHeaderIndicator();
+
+      const msgEl = document.getElementById('ghSyncStatusMsg');
+      msgEl.textContent = "설정이 저장되었습니다. 클라우드 동기화를 테스트합니다...";
+      await pushStateToGitHub(true);
+    }
+
+    function utf8ToBase64(str) {
+      return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    function base64ToUtf8(b64) {
+      return decodeURIComponent(escape(atob(b64.replace(/\s/g, ''))));
+    }
+
+    async function pullStateFromGitHub(manual = false) {
+      const msgEl = document.getElementById('ghSyncStatusMsg');
+      try {
+        updateGithubHeaderIndicator('syncing');
+        const headers = { 'Accept': 'application/vnd.github.v3+json' };
+        if (ghConfig.token) headers['Authorization'] = `Bearer ${ghConfig.token}`;
+
+        const url = `https://api.github.com/repos/${ghConfig.repo}/contents/${ghConfig.path}?t=${Date.now()}`;
+        const res = await fetch(url, { headers, cache: 'no-store' });
+        if (!res.ok) {
+          if (manual && msgEl) msgEl.textContent = `불러오기 실패 (${res.status}): 저장소/토큰을 확인하세요.`;
+          updateGithubHeaderIndicator('error');
+          return;
+        }
+        const data = await res.json();
+        ghConfig.lastSha = data.sha || '';
+        if (data.content) {
+          const remoteState = JSON.parse(base64ToUtf8(data.content));
+          // Merge cloud state while preserving local mealPhotos & webhookUrl if not in cloud
+          state = {
+            ...state,
+            ...remoteState,
+            mealPhotos: state.mealPhotos,
+            webhookUrl: state.webhookUrl || remoteState.webhookUrl || ''
+          };
+          saveState(false);
+          syncUI();
+          renderChat();
+          updateGithubHeaderIndicator('ok');
+          if (manual && msgEl) {
+            msgEl.textContent = `✅ 클라우드 불러오기 완료! (${new Date().toLocaleTimeString()})`;
+            playBeep(820, 0.12);
+          }
+        }
+      } catch (err) {
+        updateGithubHeaderIndicator('error');
+        if (manual && msgEl) msgEl.textContent = `오류: ${err.message}`;
+      }
+    }
+
+    async function pushStateToGitHub(manual = false) {
+      const msgEl = document.getElementById('ghSyncStatusMsg');
+      if (!ghConfig.token) {
+        if (manual && msgEl) msgEl.textContent = "⚠️ 먼저 GitHub Personal Access Token (PAT)을 입력해주세요!";
+        return;
+      }
+      try {
+        updateGithubHeaderIndicator('syncing');
+        const headers = {
+          'Accept': 'application/vnd.github.v3+json',
+          'Authorization': `Bearer ${ghConfig.token}`,
+          'Content-Type': 'application/json'
+        };
+
+        // 1. Fetch current SHA so GitHub API allows updating state.json
+        const getUrl = `https://api.github.com/repos/${ghConfig.repo}/contents/${ghConfig.path}?t=${Date.now()}`;
+        const getRes = await fetch(getUrl, { headers, cache: 'no-store' });
+        let sha = ghConfig.lastSha;
+        if (getRes.ok) {
+          const getJson = await getRes.json();
+          sha = getJson.sha;
+        }
+
+        // Build lightweight cloud payload (exclude heavy base64 photos so state.json stays ~2KB)
+        const cloudPayload = {
+          updatedAt: new Date().toISOString(),
+          theme: state.theme,
+          weight: state.weight,
+          fat: state.fat,
+          bondRank: state.bondRank,
+          bondExp: state.bondExp,
+          activeTrainer: state.activeTrainer,
+          activeMode: state.activeMode,
+          currentSituation: state.currentSituation,
+          absDone: state.absDone,
+          runDone: state.runDone,
+          runDist: state.runDist,
+          rehab: state.rehab,
+          meals: state.meals,
+          teaLog: state.teaLog,
+          chatHistory: (state.chatHistory || []).slice(-18).map(m => ({ sender: m.sender, name: m.name, text: m.text }))
+        };
+
+        const body = {
+          message: `Sync state.json (${new Date().toLocaleString('ko-KR')})`,
+          content: utf8ToBase64(JSON.stringify(cloudPayload, null, 2))
+        };
+        if (sha) body.sha = sha;
+
+        const putRes = await fetch(`https://api.github.com/repos/${ghConfig.repo}/contents/${ghConfig.path}`, {
+          method: 'PUT',
+          headers,
+          body: JSON.stringify(body)
+        });
+
+        if (!putRes.ok) {
+          const errText = await putRes.text();
+          throw new Error(`HTTP ${putRes.status}: ${errText.slice(0, 80)}`);
+        }
+        const putData = await putRes.json();
+        if (putData.content && putData.content.sha) ghConfig.lastSha = putData.content.sha;
+        updateGithubHeaderIndicator('ok');
+        if (manual && msgEl) {
+          msgEl.textContent = `✅ GitHub state.json 저장 성공! (${new Date().toLocaleTimeString()})`;
+          playBeep(880, 0.12);
+        }
+      } catch (err) {
+        updateGithubHeaderIndicator('error');
+        if (manual && msgEl) msgEl.textContent = `저장 실패: ${err.message}`;
+      }
+    }
+
+    // Auto-pull when user switches back to tab on mobile or PC
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && ghConfig.autoSync && ghConfig.token) {
+        pullStateFromGitHub(false);
+      }
+    });
 
     function applyTheme() {
       const html = document.documentElement;
@@ -896,7 +1410,7 @@
       const mainImg = document.getElementById('mainTrainerImg');
       const btn = document.getElementById('btnToggleCrop');
       if (state.fullCgView) {
-        wrapper.className = "relative w-full h-[460px] sm:h-[520px] bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300";
+        wrapper.className = "relative w-full h-[500px] sm:h-[560px] bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300";
         mainImg.classList.remove('object-cover');
         mainImg.classList.add('object-contain');
         btn.textContent = "🖼️ 카드뷰";
@@ -916,12 +1430,27 @@
       if (day === 3) {
         banner.classList.remove('hidden');
         ddayText.textContent = "⭐ 오늘은 수요일 인바디 데이! (EXP 2배)";
-        ddayText.className = "text-[11px] text-amber-600 dark:text-amber-400 font-extrabold";
+        ddayText.className = "text-[10px] text-amber-600 dark:text-amber-400 font-extrabold";
       } else {
         banner.classList.add('hidden');
         const diff = (3 - day + 7) % 7;
-        ddayText.textContent = `다음 수요일 인바디 데이: ${diff === 1 ? '내일(수요일)!' : `D-${diff}`}`;
+        ddayText.textContent = `제미니 · 코토네 · 미오 코칭 (인바디 D-${diff})`;
       }
+    }
+
+    function renderSituationPills() {
+      const container = document.getElementById('situationPills');
+      if (!container) return;
+      const heroine = state.activeTrainer || 'gemini';
+      const events = getEventsForHeroine(heroine);
+
+      container.innerHTML = events.map(ev => {
+        const isActive = (state.currentSituation === ev.key && state.activeMode !== 'dual');
+        const cls = isActive
+          ? "sit-pill px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-[#4a89dc] text-white shadow-sm transition-all"
+          : "sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 transition-all";
+        return `<button onclick="changeSituation('${ev.key}')" class="${cls}">${ev.pill}</button>`;
+      }).join('');
     }
 
     function changeSituation(sitKey) {
@@ -930,23 +1459,13 @@
       setTrainerMode(state.activeMode, sitKey);
     }
 
-    function updateSituationPillsUI() {
-      const pills = document.querySelectorAll('.sit-pill');
-      pills.forEach(btn => {
-        if (btn.dataset.sit === state.currentSituation) {
-          btn.className = "sit-pill px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-[#4a89dc] text-white shadow-sm transition-all";
-        } else {
-          btn.className = "sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 transition-all";
-        }
-      });
-    }
-
     function setTrainerMode(mode, situation = null) {
       state.activeMode = mode;
       if (situation) state.currentSituation = situation;
-      if (mode === 'gemini' || mode === 'mio') state.activeTrainer = mode;
+      if (['gemini', 'kotone', 'mio'].includes(mode)) state.activeTrainer = mode;
 
       const btnG = document.getElementById('btnFocusGemini');
+      const btnK = document.getElementById('btnFocusKotone');
       const btnM = document.getElementById('btnFocusMio');
       const btnD = document.getElementById('btnFocusDual');
       const singleView = document.getElementById('singleStageView');
@@ -955,60 +1474,122 @@
       const mainTag = document.getElementById('mainTrainerTagName');
       const mainDot = document.getElementById('mainTrainerDot');
       const sitTag = document.getElementById('situationTag');
+      const locTag = document.getElementById('outfitLocationTag');
       const dialogue = document.getElementById('trainerDialogue');
       const bondBtn = document.getElementById('btnBondStory');
 
-      const inactiveClass = "flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold hover:border-sky-400 transition-all";
+      const inactiveClass = "flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold hover:border-sky-400 transition-all shrink-0";
+
+      if (btnG) btnG.className = inactiveClass;
+      if (btnK) btnK.className = inactiveClass;
+      if (btnM) btnM.className = inactiveClass;
+      if (btnD) btnD.className = inactiveClass;
 
       if (mode === 'dual') {
-        if (btnD) btnD.className = "flex items-center gap-1 px-3 py-1 rounded-xl bg-gradient-to-r from-amber-400 to-pink-500 text-white text-xs font-extrabold shadow-sm transition-all";
-        if (btnG) btnG.className = inactiveClass;
-        if (btnM) btnM.className = inactiveClass;
-
+        if (btnD) btnD.className = "flex items-center gap-1 px-2.5 py-1 rounded-xl bg-gradient-to-r from-pink-500 via-amber-500 to-sky-500 text-white text-xs font-extrabold shadow-sm transition-all shrink-0";
         if (singleView) singleView.classList.add('hidden');
         if (dualView) dualView.classList.remove('hidden');
-        if (dialogue) dialogue.textContent = `"${SITUATIONS.dual.inbody.text}"`;
-        if (bondBtn) bondBtn.textContent = "합동 인연스토리로 ➔";
-      } else if (mode === 'mio') {
-        if (btnM) btnM.className = "flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-500 text-white text-xs font-extrabold shadow-sm transition-all";
-        if (btnG) btnG.className = inactiveClass;
-        if (btnD) btnD.className = inactiveClass;
-
-        if (singleView) singleView.classList.remove('hidden');
-        if (dualView) dualView.classList.add('hidden');
-
-        const sit = SITUATIONS.mio[state.currentSituation] || SITUATIONS.mio.idle;
-        if (mainImg) {
-          mainImg.src = sit.img;
-          mainImg.style.objectPosition = sit.pos || 'center 24%';
-        }
-        if (mainTag) mainTag.textContent = "미오";
-        if (mainDot) mainDot.className = "w-2 h-2 rounded-full bg-amber-500 animate-pulse";
-        if (sitTag) sitTag.textContent = sit.tag;
-        if (dialogue) dialogue.textContent = `"미오: ${sit.text}"`;
-        if (bondBtn) bondBtn.textContent = "미오의 인연스토리로 ➔";
+        if (dialogue) dialogue.textContent = `"${DUAL_EVENT.text}"`;
+        if (bondBtn) bondBtn.textContent = "3인 합동 인연스토리 ➔";
       } else {
-        if (btnG) btnG.className = "flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#f4869d] text-white text-xs font-extrabold shadow-sm transition-all";
-        if (btnM) btnM.className = inactiveClass;
-        if (btnD) btnD.className = inactiveClass;
-
         if (singleView) singleView.classList.remove('hidden');
         if (dualView) dualView.classList.add('hidden');
 
-        const sit = SITUATIONS.gemini[state.currentSituation] || SITUATIONS.gemini.idle;
+        const ev = findEventObj(mode, state.currentSituation);
         if (mainImg) {
-          mainImg.src = sit.img;
-          mainImg.style.objectPosition = sit.pos || 'center 18%';
+          mainImg.src = ev.img;
+          mainImg.style.objectPosition = ev.pos || 'center 15%';
         }
-        if (mainTag) mainTag.textContent = "제미니";
-        if (mainDot) mainDot.className = "w-2 h-2 rounded-full bg-pink-500 animate-pulse";
-        if (sitTag) sitTag.textContent = sit.tag;
-        if (dialogue) dialogue.textContent = `"제미니: ${sit.text}"`;
-        if (bondBtn) bondBtn.textContent = "제미니의 인연스토리로 ➔";
+        if (sitTag) sitTag.textContent = ev.tag;
+        if (locTag) locTag.textContent = ev.locOutfit;
+
+        if (mode === 'kotone') {
+          if (btnK) btnK.className = "flex items-center gap-1 px-2.5 py-1 rounded-xl bg-yellow-500 text-slate-950 text-xs font-extrabold shadow-sm transition-all shrink-0";
+          if (mainTag) mainTag.textContent = "코토네";
+          if (mainDot) mainDot.className = "w-2 h-2 rounded-full bg-yellow-400 animate-pulse";
+          if (dialogue) dialogue.textContent = `"코토네: ${ev.text}"`;
+          if (bondBtn) bondBtn.textContent = "코토네 인연스토리 ➔";
+        } else if (mode === 'mio') {
+          if (btnM) btnM.className = "flex items-center gap-1 px-2.5 py-1 rounded-xl bg-amber-500 text-white text-xs font-extrabold shadow-sm transition-all shrink-0";
+          if (mainTag) mainTag.textContent = "미오";
+          if (mainDot) mainDot.className = "w-2 h-2 rounded-full bg-amber-500 animate-pulse";
+          if (dialogue) dialogue.textContent = `"미오: ${ev.text}"`;
+          if (bondBtn) bondBtn.textContent = "미오 인연스토리 ➔";
+        } else {
+          if (btnG) btnG.className = "flex items-center gap-1 px-2.5 py-1 rounded-xl bg-[#f4869d] text-white text-xs font-extrabold shadow-sm transition-all shrink-0";
+          if (mainTag) mainTag.textContent = "제미니";
+          if (mainDot) mainDot.className = "w-2 h-2 rounded-full bg-pink-500 animate-pulse";
+          if (dialogue) dialogue.textContent = `"제미니: ${ev.text}"`;
+          if (bondBtn) bondBtn.textContent = "제미니 인연스토리 ➔";
+        }
       }
-      updateSituationPillsUI();
+      renderSituationPills();
       playBeep(650);
       saveState();
+    }
+
+    // ============================================================================
+    // 15-CG GALLERY MODAL FUNCTIONS
+    // ============================================================================
+    function openGalleryModal(filter = 'all') {
+      playBeep(700, 0.08);
+      document.getElementById('galleryModal').classList.remove('hidden');
+      renderGalleryGrid(filter);
+    }
+
+    function closeGalleryModal() {
+      document.getElementById('galleryModal').classList.add('hidden');
+    }
+
+    function renderGalleryGrid(filter) {
+      currentGalleryFilter = filter;
+      const tabs = { all: 'galTabAll', gemini: 'galTabGemini', kotone: 'galTabKotone', mio: 'galTabMio' };
+      Object.entries(tabs).forEach(([k, id]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.className = (k === filter)
+          ? "px-2.5 py-1 rounded-lg text-xs font-extrabold bg-[#4a89dc] text-white shadow-sm"
+          : "px-2.5 py-1 rounded-lg text-xs font-bold sub-box";
+      });
+
+      const list = [];
+      const order = filter === 'all' ? ['gemini', 'kotone', 'mio'] : [filter];
+      const names = { gemini: '🐾 제미니', kotone: '💛 코토네', mio: '🌟 미오' };
+
+      order.forEach(h => {
+        HEROINE_EVENTS[h].forEach(ev => {
+          list.push({ heroine: h, hName: names[h], ...ev });
+        });
+      });
+
+      const grid = document.getElementById('galleryGridContainer');
+      grid.innerHTML = list.map(item => `
+        <div onclick="selectGalleryCg('${item.heroine}', '${item.key}')" class="sub-box overflow-hidden cursor-pointer group hover:border-pink-400 transition-all flex flex-col">
+          <div class="relative h-48 w-full overflow-hidden bg-slate-900">
+            <img src="${item.img}" alt="${item.tag}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" style="object-position: ${item.pos};">
+            <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md bg-slate-950/75 text-white text-[9px] font-extrabold backdrop-blur-sm">${item.hName}</span>
+          </div>
+          <div class="p-2 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="text-[11px] font-extrabold text-pink-600 dark:text-pink-300">${item.tag}</div>
+              <div class="text-[9px] text-slate-500 dark:text-slate-400 mt-0.5">${item.locOutfit}</div>
+            </div>
+            <div class="text-[10px] text-slate-600 dark:text-slate-300 mt-1.5 line-clamp-2 leading-snug">"${item.text}"</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectGalleryCg(heroine, evKey) {
+      closeGalleryModal();
+      switchMainTab('talk');
+      setTrainerMode(heroine, evKey);
+      const ev = findEventObj(heroine, evKey);
+      const hName = heroine === 'kotone' ? '코토네' : heroine === 'mio' ? '미오' : '제미니';
+      state.chatHistory.push({ sender: heroine, name: hName, text: ev.story });
+      addBondExp(15);
+      saveState();
+      renderChat();
     }
 
     function addBondExp(amount) {
@@ -1046,14 +1627,14 @@
 
       for (let i = 1; i <= 3; i++) {
         updateRehabBtnUI(i, state.rehab[i - 1]);
-        if (state.mealPhotos[i - 1]) {
+        if (state.mealPhotos && state.mealPhotos[i - 1]) {
           document.getElementById(`prevImg${i}`).src = state.mealPhotos[i - 1];
           document.getElementById(`prevBox${i}`).classList.remove('hidden');
         }
       }
-      updateMetrics();
+      updateMetrics(false);
       updateBondUI();
-      setTrainerMode(state.activeMode || state.activeTrainer || 'gemini');
+      setTrainerMode(state.activeMode || state.activeTrainer || 'gemini', state.currentSituation || 'ev1');
     }
 
     function switchMainTab(tab) {
@@ -1071,7 +1652,6 @@
       playBeep(560);
     }
 
-    // Topic & Choices Rendering
     function loadTopic(topicKey) {
       currentTopic = topicKey;
       const list = TOPIC_CHOICES[topicKey] || TOPIC_CHOICES.diet;
@@ -1099,8 +1679,11 @@
 
       setTimeout(() => {
         if (item.dualReply || state.activeMode === 'dual') {
-          if (item.mio) state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio });
           if (item.gem) state.chatHistory.push({ sender: 'gemini', name: '제미니', text: item.gem });
+          if (item.kot) state.chatHistory.push({ sender: 'kotone', name: '코토네', text: item.kot });
+          if (item.mio) state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio });
+        } else if (state.activeTrainer === 'kotone') {
+          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: item.kot });
         } else if (state.activeTrainer === 'mio') {
           state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio });
         } else {
@@ -1123,30 +1706,41 @@
       renderChat();
 
       setTimeout(() => {
-        // Smart keyword detection
         let sit = null;
-        let gemReply = "응, 프로듀서 말 다 듣고 있어! 오늘 목표까지 흔들리지 말고 나랑 같이 가자.";
-        let mioReply = "프로듀서 말 들으니까 나도 기운이 펄펄 나! 오늘도 우리 파이팅이야~ 🌟";
+        let gemReply = "흥, 바보 프로듀서! 네가 무슨 말 하는지 다 듣고 있거든? 목표 52kg까지 나만 믿고 따라와! 🐾";
+        let kotReply = "헤헤~ 프로듀서님! 이 코토네 님이 언제나 1등으로 응원하고 있는 거 아시죠?! 💛💸";
+        let mioReply = "프로듀서 말 들으니까 나도 기운이 펄펄 나! 오늘도 우리 신나게 파이팅이야~ 🌟";
 
-        if (text.includes('말차') || text.includes('차') || text.includes('커피') || text.includes('에스프레소')) {
-          sit = 'tea';
-          gemReply = "홈카페 티타임 좋지! 무가당으로 깔끔하게 즐기면서 공복 유지하는 거 잊지 마.";
-          mioReply = "우와~ 향긋한 티타임이네! 나도 프로듀서가 타주는 차 마시고 싶다~ ☕✨";
-        } else if (text.includes('러닝') || text.includes('달리') || text.includes('운동') || text.includes('복근')) {
-          sit = state.activeTrainer === 'mio' ? 'running' : 'workout';
-          gemReply = "팔꿈치에 무리 가지 않게 손아귀 힘 빼는 거 꼭 신경 쓰면서 운동해!";
-          mioReply = "역시 성실한 프로듀서! 다치지 않게 스트레칭도 꼭 챙기면서 달리자구! 🏃‍♀️";
+        if (text.includes('귀여') || text.includes('예쁘') || text.includes('이쁘') || text.includes('최고')) {
+          sit = 'ev3';
+          gemReply = "뭐, 뭐야 갑자기 귀엽다고 그러지 마! 고양이 귀 쫑긋한 거 들켰잖아, 바보! 😳🐾";
+          kotReply = "헤헤헤~! 프로듀서님! 이 코토네 님이 정말 그렇게 귀여워요?! 특별 서비스로 오늘 하루 종일 애교 부려드릴게요~! 💛✨";
+          mioReply = "에헤헤~ 프로듀서한테 칭찬받으니까 기분 최고조야! 하이파이브~! 🌟💕";
+        } else if (text.includes('말차') || text.includes('차') || text.includes('커피') || text.includes('에스프레소')) {
+          sit = 'ev2';
+          gemReply = "다기로 격불한 말차랑 에스프레소 좋지! 무가당으로 즐기면서 17:7 단식 유지하는 거 잊지 마. 🍵";
+          kotReply = "우와~ 홈카페 티타임이네요! 카페 값 아껴서 나중에 코토네랑 맛있는 파르페 먹으러 가요! 🍰💛";
+          mioReply = "향긋한 티타임 너무 좋다~ 나도 프로듀서가 타주는 차 마시고 싶어! ☕✨";
+        } else if (text.includes('러닝') || text.includes('달리') || text.includes('운동') || text.includes('복근') || text.includes('재활')) {
+          sit = 'ev3';
+          gemReply = "테니스 엘보 무리 가지 않게 손아귀 힘 빼고 2kg 편심성 재활 컬 꼭 챙겨! 🩹🐾";
+          kotReply = "성실하게 운동하시는 프로듀서님 완전 멋져요! 코토네가 옆에서 수건이랑 물 챙겨드릴게요! 💛";
+          mioReply = "역시 우리 프로듀서! 다치지 않게 스트레칭도 꼭 챙기면서 신나게 달리자구! 🏃‍♀️🌸";
         } else if (text.includes('배고') || text.includes('야식') || text.includes('먹고')) {
-          sit = 'night';
-          gemReply = "안 돼 바보야! 17시 이후엔 입에 칼로리 넣으면 절대 안 돼! 따뜻한 물이나 허브티 마셔! 💢";
-          mioReply = "으앙 배고프겠다 ㅠㅠ 하지만 지금 참으면 내일 아침 몸무게가 보답해 줄 거야! 힘내힘내!";
+          sit = 'ev5';
+          gemReply = "안 돼 바보야! 17시 이후엔 입에 칼로리 넣으면 절대 안 돼! 내가 레몬 탄산수랑 허브티 타줄게! 💢🌙";
+          kotReply = "프로듀서님 스톱!! 지금 야식 시키면 배달비도 아깝고 살도 쪄요! 코토네 얼굴 보고 참으세요~! 💸";
+          mioReply = "으앙 배고프겠다 ㅠㅠ 하지만 지금 참으면 내일 아침 체중계가 보답해 줄 거야! 힘내힘내!";
         }
 
         if (sit) setTrainerMode(state.activeMode, sit);
 
         if (state.activeMode === 'dual') {
           state.chatHistory.push({ sender: 'gemini', name: '제미니', text: gemReply });
+          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: kotReply });
           state.chatHistory.push({ sender: 'mio', name: '미오', text: mioReply });
+        } else if (state.activeTrainer === 'kotone') {
+          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: kotReply });
         } else if (state.activeTrainer === 'mio') {
           state.chatHistory.push({ sender: 'mio', name: '미오', text: mioReply });
         } else {
@@ -1158,29 +1752,23 @@
       }, 450);
     }
 
+    // Cycles through all 5 visual-novel event episodes for the active heroine!
     function triggerBondStory() {
       playBeep(780, 0.12);
       if (state.activeMode === 'dual') {
-        setTrainerMode('dual', 'inbody');
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '💖 [합동 인연 에피소드] "프로듀서가 매일 사진도 찍어 올리고 단식 지키는 거... 사실 미오랑 나랑 뒤에서 엄청 칭찬하고 있었어."' });
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: '💖 "맞아맞아! 제미니 짱이 프로듀서 기록 볼 때마다 입꼬리 올라가는 거 내가 다 봤다구~ 에헤헤!"' });
-      } else if (state.activeTrainer === 'mio') {
-        const stories = [
-          { sit: 'running', text: '💖 [미오 인연 스토리] "트랙 위에서 프로듀서랑 나란히 달릴 때가 제일 행복해! 숨이 차올라도 프로듀서 옆이면 어디까지든 뛸 수 있을 것 같아!"' },
-          { sit: 'idle', text: '💖 [미오 인연 스토리] "햇살 좋은 날엔 운동 끝나고 나랑 시원한 개울가에서 발 담그고 쉬자! 약속이야 프로듀서~ 🌟"' }
-        ];
-        const pick = stories[Math.floor(Math.random() * stories.length)];
-        setTrainerMode('mio', pick.sit);
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: pick.text });
+        setTrainerMode('dual');
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '💖 [3인 합동 에피소드] "흥, 프로듀서가 매일 식단이랑 재활 챙기는 거... 사실 우리 셋이 단톡방에서 엄청 칭찬하고 있었거든! 🐾"' });
+        state.chatHistory.push({ sender: 'kotone', name: '코토네', text: '💖 "맞아요 맞아요! 제미니 짱이 프로듀서님 기록 올라올 때마다 고양이 귀 쫑긋거리는 거 제가 다 봤다구요~ 헤헤! 💛"' });
+        state.chatHistory.push({ sender: 'mio', name: '미오', text: '💖 "에헤헤, 우리 셋이 프로듀서 평생 전담 파트너니까 52kg 달성할 때까지 매일매일 즐겁게 달리자! 🌟"' });
       } else {
-        const stories = [
-          { sit: 'morning', text: '💖 [제미니 인연 스토리] "아침 창가 햇살이 너무 좋아서 프로듀서 생각났어. 오늘도 나랑 같이 건강한 하루 보낼 준비 됐지?"' },
-          { sit: 'tea', text: '💖 [제미니 인연 스토리] "흥... 특별히 프로듀서 주려고 정성껏 격불한 말차야. 남기지 말고 다 마셔, 알겠어?"' },
-          { sit: 'night', text: '💖 [제미니 인연 스토리] "오늘 하루도 내 잔소리 다 들어주면서 루틴 지키느라 고생했어. 내일도 내가 제일 먼저 응원해 줄게."' }
-        ];
-        const pick = stories[Math.floor(Math.random() * stories.length)];
-        setTrainerMode('gemini', pick.sit);
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: pick.text });
+        const heroine = state.activeTrainer || 'gemini';
+        const events = getEventsForHeroine(heroine);
+        const curIdx = events.findIndex(e => e.key === state.currentSituation);
+        const nextEv = events[(curIdx + 1) % events.length];
+        const hName = heroine === 'kotone' ? '코토네' : heroine === 'mio' ? '미오' : '제미니';
+
+        setTrainerMode(heroine, nextEv.key);
+        state.chatHistory.push({ sender: heroine, name: hName, text: nextEv.story });
       }
       addBondExp(25);
       saveState();
@@ -1189,13 +1777,12 @@
 
     function clearChatLog() {
       state.chatHistory = [
-        { sender: 'gemini', name: '제미니', text: '대화 기록을 깔끔하게 정리했어! 자, 오늘 루틴 브리핑부터 다시 시작해 볼까?' }
+        { sender: 'gemini', name: '제미니', text: '대화 기록 깔끔하게 정리했어! 자, 오늘 루틴이랑 단식 현황부터 다시 체크해 볼까? 🐾' }
       ];
       saveState();
       renderChat();
     }
 
-    // Authentic Blue Archive MomoTalk Chat Renderer (Uses dedicated square face avatars!)
     function renderChat() {
       const container = document.getElementById('chatContainer');
       if (!container) return;
@@ -1211,6 +1798,20 @@
               </div>
             </div>
           `;
+        } else if (msg.sender === 'kotone') {
+          return `
+            <div class="flex items-start gap-2.5">
+              <div class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-yellow-400/70 bg-yellow-50 shrink-0 shadow-sm">
+                <img src="./avatar_kotone.png" alt="코토네" class="w-full h-full object-cover" onerror="this.src='./kotone_01_studio.png'">
+              </div>
+              <div class="max-w-[76%] space-y-1">
+                <div class="text-xs font-extrabold text-yellow-700 dark:text-yellow-300">코토네</div>
+                <div class="px-3.5 py-2.5 bubble-left-kotone text-xs font-medium leading-relaxed">
+                  ${msg.text}
+                </div>
+              </div>
+            </div>
+          `;
         } else if (msg.sender === 'mio') {
           return `
             <div class="flex items-start gap-2.5">
@@ -1218,7 +1819,7 @@
                 <img src="./avatar_mio.png" alt="미오" class="w-full h-full object-cover" onerror="this.src='./trainer_mio.png'">
               </div>
               <div class="max-w-[76%] space-y-1">
-                <div class="text-xs font-extrabold text-slate-800 dark:text-amber-300">미오</div>
+                <div class="text-xs font-extrabold text-amber-700 dark:text-amber-300">미오</div>
                 <div class="px-3.5 py-2.5 bubble-left-mio text-xs font-medium leading-relaxed">
                   ${msg.text}
                 </div>
@@ -1232,7 +1833,7 @@
                 <img src="./avatar_gemini.png" alt="제미니" class="w-full h-full object-cover" onerror="this.src='./trainer_gemini.png'">
               </div>
               <div class="max-w-[76%] space-y-1">
-                <div class="text-xs font-extrabold text-slate-800 dark:text-pink-300">${msg.name || '제미니'}</div>
+                <div class="text-xs font-extrabold text-pink-600 dark:text-pink-300">${msg.name || '제미니'}</div>
                 <div class="px-3.5 py-2.5 bubble-left text-xs font-medium leading-relaxed">
                   ${msg.text}
                 </div>
@@ -1248,29 +1849,38 @@
       playBeep(700, 0.07);
       if (state.activeMode === 'dual') {
         const dualQuotes = [
-          "제미니 & 미오: 둘이서 프로듀서 꼭 52kg 슬림핏 만들어 줄게!",
-          "제미니: 잠깐, 갑자기 건드리지 마! | 미오: 에헤헤 간지러워~ 🌟",
-          "제미니 & 미오: 이번 주 수요일 인바디 측정까지 함께 달리는 거야!"
+          "제미니 · 코토네 · 미오: 셋이서 프로듀서 꼭 52kg 슬림핏 만들어 줄게! 💖",
+          "제미니: 앗, 고양이 귀 건드리지 마! | 코토네: 헤헤, 쓰담쓰담은 언제나 환영이에요~! | 미오: 간지러워 프로듀서~ 🌟"
         ];
         const q = dualQuotes[Math.floor(Math.random() * dualQuotes.length)];
         document.getElementById('trainerDialogue').textContent = `"${q}"`;
-        state.chatHistory.push({ sender: 'gemini', name: '제미니 & 미오', text: q });
+        state.chatHistory.push({ sender: 'gemini', name: '제미니 · 코토네 · 미오', text: q });
+      } else if (state.activeTrainer === 'kotone') {
+        const kotoneQuotes = [
+          "헤헤, 프로듀서님! 이 코토네 님이 정말 그렇게 귀여워요?! 더 칭찬해 주셔도 돼요~! 💛",
+          "앗! 머리 쓰다듬어 주시는 건 무료지만... 특별 애교는 인바디 목표 달성 보너스라구요! 💸✨",
+          "프로듀서님이 웃어주시면 코토네는 알바 피로가 싹 날아가요! 오늘도 힘내요 우리!",
+          "목표 52kg 달성하시면 코토네랑 테라스 카페 데이트 가기예요! 약속~ 🍰"
+        ];
+        const q = kotoneQuotes[Math.floor(Math.random() * kotoneQuotes.length)];
+        document.getElementById('trainerDialogue').textContent = `"코토네: ${q}"`;
+        state.chatHistory.push({ sender: 'kotone', name: '코토네', text: q });
       } else if (state.activeTrainer === 'mio') {
         const mioQuotes = [
-          "와앗! 간지러워 프로듀서~ ㅋㅋㅋ",
-          "헤헤, 오늘도 기운차게 같이 5km 달려볼까?",
-          "프로듀서가 힘내면 나도 엄청 힘이 난다구! 🌟",
-          "나이키런 켜고 출발할 준비 됐어? 하이파이브! 🖐️"
+          "와앗! 간지러워 프로듀서~ 에헤헤 ㅋㅋㅋ",
+          "오늘도 미오랑 기운차게 5km 달려볼까? 하이파이브! 🖐️",
+          "프로듀서가 힘내면 나도 에너지가 200% 충전된다구! 🌟",
+          "운동 끝나고 나랑 노을 지는 바닷가 산책 가자! 약속이야~ 🌅"
         ];
         const q = mioQuotes[Math.floor(Math.random() * mioQuotes.length)];
         document.getElementById('trainerDialogue').textContent = `"미오: ${q}"`;
         state.chatHistory.push({ sender: 'mio', name: '미오', text: q });
       } else {
         const geminiQuotes = [
-          "아야! 어딜 만지는 거야, 바보야! 💢",
-          "운동 안 하고 딴짓하면 진짜 혼난다! 😈",
-          "흥... 오늘 17시 단식이랑 루틴 다 끝내면 칭찬해 줄게.",
-          "말차랑 허브티 마시면서 공복 시간 끝까지 유지해 봐!"
+          "냐앗?! 고, 고양이 귀는 갑자기 만지지 말라고 바보야! 😳🐾",
+          "흥... 그렇게 쓰다듬는다고 내가 봐줄 줄 알아? 오늘 17시 단식 칼같이 지켜! 😈",
+          "테니스 엘보 2kg 재활이랑 복근 다 끝내면... 이따 밤에 특별히 칭찬해 줄게.",
+          "다기로 정성껏 격불한 말차 마시면서 공복 골든타임 끝까지 유지하자! 🍵"
         ];
         const q = geminiQuotes[Math.floor(Math.random() * geminiQuotes.length)];
         document.getElementById('trainerDialogue').textContent = `"제미니: ${q}"`;
@@ -1279,7 +1889,6 @@
       renderChat();
     }
 
-    // Tea & Coffee Log
     function logTea(type) {
       playBeep(700, 0.1);
       state.teaLog[type] = (state.teaLog[type] || 0) + 1;
@@ -1292,14 +1901,14 @@
 
       setTimeout(() => {
         if (type === 'matcha') {
-          setTrainerMode('gemini', 'tea');
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '오... 다기로 말차 격불한 거야? 거품 고운 것 좀 봐. 카테킨 덕분에 체지방 연소 효율도 올라가겠네!' });
+          setTrainerMode('gemini', 'ev2');
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '오... 다기로 말차 격불한 거야? 거품 고운 것 좀 봐! 카테킨 덕분에 체지방 연소 효율도 올라가겠네! 🍵🐾' });
         } else if (type === 'espresso') {
-          setTrainerMode('gemini', 'cafe');
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: '에스프레소 마셨으니까 이제 나랑 같이 신나게 러닝 달릴 준비 완료지? 🏃‍♀️' });
+          setTrainerMode('kotone', 'ev3');
+          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: '와아~ 향긋한 에스프레소! 홈카페로 커피값도 아끼고 대사도 올리고 역시 프로듀서님 최고예요~! ☕💛' });
         } else {
-          setTrainerMode('gemini', 'night');
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '17시 이후 출출할 땐 따뜻한 허브티로 달래는 게 정석이야. 아주 잘하고 있어.' });
+          setTrainerMode('gemini', 'ev5');
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '17시 이후 출출할 땐 따뜻한 허브티로 달래는 게 정석이야. 아주 잘하고 있어, 기특하네. 🌙' });
         }
         addBondExp(10);
         saveState();
@@ -1316,11 +1925,13 @@
       renderChat();
 
       setTimeout(() => {
-        if (state.activeTrainer === 'mio') {
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: "우와~ 찻잔 너무 예쁘다 프로듀서! 나도 나중에 한 잔 타줘~ ☕✨" });
+        if (state.activeTrainer === 'kotone') {
+          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: "우와~ 찻잔 너무 고급스러워요 프로듀서님! 코토네한테도 한 잔 타주세요~ 헤헤! 💛" });
+        } else if (state.activeTrainer === 'mio') {
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: "우와~ 찻잔 너무 예쁘다 프로듀서! 나도 나중에 같이 마시자~ ☕✨" });
         } else {
-          setTrainerMode('gemini', 'tea');
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: "흥... 감성 챙기면서 17:7 단식 룰 유지하는 건 확실히 인정해 줄게." });
+          setTrainerMode('gemini', 'ev2');
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: "흥... 감성 챙기면서 17:7 단식 룰 유지하는 건 확실히 인정해 줄게! 🐾🍵" });
         }
         addBondExp(15);
         saveState();
@@ -1329,7 +1940,6 @@
       e.target.value = '';
     }
 
-    // Meal Photo Upload (Shows actual photo inside chat bubble too!)
     async function uploadMealPhoto(e, idx) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1347,10 +1957,12 @@
       renderChat();
 
       setTimeout(() => {
-        if (state.activeTrainer === 'mio') {
+        if (state.activeTrainer === 'kotone') {
+          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: '식단 인증 확인 완료! 정성껏 챙겨 드시는 모습 너무 보기 좋아요 프로듀서님~! 💛' });
+        } else if (state.activeTrainer === 'mio') {
           state.chatHistory.push({ sender: 'mio', name: '미오', text: '맛있어 보인다~ 단백질도 영양 밸런스도 완벽해! 이 기세로 저녁까지 가자! 🌟' });
         } else {
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '식단 사진 확인 완료! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 칼로리 섭취 금지야!' });
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '식단 사진 확인 완료! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 칼로리 섭취 금지야! 🐾' });
         }
         addBondExp(15);
         saveState();
@@ -1359,7 +1971,6 @@
       e.target.value = '';
     }
 
-    // Canvas Preprocessing for High-Accuracy Samsung Health OCR
     function preprocessOcrImage(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -1517,23 +2128,23 @@
         document.getElementById('currentFatInput').value = state.fat;
       }
 
-      updateMetrics();
+      updateMetrics(false);
       const isWed = (new Date().getDay() === 3);
       addBondExp(isWed ? 40 : 20);
       saveState();
 
-      setTrainerMode('dual', 'inbody');
+      setTrainerMode('dual');
 
       const wedBonusNote = isWed ? " (수요일 보너스 EXP 2배!)" : "";
-      state.chatHistory.push({ sender: 'gemini', name: '제미니', text: `체중 ${state.weight}kg, 체지방 ${state.fat}% 반영 완료! 목표 52kg까지 끝까지 방심 금물이야!${wedBonusNote}` });
-      state.chatHistory.push({ sender: 'mio', name: '미오', text: `와아~ 프로듀서 꾸준히 기록 챙기는 모습 너무 멋있어! 이 기세로 계속 함께 가자~ 💖✨` });
+      state.chatHistory.push({ sender: 'gemini', name: '제미니', text: `체중 ${state.weight}kg, 체지방 ${state.fat}% 반영 완료! 목표 52kg까지 방심 금물이야!${wedBonusNote} 🐾` });
+      state.chatHistory.push({ sender: 'kotone', name: '코토네', text: `헤헤, 프로듀서님 인바디 기록 완료! 목표 달성하시면 코토네랑 테라스 카페 데이트 잊지 마세요~! 💛` });
+      state.chatHistory.push({ sender: 'mio', name: '미오', text: `와아~ 꾸준히 기록 챙기는 프로듀서 너무 멋있어! 이 기세로 계속 함께 가자~ 🌟` });
       renderChat();
 
       closeOcrModal();
       playBeep(900, 0.18);
     }
 
-    // 17:7 Fasting Clock
     function updateFastingClock() {
       const now = new Date();
       const currentSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
@@ -1580,7 +2191,7 @@
     setInterval(updateFastingClock, 1000);
     updateFastingClock();
 
-    function updateMetrics() {
+    function updateMetrics(shouldSave = true) {
       const w = parseFloat(document.getElementById('currentWeightInput').value) || 52;
       const f = parseFloat(document.getElementById('currentFatInput').value) || 20;
       state.weight = w;
@@ -1595,7 +2206,7 @@
       const deltaFatElem = document.getElementById('fatDelta');
       deltaFatElem.textContent = f <= 20.0 ? "달성! 🎉" : `+${deltaF} %`;
       deltaFatElem.className = f <= 20.0 ? "font-bold text-emerald-500 font-mono" : "font-bold text-rose-500 font-mono";
-      saveState();
+      if (shouldSave) saveState();
     }
 
     function updateRoutine() {
@@ -1606,13 +2217,13 @@
       state.runDist = parseFloat(document.getElementById('runDistInput').value) || 5.0;
 
       if (!prevRun && state.runDone) {
-        setTrainerMode('mio', 'running');
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: `나이키런 ${state.runDist}km 완주 대박! 페이스 잘 조절했어 프로듀서~ 진짜 최고야! 🏃‍♀️✨` });
+        setTrainerMode('mio', 'ev2');
+        state.chatHistory.push({ sender: 'mio', name: '미오', text: `나이키런 ${state.runDist}km 완주 대박! 벚꽃 산책로 페이스 완전 좋았어 프로듀서~ 최고야! 🏃‍♀️🌸` });
         addBondExp(20);
         renderChat();
       } else if (!prevAbs && state.absDone) {
-        setTrainerMode('gemini', 'workout');
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '14분 복근 루틴 완료! 코어 제대로 쪼이는 느낌 받았지? 내일도 똑같이 하는 거야!' });
+        setTrainerMode('kotone', 'ev1');
+        state.chatHistory.push({ sender: 'kotone', name: '코토네', text: '와아~ 14분 아이돌 11자 복근 루틴 클리어! 프로듀서님 코어 힘 대단해요, 이 코토네 님이 특급 칭찬 해드릴게요! 💛✨' });
         addBondExp(20);
         renderChat();
       }
@@ -1625,9 +2236,9 @@
       state.rehab[idx] = !state.rehab[idx];
       updateRehabBtnUI(num, state.rehab[idx]);
       if (state.rehab[idx]) {
-        setTrainerMode('gemini', 'workout');
+        setTrainerMode('gemini', 'ev3');
         if (state.rehab.filter(Boolean).length === 3) {
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '2kg 덤벨 익센트릭 재활 3세트 완벽 클리어! 팔꿈치 힘줄 무리하지 않게 스트레칭도 잊지 마!' });
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '2kg 덤벨 편심성 재활 3세트 완벽 클리어! 이리 손목 줘봐, 힘줄 뭉친 데 없는지 내가 부드럽게 마사지해 줄게. 🩹🐾' });
           addBondExp(15);
           renderChat();
         }
@@ -1665,7 +2276,6 @@
       alert('디스코드 Webhook 저장 완료!');
     }
 
-    // Discord Webhook Dispatch (Uses dedicated face-centered square avatars!)
     async function dispatchDiscord() {
       if (!state.webhookUrl) {
         openWebhookModal();
@@ -1677,27 +2287,27 @@
       btn.textContent = "전송 중...";
 
       const rehabCnt = state.rehab.filter(Boolean).length;
-      const photoCnt = state.mealPhotos.filter(Boolean).length;
+      const photoCnt = (state.mealPhotos || []).filter(Boolean).length;
       const baseUrl = (window.location.origin && window.location.origin.startsWith('http'))
         ? window.location.origin
-        : 'https://githubprivate-mwmc.vercel.app';
+        : 'https://git-hub-private-psi.vercel.app';
 
-      // Dedicated 256x256 square face avatars so Discord never crops out their faces!
       const geminiAvatar = `${baseUrl}/avatar_gemini.png`;
+      const kotoneAvatar = `${baseUrl}/avatar_kotone.png`;
       const mioAvatar = `${baseUrl}/avatar_mio.png`;
-      const activeAvatar = state.activeTrainer === 'mio' ? mioAvatar : geminiAvatar;
+      const activeAvatar = state.activeTrainer === 'kotone' ? kotoneAvatar : state.activeTrainer === 'mio' ? mioAvatar : geminiAvatar;
 
       const payload = {
-        username: "제미니 & 미오 (GeminiTalk)",
+        username: "제미니 · 코토네 · 미오 (GeminiTalk)",
         avatar_url: activeAvatar,
         embeds: [{
           author: {
-            name: "SCHALE FIT · IDOL COACH BRIEFING",
+            name: "GAKUMAS FIT · 3-HEROINE DAILY BRIEFING",
             icon_url: geminiAvatar
           },
-          title: "💌 [Gemini Fit] 트레이너 데일리 브리핑 리포트",
-          description: `**제미니:** "17:7 단식이랑 코어 루틴 끝까지 해내는지 지켜보고 있어!"\n**미오:** "프로듀서 오늘 하루도 수고 많았어! 완전 짱이야~ 🌟"`,
-          color: 0x4a89dc,
+          title: "💌 [GeminiTalk] 3인 트레이너 데일리 브리핑 리포트",
+          description: `**제미니:** "17:7 단식이랑 엘보 재활 끝까지 해내는지 밀착 마크 중이야! 🐾"\n**코토네:** "헤헤~ 프로듀서님 오늘 루틴도 이 코토네 님이 특급 칭찬 해드릴게요! 💛"\n**미오:** "프로듀서 오늘 하루도 수고 많았어! 완전 짱이야~ 🌟"`,
+          color: 0xf4869d,
           thumbnail: {
             url: activeAvatar
           },
@@ -1709,7 +2319,7 @@
             { name: "🔥 루틴", value: `• 14분 복근: ${state.absDone ? '✅' : '❌'}\n• 야외 러닝 (${state.runDist}km): ${state.runDone ? '✅' : '❌'}`, inline: false }
           ],
           footer: {
-            text: `인연 랭크 Lv.${state.bondRank} (${state.bondExp}%) ❤️ | GeminiTalk Dashboard`,
+            text: `인연 랭크 Lv.${state.bondRank} (${state.bondExp}%) ❤️ | GitHub state.json Cloud Sync Ready`,
             icon_url: mioAvatar
           },
           timestamp: new Date().toISOString()
@@ -1722,13 +2332,13 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        if (res.ok) alert('🚀 디스코드 채널로 브리핑이 성공적으로 전송되었습니다!');
+        if (res.ok) alert('🚀 디스코드 채널로 3인 브리핑이 성공적으로 전송되었습니다!');
         else throw new Error(`응답 코드: ${res.status}`);
       } catch (e) {
         alert(`전송 실패: ${e.message}`);
       } finally {
         btn.disabled = false;
-        btn.textContent = "🚀 디스코드에 트레이너 일일 브리핑 전송하기";
+        btn.textContent = "🚀 디스코드에 3인 트레이너 브리핑 전송";
       }
     }
 

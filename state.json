@@ -1,0 +1,28 @@
+{
+  "updatedAt": "2026-10-20T09:00:00Z",
+  "weight": 53.8,
+  "fat": 21.5,
+  "bondRank": 1,
+  "bondExp": 75,
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev1",
+  "absDone": false,
+  "runDone": false,
+  "runDist": 5.0,
+  "rehab": [
+    false,
+    false,
+    false
+  ],
+  "meals": [
+    false,
+    false,
+    false
+  ],
+  "teaLog": {
+    "matcha": 0,
+    "espresso": 0,
+    "tea": 0
+  }
+}
