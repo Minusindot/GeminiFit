@@ -2844,48 +2844,133 @@
       }
     }
 
+    // Discovers available models dynamically for this API key
+    async function discoverGeminiModels(apiKey) {
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          const errMsg = errData.error?.message || ('HTTP ' + res.status);
+          throw new Error(errMsg);
+        }
+        const data = await res.json();
+        const models = data.models || [];
+        const supported = models
+          .filter(m => Array.isArray(m.supportedGenerationMethods) && m.supportedGenerationMethods.includes('generateContent'))
+          .map(m => m.name.replace(/^models\//, ''));
+
+        if (!supported.length) return null;
+
+        // Rank by priority
+        const rank = (name) => {
+          const n = name.toLowerCase();
+          if (n === 'gemini-2.5-flash') return 1;
+          if (n === 'gemini-2.0-flash') return 2;
+          if (n.startsWith('gemini-2') && n.includes('flash')) return 3;
+          if (n === 'gemini-1.5-flash') return 4;
+          if (n.includes('flash')) return 5;
+          if (n.startsWith('gemini-2')) return 6;
+          if (n === 'gemini-1.5-pro') return 7;
+          if (n.includes('pro')) return 8;
+          return 9;
+        };
+        supported.sort((a, b) => rank(a) - rank(b));
+        return supported;
+      } catch (e) {
+        console.warn('Model discovery failed, fallback to static models:', e.message);
+        return null;
+      }
+    }
+
     async function fetchGeminiWithFallback(apiKey, bodyPayload) {
-      const endpoints = [
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent',
-        'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent',
+      const cleanKey = (apiKey || '').trim();
+      if (!cleanKey) throw new Error('API 키가 입력되지 않았습니다.');
+
+      // 1. Check cached working model
+      let candidateEndpoints = [];
+      const cached = localStorage.getItem('GEMINI_WORKING_MODEL');
+      if (cached) {
+        candidateEndpoints.push(`https://generativelanguage.googleapis.com/v1beta/models/${cached}:generateContent`);
+      }
+
+      // 2. Discover available models dynamically from Google
+      const discovered = await discoverGeminiModels(cleanKey);
+      if (discovered && discovered.length > 0) {
+        for (const m of discovered) {
+          const ep = `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`;
+          if (!candidateEndpoints.includes(ep)) {
+            candidateEndpoints.push(ep);
+          }
+        }
+      }
+
+      // 3. Fallback static candidate endpoints if discovery is empty
+      const staticFallbacks = [
         'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
         'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
-        'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent',
-        'https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent'
+        'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-8b:generateContent',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent',
+        'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent'
       ];
+      for (const ep of staticFallbacks) {
+        if (!candidateEndpoints.includes(ep)) candidateEndpoints.push(ep);
+      }
 
       let lastError = null;
-      for (const base of endpoints) {
+      for (const base of candidateEndpoints) {
         try {
-          const res = await fetch(`${base}?key=${apiKey}`, {
+          const res = await fetch(`${base}?key=${cleanKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(bodyPayload)
           });
           if (res.ok) {
-            return await res.json();
+            const data = await res.json();
+            // Cache successful model name
+            const modelMatch = base.match(/\/models\/([^:]+):/);
+            if (modelMatch && modelMatch[1]) {
+              localStorage.setItem('GEMINI_WORKING_MODEL', modelMatch[1]);
+              data._workingModel = modelMatch[1];
+            }
+            return data;
           }
           const errData = await res.json().catch(() => ({}));
           const errMsg = errData.error?.message || ('HTTP ' + res.status);
           lastError = new Error(errMsg);
+
+          // If invalid key or quota exceeded, throw immediately rather than looping
+          if (errMsg.toLowerCase().includes('api key not valid') || res.status === 400 && errMsg.includes('API_KEY_INVALID')) {
+            throw new Error('API 키가 올바르지 않습니다. Google AI Studio에서 새로 복사해 주세요.');
+          }
+          if (res.status === 429 || errMsg.toLowerCase().includes('quota')) {
+            throw new Error('API 사용량 초과(429 Quota Exceeded) 상태입니다. 잠시 후 다시 시도해 주세요.');
+          }
+
+          // If 404 or not found, continue to next candidate
           if (res.status === 404 || errMsg.toLowerCase().includes('not found') || errMsg.toLowerCase().includes('not supported')) {
             continue;
           }
           throw lastError;
         } catch (e) {
           lastError = e;
+          if (e.message && (e.message.includes('API 키가 올바르지 않습니다') || e.message.includes('사용량 초과'))) {
+            throw e;
+          }
           if (e.message && (e.message.toLowerCase().includes('not found') || e.message.toLowerCase().includes('not supported'))) {
             continue;
           }
           throw e;
         }
       }
-      throw lastError || new Error('사용 가능한 Gemini 모델 엔드포인트를 찾지 못했습니다.');
+      throw lastError || new Error('사용 가능한 Gemini 모델을 찾지 못했습니다.');
     }
 
     async function testGeminiApiKey() {
       const keyInput = document.getElementById('geminiApiKeyInput');
-      const key = (keyInput ? keyInput.value : '').trim() || localStorage.getItem('GEMINI_API_KEY');
+      const key = (keyInput ? keyInput.value : '').trim() || (localStorage.getItem('GEMINI_API_KEY') || '').trim();
       const statusEl = document.getElementById('geminiKeyStatus');
       if (!key) {
         alert('먼저 Gemini API 키를 입력해 주세요!');
@@ -2899,16 +2984,25 @@
         const data = await fetchGeminiWithFallback(key, {
           contents: [{ role: 'user', parts: [{ text: '안녕! 제미니 트레이너로서 한국어로 한 문장 인사해줘.' }] }]
         });
-        const testReply = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+        const testReply = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '응답 수신 완료';
+        const workingModel = data._workingModel || localStorage.getItem('GEMINI_WORKING_MODEL') || 'Gemini Flash';
         localStorage.setItem('GEMINI_API_KEY', key);
         updateGeminiKeyStatusUI();
-        alert(`✅ Gemini AI 정상 연결 성공!\n\n[AI 테스트 응답]\n"${testReply}"`);
+        alert(`✅ Gemini AI 정상 연결 성공!
+
+[연결된 모델: ${workingModel}]
+
+[AI 테스트 응답]
+"${testReply}"`);
       } catch (err) {
         if (statusEl) {
           statusEl.textContent = "🔴 연결 실패";
           statusEl.className = "text-[9px] px-2 py-0.5 rounded-full font-black bg-rose-500/20 text-rose-600";
         }
-        alert(`❌ Gemini AI 연결 실패:\n${err.message}\n\nGoogle AI Studio에서 API 키를 다시 확인해 주세요!`);
+        alert(`❌ Gemini AI 연결 실패:
+${err.message}
+
+Google AI Studio (https://aistudio.google.com/)에서 새 API 키를 발급받아 입력해 주세요!`);
       }
     }
 
