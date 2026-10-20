@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-20T11:24:43.393Z",
+  "updatedAt": "2026-10-20T11:36:38.928Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
   "bondRank": 3,
   "bondExp": 15,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
-  "currentSituation": "ev2",
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev4",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,16 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "아야! 어딜 만지는 거야, 바보야! 💢"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "프로듀서가 힘내면 나도 엄청 힘이 난다구!"
-    },
     {
       "sender": "gemini",
       "name": "제미니",
@@ -113,6 +103,16 @@
       "sender": "mio",
       "name": "미오",
       "text": "나이키런 7km 완주 대박! 벚꽃 산책로 페이스 완전 좋았어 프로듀서~ 최고야! 🏃‍♀️🌸"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "메~롱! 그렇게 쳐다본다고 내가 봐줄 줄 알아? 오늘 17시 단식 칼같이 지켜! 😈"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "메~롱! 그렇게 쳐다본다고 내가 봐줄 줄 알아? 오늘 17시 단식 칼같이 지켜! 😈"
     }
   ]
 }
