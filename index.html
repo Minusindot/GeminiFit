@@ -309,7 +309,7 @@
           <label for="teaPhotoInput" class="px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold cursor-pointer hover:bg-emerald-500/30">
             📷 찻잔 촬영
           </label>
-          <input type="file" id="teaPhotoInput" accept="image/*" capture="environment" class="hidden" onchange="handleTeaPhoto(event)">
+          <input type="file" id="teaPhotoInput" accept="image/*" class="hidden" onchange="handleTeaPhoto(event)">
         </div>
       </div>
 
@@ -391,7 +391,7 @@
             <label for="photo1" class="px-2 py-1 rounded-lg bg-[#20273c] border border-slate-700 text-[11px] font-bold text-slate-200 cursor-pointer hover:border-sky-400">
               📷 사진
             </label>
-            <input type="file" id="photo1" accept="image/*" capture="environment" class="hidden" onchange="uploadMealPhoto(event, 1)">
+            <input type="file" id="photo1" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 1)">
           </div>
           <div id="prevBox1" class="hidden relative rounded-xl overflow-hidden max-h-28 bg-black">
             <img id="prevImg1" class="w-full h-28 object-cover">
@@ -411,7 +411,7 @@
             <label for="photo2" class="px-2 py-1 rounded-lg bg-[#20273c] border border-slate-700 text-[11px] font-bold text-slate-200 cursor-pointer hover:border-sky-400">
               📷 사진
             </label>
-            <input type="file" id="photo2" accept="image/*" capture="environment" class="hidden" onchange="uploadMealPhoto(event, 2)">
+            <input type="file" id="photo2" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 2)">
           </div>
           <div id="prevBox2" class="hidden relative rounded-xl overflow-hidden max-h-28 bg-black">
             <img id="prevImg2" class="w-full h-28 object-cover">
@@ -431,7 +431,7 @@
             <label for="photo3" class="px-2 py-1 rounded-lg bg-[#20273c] border border-slate-700 text-[11px] font-bold text-slate-200 cursor-pointer hover:border-rose-400">
               📷 사진
             </label>
-            <input type="file" id="photo3" accept="image/*" capture="environment" class="hidden" onchange="uploadMealPhoto(event, 3)">
+            <input type="file" id="photo3" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 3)">
           </div>
           <div id="prevBox3" class="hidden relative rounded-xl overflow-hidden max-h-28 bg-black">
             <img id="prevImg3" class="w-full h-28 object-cover">
@@ -653,11 +653,12 @@
       }, 500);
     }
 
-    function handleTeaPhoto(e) {
+    async function handleTeaPhoto(e) {
       const file = e.target.files[0];
       if (!file) return;
       playBeep(650, 0.1);
-      state.chatHistory.push({ sender: 'user', text: "📸 [홈카페 찻잔/커피 사진을 보냈습니다]" });
+      const dataUrl = await compressImage(file);
+      state.chatHistory.push({ sender: 'user', text: "📸 [홈카페 찻잔/커피 사진]" });
       renderChat();
 
       setTimeout(() => {
@@ -667,6 +668,7 @@
         saveState();
         renderChat();
       }, 500);
+      e.target.value = '';
     }
 
     // MomoTalk Messaging Logic
@@ -804,35 +806,65 @@
       renderChat();
     }
 
-    // Meal Photo
-    function uploadMealPhoto(e, idx) {
+    // Image Compressor for Fast Mobile Storage & Discord Webhook
+    function compressImage(file, maxSide = 960, quality = 0.75) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let w = img.width;
+            let h = img.height;
+            if (w > maxSide || h > maxSide) {
+              if (w > h) {
+                h = Math.round((h * maxSide) / w);
+                w = maxSide;
+              } else {
+                w = Math.round((w * maxSide) / h);
+                h = maxSide;
+              }
+            }
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Meal Photo (Gallery / Camera Compatible)
+    async function uploadMealPhoto(e, idx) {
       const file = e.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        const dataUrl = evt.target.result;
-        state.mealPhotos[idx - 1] = dataUrl;
-        state.meals[idx - 1] = true;
-        document.getElementById(`chkMeal${idx}`).checked = true;
-        document.getElementById(`prevImg${idx}`).src = dataUrl;
-        document.getElementById(`prevBox${idx}`).classList.remove('hidden');
+      playBeep(650, 0.1);
+      
+      const dataUrl = await compressImage(file);
+      state.mealPhotos[idx - 1] = dataUrl;
+      state.meals[idx - 1] = true;
+      document.getElementById(`chkMeal${idx}`).checked = true;
+      document.getElementById(`prevImg${idx}`).src = dataUrl;
+      document.getElementById(`prevBox${idx}`).classList.remove('hidden');
 
-        const mealTitle = idx === 1 ? '10:00 아침' : idx === 2 ? '14:00 점심' : '17:00 저녁';
-        state.chatHistory.push({ sender: 'user', text: `📸 [${mealTitle} 식단 인증 사진을 보냈습니다]` });
+      const mealTitle = idx === 1 ? '10:00 아침' : idx === 2 ? '14:00 점심' : '17:00 저녁';
+      state.chatHistory.push({ sender: 'user', text: `📸 [${mealTitle} 식단 인증 사진]` });
+      renderChat();
+
+      setTimeout(() => {
+        state.chatHistory.push({
+          sender: 'gemini',
+          text: `식단 사진 확인! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 입에 칼로리 넣지 마!`
+        });
+        state.bondExp += 15;
+        updateBondUI();
+        saveState();
         renderChat();
-
-        setTimeout(() => {
-          state.chatHistory.push({
-            sender: 'gemini',
-            text: `사진 확인! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 입에 칼로리 넣지 마!`
-          });
-          state.bondExp += 15;
-          updateBondUI();
-          saveState();
-          renderChat();
-        }, 600);
-      };
-      reader.readAsDataURL(file);
+      }, 500);
+      e.target.value = '';
     }
 
     // AI Vision OCR
