@@ -504,20 +504,194 @@
         </div>
       </div>
 
-      <!-- 4. Tennis Elbow Safe Routine & Core/Running -->
-      <div class="game-card p-3.5 space-y-2.5 border-l-4 border-l-amber-400">
-        <div class="flex items-center justify-between pb-1.5 border-b border-slate-200/80 dark:border-slate-700/60">
+      <!-- 4. 🏃 러닝 & 유산소 완주 대시보드 (삼성헬스 & 나이키런 연동) -->
+      <div class="game-card p-3.5 space-y-3 border-l-4 border-l-orange-400">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
           <div class="flex items-center gap-1.5">
-            <span class="text-sm">🩹</span>
-            <span class="text-xs font-extrabold">테니스 엘보 보호 & 슬림핏 루틴</span>
+            <span class="text-base">🏃</span>
+            <div>
+              <span class="text-xs font-black text-slate-800 dark:text-slate-100">러닝 & 유산소 완주 대시보드</span>
+              <span class="text-[9px] text-orange-500 font-bold block">삼성헬스 · 나이키런(NRC) 캡처 자동 연동</span>
+            </div>
           </div>
-          <span class="text-[10px] text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-500/20 font-bold">당기는 상체운동 금지</span>
+          <div class="flex items-center gap-1">
+            <!-- Scan / Upload Running Screenshot -->
+            <label for="runningOcrInput" class="px-2.5 py-1 rounded-xl bg-orange-500 text-white text-[10px] font-black cursor-pointer hover:bg-orange-600 shadow-xs transition-all flex items-center gap-1">
+              <span>📷 캡처 스캔</span>
+            </label>
+            <input type="file" id="runningOcrInput" accept="image/*" class="hidden" onchange="handleRunningScan(event)">
+            <button onclick="openRunningManualModal()" class="px-2.5 py-1 rounded-xl sub-box text-[10px] font-bold hover:border-orange-400 transition-all">
+              ✏️ 직접입력
+            </button>
+          </div>
         </div>
 
-        <!-- Rehab -->
+        <!-- Latest Run Highlight Card -->
+        <div id="latestRunCard" class="p-3 rounded-2xl bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-transparent border border-orange-400/30">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+              <span class="text-[11px] font-black text-orange-600 dark:text-orange-400">최근 완주 기록</span>
+              <span id="runCardDate" class="text-[10px] text-slate-400 font-mono">2026-10-20</span>
+            </div>
+            <span id="runCardSource" class="text-[9px] px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-600 dark:text-orange-400 font-black">삼성헬스</span>
+          </div>
+
+          <div class="flex items-baseline justify-between mb-2.5">
+            <div class="flex items-baseline gap-1">
+              <span id="runCardDist" class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">7.30</span>
+              <span class="text-xs font-extrabold text-slate-500">km</span>
+            </div>
+            <div class="text-right">
+              <span id="runCardPace" class="text-sm font-black text-orange-600 dark:text-orange-400">11'33"</span>
+              <span class="text-[10px] text-slate-400 block font-mono">평균 페이스</span>
+            </div>
+          </div>
+
+          <!-- Mini Stats Grid -->
+          <div class="grid grid-cols-4 gap-1.5 text-center text-[10px]">
+            <div class="p-1.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800">
+              <span class="text-slate-400 block text-[9px]">운동 시간</span>
+              <span id="runCardDuration" class="font-black text-slate-800 dark:text-slate-200">1:24:31</span>
+            </div>
+            <div class="p-1.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800">
+              <span class="text-slate-400 block text-[9px]">소모 칼로리</span>
+              <span id="runCardCalories" class="font-black text-rose-500">538 kcal</span>
+            </div>
+            <div class="p-1.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800">
+              <span class="text-slate-400 block text-[9px]">평균 심박수</span>
+              <span id="runCardHeartRate" class="font-black text-amber-500">130 bpm</span>
+            </div>
+            <div class="p-1.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800">
+              <span class="text-slate-400 block text-[9px]">총 걸음수</span>
+              <span id="runCardSteps" class="font-black text-emerald-500">9,206보</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Safe Running Check & Tennis Elbow Protection Note -->
+        <label class="flex items-center justify-between p-2.5 rounded-xl sub-box cursor-pointer hover:border-orange-400 transition-all">
+          <div class="flex items-center gap-2.5">
+            <input type="checkbox" id="chkRun" class="w-4 h-4 rounded accent-orange-500" onchange="updateRoutine()">
+            <div>
+              <div class="text-xs font-bold text-slate-800 dark:text-slate-200">오늘 5km+ 야외 러닝 완주 체크</div>
+              <div class="text-[10px] text-slate-400">미오 전담 유산소 파트너 코칭 완료</div>
+            </div>
+          </div>
+          <span class="text-[10px] font-mono text-orange-500 font-extrabold">+50 EXP</span>
+        </label>
+      </div>
+
+      <!-- 5. 🏋️ 헬스장 풀코스 체크 (상체2 + 하체1 + 캡틴스 체어 레그레이즈 + 크런치) -->
+      <div class="game-card p-3.5 space-y-3 border-l-4 border-l-sky-500">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
+          <div class="flex items-center gap-1.5">
+            <span class="text-base">🏋️</span>
+            <div>
+              <span class="text-xs font-black text-slate-800 dark:text-slate-100">헬스장 풀코스 루틴</span>
+              <span class="text-[9px] text-sky-500 font-bold block">상체 2종 + 하체 1종 + 캡틴스 체어 + 크런치</span>
+            </div>
+          </div>
+          <span id="gymProgressBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 font-black border border-sky-400/30">
+            0 / 5 완료
+          </span>
+        </div>
+
+        <!-- 1) Upper 1 -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+              <span class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-wide">상체 1</span>
+              <input type="text" id="gymUpper1Name" value="체스트 프레스" class="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-100 border-b border-dashed border-slate-300 dark:border-slate-600 focus:outline-none focus:border-sky-500 px-1 py-0.5" onchange="saveGymRoutineConfig()">
+            </div>
+            <input type="text" id="gymUpper1Weight" value="40kg × 12회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-20" onchange="saveGymRoutineConfig()">
+          </div>
+          <div class="grid grid-cols-4 gap-1.5">
+            <button onclick="toggleGymSet('upper1', 0)" id="gymSet_upper1_0" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트</button>
+            <button onclick="toggleGymSet('upper1', 1)" id="gymSet_upper1_1" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">2세트</button>
+            <button onclick="toggleGymSet('upper1', 2)" id="gymSet_upper1_2" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">3세트</button>
+            <button onclick="toggleGymSet('upper1', 3)" id="gymSet_upper1_3" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">4세트</button>
+          </div>
+        </div>
+
+        <!-- 2) Upper 2 -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+              <span class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-wide">상체 2</span>
+              <input type="text" id="gymUpper2Name" value="시티드 케이블 로우" class="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-100 border-b border-dashed border-slate-300 dark:border-slate-600 focus:outline-none focus:border-sky-500 px-1 py-0.5" onchange="saveGymRoutineConfig()">
+            </div>
+            <input type="text" id="gymUpper2Weight" value="35kg × 12회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-20" onchange="saveGymRoutineConfig()">
+          </div>
+          <div class="grid grid-cols-4 gap-1.5">
+            <button onclick="toggleGymSet('upper2', 0)" id="gymSet_upper2_0" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트</button>
+            <button onclick="toggleGymSet('upper2', 1)" id="gymSet_upper2_1" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">2세트</button>
+            <button onclick="toggleGymSet('upper2', 2)" id="gymSet_upper2_2" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">3세트</button>
+            <button onclick="toggleGymSet('upper2', 3)" id="gymSet_upper2_3" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">4세트</button>
+          </div>
+        </div>
+
+        <!-- 3) Lower 1 -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">하체 1</span>
+              <input type="text" id="gymLowerName" value="레그 프레스" class="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-100 border-b border-dashed border-slate-300 dark:border-slate-600 focus:outline-none focus:border-emerald-500 px-1 py-0.5" onchange="saveGymRoutineConfig()">
+            </div>
+            <input type="text" id="gymLowerWeight" value="80kg × 12회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-20" onchange="saveGymRoutineConfig()">
+          </div>
+          <div class="grid grid-cols-4 gap-1.5">
+            <button onclick="toggleGymSet('lower', 0)" id="gymSet_lower_0" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트</button>
+            <button onclick="toggleGymSet('lower', 1)" id="gymSet_lower_1" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">2세트</button>
+            <button onclick="toggleGymSet('lower', 2)" id="gymSet_lower_2" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">3세트</button>
+            <button onclick="toggleGymSet('lower', 3)" id="gymSet_lower_3" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">4세트</button>
+          </div>
+        </div>
+
+        <!-- 4) Captain's Chair Leg Raise (하복부 코어) -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2 border-l-2 border-l-pink-400">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-xs font-black text-pink-600 dark:text-pink-400">캡틴스 체어 레그레이즈</span>
+              <span class="text-[9px] text-slate-400 block">하복부 고립 · 반동 없이 무릎 가슴으로 당기기</span>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500 font-bold">15회 × 4세트</span>
+          </div>
+          <div class="grid grid-cols-4 gap-1.5">
+            <button onclick="toggleGymSet('legRaise', 0)" id="gymSet_legRaise_0" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트</button>
+            <button onclick="toggleGymSet('legRaise', 1)" id="gymSet_legRaise_1" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">2세트</button>
+            <button onclick="toggleGymSet('legRaise', 2)" id="gymSet_legRaise_2" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">3세트</button>
+            <button onclick="toggleGymSet('legRaise', 3)" id="gymSet_legRaise_3" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">4세트</button>
+          </div>
+        </div>
+
+        <!-- 5) Crunch (상복부 코어) -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2 border-l-2 border-l-amber-400">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-xs font-black text-amber-600 dark:text-amber-400">크런치</span>
+              <span class="text-[9px] text-slate-400 block">상복부 수축 · 요추 바닥 밀착 & 45도 상방 시선</span>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500 font-bold">20회 × 4세트</span>
+          </div>
+          <div class="grid grid-cols-4 gap-1.5">
+            <button onclick="toggleGymSet('crunch', 0)" id="gymSet_crunch_0" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트</button>
+            <button onclick="toggleGymSet('crunch', 1)" id="gymSet_crunch_1" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">2세트</button>
+            <button onclick="toggleGymSet('crunch', 2)" id="gymSet_crunch_2" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">3세트</button>
+            <button onclick="toggleGymSet('crunch', 3)" id="gymSet_crunch_3" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">4세트</button>
+          </div>
+        </div>
+
+        <!-- 2kg Wrist Eccentric Rehab (Tennis Elbow Safe) -->
         <div class="p-2.5 rounded-xl sub-box">
-          <div class="flex justify-between items-center mb-2">
-            <span class="text-xs font-bold text-emerald-700 dark:text-emerald-300">2kg 덤벨 손목 편심성 컬 (재활 필수)</span>
+          <div class="flex justify-between items-center mb-1.5">
+            <div>
+              <span class="text-xs font-bold text-emerald-700 dark:text-emerald-300">2kg 덤벨 손목 편심성 컬 (테니스 엘보 재활)</span>
+              <span class="text-[9px] text-slate-400 block">내릴 때 3~4초 천천히 버티기 필수</span>
+            </div>
             <span class="text-[10px] text-slate-400 font-mono">10회 × 3세트</span>
           </div>
           <div class="grid grid-cols-3 gap-1.5">
@@ -527,34 +701,11 @@
           </div>
         </div>
 
-        <!-- Core Abs -->
-        <label class="flex items-center justify-between p-2.5 rounded-xl sub-box cursor-pointer">
-          <div class="flex items-center gap-2.5">
-            <input type="checkbox" id="chkAbs" class="w-4 h-4 rounded accent-sky-500" onchange="updateRoutine()">
-            <div>
-              <div class="text-xs font-bold">14분 아이돌 11자 복근 루틴</div>
-              <div class="text-[10px] text-slate-400">크런치 · 레그레이즈 · 플랭크 (노그립)</div>
-            </div>
-          </div>
-          <span class="text-[10px] font-mono text-sky-500 font-bold">CORE</span>
-        </label>
-
-        <!-- Running -->
-        <div class="p-2.5 rounded-xl sub-box">
-          <div class="flex items-center justify-between">
-            <label class="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" id="chkRun" class="w-4 h-4 rounded accent-emerald-500" onchange="updateRoutine()">
-              <div>
-                <div class="text-xs font-bold">야외 러닝 / 트레드밀 (나이키런)</div>
-                <div class="text-[10px] text-slate-400">손아귀 힘 100% 빼고 가볍게 흔들기</div>
-              </div>
-            </label>
-            <div class="flex items-center gap-1">
-              <input type="number" id="runDistInput" value="5.0" step="0.5" class="w-12 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded px-1.5 py-0.5 text-right text-xs font-mono font-bold" onchange="updateRoutine()">
-              <span class="text-[10px] text-slate-400 font-mono">km</span>
-            </div>
-          </div>
-        </div>
+        <!-- Full Course Complete Action Button -->
+        <button onclick="completeGymFullCourse()" id="btnGymFullCourse" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-500 text-white text-xs font-black shadow-md hover:opacity-95 transition-all flex items-center justify-center gap-1.5">
+          <span>🏆 헬스장 풀코스 완료 체크</span>
+          <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold">+40 EXP</span>
+        </button>
       </div>
 
       <!-- 5. Meal Photo Camera & Gallery Log -->
@@ -741,6 +892,73 @@
       </div>
     </div>
 
+    <!-- Running Workout Result Modal (Samsung Health / Nike Run Club) -->
+    <div id="runningResultModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
+      <div class="game-card max-w-sm w-full p-4 space-y-3.5 border-orange-400/50 shadow-2xl">
+        <div class="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-slate-700">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🏃</span>
+            <div>
+              <h3 class="text-sm font-black text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                <span>러닝 완주 분석 결과</span>
+                <span id="runSourceBadge" class="text-[9px] px-1.5 py-0.5 rounded-full bg-orange-500/20 text-orange-600 dark:text-orange-400 font-bold">삼성헬스 / 나이키런</span>
+              </h3>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400">인식된 수치를 확인하고 바로 기록하세요</p>
+            </div>
+          </div>
+          <button onclick="closeRunningModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold px-1">✕</button>
+        </div>
+
+        <!-- Running Metric Inputs Grid -->
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <div class="p-2.5 rounded-xl sub-box">
+            <span class="text-[10px] text-slate-500 font-bold block mb-1">🏁 러닝 거리 (km)</span>
+            <input type="number" step="0.01" id="ocrRunDist" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black text-orange-600 dark:text-orange-400 focus:outline-none focus:border-orange-500">
+          </div>
+          <div class="p-2.5 rounded-xl sub-box">
+            <span class="text-[10px] text-slate-500 font-bold block mb-1">⏱️ 운동 시간</span>
+            <input type="text" id="ocrRunDuration" placeholder="1:24:31" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black focus:outline-none focus:border-orange-500">
+          </div>
+          <div class="p-2.5 rounded-xl sub-box">
+            <span class="text-[10px] text-slate-500 font-bold block mb-1">⚡ 평균 페이스</span>
+            <input type="text" id="ocrRunPace" placeholder="11'33\"" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black focus:outline-none focus:border-orange-500">
+          </div>
+          <div class="p-2.5 rounded-xl sub-box">
+            <span class="text-[10px] text-slate-500 font-bold block mb-1">🔥 소모 칼로리 (kcal)</span>
+            <input type="number" id="ocrRunCalories" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black text-rose-500 focus:outline-none focus:border-orange-500">
+          </div>
+          <div class="p-2.5 rounded-xl sub-box">
+            <span class="text-[10px] text-slate-500 font-bold block mb-1">❤️ 평균 심박수 (bpm)</span>
+            <input type="number" id="ocrRunHeartRate" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black focus:outline-none focus:border-orange-500">
+          </div>
+          <div class="p-2.5 rounded-xl sub-box">
+            <span class="text-[10px] text-slate-500 font-bold block mb-1">👣 걸음 수 / 케이던스</span>
+            <input type="number" id="ocrRunSteps" placeholder="9206" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black focus:outline-none focus:border-orange-500">
+          </div>
+        </div>
+
+        <!-- Optional Source Select & Raw Text -->
+        <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 text-[10px] flex items-center justify-between">
+          <span class="text-slate-500 font-bold">기록 소스:</span>
+          <select id="ocrRunAppSource" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-[11px] font-bold">
+            <option value="삼성헬스">📱 삼성헬스 (Galaxy Watch)</option>
+            <option value="나이키런">👟 나이키 런 클럽 (NRC)</option>
+            <option value="애플피트니스">🍎 애플 피트니스 / 가민</option>
+            <option value="직접입력">✏️ 직접 수기 입력</option>
+          </select>
+        </div>
+
+        <div class="flex gap-2 pt-1">
+          <button onclick="closeRunningModal()" class="flex-1 py-2.5 rounded-xl sub-box text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+            취소
+          </button>
+          <button onclick="applyRunningResult()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white text-xs font-black shadow-md transition-all">
+            🌟 기록 저장 & 미오 코칭
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- OCR Result Modal -->
     <div id="ocrResultModal" class="fixed inset-0 bg-slate-950/65 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
       <div class="game-card max-w-sm w-full p-5 space-y-4 border-sky-400/50 shadow-2xl">
@@ -862,8 +1080,41 @@
       activeMode: 'gemini',    // 'gemini' | 'kotone' | 'mio' | 'dual'
       currentSituation: 'ev1',
       absDone: false,
-      runDone: false,
-      runDist: 5.0,
+      runDone: true,
+      runDist: 7.30,
+      latestRun: {
+        distance: 7.30,
+        duration: "1:24:31",
+        pace: "11'33\"",
+        calories: 538,
+        heartRate: 130,
+        cadence: 108,
+        steps: 9206,
+        source: '삼성헬스',
+        date: '2026-10-20'
+      },
+      runningLogs: [
+        {
+          id: 'run-1',
+          date: '2026-10-20',
+          distance: 7.30,
+          duration: "1:24:31",
+          pace: "11'33\"",
+          calories: 538,
+          heartRate: 130,
+          cadence: 108,
+          steps: 9206,
+          source: '삼성헬스'
+        }
+      ],
+      gymRoutine: {
+        upper1: { name: '체스트 프레스', sets: [false, false, false, false], weight: '40kg' },
+        upper2: { name: '시티드 케이블 로우', sets: [false, false, false, false], weight: '35kg' },
+        lower: { name: '레그 프레스', sets: [false, false, false, false], weight: '80kg' },
+        legRaise: { name: '캡틴스 체어 레그레이즈', sets: [false, false, false, false], target: '15회' },
+        crunch: { name: '크런치', sets: [false, false, false, false], target: '20회' },
+        allDone: false
+      },
       rehab: [false, false, false],
       meals: [false, false, false],
       mealPhotos: ['', '', ''],
@@ -1736,6 +1987,8 @@
         }
       }
       updateMetrics(false);
+      renderRunningUI();
+      renderGymUI();
       updateBondUI();
       setTrainerMode(state.activeMode || state.activeTrainer || 'gemini', state.currentSituation || 'ev1');
     }
@@ -2109,60 +2362,115 @@
       });
     }
 
-    function parseHealthImageText(text) {
-      const unified = text
+    // ============================================================================
+    // DUAL-PURPOSE OCR PARSER: RUNNING (SAMSUNG HEALTH & NRC) + INBODY COMPOSITION
+    // ============================================================================
+    function parseHealthImageText(rawText) {
+      const unified = (rawText || "")
         .replace(/(\d)[,.](\d)/g, '$1.$2')
-        .replace(/\r?\n/g, ' ');
+        .replace(/,/g, '')
+        .replace(/\r?\n/g, '\n');
+      const lower = unified.toLowerCase();
 
+      // Check if this is a Running Workout screenshot (Samsung Health, Nike Run, Apple Fitness, Garmin)
+      const hasRunningKeywords = (
+        lower.includes('페이스') || lower.includes('pace') ||
+        lower.includes('km') || lower.includes('케이던스') || lower.includes('spm') ||
+        lower.includes('구간기록') || lower.includes('러닝') || lower.includes('달리기') ||
+        lower.includes('나이키') || lower.includes('nike') || lower.includes('삼성헬스') ||
+        lower.includes('bpm') || (lower.includes('운동 시간') && lower.includes('칼로리'))
+      );
+
+      // 1. Distance (km)
+      let distance = null;
+      const distMatch = unified.match(/(\d{1,2}(?:\.\d{1,2})?)\s*km/i) ||
+                        unified.match(/(\d{1,2}\.\d{1,2})/);
+      if (distMatch) {
+        const val = parseFloat(distMatch[1]);
+        if (val >= 0.5 && val <= 100) distance = val;
+      }
+
+      // 2. Duration (hh:mm:ss or mm:ss)
+      let duration = null;
+      const timeHms = unified.match(/(\d{1,2}:\d{2}:\d{2})/);
+      if (timeHms) {
+        duration = timeHms[1];
+      } else {
+        const afterTime = unified.match(/(?:운동\s*시간|시간)[^\d]*(\d{1,2}:\d{2}(?::\d{2})?)/);
+        if (afterTime) {
+          duration = afterTime[1];
+        } else {
+          const timeMs = unified.match(/(\d{1,2}:\d{2})/);
+          if (timeMs) duration = timeMs[1];
+        }
+      }
+
+      // 3. Pace
+      let pace = null;
+      const paceQuote = unified.match(/(\d{1,2}[''’]\d{2}(?:["”]|\/km)?)/);
+      if (paceQuote) {
+        pace = paceQuote[1].replace('/km', '').trim();
+      } else {
+        const afterPace = unified.match(/(?:평균\s*페이스|페이스|pace)[^\d]*(\d{1,2}[:'’]\d{2}(?:["”]|\/km)?)/i);
+        if (afterPace) pace = afterPace[1].replace('/km', '').trim();
+      }
+
+      // 4. Calories
+      let calories = null;
+      const calMatch = unified.match(/(\d{2,4})\s*kcal/i) || unified.match(/칼로리[^\d]*(\d{2,4})/);
+      if (calMatch) calories = parseInt(calMatch[1], 10);
+
+      // 5. Heart Rate
+      let heartRate = null;
+      const hrMatch = unified.match(/(\d{2,3})\s*bpm/i) || unified.match(/심박수[^\d]*(\d{2,3})/);
+      if (hrMatch) heartRate = parseInt(hrMatch[1], 10);
+
+      // 6. Cadence
+      let cadence = null;
+      const cadMatch = unified.match(/(\d{2,3})\s*spm/i) || unified.match(/케이던스[^\d]*(\d{2,3})/);
+      if (cadMatch) cadence = parseInt(cadMatch[1], 10);
+
+      // 7. Steps
+      let steps = null;
+      const stepMatch = unified.match(/걸음[^\d]*(\d{3,6})/i) || unified.match(/(\d{4,5})\s*걸음/);
+      if (stepMatch) steps = parseInt(stepMatch[1], 10);
+
+      const isRunning = Boolean(hasRunningKeywords || (distance !== null && (duration !== null || calories !== null)));
+
+      // Detect Source
+      let source = '삼성헬스';
+      if (lower.includes('나이키') || lower.includes('nike') || lower.includes('nrc')) source = '나이키런';
+      else if (lower.includes('apple') || lower.includes('garmin')) source = '애플피트니스';
+
+      // 8. InBody Weight & Fat
       let weight = null;
       let fat = null;
-
       const labelMatch = unified.match(/(?:체중|몸무게|Weight|체\s*중)[\s:：]*([4-9]\d(?:\.\d{1,2})?)/i);
       if (labelMatch) {
         const val = parseFloat(labelMatch[1]);
         if (val >= 40 && val <= 120) weight = val;
       }
-
       if (weight === null) {
         const kgMatches = [...unified.matchAll(/([4-9]\d(?:\.\d{1,2})?)\s*(?:kg|KG)\b/gi)];
         for (const m of kgMatches) {
           const val = parseFloat(m[1]);
-          if (val >= 40 && val <= 120) {
-            weight = val;
-            break;
-          }
+          if (val >= 40 && val <= 120) { weight = val; break; }
         }
       }
-
-      if (weight === null) {
-        const decimalMatches = [...unified.matchAll(/\b([4-8]\d\.\d{1,2})\b/g)];
-        for (const m of decimalMatches) {
-          const val = parseFloat(m[1]);
-          if (val >= 45 && val <= 85) {
-            weight = val;
-            break;
-          }
-        }
-      }
-
       const fatLabelMatch = unified.match(/(?:체지방률?|체지방량?|Fat)[\s:：]*([1-4]\d(?:\.\d{1,2})?)/i);
       if (fatLabelMatch) {
         const val = parseFloat(fatLabelMatch[1]);
         if (val >= 10 && val <= 45) fat = val;
       }
-
       if (fat === null) {
         const pctMatches = [...unified.matchAll(/([1-4]\d(?:\.\d{1,2})?)\s*%/g)];
         for (const m of pctMatches) {
           const val = parseFloat(m[1]);
-          if (val >= 10 && val <= 45) {
-            fat = val;
-            break;
-          }
+          if (val >= 10 && val <= 45) { fat = val; break; }
         }
       }
 
-      return { weight, fat };
+      return { isRunning, source, distance, duration, pace, calories, heartRate, cadence, steps, weight, fat };
     }
 
     async function handleInbodyScan(e) {
@@ -2178,30 +2486,291 @@
         const text = res.data.text || "";
         const parsed = parseHealthImageText(text);
 
-        document.getElementById('ocrWeightInput').value = parsed.weight !== null ? parsed.weight : state.weight;
-        document.getElementById('ocrFatInput').value = parsed.fat !== null ? parsed.fat : state.fat;
-        document.getElementById('ocrRawText').textContent = text.trim() || "(인식된 텍스트가 없습니다. 아래 입력창에서 직접 수치를 입력하거나 수정할 수 있습니다.)";
-
-        const badge = document.getElementById('ocrWeightConfidence');
-        if (parsed.weight !== null) {
-          badge.textContent = "✨ 체중 감지 성공";
-          badge.className = "text-[10px] text-emerald-500 font-extrabold";
+        if (parsed.isRunning) {
+          openRunningResultFromOcr(parsed);
         } else {
-          badge.textContent = "직접 확인/수정 가능";
-          badge.className = "text-[10px] text-amber-500 font-extrabold";
+          openInbodyResultFromOcr(parsed, text);
         }
-
-        document.getElementById('ocrResultModal').classList.remove('hidden');
         playBeep(880, 0.15);
       } catch (err) {
-        document.getElementById('ocrWeightInput').value = state.weight;
-        document.getElementById('ocrFatInput').value = state.fat;
-        document.getElementById('ocrRawText').textContent = "직접 수치를 입력하여 저장할 수 있습니다.";
-        document.getElementById('ocrResultModal').classList.remove('hidden');
+        console.error("Scan error:", err);
+        openRunningManualModal();
       } finally {
-        if (scanBtnText) scanBtnText.textContent = "📷 스캔";
+        if (scanBtnText) scanBtnText.textContent = "스캔";
         e.target.value = '';
       }
+    }
+
+    async function handleRunningScan(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      try {
+        const processedBlob = await preprocessOcrImage(file);
+        const res = await Tesseract.recognize(processedBlob, 'kor+eng');
+        const text = res.data.text || "";
+        const parsed = parseHealthImageText(text);
+        openRunningResultFromOcr(parsed);
+        playBeep(880, 0.15);
+      } catch (err) {
+        console.error("Running scan error:", err);
+        openRunningManualModal();
+      } finally {
+        e.target.value = '';
+      }
+    }
+
+    function openInbodyResultFromOcr(parsed, rawText) {
+      document.getElementById('ocrWeightInput').value = parsed.weight !== null ? parsed.weight : state.weight;
+      document.getElementById('ocrFatInput').value = parsed.fat !== null ? parsed.fat : state.fat;
+      document.getElementById('ocrRawText').textContent = rawText.trim() || "(인식된 텍스트가 없습니다. 직접 수치를 입력하거나 수정할 수 있습니다.)";
+
+      const badge = document.getElementById('ocrWeightConfidence');
+      if (parsed.weight !== null) {
+        badge.textContent = "✨ 체중 감지 성공";
+        badge.className = "text-[10px] text-emerald-500 font-extrabold";
+      } else {
+        badge.textContent = "직접 확인/수정 가능";
+        badge.className = "text-[10px] text-amber-500 font-extrabold";
+      }
+      document.getElementById('ocrResultModal').classList.remove('hidden');
+    }
+
+    function openRunningResultFromOcr(parsed) {
+      document.getElementById('ocrRunDist').value = parsed.distance !== null ? parsed.distance : 5.0;
+      document.getElementById('ocrRunDuration').value = parsed.duration || "45:00";
+      document.getElementById('ocrRunPace').value = parsed.pace || "09'00\"";
+      document.getElementById('ocrRunCalories').value = parsed.calories || 350;
+      document.getElementById('ocrRunHeartRate').value = parsed.heartRate || 135;
+      document.getElementById('ocrRunSteps').value = parsed.steps || (parsed.distance ? Math.round(parsed.distance * 1300) : 6500);
+
+      if (parsed.source) {
+        document.getElementById('ocrRunAppSource').value = parsed.source;
+        document.getElementById('runSourceBadge').textContent = parsed.source + " 자동 감지";
+      }
+      document.getElementById('runningResultModal').classList.remove('hidden');
+    }
+
+    function openRunningManualModal() {
+      const lr = state.latestRun || {};
+      document.getElementById('ocrRunDist').value = lr.distance || 7.30;
+      document.getElementById('ocrRunDuration').value = lr.duration || "1:24:31";
+      document.getElementById('ocrRunPace').value = lr.pace || "11'33\"";
+      document.getElementById('ocrRunCalories').value = lr.calories || 538;
+      document.getElementById('ocrRunHeartRate').value = lr.heartRate || 130;
+      document.getElementById('ocrRunSteps').value = lr.steps || 9206;
+      document.getElementById('ocrRunAppSource').value = lr.source || "삼성헬스";
+      document.getElementById('runSourceBadge').textContent = "수기 입력 / 수정";
+      document.getElementById('runningResultModal').classList.remove('hidden');
+      playBeep(700, 0.08);
+    }
+
+    function closeRunningModal() {
+      document.getElementById('runningResultModal').classList.add('hidden');
+    }
+
+    function applyRunningResult() {
+      const dist = parseFloat(document.getElementById('ocrRunDist').value) || 5.0;
+      const duration = document.getElementById('ocrRunDuration').value || "45:00";
+      const pace = document.getElementById('ocrRunPace').value || "09'00\"";
+      const calories = parseInt(document.getElementById('ocrRunCalories').value, 10) || 350;
+      const heartRate = parseInt(document.getElementById('ocrRunHeartRate').value, 10) || 135;
+      const steps = parseInt(document.getElementById('ocrRunSteps').value, 10) || Math.round(dist * 1300);
+      const source = document.getElementById('ocrRunAppSource').value || "삼성헬스";
+      const todayStr = new Date().toISOString().split('T')[0];
+
+      const runEntry = {
+        id: 'run-' + Date.now(),
+        date: todayStr,
+        distance: dist,
+        duration: duration,
+        pace: pace,
+        calories: calories,
+        heartRate: heartRate,
+        steps: steps,
+        source: source
+      };
+
+      state.latestRun = runEntry;
+      if (!state.runningLogs) state.runningLogs = [];
+      state.runningLogs.unshift(runEntry);
+      state.runDone = true;
+      state.runDist = dist;
+
+      addBondExp(50);
+      saveState();
+      renderRunningUI();
+
+      // Switch stage to Mio (running partner)
+      setTrainerMode('mio', 'ev1');
+
+      // Add enthusiastic responses to chat stream
+      state.chatHistory.push({
+        sender: 'mio',
+        name: '미오',
+        text: `와아아아 대박!! ${dist}km 완주 나이스!! ${duration} 동안 ${calories}kcal나 불태웠잖아! 손목 힘 빼고 달린 폼 진짜 최고였어 프로듀서!! 🌟🏃‍♀️`
+      });
+      state.chatHistory.push({
+        sender: 'gemini',
+        name: '제미니',
+        text: `${dist}km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾`
+      });
+      state.chatHistory.push({
+        sender: 'kotone',
+        name: '코토네',
+        text: `헉! ${calories}kcal 소모에 ${steps.toLocaleString()}걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛`
+      });
+      renderChat();
+
+      closeRunningModal();
+      playBeep(920, 0.2);
+    }
+
+    function renderRunningUI() {
+      const lr = state.latestRun || {
+        distance: 7.30, duration: "1:24:31", pace: "11'33\"", calories: 538, heartRate: 130, steps: 9206, source: '삼성헬스', date: '2026-10-20'
+      };
+
+      const distEl = document.getElementById('runCardDist');
+      const paceEl = document.getElementById('runCardPace');
+      const durEl = document.getElementById('runCardDuration');
+      const calEl = document.getElementById('runCardCalories');
+      const hrEl = document.getElementById('runCardHeartRate');
+      const stepEl = document.getElementById('runCardSteps');
+      const srcEl = document.getElementById('runCardSource');
+      const dateEl = document.getElementById('runCardDate');
+      const chkRun = document.getElementById('chkRun');
+
+      if (distEl) distEl.textContent = Number(lr.distance).toFixed(2);
+      if (paceEl) paceEl.textContent = lr.pace;
+      if (durEl) durEl.textContent = lr.duration;
+      if (calEl) calEl.textContent = `${lr.calories} kcal`;
+      if (hrEl) hrEl.textContent = `${lr.heartRate} bpm`;
+      if (stepEl) stepEl.textContent = `${Number(lr.steps || 0).toLocaleString()}보`;
+      if (srcEl) srcEl.textContent = lr.source || '삼성헬스';
+      if (dateEl) dateEl.textContent = lr.date || '오늘';
+      if (chkRun) chkRun.checked = Boolean(state.runDone);
+    }
+
+    // ============================================================================
+    // GYM FULL COURSE ROUTINE (상체2 + 하체1 + 캡틴스 체어 + 크런치)
+    // ============================================================================
+    function initGymRoutine() {
+      if (!state.gymRoutine) {
+        state.gymRoutine = {
+          upper1: { name: '체스트 프레스', sets: [false, false, false, false], weight: '40kg × 12회' },
+          upper2: { name: '시티드 케이블 로우', sets: [false, false, false, false], weight: '35kg × 12회' },
+          lower: { name: '레그 프레스', sets: [false, false, false, false], weight: '80kg × 12회' },
+          legRaise: { name: '캡틴스 체어 레그레이즈', sets: [false, false, false, false], target: '15회' },
+          crunch: { name: '크런치', sets: [false, false, false, false], target: '20회' },
+          allDone: false
+        };
+      }
+    }
+
+    function toggleGymSet(exKey, setIdx) {
+      initGymRoutine();
+      if (!state.gymRoutine[exKey]) return;
+      state.gymRoutine[exKey].sets[setIdx] = !state.gymRoutine[exKey].sets[setIdx];
+      playBeep(state.gymRoutine[exKey].sets[setIdx] ? 750 : 380, 0.08);
+      saveState();
+      renderGymUI();
+    }
+
+    function saveGymRoutineConfig() {
+      initGymRoutine();
+      const u1 = document.getElementById('gymUpper1Name');
+      const u1w = document.getElementById('gymUpper1Weight');
+      const u2 = document.getElementById('gymUpper2Name');
+      const u2w = document.getElementById('gymUpper2Weight');
+      const l = document.getElementById('gymLowerName');
+      const lw = document.getElementById('gymLowerWeight');
+
+      if (u1) state.gymRoutine.upper1.name = u1.value;
+      if (u1w) state.gymRoutine.upper1.weight = u1w.value;
+      if (u2) state.gymRoutine.upper2.name = u2.value;
+      if (u2w) state.gymRoutine.upper2.weight = u2w.value;
+      if (l) state.gymRoutine.lower.name = l.value;
+      if (lw) state.gymRoutine.lower.weight = lw.value;
+
+      saveState();
+    }
+
+    function completeGymFullCourse() {
+      initGymRoutine();
+      const keys = ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'];
+      keys.forEach(k => {
+        state.gymRoutine[k].sets = [true, true, true, true];
+      });
+      state.gymRoutine.allDone = true;
+      addBondExp(40);
+      saveState();
+      renderGymUI();
+
+      setTrainerMode('gemini', 'ev1');
+
+      state.chatHistory.push({
+        sender: 'gemini',
+        name: '제미니',
+        text: '오... 상체 2종에 하체, 캡틴스 체어랑 크런치까지 헬스장 풀코스 올 클리어? 바보 프로듀서 치고는 꽤 독하게 해냈네! 기특하니까 이리 와, 어깨 주물러줄게. 🐾'
+      });
+      state.chatHistory.push({
+        sender: 'kotone',
+        name: '코토네',
+        text: '우와아~ 헬스장 풀코스 완주 대박이에요 프로듀서님! 11자 복근이랑 슬림핏에 한 걸음 더 가까워졌어요! 💛'
+      });
+      renderChat();
+      playBeep(980, 0.25);
+    }
+
+    function renderGymUI() {
+      initGymRoutine();
+      const gr = state.gymRoutine;
+      const keys = ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'];
+      let completedExCount = 0;
+
+      keys.forEach(k => {
+        const ex = gr[k];
+        let exDone = true;
+        for (let i = 0; i < 4; i++) {
+          const btn = document.getElementById(`gymSet_${k}_${i}`);
+          if (btn) {
+            const isDone = Boolean(ex.sets && ex.sets[i]);
+            btn.className = isDone
+              ? "py-1.5 rounded-lg text-xs font-black bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400"
+              : "py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400";
+            btn.textContent = isDone ? `✓ ${i + 1}세트` : `${i + 1}세트`;
+            if (!isDone) exDone = false;
+          }
+        }
+        if (exDone) completedExCount++;
+      });
+
+      const badge = document.getElementById('gymProgressBadge');
+      if (badge) {
+        badge.textContent = `${completedExCount} / 5 완료`;
+        badge.className = (completedExCount === 5)
+          ? "text-[10px] px-2 py-0.5 rounded-full bg-emerald-500 text-white font-black shadow-xs animate-bounce"
+          : "text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 font-black border border-sky-400/30";
+      }
+
+      const fullBtn = document.getElementById('btnGymFullCourse');
+      if (fullBtn) {
+        if (completedExCount === 5 || gr.allDone) {
+          fullBtn.className = "w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-sky-500 text-white text-xs font-black shadow-md flex items-center justify-center gap-1.5 ring-2 ring-emerald-400/50";
+          fullBtn.innerHTML = "<span>🎉 헬스장 풀코스 올 클리어 달성!</span><span class='text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold'>완료됨</span>";
+        } else {
+          fullBtn.className = "w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-500 text-white text-xs font-black shadow-md hover:opacity-95 transition-all flex items-center justify-center gap-1.5";
+          fullBtn.innerHTML = "<span>🏆 헬스장 풀코스 완료 체크</span><span class='text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold'>+40 EXP</span>";
+        }
+      }
+
+      if (gr.upper1 && document.getElementById('gymUpper1Name')) document.getElementById('gymUpper1Name').value = gr.upper1.name;
+      if (gr.upper1 && document.getElementById('gymUpper1Weight')) document.getElementById('gymUpper1Weight').value = gr.upper1.weight;
+      if (gr.upper2 && document.getElementById('gymUpper2Name')) document.getElementById('gymUpper2Name').value = gr.upper2.name;
+      if (gr.upper2 && document.getElementById('gymUpper2Weight')) document.getElementById('gymUpper2Weight').value = gr.upper2.weight;
+      if (gr.lower && document.getElementById('gymLowerName')) document.getElementById('gymLowerName').value = gr.lower.name;
+      if (gr.lower && document.getElementById('gymLowerWeight')) document.getElementById('gymLowerWeight').value = gr.lower.weight;
     }
 
     function closeOcrModal() {
