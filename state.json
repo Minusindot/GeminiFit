@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-20T15:50:05.576Z",
+  "updatedAt": "2026-10-20T15:52:34.844Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
   "bondRank": 3,
-  "bondExp": 15,
+  "bondExp": 55,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev3",
+  "currentSituation": "ev1",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,20 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "user",
-      "text": "솔직히 저녁에 살짝 입이 심심한데 어떡하지 ㅠㅠ"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "안 돼요 프로듀서님! 지금 참으시면 내일 코토네가 카페 데이트 가서 애교 백 번 보여드릴게요, 꾹 참기예요! 🍰"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "체중 65.7kg, 체지방 21.5% 반영 완료! 목표 52kg까지 방심 금물이야! 🐾"
-    },
     {
       "sender": "kotone",
       "name": "코토네",
@@ -115,6 +101,21 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "단식 골든타임 진입! 지금부터 내일 아침 10시까지가 슬림핏 치트키 구간이야."
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "오... 상체 2종에 하체, 캡틴스 체어랑 크런치까지 헬스장 풀코스 올 클리어? 바보 프로듀서 치고는 꽤 독하게 해냈네! 기특하니까 이리 와, 어깨 주물러줄게. 🐾"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "우와아~ 헬스장 풀코스 완주 대박이에요 프로듀서님! 11자 복근이랑 슬림핏에 한 걸음 더 가까워졌어요! 💛"
+    },
+    {
+      "sender": "mio",
+      "name": "미오 [SD 방전]",
+      "text": "하아하아... 캡틴스 체어에 크런치까지... 프로듀서... 이거 분명 준비운동 레벨이 아니야... 😵💦 (모리키노코 탈진)"
     }
   ]
 }
