@@ -1406,13 +1406,27 @@
 
       const rehabCnt = state.rehab.filter(Boolean).length;
       const photoCnt = state.mealPhotos.filter(Boolean).length;
+      const baseUrl = (window.location.origin && window.location.origin.startsWith('http'))
+        ? window.location.origin
+        : 'https://githubprivate-mwmc.vercel.app';
+
+      const avatarUrl = `${baseUrl}/trainer_gemini.png`;
+      const thumbUrl = state.activeTrainer === 'mio' ? `${baseUrl}/trainer_mio.png` : `${baseUrl}/trainer_gemini.png`;
 
       const payload = {
-        username: "Gemini & Mio Dual Coaches",
+        username: "제미니 & 미오 (Gemini Fit)",
+        avatar_url: avatarUrl,
         embeds: [{
+          author: {
+            name: "Gemini Fit IDOL COACH",
+            icon_url: avatarUrl
+          },
           title: "💌 [Gemini Fit] 더블 트레이너 데일리 브리핑 보고서",
           description: `**제미니:** "17:7 단식이랑 운동 끝까지 해내는지 지켜보고 있어!"\n**미오:** "프로듀서 오늘 하루도 수고 많았어! 완전 짱이야~ 🌟"`,
           color: 0x4d88ff,
+          thumbnail: {
+            url: thumbUrl
+          },
           fields: [
             { name: "⚖️ 체중 / 체지방", value: `• 체중: **${state.weight} kg**\n• 체지방률: **${state.fat} %**`, inline: true },
             { name: "⏱️ 17:7 단식", value: `• 아침: ${state.meals[0] ? '✅' : '❌'}\n• 점심: ${state.meals[1] ? '✅' : '❌'}\n• 저녁: ${state.meals[2] ? '✅' : '❌'}\n(사진 인증: **${photoCnt}끼** 첨부)`, inline: true },
@@ -1420,6 +1434,10 @@
             { name: "🩹 엘보 재활", value: `• 2kg 덤벨 편심성: **${rehabCnt} / 3 세트**`, inline: false },
             { name: "🔥 루틴", value: `• 복근 14분: ${state.absDone ? '✅' : '❌'}\n• 야외 러닝 (${state.runDist}km): ${state.runDone ? '✅' : '❌'}`, inline: false }
           ],
+          footer: {
+            text: `인연 랭크 Lv.${state.bondRank} ❤️ | Gemini Fit Dashboard`,
+            icon_url: `${baseUrl}/trainer_mio.png`
+          },
           timestamp: new Date().toISOString()
         }]
       };
