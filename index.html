@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>GeminiTalk - 제미니 · 코토네 · 미오 피트니스 코칭</title>
+  <title>Gemini Fit - 제미니 · 코토네 · 미오 피트니스 코칭</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -86,16 +86,6 @@
       border-radius: 1rem;
     }
 
-    .skew-badge {
-      transform: skewX(-10deg);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .skew-badge > span {
-      transform: skewX(10deg);
-    }
-
     .clean-scroll::-webkit-scrollbar {
       width: 5px;
       height: 5px;
@@ -158,7 +148,7 @@
 
     .bubble-left {
       position: relative;
-      background: #4c5b70;
+      background: #3b4252;
       color: #ffffff;
       border-radius: 0.35rem 1.1rem 1.1rem 1.1rem;
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
@@ -192,10 +182,10 @@
 </head>
 <body class="min-h-screen selection:bg-sky-400 selection:text-white">
 
-  <!-- Mobile Container (Max width 460px, tight natural vertical flow) -->
+  <!-- Mobile Container (Max width 460px) -->
   <div class="max-w-md mx-auto min-h-screen p-3 sm:p-4 pb-36 relative space-y-2.5">
 
-    <!-- Wednesday InBody Day Special Banner -->
+    <!-- Wednesday InBody Day Banner -->
     <div id="inbodyDayBanner" class="hidden p-3 rounded-2xl bg-gradient-to-r from-amber-400/25 via-rose-400/20 to-amber-400/25 border border-amber-400/60 flex items-center justify-between shadow-sm">
       <div class="flex items-center gap-2.5">
         <span class="text-xl">⭐</span>
@@ -212,32 +202,24 @@
       </label>
     </div>
 
-    <!-- 1. Top MomoTalk / Schale Style Header -->
-    <header class="game-card px-3 py-2.5 flex items-center justify-between border-t-4 border-t-[#f4869d]">
+    <!-- 1. Top Clean Header: Gemini Fit -->
+    <header class="game-card px-3.5 py-2.5 flex items-center justify-between border-t-4 border-t-[#f4869d]">
       <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#f4869d] to-[#fb7185] flex items-center justify-center text-white text-sm font-black shadow-sm shrink-0">
-          💌
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#f4869d] to-[#fb7185] flex items-center justify-center text-white text-base font-black shadow-sm shrink-0">
+          ✨
         </div>
-        <div>
-          <div class="flex items-center gap-1">
-            <h1 class="text-sm font-black tracking-tight">GeminiTalk</h1>
-            <span class="skew-badge bg-sky-500/15 border border-sky-400/40 text-sky-600 dark:text-sky-300 text-[9px] font-extrabold px-1.5 py-0.5 rounded">
-              <span>GAKUMAS FIT</span>
-            </span>
-          </div>
-          <p id="inbodyDdayText" class="text-[10px] font-medium text-slate-500 dark:text-slate-400">제미니 · 코토네 · 미오 밀착 코칭</p>
-        </div>
+        <h1 class="text-base font-black tracking-tight text-slate-800 dark:text-slate-100">Gemini Fit</h1>
       </div>
 
-      <div class="flex items-center gap-1">
+      <div class="flex items-center gap-1.5">
         <!-- GitHub Cloud Sync Button -->
-        <button onclick="openGithubSyncModal()" id="githubSyncHeaderBtn" class="px-2 py-1.5 rounded-xl sub-box text-[11px] font-extrabold flex items-center gap-1 hover:border-emerald-400 transition-all" title="PC ↔ 폰 GitHub state.json 실시간 연동">
+        <button onclick="openGithubSyncModal()" id="githubSyncHeaderBtn" class="px-2.5 py-1.5 rounded-xl sub-box text-[11px] font-extrabold flex items-center gap-1.5 hover:border-emerald-400 transition-all" title="PC ↔ 폰 GitHub state.json 실시간 연동">
           <span id="syncStatusDot" class="w-2 h-2 rounded-full bg-slate-400"></span>
           <span id="syncStatusLabel">☁️ 연동</span>
         </button>
 
         <!-- InBody OCR Scan -->
-        <label for="inbodyOcrInput" class="px-2 py-1.5 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-600 dark:text-sky-300 text-[11px] font-extrabold flex items-center gap-1 cursor-pointer hover:bg-sky-500/20 transition-all shadow-sm" title="삼성헬스/인바디 캡처 스캔">
+        <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-600 dark:text-sky-300 text-[11px] font-extrabold flex items-center gap-1 cursor-pointer hover:bg-sky-500/20 transition-all shadow-sm" title="삼성헬스/인바디 캡처 스캔">
           <span id="inbodyScanBtnText">📷 스캔</span>
         </label>
         <input type="file" id="inbodyOcrInput" accept="image/*" class="hidden" onchange="handleInbodyScan(event)">
@@ -252,32 +234,32 @@
       </div>
     </header>
 
-    <!-- 2. Main Navigation Tabs (MomoTalk / Routine & Diet / Event Gallery) -->
+    <!-- 2. Main Navigation Tabs: 톡 & 트레이닝 / 루틴 & 식단 / CG도감(15) -->
     <div class="game-card p-1 flex text-xs font-bold gap-1">
       <button onclick="switchMainTab('talk')" id="tabTalkBtn" class="nav-tab active flex-1 py-2 rounded-xl text-center flex items-center justify-center gap-1">
-        <span>💬 모모톡 & 코칭</span>
+        <span>💬 톡 & 트레이닝</span>
         <span id="unreadBadge" class="text-[8px] bg-white/25 text-white px-1.5 py-0.2 rounded-full font-extrabold">3인</span>
       </button>
       <button onclick="switchMainTab('health')" id="tabHealthBtn" class="nav-tab flex-1 py-2 rounded-xl text-center flex items-center justify-center gap-1">
         <span>📊 루틴 & 식단</span>
       </button>
       <button onclick="openGalleryModal()" class="px-2.5 py-2 rounded-xl bg-gradient-to-r from-pink-500/15 to-amber-500/15 border border-pink-400/30 text-pink-600 dark:text-pink-300 text-[11px] font-extrabold hover:border-pink-400 transition-all shrink-0">
-        🖼️ CG도감(15)
+        🖼️ CG도감 (15)
       </button>
     </div>
 
     <!-- ========================================================
-         VIEW A: MomoTalk & 3-Heroine Subculture Showcase
+         VIEW A: 톡 & 트레이닝 (3-Heroine Showcase & Interactive VN)
          ======================================================== -->
     <div id="viewTalk" class="space-y-2.5">
 
       <!-- Trainer Showcase Card -->
       <div id="trainerCardContainer" class="game-card overflow-hidden">
         
-        <!-- Top Bar: 3 Heroines Selection + Bond Rank & EXP Bar -->
+        <!-- Top Bar: 3 Heroines Selection + Bond Rank & Stage Actions -->
         <div class="px-2.5 py-2 border-b border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-1.5">
           <div class="flex items-center gap-1 overflow-x-auto clean-scroll">
-            <!-- New Gemini Tab (Cat-ear Tsundere/Koakuma Personal Coach) -->
+            <!-- New Gemini Tab (Black-hair Tsundere/Koakuma Personal Coach) -->
             <button onclick="setTrainerMode('gemini')" id="btnFocusGemini" class="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-[#f4869d] text-white text-xs font-extrabold shadow-sm transition-all shrink-0">
               <span>🐾 제미니</span>
             </button>
@@ -298,45 +280,38 @@
             </button>
           </div>
 
-          <!-- Bond Level & EXP Gauge -->
+          <!-- Controls: Random Situation & Fullscreen Toggle + Bond Rank -->
           <div class="flex items-center gap-1.5 shrink-0">
-            <div class="text-right">
-              <div class="flex items-center justify-end gap-1">
-                <span id="bondRankBadge" class="text-[10px] font-extrabold text-[#f4869d]">인연 Lv.1 ❤️</span>
-                <span id="bondExpText" class="text-[9px] font-mono text-slate-400">75%</span>
-              </div>
-              <div class="w-16 h-1.5 bg-pink-100 dark:bg-slate-700 rounded-full overflow-hidden mt-0.5">
+            <button onclick="randomizeSituation()" class="text-[10px] font-bold px-2 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 hover:border-pink-400 transition-all shadow-sm" title="상황/의상 랜덤 전환">
+              🎲 다른 상황
+            </button>
+            <button onclick="toggleFullCgView()" id="btnToggleCrop" class="text-[10px] font-bold px-2 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 hover:border-sky-400 transition-all shadow-sm" title="일러스트 전체보기 / 카드뷰 전환">
+              🔍 전체보기
+            </button>
+            <div class="text-right pl-1 border-l border-slate-200 dark:border-slate-700">
+              <span id="bondRankBadge" class="text-[10px] font-extrabold text-[#f4869d] block">인연 Lv.1 ❤️</span>
+              <div class="w-14 h-1 bg-pink-100 dark:bg-slate-700 rounded-full overflow-hidden mt-0.5">
                 <div id="bondExpBar" class="h-full bg-gradient-to-r from-[#f4869d] to-[#fb7185] rounded-full transition-all duration-300" style="width: 75%"></div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 5 Visual-Novel Event Scenarios / Outfit Quick Selector Bar -->
-        <div class="px-2.5 py-1.5 bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-200/60 dark:border-slate-700/50 flex items-center justify-between gap-1 overflow-x-auto clean-scroll">
-          <div class="flex items-center gap-1 shrink-0" id="situationPills">
-            <!-- Dynamically rendered for current heroine's 5 distinct event CGs -->
-          </div>
-          <button onclick="toggleFullCgView()" id="btnToggleCrop" class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 shrink-0 hover:border-sky-400" title="일러스트 전체보기 / 카드뷰 전환">
-            🔍 전체보기
-          </button>
-        </div>
-
-        <!-- Grand Character Stage (Face-centered smart focal point + expandable full view!) -->
-        <div id="stageWrapper" class="relative w-full h-80 sm:h-96 bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300" onclick="pokeCurrentTrainer()">
+        <!-- Grand Character Stage -->
+        <div id="stageWrapper" class="relative w-full h-84 sm:h-96 bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300" onclick="pokeCurrentTrainer()">
           
           <!-- Single Trainer View -->
           <div id="singleStageView" class="w-full h-full relative">
-            <img id="mainTrainerImg" src="./gemini_01_main.png" alt="Trainer" class="w-full h-full object-cover" style="object-position: center 14%;" onerror="this.src='./trainer_gemini.png'">
+            <img id="mainTrainerImg" src="./gemini_01_main.png" alt="Trainer" class="w-full h-full object-cover" style="object-position: center 12%;" onerror="this.src='./trainer_gemini.png'">
             
-            <!-- Floating Character Name & Location/Outfit Badge -->
+            <!-- Floating Character Name & Situation Badge -->
             <div class="absolute top-2.5 left-2.5 flex flex-wrap items-center gap-1.5 pr-2">
               <div id="mainTrainerTag" class="bg-white/90 dark:bg-slate-900/85 backdrop-blur-md px-2.5 py-1 rounded-xl border border-pink-400/50 text-[11px] font-extrabold text-pink-600 dark:text-pink-300 flex items-center gap-1.5 shadow-sm">
                 <span id="mainTrainerDot" class="w-2 h-2 rounded-full bg-pink-500 animate-pulse"></span>
                 <span id="mainTrainerTagName">제미니</span>
               </div>
-              <span id="situationTag" class="text-[10px] font-bold px-2.5 py-1 rounded-xl bg-sky-500/90 text-white backdrop-blur-md shadow-sm">✨ EP.1 밀착 PT 코칭</span>
-              <span id="outfitLocationTag" class="text-[9px] font-bold px-2 py-0.5 rounded-lg bg-slate-900/70 text-amber-200 backdrop-blur-md">📍 VIP 스튜디오 · 오프숄더 크롭탑</span>
+              <span id="situationTag" class="text-[10px] font-bold px-2.5 py-1 rounded-xl bg-sky-500/90 text-white backdrop-blur-md shadow-sm">✨ 밀착 덤벨 코칭</span>
+              <span id="outfitLocationTag" class="text-[9px] font-bold px-2 py-0.5 rounded-lg bg-slate-900/70 text-amber-200 backdrop-blur-md">📍 VIP 스튜디오 · 상체 숙인 2kg 덤벨</span>
             </div>
           </div>
 
@@ -352,16 +327,16 @@
           <!-- Visual Novel Style Dialogue Overlay Bar -->
           <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-950/95 via-slate-900/75 to-transparent p-3 pt-8 text-center">
             <p id="trainerDialogue" class="text-xs font-bold text-white leading-snug drop-shadow-sm">
-              "제미니: 흥, 바보 프로듀서! 내 눈엔 다 보이거든? 슬림핏 52kg 될 때까지 나만 딱 믿고 따라와! 🐾"
+              "제미니: 벌써 덤벨 1세트 하고 지친 거야, 프로듀서? 메~롱! 슬림핏 52kg 될 때까지 나만 딱 믿고 따라와! 🐾"
             </p>
-            <p class="text-[9px] text-sky-200/80 mt-0.5">💡 캐릭터를 터치하면 대사와 표정이 반응합니다 · 상단 EP 버튼으로 미연시 이벤트 전환</p>
+            <p class="text-[9px] text-sky-200/80 mt-0.5">💡 캐릭터를 터치하면 표정/대사와 상황이 생동감 있게 반응합니다</p>
           </div>
         </div>
       </div>
 
-      <!-- Authentic Blue Archive MomoTalk Chat Window -->
+      <!-- Dialogue & Training Stream Window -->
       <div class="game-card overflow-hidden">
-        <!-- MomoTalk Sub-Header with Topic Switcher -->
+        <!-- Sub-Header with Topic Switcher -->
         <div class="px-3 py-2 bg-slate-50/90 dark:bg-slate-800/70 border-b border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-1 overflow-x-auto clean-scroll">
           <div class="flex items-center gap-1 shrink-0">
             <span class="text-[10px] font-extrabold text-slate-400 mr-1">주제:</span>
@@ -387,7 +362,7 @@
         </div>
       </div>
 
-      <!-- Authentic MomoTalk Reply Box (| 답장하기) -->
+      <!-- Quick Reply Box (| 답장하기) -->
       <div class="p-3 rounded-2xl bg-[#eef5ff] dark:bg-[#192236] border border-[#cfe0fc] dark:border-sky-500/30 space-y-2 shadow-sm">
         <div class="text-[11px] font-extrabold text-[#3b76c4] dark:text-sky-400 flex items-center justify-between">
           <span class="flex items-center gap-1"><span class="text-sky-500 font-black">|</span> 답장하기</span>
@@ -399,11 +374,11 @@
         </div>
       </div>
 
-      <!-- Authentic Blue Archive Pink Bond Event Box (| 인연 이벤트) -->
+      <!-- Visual Novel Bond Event Box (| 인연 이벤트) -->
       <div class="p-3 rounded-2xl bg-[#fde8ef] dark:bg-pink-950/30 border border-[#f9d5e2] dark:border-pink-500/30 flex items-center justify-between shadow-sm">
         <div>
           <div class="text-[11px] font-extrabold text-[#d65c7a] dark:text-pink-300 flex items-center gap-1">
-            <span class="font-black">|</span> 미연시 인연 이벤트 (캐릭터별 5종 CG)
+            <span class="font-black">|</span> 미연시 인연 스토리 (캐릭터별 5종 CG)
           </div>
           <p id="bondEventDesc" class="text-[10px] text-[#b85d74] dark:text-pink-200/80 mt-0.5">장소·의상·시츄에이션이 달라지는 다음 인연 에피소드를 감상하세요</p>
         </div>
@@ -633,7 +608,7 @@
 
     </div>
 
-    <!-- 3. Bottom Sticky Action Bar (디스코드 전송) -->
+    <!-- 3. Bottom Sticky Action Bar -->
     <div class="fixed bottom-0 left-0 right-0 p-3 bg-white/85 dark:bg-[#111622]/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 z-30">
       <div class="max-w-md mx-auto flex gap-2">
         <button onclick="dispatchDiscord()" id="btnDispatch" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-[#4a89dc] via-[#5b7cfa] to-[#f4869d] hover:opacity-95 text-white font-extrabold text-xs shadow-lg transition-all flex items-center justify-center gap-2">
@@ -643,7 +618,7 @@
     </div>
 
     <!-- ========================================================
-         MODAL 1: 15-CG Visual Novel Event Gallery (3 Heroines x 5 CGs)
+         MODAL 1: 15-CG Visual Novel Event Gallery
          ======================================================== -->
     <div id="galleryModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
       <div class="game-card max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden border-pink-400/40 shadow-2xl">
@@ -658,7 +633,6 @@
           <button onclick="closeGalleryModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold px-1">✕</button>
         </div>
 
-        <!-- Gallery Filter Tabs -->
         <div class="px-4 py-2 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex gap-1.5">
           <button onclick="renderGalleryGrid('all')" id="galTabAll" class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-[#4a89dc] text-white">전체 (15)</button>
           <button onclick="renderGalleryGrid('gemini')" id="galTabGemini" class="px-2.5 py-1 rounded-lg text-xs font-bold sub-box">🐾 제미니 (5)</button>
@@ -666,7 +640,6 @@
           <button onclick="renderGalleryGrid('mio')" id="galTabMio" class="px-2.5 py-1 rounded-lg text-xs font-bold sub-box">🌟 미오 (5)</button>
         </div>
 
-        <!-- Gallery Grid -->
         <div id="galleryGridContainer" class="p-3.5 overflow-y-auto clean-scroll grid grid-cols-2 gap-2.5">
           <!-- Populated dynamically -->
         </div>
@@ -707,7 +680,7 @@
             </label>
             <input type="password" id="ghTokenInput" placeholder="github_pat_... 또는 ghp_..." class="w-full sub-box px-3 py-2 text-xs font-mono focus:outline-none focus:border-emerald-400">
             <p class="text-[10px] text-slate-400 mt-1 leading-snug">
-              ※ 토큰은 이 기기의 브라우저(`localStorage`)에만 안전하게 보관되며 외부나 GitHub 코드에 절대 노출되지 않습니다. (`Contents: Read & Write` 권한만 부여)
+              ※ 토큰은 이 기기의 브라우저(`localStorage`)에만 안전하게 보관되며 외부나 코드에 노출되지 않습니다.
             </p>
           </div>
 
@@ -851,8 +824,8 @@
       });
     }
 
-    const STORAGE_KEY = 'gemini_fit_triple_v8';
-    const LEGACY_KEYS = ['gemini_fit_dual_v7', 'gemini_fit_dual_v6'];
+    const STORAGE_KEY = 'gemini_fit_triple_v9';
+    const LEGACY_KEYS = ['gemini_fit_triple_v8', 'gemini_fit_dual_v7', 'gemini_fit_dual_v6'];
     const GH_CONFIG_KEY = 'gemini_fit_gh_sync_v1';
 
     let ghConfig = {
@@ -883,73 +856,67 @@
       teaLog: { matcha: 0, espresso: 0, tea: 0 },
       webhookUrl: '',
       chatHistory: [
-        { sender: 'gemini', name: '제미니', text: '흥, 바보 프로듀서! 오늘 17:7 단식이랑 엘보 2kg 재활 빼먹지 않았겠지? 이 제미니가 24시간 밀착 마크할 거니까 각오해! 🐾' },
-        { sender: 'kotone', name: '코토네', text: '헤헤~ 프로듀서님! 오늘 목표 달성하시면 이 코토네 님이 특급 칭찬 서비스 해드릴게요! (소곤소곤) 인센티브도 기대할게요~? 💛💸' },
+        { sender: 'gemini', name: '제미니', text: '흥, 바보 프로듀서! 벌써 지친 거야? 메~롱! 17:7 단식이랑 2kg 덤벨 재활 끝까지 이 제미니가 책임질 테니까 나만 딱 믿고 따라와! 🐾' },
+        { sender: 'kotone', name: '코토네', text: '헤헤~ 프로듀서님! 오늘 목표 달성하시면 이 코토네 님이 특급 칭찬 서비스 해드릴게요! 인센티브도 살짝쿵 기대할게요~? 💛💸' },
         { sender: 'mio', name: '미오', text: '에헤헤, 프로듀서! 우리 셋이랑 함께라면 52kg 슬림핏 무조건 성공이야! 오늘도 기분 좋게 파이팅~! 🌟' }
       ]
     };
 
     // ============================================================================
-    // 15 VISUAL-NOVEL EVENT CGs (5 per Heroine: Distinct Location, Situation, Outfit)
+    // 15 VISUAL-NOVEL EVENT CGs (3 Heroines x 5 CGs with Distinct Poses & Angles)
     // ============================================================================
     const HEROINE_EVENTS = {
       gemini: [
         {
           key: 'ev1',
-          pill: '✨ EP.1 스튜디오 PT',
-          tag: '✨ EP.1 밀착 PT 코칭',
-          locOutfit: '📍 VIP 스튜디오 · 오프숄더 크롭 집업 & 방울 초커',
+          tag: '✨ 밀착 덤벨 코칭',
+          locOutfit: '📍 VIP 스튜디오 · 상체 숙인 2kg 덤벨 & 소악마 메롱',
           img: './gemini_01_main.png',
-          pos: 'center 14%',
-          text: '흥, 바보 프로듀서! 내 눈엔 다 보이거든? 슬림핏 52kg 될 때까지 이 제미니만 딱 믿고 따라와! 🐾',
-          story: '💖 [제미니 EP.1 · VIP 스튜디오] "자, 거울 똑바로 봐! 복근에 힘 빡 주고! 흥... 내가 이렇게 가까이서 코칭해 주는데 딴데 한눈팔면 가만 안 둬!"'
+          pos: 'center 12%',
+          text: '벌써 덤벨 1세트 하고 지친 거야, 프로듀서? 메~롱! 슬림핏 52kg 될 때까지 나만 딱 믿고 따라와! 🐾',
+          story: '💖 [제미니 EP.1 · VIP 스튜디오] "자, 거울 똑바로 봐! 내가 이렇게 가까이서 얼굴 들이대고 코칭해 주는데 딴데 한눈팔면 가만 안 둘 거야!"'
         },
         {
           key: 'ev2',
-          pill: '🍵 EP.2 다실 말차',
-          tag: '🍵 EP.2 다실 말차 다도',
-          locOutfit: '📍 햇살 다다미 다실 · 네코 하오리 기모노 & 말차 다완',
+          tag: '🍵 다실 말차 다도',
+          locOutfit: '📍 햇살 다다미 다실 · 정좌 하이앵글 & 붉어진 볼의 츤데레 곁눈질',
           img: './gemini_02_matcha.png',
           pos: 'center 15%',
-          text: '17시 단식 셧다운 후엔 내가 직접 격불한 이 말차 한 잔만 마시는 거야! 카테킨이 지방 태워주는 거 알지? 🍵',
-          story: '💖 [제미니 EP.2 · 전통 다실] "프로듀서 주려고 일부러 다기 데워서 곱게 격불했어. 거품 예쁘게 올라왔지? ...마, 맛있게 마셔주면 기분은 좋겠네."'
+          text: '...흥, 널 위해 정성껏 격불한 말차니까 한 방울도 남기지 말고 다 마셔! 카테킨이 체지방 태워준다고. 🍵',
+          story: '💖 [제미니 EP.2 · 전통 다실] "다다미에 무릎 꿇고 앉아서 기다렸단 말이야... 거품 예쁘게 올라왔지? 마, 맛있게 마셔주면 기분은 좋겠네."'
         },
         {
           key: 'ev3',
-          pill: '🩹 EP.3 손목 스킨십',
-          tag: '🩹 EP.3 노을빛 손목 스킨십',
-          locOutfit: '📍 석양 필라테스룸 · 홀터넥 & 루즈 가디건 · 손목 케어',
+          tag: '🩹 손목 재활 스킨십',
+          locOutfit: '📍 석양 필라테스룸 · 1인칭 POV 올려다보는 다정한 손목 케어',
           img: './gemini_03_rehab_touch.png',
-          pos: 'center 15%',
-          text: '잠깐, 손목 각도 흔들렸잖아! 이리 줘봐, 내가 직접 잡아줄 테니까 3초 동안 천천히 버티면서 내려봐.',
-          story: '💖 [제미니 EP.3 · 석양 필라테스룸] "바보야, 테니스 엘보 다 나을 때까지 무거운 거 잡지 말랬지... 가만히 있어 봐, 내가 팔꿈치랑 손목 힘줄 부드럽게 풀어줄게."'
+          pos: 'center 14%',
+          text: '바보야, 아프면 아프다고 말을 해야지... 가만히 있어 봐, 내가 안 아프게 손목이랑 힘줄 부드럽게 마사지해 줄게.',
+          story: '💖 [제미니 EP.3 · 석양 필라테스룸] "프로듀서 팔꿈치가 다 나을 때까지는 내가 매일 이렇게 손잡아 줄 거야. 딴생각 말고 내 손길에만 집중해."'
         },
         {
           key: 'ev4',
-          pill: '🏖️ EP.4 풀사이드 비키니',
-          tag: '🏖️ EP.4 서머 풀사이드 바캉스',
-          locOutfit: '📍 에메랄드 풀장 · 블랙 홀터넥 비키니 & 하트 헤어핀',
+          tag: '🏖️ 선베드 비키니',
+          locOutfit: '📍 리조트 풀장 · 비스듬히 누워 선글라스 내리는 윙크',
           img: './gemini_04_pool_bikini.png',
-          pos: 'center 14%',
-          text: '뭐, 뭐야... 왜 그렇게 뚫어져라 쳐다봐?! 프로듀서도 빨리 11자 복근 만들어서 나랑 수영장 와야지! 🏖️',
-          story: '💖 [제미니 EP.4 · 프라이빗 풀사이드] "흥, 프로듀서가 이번 주 식단 잘 지킨 상으로 특별히 어울려 주는 거야! 물장구치기 시합해서 지는 사람이 이따 에스프레소 쏘기다?"'
+          pos: 'center 12%',
+          text: '프로듀서, 11자 복근 진짜 멋있어졌네? 이번 주 식단 잘 지킨 상으로 수영장에서 나랑 하루 종일 물놀이하기다! 🏖️',
+          story: '💖 [제미니 EP.4 · 프라이빗 풀사이드] "선글라스 너머로 프로듀서 쳐다보는데 심장이 두근거렸단 건 비밀이야. 이따 나한테 시원한 에스프레소 사줘!"'
         },
         {
           key: 'ev5',
-          pill: '🌙 EP.5 밤 발코니 비밀',
-          tag: '🌙 EP.5 17시 이후의 비밀 야경',
-          locOutfit: '📍 도심 야경 발코니 · 버건디 오프숄더 나이트 슬립',
+          tag: '🌙 펜트하우스 야경',
+          locOutfit: '📍 도심 야경 발코니 · 바람에 흩날리는 롱헤어 & 뒤돌아보는 건배',
           img: './gemini_05_night_secret.png',
           pos: 'center 14%',
-          text: '밤늦게 배고플까 봐 무가당 레몬 탄산수 챙겨왔어. 오늘 하루도 내 잔소리 따라오느라... 고생 많았어, 프로듀서. 🌙',
-          story: '💖 [제미니 EP.5 · 야경 발코니] "낮에는 엄격하게 굴었지만... 사실 매일 포기하지 않고 노력하는 프로듀서 모습, 내가 제일 좋아하는 거 알지? 내일도 내가 1등으로 응원할게."'
+          text: '오늘 17시 단식 셧다운 완벽 성공이야, 프로듀서. 시원한 레몬 탄산수 마시면서 나랑 밤바람 좀 쐬자. 🌙',
+          story: '💖 [제미니 EP.5 · 야경 발코니] "낮에는 짓궂게 굴었지만... 사실 매일 포기하지 않고 노력하는 프로듀서 모습, 내가 세상에서 제일 좋아해. 건배!"'
         }
       ],
       kotone: [
         {
           key: 'ev1',
-          pill: '✨ EP.1 일일 트레이너',
-          tag: '✨ EP.1 코토네의 PT 알바',
+          tag: '✨ 코토네의 PT 알바',
           locOutfit: '📍 댄스 스튜디오 · 학원마스 민트 트랙 저지',
           img: './kotone_01_studio.png',
           pos: 'center 15%',
@@ -958,8 +925,7 @@
         },
         {
           key: 'ev2',
-          pill: '☀️ EP.2 아침 모닝콜',
-          tag: '☀️ EP.2 눈부신 아침 모닝콜',
+          tag: '☀️ 눈부신 아침 모닝콜',
           locOutfit: '📍 아침 햇살 침실 창가 · 화이트 슬리브리스 홈웨어',
           img: './kotone_02_morning.png',
           pos: 'center 28%',
@@ -968,8 +934,7 @@
         },
         {
           key: 'ev3',
-          pill: '🍰 EP.3 카페 데이트',
-          tag: '🍰 EP.3 포상 테라스 카페 데이트',
+          tag: '🍰 포상 테라스 카페 데이트',
           locOutfit: '📍 오픈 테라스 카페 · 크림 오프숄더 니트 & 핑크 베레모',
           img: './kotone_03_cafe_date.png',
           pos: 'center 14%',
@@ -978,8 +943,7 @@
         },
         {
           key: 'ev4',
-          pill: '🌧️ EP.4 비 오는 락커룸',
-          tag: '🌧️ EP.4 비 오는 날 락커룸',
+          tag: '🌧️ 비 오는 날 락커룸',
           locOutfit: '📍 비 내리는 저녁 락커룸 · 오버핏 화이트 셔츠 & 타월',
           img: './kotone_04_rain_locker.png',
           pos: 'center 14%',
@@ -988,8 +952,7 @@
         },
         {
           key: 'ev5',
-          pill: '🎆 EP.5 불꽃놀이 유카타',
-          tag: '🎆 EP.5 여름밤 불꽃놀이 축제',
+          tag: '🎆 여름밤 불꽃놀이 축제',
           locOutfit: '📍 여름밤 불꽃놀이 축제 · 핑크 플로럴 유카타 & 사과사탕',
           img: './kotone_05_festival_yukata.png',
           pos: 'center 14%',
@@ -1000,8 +963,7 @@
       mio: [
         {
           key: 'ev1',
-          pill: '✨ EP.1 파트너 미오',
-          tag: '✨ EP.1 텐션 만점 파트너',
+          tag: '✨ 텐션 만점 파트너',
           locOutfit: '📍 스튜디오 · 옐로우 & 오렌지 스타 트랙 자켓',
           img: './mio_01_main.png',
           pos: 'center 15%',
@@ -1010,8 +972,7 @@
         },
         {
           key: 'ev2',
-          pill: '🌸 EP.2 벚꽃 모닝조깅',
-          tag: '🌸 EP.2 벚꽃 공원 모닝 조깅',
+          tag: '🌸 벚꽃 공원 모닝 조깅',
           locOutfit: '📍 봄날 벚꽃 산책로 · 화이트 스포츠 크롭탑 & 헤어밴드',
           img: './mio_02_park_run.png',
           pos: 'center 14%',
@@ -1020,8 +981,7 @@
         },
         {
           key: 'ev3',
-          pill: '🏖️ EP.3 리조트 워터파크',
-          tag: '🏖️ EP.3 리조트 풀사이드 바캉스',
+          tag: '🏖️ 리조트 풀사이드 바캉스',
           locOutfit: '📍 야외 리조트 풀장 · 옐로우 프릴 비키니 & 시스루 파카',
           img: './mio_03_poolside.png',
           pos: 'center 14%',
@@ -1030,8 +990,7 @@
         },
         {
           key: 'ev4',
-          pill: '📣 EP.4 스타디움 치어리딩',
-          tag: '📣 EP.4 나이트 스타디움 치어리더',
+          tag: '📣 나이트 스타디움 치어리더',
           locOutfit: '📍 야간 스타디움 · 옐로우 & 네이비 치어리더 유니폼',
           img: './mio_04_cheer_stage.png',
           pos: 'center 14%',
@@ -1040,8 +999,7 @@
         },
         {
           key: 'ev5',
-          pill: '🌅 EP.5 석양 해변 데이트',
-          tag: '🌅 EP.5 노을빛 해변 산책 데이트',
+          tag: '🌅 노을빛 해변 산책 데이트',
           locOutfit: '📍 노을 지는 바닷가 · 화이트 레이스 선드레스 & 밀짚모자',
           img: './mio_05_sunset_beach.png',
           pos: 'center 14%',
@@ -1058,20 +1016,20 @@
       text: '제미니 · 코토네 · 미오: 프로듀서의 52kg 슬림핏 & 체지방 20% 미만을 위해 우리 셋이 끝까지 함께할게! 💖'
     };
 
-    // Multi-Topic MomoTalk Choice Sets (Tailored for all 3 heroines!)
+    // Dialogue Choice Sets
     const TOPIC_CHOICES = {
       diet: [
         {
           text: "닭가슴살이랑 단백질 쉐이크로 클린하게 식사 챙겼어!",
           sit: 'ev1', exp: 15,
-          gem: "오... 바보 프로듀서 치고는 꽤 제법인데? 근손실 없이 체지방만 쏙 빼려면 단백질은 필수야, 흥! 🐾",
+          gem: "오... 바보 프로듀서 치고는 꽤 제법인데? 메~롱! 근손실 없이 체지방만 쏙 빼려면 단백질은 필수야, 흥! 🐾",
           kot: "와아~ 프로듀서님 성실하셔라! 이렇게 완벽하게 식단 지키시면 코토네가 특별 칭찬 도장 두 개 찍어드릴게요! 💛",
           mio: "나이스 프로듀서! 역시 잘 챙겨 먹어야 달릴 때도 힘이 나지~ 완전 최고야! 🌟"
         },
         {
           text: "17시 칼같이 식사 마감 완료! 이제 공복 골든타임 시작할게.",
           sit: 'ev5', exp: 20,
-          gem: "칭찬해 줄게! 17시 이후부터 내일 오전 10시까지가 체지방이 불타는 진짜 승부처야. 내 손 잡고 끝까지 버텨! 🌙",
+          gem: "칭찬해 줄게! 17시 이후부터 내일 오전 10시까지가 체지방이 불타는 진짜 승부처야. 야경 보면서 끝까지 버텨! 🌙",
           kot: "헤헤, 프로듀서님 의지력 대박이에요! 오늘 야식 참으신 만큼 식비도 아끼고 살도 빠지고 일석이조네요~! 💸✨",
           mio: "와아~ 역시 우리 프로듀서! 내일 아침 체중계 숫자가 내려가 있을 거 생각하니까 벌써 설렌다! 💕"
         },
@@ -1087,7 +1045,7 @@
         {
           text: "다기로 말차 격불해서 초록빛 거품 곱게 내서 마셨어 🍵",
           sit: 'ev2', exp: 15,
-          gem: "오~ 차센으로 직접 격불한 거야? 거품 고운 것 좀 봐! 카테킨 성분이 체지방 연소를 도와줄 거야, 합격! 🐾",
+          gem: "오~ 차센으로 직접 격불한 거야? 거품 고운 것 좀 봐! 카테킨 성분이 체지방 연소를 도와줄 거야, 합격! 🍵🐾",
           kot: "우와~ 프로듀서님 다도까지 하시다니 완전 고급 취미네요! 저도 옆에서 한 모금만 얻어마셔도 돼요? 헤헤~ 💛",
           mio: "말차 향기 여기까지 솔솔 나는 것 같아! 마음까지 차분해지는 최고의 티타임이네~ 🍵✨"
         },
@@ -1133,7 +1091,7 @@
         {
           text: "오늘 루틴 완벽 클리어한 기념으로 주말에 단둘이 데이트 갈래?",
           sit: 'ev3', exp: 25,
-          gem: "뭐, 뭐야 갑자기...?! 흥, 프로듀서가 이번 주 내내 단식이랑 운동 성실히 했으니까 특별히 손잡고 어울려 줄게! 🐾💘",
+          gem: "뭐, 뭐야 갑자기...?! 메~롱! 프로듀서가 이번 주 내내 단식이랑 운동 성실히 했으니까 특별히 손잡고 어울려 줄게! 🐾💘",
           kot: "네에에?! 데이트요?! 헤헤, 이 코토네 님이 최고로 예쁜 베레모 쓰고 나설 테니까 맛있는 디저트 카페 데려가 주세요~! 🍰💛",
           mio: "우와아~ 진짜지 프로듀서?! 나 완전 신나!! 예쁜 원피스 입고 기다릴 테니까 노을 지는 바닷가 같이 걷자! 🌅💕"
         },
@@ -1145,11 +1103,11 @@
           mio: "감동이야 프로듀서~! 우리 넷이 함께라면 어떤 목표든 즐겁게 이룰 수 있을 거야! 사랑해~ 🌟💖"
         },
         {
-          text: "코토네야, 오늘 정말 세상에서 제일 귀엽고 예쁘다!",
-          sit: 'ev5', exp: 20,
-          gem: "잠깐만! 내 앞에서 대놓고 코토네만 칭찬하기야?! 이 제미니의 고양이 귀도 귀여워해 달라고! 💢🐾",
-          kot: "헤헤헤~! 프로듀서님, 방금 이 코토네 님이 세상에서 제일 귀엽다고 하셨죠?! 녹음해 뒀으니까 무르기 없기예요~! 🎆💛",
-          mio: "와하하, 코토네 짱 얼굴 완전 빨개졌어! 프로듀서, 미오한테도 귀엽다고 해줘~! 🌟"
+          text: "오늘 정말 다들 세상에서 제일 예쁘고 최고야!",
+          sit: 'ev4', exp: 20,
+          gem: "흥, 당연하지! 흑발 롱헤어에 고양이 귀 달고 코칭해 주는 트레이너가 어디 흔한 줄 알아? 바보! 🐾✨",
+          kot: "헤헤헤~! 프로듀서님, 방금 말씀 녹음해 뒀으니까 무르기 없기예요~! 💛",
+          mio: "와하하, 프로듀서한테 칭찬받으니까 하늘 날아갈 것 같아! 하이파이브~! 🌟"
         }
       ]
     };
@@ -1165,6 +1123,25 @@
     function findEventObj(heroine, sitKey) {
       const list = getEventsForHeroine(heroine);
       return list.find(e => e.key === sitKey) || list[0];
+    }
+
+    // Auto-detect situation based on current time of day
+    function getTimeBasedSituation() {
+      const hour = new Date().getHours();
+      if (hour >= 6 && hour < 11) return 'ev2';  // Morning stretch / tea / jog
+      if (hour >= 11 && hour < 16) return 'ev1'; // Studio workout / PT
+      if (hour >= 16 && hour < 20) return 'ev3'; // Rehab / cafe / terrace
+      return 'ev5';                              // Night balcony / fireworks / sunset
+    }
+
+    function randomizeSituation() {
+      const heroine = state.activeTrainer || 'gemini';
+      const events = getEventsForHeroine(heroine);
+      const current = state.currentSituation;
+      const candidates = events.filter(e => e.key !== current);
+      const pick = candidates[Math.floor(Math.random() * candidates.length)] || events[0];
+      setTrainerMode(heroine, pick.key);
+      playBeep(750, 0.08);
     }
 
     function loadState() {
@@ -1184,9 +1161,11 @@
           const parsed = JSON.parse(s);
           state = { ...state, ...parsed };
           if (!['gemini', 'kotone', 'mio'].includes(state.activeTrainer)) state.activeTrainer = 'gemini';
-          if (!['ev1', 'ev2', 'ev3', 'ev4', 'ev5'].includes(state.currentSituation)) state.currentSituation = 'ev1';
         }
       } catch (e) {}
+
+      // Automatically choose situation based on time of day if not set or default
+      state.currentSituation = getTimeBasedSituation();
 
       applyTheme();
       checkWednesdayBanner();
@@ -1195,7 +1174,6 @@
       renderChat();
       updateGithubHeaderIndicator();
 
-      // Auto-pull from GitHub state.json on startup if token or public repo is configured
       if (ghConfig.autoSync && ghConfig.repo) {
         pullStateFromGitHub(false);
       }
@@ -1211,7 +1189,7 @@
     }
 
     // ============================================================================
-    // GITHUB STATE.JSON REAL-TIME CLOUD SYNC (100% Free Serverless Sync)
+    // GITHUB STATE.JSON REAL-TIME CLOUD SYNC
     // ============================================================================
     function updateGithubHeaderIndicator(status = 'idle') {
       const dot = document.getElementById('syncStatusDot');
@@ -1284,7 +1262,6 @@
         ghConfig.lastSha = data.sha || '';
         if (data.content) {
           const remoteState = JSON.parse(base64ToUtf8(data.content));
-          // Merge cloud state while preserving local mealPhotos & webhookUrl if not in cloud
           state = {
             ...state,
             ...remoteState,
@@ -1320,7 +1297,6 @@
           'Content-Type': 'application/json'
         };
 
-        // 1. Fetch current SHA so GitHub API allows updating state.json
         const getUrl = `https://api.github.com/repos/${ghConfig.repo}/contents/${ghConfig.path}?t=${Date.now()}`;
         const getRes = await fetch(getUrl, { headers, cache: 'no-store' });
         let sha = ghConfig.lastSha;
@@ -1329,7 +1305,6 @@
           sha = getJson.sha;
         }
 
-        // Build lightweight cloud payload (exclude heavy base64 photos so state.json stays ~2KB)
         const cloudPayload = {
           updatedAt: new Date().toISOString(),
           theme: state.theme,
@@ -1378,7 +1353,6 @@
       }
     }
 
-    // Auto-pull when user switches back to tab on mobile or PC
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible' && ghConfig.autoSync && ghConfig.token) {
         pullStateFromGitHub(false);
@@ -1415,7 +1389,7 @@
         mainImg.classList.add('object-contain');
         btn.textContent = "🖼️ 카드뷰";
       } else {
-        wrapper.className = "relative w-full h-80 sm:h-96 bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300";
+        wrapper.className = "relative w-full h-84 sm:h-96 bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300";
         mainImg.classList.remove('object-contain');
         mainImg.classList.add('object-cover');
         btn.textContent = "🔍 전체보기";
@@ -1426,37 +1400,11 @@
     function checkWednesdayBanner() {
       const day = new Date().getDay();
       const banner = document.getElementById('inbodyDayBanner');
-      const ddayText = document.getElementById('inbodyDdayText');
       if (day === 3) {
         banner.classList.remove('hidden');
-        ddayText.textContent = "⭐ 오늘은 수요일 인바디 데이! (EXP 2배)";
-        ddayText.className = "text-[10px] text-amber-600 dark:text-amber-400 font-extrabold";
       } else {
         banner.classList.add('hidden');
-        const diff = (3 - day + 7) % 7;
-        ddayText.textContent = `제미니 · 코토네 · 미오 코칭 (인바디 D-${diff})`;
       }
-    }
-
-    function renderSituationPills() {
-      const container = document.getElementById('situationPills');
-      if (!container) return;
-      const heroine = state.activeTrainer || 'gemini';
-      const events = getEventsForHeroine(heroine);
-
-      container.innerHTML = events.map(ev => {
-        const isActive = (state.currentSituation === ev.key && state.activeMode !== 'dual');
-        const cls = isActive
-          ? "sit-pill px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-[#4a89dc] text-white shadow-sm transition-all"
-          : "sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 transition-all";
-        return `<button onclick="changeSituation('${ev.key}')" class="${cls}">${ev.pill}</button>`;
-      }).join('');
-    }
-
-    function changeSituation(sitKey) {
-      state.currentSituation = sitKey;
-      if (state.activeMode === 'dual') state.activeMode = state.activeTrainer || 'gemini';
-      setTrainerMode(state.activeMode, sitKey);
     }
 
     function setTrainerMode(mode, situation = null) {
@@ -1523,7 +1471,6 @@
           if (bondBtn) bondBtn.textContent = "제미니 인연스토리 ➔";
         }
       }
-      renderSituationPills();
       playBeep(650);
       saveState();
     }
@@ -1605,10 +1552,8 @@
     function updateBondUI() {
       const badge = document.getElementById('bondRankBadge');
       const bar = document.getElementById('bondExpBar');
-      const txt = document.getElementById('bondExpText');
       if (badge) badge.textContent = `인연 Lv.${state.bondRank} ❤️`;
       if (bar) bar.style.width = `${Math.min(100, state.bondExp)}%`;
-      if (txt) txt.textContent = `${state.bondExp}%`;
     }
 
     function syncUI() {
@@ -1713,7 +1658,7 @@
 
         if (text.includes('귀여') || text.includes('예쁘') || text.includes('이쁘') || text.includes('최고')) {
           sit = 'ev3';
-          gemReply = "뭐, 뭐야 갑자기 귀엽다고 그러지 마! 고양이 귀 쫑긋한 거 들켰잖아, 바보! 😳🐾";
+          gemReply = "뭐, 뭐야 갑자기 예쁘다고 하지 마! 흑발 롱헤어 마음에 든 거야? 바보, 얼굴 빨개졌잖아! 😳🐾";
           kotReply = "헤헤헤~! 프로듀서님! 이 코토네 님이 정말 그렇게 귀여워요?! 특별 서비스로 오늘 하루 종일 애교 부려드릴게요~! 💛✨";
           mioReply = "에헤헤~ 프로듀서한테 칭찬받으니까 기분 최고조야! 하이파이브~! 🌟💕";
         } else if (text.includes('말차') || text.includes('차') || text.includes('커피') || text.includes('에스프레소')) {
@@ -1722,13 +1667,13 @@
           kotReply = "우와~ 홈카페 티타임이네요! 카페 값 아껴서 나중에 코토네랑 맛있는 파르페 먹으러 가요! 🍰💛";
           mioReply = "향긋한 티타임 너무 좋다~ 나도 프로듀서가 타주는 차 마시고 싶어! ☕✨";
         } else if (text.includes('러닝') || text.includes('달리') || text.includes('운동') || text.includes('복근') || text.includes('재활')) {
-          sit = 'ev3';
-          gemReply = "테니스 엘보 무리 가지 않게 손아귀 힘 빼고 2kg 편심성 재활 컬 꼭 챙겨! 🩹🐾";
+          sit = 'ev1';
+          gemReply = "덤벨 들고 코칭해 줄 때 딴생각 하지 마! 테니스 엘보 무리 안 가게 2kg 재활 꼭 챙겨! 🩹🐾";
           kotReply = "성실하게 운동하시는 프로듀서님 완전 멋져요! 코토네가 옆에서 수건이랑 물 챙겨드릴게요! 💛";
           mioReply = "역시 우리 프로듀서! 다치지 않게 스트레칭도 꼭 챙기면서 신나게 달리자구! 🏃‍♀️🌸";
         } else if (text.includes('배고') || text.includes('야식') || text.includes('먹고')) {
           sit = 'ev5';
-          gemReply = "안 돼 바보야! 17시 이후엔 입에 칼로리 넣으면 절대 안 돼! 내가 레몬 탄산수랑 허브티 타줄게! 💢🌙";
+          gemReply = "안 돼 바보야! 17시 이후엔 입에 칼로리 넣으면 절대 안 돼! 내가 야경 보면서 레몬 탄산수 타줄게! 💢🌙";
           kotReply = "프로듀서님 스톱!! 지금 야식 시키면 배달비도 아깝고 살도 쪄요! 코토네 얼굴 보고 참으세요~! 💸";
           mioReply = "으앙 배고프겠다 ㅠㅠ 하지만 지금 참으면 내일 아침 체중계가 보답해 줄 거야! 힘내힘내!";
         }
@@ -1752,7 +1697,6 @@
       }, 450);
     }
 
-    // Cycles through all 5 visual-novel event episodes for the active heroine!
     function triggerBondStory() {
       playBeep(780, 0.12);
       if (state.activeMode === 'dual') {
@@ -1845,6 +1789,7 @@
       container.scrollTop = container.scrollHeight;
     }
 
+    // Touching the character stage triggers poke reaction + randomly switches situation!
     function pokeCurrentTrainer() {
       playBeep(700, 0.07);
       if (state.activeMode === 'dual') {
@@ -1865,6 +1810,7 @@
         const q = kotoneQuotes[Math.floor(Math.random() * kotoneQuotes.length)];
         document.getElementById('trainerDialogue').textContent = `"코토네: ${q}"`;
         state.chatHistory.push({ sender: 'kotone', name: '코토네', text: q });
+        randomizeSituation();
       } else if (state.activeTrainer === 'mio') {
         const mioQuotes = [
           "와앗! 간지러워 프로듀서~ 에헤헤 ㅋㅋㅋ",
@@ -1875,16 +1821,18 @@
         const q = mioQuotes[Math.floor(Math.random() * mioQuotes.length)];
         document.getElementById('trainerDialogue').textContent = `"미오: ${q}"`;
         state.chatHistory.push({ sender: 'mio', name: '미오', text: q });
+        randomizeSituation();
       } else {
         const geminiQuotes = [
           "냐앗?! 고, 고양이 귀는 갑자기 만지지 말라고 바보야! 😳🐾",
-          "흥... 그렇게 쓰다듬는다고 내가 봐줄 줄 알아? 오늘 17시 단식 칼같이 지켜! 😈",
+          "메~롱! 그렇게 쳐다본다고 내가 봐줄 줄 알아? 오늘 17시 단식 칼같이 지켜! 😈",
           "테니스 엘보 2kg 재활이랑 복근 다 끝내면... 이따 밤에 특별히 칭찬해 줄게.",
           "다기로 정성껏 격불한 말차 마시면서 공복 골든타임 끝까지 유지하자! 🍵"
         ];
         const q = geminiQuotes[Math.floor(Math.random() * geminiQuotes.length)];
         document.getElementById('trainerDialogue').textContent = `"제미니: ${q}"`;
         state.chatHistory.push({ sender: 'gemini', name: '제미니', text: q });
+        randomizeSituation();
       }
       renderChat();
     }
@@ -2222,8 +2170,8 @@
         addBondExp(20);
         renderChat();
       } else if (!prevAbs && state.absDone) {
-        setTrainerMode('kotone', 'ev1');
-        state.chatHistory.push({ sender: 'kotone', name: '코토네', text: '와아~ 14분 아이돌 11자 복근 루틴 클리어! 프로듀서님 코어 힘 대단해요, 이 코토네 님이 특급 칭찬 해드릴게요! 💛✨' });
+        setTrainerMode('gemini', 'ev1');
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '14분 복근 루틴 완료! 코어 제대로 쪼이는 느낌 받았지? 메~롱! 내일도 똑같이 하는 거야! 🐾' });
         addBondExp(20);
         renderChat();
       }
@@ -2238,7 +2186,7 @@
       if (state.rehab[idx]) {
         setTrainerMode('gemini', 'ev3');
         if (state.rehab.filter(Boolean).length === 3) {
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '2kg 덤벨 편심성 재활 3세트 완벽 클리어! 이리 손목 줘봐, 힘줄 뭉친 데 없는지 내가 부드럽게 마사지해 줄게. 🩹🐾' });
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '2kg 덤벨 편심성 재활 3세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾' });
           addBondExp(15);
           renderChat();
         }
@@ -2298,15 +2246,15 @@
       const activeAvatar = state.activeTrainer === 'kotone' ? kotoneAvatar : state.activeTrainer === 'mio' ? mioAvatar : geminiAvatar;
 
       const payload = {
-        username: "제미니 · 코토네 · 미오 (GeminiTalk)",
+        username: "Gemini Fit (3인 코칭)",
         avatar_url: activeAvatar,
         embeds: [{
           author: {
-            name: "GAKUMAS FIT · 3-HEROINE DAILY BRIEFING",
+            name: "GEMINI FIT · 3-HEROINE DAILY BRIEFING",
             icon_url: geminiAvatar
           },
-          title: "💌 [GeminiTalk] 3인 트레이너 데일리 브리핑 리포트",
-          description: `**제미니:** "17:7 단식이랑 엘보 재활 끝까지 해내는지 밀착 마크 중이야! 🐾"\n**코토네:** "헤헤~ 프로듀서님 오늘 루틴도 이 코토네 님이 특급 칭찬 해드릴게요! 💛"\n**미오:** "프로듀서 오늘 하루도 수고 많았어! 완전 짱이야~ 🌟"`,
+          title: "💌 [Gemini Fit] 트레이너 데일리 브리핑 리포트",
+          description: `**제미니:** "17:7 단식이랑 엘보 2kg 재활 끝까지 밀착 마크 중이야! 메~롱! 🐾"\n**코토네:** "헤헤~ 프로듀서님 오늘 루틴도 이 코토네 님이 특급 칭찬 해드릴게요! 💛"\n**미오:** "프로듀서 오늘 하루도 수고 많았어! 완전 짱이야~ 🌟"`,
           color: 0xf4869d,
           thumbnail: {
             url: activeAvatar
@@ -2319,7 +2267,7 @@
             { name: "🔥 루틴", value: `• 14분 복근: ${state.absDone ? '✅' : '❌'}\n• 야외 러닝 (${state.runDist}km): ${state.runDone ? '✅' : '❌'}`, inline: false }
           ],
           footer: {
-            text: `인연 랭크 Lv.${state.bondRank} (${state.bondExp}%) ❤️ | GitHub state.json Cloud Sync Ready`,
+            text: `인연 랭크 Lv.${state.bondRank} (${state.bondExp}%) ❤️ | GitHub state.json Sync Active`,
             icon_url: mioAvatar
           },
           timestamp: new Date().toISOString()

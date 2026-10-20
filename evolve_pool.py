@@ -60,15 +60,15 @@ BASE_STYLE_PROMPT = {
     ),
     "gemini": (
         "CRITICAL STYLE RULE: Draw strictly in the Gakuen Idolmaster (학원 아이돌마스터) high-end mobile game "
-        "illustration art style of the FIRST attached style reference images — ultra-delicate fine tinted lineart, "
-        "soft luminous porcelain skin rendering with warm coral cheek blush, detailed jewel-like golden-amber eyes with rich eyelashes, "
-        "silky hair strands catching warm golden light, airy depth of field. "
-        "DO NOT use flat cel-shading! "
-        "CHARACTER DESIGN (New Gemini): 19yo alluring tsundere-bratty (mesugaki/koakuma vibe) personal trainer girl, "
-        "short silky milk-tea ash-blonde bob haircut with a distinctive pure WHITE front hair streak in her bangs, "
-        "cute fluffy cat ears (nekomimi) on top of her head with a small red/gold hairpin, "
-        "half-lidded teasing golden-amber cat eyes, cute tiny single fang (yaeba) showing on her playful smug blushing smile, "
-        "slender glamorous idol proportions, masterpiece 2D bishoujo game event CG, aspect ratio 9:16."
+        "illustration art style of the attached style reference images — ultra-delicate fine tinted lineart, "
+        "soft luminous porcelain skin rendering with warm coral cheek blush, detailed jewel-like eyes with rich eyelashes, "
+        "silky hair strands catching warm golden light, airy depth of field. DO NOT use flat cel-shading! "
+        "CHARACTER DESIGN (Gemini): 19yo personal fitness & intermittent fasting coach girl, "
+        "very long waist-length silky raven-black hair (흑발 롱헤어), straight blunt-cut bangs (hime cut bangs) "
+        "with straight cheek-length sidelocks framing her face, a cute little ahoge strand on top, "
+        "and cute fluffy black cat ears (nekomimi) with a tiny ribbon pin. "
+        "FACE: Alluring teasing tsundere-mesugaki expression, cute single sharp fang (yaeba) peeking out, "
+        "warm blush on cheeks and nose tip. Slender glamorous idol proportions, masterpiece 2D bishoujo game event CG, aspect ratio 9:16."
     ),
 }
 
@@ -116,30 +116,24 @@ def pick_evolution_refs(trainer: str) -> list[Path]:
                 chosen.append(feature_refs[-1])
         return chosen
 
-    # trainer == "gemini" (신규 오리지널 캐릭터)
+    # trainer == "gemini" (신규 흑발 롱헤어 제미니)
     gem_survivors = list_survivors(GEMINI_POOL)
     gem_features = list_survivors(REF_GEMINI_FEATURE_POOL)
+    black_ref = [p for p in gem_features if "06_black_hair" in p.name]
     chosen = []
     if gem_survivors:
-        # 이미 학원마스 화풍으로 탄생한 신규 제미니 시드가 있으면 최우선 참조!
         chosen.append(gem_survivors[0])
-        if kotone_survivors:
-            chosen.append(kotone_survivors[0])  # 학원마스 빛/피부 톤 고정용
-        elif style_survivors:
-            chosen.append(style_survivors[0])
-        if gem_features:
-            # 네코 클로즈업(02_neko_closeup.jpg) 또는 투톤 풀장(03_twotone_pool.jpg) 중 특징 보조
-            pref = [p for p in gem_features if "02_" in p.name or "01_" in p.name]
-            chosen.append(pref[0] if pref else gem_features[0])
-    else:
-        # 최초 시드 생성: 학원마스 화풍 레퍼런스 2장 + 신규 제미니 캐릭터 특징(02_neko_closeup.jpg) 1장
-        if kotone_survivors:
+        if black_ref:
+            chosen.append(black_ref[0])
+        elif kotone_survivors:
             chosen.append(kotone_survivors[0])
+    else:
+        if black_ref:
+            chosen.append(black_ref[0])
         if style_survivors:
             chosen.append(style_survivors[0])
-        if gem_features:
-            pref = [p for p in gem_features if "02_neko_closeup" in p.name]
-            chosen.append(pref[0] if pref else gem_features[0])
+        if kotone_survivors:
+            chosen.append(kotone_survivors[0])
     return chosen
 
 
