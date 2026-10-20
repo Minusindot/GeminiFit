@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-10-20T11:23:56.062Z",
+  "updatedAt": "2026-10-20T11:24:08.552Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
-  "bondRank": 2,
-  "bondExp": 95,
-  "activeTrainer": "gemini",
-  "activeMode": "dual",
-  "currentSituation": "ev5",
+  "bondRank": 3,
+  "bondExp": 15,
+  "activeTrainer": "mio",
+  "activeMode": "mio",
+  "currentSituation": "ev2",
   "absDone": false,
-  "runDone": false,
-  "runDist": 5,
+  "runDone": true,
+  "runDist": 7,
   "rehab": [
     false,
     false,
@@ -27,11 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "아하하, 제미니 짱 잔소리 시작이네~ 프로듀서! 오늘도 우리랑 같이 파이팅이야! 🌟"
-    },
     {
       "sender": "gemini",
       "name": "제미니",
@@ -113,6 +108,11 @@
       "sender": "mio",
       "name": "미오",
       "text": "와아~ 꾸준히 기록 챙기는 프로듀서 너무 멋있어! 이 기세로 계속 함께 가자~ 🌟"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "나이키런 7km 완주 대박! 벚꽃 산책로 페이스 완전 좋았어 프로듀서~ 최고야! 🏃‍♀️🌸"
     }
   ]
 }
