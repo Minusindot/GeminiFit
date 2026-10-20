@@ -356,6 +356,7 @@
             <button onclick="loadTopic('diet')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-sky-400">🥗 식단/단식</button>
             <button onclick="loadTopic('tea')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-emerald-400">🍵 말차/카페</button>
             <button onclick="loadTopic('workout')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-amber-400">🏃 러닝/재활</button>
+            <button onclick="loadTopic('gym')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-indigo-400">🏋️ 헬스 풀코스</button>
             <button onclick="loadTopic('date')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-pink-400">💘 미연시 데이트</button>
           </div>
           <button onclick="clearChatLog()" class="text-[10px] text-slate-400 hover:text-rose-400 shrink-0 px-1" title="대화 기록 정리">지우기</button>
@@ -1138,11 +1139,11 @@
         {
           key: 'ev1',
           tag: '✨ 밀착 덤벨 코칭',
-          locOutfit: '📍 VIP 스튜디오 · 상체 숙인 2kg 덤벨 & 소악마 메롱',
+          locOutfit: '📍 VIP 스튜디오 · 2kg 덤벨 & 당당한 전담 코치 미소',
           img: './gemini_01_main.png',
           pos: 'center 12%',
-          text: '벌써 덤벨 1세트 하고 지친 거야, 프로듀서? 메~롱! 슬림핏 52kg 될 때까지 나만 딱 믿고 따라와! 🐾',
-          story: '💖 [제미니 EP.1 · VIP 스튜디오] "자, 거울 똑바로 봐! 내가 이렇게 가까이서 얼굴 들이대고 코칭해 주는데 딴데 한눈팔면 가만 안 둘 거야!"'
+          text: '벌써 덤벨 1세트 하고 지친 거야, 프로듀서? 흥, 슬림핏 52kg 될 때까지 나만 딱 믿고 따라와! 🐾',
+          story: '💖 [제미니 EP.1 · VIP 스튜디오] "자, 거울 똑바로 봐! 내가 이렇게 가까이서 코칭해 주는데 딴데 한눈팔면 가만 안 둘 거야!"'
         },
         {
           key: 'ev2',
@@ -1491,14 +1492,37 @@
           mio: "14분 동안 쉬지 않고 해내다니 대단해! 내가 옆에서 치어리딩 해준 보람이 있는걸? 📣🌟"
         }
       ],
+      gym: [
+        {
+          text: "헬스장 풀코스(상체2+하체1+복근2) 전부 올클리어! 🏋️",
+          sit: 'ev1', exp: 25,
+          gem: "오... 풀코스 정석대로 다 돌았네! 상체 2개에 하체 1개, 캡틴스 체어랑 크런치까지! 진짜 기특하잖아, 프로듀서. 🐾",
+          kot: "와아아~! 헬스장 풀코스 정복! 프로듀서님 체력이 나날이 센터 아이돌급으로 진화하고 계세요~! 💛💸",
+          mio: "대박 대박!! 풀코스 다 뛰고 나니까 땀도 쫙 빠지고 최고지? 하이파이브 짝~! 완전 멋져 프로듀서! 🖐️🔥"
+        },
+        {
+          text: "캡틴스 체어 레그레이즈로 하복부 타는 느낌 제대로 잡았어! 💥",
+          sit: 'ev4', exp: 20,
+          gem: "팔꿈치 패드에 체중 잘 실었지? 손아귀에 무리 안 주면서 하복부만 쏙 접어 올리는 최고의 치트키야!",
+          kot: "코토네가 옆에서 각도기 대고 봤는데 반동 1도 없이 완벽한 폼이었어요! 11자 복근 예약 완료! ✨",
+          mio: "하복부 찢어지는 자극 최고지! 코어가 단단해지면 달리기 페이스도 엄청 안정된다구~ 🌟"
+        },
+        {
+          text: "크런치 20개로 상복부까지 쥐어짜면서 호흡 후-! 🧘",
+          sit: 'ev6', exp: 20,
+          gem: "상체 무리하게 꺾지 않고 배꼽만 쏙 말아 올렸네. 체지방 20% 언더가 이제 코앞이야!",
+          kot: "바닥에 매트 깔고 후- 후- 호흡하시는 프로듀서님 보면서 코토네도 같이 복근 힘줬답니다! 헤헤~ 💛",
+          mio: "크런치 끝내고 바닥에 누웠을 때의 그 카타르시스! 우리 둘 다 오늘 진짜 최고였어! 🌟"
+        }
+      ],
       date: [
         {
           text: "오늘 루틴 완벽 클리어한 기념으로 주말에 단둘이 데이트 갈래?",
           sit: 'ev3', exp: 25,
-          gem: "뭐, 뭐야 갑자기...?! 메~롱! 프로듀서가 이번 주 내내 단식이랑 운동 성실히 했으니까 특별히 손잡고 어울려 줄게! 🐾💘",
+          gem: "뭐, 뭐야 갑자기...?! 프로듀서가 이번 주 내내 단식이랑 운동 성실히 했으니까 특별히 손잡고 어울려 줄게! 🐾💘",
           kot: "네에에?! 데이트요?! 헤헤, 이 코토네 님이 최고로 예쁜 베레모 쓰고 나설 테니까 맛있는 디저트 카페 데려가 주세요~! 🍰💛",
           mio: "우와아~ 진짜지 프로듀서?! 나 완전 신나!! 예쁜 원피스 입고 기다릴 테니까 노을 지는 바닷가 같이 걷자! 🌅💕"
-        },
+        }," 
         {
           text: "요즘 너희 셋 덕분에 운동이랑 식단 관리하는 게 매일 설레고 즐거워!",
           sit: 'ev5', exp: 25, dualReply: true,
@@ -2062,50 +2086,33 @@
       renderChat();
 
       setTimeout(() => {
-        let sit = null;
-        let gemReply = "흥, 바보 프로듀서! 네가 무슨 말 하는지 다 듣고 있거든? 목표 52kg까지 나만 믿고 따라와! 🐾";
-        let kotReply = "헤헤~ 프로듀서님! 이 코토네 님이 언제나 1등으로 응원하고 있는 거 아시죠?! 💛💸";
-        let mioReply = "프로듀서 말 들으니까 나도 기운이 펄펄 나! 오늘도 우리 신나게 파이팅이야~ 🌟";
+        let gemObj = window.getSmartReply ? window.getSmartReply('gemini', text) : { text: "흥, 바보 프로듀서! 목표 52kg까지 나만 믿고 따라와! 🐾", sit: 'ev1' };
+        let kotObj = window.getSmartReply ? window.getSmartReply('kotone', text) : { text: "헤헤~ 프로듀서님! 코토네가 1등으로 응원할게요! 💛", sit: 'ev1' };
+        let mioObj = window.getSmartReply ? window.getSmartReply('mio', text) : { text: "프로듀서 목소리 들으니까 기운 펄펄! 오늘도 파이팅이야~ 🌟", sit: 'ev1' };
 
-        if (text.includes('귀여') || text.includes('예쁘') || text.includes('이쁘') || text.includes('최고')) {
-          sit = 'ev3';
-          gemReply = "뭐, 뭐야 갑자기 예쁘다고 하지 마! 흑발 롱헤어 마음에 든 거야? 바보, 얼굴 빨개졌잖아! 😳🐾";
-          kotReply = "헤헤헤~! 프로듀서님! 이 코토네 님이 정말 그렇게 귀여워요?! 특별 서비스로 오늘 하루 종일 애교 부려드릴게요~! 💛✨";
-          mioReply = "에헤헤~ 프로듀서한테 칭찬받으니까 기분 최고조야! 하이파이브~! 🌟💕";
-        } else if (text.includes('말차') || text.includes('차') || text.includes('커피') || text.includes('에스프레소')) {
-          sit = 'ev2';
-          gemReply = "다기로 격불한 말차랑 에스프레소 좋지! 무가당으로 즐기면서 17:7 단식 유지하는 거 잊지 마. 🍵";
-          kotReply = "우와~ 홈카페 티타임이네요! 카페 값 아껴서 나중에 코토네랑 맛있는 파르페 먹으러 가요! 🍰💛";
-          mioReply = "향긋한 티타임 너무 좋다~ 나도 프로듀서가 타주는 차 마시고 싶어! ☕✨";
-        } else if (text.includes('러닝') || text.includes('달리') || text.includes('운동') || text.includes('복근') || text.includes('재활')) {
-          sit = 'ev1';
-          gemReply = "덤벨 들고 코칭해 줄 때 딴생각 하지 마! 테니스 엘보 무리 안 가게 2kg 재활 꼭 챙겨! 🩹🐾";
-          kotReply = "성실하게 운동하시는 프로듀서님 완전 멋져요! 코토네가 옆에서 수건이랑 물 챙겨드릴게요! 💛";
-          mioReply = "역시 우리 프로듀서! 다치지 않게 스트레칭도 꼭 챙기면서 신나게 달리자구! 🏃‍♀️🌸";
-        } else if (text.includes('배고') || text.includes('야식') || text.includes('먹고')) {
-          sit = 'ev5';
-          gemReply = "안 돼 바보야! 17시 이후엔 입에 칼로리 넣으면 절대 안 돼! 내가 야경 보면서 레몬 탄산수 타줄게! 💢🌙";
-          kotReply = "프로듀서님 스톱!! 지금 야식 시키면 배달비도 아깝고 살도 쪄요! 코토네 얼굴 보고 참으세요~! 💸";
-          mioReply = "으앙 배고프겠다 ㅠㅠ 하지만 지금 참으면 내일 아침 체중계가 보답해 줄 거야! 힘내힘내!";
-        }
-
-        if (sit) setTrainerMode(state.activeMode, sit);
+        let gemReply = gemObj.text;
+        let kotReply = kotObj.text;
+        let mioReply = mioObj.text;
 
         if (state.activeMode === 'dual') {
+          setTrainerMode('dual', gemObj.sit || 'ev1');
           state.chatHistory.push({ sender: 'gemini', name: '제미니', text: gemReply });
           state.chatHistory.push({ sender: 'kotone', name: '코토네', text: kotReply });
           state.chatHistory.push({ sender: 'mio', name: '미오', text: mioReply });
         } else if (state.activeTrainer === 'kotone') {
+          setTrainerMode('kotone', kotObj.sit || 'ev1');
           state.chatHistory.push({ sender: 'kotone', name: '코토네', text: kotReply });
         } else if (state.activeTrainer === 'mio') {
+          setTrainerMode('mio', mioObj.sit || 'ev1');
           state.chatHistory.push({ sender: 'mio', name: '미오', text: mioReply });
         } else {
+          setTrainerMode('gemini', gemObj.sit || 'ev1');
           state.chatHistory.push({ sender: 'gemini', name: '제미니', text: gemReply });
         }
-        addBondExp(10);
+        addBondExp(15);
         saveState();
         renderChat();
-      }, 450);
+      }, 420);
     }
 
     function triggerBondStory() {
