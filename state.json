@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-20T15:56:49.657Z",
+  "updatedAt": "2026-10-20T15:57:46.292Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
   "bondRank": 3,
-  "bondExp": 15,
+  "bondExp": 30,
   "activeTrainer": "mio",
   "activeMode": "mio",
-  "currentSituation": "ev17",
+  "currentSituation": "ev1",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,16 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "아야! 어딜 만지는 거야, 바보야! 💢"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "프로듀서가 힘내면 나도 엄청 힘이 난다구!"
-    },
     {
       "sender": "gemini",
       "name": "제미니",
@@ -113,6 +103,15 @@
       "sender": "mio",
       "name": "미오",
       "text": "나이키런 7km 완주 대박! 벚꽃 산책로 페이스 완전 좋았어 프로듀서~ 최고야! 🏃‍♀️🌸"
+    },
+    {
+      "sender": "user",
+      "text": "안녕 오늘 운동 끝~~"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "언제 어디서든 미오는 프로듀서 편인 거 알지? 하이파이브 딱 치고 에너지 끌어올리자구! 🖐️"
     }
   ]
 }
