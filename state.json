@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T11:06:39.158Z",
+  "updatedAt": "2026-10-20T11:06:41.642Z",
   "theme": "dark",
   "weight": 53.8,
   "fat": 21.5,
@@ -7,7 +7,7 @@
   "bondExp": 0,
   "activeTrainer": "mio",
   "activeMode": "mio",
-  "currentSituation": "ev4",
+  "currentSituation": "ev5",
   "absDone": false,
   "runDone": false,
   "runDist": 5,
@@ -36,6 +36,11 @@
       "sender": "mio",
       "name": "미오",
       "text": "💖 [미오 EP.4 · 나이트 스타디움] \"프로듀서만을 위한 단독 치어리딩 스테이지야! 지치고 포기하고 싶은 순간이 와도 언제나 미오의 목소리를 떠올려 줘!\""
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "와앗! 간지러워 프로듀서~ 에헤헤 ㅋㅋㅋ"
     }
   ]
 }
