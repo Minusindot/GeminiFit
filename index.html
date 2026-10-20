@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko" class="dark">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Gemini Fit - 제미니 & 미오 듀얼 트레이닝</title>
+  <title>GeminiTalk - 제미니 & 미오 피트니스 코칭</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -17,16 +17,16 @@
             mono: ['JetBrains Mono', 'monospace']
           },
           colors: {
-            momo: {
-              header: '#4a7298',
-              bg: '#141824',
-              card: '#1d2334',
-              border: '#2a344d',
-              userMsg: '#4d88ff',
-              geminiMsg: '#242b3e',
-              mioMsg: '#2e2520',
-              geminiPink: '#ff6699',
-              mioOrange: '#f59e0b'
+            ba: {
+              sky: '#38bdf8',
+              blue: '#4a89dc',
+              navy: '#2c3e50',
+              bubbleLeft: '#4c5b70',
+              bubbleRight: '#4a89dc',
+              pink: '#f4869d',
+              pinkBg: '#fde8ef',
+              pinkBorder: '#f9d5e2',
+              gold: '#f59e0b'
             }
           }
         }
@@ -34,525 +34,671 @@
     }
   </script>
   <style>
+    :root {
+      --bg-main: #f0f5fc;
+      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-sub: #f8fafd;
+      --border-card: #dce6f4;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --chat-bg: #ffffff;
+    }
+
+    html.dark {
+      --bg-main: #111622;
+      --bg-card: rgba(24, 31, 48, 0.92);
+      --bg-sub: #161d2e;
+      --border-card: #28334d;
+      --text-main: #f1f5f9;
+      --text-sub: #94a3b8;
+      --chat-bg: #151b2b;
+    }
+
     body {
-      background-color: #0f121c;
-      color: #f1f4fb;
+      background-color: var(--bg-main);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.14) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(244, 134, 157, 0.14) 0px, transparent 50%),
+        radial-gradient(rgba(148, 163, 184, 0.18) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 20px 20px;
+      color: var(--text-main);
       font-family: 'Pretendard', -apple-system, sans-serif;
       -webkit-tap-highlight-color: transparent;
       padding-bottom: env(safe-area-inset-bottom, 24px);
       overflow-y: auto;
       overscroll-behavior-y: contain;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
-    .app-card {
-      background: #171c2b;
-      border: 1px solid #262e45;
+    .game-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-card);
       border-radius: 1.25rem;
+      box-shadow: 0 8px 26px -4px rgba(59, 130, 246, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+      transition: all 0.2s ease;
     }
 
+    .sub-box {
+      background: var(--bg-sub);
+      border: 1px solid var(--border-card);
+      border-radius: 1rem;
+    }
+
+    /* Skewed Subculture Badge (Blue Archive / Gakumas Style) */
+    .skew-badge {
+      transform: skewX(-10deg);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .skew-badge > span {
+      transform: skewX(10deg);
+    }
+
+    /* Sleek Custom Scrollbar (No ugly Windows gray bar!) */
+    .clean-scroll::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .clean-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .clean-scroll::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.35);
+      border-radius: 9999px;
+    }
+    .clean-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.6);
+    }
+    .clean-scroll {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+    }
+
+    /* Navigation Pill Active State */
+    .nav-tab {
+      color: var(--text-sub);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-tab.active {
+      background: linear-gradient(135deg, #38bdf8 0%, #4a89dc 100%);
+      color: #ffffff;
+      font-weight: 800;
+      box-shadow: 0 4px 14px rgba(74, 137, 220, 0.35);
+    }
+
+    /* MomoTalk Choice Button */
     .momo-choice-btn {
       width: 100%;
       text-align: left;
-      padding: 0.75rem 1rem;
-      border-radius: 0.875rem;
-      background: #20273c;
-      border: 1.5px solid #2f3b59;
-      color: #e2e8f0;
-      font-size: 0.8125rem;
-      font-weight: 600;
-      transition: all 0.15s ease;
+      padding: 0.65rem 0.9rem;
+      border-radius: 0.85rem;
+      background: #ffffff;
+      border: 1px solid #d4e3fc;
+      color: #1e293b;
+      font-size: 0.78rem;
+      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-    .momo-choice-btn:hover, .momo-choice-btn:active {
-      border-color: #4d88ff;
-      background: #27304a;
-      transform: translateY(-1px);
-    }
-
-    .routine-check {
-      appearance: none;
-      width: 1.35rem;
-      height: 1.35rem;
-      border-radius: 0.5rem;
-      border: 2px solid #3b4766;
-      background-color: #1a2030;
-      cursor: pointer;
-      display: grid;
-      place-content: center;
-      transition: all 0.2s ease;
-    }
-    .routine-check:checked {
-      background-color: #4d88ff;
-      border-color: #4d88ff;
-    }
-    .routine-check:checked::before {
-      content: "";
-      width: 0.55rem;
-      height: 0.35rem;
-      border-left: 2px solid white;
-      border-bottom: 2px solid white;
-      transform: rotate(-45deg) translate(1px, -1px);
-    }
-
-    .nav-tab.active {
-      background: #4d88ff;
-      color: white;
-      font-weight: 700;
-      box-shadow: 0 4px 12px rgba(77, 136, 255, 0.3);
-    }
-
-    .tag-chip {
-      background: #20273c;
-      border: 1px solid #2b354e;
-      border-radius: 0.75rem;
-      padding: 0.4rem 0.75rem;
-      font-size: 0.75rem;
-      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(74, 137, 220, 0.07);
       transition: all 0.15s ease;
+    }
+    html.dark .momo-choice-btn {
+      background: #1e273d;
+      border-color: #334366;
+      color: #f1f5f9;
+    }
+    .momo-choice-btn:hover {
+      border-color: #4a89dc;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(74, 137, 220, 0.16);
+    }
+    .momo-choice-btn:active {
+      transform: scale(0.985);
+    }
+
+    /* Speech Bubble Tails */
+    .bubble-left {
+      position: relative;
+      background: #4c5b70;
+      color: #ffffff;
+      border-radius: 0.35rem 1.1rem 1.1rem 1.1rem;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+    .bubble-left-mio {
+      position: relative;
+      background: #524742;
+      color: #fffbeb;
+      border-radius: 0.35rem 1.1rem 1.1rem 1.1rem;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+    .bubble-right {
+      position: relative;
+      background: #4a89dc;
+      color: #ffffff;
+      border-radius: 1.1rem 0.35rem 1.1rem 1.1rem;
+      box-shadow: 0 2px 8px rgba(74, 137, 220, 0.22);
+    }
+
+    /* Stage Image Smooth Transition */
+    #mainTrainerImg, #dualStageImg {
+      transition: object-position 0.35s ease, transform 0.35s ease, opacity 0.25s ease;
     }
   </style>
 </head>
-<body class="min-h-screen selection:bg-blue-500 selection:text-white">
+<body class="min-h-screen selection:bg-sky-400 selection:text-white">
 
-  <!-- Mobile Container (Max width 460px) -->
-  <div class="max-w-md mx-auto min-h-screen p-3.5 sm:p-4 pb-44 relative space-y-2.5">
+  <!-- Mobile Container (Max width 460px, tight natural vertical flow) -->
+  <div class="max-w-md mx-auto min-h-screen p-3 sm:p-4 pb-36 relative space-y-2.5">
 
     <!-- Wednesday InBody Day Special Banner -->
-    <div id="inbodyDayBanner" class="hidden p-3 rounded-2xl bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-amber-500/20 border border-amber-500/40 flex items-center justify-between shadow-sm animate-pulse">
+    <div id="inbodyDayBanner" class="hidden p-3 rounded-2xl bg-gradient-to-r from-amber-400/25 via-rose-400/20 to-amber-400/25 border border-amber-400/60 flex items-center justify-between shadow-sm">
       <div class="flex items-center gap-2.5">
         <span class="text-xl">⭐</span>
         <div>
-          <div class="text-xs font-black text-amber-300 flex items-center gap-1.5">
-            <span>[WEDNESDAY] 헬스장 인바디 측정 데이!</span>
-            <span class="text-[9px] bg-amber-400 text-black px-1.5 py-0.2 rounded font-bold">인연 2배</span>
+          <div class="text-xs font-black text-amber-700 dark:text-amber-300 flex items-center gap-1.5">
+            <span>[수요일] 헬스장 인바디 측정 데이!</span>
+            <span class="text-[9px] bg-amber-400 text-slate-950 px-1.5 py-0.5 rounded font-extrabold">EXP 2배</span>
           </div>
-          <div class="text-[11px] text-slate-300 mt-0.5">오늘 인바디 측정 후 캡처 스캔 시 인연 EXP가 2배로 적립됩니다!</div>
+          <div class="text-[11px] text-slate-600 dark:text-slate-300 mt-0.5">오늘 측정 후 스캔하면 인연 경험치가 2배 적립됩니다!</div>
         </div>
       </div>
-      <label for="inbodyOcrInput" class="px-2.5 py-1 rounded-xl bg-amber-400 text-slate-950 text-xs font-black shrink-0 cursor-pointer hover:bg-amber-300">
-        스캔
+      <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-amber-400 text-slate-950 text-xs font-black shrink-0 cursor-pointer hover:bg-amber-300 shadow-sm">
+        측정 스캔
       </label>
     </div>
 
-    <!-- 1. Header (GeminiTalk Bar & Double Trainers Profile) -->
-    <header class="flex items-center justify-between pt-1 pb-1">
+    <!-- 1. Top MomoTalk / Schale Style Header -->
+    <header class="game-card px-3.5 py-2.5 flex items-center justify-between border-t-4 border-t-[#f4869d]">
       <div class="flex items-center gap-2.5">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-white text-base font-black shadow-sm">
-          💬
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#f4869d] to-[#fb7185] flex items-center justify-center text-white text-base font-black shadow-sm shrink-0">
+          💌
         </div>
         <div>
-          <h1 class="text-sm font-black text-white flex items-center gap-1.5">
-            <span>GeminiTalk</span>
-            <span class="text-[10px] text-amber-400 font-bold bg-amber-500/10 px-1.5 py-0.2 rounded border border-amber-500/20">IDOL COACH</span>
-          </h1>
-          <p id="inbodyDdayText" class="text-[11px] text-slate-400">제미니 & 미오 트레이너와의 대화</p>
+          <div class="flex items-center gap-1.5">
+            <h1 class="text-sm font-black tracking-tight">GeminiTalk</h1>
+            <span class="skew-badge bg-sky-500/15 border border-sky-400/40 text-sky-600 dark:text-sky-300 text-[9px] font-extrabold px-1.5 py-0.5 rounded">
+              <span>SCHALE FIT</span>
+            </span>
+          </div>
+          <p id="inbodyDdayText" class="text-[11px] font-medium text-slate-500 dark:text-slate-400">제미니 & 미오 트레이너와의 대화</p>
         </div>
       </div>
 
-      <div class="flex items-center gap-2">
-        <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-app-card border border-sky-500/30 text-sky-400 text-xs font-bold flex items-center gap-1 cursor-pointer hover:bg-sky-500/10">
-          <span id="inbodyScanBtnText">📷 인바디 스캔</span>
+      <div class="flex items-center gap-1.5">
+        <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-600 dark:text-sky-300 text-xs font-extrabold flex items-center gap-1 cursor-pointer hover:bg-sky-500/20 transition-all shadow-sm" title="삼성헬스/인바디 캡처 스캔">
+          <span id="inbodyScanBtnText">📷 스캔</span>
         </label>
         <input type="file" id="inbodyOcrInput" accept="image/*" class="hidden" onchange="handleInbodyScan(event)">
 
-        <button onclick="openWebhookModal()" class="p-2 rounded-xl bg-app-card border border-slate-700 text-slate-300 hover:text-white" title="디스코드 설정">
+        <button onclick="toggleTheme()" id="themeToggleBtn" class="p-2 rounded-xl sub-box text-xs hover:border-sky-400 transition-all" title="라이트/다크 테마 전환">
+          ☀️
+        </button>
+
+        <button onclick="openWebhookModal()" class="p-2 rounded-xl sub-box text-xs hover:border-sky-400 transition-all" title="디스코드 Webhook 설정">
           ⚙️
         </button>
       </div>
     </header>
 
-    <!-- 2. Interactive Navigation Tabs (MomoTalk / Today's Routine / Fasting & Health) -->
-    <div class="flex rounded-2xl bg-[#141926] p-1 border border-[#232b3f] text-xs font-semibold">
-      <button onclick="switchMainTab('talk')" id="tabTalkBtn" class="nav-tab active flex-1 py-2 rounded-xl text-center transition-all">
-        💬 제미니톡
+    <!-- 2. Main Navigation Tabs (MomoTalk / Routine & Diet) -->
+    <div class="game-card p-1 flex text-xs font-bold">
+      <button onclick="switchMainTab('talk')" id="tabTalkBtn" class="nav-tab active flex-1 py-2 rounded-xl text-center flex items-center justify-center gap-1.5">
+        <span>💬 제미니톡</span>
+        <span id="unreadBadge" class="text-[9px] bg-white/25 text-white px-1.5 py-0.2 rounded-full font-extrabold">LIVE</span>
       </button>
-      <button onclick="switchMainTab('health')" id="tabHealthBtn" class="nav-tab flex-1 py-2 rounded-xl text-center text-slate-400 transition-all">
-        📊 루틴 & 식단 관리
+      <button onclick="switchMainTab('health')" id="tabHealthBtn" class="nav-tab flex-1 py-2 rounded-xl text-center flex items-center justify-center gap-1.5">
+        <span>📊 루틴 & 식단 관리</span>
       </button>
     </div>
 
     <!-- ========================================================
-         VIEW A: MomoTalk & Trainers Showcase
+         VIEW A: MomoTalk & Subculture Trainer Showcase
          ======================================================== -->
-    <div id="viewTalk" class="space-y-3">
+    <div id="viewTalk" class="space-y-2.5">
+
       <!-- Trainer Showcase Card -->
-      <div id="trainerCardContainer" class="app-card overflow-hidden bg-gradient-to-b from-[#1c2438] via-[#161d2d] to-[#121622] border-sky-500/20 shadow-md">
-        <!-- Header with Trainer Tabs & Situation Pill -->
-        <div class="p-3 border-b border-[#252e46] flex items-center justify-between">
+      <div id="trainerCardContainer" class="game-card overflow-hidden">
+        
+        <!-- Top Bar: Trainer Selection + Bond Rank & EXP Bar -->
+        <div class="px-3 py-2.5 border-b border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-2">
           <div class="flex items-center gap-1.5">
-            <!-- Gemini Button -->
-            <button onclick="setTrainerMode('gemini')" id="btnFocusGemini" class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs font-bold transition-all">
-              <span class="w-2 h-2 rounded-full bg-pink-400"></span>
+            <!-- Gemini Tab -->
+            <button onclick="setTrainerMode('gemini')" id="btnFocusGemini" class="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-pink-500 text-white text-xs font-extrabold shadow-sm transition-all">
+              <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
               <span>제미니</span>
             </button>
 
-            <!-- Mio Button -->
-            <button onclick="setTrainerMode('mio')" id="btnFocusMio" class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-amber-400/50 transition-all">
-              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+            <!-- Mio Tab -->
+            <button onclick="setTrainerMode('mio')" id="btnFocusMio" class="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold hover:border-amber-400 transition-all">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
               <span>미오</span>
             </button>
 
-            <!-- Joint Event Button -->
-            <button onclick="setTrainerMode('dual')" id="btnFocusDual" class="flex items-center gap-1.5 px-2 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-[11px] font-bold hover:border-amber-400/50 transition-all" title="특수 합동 이벤트">
+            <!-- Joint Event Tab -->
+            <button onclick="setTrainerMode('dual')" id="btnFocusDual" class="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[11px] font-bold hover:border-amber-400 transition-all" title="특수 합동 이벤트">
               <span>⭐ 합동</span>
             </button>
           </div>
 
-          <div class="flex items-center gap-1.5">
-            <span id="situationTag" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-300 border border-pink-500/20">✨ 데일리</span>
-            <span id="bondRankBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/30">인연 Lv.1 ❤️</span>
+          <!-- Bond Level & EXP Gauge -->
+          <div class="flex items-center gap-2 shrink-0">
+            <div class="text-right">
+              <div class="flex items-center justify-end gap-1">
+                <span id="bondRankBadge" class="text-[11px] font-extrabold text-[#f4869d]">인연 Lv.1 ❤️</span>
+                <span id="bondExpText" class="text-[9px] font-mono text-slate-400">75%</span>
+              </div>
+              <div class="w-20 h-1.5 bg-pink-100 dark:bg-slate-700 rounded-full overflow-hidden mt-0.5">
+                <div id="bondExpBar" class="h-full bg-gradient-to-r from-[#f4869d] to-[#fb7185] rounded-full transition-all duration-300" style="width: 75%"></div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Grand Showcase Stage: 1 Trainer prominently (or Joint Event) -->
-        <div class="relative w-full h-72 bg-gradient-to-b from-black/80 via-black/50 to-black/95 overflow-hidden cursor-pointer group" onclick="pokeCurrentTrainer()">
+        <!-- Situation / Outfit Quick Selector Bar (Lets user freely enjoy all event CGs!) -->
+        <div class="px-3 py-1.5 bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-200/60 dark:border-slate-700/50 flex items-center justify-between gap-1 overflow-x-auto clean-scroll">
+          <div class="flex items-center gap-1 shrink-0" id="situationPills">
+            <button onclick="changeSituation('idle')" data-sit="idle" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-bold bg-sky-500 text-white shadow-sm">✨ 일상</button>
+            <button onclick="changeSituation('morning')" data-sit="morning" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60">☀️ 모닝 스트레칭</button>
+            <button onclick="changeSituation('tea')" data-sit="tea" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60">🍵 말차 다도</button>
+            <button onclick="changeSituation('cafe')" data-sit="cafe" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60">☕ 홈카페</button>
+            <button onclick="changeSituation('running')" data-sit="running" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60">🏃 야외 러닝</button>
+            <button onclick="changeSituation('night')" data-sit="night" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60">🌙 단식 마감</button>
+            <button onclick="changeSituation('inbody')" data-sit="inbody" class="sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60">📊 인바디</button>
+          </div>
+          <button onclick="toggleFullCgView()" id="btnToggleCrop" class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 shrink-0 hover:border-sky-400" title="일러스트 전체보기 / 카드뷰 전환">
+            🔍 전체보기
+          </button>
+        </div>
+
+        <!-- Grand Character Stage (Face-centered smart focal point + expandable full view!) -->
+        <div id="stageWrapper" class="relative w-full h-80 sm:h-96 bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300" onclick="pokeCurrentTrainer()">
           
-          <!-- Single Trainer View (Default: Gemini or Mio) -->
-          <div id="singleStageView" class="w-full h-full relative transition-all duration-300">
-            <img id="mainTrainerImg" src="./trainer_gemini.png" alt="Trainer" class="w-full h-full object-cover object-top filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] group-hover:scale-102 transition-transform duration-300" onerror="this.src='./trainer_gemini.png'">
-            <div id="mainTrainerTag" class="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-pink-500/30 text-[11px] font-bold text-pink-300 flex items-center gap-1.5 shadow-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse"></span>
-              <span id="mainTrainerTagName">제미니 코치</span>
+          <!-- Single Trainer View -->
+          <div id="singleStageView" class="w-full h-full relative">
+            <img id="mainTrainerImg" src="./trainer_gemini.png" alt="Trainer" class="w-full h-full object-cover" style="object-position: center 18%;" onerror="this.src='./trainer_gemini.png'">
+            
+            <!-- Floating Character Name & Situation Badge -->
+            <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+              <div id="mainTrainerTag" class="bg-white/90 dark:bg-slate-900/85 backdrop-blur-md px-2.5 py-1 rounded-xl border border-pink-400/50 text-[11px] font-extrabold text-pink-600 dark:text-pink-300 flex items-center gap-1.5 shadow-sm">
+                <span id="mainTrainerDot" class="w-2 h-2 rounded-full bg-pink-500 animate-pulse"></span>
+                <span id="mainTrainerTagName">제미니</span>
+              </div>
+              <span id="situationTag" class="text-[10px] font-bold px-2.5 py-1 rounded-xl bg-sky-500/90 text-white backdrop-blur-md shadow-sm">✨ 일상 코칭</span>
             </div>
           </div>
 
-          <!-- Dual Event Stage View (Only visible on Wednesday InBody or Dual Event) -->
-          <div id="dualStageView" class="w-full h-full relative hidden transition-all duration-300">
-            <img id="dualStageImg" src="./dual_inbody.png" alt="Dual Event" class="w-full h-full object-cover object-top filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]" onerror="this.src='./trainer_wednesday.png'">
-            <div class="absolute top-2.5 left-2.5 bg-gradient-to-r from-amber-500/30 to-pink-500/30 backdrop-blur-md px-2.5 py-1 rounded-xl border border-amber-400/40 text-[11px] font-bold text-amber-200 flex items-center gap-1.5 shadow-md">
+          <!-- Dual Event Stage View -->
+          <div id="dualStageView" class="w-full h-full relative hidden">
+            <img id="dualStageImg" src="./dual_inbody.png" alt="Dual Event" class="w-full h-full object-cover" style="object-position: center 20%;" onerror="this.src='./trainer_gemini.png'">
+            <div class="absolute top-2.5 left-2.5 bg-gradient-to-r from-amber-500/90 to-pink-500/90 backdrop-blur-md px-3 py-1 rounded-xl text-[11px] font-extrabold text-white flex items-center gap-1.5 shadow-md">
               <span>⭐</span>
               <span>제미니 & 미오 합동 스페셜 코칭</span>
             </div>
           </div>
 
-          <!-- Bottom Dialogue Caption Bar -->
-          <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/75 to-transparent p-3 pt-8 text-center">
-            <p id="trainerDialogue" class="text-xs font-semibold text-slate-100 leading-snug">
+          <!-- Visual Novel Style Dialogue Overlay Bar -->
+          <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-950/90 via-slate-900/70 to-transparent p-3 pt-8 text-center">
+            <p id="trainerDialogue" class="text-xs font-bold text-white leading-snug drop-shadow-sm">
               "제미니: 프로듀서, 슬림핏 52kg 될 때까지 긴장 늦추지 마!"
             </p>
+            <p class="text-[9px] text-sky-200/80 mt-0.5">💡 캐릭터를 터치하면 반응합니다</p>
           </div>
         </div>
       </div>
 
-      <!-- GeminiTalk Messenger Log Screen (3자 그룹 메신저) -->
-      <div class="app-card p-3 min-h-[300px] max-h-[360px] overflow-y-auto space-y-2.5 bg-[#121622] border-[#22293d]" id="chatContainer">
-        <!-- Message stream dynamically populated -->
-      </div>
-
-      <!-- GeminiTalk Response Choice Box (| 답장하기) -->
-      <div class="app-card p-3 bg-[#151b2a] border-sky-500/30 space-y-2 mb-2">
-        <div class="text-[11px] font-bold text-sky-400 flex items-center justify-between">
-          <span>| 답장하기</span>
-          <span class="text-[10px] text-slate-500 font-normal">선택지를 터치해 대화하세요</span>
+      <!-- Authentic Blue Archive MomoTalk Chat Window -->
+      <div class="game-card overflow-hidden">
+        <!-- MomoTalk Sub-Header with Topic Switcher -->
+        <div class="px-3 py-2 bg-slate-50/90 dark:bg-slate-800/70 border-b border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-1 overflow-x-auto clean-scroll">
+          <div class="flex items-center gap-1 shrink-0">
+            <span class="text-[10px] font-extrabold text-slate-400 mr-1">주제:</span>
+            <button onclick="loadTopic('diet')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-sky-400">🥗 식단/단식</button>
+            <button onclick="loadTopic('tea')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-emerald-400">🍵 말차/카페</button>
+            <button onclick="loadTopic('workout')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-amber-400">🏃 러닝/재활</button>
+            <button onclick="loadTopic('smalltalk')" class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-pink-400">💖 일상토크</button>
+          </div>
+          <button onclick="clearChatLog()" class="text-[10px] text-slate-400 hover:text-rose-400 shrink-0 px-1" title="대화 기록 정리">지우기</button>
         </div>
 
-        <div id="choicesContainer" class="space-y-1.5 max-h-[220px] overflow-y-auto pr-0.5">
-          <button onclick="chooseOption(1)" class="momo-choice-btn">
-            <span>1. 닭가슴살이랑 쉐이크로 단백질 든든하게 채웠어!</span>
-            <span class="text-xs text-sky-400 shrink-0 ml-1">➔</span>
-          </button>
-          <button onclick="chooseOption(2)" class="momo-choice-btn">
-            <span>2. 미오야, 제미니가 너무 팩폭 날려서 기죽을 뻔했어 ㅠㅠ</span>
-            <span class="text-xs text-amber-400 shrink-0 ml-1">➔</span>
-          </button>
-          <button onclick="chooseOption(3)" class="momo-choice-btn">
-            <span>3. 둘 다 나 챙겨줘서 너무 든든해! 오늘 러닝도 달릴게!</span>
-            <span class="text-xs text-pink-400 shrink-0 ml-1">➔</span>
+        <!-- Chat Stream (3~4+ Speech Bubbles Clearly Visible, Clean Custom Scrollbar) -->
+        <div class="p-3.5 min-h-[310px] max-h-[370px] overflow-y-auto clean-scroll space-y-3 bg-[var(--chat-bg)]" id="chatContainer">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Direct Message Input Bar -->
+        <div class="px-3 py-2 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center gap-2">
+          <input type="text" id="directChatInput" placeholder="제미니/미오에게 직접 메시지 보내기..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-sky-400" onkeydown="if(event.key==='Enter') sendDirectMessage()">
+          <button onclick="sendDirectMessage()" class="px-3 py-1.5 rounded-xl bg-[#4a89dc] hover:bg-sky-500 text-white text-xs font-extrabold shadow-sm shrink-0">
+            전송
           </button>
         </div>
       </div>
+
+      <!-- Authentic MomoTalk Reply Box (| 답장하기) -->
+      <div class="p-3 rounded-2xl bg-[#eef5ff] dark:bg-[#192236] border border-[#cfe0fc] dark:border-sky-500/30 space-y-2 shadow-sm">
+        <div class="text-[11px] font-extrabold text-[#3b76c4] dark:text-sky-400 flex items-center justify-between">
+          <span class="flex items-center gap-1"><span class="text-sky-500 font-black">|</span> 답장하기</span>
+          <span class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">선택지를 터치해 대화하세요</span>
+        </div>
+
+        <div id="choicesContainer" class="space-y-1.5 max-h-[210px] overflow-y-auto clean-scroll pr-0.5">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Authentic Blue Archive Pink Bond Event Box (| 인연 이벤트) -->
+      <div class="p-3 rounded-2xl bg-[#fde8ef] dark:bg-pink-950/30 border border-[#f9d5e2] dark:border-pink-500/30 flex items-center justify-between shadow-sm">
+        <div>
+          <div class="text-[11px] font-extrabold text-[#d65c7a] dark:text-pink-300 flex items-center gap-1">
+            <span class="font-black">|</span> 인연 이벤트
+          </div>
+          <p id="bondEventDesc" class="text-[10px] text-[#b85d74] dark:text-pink-200/80 mt-0.5">트레이너와의 특별한 1:1 에피소드를 감상해보세요</p>
+        </div>
+        <button onclick="triggerBondStory()" id="btnBondStory" class="px-3.5 py-2 rounded-xl bg-[#f4869d] hover:bg-[#ec6e89] text-white text-xs font-extrabold shadow-sm transition-all shrink-0">
+          제미니의 인연스토리로 ➔
+        </button>
+      </div>
+
     </div>
 
     <!-- ========================================================
-         VIEW B: Health & Routine Management (Fasting, Routine, Diet, Tea Log)
+         VIEW B: Health, Fasting, Tea Log & Routine Management
          ======================================================== -->
     <div id="viewHealth" class="space-y-3 hidden">
 
       <!-- 1. 🍵 Tea & Coffee 홈카페 / 말차 로그 카드 -->
-      <div class="app-card p-3.5 bg-gradient-to-br from-[#1a2332] to-[#151c28] border-emerald-500/30">
-        <div class="flex items-center justify-between pb-2 border-b border-[#253246]">
+      <div class="game-card p-3.5 border-l-4 border-l-emerald-400">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
           <div class="flex items-center gap-1.5">
             <span class="text-base">🍵</span>
-            <span class="text-xs font-bold text-emerald-300">홈카페 & 티(Tea) 로그</span>
+            <span class="text-xs font-extrabold text-emerald-700 dark:text-emerald-300">홈카페 & 말차 다도 로그</span>
           </div>
-          <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 font-bold">
-            17시 이후 허용 음료
+          <span class="text-[10px] text-emerald-600 dark:text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 font-bold">
+            17시 이후 단식 중 허용
           </span>
         </div>
 
-        <p class="text-[11px] text-slate-300 mt-2 leading-relaxed">
-          다기 말차 격불 🍵, 머신 에스프레소 ☕, 무당 허브티는 단식 중 수분 보충 & 지방 연소에 최고의 파트너입니다!
+        <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+          다기 말차 격불 🍵, 머신 에스프레소 ☕, 무가당 허브티는 공복 유지와 카테킨 지방 연소에 최고의 파트너입니다!
         </p>
 
         <div class="grid grid-cols-3 gap-2 mt-2.5">
-          <button onclick="logTea('matcha')" class="tag-chip text-center flex flex-col items-center py-2 hover:border-emerald-400">
-            <span class="text-sm">🍵</span>
-            <span class="text-[11px] mt-0.5">말차 다기 격불</span>
-            <span id="matchaCount" class="text-[10px] text-emerald-400 font-mono mt-0.5 font-bold">0회</span>
+          <button onclick="logTea('matcha')" class="p-2.5 rounded-xl sub-box hover:border-emerald-400 text-center transition-all">
+            <div class="text-lg">🍵</div>
+            <div class="text-[11px] font-extrabold text-emerald-700 dark:text-emerald-300 mt-0.5">말차 격불</div>
+            <div id="matchaCount" class="text-[10px] text-slate-500 font-mono">0회</div>
           </button>
 
-          <button onclick="logTea('espresso')" class="tag-chip text-center flex flex-col items-center py-2 hover:border-amber-400">
-            <span class="text-sm">☕</span>
-            <span class="text-[11px] mt-0.5">에스프레소 샷</span>
-            <span id="espressoCount" class="text-[10px] text-amber-400 font-mono mt-0.5 font-bold">0회</span>
+          <button onclick="logTea('espresso')" class="p-2.5 rounded-xl sub-box hover:border-amber-400 text-center transition-all">
+            <div class="text-lg">☕</div>
+            <div class="text-[11px] font-extrabold text-amber-700 dark:text-amber-300 mt-0.5">에스프레소</div>
+            <div id="espressoCount" class="text-[10px] text-slate-500 font-mono">0회</div>
           </button>
 
-          <button onclick="logTea('tea')" class="tag-chip text-center flex flex-col items-center py-2 hover:border-sky-400">
-            <span class="text-sm">🫖</span>
-            <span class="text-[11px] mt-0.5">무당 허브티</span>
-            <span id="teaCount" class="text-[10px] text-sky-400 font-mono mt-0.5 font-bold">0회</span>
+          <button onclick="logTea('tea')" class="p-2.5 rounded-xl sub-box hover:border-sky-400 text-center transition-all">
+            <div class="text-lg">🫖</div>
+            <div class="text-[11px] font-extrabold text-sky-700 dark:text-sky-300 mt-0.5">무당 티</div>
+            <div id="teaCount" class="text-[10px] text-slate-500 font-mono">0회</div>
           </button>
         </div>
 
-        <div class="mt-2.5 pt-2 border-t border-[#253246] flex items-center justify-between text-[11px]">
-          <span class="text-slate-400">찻잔 사진 인증하기:</span>
-          <label for="teaPhotoInput" class="px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold cursor-pointer hover:bg-emerald-500/30">
-            📷 찻잔 촬영 / 갤러리
+        <div class="mt-2.5 pt-2 border-t border-slate-200/70 dark:border-slate-700/60 flex items-center justify-between">
+          <span class="text-[11px] text-slate-500">오늘 직접 내린 찻잔/크레마 사진 자랑하기</span>
+          <label for="teaPhotoInput" class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 text-[11px] font-extrabold cursor-pointer hover:bg-emerald-500/25">
+            📸 찻잔 사진 첨부
           </label>
           <input type="file" id="teaPhotoInput" accept="image/*" class="hidden" onchange="handleTeaPhoto(event)">
         </div>
       </div>
 
-      <!-- 2. 17:7 Fasting Monitor Card -->
-      <div class="app-card p-3.5">
-        <div class="flex items-center justify-between pb-2 border-b border-[#262e45]">
-          <span class="text-xs font-bold text-slate-200">17:7 간헐적 단식 모니터</span>
-          <span id="fastingBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            식사 가능 (10~17시)
+      <!-- 2. 17:7 Intermittent Fasting Live Clock -->
+      <div class="game-card p-3.5 space-y-2.5 border-l-4 border-l-sky-400">
+        <div class="flex justify-between items-center">
+          <span class="text-xs font-extrabold text-slate-500 uppercase tracking-wider">⏱️ 17:7 간헐적 단식 타이머</span>
+          <span id="fastingBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+            계산 중...
           </span>
         </div>
 
-        <div class="pt-2.5 pb-1 flex items-baseline justify-between">
+        <div class="flex items-baseline justify-between">
           <div>
-            <div id="fastingTimerLabel" class="text-[11px] text-slate-400">17:00 셧다운까지 남은 시간</div>
-            <div id="fastingCountdown" class="text-2xl font-black font-mono text-white mt-0.5">--:--:--</div>
+            <div class="text-[11px] text-slate-500" id="fastingTimerLabel">17:00 셧다운까지 남은 시간</div>
+            <div id="fastingCountdown" class="text-2xl font-black font-mono text-sky-600 dark:text-sky-400 mt-0.5">00:00:00</div>
           </div>
           <div class="text-right">
-            <div class="text-[11px] text-slate-400">진척도</div>
-            <div id="fastingPctText" class="text-sm font-bold text-sky-400 font-mono">65%</div>
+            <span class="text-[10px] text-slate-400">단식 달성도</span>
+            <div id="fastingPctText" class="text-sm font-black text-sky-500 font-mono">0%</div>
           </div>
         </div>
 
-        <div class="w-full bg-black/40 rounded-full h-2 mt-2 overflow-hidden border border-[#2a344d]">
-          <div id="fastingProgressBar" class="h-full rounded-full bg-sky-400 transition-all duration-500" style="width: 65%;"></div>
+        <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+          <div id="fastingProgressBar" class="h-full rounded-full bg-gradient-to-r from-sky-400 to-indigo-500 transition-all duration-500" style="width: 50%"></div>
         </div>
       </div>
 
-      <!-- 3. Weight & Body Fat Dual Card -->
+      <!-- 3. Weight & Body Fat Goal Input -->
       <div class="grid grid-cols-2 gap-2.5">
-        <div class="app-card p-3">
-          <div class="flex justify-between text-xs text-slate-400">
-            <span>현재 체중</span>
-            <span class="text-[10px] text-sky-400 font-bold bg-sky-500/10 px-1 rounded">목표 52kg</span>
-          </div>
-          <div class="my-1.5 flex items-baseline justify-between">
-            <input type="number" step="0.1" id="currentWeightInput" value="53.8" onchange="updateMetrics()" class="w-18 text-xl font-black text-white bg-transparent focus:outline-none font-mono">
+        <div class="game-card p-3">
+          <div class="text-[11px] text-slate-500 font-bold">현재 체중 (목표 49~52kg)</div>
+          <div class="flex items-baseline gap-1 mt-1">
+            <input type="number" id="currentWeightInput" step="0.1" value="53.8" class="w-20 bg-transparent text-xl font-black font-mono border-b border-slate-300 dark:border-slate-600 focus:outline-none focus:border-sky-400" onchange="updateMetrics()">
             <span class="text-xs text-slate-400 font-bold">kg</span>
           </div>
-          <div class="text-[11px] pt-1.5 border-t border-[#262e45] flex justify-between">
-            <span class="text-slate-500">남은 감량</span>
-            <span id="weightDelta" class="font-bold text-rose-400 font-mono">+1.8 kg</span>
+          <div class="mt-1.5 flex justify-between text-[11px]">
+            <span class="text-slate-400">52kg까지:</span>
+            <span id="weightDelta" class="font-bold text-rose-500 font-mono">+1.8 kg</span>
           </div>
         </div>
 
-        <div class="app-card p-3">
-          <div class="flex justify-between text-xs text-slate-400">
-            <span>체지방률</span>
-            <span class="text-[10px] text-pink-400 font-bold bg-pink-500/10 px-1 rounded">목표 &lt;20%</span>
-          </div>
-          <div class="my-1.5 flex items-baseline justify-between">
-            <input type="number" step="0.1" id="currentFatInput" value="21.5" onchange="updateMetrics()" class="w-18 text-xl font-black text-white bg-transparent focus:outline-none font-mono">
+        <div class="game-card p-3">
+          <div class="text-[11px] text-slate-500 font-bold">체지방률 (목표 20% 미만)</div>
+          <div class="flex items-baseline gap-1 mt-1">
+            <input type="number" id="currentFatInput" step="0.1" value="21.5" class="w-20 bg-transparent text-xl font-black font-mono border-b border-slate-300 dark:border-slate-600 focus:outline-none focus:border-purple-400" onchange="updateMetrics()">
             <span class="text-xs text-slate-400 font-bold">%</span>
           </div>
-          <div class="text-[11px] pt-1.5 border-t border-[#262e45] flex justify-between">
-            <span class="text-slate-500">목표까지</span>
-            <span id="fatDelta" class="font-bold text-rose-400 font-mono">+1.5 %</span>
+          <div class="mt-1.5 flex justify-between text-[11px]">
+            <span class="text-slate-400">20%까지:</span>
+            <span id="fatDelta" class="font-bold text-rose-500 font-mono">+1.5 %</span>
           </div>
         </div>
       </div>
 
-      <!-- 4. 17:7 Meal Photo Cards (갤러리 / 카메라 자유 첨부) -->
-      <div class="space-y-2">
-        <div class="text-xs font-bold text-slate-300 flex items-center justify-between">
-          <span>🍱 오늘 식단 사진 인증</span>
-          <span class="text-[11px] text-sky-400">촬영/갤러리 시 톡방 자동 공유</span>
+      <!-- 4. Tennis Elbow Safe Routine & Core/Running -->
+      <div class="game-card p-3.5 space-y-2.5 border-l-4 border-l-amber-400">
+        <div class="flex items-center justify-between pb-1.5 border-b border-slate-200/80 dark:border-slate-700/60">
+          <div class="flex items-center gap-1.5">
+            <span class="text-sm">🩹</span>
+            <span class="text-xs font-extrabold">테니스 엘보 보호 & 슬림핏 루틴</span>
+          </div>
+          <span class="text-[10px] text-rose-500 bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-500/20 font-bold">당기는 상체운동 금지</span>
         </div>
 
-        <!-- Breakfast -->
-        <div class="app-card p-3 space-y-2">
-          <div class="flex items-center justify-between">
-            <label class="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" id="chkMeal1" onchange="handleMeal(1)" class="routine-check">
-              <div>
-                <div class="text-xs font-bold text-sky-300">10:00 아침 (단백질 30g+)</div>
-                <div class="text-[11px] text-slate-400">단백질 쉐이크 + 고단백 두유</div>
-              </div>
-            </label>
-            <label for="photo1" class="px-2 py-1 rounded-lg bg-[#20273c] border border-slate-700 text-[11px] font-bold text-slate-200 cursor-pointer hover:border-sky-400">
-              📷 사진 첨부
-            </label>
-            <input type="file" id="photo1" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 1)">
-          </div>
-          <div id="prevBox1" class="hidden relative rounded-xl overflow-hidden max-h-28 bg-black">
-            <img id="prevImg1" class="w-full h-28 object-cover">
-          </div>
-        </div>
-
-        <!-- Lunch -->
-        <div class="app-card p-3 space-y-2">
-          <div class="flex items-center justify-between">
-            <label class="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" id="chkMeal2" onchange="handleMeal(2)" class="routine-check">
-              <div>
-                <div class="text-xs font-bold text-sky-300">14:00 점심 (클린 식단)</div>
-                <div class="text-[11px] text-slate-400">삶은 달걀 2개 + 통오이/방울토마토</div>
-              </div>
-            </label>
-            <label for="photo2" class="px-2 py-1 rounded-lg bg-[#20273c] border border-slate-700 text-[11px] font-bold text-slate-200 cursor-pointer hover:border-sky-400">
-              📷 사진 첨부
-            </label>
-            <input type="file" id="photo2" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 2)">
-          </div>
-          <div id="prevBox2" class="hidden relative rounded-xl overflow-hidden max-h-28 bg-black">
-            <img id="prevImg2" class="w-full h-28 object-cover">
-          </div>
-        </div>
-
-        <!-- Dinner -->
-        <div class="app-card p-3 space-y-2">
-          <div class="flex items-center justify-between">
-            <label class="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" id="chkMeal3" onchange="handleMeal(3)" class="routine-check">
-              <div>
-                <div class="text-xs font-bold text-rose-400">17:00 저녁 (칼마감 셧다운)</div>
-                <div class="text-[11px] text-slate-400">현미밥 + 닭가슴살/두부 + 채소</div>
-              </div>
-            </label>
-            <label for="photo3" class="px-2 py-1 rounded-lg bg-[#20273c] border border-slate-700 text-[11px] font-bold text-slate-200 cursor-pointer hover:border-rose-400">
-              📷 사진 첨부
-            </label>
-            <input type="file" id="photo3" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 3)">
-          </div>
-          <div id="prevBox3" class="hidden relative rounded-xl overflow-hidden max-h-28 bg-black">
-            <img id="prevImg3" class="w-full h-28 object-cover">
-          </div>
-        </div>
-      </div>
-
-      <!-- 5. Main Workout & Elbow Rehab -->
-      <div class="app-card p-3.5 space-y-2.5">
-        <div class="text-xs font-bold text-slate-200">🏃 메인 루틴 & 재활</div>
-        
-        <label class="flex items-center justify-between cursor-pointer">
-          <div class="flex items-center gap-2.5">
-            <input type="checkbox" id="chkAbs" onchange="updateRoutine()" class="routine-check">
-            <span class="text-xs text-white">14분 아이돌 복근 루틴</span>
-          </div>
-          <span class="text-[11px] font-mono text-slate-400">14 MIN</span>
-        </label>
-
-        <div class="flex items-center justify-between pt-1 border-t border-[#262e45]">
-          <label class="flex items-center gap-2.5 cursor-pointer">
-            <input type="checkbox" id="chkRun" onchange="updateRoutine()" class="routine-check">
-            <span class="text-xs text-white">야외 러닝 (나이키런)</span>
-          </label>
-          <div class="flex items-center gap-1">
-            <input type="number" step="0.1" id="runDistInput" value="5.0" onchange="updateRoutine()" class="w-12 bg-[#20273c] text-center text-xs font-mono text-sky-400 rounded py-0.5 border border-slate-700">
-            <span class="text-xs text-slate-400 font-mono">km</span>
-          </div>
-        </div>
-
-        <div class="pt-2 border-t border-[#262e45]">
-          <div class="flex justify-between items-center mb-1.5">
-            <span class="text-xs font-bold text-emerald-400">[필수] 2kg 덤벨 편심성 운동</span>
-            <span class="text-[10px] text-slate-400">3세트</span>
+        <!-- Rehab -->
+        <div class="p-2.5 rounded-xl sub-box">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold text-emerald-700 dark:text-emerald-300">2kg 덤벨 손목 편심성 컬 (재활 필수)</span>
+            <span class="text-[10px] text-slate-400 font-mono">10회 × 3세트</span>
           </div>
           <div class="grid grid-cols-3 gap-1.5">
-            <button onclick="toggleRehab(1)" id="rehabBtn1" class="py-1.5 rounded-lg text-xs font-bold bg-[#20273c] text-slate-300 border border-slate-700">1세트</button>
-            <button onclick="toggleRehab(2)" id="rehabBtn2" class="py-1.5 rounded-lg text-xs font-bold bg-[#20273c] text-slate-300 border border-slate-700">2세트</button>
-            <button onclick="toggleRehab(3)" id="rehabBtn3" class="py-1.5 rounded-lg text-xs font-bold bg-[#20273c] text-slate-300 border border-slate-700">3세트</button>
+            <button onclick="toggleRehab(1)" id="rehabBtn1" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트</button>
+            <button onclick="toggleRehab(2)" id="rehabBtn2" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">2세트</button>
+            <button onclick="toggleRehab(3)" id="rehabBtn3" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">3세트</button>
+          </div>
+        </div>
+
+        <!-- Core Abs -->
+        <label class="flex items-center justify-between p-2.5 rounded-xl sub-box cursor-pointer">
+          <div class="flex items-center gap-2.5">
+            <input type="checkbox" id="chkAbs" class="w-4 h-4 rounded accent-sky-500" onchange="updateRoutine()">
+            <div>
+              <div class="text-xs font-bold">14분 아이돌 11자 복근 루틴</div>
+              <div class="text-[10px] text-slate-400">크런치 · 레그레이즈 · 플랭크 (노그립)</div>
+            </div>
+          </div>
+          <span class="text-[10px] font-mono text-sky-500 font-bold">CORE</span>
+        </label>
+
+        <!-- Running -->
+        <div class="p-2.5 rounded-xl sub-box">
+          <div class="flex items-center justify-between">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="checkbox" id="chkRun" class="w-4 h-4 rounded accent-emerald-500" onchange="updateRoutine()">
+              <div>
+                <div class="text-xs font-bold">야외 러닝 / 트레드밀 (나이키런)</div>
+                <div class="text-[10px] text-slate-400">손아귀 힘 100% 빼고 가볍게 흔들기</div>
+              </div>
+            </label>
+            <div class="flex items-center gap-1">
+              <input type="number" id="runDistInput" value="5.0" step="0.5" class="w-12 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded px-1.5 py-0.5 text-right text-xs font-mono font-bold" onchange="updateRoutine()">
+              <span class="text-[10px] text-slate-400 font-mono">km</span>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- 5. Meal Photo Camera & Gallery Log (Supports both Camera & Photo Library!) -->
+      <div class="game-card p-3.5 space-y-2.5 border-l-4 border-l-pink-400">
+        <div class="flex items-center justify-between pb-1.5 border-b border-slate-200/80 dark:border-slate-700/60">
+          <div class="flex items-center gap-1.5">
+            <span class="text-sm">📸</span>
+            <span class="text-xs font-extrabold">식단 인증 사진 & 체크리스트</span>
+          </div>
+          <span class="text-[10px] text-slate-400">카메라 촬영 & 갤러리 선택 지원</span>
+        </div>
+
+        <!-- Meal 1 -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="chkMeal1" class="w-4 h-4 rounded accent-emerald-500" onchange="handleMeal(1)">
+              <span class="text-xs font-bold">10:00 첫 식사 (단백질 + 클린 탄수)</span>
+            </label>
+            <label for="photoMeal1" class="px-2.5 py-1 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30 text-[10px] font-extrabold cursor-pointer hover:bg-sky-500/25">
+              📷 사진 첨부
+            </label>
+            <input type="file" id="photoMeal1" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 1)">
+          </div>
+          <div id="prevBox1" class="hidden">
+            <img id="prevImg1" src="" class="w-full h-28 object-cover rounded-lg border border-slate-200 dark:border-slate-700">
+          </div>
+        </div>
+
+        <!-- Meal 2 -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="chkMeal2" class="w-4 h-4 rounded accent-emerald-500" onchange="handleMeal(2)">
+              <span class="text-xs font-bold">14:00 단백질 간식 / 쉐이크</span>
+            </label>
+            <label for="photoMeal2" class="px-2.5 py-1 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30 text-[10px] font-extrabold cursor-pointer hover:bg-sky-500/25">
+              📷 사진 첨부
+            </label>
+            <input type="file" id="photoMeal2" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 2)">
+          </div>
+          <div id="prevBox2" class="hidden">
+            <img id="prevImg2" src="" class="w-full h-28 object-cover rounded-lg border border-slate-200 dark:border-slate-700">
+          </div>
+        </div>
+
+        <!-- Meal 3 -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="chkMeal3" class="w-4 h-4 rounded accent-emerald-500" onchange="handleMeal(3)">
+              <span class="text-xs font-bold">16:30 마감 식사 (17:00 칼같이 종료!)</span>
+            </label>
+            <label for="photoMeal3" class="px-2.5 py-1 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30 text-[10px] font-extrabold cursor-pointer hover:bg-sky-500/25">
+              📷 사진 첨부
+            </label>
+            <input type="file" id="photoMeal3" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 3)">
+          </div>
+          <div id="prevBox3" class="hidden">
+            <img id="prevImg3" src="" class="w-full h-28 object-cover rounded-lg border border-slate-200 dark:border-slate-700">
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- 3. Bottom Sticky Action Bar (디스코드 전송) -->
-    <div class="fixed bottom-0 left-0 right-0 p-3 bg-[#0f121c]/90 backdrop-blur-md border-t border-[#242c42] z-30">
+    <div class="fixed bottom-0 left-0 right-0 p-3 bg-white/85 dark:bg-[#111622]/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 z-30">
       <div class="max-w-md mx-auto">
-        <button onclick="dispatchDiscord()" id="btnDispatch" class="w-full py-3 rounded-2xl bg-gradient-to-r from-sky-500 via-indigo-600 to-amber-500 hover:from-sky-400 hover:to-amber-400 text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2">
-          <span>🚀 디스코드에 더블 코치 브리핑 전송하기</span>
+        <button onclick="dispatchDiscord()" id="btnDispatch" class="w-full py-3 rounded-2xl bg-gradient-to-r from-[#4a89dc] via-[#5b7cfa] to-[#f4869d] hover:opacity-95 text-white font-extrabold text-xs shadow-lg transition-all flex items-center justify-center gap-2">
+          <span>🚀 디스코드에 트레이너 일일 브리핑 전송하기</span>
         </button>
       </div>
     </div>
 
     <!-- Webhook Modal -->
-    <div id="webhookModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-      <div class="app-card max-w-sm w-full p-5 space-y-3">
+    <div id="webhookModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+      <div class="game-card max-w-sm w-full p-5 space-y-3">
         <div class="flex justify-between items-center">
-          <h3 class="text-sm font-bold text-white">디스코드 Webhook URL</h3>
-          <button onclick="closeWebhookModal()" class="text-slate-400 hover:text-white">✕</button>
+          <h3 class="text-sm font-extrabold">디스코드 Webhook URL 설정</h3>
+          <button onclick="closeWebhookModal()" class="text-slate-400 hover:text-slate-600">✕</button>
         </div>
-        <input type="url" id="webhookInput" placeholder="https://discord.com/api/webhooks/..." class="w-full bg-black/50 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400 font-mono">
+        <input type="url" id="webhookInput" placeholder="https://discord.com/api/webhooks/..." class="w-full sub-box px-3 py-2 text-xs focus:outline-none focus:border-sky-400 font-mono">
         <div class="flex justify-end gap-2 pt-2">
-          <button onclick="closeWebhookModal()" class="px-3 py-1.5 text-xs text-slate-400">취소</button>
-          <button onclick="saveWebhook()" class="px-4 py-1.5 text-xs font-bold bg-sky-500 text-slate-950 rounded-xl">저장</button>
+          <button onclick="closeWebhookModal()" class="px-3 py-1.5 text-xs text-slate-500 font-bold">취소</button>
+          <button onclick="saveWebhook()" class="px-4 py-1.5 text-xs font-extrabold bg-[#4a89dc] text-white rounded-xl shadow-sm">저장</button>
         </div>
       </div>
     </div>
 
-    <!-- OCR Result Modal (삼성헬스 / 인바디 스캔 확인) -->
-    <div id="ocrResultModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-      <div class="app-card max-w-sm w-full p-5 space-y-4 border-sky-500/40 shadow-2xl">
-        <div class="flex justify-between items-center pb-2 border-b border-[#263148]">
+    <!-- OCR Result Modal (삼성헬스 / 인바디 스캔 확인 및 수동 보정) -->
+    <div id="ocrResultModal" class="fixed inset-0 bg-slate-950/65 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+      <div class="game-card max-w-sm w-full p-5 space-y-4 border-sky-400/50 shadow-2xl">
+        <div class="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-slate-700">
           <div class="flex items-center gap-2">
             <span class="text-xl">🎯</span>
             <div>
-              <h3 class="text-sm font-bold text-white">삼성헬스 / 인바디 스캔 결과</h3>
-              <p class="text-[10px] text-sky-400">인식된 수치를 확인하고 바로 반영하세요</p>
+              <h3 class="text-sm font-extrabold">삼성헬스 / 인바디 스캔 결과</h3>
+              <p class="text-[10px] text-sky-500 font-bold">인식된 수치를 확인하고 바로 반영하세요</p>
             </div>
           </div>
-          <button onclick="closeOcrModal()" class="text-slate-400 hover:text-white text-base">✕</button>
+          <button onclick="closeOcrModal()" class="text-slate-400 hover:text-slate-600 text-base">✕</button>
         </div>
 
         <div class="space-y-3">
           <!-- Weight Input Card -->
-          <div class="bg-[#121622] p-3 rounded-xl border border-[#232b3e]">
-            <label class="text-[11px] font-bold text-slate-400 flex justify-between">
+          <div class="sub-box p-3">
+            <label class="text-[11px] font-bold text-slate-500 flex justify-between">
               <span>⚖️ 현재 체중 (kg)</span>
-              <span id="ocrWeightConfidence" class="text-[10px] text-emerald-400 font-bold">자동 인식</span>
+              <span id="ocrWeightConfidence" class="text-[10px] text-emerald-500 font-extrabold">자동 인식</span>
             </label>
             <div class="flex items-center gap-2 mt-1">
-              <input type="number" id="ocrWeightInput" step="0.1" class="w-full bg-[#1a2133] border border-sky-500/30 rounded-lg px-3 py-2 text-xl font-bold font-mono text-white focus:outline-none focus:border-sky-400">
-              <span class="text-sm font-bold text-slate-300">kg</span>
+              <input type="number" id="ocrWeightInput" step="0.1" class="w-full bg-white dark:bg-slate-900 border border-sky-400/50 rounded-lg px-3 py-2 text-xl font-black font-mono focus:outline-none focus:border-sky-500">
+              <span class="text-sm font-bold text-slate-400">kg</span>
             </div>
           </div>
 
           <!-- Body Fat Input Card -->
-          <div class="bg-[#121622] p-3 rounded-xl border border-[#232b3e]">
-            <label class="text-[11px] font-bold text-slate-400 flex justify-between">
+          <div class="sub-box p-3">
+            <label class="text-[11px] font-bold text-slate-500 flex justify-between">
               <span>💧 체지방률 (%)</span>
-              <span id="ocrFatConfidence" class="text-[10px] text-purple-400 font-bold">선택 사항</span>
+              <span id="ocrFatConfidence" class="text-[10px] text-purple-500 font-extrabold">선택 사항</span>
             </label>
             <div class="flex items-center gap-2 mt-1">
-              <input type="number" id="ocrFatInput" step="0.1" class="w-full bg-[#1a2133] border border-purple-500/30 rounded-lg px-3 py-2 text-xl font-bold font-mono text-white focus:outline-none focus:border-purple-400">
-              <span class="text-sm font-bold text-slate-300">%</span>
+              <input type="number" id="ocrFatInput" step="0.1" class="w-full bg-white dark:bg-slate-900 border border-purple-400/50 rounded-lg px-3 py-2 text-xl font-black font-mono focus:outline-none focus:border-purple-500">
+              <span class="text-sm font-bold text-slate-400">%</span>
             </div>
           </div>
 
           <!-- Raw text accordion -->
-          <details class="text-[11px] text-slate-400 bg-black/40 p-2.5 rounded-xl border border-slate-800">
-            <summary class="cursor-pointer font-semibold text-slate-300 hover:text-sky-300">🔍 OCR 인식 텍스트 원문 보기</summary>
-            <pre id="ocrRawText" class="mt-2 text-[10px] text-slate-400 whitespace-pre-wrap max-h-28 overflow-y-auto font-mono bg-black/60 p-2 rounded"></pre>
+          <details class="text-[11px] text-slate-500 sub-box p-2.5">
+            <summary class="cursor-pointer font-bold hover:text-sky-500">🔍 OCR 인식 텍스트 원문 보기</summary>
+            <pre id="ocrRawText" class="mt-2 text-[10px] text-slate-500 whitespace-pre-wrap max-h-28 overflow-y-auto font-mono bg-slate-100 dark:bg-slate-900 p-2 rounded"></pre>
           </details>
         </div>
 
         <div class="flex gap-2 pt-1">
-          <button onclick="closeOcrModal()" class="flex-1 py-2.5 rounded-xl bg-[#20273c] text-slate-300 text-xs font-bold hover:bg-slate-700">
+          <button onclick="closeOcrModal()" class="flex-1 py-2.5 rounded-xl sub-box text-xs font-bold">
             취소
           </button>
-          <button onclick="applyOcrResult()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-xs font-bold shadow-md hover:from-sky-400 hover:to-indigo-500">
+          <button onclick="applyOcrResult()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#4a89dc] to-indigo-500 text-white text-xs font-extrabold shadow-md">
             ✅ 대시보드 반영
           </button>
         </div>
@@ -563,21 +709,22 @@
 
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    function playBeep(freq, duration = 0.08) {
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + duration);
+    function playBeep(freq, duration = 0.07) {
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
     }
 
-    // Image Compressor for Fast Mobile Storage & Discord Webhook
-    function compressImage(file, maxSide = 960, quality = 0.75) {
+    function compressImage(file, maxSide = 800, quality = 0.72) {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -586,15 +733,8 @@
             const canvas = document.createElement('canvas');
             let w = img.width;
             let h = img.height;
-            if (w > maxSide || h > maxSide) {
-              if (w > h) {
-                h = Math.round((h * maxSide) / w);
-                w = maxSide;
-              } else {
-                w = Math.round((w * maxSide) / h);
-                h = maxSide;
-              }
-            }
+            if (w > h && w > maxSide) { h = Math.round(h * maxSide / w); w = maxSide; }
+            else if (h >= w && h > maxSide) { w = Math.round(w * maxSide / h); h = maxSide; }
             canvas.width = w;
             canvas.height = h;
             const ctx = canvas.getContext('2d');
@@ -607,14 +747,20 @@
       });
     }
 
-    // State
-    const STORAGE_KEY = 'gemini_fit_dual_v6';
+    // Persistent State (Migrates seamlessly from v6)
+    const STORAGE_KEY = 'gemini_fit_dual_v7';
+    const LEGACY_KEY = 'gemini_fit_dual_v6';
+
     let state = {
+      theme: 'light', // 'light' (Blue Archive / Gakumas Airy) or 'dark' (Wuthering Waves / Genshin Night)
+      fullCgView: false,
       weight: 53.8,
       fat: 21.5,
       bondRank: 1,
       bondExp: 75,
-      activeTrainer: 'gemini', // 'gemini' or 'mio'
+      activeTrainer: 'gemini',
+      activeMode: 'gemini',
+      currentSituation: 'idle',
       absDone: false,
       runDone: false,
       runDist: 5.0,
@@ -625,22 +771,142 @@
       webhookUrl: '',
       chatHistory: [
         { sender: 'gemini', name: '제미니', text: '프로듀서! 오늘 17:7 단식 잘 지키고 있지? 딴생각 말고 나만 딱 믿고 따라오라고!' },
-        { sender: 'mio', name: '미오', text: '아하하, 제미니 짱 잔소리 시작이네~ 프로듀서! 오늘도 우리랑 같이 파이팅이야! 🌟' }
+        { sender: 'mio', name: '미오', text: '에헤헤, 프로듀서! 오늘도 우리랑 같이 기분 좋게 파이팅이야! 🌟' }
       ]
     };
 
+    // Per-Image Smart Focal Coordinates (Ensures faces are NEVER cut off!)
+    const SITUATIONS = {
+      gemini: {
+        idle:    { img: './trainer_gemini.png',    pos: 'center 16%', tag: '✨ 일상 코칭',      text: '프로듀서, 슬림핏 52kg 될 때까지 긴장 늦추지 마!' },
+        morning: { img: './gemini_morning.png',    pos: 'center 42%', tag: '☀️ 모닝 스트레칭',  text: '창가로 들어오는 아침 햇살 받으면서 기지개 쭉! 10시 첫 식사 전까지 공복 유지하자.' },
+        tea:     { img: './trainer_tea.png',       pos: 'center 24%', tag: '🍵 말차 다도 타임', text: '다기로 정성껏 격불한 말차야. 카테킨 성분이 지방 연소를 돕는 거 알지?' },
+        cafe:    { img: './trainer_cafe.png',      pos: 'center 22%', tag: '☕ 홈카페 브레이크', text: '향긋한 에스프레소 한 잔으로 대사 부스팅 완료! 오늘도 식단 깔끔하게 가자.' },
+        running: { img: './trainer_gemini.png',    pos: 'center 16%', tag: '🏃 러닝 코칭',      text: '손아귀 힘 100% 빼고 달리는 거 잊지 마! 팔꿈치에 무리 가면 바로 멈춰야 해.' },
+        workout: { img: './trainer_wednesday.png', pos: 'center 20%', tag: '💪 코어 & 엘보케어', text: '2kg 덤벨 익센트릭 컬이랑 14분 복근! 정확한 자세로 천천히 자극을 느껴봐.' },
+        night:   { img: './gemini_evening.png',    pos: 'center 22%', tag: '🌙 17:00 단식 마감', text: '오늘 17:00 셧다운 완벽 성공! 따뜻한 허브티 마시면서 푹 쉬자, 기특하네.' },
+        inbody:  { img: './trainer_wednesday.png', pos: 'center 20%', tag: '📊 인바디 체크',    text: '인바디 측정 완료! 골격근은 지키고 체지방만 쏙 빠졌는지 확인해 볼까?' }
+      },
+      mio: {
+        idle:    { img: './trainer_mio.png',       pos: 'center 25%', tag: '✨ 파트너 미오',    text: '에헤헤, 프로듀서! 오늘도 나랑 기운차게 하루를 시작해볼까? 🏃‍♀️' },
+        morning: { img: './trainer_mio.png',       pos: 'center 25%', tag: '☀️ 상쾌한 아침',    text: '좋은 아침이야 프로듀서! 시원한 물 한 잔 마시고 활기차게 출발하자!' },
+        running: { img: './mio_running.png',       pos: 'center 18%', tag: '🏃 야외 트랙 러닝', text: '나이키런 켜고 5km 가뿐하게 완주! 페이스 완전 좋았어, 하이파이브~ 🖐️' },
+        tea:     { img: './trainer_mio.png',       pos: 'center 25%', tag: '☕ 티 브레이크',    text: '따뜻한 차 향기 너무 좋다~ 잠깐 숨 돌리고 오후도 힘내자구!' },
+        cafe:    { img: './trainer_mio.png',       pos: 'center 25%', tag: '☕ 에너지 충전',    text: '에스프레소 마셨으니까 이제 나랑 신나게 트랙 달리러 갈 준비 됐지?' },
+        workout: { img: './mio_running.png',       pos: 'center 18%', tag: '💪 코어 트레이닝',  text: '복근 14분 루틴 마지막까지 하나, 둘! 프로듀서 진짜 멋있어!' },
+        night:   { img: './trainer_mio.png',       pos: 'center 25%', tag: '🌙 오늘 하루 완주', text: '오늘 하루도 단식이랑 운동 정말 수고 많았어! 푹 자고 내일 또 만나자~ 🌟' },
+        inbody:  { img: './trainer_mio.png',       pos: 'center 25%', tag: '📊 인바디 응원',    text: '와아~ 수치 내려간 거 보여? 프로듀서의 노력은 절대 배신하지 않는다구!' }
+      },
+      dual: {
+        inbody:  { img: './dual_inbody.png',       pos: 'center 20%', tag: '⭐ 합동 스페셜',    text: '제미니 & 미오: 목표 52kg 슬림핏 달성을 향해 우리 셋이 함께 달려가자! 💖' }
+      }
+    };
+
+    // Multi-Topic MomoTalk Choice Sets
+    const TOPIC_CHOICES = {
+      diet: [
+        { text: "닭가슴살이랑 쉐이크로 단백질 든든하게 채웠어!", sit: 'idle', exp: 15,
+          gem: "오... 진짜로 제대로 챙겨 먹었잖아? 단백질 보충 확인! 이번만큼은 칭찬해 줄게, 흥!",
+          mio: "나이스 프로듀서! 잘 챙겨 먹어야 근손실 없이 예쁘게 빠지지~ 완전 최고야! 🌟" },
+        { text: "17시 칼같이 식사 마감 완료! 이제 물이랑 차만 마실게.", sit: 'night', exp: 20,
+          gem: "훌륭해! 17시 이후 공복 시간이 지방을 태우는 골든타임이야. 이 기세 그대로 유지해!",
+          mio: "와아~ 역시 프로듀서 의지력 대단해! 내일 아침 체중계가 기대되는걸? ✨" },
+        { text: "솔직히 저녁에 살짝 배고픈데 어떡하지 ㅠㅠ", sit: 'tea', exp: 10,
+          gem: "바보야, 여기서 무너지면 아깝잖아! 얼른 따뜻한 허브티나 말차 한 잔 우려서 마셔!",
+          mio: "맞아맞아! 따뜻한 차 마시면 속도 든든해지고 기분도 차분해질 거야. 조금만 참자~!" }
+      ],
+      tea: [
+        { text: "다기로 말차 격불해서 곱게 거품 내서 마셨어 🍵", sit: 'tea', exp: 15,
+          gem: "오~ 다기로 직접 격불한 거야? 초록빛 거품 고운 것 좀 봐. 카테킨 덕분에 지방도 잘 타겠네!",
+          mio: "우와~ 말차 향기 여기까지 나는 것 같아! 프로듀서 다도하는 모습 진짜 멋있다~ 🍵" },
+        { text: "머신으로 에스프레소 한 잔 뽑아서 마셨어 ☕", sit: 'cafe', exp: 15,
+          gem: "크레마 제대로 올라왔네! 시럽 안 넣은 순수 에스프레소 맞지? 합격이야.",
+          mio: "에스프레소 충전 완료! 카페인 부스팅도 됐으니까 이따 나랑 가볍게 러닝 어때? 🏃‍♀️" },
+        { text: "17시 넘어서 따뜻한 무가당 허브티 마시는 중이야 🫖", sit: 'night', exp: 15,
+          gem: "단식 셧다운 시간에 정석대로 잘하고 있네. 몸도 따뜻해지고 수면 질도 좋아질 거야.",
+          mio: "포근하고 좋다~ 나도 프로듀서 옆에서 같이 한 잔 마시고 싶어! 에헤헤 💕" }
+      ],
+      workout: [
+        { text: "나이키런 켜고 손목 힘 빼고 가볍게 러닝 뛰고 왔어! 🏃", sit: 'running', exp: 20,
+          gem: "그립 안 쥐고 달렸지? 유산소로 체지방 태우는 데는 러닝만한 게 없어. 수고했어!",
+          mio: "완주 축하해 프로듀서!! 바람 가르면서 달릴 때 진짜 상쾌했지? 하이파이브! 🖐️✨" },
+        { text: "2kg 덤벨 손목 편심성 재활 컬 3세트 완료! 🩹", sit: 'workout', exp: 20,
+          gem: "잘했어! 내릴 때 3~4초 동안 천천히 버티는 게 핵심이야. 팔꿈치 힘줄이 한결 튼튼해질 거야.",
+          mio: "꾸준히 재활 챙기는 프로듀서 칭찬해~! 아프지 않고 건강하게 운동하는 게 1순위야!" },
+        { text: "14분 아이돌 11자 복근 루틴 불태웠다! 🔥", sit: 'workout', exp: 20,
+          gem: "코어에 힘 빡 들어갔지? 당기는 기구 없이도 복근은 얼마든지 탄탄하게 만들 수 있어!",
+          mio: "와아~ 14분 동안 쉬지 않고 해내다니 대단해! 11자 복근 금방 선명해지겠는걸?" }
+      ],
+      smalltalk: [
+        { text: "미오야, 제미니가 너무 팩폭 날려서 기죽을 뻔했어 ㅋㅋ", sit: 'idle', exp: 15, dualReply: true,
+          mio: "에헤헤, 제미니 짱이 말이 살짝 뾰루퉁해서 그렇지 속으로는 프로듀서 엄청 아낀다구!",
+          gem: "야! 미오! 쓸데없는 폭로 하지 마! 난 그냥 프로듀서가 52kg 목표 달성하길 바라서 그런 거거든! 💢" },
+        { text: "둘 다 매일 챙겨줘서 식단이랑 운동 할 맛이 난다 고마워!", sit: 'idle', exp: 20, dualReply: true,
+          gem: "흥... 그렇게 솔직하게 고맙다고 하면 뭐라 답해야 할지 모르겠잖아. 끝까지 함께 가줄게!",
+          mio: "와아~ 감동이야 프로듀서! 우리 셋이면 52kg 슬림핏 무조건 성공이야! 사랑해~ 💖" },
+        { text: "오늘 컨디션 최고야! 목표 체중까지 흔들리지 않고 가보자!", sit: 'morning', exp: 15,
+          gem: "그 눈빛 마음에 드네! 오늘 루틴도 하나씩 깔끔하게 클리어해 보자고.",
+          mio: "좋았어~! 텐션 최고조! 오늘도 프로듀서의 전담 파트너가 전력으로 응원할게! 🌟" }
+      ]
+    };
+
+    let currentTopic = 'diet';
+
     function loadState() {
       try {
-        const s = localStorage.getItem(STORAGE_KEY);
-        if (s) state = { ...state, ...JSON.parse(s) };
+        const s = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_KEY);
+        if (s) {
+          const parsed = JSON.parse(s);
+          state = { ...state, ...parsed };
+        }
       } catch (e) {}
+      applyTheme();
       checkWednesdayBanner();
       syncUI();
+      loadTopic('diet');
       renderChat();
     }
 
     function saveState() {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+    }
+
+    function applyTheme() {
+      const html = document.documentElement;
+      const btn = document.getElementById('themeToggleBtn');
+      if (state.theme === 'dark') {
+        html.classList.add('dark');
+        if (btn) btn.textContent = '🌙';
+      } else {
+        html.classList.remove('dark');
+        if (btn) btn.textContent = '☀️';
+      }
+    }
+
+    function toggleTheme() {
+      state.theme = state.theme === 'dark' ? 'light' : 'dark';
+      applyTheme();
+      playBeep(720, 0.06);
+      saveState();
+    }
+
+    function toggleFullCgView() {
+      state.fullCgView = !state.fullCgView;
+      const wrapper = document.getElementById('stageWrapper');
+      const mainImg = document.getElementById('mainTrainerImg');
+      const btn = document.getElementById('btnToggleCrop');
+      if (state.fullCgView) {
+        wrapper.className = "relative w-full h-[460px] sm:h-[520px] bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300";
+        mainImg.classList.remove('object-cover');
+        mainImg.classList.add('object-contain');
+        btn.textContent = "🖼️ 카드뷰";
+      } else {
+        wrapper.className = "relative w-full h-80 sm:h-96 bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300";
+        mainImg.classList.remove('object-contain');
+        mainImg.classList.add('object-cover');
+        btn.textContent = "🔍 전체보기";
+      }
+      playBeep(680, 0.06);
     }
 
     function checkWednesdayBanner() {
@@ -649,33 +915,31 @@
       const ddayText = document.getElementById('inbodyDdayText');
       if (day === 3) {
         banner.classList.remove('hidden');
-        ddayText.textContent = "⭐ 오늘은 인바디 측정 데이! (인연 EXP 2배)";
-        ddayText.className = "text-[11px] text-amber-400 font-bold font-mono";
+        ddayText.textContent = "⭐ 오늘은 수요일 인바디 데이! (EXP 2배)";
+        ddayText.className = "text-[11px] text-amber-600 dark:text-amber-400 font-extrabold";
       } else {
         banner.classList.add('hidden');
         const diff = (3 - day + 7) % 7;
-        ddayText.textContent = `다음 인바디 데이: ${diff === 1 ? '내일(수요일)!' : `D-${diff} (수요일)`}`;
+        ddayText.textContent = `다음 수요일 인바디 데이: ${diff === 1 ? '내일(수요일)!' : `D-${diff}`}`;
       }
     }
 
-    const SITUATIONS = {
-      gemini: {
-        idle: { img: './trainer_gemini.png', tag: '✨ 일상 코칭', text: '프로듀서, 슬림핏 52kg 될 때까지 긴장 늦추지 마!' },
-        morning: { img: './gemini_morning.png', tag: '☀️ 모닝 스트레칭', text: '창가로 들어오는 아침 햇살 받으면서 기지개 쭉! 10시 첫 식사 전까지 공복 유지하자.' },
-        tea: { img: './gemini_tea_matcha.png', tag: '🍵 홈카페 말차 타임', text: '다기로 정성껏 격불한 말차야. 카테킨 성분이 지방 연소를 돕는 거 알지?' },
-        workout: { img: './gemini_workout_clean.png', tag: '💪 코어 & 엘보 재활', text: '2kg 덤벨 익센트릭 컬이랑 14분 복근! 손아귀 힘 절대 주지 말고!' },
-        night: { img: './gemini_evening.png', tag: '🌙 17:00 단식 마감', text: '오늘 17:00 셧다운 완벽 성공! 따뜻한 차 마시면서 푹 쉬자, 바보 프로듀서.' }
-      },
-      mio: {
-        idle: { img: './trainer_mio.png', tag: '✨ 파트너 미오', text: '에헤헤, 프로듀서! 오늘도 나랑 기운차게 하루를 시작해볼까? 🏃‍♀️' },
-        running: { img: './mio_sunlight_run.png', tag: '🏃 야외 햇살 러닝', text: '나뭇잎 사이로 햇살 쏟아지는 트랙에서 5km 완주! 완전 상쾌하다 그치? 하이파이브! 🖐️' },
-        tea: { img: './trainer_mio.png', tag: '☕ 티 브레이크', text: '향긋한 차 한 잔으로 에너지 충전 완료! 다시 파이팅!' },
-        workout: { img: './trainer_mio.png', tag: '💪 파워 트레이닝', text: '복근 쥐어짜는 느낌 그대로! 프로듀서 진짜 대단해!' }
-      },
-      dual: {
-        inbody: { img: './dual_inbody.png', tag: '⭐ 합동 스페셜', text: '제미니 & 미오: 인바디 목표 52kg 달성을 향해 함께 달려가자! 💖' }
-      }
-    };
+    function changeSituation(sitKey) {
+      state.currentSituation = sitKey;
+      if (state.activeMode === 'dual') state.activeMode = state.activeTrainer || 'gemini';
+      setTrainerMode(state.activeMode, sitKey);
+    }
+
+    function updateSituationPillsUI() {
+      const pills = document.querySelectorAll('.sit-pill');
+      pills.forEach(btn => {
+        if (btn.dataset.sit === state.currentSituation) {
+          btn.className = "sit-pill px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-[#4a89dc] text-white shadow-sm transition-all";
+        } else {
+          btn.className = "sit-pill px-2 py-0.5 rounded-lg text-[10px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 transition-all";
+        }
+      });
+    }
 
     function setTrainerMode(mode, situation = null) {
       state.activeMode = mode;
@@ -689,66 +953,81 @@
       const dualView = document.getElementById('dualStageView');
       const mainImg = document.getElementById('mainTrainerImg');
       const mainTag = document.getElementById('mainTrainerTagName');
+      const mainDot = document.getElementById('mainTrainerDot');
       const sitTag = document.getElementById('situationTag');
       const dialogue = document.getElementById('trainerDialogue');
+      const bondBtn = document.getElementById('btnBondStory');
+
+      const inactiveClass = "flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold hover:border-sky-400 transition-all";
 
       if (mode === 'dual') {
-        if (btnD) btnD.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-amber-500/30 border border-amber-400 text-amber-200 text-xs font-bold shadow-sm transition-all";
-        if (btnG) btnG.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-pink-400/50 transition-all";
-        if (btnM) btnM.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-amber-400/50 transition-all";
+        if (btnD) btnD.className = "flex items-center gap-1 px-3 py-1 rounded-xl bg-gradient-to-r from-amber-400 to-pink-500 text-white text-xs font-extrabold shadow-sm transition-all";
+        if (btnG) btnG.className = inactiveClass;
+        if (btnM) btnM.className = inactiveClass;
 
         if (singleView) singleView.classList.add('hidden');
         if (dualView) dualView.classList.remove('hidden');
-        if (sitTag) {
-          sitTag.textContent = "⭐ 합동 코칭";
-          sitTag.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40";
-        }
-        if (dialogue) dialogue.textContent = `"제미니 & 미오: 인바디 목표 52kg 달성을 향해 함께 달려가자! 💖"`;
+        if (dialogue) dialogue.textContent = `"${SITUATIONS.dual.inbody.text}"`;
+        if (bondBtn) bondBtn.textContent = "합동 인연스토리로 ➔";
       } else if (mode === 'mio') {
-        if (btnM) btnM.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all";
-        if (btnG) btnG.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-pink-400/50 transition-all";
-        if (btnD) btnD.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-[11px] font-bold hover:border-amber-400/50 transition-all";
+        if (btnM) btnM.className = "flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-500 text-white text-xs font-extrabold shadow-sm transition-all";
+        if (btnG) btnG.className = inactiveClass;
+        if (btnD) btnD.className = inactiveClass;
 
         if (singleView) singleView.classList.remove('hidden');
         if (dualView) dualView.classList.add('hidden');
 
-        const sit = (SITUATIONS.mio && SITUATIONS.mio[state.currentSituation]) || SITUATIONS.mio.idle;
-        if (mainImg) mainImg.src = sit.img;
-        if (mainTag) {
-          mainTag.textContent = "미오";
-          mainTag.parentElement.className = "absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-amber-500/30 text-[11px] font-bold text-amber-300 flex items-center gap-1.5 shadow-sm";
+        const sit = SITUATIONS.mio[state.currentSituation] || SITUATIONS.mio.idle;
+        if (mainImg) {
+          mainImg.src = sit.img;
+          mainImg.style.objectPosition = sit.pos || 'center 24%';
         }
-        if (sitTag) {
-          sitTag.textContent = sit.tag;
-          sitTag.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20";
-        }
+        if (mainTag) mainTag.textContent = "미오";
+        if (mainDot) mainDot.className = "w-2 h-2 rounded-full bg-amber-500 animate-pulse";
+        if (sitTag) sitTag.textContent = sit.tag;
         if (dialogue) dialogue.textContent = `"미오: ${sit.text}"`;
+        if (bondBtn) bondBtn.textContent = "미오의 인연스토리로 ➔";
       } else {
-        if (btnG) btnG.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs font-bold transition-all";
-        if (btnM) btnM.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-xs font-bold hover:border-amber-400/50 transition-all";
-        if (btnD) btnD.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#20273c] border border-slate-700 text-slate-400 text-[11px] font-bold hover:border-yellow-400/50 transition-all";
+        if (btnG) btnG.className = "flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#f4869d] text-white text-xs font-extrabold shadow-sm transition-all";
+        if (btnM) btnM.className = inactiveClass;
+        if (btnD) btnD.className = inactiveClass;
 
         if (singleView) singleView.classList.remove('hidden');
         if (dualView) dualView.classList.add('hidden');
 
-        const sit = (SITUATIONS.gemini && SITUATIONS.gemini[state.currentSituation]) || SITUATIONS.gemini.idle;
-        if (mainImg) mainImg.src = sit.img;
-        if (mainTag) {
-          mainTag.textContent = "제미니";
-          mainTag.parentElement.className = "absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-pink-500/30 text-[11px] font-bold text-pink-300 flex items-center gap-1.5 shadow-sm";
+        const sit = SITUATIONS.gemini[state.currentSituation] || SITUATIONS.gemini.idle;
+        if (mainImg) {
+          mainImg.src = sit.img;
+          mainImg.style.objectPosition = sit.pos || 'center 18%';
         }
-        if (sitTag) {
-          sitTag.textContent = sit.tag;
-          sitTag.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-300 border border-pink-500/20";
-        }
+        if (mainTag) mainTag.textContent = "제미니";
+        if (mainDot) mainDot.className = "w-2 h-2 rounded-full bg-pink-500 animate-pulse";
+        if (sitTag) sitTag.textContent = sit.tag;
         if (dialogue) dialogue.textContent = `"제미니: ${sit.text}"`;
+        if (bondBtn) bondBtn.textContent = "제미니의 인연스토리로 ➔";
       }
+      updateSituationPillsUI();
       playBeep(650);
       saveState();
     }
 
-    function switchTrainerFocus(trainer) {
-      setTrainerMode(trainer);
+    function addBondExp(amount) {
+      state.bondExp += amount;
+      while (state.bondExp >= 100) {
+        state.bondRank += 1;
+        state.bondExp -= 100;
+        playBeep(880, 0.2);
+      }
+      updateBondUI();
+    }
+
+    function updateBondUI() {
+      const badge = document.getElementById('bondRankBadge');
+      const bar = document.getElementById('bondExpBar');
+      const txt = document.getElementById('bondExpText');
+      if (badge) badge.textContent = `인연 Lv.${state.bondRank} ❤️`;
+      if (bar) bar.style.width = `${Math.min(100, state.bondExp)}%`;
+      if (txt) txt.textContent = `${state.bondExp}%`;
     }
 
     function syncUI() {
@@ -761,9 +1040,9 @@
       document.getElementById('chkMeal2').checked = state.meals[1];
       document.getElementById('chkMeal3').checked = state.meals[2];
 
-      document.getElementById('matchaCount').textContent = `${state.teaLog.matcha}회`;
-      document.getElementById('espressoCount').textContent = `${state.teaLog.espresso}회`;
-      document.getElementById('teaCount').textContent = `${state.teaLog.tea}회`;
+      document.getElementById('matchaCount').textContent = `${state.teaLog.matcha || 0}회`;
+      document.getElementById('espressoCount').textContent = `${state.teaLog.espresso || 0}회`;
+      document.getElementById('teaCount').textContent = `${state.teaLog.tea || 0}회`;
 
       for (let i = 1; i <= 3; i++) {
         updateRehabBtnUI(i, state.rehab[i - 1]);
@@ -789,193 +1068,158 @@
         document.getElementById('tabTalkBtn').classList.remove('active');
         document.getElementById('tabHealthBtn').classList.add('active');
       }
-      playBeep(500);
+      playBeep(560);
     }
 
-    // Tea & Coffee Log
-    function logTea(type) {
-      playBeep(700, 0.1);
-      state.teaLog[type] = (state.teaLog[type] || 0) + 1;
-      saveState();
-      syncUI();
-
-      let name = type === 'matcha' ? '말차 다기 격불 🍵' : type === 'espresso' ? '에스프레소 샷 ☕' : '무당 허브티 🫖';
-      state.chatHistory.push({ sender: 'user', text: `[홈카페] ${name} 1잔을 기록했습니다.` });
-      renderChat();
-
-      setTimeout(() => {
-        if (type === 'matcha') {
-          setTrainerMode('gemini', 'tea');
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '오... 다기로 말차 격불한 거야? 거품 고운 것 좀 봐. 17시 넘겨서 배고프다고 징징대지 말고 차나 마셔, 바보야!' });
-        } else if (type === 'espresso') {
-          setTrainerMode('gemini', 'cafe');
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: '에스프레소 마셨으니까 이제 나랑 같이 신나게 5km 러닝 달릴 거지? 🏃‍♀️' });
-        } else {
-          setTrainerMode('gemini', 'tea');
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '17시 이후 배고플 땐 따뜻한 허브티로 달래는 게 정석이야. 훌륭해.' });
-        }
-        state.bondExp += 10;
-        updateBondUI();
-        saveState();
-        renderChat();
-      }, 500);
-    }
-
-    async function handleTeaPhoto(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      playBeep(650, 0.1);
-      const dataUrl = await compressImage(file);
-      state.chatHistory.push({ sender: 'user', text: "📸 [홈카페 찻잔/커피 사진]" });
-      renderChat();
-
-      setTimeout(() => {
-        if (state.activeTrainer === 'mio') {
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: "찻잔 너무 예쁘다 프로듀서! 나도 나중에 한 잔 타줘~ ☕✨" });
-        } else {
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: "흥... 그래도 감성 챙기면서 17:7 단식 룰 유지하는 건 인정해 줄게." });
-        }
-        state.bondExp += 15;
-        updateBondUI();
-        saveState();
-        renderChat();
-      }, 500);
-      e.target.value = '';
-    }
-
-    // MomoTalk Dual Messaging Story Tree
-    const storyTree = {
-      1: {
-        userText: "닭가슴살이랑 쉐이크로 단백질 든든하게 채웠어!",
-        replies: [
-          { sender: 'gemini', name: '제미니', text: '오... 진짜로 제대로 먹었잖아? 단백질 30g 이상 보충 확인! 이번만큼은 인정해 줄게요, 흥!' },
-          { sender: 'mio', name: '미오', text: '나이스 프로듀서! 잘 챙겨 먹어야 근손실 안 오지~ 완전 최고야!' }
-        ],
-        exp: 15,
-        nextChoices: [
-          "이제 14분 복근 루틴 하러 갈게!",
-          "칭찬 고마워! 오늘 루틴 끝까지 간다!"
-        ]
-      },
-      2: {
-        userText: "미오야, 제미니가 너무 팩폭 날려서 기죽을 뻔했어 ㅠㅠ",
-        replies: [
-          { sender: 'mio', name: '미오', text: '에헤헤, 제미니 짱이 말이 뾰루퉁해서 그래~ 속으로는 엄청 챙겨주고 있다구!' },
-          { sender: 'gemini', name: '제미니', text: '야! 미오! 쓸데없는 소리 하지 마! 바보 프로듀서가 17시 넘어서 먹을까 봐 미리 경고한 거잖아! 💢' }
-        ],
-        exp: 20,
-        nextChoices: [
-          "알았어 알았어, 17시 셧다운 칼같이 지킬게!",
-          "둘이 티격태격하는 거 진짜 귀엽네 ㅋㅋㅋ"
-        ]
-      },
-      3: {
-        userText: "둘 다 나 챙겨줘서 너무 든든해! 오늘 러닝도 달릴게!",
-        replies: [
-          { sender: 'mio', name: '미오', text: '응응! 나도 옆에서 페이스 맞춰서 같이 달리는 기분으로 응원할게! 5km 가보자구!' },
-          { sender: 'gemini', name: '제미니', text: '손아귀 힘 100% 빼고 달리는 거 잊지 마! 팔꿈치 아프면 즉시 멈춰야 돼, 바보야!' }
-        ],
-        exp: 20,
-        nextChoices: [
-          "손목에 힘 빼고 가볍게 뛸게!",
-          "러닝 끝나고 보고할게!"
-        ]
-      }
-    };
-
-    function chooseOption(num) {
-      playBeep(650, 0.1);
-      const data = storyTree[num];
-      if (!data) return;
-
-      state.chatHistory.push({ sender: 'user', text: data.userText });
-      renderChat();
-
-      setTimeout(() => {
-        if (num === 3) {
-          setTrainerMode('dual', 'inbody');
-          data.replies.forEach(r => state.chatHistory.push(r));
-        } else if (num === 2) {
-          setTrainerMode('mio', 'idle');
-          data.replies.forEach(r => state.chatHistory.push(r));
-        } else {
-          if (state.activeMode === 'dual') {
-            data.replies.forEach(r => state.chatHistory.push(r));
-          } else if (state.activeTrainer === 'mio') {
-            state.chatHistory.push({ sender: 'mio', name: '미오', text: '나이스 프로듀서! 잘 챙겨 먹어야 근손실 안 오지~ 완전 최고야! 🌟' });
-          } else {
-            state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '오... 진짜로 제대로 먹었잖아? 단백질 30g 이상 보충 확인! 이번만큼은 인정해 줄게요, 흥!' });
-          }
-        }
-
-        state.bondExp += data.exp;
-        if (state.bondExp >= 100) {
-          state.bondRank += 1;
-          state.bondExp = state.bondExp - 100;
-          playBeep(880, 0.25);
-          alert(`🎉 [인연 랭크 UP!] 인연 레벨이 Lv.${state.bondRank}로 상승했습니다!`);
-        } else {
-          playBeep(750, 0.1);
-        }
-        updateBondUI();
-        saveState();
-        renderChat();
-        updateNextChoices(data.nextChoices);
-      }, 600);
-    }
-
-    function updateNextChoices(choices) {
+    // Topic & Choices Rendering
+    function loadTopic(topicKey) {
+      currentTopic = topicKey;
+      const list = TOPIC_CHOICES[topicKey] || TOPIC_CHOICES.diet;
       const container = document.getElementById('choicesContainer');
-      if (!choices || choices.length === 0) return;
-      container.innerHTML = choices.map((c, idx) => `
-        <button onclick="chooseCustomOption('${c}')" class="momo-choice-btn">
-          <span>${idx + 1}. ${c}</span>
-          <span class="text-xs text-sky-400 shrink-0 ml-1">➔</span>
+      container.innerHTML = list.map((item, idx) => `
+        <button onclick="selectTopicOption('${topicKey}', ${idx})" class="momo-choice-btn">
+          <span>${idx + 1}. ${item.text}</span>
+          <span class="text-xs text-[#4a89dc] font-black shrink-0 ml-2">➔</span>
         </button>
       `).join('');
     }
 
-    function chooseCustomOption(text) {
-      playBeep(600, 0.08);
-      state.chatHistory.push({ sender: 'user', text: text });
+    function selectTopicOption(topicKey, idx) {
+      const list = TOPIC_CHOICES[topicKey];
+      if (!list || !list[idx]) return;
+      const item = list[idx];
+      playBeep(660, 0.08);
+
+      state.chatHistory.push({ sender: 'user', text: item.text });
+      renderChat();
+
+      if (item.sit) {
+        setTrainerMode(state.activeMode, item.sit);
+      }
+
+      setTimeout(() => {
+        if (item.dualReply || state.activeMode === 'dual') {
+          if (item.mio) state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio });
+          if (item.gem) state.chatHistory.push({ sender: 'gemini', name: '제미니', text: item.gem });
+        } else if (state.activeTrainer === 'mio') {
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio });
+        } else {
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: item.gem });
+        }
+        addBondExp(item.exp || 15);
+        saveState();
+        renderChat();
+      }, 420);
+    }
+
+    function sendDirectMessage() {
+      const input = document.getElementById('directChatInput');
+      const text = (input.value || '').trim();
+      if (!text) return;
+      input.value = '';
+      playBeep(640, 0.07);
+
+      state.chatHistory.push({ sender: 'user', text });
       renderChat();
 
       setTimeout(() => {
-        if (state.activeMode === 'dual') {
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '말만 앞서지 말고 바로 실천해! 오늘 루틴 다 끝낼 때까지 똑똑히 감시할 거니까!' });
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: '화이팅 화이팅 프로듀서~! 완주하면 하이파이브야! 🖐️✨' });
-        } else if (state.activeTrainer === 'mio') {
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: '화이팅 화이팅 프로듀서~! 완주하면 하이파이브야! 🖐️✨' });
-        } else {
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '말만 앞서지 말고 바로 실천해! 오늘 루틴 다 끝낼 때까지 똑똑히 감시할 거니까!' });
+        // Smart keyword detection
+        let sit = null;
+        let gemReply = "응, 프로듀서 말 다 듣고 있어! 오늘 목표까지 흔들리지 말고 나랑 같이 가자.";
+        let mioReply = "프로듀서 말 들으니까 나도 기운이 펄펄 나! 오늘도 우리 파이팅이야~ 🌟";
+
+        if (text.includes('말차') || text.includes('차') || text.includes('커피') || text.includes('에스프레소')) {
+          sit = 'tea';
+          gemReply = "홈카페 티타임 좋지! 무가당으로 깔끔하게 즐기면서 공복 유지하는 거 잊지 마.";
+          mioReply = "우와~ 향긋한 티타임이네! 나도 프로듀서가 타주는 차 마시고 싶다~ ☕✨";
+        } else if (text.includes('러닝') || text.includes('달리') || text.includes('운동') || text.includes('복근')) {
+          sit = state.activeTrainer === 'mio' ? 'running' : 'workout';
+          gemReply = "팔꿈치에 무리 가지 않게 손아귀 힘 빼는 거 꼭 신경 쓰면서 운동해!";
+          mioReply = "역시 성실한 프로듀서! 다치지 않게 스트레칭도 꼭 챙기면서 달리자구! 🏃‍♀️";
+        } else if (text.includes('배고') || text.includes('야식') || text.includes('먹고')) {
+          sit = 'night';
+          gemReply = "안 돼 바보야! 17시 이후엔 입에 칼로리 넣으면 절대 안 돼! 따뜻한 물이나 허브티 마셔! 💢";
+          mioReply = "으앙 배고프겠다 ㅠㅠ 하지만 지금 참으면 내일 아침 몸무게가 보답해 줄 거야! 힘내힘내!";
         }
-        state.bondExp += 10;
-        updateBondUI();
+
+        if (sit) setTrainerMode(state.activeMode, sit);
+
+        if (state.activeMode === 'dual') {
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: gemReply });
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: mioReply });
+        } else if (state.activeTrainer === 'mio') {
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: mioReply });
+        } else {
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: gemReply });
+        }
+        addBondExp(10);
         saveState();
         renderChat();
-      }, 600);
+      }, 450);
     }
 
+    function triggerBondStory() {
+      playBeep(780, 0.12);
+      if (state.activeMode === 'dual') {
+        setTrainerMode('dual', 'inbody');
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '💖 [합동 인연 에피소드] "프로듀서가 매일 사진도 찍어 올리고 단식 지키는 거... 사실 미오랑 나랑 뒤에서 엄청 칭찬하고 있었어."' });
+        state.chatHistory.push({ sender: 'mio', name: '미오', text: '💖 "맞아맞아! 제미니 짱이 프로듀서 기록 볼 때마다 입꼬리 올라가는 거 내가 다 봤다구~ 에헤헤!"' });
+      } else if (state.activeTrainer === 'mio') {
+        const stories = [
+          { sit: 'running', text: '💖 [미오 인연 스토리] "트랙 위에서 프로듀서랑 나란히 달릴 때가 제일 행복해! 숨이 차올라도 프로듀서 옆이면 어디까지든 뛸 수 있을 것 같아!"' },
+          { sit: 'idle', text: '💖 [미오 인연 스토리] "햇살 좋은 날엔 운동 끝나고 나랑 시원한 개울가에서 발 담그고 쉬자! 약속이야 프로듀서~ 🌟"' }
+        ];
+        const pick = stories[Math.floor(Math.random() * stories.length)];
+        setTrainerMode('mio', pick.sit);
+        state.chatHistory.push({ sender: 'mio', name: '미오', text: pick.text });
+      } else {
+        const stories = [
+          { sit: 'morning', text: '💖 [제미니 인연 스토리] "아침 창가 햇살이 너무 좋아서 프로듀서 생각났어. 오늘도 나랑 같이 건강한 하루 보낼 준비 됐지?"' },
+          { sit: 'tea', text: '💖 [제미니 인연 스토리] "흥... 특별히 프로듀서 주려고 정성껏 격불한 말차야. 남기지 말고 다 마셔, 알겠어?"' },
+          { sit: 'night', text: '💖 [제미니 인연 스토리] "오늘 하루도 내 잔소리 다 들어주면서 루틴 지키느라 고생했어. 내일도 내가 제일 먼저 응원해 줄게."' }
+        ];
+        const pick = stories[Math.floor(Math.random() * stories.length)];
+        setTrainerMode('gemini', pick.sit);
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: pick.text });
+      }
+      addBondExp(25);
+      saveState();
+      renderChat();
+    }
+
+    function clearChatLog() {
+      state.chatHistory = [
+        { sender: 'gemini', name: '제미니', text: '대화 기록을 깔끔하게 정리했어! 자, 오늘 루틴 브리핑부터 다시 시작해 볼까?' }
+      ];
+      saveState();
+      renderChat();
+    }
+
+    // Authentic Blue Archive MomoTalk Chat Renderer (Uses dedicated square face avatars!)
     function renderChat() {
       const container = document.getElementById('chatContainer');
+      if (!container) return;
+
       container.innerHTML = state.chatHistory.map(msg => {
+        const imgBlock = msg.image ? `<img src="${msg.image}" class="mt-2 rounded-xl max-h-36 w-auto object-cover border border-white/25">` : '';
         if (msg.sender === 'user') {
           return `
             <div class="flex justify-end">
-              <div class="max-w-[78%] p-2.5 rounded-2xl rounded-tr-sm bg-[#4d88ff] text-white text-xs leading-relaxed shadow-sm">
-                ${msg.text}
+              <div class="max-w-[78%] px-3.5 py-2.5 bubble-right text-xs font-medium leading-relaxed">
+                <div>${msg.text}</div>
+                ${imgBlock}
               </div>
             </div>
           `;
         } else if (msg.sender === 'mio') {
           return `
             <div class="flex items-start gap-2.5">
-              <div class="w-8 h-8 rounded-full overflow-hidden ring-1 ring-amber-400/40 bg-black shrink-0">
-                <img src="./trainer_mio.png" class="w-full h-full object-cover object-top">
+              <div class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-amber-400/60 bg-amber-50 shrink-0 shadow-sm">
+                <img src="./avatar_mio.png" alt="미오" class="w-full h-full object-cover" onerror="this.src='./trainer_mio.png'">
               </div>
-              <div class="max-w-[75%] space-y-1">
-                <div class="text-[11px] font-bold text-amber-300">미오</div>
-                <div class="p-2.5 rounded-2xl rounded-tl-sm bg-[#2e2520] text-amber-100 text-xs leading-relaxed border border-amber-500/25">
+              <div class="max-w-[76%] space-y-1">
+                <div class="text-xs font-extrabold text-slate-800 dark:text-amber-300">미오</div>
+                <div class="px-3.5 py-2.5 bubble-left-mio text-xs font-medium leading-relaxed">
                   ${msg.text}
                 </div>
               </div>
@@ -984,12 +1228,12 @@
         } else {
           return `
             <div class="flex items-start gap-2.5">
-              <div class="w-8 h-8 rounded-full overflow-hidden ring-1 ring-pink-400/40 bg-black shrink-0">
-                <img src="./trainer_gemini.png" class="w-full h-full object-cover object-top">
+              <div class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-pink-400/60 bg-pink-50 shrink-0 shadow-sm">
+                <img src="./avatar_gemini.png" alt="제미니" class="w-full h-full object-cover" onerror="this.src='./trainer_gemini.png'">
               </div>
-              <div class="max-w-[75%] space-y-1">
-                <div class="text-[11px] font-bold text-pink-300">제미니</div>
-                <div class="p-2.5 rounded-2xl rounded-tl-sm bg-[#1e2538] text-slate-100 text-xs leading-relaxed border border-[#2b354e]">
+              <div class="max-w-[76%] space-y-1">
+                <div class="text-xs font-extrabold text-slate-800 dark:text-pink-300">${msg.name || '제미니'}</div>
+                <div class="px-3.5 py-2.5 bubble-left text-xs font-medium leading-relaxed">
                   ${msg.text}
                 </div>
               </div>
@@ -1000,17 +1244,13 @@
       container.scrollTop = container.scrollHeight;
     }
 
-    function updateBondUI() {
-      document.getElementById('bondRankBadge').textContent = `인연 Lv.${state.bondRank} ❤️`;
-    }
-
     function pokeCurrentTrainer() {
-      playBeep(700, 0.08);
+      playBeep(700, 0.07);
       if (state.activeMode === 'dual') {
         const dualQuotes = [
           "제미니 & 미오: 둘이서 프로듀서 꼭 52kg 슬림핏 만들어 줄게!",
-          "제미니: 잠깐, 둘 다 건드리지 마! | 미오: 에헤헤 간지러워~ 🌟",
-          "제미니 & 미오: 이번 주 인바디 측정까지 함께 달리는 거야!"
+          "제미니: 잠깐, 갑자기 건드리지 마! | 미오: 에헤헤 간지러워~ 🌟",
+          "제미니 & 미오: 이번 주 수요일 인바디 측정까지 함께 달리는 거야!"
         ];
         const q = dualQuotes[Math.floor(Math.random() * dualQuotes.length)];
         document.getElementById('trainerDialogue').textContent = `"${q}"`;
@@ -1028,9 +1268,9 @@
       } else {
         const geminiQuotes = [
           "아야! 어딜 만지는 거야, 바보야! 💢",
-          "운동 안 하고 딴짓하면 진짜 주거주거! 😈",
-          "흥... 오늘 17시 단식이랑 루틴 다 끝내면 머리 쓰다듬게 해줄게.",
-          "말차랑 허브티 마시면서 단식 끝까지 버텨봐!"
+          "운동 안 하고 딴짓하면 진짜 혼난다! 😈",
+          "흥... 오늘 17시 단식이랑 루틴 다 끝내면 칭찬해 줄게.",
+          "말차랑 허브티 마시면서 공복 시간 끝까지 유지해 봐!"
         ];
         const q = geminiQuotes[Math.floor(Math.random() * geminiQuotes.length)];
         document.getElementById('trainerDialogue').textContent = `"제미니: ${q}"`;
@@ -1039,12 +1279,57 @@
       renderChat();
     }
 
-    function pokeTrainer(who) {
-      if (who) state.activeTrainer = who;
-      pokeCurrentTrainer();
+    // Tea & Coffee Log
+    function logTea(type) {
+      playBeep(700, 0.1);
+      state.teaLog[type] = (state.teaLog[type] || 0) + 1;
+      saveState();
+      syncUI();
+
+      const name = type === 'matcha' ? '말차 다기 격불 🍵' : type === 'espresso' ? '에스프레소 샷 ☕' : '무당 허브티 🫖';
+      state.chatHistory.push({ sender: 'user', text: `[홈카페 기록] ${name} 1잔을 마셨어!` });
+      renderChat();
+
+      setTimeout(() => {
+        if (type === 'matcha') {
+          setTrainerMode('gemini', 'tea');
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '오... 다기로 말차 격불한 거야? 거품 고운 것 좀 봐. 카테킨 덕분에 체지방 연소 효율도 올라가겠네!' });
+        } else if (type === 'espresso') {
+          setTrainerMode('gemini', 'cafe');
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: '에스프레소 마셨으니까 이제 나랑 같이 신나게 러닝 달릴 준비 완료지? 🏃‍♀️' });
+        } else {
+          setTrainerMode('gemini', 'night');
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '17시 이후 출출할 땐 따뜻한 허브티로 달래는 게 정석이야. 아주 잘하고 있어.' });
+        }
+        addBondExp(10);
+        saveState();
+        renderChat();
+      }, 450);
     }
 
-    // Meal Photo
+    async function handleTeaPhoto(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      playBeep(650, 0.1);
+      const dataUrl = await compressImage(file);
+      state.chatHistory.push({ sender: 'user', text: "📸 [홈카페 찻잔/커피 인증 사진]", image: dataUrl });
+      renderChat();
+
+      setTimeout(() => {
+        if (state.activeTrainer === 'mio') {
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: "우와~ 찻잔 너무 예쁘다 프로듀서! 나도 나중에 한 잔 타줘~ ☕✨" });
+        } else {
+          setTrainerMode('gemini', 'tea');
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: "흥... 감성 챙기면서 17:7 단식 룰 유지하는 건 확실히 인정해 줄게." });
+        }
+        addBondExp(15);
+        saveState();
+        renderChat();
+      }, 450);
+      e.target.value = '';
+    }
+
+    // Meal Photo Upload (Shows actual photo inside chat bubble too!)
     async function uploadMealPhoto(e, idx) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1057,21 +1342,20 @@
       document.getElementById(`prevImg${idx}`).src = dataUrl;
       document.getElementById(`prevBox${idx}`).classList.remove('hidden');
 
-      const mealTitle = idx === 1 ? '10:00 아침' : idx === 2 ? '14:00 점심' : '17:00 저녁';
-      state.chatHistory.push({ sender: 'user', text: `📸 [${mealTitle} 식단 인증 사진]` });
+      const mealTitle = idx === 1 ? '10:00 첫 식사' : idx === 2 ? '14:00 단백질 간식' : '16:30 마감 식사';
+      state.chatHistory.push({ sender: 'user', text: `📸 [${mealTitle} 인증 사진]`, image: dataUrl });
       renderChat();
 
       setTimeout(() => {
         if (state.activeTrainer === 'mio') {
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: '맛있어 보인다~ 단백질도 채소도 완벽해! 이 기세로 저녁까지 가자!' });
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: '맛있어 보인다~ 단백질도 영양 밸런스도 완벽해! 이 기세로 저녁까지 가자! 🌟' });
         } else {
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '식단 사진 확인! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 입에 칼로리 넣지 마!' });
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '식단 사진 확인 완료! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 칼로리 섭취 금지야!' });
         }
-        state.bondExp += 15;
-        updateBondUI();
+        addBondExp(15);
         saveState();
         renderChat();
-      }, 500);
+      }, 450);
       e.target.value = '';
     }
 
@@ -1121,7 +1405,6 @@
       });
     }
 
-    // Robust Samsung Health & InBody Text Parser
     function parseHealthImageText(text) {
       const unified = text
         .replace(/(\d)[,.](\d)/g, '$1.$2')
@@ -1130,14 +1413,12 @@
       let weight = null;
       let fat = null;
 
-      // 1. Proximity to '체중', '몸무게', 'Weight'
       const labelMatch = unified.match(/(?:체중|몸무게|Weight|체\s*중)[\s:：]*([4-9]\d(?:\.\d{1,2})?)/i);
       if (labelMatch) {
         const val = parseFloat(labelMatch[1]);
         if (val >= 40 && val <= 120) weight = val;
       }
 
-      // 2. Number followed by kg / KG
       if (weight === null) {
         const kgMatches = [...unified.matchAll(/([4-9]\d(?:\.\d{1,2})?)\s*(?:kg|KG)\b/gi)];
         for (const m of kgMatches) {
@@ -1149,7 +1430,6 @@
         }
       }
 
-      // 3. Prominent standalone decimal near target weight zone (45~85kg)
       if (weight === null) {
         const decimalMatches = [...unified.matchAll(/\b([4-8]\d\.\d{1,2})\b/g)];
         for (const m of decimalMatches) {
@@ -1161,7 +1441,6 @@
         }
       }
 
-      // Body Fat parsing
       const fatLabelMatch = unified.match(/(?:체지방률?|체지방량?|Fat)[\s:：]*([1-4]\d(?:\.\d{1,2})?)/i);
       if (fatLabelMatch) {
         const val = parseFloat(fatLabelMatch[1]);
@@ -1182,13 +1461,12 @@
       return { weight, fat };
     }
 
-    // AI Vision OCR Trigger
     async function handleInbodyScan(e) {
       const file = e.target.files[0];
       if (!file) return;
 
       const scanBtnText = document.getElementById('inbodyScanBtnText');
-      if (scanBtnText) scanBtnText.textContent = "⌛ 스캔 분석 중...";
+      if (scanBtnText) scanBtnText.textContent = "⌛ 분석중...";
 
       try {
         const processedBlob = await preprocessOcrImage(file);
@@ -1196,30 +1474,28 @@
         const text = res.data.text || "";
         const parsed = parseHealthImageText(text);
 
-        // Pre-fill Modal
         document.getElementById('ocrWeightInput').value = parsed.weight !== null ? parsed.weight : state.weight;
         document.getElementById('ocrFatInput').value = parsed.fat !== null ? parsed.fat : state.fat;
-        document.getElementById('ocrRawText').textContent = text.trim() || "(인식된 텍스트가 없습니다. 사진이 흐리거나 해상도가 낮을 수 있습니다.)";
+        document.getElementById('ocrRawText').textContent = text.trim() || "(인식된 텍스트가 없습니다. 아래 입력창에서 직접 수치를 입력하거나 수정할 수 있습니다.)";
 
         const badge = document.getElementById('ocrWeightConfidence');
         if (parsed.weight !== null) {
           badge.textContent = "✨ 체중 감지 성공";
-          badge.className = "text-[10px] text-emerald-400 font-bold";
+          badge.className = "text-[10px] text-emerald-500 font-extrabold";
         } else {
-          badge.textContent = "직접 입력/수정 가능";
-          badge.className = "text-[10px] text-amber-400 font-bold";
+          badge.textContent = "직접 확인/수정 가능";
+          badge.className = "text-[10px] text-amber-500 font-extrabold";
         }
 
         document.getElementById('ocrResultModal').classList.remove('hidden');
         playBeep(880, 0.15);
       } catch (err) {
-        console.error("OCR scan error:", err);
         document.getElementById('ocrWeightInput').value = state.weight;
         document.getElementById('ocrFatInput').value = state.fat;
-        document.getElementById('ocrRawText').textContent = "OCR 스캔 오류: " + err.message + "\n직접 수치를 입력하여 저장할 수 있습니다.";
+        document.getElementById('ocrRawText').textContent = "직접 수치를 입력하여 저장할 수 있습니다.";
         document.getElementById('ocrResultModal').classList.remove('hidden');
       } finally {
-        if (scanBtnText) scanBtnText.textContent = "📷 인바디 스캔";
+        if (scanBtnText) scanBtnText.textContent = "📷 스캔";
         e.target.value = '';
       }
     }
@@ -1243,24 +1519,21 @@
 
       updateMetrics();
       const isWed = (new Date().getDay() === 3);
-      const bonusExp = isWed ? 40 : 20;
-      state.bondExp += bonusExp;
-      updateBondUI();
+      addBondExp(isWed ? 40 : 20);
       saveState();
 
-      // Trigger Joint Special Event CG & Dialogues
       setTrainerMode('dual', 'inbody');
 
       const wedBonusNote = isWed ? " (수요일 보너스 EXP 2배!)" : "";
-      state.chatHistory.push({ sender: 'gemini', name: '제미니', text: `체중 ${state.weight}kg, 체지방 ${state.fat}% 확인 완료! 목표 52kg까지 끝까지 방심 금물이야!${wedBonusNote}` });
-      state.chatHistory.push({ sender: 'mio', name: '미오', text: `와아~ 프로듀서 매일매일 노력한 결실이 나오고 있어! 이 기세로 계속 함께 가자~ 💖✨` });
+      state.chatHistory.push({ sender: 'gemini', name: '제미니', text: `체중 ${state.weight}kg, 체지방 ${state.fat}% 반영 완료! 목표 52kg까지 끝까지 방심 금물이야!${wedBonusNote}` });
+      state.chatHistory.push({ sender: 'mio', name: '미오', text: `와아~ 프로듀서 꾸준히 기록 챙기는 모습 너무 멋있어! 이 기세로 계속 함께 가자~ 💖✨` });
       renderChat();
 
       closeOcrModal();
-      playBeep(900, 0.2);
+      playBeep(900, 0.18);
     }
 
-    // Fasting Clock
+    // 17:7 Fasting Clock
     function updateFastingClock() {
       const now = new Date();
       const currentSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
@@ -1273,40 +1546,35 @@
       const count = document.getElementById('fastingCountdown');
       const bar = document.getElementById('fastingProgressBar');
       const pctText = document.getElementById('fastingPctText');
+      if (!badge || !count) return;
 
       if (isEating) {
         badge.textContent = "식사 가능 (10~17시)";
-        badge.className = "text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+        badge.className = "text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30";
         label.textContent = "17:00 셧다운까지 남은 시간";
         let diff = closeSec - currentSeconds;
         let h = Math.floor(diff / 3600);
         let m = Math.floor((diff % 3600) / 60);
         let s = diff % 60;
         count.textContent = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-        count.className = "text-2xl font-black font-mono text-emerald-400 mt-0.5";
 
         let pct = Math.round(((currentSeconds - openSec) / (closeSec - openSec)) * 100);
         bar.style.width = `${pct}%`;
-        bar.className = "h-full rounded-full bg-emerald-400 transition-all duration-500";
         pctText.textContent = `${pct}%`;
-        pctText.className = "text-sm font-bold text-emerald-400 font-mono";
       } else {
         badge.textContent = "단식 셧다운 진행중";
-        badge.className = "text-[11px] font-bold px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-400 border border-rose-500/20";
+        badge.className = "text-[11px] font-bold px-2 py-0.5 rounded-md bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30";
         label.textContent = "익일 10:00 식사 오픈까지 남은 시간";
         let diff = (currentSeconds < openSec) ? (openSec - currentSeconds) : (24 * 3600 - currentSeconds + openSec);
         let h = Math.floor(diff / 3600);
         let m = Math.floor((diff % 3600) / 60);
         let s = diff % 60;
         count.textContent = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-        count.className = "text-2xl font-black font-mono text-rose-400 mt-0.5";
 
         let passed = (currentSeconds >= closeSec) ? (currentSeconds - closeSec) : (7 * 3600 + currentSeconds);
         let pct = Math.round((passed / (17 * 3600)) * 100);
         bar.style.width = `${pct}%`;
-        bar.className = "h-full rounded-full bg-rose-400 transition-all duration-500";
         pctText.textContent = `${pct}%`;
-        pctText.className = "text-sm font-bold text-rose-400 font-mono";
       }
     }
     setInterval(updateFastingClock, 1000);
@@ -1321,12 +1589,12 @@
       const deltaW = (w - 52.0).toFixed(1);
       const deltaElem = document.getElementById('weightDelta');
       deltaElem.textContent = w <= 52.0 ? "달성! 🎉" : `+${deltaW} kg`;
-      deltaElem.className = w <= 52.0 ? "font-bold text-emerald-400 font-mono" : "font-bold text-rose-400 font-mono";
+      deltaElem.className = w <= 52.0 ? "font-bold text-emerald-500 font-mono" : "font-bold text-rose-500 font-mono";
 
       const deltaF = (f - 20.0).toFixed(1);
       const deltaFatElem = document.getElementById('fatDelta');
       deltaFatElem.textContent = f <= 20.0 ? "달성! 🎉" : `+${deltaF} %`;
-      deltaFatElem.className = f <= 20.0 ? "font-bold text-emerald-400 font-mono" : "font-bold text-rose-400 font-mono";
+      deltaFatElem.className = f <= 20.0 ? "font-bold text-emerald-500 font-mono" : "font-bold text-rose-500 font-mono";
       saveState();
     }
 
@@ -1340,10 +1608,12 @@
       if (!prevRun && state.runDone) {
         setTrainerMode('mio', 'running');
         state.chatHistory.push({ sender: 'mio', name: '미오', text: `나이키런 ${state.runDist}km 완주 대박! 페이스 잘 조절했어 프로듀서~ 진짜 최고야! 🏃‍♀️✨` });
+        addBondExp(20);
         renderChat();
       } else if (!prevAbs && state.absDone) {
         setTrainerMode('gemini', 'workout');
         state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '14분 복근 루틴 완료! 코어 제대로 쪼이는 느낌 받았지? 내일도 똑같이 하는 거야!' });
+        addBondExp(20);
         renderChat();
       }
       playBeep(600);
@@ -1357,7 +1627,8 @@
       if (state.rehab[idx]) {
         setTrainerMode('gemini', 'workout');
         if (state.rehab.filter(Boolean).length === 3) {
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '2kg 덤벨 익센트릭 재활 3세트 완벽하게 끝냈네. 팔꿈치 건 절대 무리하지 말고 아이싱 잊지 마!' });
+          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '2kg 덤벨 익센트릭 재활 3세트 완벽 클리어! 팔꿈치 힘줄 무리하지 않게 스트레칭도 잊지 마!' });
+          addBondExp(15);
           renderChat();
         }
       }
@@ -1369,8 +1640,8 @@
       const btn = document.getElementById(`rehabBtn${num}`);
       if (!btn) return;
       btn.className = done 
-        ? "py-1.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/50"
-        : "py-1.5 rounded-lg text-xs font-bold bg-[#20273c] text-slate-300 border border-slate-700";
+        ? "py-1.5 rounded-lg text-xs font-extrabold bg-emerald-500 text-white shadow-sm"
+        : "py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700";
       btn.textContent = done ? `✓ ${num}세트` : `${num}세트`;
     }
 
@@ -1394,6 +1665,7 @@
       alert('디스코드 Webhook 저장 완료!');
     }
 
+    // Discord Webhook Dispatch (Uses dedicated face-centered square avatars!)
     async function dispatchDiscord() {
       if (!state.webhookUrl) {
         openWebhookModal();
@@ -1410,33 +1682,35 @@
         ? window.location.origin
         : 'https://githubprivate-mwmc.vercel.app';
 
-      const avatarUrl = `${baseUrl}/trainer_gemini.png`;
-      const thumbUrl = state.activeTrainer === 'mio' ? `${baseUrl}/trainer_mio.png` : `${baseUrl}/trainer_gemini.png`;
+      // Dedicated 256x256 square face avatars so Discord never crops out their faces!
+      const geminiAvatar = `${baseUrl}/avatar_gemini.png`;
+      const mioAvatar = `${baseUrl}/avatar_mio.png`;
+      const activeAvatar = state.activeTrainer === 'mio' ? mioAvatar : geminiAvatar;
 
       const payload = {
-        username: "제미니 & 미오 (Gemini Fit)",
-        avatar_url: avatarUrl,
+        username: "제미니 & 미오 (GeminiTalk)",
+        avatar_url: activeAvatar,
         embeds: [{
           author: {
-            name: "Gemini Fit IDOL COACH",
-            icon_url: avatarUrl
+            name: "SCHALE FIT · IDOL COACH BRIEFING",
+            icon_url: geminiAvatar
           },
-          title: "💌 [Gemini Fit] 더블 트레이너 데일리 브리핑 보고서",
-          description: `**제미니:** "17:7 단식이랑 운동 끝까지 해내는지 지켜보고 있어!"\n**미오:** "프로듀서 오늘 하루도 수고 많았어! 완전 짱이야~ 🌟"`,
-          color: 0x4d88ff,
+          title: "💌 [Gemini Fit] 트레이너 데일리 브리핑 리포트",
+          description: `**제미니:** "17:7 단식이랑 코어 루틴 끝까지 해내는지 지켜보고 있어!"\n**미오:** "프로듀서 오늘 하루도 수고 많았어! 완전 짱이야~ 🌟"`,
+          color: 0x4a89dc,
           thumbnail: {
-            url: thumbUrl
+            url: activeAvatar
           },
           fields: [
             { name: "⚖️ 체중 / 체지방", value: `• 체중: **${state.weight} kg**\n• 체지방률: **${state.fat} %**`, inline: true },
             { name: "⏱️ 17:7 단식", value: `• 아침: ${state.meals[0] ? '✅' : '❌'}\n• 점심: ${state.meals[1] ? '✅' : '❌'}\n• 저녁: ${state.meals[2] ? '✅' : '❌'}\n(사진 인증: **${photoCnt}끼** 첨부)`, inline: true },
-            { name: "🍵 홈카페 티 로그", value: `• 말차: **${state.teaLog.matcha}회**\n• 에스프레소: **${state.teaLog.espresso}회**\n• 허브티: **${state.teaLog.tea}회**`, inline: true },
-            { name: "🩹 엘보 재활", value: `• 2kg 덤벨 편심성: **${rehabCnt} / 3 세트**`, inline: false },
-            { name: "🔥 루틴", value: `• 복근 14분: ${state.absDone ? '✅' : '❌'}\n• 야외 러닝 (${state.runDist}km): ${state.runDone ? '✅' : '❌'}`, inline: false }
+            { name: "🍵 홈카페 티 로그", value: `• 말차: **${state.teaLog.matcha || 0}회**\n• 에스프레소: **${state.teaLog.espresso || 0}회**\n• 허브티: **${state.teaLog.tea || 0}회**`, inline: true },
+            { name: "🩹 엘보 재활", value: `• 2kg 덤벨 편심성 컬: **${rehabCnt} / 3 세트**`, inline: false },
+            { name: "🔥 루틴", value: `• 14분 복근: ${state.absDone ? '✅' : '❌'}\n• 야외 러닝 (${state.runDist}km): ${state.runDone ? '✅' : '❌'}`, inline: false }
           ],
           footer: {
-            text: `인연 랭크 Lv.${state.bondRank} ❤️ | Gemini Fit Dashboard`,
-            icon_url: `${baseUrl}/trainer_mio.png`
+            text: `인연 랭크 Lv.${state.bondRank} (${state.bondExp}%) ❤️ | GeminiTalk Dashboard`,
+            icon_url: mioAvatar
           },
           timestamp: new Date().toISOString()
         }]
@@ -1448,13 +1722,13 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        if (res.ok) alert('🚀 디스코드 채널로 더블 트레이너 브리핑이 성공적으로 전송되었습니다!');
+        if (res.ok) alert('🚀 디스코드 채널로 브리핑이 성공적으로 전송되었습니다!');
         else throw new Error(`응답 코드: ${res.status}`);
       } catch (e) {
         alert(`전송 실패: ${e.message}`);
       } finally {
         btn.disabled = false;
-        btn.textContent = "🚀 디스코드에 더블 코치 브리핑 전송하기";
+        btn.textContent = "🚀 디스코드에 트레이너 일일 브리핑 전송하기";
       }
     }
 
