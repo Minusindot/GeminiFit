@@ -1,5 +1,6 @@
 {
-  "updatedAt": "2026-10-20T09:00:00Z",
+  "updatedAt": "2026-10-20T10:36:25.599Z",
+  "theme": "light",
   "weight": 53.8,
   "fat": 21.5,
   "bondRank": 1,
@@ -9,7 +10,7 @@
   "currentSituation": "ev1",
   "absDone": false,
   "runDone": false,
-  "runDist": 5.0,
+  "runDist": 5,
   "rehab": [
     false,
     false,
@@ -24,5 +25,47 @@
     "matcha": 0,
     "espresso": 0,
     "tea": 0
-  }
+  },
+  "chatHistory": [
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "프로듀서! 오늘 17:7 단식 잘 지키고 있지? 딴생각 말고 나만 딱 믿고 따라오라고!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "아하하, 제미니 짱 잔소리 시작이네~ 프로듀서! 오늘도 우리랑 같이 파이팅이야! 🌟"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "말차랑 허브티 마시면서 단식 끝까지 버텨봐!"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "아야! 어딜 만지는 거야, 바보야! 💢"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "아야! 어딜 만지는 거야, 바보야! 💢"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "운동 안 하고 딴짓하면 진짜 주거주거! 😈"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "와앗! 간지러워 프로듀서~ ㅋㅋㅋ"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "나이키런 켜고 출발할 준비 됐어? 하이파이브! 🖐️"
+    }
+  ]
 }
