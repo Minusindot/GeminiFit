@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Gemini Fit - Daily Training & Fasting</title>
+  <title>Gemini Fit - MomoTalk & Health</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
-  <!-- Tesseract OCR for On-device InBody / Samsung Health Screenshot Scanning -->
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
   <script>
     tailwind.config = {
@@ -18,18 +17,15 @@
             mono: ['JetBrains Mono', 'monospace']
           },
           colors: {
-            app: {
-              bg: '#0c0e14',
-              surface: '#151822',
-              card: '#1c202e',
-              border: '#282e42',
-              text: '#f3f4f8',
-              muted: '#949bb2',
-              subtle: '#626880',
-              accent: '#38bdf8',
-              coral: '#fb7185',
-              mint: '#34d399',
-              amber: '#fbbf24'
+            momo: {
+              header: '#4a7298',
+              bg: '#141824',
+              card: '#1d2334',
+              border: '#2a344d',
+              userMsg: '#4d88ff',
+              trainerMsg: '#242b3e',
+              accent: '#ff6699',
+              gold: '#f6ad55'
             }
           }
         }
@@ -38,399 +34,373 @@
   </script>
   <style>
     body {
-      background-color: #0c0e14;
-      color: #f3f4f8;
+      background-color: #0f121c;
+      color: #f1f4fb;
       font-family: 'Pretendard', -apple-system, sans-serif;
       -webkit-tap-highlight-color: transparent;
       padding-bottom: env(safe-area-inset-bottom, 24px);
     }
 
     .app-card {
-      background: #151822;
-      border: 1px solid #232838;
+      background: #171c2b;
+      border: 1px solid #262e45;
       border-radius: 1.25rem;
-      transition: border-color 0.2s ease;
+    }
+
+    /* MomoTalk Choice Option Button */
+    .momo-choice-btn {
+      width: 100%;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-radius: 0.875rem;
+      background: #20273c;
+      border: 1.5px solid #2f3b59;
+      color: #e2e8f0;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .momo-choice-btn:hover, .momo-choice-btn:active {
+      border-color: #4d88ff;
+      background: #27304a;
+      transform: translateY(-1px);
     }
 
     .routine-check {
       appearance: none;
-      width: 1.4rem;
-      height: 1.4rem;
+      width: 1.35rem;
+      height: 1.35rem;
       border-radius: 0.5rem;
-      border: 2px solid #373f5a;
-      background-color: #1c202e;
+      border: 2px solid #3b4766;
+      background-color: #1a2030;
       cursor: pointer;
       display: grid;
       place-content: center;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.2s ease;
     }
     .routine-check:checked {
-      background-color: #38bdf8;
-      border-color: #38bdf8;
+      background-color: #4d88ff;
+      border-color: #4d88ff;
     }
     .routine-check:checked::before {
       content: "";
       width: 0.55rem;
       height: 0.35rem;
-      border-left: 2.2px solid #0c0e14;
-      border-bottom: 2.2px solid #0c0e14;
+      border-left: 2px solid white;
+      border-bottom: 2px solid white;
       transform: rotate(-45deg) translate(1px, -1px);
     }
 
-    .tab-btn.active {
-      background-color: #1c202e;
-      color: #38bdf8;
+    .nav-tab.active {
+      background: #4d88ff;
+      color: white;
       font-weight: 700;
-      border-color: #2b3248;
+      box-shadow: 0 4px 12px rgba(77, 136, 255, 0.3);
     }
   </style>
 </head>
-<body class="min-h-screen selection:bg-sky-500 selection:text-white">
+<body class="min-h-screen selection:bg-blue-500 selection:text-white">
 
-  <!-- Mobile Container (Max width 480px) -->
-  <div class="max-w-md mx-auto min-h-screen flex flex-col justify-between p-4 sm:p-5 relative pb-28">
+  <!-- Mobile Container (Max width 460px) -->
+  <div class="max-w-md mx-auto min-h-screen flex flex-col justify-between p-3.5 sm:p-4 pb-28 relative">
 
-    <!-- 1. Header (App Title & Tools) -->
+    <!-- 1. Header (MomoTalk Style Bar) -->
     <header class="flex items-center justify-between pt-1 pb-3">
-      <div class="flex items-center gap-2">
-        <h1 class="text-lg font-black tracking-tight text-white flex items-center gap-1.5">
-          <span>GEMINI</span><span class="text-sky-400">FIT</span>
-        </h1>
-        <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20">SSR COACH</span>
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-white text-base font-black shadow-sm">
+          💬
+        </div>
+        <div>
+          <h1 class="text-sm font-black text-white flex items-center gap-1.5">
+            <span>MomoTalk</span>
+            <span class="text-[10px] text-sky-400 font-bold bg-sky-500/10 px-1.5 py-0.2 rounded border border-sky-500/20">FIT</span>
+          </h1>
+          <p class="text-[11px] text-slate-400">제미니 코치와의 대화</p>
+        </div>
       </div>
 
       <div class="flex items-center gap-2">
-        <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-app-surface border border-sky-500/40 text-sky-400 text-xs font-bold flex items-center gap-1.5 cursor-pointer hover:bg-sky-500/10 transition-colors shadow-sm" title="삼성헬스/인바디 캡처 스캔">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          <span>캡처 스캔</span>
+        <!-- InBody OCR Scan Button -->
+        <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-app-card border border-sky-500/30 text-sky-400 text-xs font-bold flex items-center gap-1 cursor-pointer hover:bg-sky-500/10">
+          <span>📷 인바디 스캔</span>
         </label>
         <input type="file" id="inbodyOcrInput" accept="image/*" class="hidden" onchange="handleInbodyScan(event)">
 
-        <button onclick="openWebhookModal()" class="p-2 rounded-xl bg-app-surface border border-app-border text-app-muted hover:text-white transition-colors" title="디스코드 설정">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <button onclick="openWebhookModal()" class="p-2 rounded-xl bg-app-card border border-slate-700 text-slate-300 hover:text-white" title="디스코드 설정">
+          ⚙️
         </button>
       </div>
     </header>
 
-    <!-- 2. Large Idol Trainer Visual Stage Card (학마스 / 데레마스 홈 화면 감성) -->
-    <section class="app-card relative overflow-hidden mb-4 bg-gradient-to-b from-[#1b202d] via-[#151822] to-[#12141c] border-sky-500/20 shadow-md">
-      <!-- Background Glow Effect -->
-      <div class="absolute -top-12 -right-12 w-48 h-48 bg-sky-500/10 rounded-full blur-2xl pointer-events-none"></div>
-      
-      <div class="flex items-end justify-between p-4 pt-3 relative z-10">
-        <!-- Speech & Info Box -->
-        <div class="flex-1 pr-3 z-10">
-          <div class="flex items-center gap-1.5 mb-1.5">
-            <span class="text-[11px] font-bold text-sky-400 bg-sky-500/15 px-2 py-0.5 rounded-full border border-sky-500/30">
-              COACH GEMINI
-            </span>
-            <span class="text-[10px] text-app-subtle font-mono">17:7 SPECIALIST</span>
-          </div>
-          
-          <div class="p-3 rounded-2xl bg-black/40 backdrop-blur-md border border-white/5 shadow-inner">
-            <p id="trainerDialogue" class="text-xs sm:text-sm font-semibold text-slate-100 leading-snug">
-              "허~접 프로듀서! 오늘 17:7 단식 제대로 지킬 거지? 딴생각 말고 나만 딱 믿고 따라와!"
-            </p>
-          </div>
+    <!-- 2. Interactive Navigation Tabs (MomoTalk / Today's Routine / Fasting & Health) -->
+    <div class="flex rounded-2xl bg-[#141926] p-1 border border-[#232b3f] mb-3 text-xs font-semibold">
+      <button onclick="switchMainTab('talk')" id="tabTalkBtn" class="nav-tab active flex-1 py-2 rounded-xl text-center transition-all">
+        💬 제미니톡 (미연시)
+      </button>
+      <button onclick="switchMainTab('health')" id="tabHealthBtn" class="nav-tab flex-1 py-2 rounded-xl text-center text-slate-400 transition-all">
+        📊 루틴 & 식단 관리
+      </button>
+    </div>
 
-          <div class="flex items-center gap-2 mt-2">
-            <button onclick="triggerTrainerPoke()" class="text-[11px] font-bold text-sky-300 hover:text-white flex items-center gap-1 py-1 px-2 rounded-lg bg-sky-500/10 border border-sky-500/20 active:scale-95 transition-all">
-              <span>대화하기 💢</span>
-            </button>
-            <span id="trainerMoodBadge" class="text-[10px] text-app-subtle font-mono">상태: 평상시</span>
+    <!-- ========================================================
+         VIEW A: MomoTalk Interactive Visual Novel Chat
+         ======================================================== -->
+    <div id="viewTalk" class="space-y-3">
+      <!-- Affection / Bond Rank Card (인연 랭크) -->
+      <div class="app-card p-3.5 bg-gradient-to-r from-[#1c2438] to-[#1a1f30] flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full overflow-hidden ring-2 ring-pink-400/40 bg-black shrink-0 relative cursor-pointer" onclick="pokeTrainer()">
+            <img id="talkProfileImg" src="./trainer_gemini.png" alt="Gemini" class="w-full h-full object-cover object-top" onerror="this.src='./trainer_gemini.png'">
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-xs font-black text-white">제미니 코치</span>
+              <span id="bondRankBadge" class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-pink-500/20 text-pink-300 border border-pink-500/30">인연 Lv.1 ❤️</span>
+            </div>
+            <div class="text-[11px] text-slate-400 mt-0.5" id="trainerMoodText">"허~접 프로듀서, 오늘 식단 제대로 지켜!"</div>
           </div>
         </div>
 
-        <!-- Large Character Illustration (220px tall) -->
-        <div class="w-36 sm:w-44 h-56 relative shrink-0 -mb-4 -mr-2 cursor-pointer group" onclick="triggerTrainerPoke()" title="제미니 터치하기">
-          <img id="trainerImg" src="./trainer_gemini.png" alt="Coach Gemini" class="w-full h-full object-cover object-top filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)] group-hover:scale-105 transition-transform duration-300">
+        <div class="text-right">
+          <div class="text-[10px] text-slate-400 font-mono">BOND EXP</div>
+          <div class="w-16 bg-black/40 rounded-full h-1.5 mt-1 border border-white/10">
+            <div id="bondExpBar" class="h-full rounded-full bg-pink-400 transition-all duration-500" style="width: 75%;"></div>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- 3. Key Metrics: 17:7 Fasting Card & Weight Tracker -->
-    <section class="space-y-3 mb-4">
-      <!-- 17:7 Fasting Card -->
-      <div class="app-card p-4">
-        <div class="flex items-center justify-between pb-2 border-b border-app-border/60">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
-            <span class="text-xs font-bold text-slate-200">17:7 간헐적 단식 모니터</span>
+      <!-- MomoTalk Messenger Log Screen (블루아카 모모톡 감성) -->
+      <div class="app-card p-3.5 min-h-[300px] max-h-[360px] overflow-y-auto space-y-3.5 bg-[#121622] border-[#22293d]" id="chatContainer">
+        <!-- Message items dynamically populated -->
+        <div class="flex items-start gap-2.5">
+          <div class="w-8 h-8 rounded-full overflow-hidden ring-1 ring-sky-400/30 bg-black shrink-0">
+            <img src="./trainer_gemini.png" class="w-full h-full object-cover object-top">
           </div>
-          <span id="fastingBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-app-card text-sky-400 border border-app-border">
+          <div class="max-w-[75%] space-y-1">
+            <div class="text-[11px] font-bold text-slate-400">제미니</div>
+            <div class="p-2.5 rounded-2xl rounded-tl-sm bg-[#1e2538] text-slate-100 text-xs leading-relaxed border border-[#2b354e]">
+              프로듀서! 오늘 17:7 단식 잘 지키고 있지? 딴생각 말고 나만 딱 믿고 따라오라고!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MomoTalk Response Choice Box (미연시 선택지 UI: | 답장하기) -->
+      <div class="app-card p-3 bg-[#151b2a] border-sky-500/30 space-y-2">
+        <div class="text-[11px] font-bold text-sky-400 flex items-center gap-1">
+          <span>| 답장하기</span>
+          <span class="text-[10px] text-slate-500 font-normal">(선택지를 터치해 대화하세요)</span>
+        </div>
+
+        <div id="choicesContainer" class="space-y-1.5">
+          <button onclick="chooseOption(1)" class="momo-choice-btn">
+            <span>1. 닭가슴살이랑 쉐이크로 단백질 든든하게 채웠어!</span>
+            <span class="text-xs text-sky-400">➔</span>
+          </button>
+          <button onclick="chooseOption(2)" class="momo-choice-btn">
+            <span>2. 사실... 라면 끓여먹으려다 제미니 생각나서 참았어.</span>
+            <span class="text-xs text-sky-400">➔</span>
+          </button>
+          <button onclick="chooseOption(3)" class="momo-choice-btn">
+            <span>3. 제미니한테 혼나는 게 좋아서 일부러 굶는 중인데?</span>
+            <span class="text-xs text-pink-400">➔</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================
+         VIEW B: Health & Routine Management (Fasting, Routine, Diet)
+         ======================================================== -->
+    <div id="viewHealth" class="space-y-3 hidden">
+      <!-- 17:7 Fasting Monitor Card -->
+      <div class="app-card p-3.5">
+        <div class="flex items-center justify-between pb-2 border-b border-[#262e45]">
+          <span class="text-xs font-bold text-slate-200">17:7 간헐적 단식 모니터</span>
+          <span id="fastingBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
             식사 가능 (10~17시)
           </span>
         </div>
 
-        <div class="pt-3 pb-1 flex items-baseline justify-between">
+        <div class="pt-2.5 pb-1 flex items-baseline justify-between">
           <div>
-            <div id="fastingTimerLabel" class="text-[11px] text-app-subtle">17:00 셧다운까지 남은 시간</div>
+            <div id="fastingTimerLabel" class="text-[11px] text-slate-400">17:00 셧다운까지 남은 시간</div>
             <div id="fastingCountdown" class="text-2xl font-black font-mono text-white mt-0.5">--:--:--</div>
           </div>
           <div class="text-right">
-            <div class="text-[11px] text-app-subtle">단식 진행률</div>
-            <div id="fastingPctText" class="text-sm font-bold text-sky-400 font-mono mt-0.5">65%</div>
+            <div class="text-[11px] text-slate-400">진척도</div>
+            <div id="fastingPctText" class="text-sm font-bold text-sky-400 font-mono">65%</div>
           </div>
         </div>
 
-        <div class="w-full bg-[#11131a] rounded-full h-2 mt-2 overflow-hidden border border-app-border/40">
+        <div class="w-full bg-black/40 rounded-full h-2 mt-2 overflow-hidden border border-[#2a344d]">
           <div id="fastingProgressBar" class="h-full rounded-full bg-sky-400 transition-all duration-500" style="width: 65%;"></div>
         </div>
       </div>
 
-      <!-- Weight & Body Fat Dual Stepper Card -->
-      <div class="grid grid-cols-2 gap-3">
-        <!-- Current Weight -->
-        <div class="app-card p-3.5 flex flex-col justify-between">
-          <div class="flex items-center justify-between text-xs text-app-muted">
-            <span class="font-medium">현재 체중</span>
-            <span class="text-[10px] text-sky-400 font-bold bg-sky-500/10 px-1.5 py-0.5 rounded">목표 52kg</span>
+      <!-- Weight & Body Fat Dual Card -->
+      <div class="grid grid-cols-2 gap-2.5">
+        <div class="app-card p-3">
+          <div class="flex justify-between text-xs text-slate-400">
+            <span>현재 체중</span>
+            <span class="text-[10px] text-sky-400 font-bold bg-sky-500/10 px-1 rounded">목표 52kg</span>
           </div>
-          <div class="my-2 flex items-baseline justify-between">
-            <input type="number" step="0.1" id="currentWeightInput" value="53.8" onchange="updateMetrics()" class="w-20 text-2xl font-black text-white bg-transparent focus:outline-none font-mono">
-            <span class="text-xs text-app-subtle font-bold">kg</span>
+          <div class="my-1.5 flex items-baseline justify-between">
+            <input type="number" step="0.1" id="currentWeightInput" value="53.8" onchange="updateMetrics()" class="w-18 text-xl font-black text-white bg-transparent focus:outline-none font-mono">
+            <span class="text-xs text-slate-400 font-bold">kg</span>
           </div>
-          <div class="flex items-center justify-between text-[11px] pt-2 border-t border-app-border/50">
-            <span class="text-app-subtle">남은 감량</span>
+          <div class="text-[11px] pt-1.5 border-t border-[#262e45] flex justify-between">
+            <span class="text-slate-500">남은 감량</span>
             <span id="weightDelta" class="font-bold text-rose-400 font-mono">+1.8 kg</span>
           </div>
         </div>
 
-        <!-- Current Body Fat % -->
-        <div class="app-card p-3.5 flex flex-col justify-between">
-          <div class="flex items-center justify-between text-xs text-app-muted">
-            <span class="font-medium">체지방률</span>
-            <span class="text-[10px] text-rose-400 font-bold bg-rose-500/10 px-1.5 py-0.5 rounded">목표 &lt;20%</span>
+        <div class="app-card p-3">
+          <div class="flex justify-between text-xs text-slate-400">
+            <span>체지방률</span>
+            <span class="text-[10px] text-pink-400 font-bold bg-pink-500/10 px-1 rounded">목표 &lt;20%</span>
           </div>
-          <div class="my-2 flex items-baseline justify-between">
-            <input type="number" step="0.1" id="currentFatInput" value="21.5" onchange="updateMetrics()" class="w-20 text-2xl font-black text-white bg-transparent focus:outline-none font-mono">
-            <span class="text-xs text-app-subtle font-bold">%</span>
+          <div class="my-1.5 flex items-baseline justify-between">
+            <input type="number" step="0.1" id="currentFatInput" value="21.5" onchange="updateMetrics()" class="w-18 text-xl font-black text-white bg-transparent focus:outline-none font-mono">
+            <span class="text-xs text-slate-400 font-bold">%</span>
           </div>
-          <div class="flex items-center justify-between text-[11px] pt-2 border-t border-app-border/50">
-            <span class="text-app-subtle">슬림핏까지</span>
+          <div class="text-[11px] pt-1.5 border-t border-[#262e45] flex justify-between">
+            <span class="text-slate-500">목표까지</span>
             <span id="fatDelta" class="font-bold text-rose-400 font-mono">+1.5 %</span>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- 4. Section Navigation Tabs -->
-    <div class="flex rounded-xl bg-app-surface p-1 border border-app-border mb-4 text-xs font-semibold">
-      <button onclick="switchTab('diet')" id="tabDietBtn" class="tab-btn active flex-1 py-2 rounded-lg text-center transition-all text-slate-300">
-        📸 식단 사진 & 단식
-      </button>
-      <button onclick="switchTab('routine')" id="tabRoutineBtn" class="tab-btn flex-1 py-2 rounded-lg text-center transition-all text-slate-400">
-        루틴 (NRC/복근)
-      </button>
-      <button onclick="switchTab('rehab')" id="tabRehabBtn" class="tab-btn flex-1 py-2 rounded-lg text-center transition-all text-slate-400">
-        엘보 재활
-      </button>
-    </div>
+      <!-- 17:7 Meal Photo Cards -->
+      <div class="space-y-2">
+        <div class="text-xs font-bold text-slate-300 flex items-center justify-between">
+          <span>🍱 오늘 식단 사진 인증</span>
+          <span class="text-[11px] text-sky-400">촬영 시 제미니톡 자동 공유</span>
+        </div>
 
-    <!-- 5-A. Tab Content: 17:7 Diet Meals & Meal Photo Upload -->
-    <div id="tabDietContent" class="space-y-3">
-      <!-- 10:00 Breakfast -->
-      <div class="app-card p-3.5 space-y-2.5">
-        <div class="flex items-center justify-between">
-          <label class="flex items-center gap-3 cursor-pointer">
-            <input type="checkbox" id="chkMeal1" onchange="handleMeal('아침')" class="routine-check">
-            <div>
-              <div class="text-xs font-bold text-sky-400">10:00 아침 (단백질 30g+)</div>
-              <div class="text-xs text-slate-300 mt-0.5">단백질 쉐이크 + 고단백 두유</div>
-            </div>
-          </label>
-          <label for="photoMeal1" class="px-2.5 py-1 rounded-lg bg-app-card border border-app-border text-[11px] font-bold text-slate-300 flex items-center gap-1 cursor-pointer hover:border-sky-400">
-            <span>📷 사진</span>
-          </label>
-          <input type="file" id="photoMeal1" accept="image/*" capture="environment" class="hidden" onchange="handleMealPhoto(event, 1)">
-        </div>
-        <!-- Photo Preview Area -->
-        <div id="previewMeal1" class="hidden relative rounded-xl overflow-hidden max-h-36 bg-black border border-app-border">
-          <img id="imgMeal1" class="w-full h-36 object-cover" src="">
-          <span class="absolute bottom-1 right-2 text-[10px] bg-black/60 px-1.5 py-0.5 rounded text-white font-mono">10:00 식단</span>
-        </div>
-      </div>
-
-      <!-- 14:00 Lunch -->
-      <div class="app-card p-3.5 space-y-2.5">
-        <div class="flex items-center justify-between">
-          <label class="flex items-center gap-3 cursor-pointer">
-            <input type="checkbox" id="chkMeal2" onchange="handleMeal('점심')" class="routine-check">
-            <div>
-              <div class="text-xs font-bold text-sky-400">14:00 점심 (클린 식단)</div>
-              <div class="text-xs text-slate-300 mt-0.5">삶은 달걀 2개 + 통오이/방울토마토</div>
-            </div>
-          </label>
-          <label for="photoMeal2" class="px-2.5 py-1 rounded-lg bg-app-card border border-app-border text-[11px] font-bold text-slate-300 flex items-center gap-1 cursor-pointer hover:border-sky-400">
-            <span>📷 사진</span>
-          </label>
-          <input type="file" id="photoMeal2" accept="image/*" capture="environment" class="hidden" onchange="handleMealPhoto(event, 2)">
-        </div>
-        <div id="previewMeal2" class="hidden relative rounded-xl overflow-hidden max-h-36 bg-black border border-app-border">
-          <img id="imgMeal2" class="w-full h-36 object-cover" src="">
-          <span class="absolute bottom-1 right-2 text-[10px] bg-black/60 px-1.5 py-0.5 rounded text-white font-mono">14:00 식단</span>
-        </div>
-      </div>
-
-      <!-- 17:00 Dinner -->
-      <div class="app-card p-3.5 space-y-2.5">
-        <div class="flex items-center justify-between">
-          <label class="flex items-center gap-3 cursor-pointer">
-            <input type="checkbox" id="chkMeal3" onchange="handleMeal('저녁')" class="routine-check">
-            <div>
-              <div class="text-xs font-bold text-rose-400">17:00 저녁 (칼마감 셧다운)</div>
-              <div class="text-xs text-slate-300 mt-0.5">현미밥 + 닭가슴살/두부 + 채소</div>
-            </div>
-          </label>
-          <label for="photoMeal3" class="px-2.5 py-1 rounded-lg bg-app-card border border-app-border text-[11px] font-bold text-slate-300 flex items-center gap-1 cursor-pointer hover:border-rose-400">
-            <span>📷 사진</span>
-          </label>
-          <input type="file" id="photoMeal3" accept="image/*" capture="environment" class="hidden" onchange="handleMealPhoto(event, 3)">
-        </div>
-        <div id="previewMeal3" class="hidden relative rounded-xl overflow-hidden max-h-36 bg-black border border-app-border">
-          <img id="imgMeal3" class="w-full h-36 object-cover" src="">
-          <span class="absolute bottom-1 right-2 text-[10px] bg-black/60 px-1.5 py-0.5 rounded text-white font-mono">17:00 식단</span>
-        </div>
-      </div>
-
-      <!-- 17시 이후 야식 경보 테스트 -->
-      <div class="pt-1">
-        <button onclick="triggerLateNightAlert()" class="w-full py-2 text-xs font-semibold text-rose-400 bg-rose-500/10 border border-rose-500/20 rounded-xl hover:bg-rose-500/20 transition-all">
-          🚨 17시 이후 식사/야식 위반 경보 테스트
-        </button>
-      </div>
-    </div>
-
-    <!-- 5-B. Tab Content: Main Workouts Routine (NRC & Abs) -->
-    <div id="tabRoutineContent" class="space-y-3 hidden">
-      <!-- 14min Idol Abs -->
-      <label class="app-card p-3.5 flex items-center justify-between cursor-pointer group">
-        <div class="flex items-center gap-3">
-          <input type="checkbox" id="chkAbs" onchange="updateRoutine()" class="routine-check">
-          <div>
-            <div class="text-sm font-bold text-white group-hover:text-sky-300 transition-colors">14분 아이돌 복근 루틴</div>
-            <div class="text-xs text-app-subtle mt-0.5">크런치 • 레그레이즈 • 플랭크 대체</div>
+        <!-- Breakfast -->
+        <div class="app-card p-3 space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="checkbox" id="chkMeal1" onchange="handleMeal(1)" class="routine-check">
+              <div>
+                <div class="text-xs font-bold text-sky-300">10:00 아침 (단백질 30g+)</div>
+                <div class="text-[11px] text-slate-400">단백질 쉐이크 + 고단백 두유</div>
+              </div>
+            </label>
+            <label for="photo1" class="px-2 py-1 rounded-lg bg-[#20273c] border border-slate-700 text-[11px] font-bold text-slate-200 cursor-pointer hover:border-sky-400">
+              📷 사진
+            </label>
+            <input type="file" id="photo1" accept="image/*" capture="environment" class="hidden" onchange="uploadMealPhoto(event, 1)">
+          </div>
+          <div id="prevBox1" class="hidden relative rounded-xl overflow-hidden max-h-28 bg-black">
+            <img id="prevImg1" class="w-full h-28 object-cover">
           </div>
         </div>
-        <span class="text-xs font-mono text-app-muted px-2 py-0.5 rounded bg-app-card">14 MIN</span>
-      </label>
 
-      <!-- Outdoor Running (NRC Sync) -->
-      <div class="app-card p-3.5">
-        <div class="flex items-center justify-between">
-          <label class="flex items-center gap-3 cursor-pointer">
-            <input type="checkbox" id="chkRun" onchange="updateRoutine()" class="routine-check">
-            <div>
-              <div class="text-sm font-bold text-white flex items-center gap-1.5">
-                <span>야외 러닝 (나이키런)</span>
-                <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded">NRC 연동</span>
+        <!-- Lunch -->
+        <div class="app-card p-3 space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="checkbox" id="chkMeal2" onchange="handleMeal(2)" class="routine-check">
+              <div>
+                <div class="text-xs font-bold text-sky-300">14:00 점심 (클린 식단)</div>
+                <div class="text-[11px] text-slate-400">삶은 달걀 2개 + 통오이/방울토마토</div>
               </div>
-              <div class="text-xs text-app-subtle mt-0.5">손아귀 힘 100% 빼고 가볍게 페이스 조절</div>
-            </div>
+            </label>
+            <label for="photo2" class="px-2 py-1 rounded-lg bg-[#20273c] border border-slate-700 text-[11px] font-bold text-slate-200 cursor-pointer hover:border-sky-400">
+              📷 사진
+            </label>
+            <input type="file" id="photo2" accept="image/*" capture="environment" class="hidden" onchange="uploadMealPhoto(event, 2)">
+          </div>
+          <div id="prevBox2" class="hidden relative rounded-xl overflow-hidden max-h-28 bg-black">
+            <img id="prevImg2" class="w-full h-28 object-cover">
+          </div>
+        </div>
+
+        <!-- Dinner -->
+        <div class="app-card p-3 space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="checkbox" id="chkMeal3" onchange="handleMeal(3)" class="routine-check">
+              <div>
+                <div class="text-xs font-bold text-rose-400">17:00 저녁 (칼마감 셧다운)</div>
+                <div class="text-[11px] text-slate-400">현미밥 + 닭가슴살/두부 + 채소</div>
+              </div>
+            </label>
+            <label for="photo3" class="px-2 py-1 rounded-lg bg-[#20273c] border border-slate-700 text-[11px] font-bold text-slate-200 cursor-pointer hover:border-rose-400">
+              📷 사진
+            </label>
+            <input type="file" id="photo3" accept="image/*" capture="environment" class="hidden" onchange="uploadMealPhoto(event, 3)">
+          </div>
+          <div id="prevBox3" class="hidden relative rounded-xl overflow-hidden max-h-28 bg-black">
+            <img id="prevImg3" class="w-full h-28 object-cover">
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Workout & Elbow Rehab -->
+      <div class="app-card p-3.5 space-y-2.5">
+        <div class="text-xs font-bold text-slate-200">🏃 메인 루틴 & 재활</div>
+        
+        <label class="flex items-center justify-between cursor-pointer">
+          <div class="flex items-center gap-2.5">
+            <input type="checkbox" id="chkAbs" onchange="updateRoutine()" class="routine-check">
+            <span class="text-xs text-white">14분 아이돌 복근 루틴</span>
+          </div>
+          <span class="text-[11px] font-mono text-slate-400">14 MIN</span>
+        </label>
+
+        <div class="flex items-center justify-between pt-1 border-t border-[#262e45]">
+          <label class="flex items-center gap-2.5 cursor-pointer">
+            <input type="checkbox" id="chkRun" onchange="updateRoutine()" class="routine-check">
+            <span class="text-xs text-white">야외 러닝 (나이키런)</span>
           </label>
           <div class="flex items-center gap-1">
-            <input type="number" step="0.1" id="runDistInput" value="5.0" onchange="updateRoutine()" class="w-12 bg-app-card text-center text-xs font-mono text-sky-400 rounded py-1 border border-app-border focus:outline-none">
-            <span class="text-xs text-app-subtle font-mono">km</span>
+            <input type="number" step="0.1" id="runDistInput" value="5.0" onchange="updateRoutine()" class="w-12 bg-[#20273c] text-center text-xs font-mono text-sky-400 rounded py-0.5 border border-slate-700">
+            <span class="text-xs text-slate-400 font-mono">km</span>
           </div>
         </div>
-      </div>
 
-      <!-- Gym Leg Machines -->
-      <label class="app-card p-3.5 flex items-center justify-between cursor-pointer group">
-        <div class="flex items-center gap-3">
-          <input type="checkbox" id="chkLegs" onchange="updateRoutine()" class="routine-check">
-          <div>
-            <div class="text-sm font-bold text-white group-hover:text-sky-300 transition-colors">헬스장 하체 머신</div>
-            <div class="text-xs text-app-subtle mt-0.5">레그 익스텐션 & 컬 (손잡이 악력 0% 유지)</div>
+        <!-- 2kg Dumbbell Elbow Rehab -->
+        <div class="pt-2 border-t border-[#262e45]">
+          <div class="flex justify-between items-center mb-1.5">
+            <span class="text-xs font-bold text-emerald-400">[필수] 2kg 덤벨 편심성 운동</span>
+            <span class="text-[10px] text-slate-400">3세트</span>
+          </div>
+          <div class="grid grid-cols-3 gap-1.5">
+            <button onclick="toggleRehab(1)" id="rehabBtn1" class="py-1.5 rounded-lg text-xs font-bold bg-[#20273c] text-slate-300 border border-slate-700">1세트</button>
+            <button onclick="toggleRehab(2)" id="rehabBtn2" class="py-1.5 rounded-lg text-xs font-bold bg-[#20273c] text-slate-300 border border-slate-700">2세트</button>
+            <button onclick="toggleRehab(3)" id="rehabBtn3" class="py-1.5 rounded-lg text-xs font-bold bg-[#20273c] text-slate-300 border border-slate-700">3세트</button>
           </div>
         </div>
-        <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">악력0%</span>
-      </label>
-    </div>
-
-    <!-- 5-C. Tab Content: Elbow Rehab & Safety Lock -->
-    <div id="tabRehabContent" class="space-y-3 hidden">
-      <div class="app-card p-4 border-emerald-500/30">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-xs font-bold text-emerald-400">[필수 재활] 2kg 덤벨 편심성 운동</span>
-          <span class="text-[10px] font-mono text-app-subtle">10회 x 3세트</span>
-        </div>
-        <p class="text-xs text-slate-300 leading-relaxed mb-3">
-          팔꿈치를 무릎/테이블에 완벽 지지하고, 손목을 천천히 내리며 편심성 신전 자극 전달!
-        </p>
-        <div class="grid grid-cols-3 gap-2">
-          <button onclick="toggleRehab(1)" id="rehabBtn1" class="py-2.5 rounded-xl text-xs font-bold bg-app-card border border-app-border text-app-muted hover:border-emerald-500/50 transition-all">
-            1세트
-          </button>
-          <button onclick="toggleRehab(2)" id="rehabBtn2" class="py-2.5 rounded-xl text-xs font-bold bg-app-card border border-app-border text-app-muted hover:border-emerald-500/50 transition-all">
-            2세트
-          </button>
-          <button onclick="toggleRehab(3)" id="rehabBtn3" class="py-2.5 rounded-xl text-xs font-bold bg-app-card border border-app-border text-app-muted hover:border-emerald-500/50 transition-all">
-            3세트
-          </button>
-        </div>
-      </div>
-
-      <!-- Forbidden Exercises Warning -->
-      <div class="app-card p-3.5 border-rose-500/30 bg-rose-500/5 flex items-center justify-between">
-        <div>
-          <div class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
-            <span>🚫</span> 절대 금지: 랫풀다운 / 당기기 운동
-          </div>
-          <div class="text-[11px] text-app-subtle mt-0.5">상과염 악화 방지를 위해 상체 당기기 완전 차단</div>
-        </div>
-        <button onclick="triggerForbiddenAlert('랫풀다운')" class="text-xs font-bold text-rose-300 px-2.5 py-1 rounded-lg bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20">
-          테스트
-        </button>
       </div>
     </div>
 
-    <!-- 6. Bottom Sticky Action Bar -->
-    <div class="fixed bottom-0 left-0 right-0 p-4 bg-[#0c0e14]/90 backdrop-blur-md border-t border-app-border/60 z-30">
+    <!-- 3. Bottom Sticky Action Bar (디스코드 전송) -->
+    <div class="fixed bottom-0 left-0 right-0 p-3 bg-[#0f121c]/90 backdrop-blur-md border-t border-[#242c42] z-30">
       <div class="max-w-md mx-auto">
-        <button onclick="dispatchDiscord()" id="btnDispatch" class="w-full py-3.5 rounded-2xl bg-sky-500 hover:bg-sky-400 active:scale-[0.99] text-slate-950 font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-          <span>디스코드에 식단 사진 & 리포트 전송</span>
+        <button onclick="dispatchDiscord()" id="btnDispatch" class="w-full py-3 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2">
+          <span>🚀 디스코드에 오늘 리포트 & 식단 전송하기</span>
         </button>
       </div>
     </div>
 
     <!-- Webhook Modal -->
-    <div id="webhookModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-      <div class="app-card bg-[#151822] border-app-border max-w-sm w-full p-5 space-y-4">
-        <div class="flex items-center justify-between">
-          <h3 class="text-sm font-bold text-white">디스코드 Webhook 설정</h3>
-          <button onclick="closeWebhookModal()" class="text-app-subtle hover:text-white">✕</button>
+    <div id="webhookModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+      <div class="app-card max-w-sm w-full p-5 space-y-3">
+        <div class="flex justify-between items-center">
+          <h3 class="text-sm font-bold text-white">디스코드 Webhook URL</h3>
+          <button onclick="closeWebhookModal()" class="text-slate-400 hover:text-white">✕</button>
         </div>
-        <div>
-          <label class="block text-xs text-app-muted mb-1.5">Webhook URL</label>
-          <input type="url" id="webhookInput" placeholder="https://discord.com/api/webhooks/..." class="w-full bg-[#0c0e14] border border-app-border rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400 font-mono">
-          <p class="text-[11px] text-app-subtle mt-1.5">디스코드 채널 연동에서 생성한 웹훅 주소를 입력하세요.</p>
-        </div>
+        <input type="url" id="webhookInput" placeholder="https://discord.com/api/webhooks/..." class="w-full bg-black/50 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400 font-mono">
         <div class="flex justify-end gap-2 pt-2">
-          <button onclick="closeWebhookModal()" class="px-3 py-1.5 text-xs font-semibold text-app-muted hover:text-white">취소</button>
-          <button onclick="saveWebhook()" class="px-4 py-1.5 text-xs font-bold bg-sky-500 hover:bg-sky-400 text-slate-950 rounded-xl">저장</button>
+          <button onclick="closeWebhookModal()" class="px-3 py-1.5 text-xs text-slate-400">취소</button>
+          <button onclick="saveWebhook()" class="px-4 py-1.5 text-xs font-bold bg-sky-500 text-slate-950 rounded-xl">저장</button>
         </div>
-      </div>
-    </div>
-
-    <!-- OCR Scanning Loading Toast -->
-    <div id="ocrToast" class="fixed top-5 left-1/2 -translate-x-1/2 bg-sky-950/90 border border-sky-500 text-sky-200 px-4 py-2.5 rounded-2xl shadow-xl text-xs font-bold flex items-center gap-2 z-50 hidden">
-      <span class="animate-spin">⏳</span>
-      <span id="ocrToastText">인바디/체중 캡처 이미지 스캔 중...</span>
-    </div>
-
-    <!-- Warning / Alert Modal -->
-    <div id="alertModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-      <div class="app-card bg-[#181a24] border border-rose-500/40 max-w-xs w-full p-5 text-center space-y-3">
-        <div class="text-3xl">⚠️</div>
-        <h4 id="alertTitle" class="text-base font-bold text-white">경고!</h4>
-        <p id="alertMsg" class="text-xs text-slate-300 leading-relaxed">
-          "바보야! 규정 위반이야!"
-        </p>
-        <button onclick="closeAlertModal()" class="w-full py-2 bg-rose-500 hover:bg-rose-400 text-white font-bold text-xs rounded-xl mt-2">
-          확인
-        </button>
       </div>
     </div>
 
@@ -438,7 +408,7 @@
 
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    function playBeep(freq, duration = 0.1) {
+    function playBeep(freq, duration = 0.08) {
       if (audioCtx.state === 'suspended') audioCtx.resume();
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
@@ -452,18 +422,22 @@
     }
 
     // State
-    const STORAGE_KEY = 'gemini_fit_mobile_v3';
+    const STORAGE_KEY = 'gemini_fit_momotalk_v4';
     let state = {
       weight: 53.8,
       fat: 21.5,
+      bondRank: 1,
+      bondExp: 75,
       absDone: false,
       runDone: false,
       runDist: 5.0,
-      legsDone: false,
       rehab: [false, false, false],
       meals: [false, false, false],
-      mealPhotos: ['', '', ''], // Base64 photos
-      webhookUrl: ''
+      mealPhotos: ['', '', ''],
+      webhookUrl: '',
+      chatHistory: [
+        { sender: 'gemini', text: '프로듀서! 오늘 17:7 단식 잘 지키고 있지? 딴생각 말고 나만 딱 믿고 따라오라고!' }
+      ]
     };
 
     function loadState() {
@@ -472,11 +446,11 @@
         if (s) state = { ...state, ...JSON.parse(s) };
       } catch (e) {}
       syncUI();
+      renderChat();
     }
 
     function saveState() {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
-      checkAllClear();
     }
 
     function syncUI() {
@@ -485,8 +459,6 @@
       document.getElementById('chkAbs').checked = state.absDone;
       document.getElementById('chkRun').checked = state.runDone;
       document.getElementById('runDistInput').value = state.runDist;
-      document.getElementById('chkLegs').checked = state.legsDone;
-
       document.getElementById('chkMeal1').checked = state.meals[0];
       document.getElementById('chkMeal2').checked = state.meals[1];
       document.getElementById('chkMeal3').checked = state.meals[2];
@@ -494,89 +466,225 @@
       for (let i = 1; i <= 3; i++) {
         updateRehabBtnUI(i, state.rehab[i - 1]);
         if (state.mealPhotos[i - 1]) {
-          showMealPhotoPreview(i, state.mealPhotos[i - 1]);
+          document.getElementById(`prevImg${i}`).src = state.mealPhotos[i - 1];
+          document.getElementById(`prevBox${i}`).classList.remove('hidden');
         }
       }
       updateMetrics();
+      updateBondUI();
     }
 
-    // Meal Photo Handler
-    function handleMealPhoto(e, mealIdx) {
+    function switchMainTab(tab) {
+      if (tab === 'talk') {
+        document.getElementById('viewTalk').classList.remove('hidden');
+        document.getElementById('viewHealth').classList.add('hidden');
+        document.getElementById('tabTalkBtn').classList.add('active');
+        document.getElementById('tabHealthBtn').classList.remove('active');
+      } else {
+        document.getElementById('viewTalk').classList.add('hidden');
+        document.getElementById('viewHealth').classList.remove('hidden');
+        document.getElementById('tabTalkBtn').classList.remove('active');
+        document.getElementById('tabHealthBtn').classList.add('active');
+      }
+      playBeep(500);
+    }
+
+    // MomoTalk Messaging Logic
+    const storyTree = {
+      1: {
+        userText: "닭가슴살이랑 쉐이크로 단백질 든든하게 채웠어!",
+        geminiReply: "오... 진짜로 제대로 먹었잖아? 단백질 30g 이상 보충 확인! 이번만큼은 인정해 줄게요, 흥!",
+        exp: 15,
+        nextChoices: [
+          "이제 14분 복근 루틴 하러 갈게!",
+          "제미니가 칭찬해주니까 힘난다 ㅎㅎ"
+        ]
+      },
+      2: {
+        userText: "사실... 라면 끓여먹으려다 제미니 생각나서 참았어.",
+        geminiReply: "바보야! 🤬 라면 같은 소리 하네! 나트륨 폭탄 맞고 내일 퉁퉁 부을 셈이야?! 그래도 참았다니... 잘했어.",
+        exp: 20,
+        nextChoices: [
+          "혼내줘서 고마워, 물 1L 마실게!",
+          "제미니가 감시해주니까 참게 되네."
+        ]
+      },
+      3: {
+        userText: "제미니한테 혼나는 게 좋아서 일부러 굶는 중인데?",
+        geminiReply: "변태 프로듀서! 뭐라는 거야 진짜! 💢 안 뛰어가면 진짜 주거주거! 지금 당장 두유 마셔!",
+        exp: 10,
+        nextChoices: [
+          "알았어 알았어 마실게 ㅋㅋㅋ",
+          "화내는 것도 귀여워"
+        ]
+      }
+    };
+
+    function chooseOption(num) {
+      playBeep(650, 0.1);
+      const data = storyTree[num];
+      if (!data) return;
+
+      // User Message
+      state.chatHistory.push({ sender: 'user', text: data.userText });
+      renderChat();
+
+      // Gemini Response after 600ms
+      setTimeout(() => {
+        state.chatHistory.push({ sender: 'gemini', text: data.geminiReply });
+        state.bondExp += data.exp;
+        if (state.bondExp >= 100) {
+          state.bondRank += 1;
+          state.bondExp = state.bondExp - 100;
+          playBeep(880, 0.25);
+          alert(`🎉 [인연 랭크 UP!] 제미니 코치와의 인연 레벨이 Lv.${state.bondRank}로 상승했습니다!`);
+        } else {
+          playBeep(750, 0.1);
+        }
+        updateBondUI();
+        saveState();
+        renderChat();
+
+        // Update choices for next turn
+        updateNextChoices(data.nextChoices);
+      }, 600);
+    }
+
+    function updateNextChoices(choices) {
+      const container = document.getElementById('choicesContainer');
+      if (!choices || choices.length === 0) return;
+      container.innerHTML = choices.map((c, idx) => `
+        <button onclick="chooseCustomOption('${c}')" class="momo-choice-btn">
+          <span>${idx + 1}. ${c}</span>
+          <span class="text-xs text-sky-400">➔</span>
+        </button>
+      `).join('');
+    }
+
+    function chooseCustomOption(text) {
+      playBeep(600, 0.08);
+      state.chatHistory.push({ sender: 'user', text: text });
+      renderChat();
+
+      setTimeout(() => {
+        const replies = [
+          "흥, 말만 앞서지 말고 몸을 움직여! 17시 되기 전에 저녁 클린하게 먹고!",
+          "손아귀 힘 빼고 달리는 거 잊지 마! 팔꿈치 다치면 진짜 가만 안 둬!",
+          "내일 아침 체중 52kg 진입할 때까지 나만 딱 믿고 따라오라고, 바보야!"
+        ];
+        const r = replies[Math.floor(Math.random() * replies.length)];
+        state.chatHistory.push({ sender: 'gemini', text: r });
+        state.bondExp += 10;
+        updateBondUI();
+        saveState();
+        renderChat();
+      }, 600);
+    }
+
+    function renderChat() {
+      const container = document.getElementById('chatContainer');
+      container.innerHTML = state.chatHistory.map(msg => {
+        if (msg.sender === 'user') {
+          return `
+            <div class="flex justify-end">
+              <div class="max-w-[78%] p-2.5 rounded-2xl rounded-tr-sm bg-[#4d88ff] text-white text-xs leading-relaxed shadow-sm">
+                ${msg.text}
+              </div>
+            </div>
+          `;
+        } else {
+          return `
+            <div class="flex items-start gap-2.5">
+              <div class="w-8 h-8 rounded-full overflow-hidden ring-1 ring-pink-400/30 bg-black shrink-0">
+                <img src="./trainer_gemini.png" class="w-full h-full object-cover object-top">
+              </div>
+              <div class="max-w-[75%] space-y-1">
+                <div class="text-[11px] font-bold text-slate-400">제미니</div>
+                <div class="p-2.5 rounded-2xl rounded-tl-sm bg-[#1e2538] text-slate-100 text-xs leading-relaxed border border-[#2b354e]">
+                  ${msg.text}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      }).join('');
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function updateBondUI() {
+      document.getElementById('bondRankBadge').textContent = `인연 Lv.${state.bondRank} ❤️`;
+      document.getElementById('bondExpBar').style.width = `${state.bondExp}%`;
+    }
+
+    function pokeTrainer() {
+      playBeep(700, 0.08);
+      const quotes = [
+        "아야! 어딜 만지는 거야, 바보야! 💢",
+        "운동 안 하고 딴짓하면 진짜 주거주거! 😈",
+        "흥... 오늘 루틴 다 끝내면 머리 쓰다듬게 해줄게."
+      ];
+      const q = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById('trainerMoodText').textContent = `"${q}"`;
+    }
+
+    // Meal Photo & MomoTalk Sync
+    function uploadMealPhoto(e, idx) {
       const file = e.target.files[0];
       if (!file) return;
       const reader = new FileReader();
       reader.onload = function(evt) {
         const dataUrl = evt.target.result;
-        state.mealPhotos[mealIdx - 1] = dataUrl;
-        state.meals[mealIdx - 1] = true;
-        document.getElementById(`chkMeal${mealIdx}`).checked = true;
-        showMealPhotoPreview(mealIdx, dataUrl);
-        saveState();
-        playBeep(650, 0.15);
-        setTrainerMood("happy", `"오! ${mealIdx === 1 ? '아침' : mealIdx === 2 ? '점심' : '저녁'} 식단 사진 확인! 클린하게 챙겨 먹는 건 인정해 줄게요, 흥!"`);
+        state.mealPhotos[idx - 1] = dataUrl;
+        state.meals[idx - 1] = true;
+        document.getElementById(`chkMeal${idx}`).checked = true;
+        document.getElementById(`prevImg${idx}`).src = dataUrl;
+        document.getElementById(`prevBox${idx}`).classList.remove('hidden');
+
+        // Post to MomoTalk Chat
+        const mealTitle = idx === 1 ? '10:00 아침' : idx === 2 ? '14:00 점심' : '17:00 저녁';
+        state.chatHistory.push({ sender: 'user', text: `📸 [${mealTitle} 식단 인증 사진을 보냈습니다]` });
+        renderChat();
+
+        setTimeout(() => {
+          state.chatHistory.push({
+            sender: 'gemini',
+            text: `사진 확인! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 입에 칼로리 넣지 마!`
+          });
+          state.bondExp += 15;
+          updateBondUI();
+          saveState();
+          renderChat();
+        }, 600);
       };
       reader.readAsDataURL(file);
     }
 
-    function showMealPhotoPreview(mealIdx, dataUrl) {
-      const prev = document.getElementById(`previewMeal${mealIdx}`);
-      const img = document.getElementById(`imgMeal${mealIdx}`);
-      if (prev && img) {
-        img.src = dataUrl;
-        prev.classList.remove('hidden');
-      }
-    }
-
-    // AI Vision OCR for InBody / Samsung Health Screenshot
+    // AI Vision OCR
     async function handleInbodyScan(e) {
       const file = e.target.files[0];
       if (!file) return;
-
-      const toast = document.getElementById('ocrToast');
-      const toastText = document.getElementById('ocrToastText');
-      toast.classList.remove('hidden');
-      toastText.textContent = "AI 비전: 캡처 숫자 분석 중...";
-      playBeep(500, 0.1);
-
+      alert("AI 비전: 인바디/삼성헬스 캡처 이미지를 스캔 중입니다...");
       try {
-        const result = await Tesseract.recognize(file, 'eng');
-        const text = result.data.text;
-        console.log("OCR Result:", text);
+        const res = await Tesseract.recognize(file, 'eng');
+        const text = res.data.text;
+        const wMatch = text.match(/(\d{2}\.\d)\s*(kg|KG)?/);
+        const fMatch = text.match(/(\d{2}\.\d)\s*%/);
 
-        // 정규식으로 체중 (예: 53.8kg or 53.8) 및 체지방률 (예: 21.5% or 21.5) 추출
-        const weightMatch = text.match(/(\d{2}\.\d)\s*(kg|KG)?/);
-        const fatMatch = text.match(/(\d{2}\.\d)\s*%/);
-
-        let detected = false;
-        if (weightMatch && parseFloat(weightMatch[1]) >= 40 && parseFloat(weightMatch[1]) <= 100) {
-          state.weight = parseFloat(weightMatch[1]);
+        if (wMatch && parseFloat(wMatch[1]) >= 40 && parseFloat(wMatch[1]) <= 100) {
+          state.weight = parseFloat(wMatch[1]);
           document.getElementById('currentWeightInput').value = state.weight;
-          detected = true;
         }
-
-        if (fatMatch && parseFloat(fatMatch[1]) >= 10 && parseFloat(fatMatch[1]) <= 45) {
-          state.fat = parseFloat(fatMatch[1]);
+        if (fMatch && parseFloat(fMatch[1]) >= 10 && parseFloat(fMatch[1]) <= 45) {
+          state.fat = parseFloat(fMatch[1]);
           document.getElementById('currentFatInput').value = state.fat;
-          detected = true;
         }
-
         updateMetrics();
         saveState();
-
-        if (detected) {
-          playBeep(880, 0.2);
-          setTrainerMood("happy", `"스캔 완료! 체중 ${state.weight}kg, 체지방 ${state.fat}% 감지했어. 거짓말은 안 통하니까 솔직해서 좋네!"`);
-          alert(`🎯 스캔 성공!\n• 체중: ${state.weight} kg\n• 체지방률: ${state.fat} % 자동 반영 완료!`);
-        } else {
-          alert('이미지에서 숫자를 명확히 인식하지 못했습니다. 수동으로 숫자를 확인해 주세요!');
-        }
+        alert(`🎯 스캔 완료!\n체중: ${state.weight}kg / 체지방: ${state.fat}% 자동 반영되었습니다!`);
       } catch (err) {
-        console.error(err);
-        alert('OCR 스캔 중 오류가 발생했습니다.');
-      } finally {
-        toast.classList.add('hidden');
-        e.target.value = '';
+        alert("스캔 중 오류가 발생했습니다.");
       }
+      e.target.value = '';
     }
 
     // Fasting Clock
@@ -608,7 +716,7 @@
         bar.style.width = `${pct}%`;
         bar.className = "h-full rounded-full bg-emerald-400 transition-all duration-500";
         pctText.textContent = `${pct}%`;
-        pctText.className = "text-sm font-bold text-emerald-400 font-mono mt-0.5";
+        pctText.className = "text-sm font-bold text-emerald-400 font-mono";
       } else {
         badge.textContent = "단식 셧다운 진행중";
         badge.className = "text-[11px] font-bold px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-400 border border-rose-500/20";
@@ -625,7 +733,7 @@
         bar.style.width = `${pct}%`;
         bar.className = "h-full rounded-full bg-rose-400 transition-all duration-500";
         pctText.textContent = `${pct}%`;
-        pctText.className = "text-sm font-bold text-rose-400 font-mono mt-0.5";
+        pctText.className = "text-sm font-bold text-rose-400 font-mono";
       }
     }
     setInterval(updateFastingClock, 1000);
@@ -639,43 +747,21 @@
 
       const deltaW = (w - 52.0).toFixed(1);
       const deltaElem = document.getElementById('weightDelta');
-      if (w <= 52.0) {
-        deltaElem.textContent = "달성! 🎉";
-        deltaElem.className = "font-bold text-emerald-400 font-mono";
-      } else {
-        deltaElem.textContent = `+${deltaW} kg`;
-        deltaElem.className = "font-bold text-rose-400 font-mono";
-      }
+      deltaElem.textContent = w <= 52.0 ? "달성! 🎉" : `+${deltaW} kg`;
+      deltaElem.className = w <= 52.0 ? "font-bold text-emerald-400 font-mono" : "font-bold text-rose-400 font-mono";
 
       const deltaF = (f - 20.0).toFixed(1);
       const deltaFatElem = document.getElementById('fatDelta');
-      if (f <= 20.0) {
-        deltaFatElem.textContent = "달성! 🎉";
-        deltaFatElem.className = "font-bold text-emerald-400 font-mono";
-      } else {
-        deltaFatElem.textContent = `+${deltaF} %`;
-        deltaFatElem.className = "font-bold text-rose-400 font-mono";
-      }
+      deltaFatElem.textContent = f <= 20.0 ? "달성! 🎉" : `+${deltaF} %`;
+      deltaFatElem.className = f <= 20.0 ? "font-bold text-emerald-400 font-mono" : "font-bold text-rose-400 font-mono";
       saveState();
     }
-
-    function switchTab(tab) {
-      ['diet', 'routine', 'rehab'].forEach(t => {
-        document.getElementById(`tab${capitalize(t)}Content`).classList.add('hidden');
-        document.getElementById(`tab${capitalize(t)}Btn`).classList.remove('active');
-      });
-      document.getElementById(`tab${capitalize(tab)}Content`).classList.remove('hidden');
-      document.getElementById(`tab${capitalize(tab)}Btn`).classList.add('active');
-      playBeep(450, 0.05);
-    }
-    function capitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
 
     function updateRoutine() {
       state.absDone = document.getElementById('chkAbs').checked;
       state.runDone = document.getElementById('chkRun').checked;
       state.runDist = parseFloat(document.getElementById('runDistInput').value) || 5.0;
-      state.legsDone = document.getElementById('chkLegs').checked;
-      playBeep(600, 0.08);
+      playBeep(600);
       saveState();
     }
 
@@ -683,101 +769,23 @@
       const idx = num - 1;
       state.rehab[idx] = !state.rehab[idx];
       updateRehabBtnUI(num, state.rehab[idx]);
-      playBeep(state.rehab[idx] ? 650 : 350, 0.1);
+      playBeep(state.rehab[idx] ? 650 : 350);
       saveState();
     }
 
     function updateRehabBtnUI(num, done) {
       const btn = document.getElementById(`rehabBtn${num}`);
       if (!btn) return;
-      if (done) {
-        btn.className = "py-2.5 rounded-xl text-xs font-bold bg-emerald-500/20 border border-emerald-500/50 text-emerald-300 transition-all";
-        btn.textContent = `✓ ${num}세트 완료`;
-      } else {
-        btn.className = "py-2.5 rounded-xl text-xs font-bold bg-app-card border border-app-border text-app-muted hover:border-emerald-500/50 transition-all";
-        btn.textContent = `${num}세트`;
-      }
+      btn.className = done 
+        ? "py-1.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/50"
+        : "py-1.5 rounded-lg text-xs font-bold bg-[#20273c] text-slate-300 border border-slate-700";
+      btn.textContent = done ? `✓ ${num}세트` : `${num}세트`;
     }
 
-    function handleMeal(mealName) {
-      state.meals[0] = document.getElementById('chkMeal1').checked;
-      state.meals[1] = document.getElementById('chkMeal2').checked;
-      state.meals[2] = document.getElementById('chkMeal3').checked;
-
-      const hour = new Date().getHours();
-      if (hour >= 17 && mealName !== '저녁') {
-        triggerLateNightAlert();
-      } else {
-        playBeep(600, 0.08);
-      }
+    function handleMeal(idx) {
+      state.meals[idx - 1] = document.getElementById(`chkMeal${idx}`).checked;
+      playBeep(600);
       saveState();
-    }
-
-    function triggerLateNightAlert() {
-      setTrainerMood("angry", "바보야! 17시 넘었는데 뭘 먹는 거야?! 즉시 숟가락 내려놔! 안 뛰어가면 진짜 주거주거! 😈💢");
-      document.getElementById('alertTitle').textContent = "17시 셧다운 위반!";
-      document.getElementById('alertMsg').textContent = "바보야! 17시 넘었는데 뭘 먹는 거야?! 즉시 숟가락 내려놔! 안 뛰어가면 진짜 주거주거! 😈💢";
-      document.getElementById('alertModal').classList.remove('hidden');
-      playBeep(250, 0.3);
-    }
-
-    function triggerForbiddenAlert(name) {
-      setTrainerMood("angry", `팔꿈치 인대 다 끊어먹을 셈이야?! "${name}" 같은 상체 당기기는 금지라고 백 번 말했잖아! 🤬`);
-      document.getElementById('alertTitle').textContent = "상과염 안전 락!";
-      document.getElementById('alertMsg').textContent = `"${name}" 같은 당기기 운동은 팔꿈치 박살 나! 당장 손 떼 바보야! 🤬💢`;
-      document.getElementById('alertModal').classList.remove('hidden');
-      playBeep(250, 0.3);
-    }
-
-    function closeAlertModal() {
-      document.getElementById('alertModal').classList.add('hidden');
-    }
-
-    // Dynamic Trainer Mood & Expressions
-    const quotes = [
-      "허~접 프로듀서, 슬림핏 52kg가 그렇게 만만해 보여? 딴생각 말고 뛰어!",
-      "안 뛰어가면 진짜 주거주거! 😈💢 내 페이스 레이더에서 벗어나지 마!",
-      "손아귀 힘 꽉 쥐지 말랬잖아! 계란 쥐듯이 손 풀고 달리라고, 바보야!",
-      "정밀 센서 스캔 결과... 오늘 복근 자극 조금만 덜 줘도 바로 티 난다구, 흥!",
-      "단식 시간 잘 지키고 있지? 17시 1초만 지나도 즉시 경보 울릴 줄 알아!"
-    ];
-
-    function setTrainerMood(mood, dialogue) {
-      const img = document.getElementById('trainerImg');
-      const badge = document.getElementById('trainerMoodBadge');
-      document.getElementById('trainerDialogue').textContent = dialogue;
-
-      if (mood === 'angry') {
-        img.src = "./trainer_angry.png";
-        badge.textContent = "상태: 분노 💢";
-        badge.className = "text-[10px] text-rose-400 font-mono font-bold";
-      } else if (mood === 'happy') {
-        img.src = "./trainer_happy.png";
-        badge.textContent = "상태: 칭찬 🥰";
-        badge.className = "text-[10px] text-emerald-400 font-mono font-bold";
-      } else {
-        img.src = "./trainer_gemini.png";
-        badge.textContent = "상태: 평상시 😏";
-        badge.className = "text-[10px] text-app-subtle font-mono";
-      }
-      // Fallback to base trainer if variation image not yet loaded
-      img.onerror = () => { img.src = "./trainer_gemini.png"; };
-    }
-
-    function triggerTrainerPoke() {
-      playBeep(700, 0.08);
-      const q = quotes[Math.floor(Math.random() * quotes.length)];
-      setTrainerMood("normal", `"${q}"`);
-    }
-
-    function checkAllClear() {
-      const allRehab = state.rehab.every(Boolean);
-      const allWork = state.absDone && state.runDone && state.legsDone;
-      const allMeals = state.meals.every(Boolean);
-
-      if (allRehab && allWork && allMeals) {
-        setTrainerMood("happy", `"이번만큼은 인정해 줄게요, 흥! 재활도 러닝도 식단도 다 해내다니... 아주 조금은 멋있었을지도? 내일도 기대할게!"`);
-      }
     }
 
     function openWebhookModal() {
@@ -791,7 +799,7 @@
       state.webhookUrl = document.getElementById('webhookInput').value.trim();
       saveState();
       closeWebhookModal();
-      alert('디스코드 Webhook 주소가 저장되었습니다!');
+      alert('디스코드 Webhook 저장 완료!');
     }
 
     async function dispatchDiscord() {
@@ -805,26 +813,20 @@
       btn.textContent = "전송 중...";
 
       const rehabCnt = state.rehab.filter(Boolean).length;
-      const workCnt = [state.absDone, state.runDone, state.legsDone].filter(Boolean).length;
-      const mealCnt = state.meals.filter(Boolean).length;
       const photoCnt = state.mealPhotos.filter(Boolean).length;
-      const isAll = (rehabCnt === 3 && workCnt === 3 && mealCnt === 3);
-
-      const quote = isAll 
-        ? "흥! 이번만큼은 인정해 줄게요. 17:7 단식부터 재활, 러닝까지 올클리어라니... 내일도 이렇게 못하면 가만 안 둘 줄 알아!"
-        : "허~접 프로듀서! 아직 미완료된 루틴이 남아있잖아?! 딴생각 말고 어서 뛰어가! 안 뛰어가면 진짜 주거주거! 😈💢";
+      const quote = "흥! 식단이랑 운동 잘 챙기고 있는지 이 몸이 지켜보고 있어!";
 
       const payload = {
-        username: "Gemini Fit Coach",
+        username: "Gemini MomoTalk Coach",
         embeds: [{
-          title: "⚡ [Gemini Fit] 데일리 트레이닝 & 식단 사진 보고서",
-          description: `**코치 제미니:**\n> "${quote}"`,
-          color: isAll ? 0x34d399 : 0x38bdf8,
+          title: "💌 [Gemini MomoTalk] 데일리 브리핑 보고서",
+          description: `**제미니 코치 (인연 Lv.${state.bondRank}):**\n> "${quote}"`,
+          color: 0x4d88ff,
           fields: [
-            { name: "⚖️ 체중 / 체지방", value: `• 현재 체중: **${state.weight} kg** (${state.weight <= 52 ? '목표 달성🎉' : '+' + (state.weight - 52).toFixed(1) + 'kg'})\n• 체지방률: **${state.fat} %** (목표 < 20%)`, inline: true },
-            { name: "⏱️ 17:7 간헐적 단식", value: `• 아침: ${state.meals[0] ? '✅' : '❌'}\n• 점심: ${state.meals[1] ? '✅' : '❌'}\n• 저녁: ${state.meals[2] ? '✅' : '❌'} (등록된 사진: **${photoCnt}장**)`, inline: true },
-            { name: "🩹 테니스 엘보 재활", value: `• 2kg 덤벨 편심성: **${rehabCnt} / 3 세트** ${rehabCnt === 3 ? '✅' : '⏳'}\n• 상체 당기기 락: **정상 가동**`, inline: false },
-            { name: "🔥 메인 루틴 현황", value: `• 복근 14분: ${state.absDone ? '✅' : '❌'}\n• 야외 러닝 (${state.runDist}km): ${state.runDone ? '✅ (NRC 연동)' : '❌'}\n• 하체 머신: ${state.legsDone ? '✅ (악력 0%)' : '❌'}`, inline: false }
+            { name: "⚖️ 체중 / 체지방", value: `• 체중: **${state.weight} kg**\n• 체지방률: **${state.fat} %**`, inline: true },
+            { name: "⏱️ 17:7 단식", value: `• 아침: ${state.meals[0] ? '✅' : '❌'}\n• 점심: ${state.meals[1] ? '✅' : '❌'}\n• 저녁: ${state.meals[2] ? '✅' : '❌'}\n(사진 인증: **${photoCnt}끼** 첨부)`, inline: true },
+            { name: "🩹 엘보 재활", value: `• 2kg 덤벨 편심성: **${rehabCnt} / 3 세트**`, inline: false },
+            { name: "🔥 루틴", value: `• 복근 14분: ${state.absDone ? '✅' : '❌'}\n• 야외 러닝 (${state.runDist}km): ${state.runDone ? '✅' : '❌'}`, inline: false }
           ],
           timestamp: new Date().toISOString()
         }]
@@ -836,13 +838,13 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        if (res.ok) alert('🚀 디스코드 채널로 오늘 식단 및 리포트가 성공적으로 전송되었습니다!');
+        if (res.ok) alert('🚀 디스코드 채널로 모모톡 브리핑이 성공적으로 전송되었습니다!');
         else throw new Error(`응답 코드: ${res.status}`);
       } catch (e) {
         alert(`전송 실패: ${e.message}`);
       } finally {
         btn.disabled = false;
-        btn.textContent = "디스코드에 식단 사진 & 리포트 전송";
+        btn.textContent = "🚀 디스코드에 오늘 리포트 & 식단 전송하기";
       }
     }
 
