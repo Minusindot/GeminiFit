@@ -554,6 +554,30 @@
           </div>
           <span class="text-[10px] font-mono text-orange-500 font-extrabold">+50 EXP</span>
         </label>
+
+        <!-- 14분 아이돌 복근 만들기 (YouTube 영상 연동 체크리스트) -->
+        <div class="flex items-center justify-between p-2.5 rounded-xl sub-box hover:border-rose-400 transition-all">
+          <label class="flex items-center gap-2.5 flex-1 min-w-0 cursor-pointer">
+            <input type="checkbox" id="chkAbs" class="w-4 h-4 rounded accent-rose-500 shrink-0" onchange="updateRoutine()">
+            <div class="truncate">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-xs font-bold text-slate-800 dark:text-slate-200">14분 복근 만들기</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-500/10 text-red-600 dark:text-red-400 border border-red-400/30 font-black">YouTube</span>
+              </div>
+              <div class="text-[10px] text-slate-400 truncate">제미니 전담 코어 & 타바타 복근 루틴 완주</div>
+            </div>
+          </label>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a id="linkAbsVideo" href="https://www.youtube.com/results?search_query=14%EB%B6%84+%EB%B3%B5%EA%B7%BC+%EC%9A%B4%EB%8F%99" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-red-600 hover:bg-red-700 text-white text-[11px] font-black shadow-xs transition-all active:scale-95" title="YouTube에서 복근 운동 영상 바로 열기">
+              <span class="text-[10px]">▶</span>
+              <span>영상 보기</span>
+            </a>
+            <button type="button" onclick="editAbsVideoUrl()" class="p-1 rounded-lg text-slate-400 hover:text-red-500 text-[10px]" title="복근 유튜브 영상 링크 설정">
+              ⚙️
+            </button>
+            <span class="text-[10px] font-mono text-rose-500 font-extrabold whitespace-nowrap">+20 EXP</span>
+          </div>
+        </div>
       </div>
 
       <!-- 5. 🏋️ 헬스장 풀코스 체크 (상체2 + 하체1 + 캡틴스 체어 레그레이즈 + 크런치) -->
@@ -2708,6 +2732,8 @@
       setVal('currentWeightInput', state.weight);
       setVal('currentFatInput', state.fat);
       setChk('chkAbs', state.absDone);
+      const absLink = document.getElementById('linkAbsVideo');
+      if (absLink && state.absVideoUrl) absLink.href = state.absVideoUrl;
       setChk('chkRun', state.runDone);
       setVal('runDistInput', state.runDist);
       setChk('chkMeal1', state.meals ? state.meals[0] : false);
@@ -4389,6 +4415,18 @@ ${err.message}
       deltaFatElem.textContent = f <= 20.0 ? "달성! 🎉" : `+${deltaF} %`;
       deltaFatElem.className = f <= 20.0 ? "font-bold text-emerald-500 font-mono" : "font-bold text-rose-500 font-mono";
       if (shouldSave) saveState();
+    }
+
+    function editAbsVideoUrl() {
+      const current = state.absVideoUrl || 'https://www.youtube.com/results?search_query=14%EB%B6%84+%EB%B3%B5%EA%B7%BC+%EC%9A%B4%EB%8F%99';
+      const custom = prompt('매일 시청하시는 복근 운동 YouTube 영상 링크를 입력해 주세요:', current);
+      if (custom && custom.trim()) {
+        state.absVideoUrl = custom.trim();
+        const link = document.getElementById('linkAbsVideo');
+        if (link) link.href = state.absVideoUrl;
+        saveState();
+        playBeep(640, 0.08);
+      }
     }
 
     function updateRoutine() {
