@@ -42,6 +42,14 @@ FIREFOX_EXE = r"C:\Program Files\Mozilla Firefox\firefox.exe"
 PROFILE_DIR = BASE_DIR / ".grok_profile"
 SAME_AS_REF = 15.0
 
+GLOBAL_NEGATIVE_RULES = (
+    "STRICT NEGATIVE CONSTRAINTS (MANDATORY): "
+    "ABSOLUTELY NO text, NO letters, NO words, NO typography, NO readable characters, NO subtitles, NO captions, "
+    "NO watermarks, NO signatures, NO artist tags, "
+    "NO brand logos, NO trademarked emblems, NO corporate insignias (strictly NO Nike swoosh, NO Adidas stripes, NO brand names, NO store signage text). "
+    "All clothing, equipment, and background objects must be completely clean, generic, original, and free of any readable writing or brand identity."
+)
+
 BASE_STYLE_PROMPT = {
     "kotone": (
         "Strictly follow the exact character design, face proportions, and Gakuen Idolmaster (학원 아이돌마스터) "
@@ -143,7 +151,7 @@ def pick_evolution_refs(trainer: str) -> list[Path]:
 def generate_single_on_driver(driver, trainer: str, tag: str, situation_prompt: str, out_web_file: str | None = None, pool_filename: str | None = None) -> Path:
     refs = pick_evolution_refs(trainer)
     ref_imgs = [Image.open(r) for r in refs]
-    full_prompt = f"{BASE_STYLE_PROMPT[trainer]} Scene, Outfit & Pose: {situation_prompt}"
+    full_prompt = f"{BASE_STYLE_PROMPT[trainer]} Scene, Outfit & Pose: {situation_prompt} {GLOBAL_NEGATIVE_RULES}"
 
     print(f"\n🧬 [{trainer.upper()} | {tag}] 수렴진화 생성 시작 (참조 {len(refs)}장):")
     for r in refs:
