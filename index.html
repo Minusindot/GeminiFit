@@ -280,8 +280,8 @@
             <button onclick="setTrainerMode('mio')" id="btnFocusMio" class="w-full flex items-center justify-center py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold hover:border-orange-400 transition-all">
               <span>미오</span>
             </button>
-            <button onclick="setTrainerMode('dual')" id="btnFocusDual" class="w-full flex items-center justify-center py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold hover:border-purple-400 transition-all" title="3인 합동 스페셜">
-              <span>합동</span>
+            <button onclick="setTrainerMode('dual')" id="btnFocusDual" class="w-full flex items-center justify-center py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold hover:border-purple-400 transition-all" title="트레이너 3인 단톡">
+              <span>단톡</span>
             </button>
           </div>
 
@@ -343,9 +343,9 @@
       <div class="game-card overflow-hidden">
         <!-- Clean Chat Header -->
         <div class="px-3.5 py-2 bg-slate-50/90 dark:bg-slate-800/70 border-b border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between">
-          <div class="flex items-center gap-1.5">
+          <div class="flex items-center gap-1.5" id="chatHeaderTitle">
             <span class="text-xs">💬</span>
-            <span class="text-[11px] font-black text-slate-700 dark:text-slate-200">트레이너 실시간 1:1 톡</span>
+            <span class="text-[11px] font-black text-slate-700 dark:text-slate-200">트레이너 실시간 톡</span>
           </div>
           <button onclick="clearChatLog()" class="text-[10px] text-slate-400 hover:text-rose-400 font-bold px-1.5 py-0.5 rounded hover:bg-slate-200/60 dark:hover:bg-slate-700 transition-all" title="대화 기록 정리">
             대화 지우기
@@ -872,7 +872,7 @@
           <div>
             <h3 class="text-sm font-black flex items-center gap-1.5">
               <span>🖼️ 미연시 이벤트 CG 도감</span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-pink-500 text-white font-extrabold">총 90종 (풀CG 75 + SD치비 9 + 3인합동 6)</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-pink-500 text-white font-extrabold">총 90종 (풀CG 75 + SD치비 9 + 3인단톡 6)</span>
             </h3>
             <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">카드를 터치하면 메인 스테이지에 해당 이벤트와 의상이 즉시 적용됩니다</p>
           </div>
@@ -884,7 +884,7 @@
           <button onclick="renderGalleryGrid('gemini')" id="galTabGemini" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box">🐾 제미니 (28)</button>
           <button onclick="renderGalleryGrid('kotone')" id="galTabKotone" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box">💛 코토네 (28)</button>
           <button onclick="renderGalleryGrid('mio')" id="galTabMio" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box">🌟 미오 (28)</button>
-          <button onclick="renderGalleryGrid('dual')" id="galTabDual" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box text-purple-600 dark:text-purple-300 border border-purple-400/40">⭐ 합동 (6)</button>
+          <button onclick="renderGalleryGrid('dual')" id="galTabDual" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box text-purple-600 dark:text-purple-300 border border-purple-400/40">💬 단톡 (6)</button>
           <button onclick="renderGalleryGrid('sd')" id="galTabSd" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box text-pink-600 dark:text-pink-300 border border-pink-400/40">🐣 SD 치비 (9)</button>
         </div>
 
@@ -2032,7 +2032,7 @@
         img: './image/00 common/dual_inbody.png',
         pos: 'center 15%',
         text: '제미니 · 코토네 · 미오: 프로듀서의 52kg 슬림핏 & 체지방 20% 미만을 위해 우리 셋이 끝까지 함께할게! 💖',
-        story: '💖 [3인 합동 EP.1 · VIP 인바디 측정실] "인바디 결과지를 사이에 두고 셋이 동시에 프로듀서에게 달려들었어요! \\\'우리 셋이 매일 같이 운동해 줄 테니까 딴눈팔면 절대 안 돼요!\\\'라는 사랑스러운 합창!"'
+        story: '💬 [3인 단톡 EP.1 · VIP 인바디 측정실] "인바디 결과지를 사이에 두고 셋이 동시에 프로듀서에게 달려들었어요! \\\'우리 셋이 매일 같이 운동해 줄 테니까 딴눈팔면 절대 안 돼요!\\\'라는 사랑스러운 합창!"'
       },
       {
         key: 'trio2',
@@ -2041,7 +2041,7 @@
         img: './image/00 common/trio_02_cafe_cheer.png',
         pos: 'center 15%',
         text: '제미니 · 코토네 · 미오: 오늘 식단이랑 단식 완벽 성공 기념! 햇살 좋은 테라스에서 셋이 함께하는 치얼스~ ☕🍵🍓',
-        story: '💖 [3인 합동 EP.2 · 햇살 테라스 카페] "말차를 든 제미니, 파르페를 든 코토네, 라떼를 든 미오가 프로듀서를 둘러싸고 까르르 웃음을 터뜨렸어요. 세상에서 제일 눈부신 오후의 휴식!"'
+        story: '💬 [3인 단톡 EP.2 · 햇살 테라스 카페] "말차를 든 제미니, 파르페를 든 코토네, 라떼를 든 미오가 프로듀서를 둘러싸고 까르르 웃음을 터뜨렸어요. 세상에서 제일 눈부신 오후의 휴식!"'
       },
       {
         key: 'trio3',
@@ -2050,7 +2050,7 @@
         img: './image/00 common/trio_03_track_jog.png',
         pos: 'center 15%',
         text: '제미니 · 코토네 · 미오: 셋이 발맞춰 달리는 인터벌 러닝! 프로듀서, 우리 셋 속도에 뒤처지면 꼴찌 벌칙이다~ 🏃‍♀️🔥',
-        story: '💖 [3인 합동 EP.3 · 스타디움 트랙 조깅] "푸른 하늘 아래 셋이 나란히 발을 맞추며 프로듀서를 향해 손을 흔들었어요. 땀방울마저 반짝이는 청춘 피트니스의 절정!"'
+        story: '💬 [3인 단톡 EP.3 · 스타디움 트랙 조깅] "푸른 하늘 아래 셋이 나란히 발을 맞추며 프로듀서를 향해 손을 흔들었어요. 땀방울마저 반짝이는 청춘 피트니스의 절정!"'
       },
       {
         key: 'trio4',
@@ -2059,7 +2059,7 @@
         img: './image/00 common/trio_04_sunset_victory.png',
         pos: 'center 15%',
         text: '제미니 · 코토네 · 미오: 해냈다 프로듀서! 목표 체중 52kg 감량 대성공! 우리 셋의 영원한 프로듀서, 사랑해! 🌇💖',
-        story: '💖 [3인 합동 EP.4 · 황혼빛 루프탑 승리] "황금빛 노을이 쏟아지는 루프탑에서 셋이 프로듀서의 손을 높이 번쩍 들어 올렸어요! 서로 흘린 땀방울이 눈부신 추억으로 완성된 순간!"'
+        story: '💬 [3인 단톡 EP.4 · 황혼빛 루프탑 승리] "황금빛 노을이 쏟아지는 루프탑에서 셋이 프로듀서의 손을 높이 번쩍 들어 올렸어요! 서로 흘린 땀방울이 눈부신 추억으로 완성된 순간!"'
       },
       {
         key: 'trio5',
@@ -2068,7 +2068,7 @@
         img: './image/00 common/trio_05_cooking_mealprep.png',
         pos: 'center 15%',
         text: '제미니 · 코토네 · 미오: 프로듀서의 클린 식단을 위해 우리 셋이 정성껏 만든 특제 헬시 도시락 완성! 🥗🍱💖',
-        story: '💖 [3인 합동 EP.5 · 키친 헬시 밀프랩 파티] "닭가슴살을 굽는 제미니, 고구마를 담는 코토네, 아보카도를 써는 미오가 앞치마를 두르고 까르르 웃으며 도시락을 완성했어요! 세상에서 제일 맛있는 특급 사랑의 식단!"'
+        story: '💬 [3인 단톡 EP.5 · 키친 헬시 밀프랩 파티] "닭가슴살을 굽는 제미니, 고구마를 담는 코토네, 아보카도를 써는 미오가 앞치마를 두르고 까르르 웃으며 도시락을 완성했어요! 세상에서 제일 맛있는 특급 사랑의 식단!"'
       },
       {
         key: 'trio6',
@@ -2077,7 +2077,7 @@
         img: './image/00 common/trio_06_fireworks_summer.png',
         pos: 'center 15%',
         text: '제미니 · 코토네 · 미오: 함께 달려온 모든 계절에 감사하며... 프로듀서, 목표 체중 52kg 성공을 진심으로 축하해! 사랑해! 🎆💖',
-        story: '💖 [3인 합동 EP.6 · 여름밤 스파클러 피날레] "언덕 위에서 밤하늘 불꽃놀이를 배경으로 셋이 타오르는 스파클러를 들고 프로듀서를 둘러쌌어요! 흘린 땀방울과 눈부신 추억이 영원한 사랑으로 완성된 감동의 순간!"'
+        story: '💬 [3인 단톡 EP.6 · 여름밤 스파클러 피날레] "언덕 위에서 밤하늘 불꽃놀이를 배경으로 셋이 타오르는 스파클러를 들고 프로듀서를 둘러쌌어요! 흘린 땀방울과 눈부신 추억이 영원한 사랑으로 완성된 감동의 순간!"'
       }
     ];
     const DUAL_EVENT = DUAL_EVENTS[0];
@@ -2363,9 +2363,12 @@
         ghConfig.lastSha = data.sha || '';
         if (data.content) {
           const remoteState = JSON.parse(base64ToUtf8(data.content));
+          // Preserve local chatHistory so remote pull never wipes user's recent messages
+          const localChats = (state.chatHistory && state.chatHistory.length > 0) ? state.chatHistory : [];
           state = {
             ...state,
             ...remoteState,
+            chatHistory: localChats.length > 0 ? localChats : (remoteState.chatHistory || []),
             mealPhotos: state.mealPhotos,
             webhookUrl: state.webhookUrl || remoteState.webhookUrl || ''
           };
@@ -2573,7 +2576,7 @@
           dualImg.style.objectPosition = trioEv.pos;
         }
         if (dialogue) dialogue.textContent = `"${trioEv.text}"`;
-        if (bondBtn) bondBtn.textContent = "3인 합동 인연스토리 ➔";
+        if (bondBtn) bondBtn.textContent = "3인 단톡 인연스토리 ➔";
       } else {
         if (singleView) singleView.classList.remove('hidden');
         if (dualView) dualView.classList.add('hidden');
@@ -2613,6 +2616,7 @@
       }
       playBeep(650);
       saveState();
+      renderChat();
     }
 
     // ============================================================================
@@ -2660,7 +2664,7 @@
           list.push({
             heroine: 'dual',
             key: trio.key,
-            hName: '💖 3인 합동',
+            hName: '💬 3인 단톡',
             tag: trio.tag,
             locOutfit: trio.locOutfit,
             img: trio.img,
@@ -3111,7 +3115,8 @@ ${err.message}
       input.value = '';
       playBeep(640, 0.07);
 
-      state.chatHistory.push({ sender: 'user', text, time: getKakaoTimeStr() });
+      const currentRoom = state.activeMode === 'dual' ? 'dual' : (state.activeTrainer || 'gemini');
+      state.chatHistory.push({ room: currentRoom, sender: 'user', text, time: getKakaoTimeStr() });
       renderChat();
 
       // Show Kakao-style typing indicator while AI thinks
@@ -3121,7 +3126,7 @@ ${err.message}
         typingSender = 'dual';
         typingName = '제미니 · 코토네 · 미오';
       }
-      activeTypingIndicator = { sender: typingSender, name: typingName };
+      activeTypingIndicator = { room: currentRoom, sender: typingSender, name: typingName };
       renderChat();
 
       const curTime = getKakaoTimeStr();
@@ -3146,12 +3151,12 @@ ${err.message}
           const aiResult = await callGeminiDirectClient(localApiKey, text, currentTrainer, currentMode, context);
           activeTypingIndicator = null;
           if (aiResult.mode === 'dual' && aiResult.replies) {
-            if (aiResult.replies.gemini) state.chatHistory.push({ sender: 'gemini', name: '제미니', text: aiResult.replies.gemini, time: curTime });
-            if (aiResult.replies.kotone) state.chatHistory.push({ sender: 'kotone', name: '코토네', text: aiResult.replies.kotone, time: curTime });
-            if (aiResult.replies.mio) state.chatHistory.push({ sender: 'mio', name: '미오', text: aiResult.replies.mio, time: curTime });
+            if (aiResult.replies.gemini) state.chatHistory.push({ room: 'dual', sender: 'gemini', name: '제미니', text: aiResult.replies.gemini, time: curTime });
+            if (aiResult.replies.kotone) state.chatHistory.push({ room: 'dual', sender: 'kotone', name: '코토네', text: aiResult.replies.kotone, time: curTime });
+            if (aiResult.replies.mio) state.chatHistory.push({ room: 'dual', sender: 'mio', name: '미오', text: aiResult.replies.mio, time: curTime });
           } else if (aiResult.reply) {
             const senderName = currentTrainer === 'kotone' ? '코토네' : currentTrainer === 'mio' ? '미오' : '제미니';
-            state.chatHistory.push({ sender: currentTrainer, name: senderName, text: aiResult.reply, time: curTime });
+            state.chatHistory.push({ room: currentRoom, sender: currentTrainer, name: senderName, text: aiResult.reply, time: curTime });
           }
           addBondExp(20);
           saveState();
@@ -3237,7 +3242,7 @@ ${err.message}
       const curTime = getKakaoTimeStr();
       if (state.activeMode === 'dual') {
         setTrainerMode('dual');
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '💖 [3인 합동 에피소드] "흥, 프로듀서가 매일 식단이랑 재활 챙기는 거... 사실 우리 셋이 단톡방에서 엄청 칭찬하고 있었거든! 🐾"', time: curTime });
+        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '💬 [3인 단톡 에피소드] "흥, 프로듀서가 매일 식단이랑 재활 챙기는 거... 사실 우리 셋이 단톡방에서 엄청 칭찬하고 있었거든! 🐾"', time: curTime });
         state.chatHistory.push({ sender: 'kotone', name: '코토네', text: '💖 "맞아요 맞아요! 제미니 짱이 프로듀서님 기록 올라올 때마다 고양이 귀 쫑긋거리는 거 제가 다 봤다구요~ 헤헤! 💛"', time: curTime });
         state.chatHistory.push({ sender: 'mio', name: '미오', text: '💖 "에헤헤, 우리 셋이 프로듀서 평생 전담 파트너니까 52kg 달성할 때까지 매일매일 즐겁게 달리자! 🌟"', time: curTime });
       } else {
@@ -3261,9 +3266,12 @@ ${err.message}
     }
 
     function clearChatLog() {
-      state.chatHistory = [
-        { sender: 'gemini', name: '제미니', text: '대화 기록 깔끔하게 정리했어! 자, 오늘 루틴이랑 단식 현황부터 다시 체크해 볼까? 🐾', time: getKakaoTimeStr() }
-      ];
+      const currentRoom = state.activeMode === 'dual' ? 'dual' : (state.activeTrainer || 'gemini');
+      // Clear only the current room's messages
+      state.chatHistory = (state.chatHistory || []).filter(msg => {
+        const msgRoom = msg.room || (msg.sender === 'user' ? 'legacy' : msg.sender);
+        return msgRoom !== currentRoom;
+      });
       saveState();
       renderChat();
     }
@@ -3273,8 +3281,42 @@ ${err.message}
       if (!container) return;
 
       const fallbackTime = getKakaoTimeStr();
+      const currentRoom = state.activeMode === 'dual' ? 'dual' : (state.activeTrainer || 'gemini');
 
-      let chatHtml = state.chatHistory.map(msg => {
+      // Update Chat Header Title to indicate current room
+      const headerTitle = document.getElementById('chatHeaderTitle');
+      if (headerTitle) {
+        if (currentRoom === 'dual') {
+          headerTitle.innerHTML = '<span class="text-xs">💬</span><span class="text-[11px] font-black text-purple-600 dark:text-purple-300">트레이너 3인 실시간 단톡</span>';
+        } else if (currentRoom === 'kotone') {
+          headerTitle.innerHTML = '<span class="text-xs">💛</span><span class="text-[11px] font-black text-yellow-600 dark:text-yellow-400">코토네 실시간 1:1 톡</span>';
+        } else if (currentRoom === 'mio') {
+          headerTitle.innerHTML = '<span class="text-xs">🌟</span><span class="text-[11px] font-black text-orange-600 dark:text-orange-400">미오 실시간 1:1 톡</span>';
+        } else {
+          headerTitle.innerHTML = '<span class="text-xs">🐾</span><span class="text-[11px] font-black text-pink-600 dark:text-pink-400">제미니 실시간 1:1 톡</span>';
+        }
+      }
+
+      // Filter messages strictly for the active room
+      let roomMessages = (state.chatHistory || []).filter(msg => {
+        if (msg.room) return msg.room === currentRoom;
+        // Legacy message fallback:
+        if (currentRoom === 'dual') return msg.sender === 'dual' || (msg.name && msg.name.includes('단톡'));
+        return msg.sender === currentRoom;
+      });
+
+      // Default room welcome greeting if room is empty
+      if (roomMessages.length === 0) {
+        const welcomeMap = {
+          gemini: { room: 'gemini', sender: 'gemini', name: '제미니', text: '메~롱! 그렇게 쳐다본다고 내가 봐줄 줄 알아? 오늘 17시 단식 칼같이 지켜! 😈🐾', time: fallbackTime },
+          kotone: { room: 'kotone', sender: 'kotone', name: '코토네', text: '프로듀서님! 오늘도 코토네랑 같이 활기차게 피트니스 달려봐요! 💛✨', time: fallbackTime },
+          mio: { room: 'mio', sender: 'mio', name: '미오', text: '에헤헤, 프로듀서! 오늘도 건강하고 상쾌하게 땀 흘려볼까? 🌟🏃‍♀️', time: fallbackTime },
+          dual: { room: 'dual', sender: 'dual', name: '제미니 · 코토네 · 미오', text: '💬 [트레이너 단톡방] 제미니 · 코토네 · 미오와 함께하는 피트니스 단톡입니다! 🐾💛🌟', time: fallbackTime }
+        };
+        roomMessages = [welcomeMap[currentRoom] || welcomeMap.gemini];
+      }
+
+      let chatHtml = roomMessages.map(msg => {
         const timeStr = msg.time || fallbackTime;
         const imgBlock = msg.image ? `<img src="${msg.image}" class="mt-2 rounded-xl max-h-36 w-auto object-cover border border-white/25">` : '';
 
