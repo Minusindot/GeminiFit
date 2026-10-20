@@ -37,6 +37,8 @@ GEMINI_POOL = POOL_DIR / "gemini"
 REF_MIO_FEATURE_POOL = POOL_DIR / "reference_mio"
 REF_GEMINI_FEATURE_POOL = POOL_DIR / "reference_gemini"
 STYLE_POOL = POOL_DIR / "gakumas_style"
+SHINY_STYLE_POOL = POOL_DIR / "shiny_style"
+SD_CHIBI_POOL = POOL_DIR / "sd_chibi_style"
 
 FIREFOX_EXE = r"C:\Program Files\Mozilla Firefox\firefox.exe"
 PROFILE_DIR = BASE_DIR / ".grok_profile"
@@ -270,6 +272,8 @@ def show_status() -> None:
         ("미오 특징 참고 (ref_pool/reference_mio)", REF_MIO_FEATURE_POOL),
         ("제미니 특징 참고 (ref_pool/reference_gemini)", REF_GEMINI_FEATURE_POOL),
         ("학원마스 화풍  (ref_pool/gakumas_style)", STYLE_POOL),
+        ("샤니마스 미소녀 (ref_pool/shiny_style)", SHINY_STYLE_POOL),
+        ("SD 치비 캐릭터  (ref_pool/sd_chibi_style)", SD_CHIBI_POOL),
     ]:
         files = list_survivors(folder)
         print(f"\n📂 {label} — {len(files)}장:")
