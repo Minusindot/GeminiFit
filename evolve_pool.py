@@ -1,21 +1,11 @@
 """Grok 수렴진화(Convergent Evolution) 일러스트 생성 & 레퍼런스 풀(ref_pool) 관리 엔진
 
-원리:
-1. 사용자가 `ref_pool/gemini/`, `ref_pool/mio/`, `ref_pool/gakumas_style/` 폴더에서
-   마음에 안 드는 이미지를 탐색기에서 그냥 삭제(Delete)합니다.
-2. 이 스크립트는 폴더에 **살아남은(생존한) 이미지들만** 스캔하여 Grok에 멀티 레퍼런스로 첨부합니다.
-3. 새로 생성된 이미지는:
-   - 첨부한 원본 레퍼런스와 픽셀 유사도(`_ref_diff < 15`)를 비교해 원본 재표시를 100% 걸러냅니다.
-   - `ref_pool/<trainer>/` 폴더 안에 새 세대 파일로 저장되어 다음 진화의 부모 후보가 되며,
-     마음에 안 들면 언제든 폴더에서 지워 도태시킬 수 있습니다.
-
-사용법:
-  python evolve_pool.py --status
-    -> 현재 살아남은 레퍼런스 풀 목록 및 웹앱 연결 상태 확인
-  python evolve_pool.py --sync
-    -> 사용자가 ref_pool에서 삭제(도태)시킨 이미지가 있으면, 살아남은 최상위 이미지로 웹앱 슬롯 동기화
-  python evolve_pool.py --trainer gemini --tag morning --prompt "stretching in sunlit room..." --out gemini_morning.png
-    -> 살아남은 ref_pool/gemini + ref_pool/gakumas_style 이미지를 참조해 새 일러스트 진화 생성
+구조:
+- `ref_pool/gemini/`        : 제미니 생존 일러스트 풀 (화풍 + 캐릭터 동시 참조)
+- `ref_pool/mio/`           : 학원 아이돌마스터 화풍으로 진화 완료된 미오 생존 풀
+- `ref_pool/reference_mio/` : 미오의 외형 특징(머리 모양, 머리색, 눈동자, 쾌활한 인상)만 따올 원본 참고 폴더
+                              (절대 이 폴더의 옛날 셀 애니메이션 그림체를 따라 그리지 않고 특징만 추출!)
+- `ref_pool/gakumas_style/` : 학원 아이돌마스터(Gakuen Idolmaster) 화풍·채색·빛 번짐·눈동자 묘사 기준 풀
 """
 from __future__ import annotations
 
@@ -24,9 +14,6 @@ import random
 import shutil
 import sys
 import time
-
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 from datetime import datetime
 from pathlib import Path
 import numpy as np
@@ -39,24 +26,27 @@ from selenium.webdriver.firefox.options import Options
 
 from _browser import big_image_srcs, fetch_image, first_visible_css, wait_new_images
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 BASE_DIR = Path(r"d:\OneDrive\WorkSpace\02 AI 작업물\Health")
 POOL_DIR = BASE_DIR / "ref_pool"
 GEMINI_POOL = POOL_DIR / "gemini"
 MIO_POOL = POOL_DIR / "mio"
+REF_MIO_FEATURE_POOL = POOL_DIR / "reference_mio"
 STYLE_POOL = POOL_DIR / "gakumas_style"
 
 FIREFOX_EXE = r"C:\Program Files\Mozilla Firefox\firefox.exe"
 PROFILE_DIR = BASE_DIR / ".grok_profile"
 SAME_AS_REF = 15.0  # 이 값 미만이면 Grok이 첨부 이미지를 그대로 화면에 표시한 것으로 판정해 무시함
 
-# 웹앱(index.html) 슬롯과 ref_pool 초기 시드 매핑
 SLOT_MAPPING = {
-    "trainer_gemini.png": ("gemini", "01_gemini_mint_tracksuit.png"),
+    "trainer_gemini.png": ("gemini", "01_gemini_main_studio.png"),
     "gemini_morning.png": ("gemini", "02_gemini_morning_sunlight.png"),
     "gemini_tea_matcha.png": ("gemini", "03_gemini_matcha_tea.png"),
     "gemini_evening.png": ("gemini", "04_gemini_evening_window.png"),
     "trainer_cafe.png": ("gemini", "05_gemini_home_cafe.png"),
-    "trainer_mio.png": ("mio", "01_mio_sunlight_track.png"),
+    "trainer_mio.png": ("mio", "01_mio_gakumas_main.png"),
 }
 
 BASE_STYLE_PROMPT = {
@@ -64,22 +54,24 @@ BASE_STYLE_PROMPT = {
         "Strictly follow the exact character design, face proportions, and Gakuen Idolmaster (학원 아이돌마스터) "
         "high-end anime illustration style of the attached reference images: "
         "19yo cute anime fitness trainer girl Gemini, soft warm blonde hair in twin braids, "
-        "expressive golden-amber eyes, charming slightly tsundere yet caring expression, "
-        "ultra-clean delicate lineart, luminous skin shading with soft coral blush, "
-        "airy warm sunlight, slender athletic idol proportions, masterpiece 2D mobile game card art, aspect ratio 9:16."
+        "expressive golden-amber jewel-like eyes, charming slightly tsundere yet sweet expression, "
+        "ultra-clean delicate fine lineart, luminous skin shading with soft coral blush, "
+        "airy warm golden sunlight, masterpiece 2D mobile game card art, aspect ratio 9:16."
     ),
     "mio": (
-        "Strictly follow the exact character design, face proportions, and Gakuen Idolmaster (학원 아이돌마스터) "
-        "high-end anime illustration style of the attached reference images: "
-        "19yo cheerful anime fitness trainer girl Honda Mio, short layered warm caramel-brown hair with cute side bangs, "
-        "bright amber eyes, radiant energetic smile, ultra-clean delicate lineart, "
-        "luminous skin shading with warm sunlight (komorebi), masterpiece 2D mobile game card art, aspect ratio 9:16."
+        "CRITICAL STYLE INSTRUCTION: Draw strictly in the Gakuen Idolmaster (학원 아이돌마스터) high-end mobile game "
+        "illustration art style of the attached style reference images — ultra-delicate fine brown/tinted lineart, "
+        "soft luminous skin rendering with warm coral cheek blush, detailed jewel-like amber eyes with fine eyelashes, "
+        "silky hair strands catching warm golden sunlight, airy depth of field. "
+        "DO NOT copy the flat TV anime cel-shading or thick outlines of the character sheet! "
+        "CHARACTER TRAITS ONLY from Honda Mio reference: 19yo cheerful idol trainer girl, short layered warm caramel-brown "
+        "hair with cute playful side-swept bangs and fluffy outward-flipped hair tips, bright golden-amber eyes, "
+        "radiant energetic sweet smile, wearing stylish yellow, white, and pastel-orange sporty track jacket, aspect ratio 9:16."
     ),
 }
 
 
 def list_survivors(folder: Path) -> list[Path]:
-    """폴더 내에서 사용자가 삭제하지 않고 남겨둔(살아남은) 이미지 목록을 반환합니다."""
     if not folder.exists():
         return []
     exts = {".png", ".jpg", ".jpeg", ".webp"}
@@ -87,89 +79,88 @@ def list_survivors(folder: Path) -> list[Path]:
 
 
 def ref_diff(img_a: Image.Image, img_b: Image.Image) -> float:
-    """두 이미지의 블러 후 최대 픽셀 차이를 계산합니다 (원본 레퍼런스 재표시 필터링용)."""
     size = (504, 896) if img_a.height >= img_a.width else (896, 504)
     a = np.asarray(img_a.convert("L").resize(size), dtype=float)
     b = np.asarray(img_b.convert("L").resize(size), dtype=float)
     return float(ndimage.gaussian_filter(np.abs(a - b), 3).max())
 
 
-def pick_evolution_refs(trainer: str, max_char_refs: int = 2, include_style: bool = True) -> list[Path]:
-    """살아남은 캐릭터 레퍼런스 풀 + 학원 아이돌마스터 화풍 풀에서 최적의 참조 이미지를 선택합니다."""
-    char_folder = GEMINI_POOL if trainer == "gemini" else MIO_POOL
-    survivors = list_survivors(char_folder)
-    if not survivors:
-        raise RuntimeError(f"[{trainer}] 레퍼런스 풀({char_folder})에 살아남은 이미지가 없습니다! 최소 1장을 남겨주세요.")
-
-    # 01_, 02_ 등 번호가 앞선 핵심 시드 1장 + 나머지 생존자 중 1장 조합으로 일관성과 진화 다양성을 동시에 확보
-    if len(survivors) <= max_char_refs:
-        chosen = list(survivors)
-    else:
-        anchor = survivors[0]
-        others = random.sample(survivors[1:], k=max_char_refs - 1)
-        chosen = [anchor] + others
-
-    if include_style:
-        style_survivors = list_survivors(STYLE_POOL)
+def pick_evolution_refs(trainer: str) -> list[Path]:
+    """트레이너별 참조 이미지 조합을 선택합니다.
+    - gemini: ref_pool/gemini 생존본 2장 + ref_pool/gakumas_style 1장
+    - mio:
+      * ref_pool/mio에 진화된 학원마스풍 미오가 있으면 그 생존본 우선 사용 + gakumas_style
+      * ref_pool/mio가 비어 있으면 gakumas_style 2장(화풍 강제 고정) + reference_mio 1장(캐릭터 특징만 참조)
+    """
+    style_survivors = list_survivors(STYLE_POOL)
+    if trainer == "gemini":
+        survivors = list_survivors(GEMINI_POOL)
+        if not survivors:
+            raise RuntimeError(f"ref_pool/gemini 에 살아남은 이미지가 없습니다!")
+        chosen = survivors[:2] if len(survivors) <= 2 else [survivors[0], random.choice(survivors[1:])]
         if style_survivors:
-            chosen.append(random.choice(style_survivors))
+            chosen.append(style_survivors[0])
+        return chosen
 
+    # trainer == "mio"
+    mio_survivors = list_survivors(MIO_POOL)
+    feature_refs = list_survivors(REF_MIO_FEATURE_POOL)
+    chosen: list[Path] = []
+
+    if mio_survivors:
+        # 이미 학원마스 화풍으로 진화해 살아남은 미오가 있을 때
+        chosen.extend(mio_survivors[:2])
+        if style_survivors:
+            chosen.append(style_survivors[0])
+    else:
+        # 화풍은 gakumas_style에서 강하게 고정하고, reference_mio에서는 원본 캐릭터 시트(02_mio_original_ref) 1장만 특징용으로 첨부
+        if style_survivors:
+            chosen.extend(style_survivors[:2])
+        gemini_survivors = list_survivors(GEMINI_POOL)
+        if gemini_survivors and len(chosen) < 2:
+            chosen.append(gemini_survivors[0])
+        if feature_refs:
+            # 02_mio_original_ref.png (또는 가장 마지막 원본 특징 이미지) 선택
+            orig_pref = [p for p in feature_refs if "original" in p.name.lower() or "02" in p.name]
+            chosen.append(orig_pref[0] if orig_pref else feature_refs[-1])
+
+    if not chosen:
+        raise RuntimeError("미오 생성을 위한 레퍼런스 이미지가 없습니다.")
     return chosen
 
 
 def show_status() -> None:
-    print("=" * 68)
+    print("=" * 72)
     print("🧬 [Gemini Fit] 수렴진화 레퍼런스 풀 (ref_pool) 생존 현황")
-    print("=" * 68)
+    print("=" * 72)
     for label, folder in [
-        ("제미니 (ref_pool/gemini)", GEMINI_POOL),
-        ("미오   (ref_pool/mio)", MIO_POOL),
-        ("화풍   (ref_pool/gakumas_style)", STYLE_POOL),
+        ("제미니 생존 풀 (ref_pool/gemini)", GEMINI_POOL),
+        ("미오 생존 풀   (ref_pool/mio - 학원마스 화풍 진화본)", MIO_POOL),
+        ("미오 특징 참고 (ref_pool/reference_mio - 외형 특징만 추출)", REF_MIO_FEATURE_POOL),
+        ("학원마스 화풍  (ref_pool/gakumas_style - 그림체/채색 기준)", STYLE_POOL),
     ]:
         files = list_survivors(folder)
-        print(f"\n📂 {label} — 생존 이미지 {len(files)}장:")
+        print(f"\n📂 {label} — {len(files)}장:")
         for f in files:
             with Image.open(f) as im:
                 print(f"   ✅ {f.name:<38} ({im.size[0]}x{im.size[1]}, {f.stat().st_size // 1024}KB)")
 
-    print("\n" + "-" * 68)
+    print("\n" + "-" * 72)
     print("🔗 웹앱(index.html) 슬롯 연결 상태:")
     for web_file, (trainer, pool_name) in SLOT_MAPPING.items():
         pool_folder = GEMINI_POOL if trainer == "gemini" else MIO_POOL
         pool_file = pool_folder / pool_name
-        status = "🟢 정상 유지됨" if pool_file.exists() else "🔴 사용자가 삭제함 (--sync 실행 시 대체됨)"
+        status = "🟢 정상 유지됨" if pool_file.exists() else "🔴 비어있음/도태됨 (새로 진화 생성 필요)"
         print(f"   • {web_file:<24} <- {pool_name:<34} : {status}")
-    print("=" * 68)
+    print("=" * 72)
 
 
-def sync_from_pool() -> None:
-    """사용자가 ref_pool에서 삭제(도태)시킨 이미지가 있으면 살아남은 최상위 이미지로 웹앱 슬롯을 자동 대체합니다."""
-    changed = False
-    for web_file, (trainer, pool_name) in SLOT_MAPPING.items():
-        pool_folder = GEMINI_POOL if trainer == "gemini" else MIO_POOL
-        pool_file = pool_folder / pool_name
-        target_path = BASE_DIR / web_file
-        if pool_file.exists():
-            continue
-        survivors = list_survivors(pool_folder)
-        if not survivors:
-            print(f"⚠️ [{trainer}] 폴더에 남은 이미지가 없어 {web_file} 대체 불가")
-            continue
-        replacement = survivors[0]
-        shutil.copy2(replacement, target_path)
-        print(f"♻️ [도태 감지] 삭제된 '{pool_name}' 대신 생존 1순위 '{replacement.name}' -> '{web_file}' 적용 완료!")
-        changed = True
-    if not changed:
-        print("✅ 모든 웹앱 슬롯 이미지가 ref_pool 내에서 정상 생존 중입니다.")
-
-
-def evolve_generate(trainer: str, tag: str, situation_prompt: str, out_web_file: str | None = None) -> Path:
-    """살아남은 레퍼런스 풀 이미지를 Grok에 첨부하여 진화된 새 일러스트를 생성하고 풀에 추가합니다."""
-    refs = pick_evolution_refs(trainer, max_char_refs=2, include_style=True)
+def evolve_generate(trainer: str, tag: str, situation_prompt: str, out_web_file: str | None = None, pool_filename: str | None = None) -> Path:
+    refs = pick_evolution_refs(trainer)
     ref_imgs = [Image.open(r) for r in refs]
-    full_prompt = f"{BASE_STYLE_PROMPT[trainer]} Scene & Action: {situation_prompt}"
+    full_prompt = f"{BASE_STYLE_PROMPT[trainer]} Scene & Pose: {situation_prompt}"
 
-    print(f"🧬 [{trainer.upper()}] 수렴진화 생성 시작 (참조 생존 이미지 {len(refs)}장):")
+    print(f"🧬 [{trainer.upper()}] 수렴진화 생성 시작 (참조 이미지 {len(refs)}장):")
     for r in refs:
         print(f"   📎 {r.relative_to(BASE_DIR)}")
 
@@ -225,14 +216,15 @@ def evolve_generate(trainer: str, tag: str, situation_prompt: str, out_web_file:
                     before.add(src)
                     continue
 
-                # 진짜 새로 진화 생성된 이미지 저장!
                 ts = datetime.now().strftime("%m%d_%H%M%S")
                 try:
                     driver.save_screenshot(str(BASE_DIR / "grok_live_proof.png"))
                 except Exception:
                     pass
                 pool_folder = GEMINI_POOL if trainer == "gemini" else MIO_POOL
-                new_pool_path = pool_folder / f"gen_{ts}_{tag}.png"
+                pool_folder.mkdir(parents=True, exist_ok=True)
+                fname = pool_filename if pool_filename else f"gen_{ts}_{tag}.png"
+                new_pool_path = pool_folder / fname
                 cand.save(new_pool_path, format="PNG")
                 print(f"✨ [진화 성공] 레퍼런스 풀 저장 완료: {new_pool_path.relative_to(BASE_DIR)} ({cand.size})")
 
@@ -250,21 +242,18 @@ def evolve_generate(trainer: str, tag: str, situation_prompt: str, out_web_file:
 def main() -> None:
     ap = argparse.ArgumentParser(description="Grok 수렴진화 레퍼런스 풀 관리 및 생성기")
     ap.add_argument("--status", action="store_true", help="현재 살아남은 레퍼런스 풀 현황 출력")
-    ap.add_argument("--sync", action="store_true", help="폴더에서 삭제된 이미지를 감지해 생존 이미지로 웹앱 동기화")
     ap.add_argument("--trainer", choices=["gemini", "mio"], help="진화 생성할 트레이너 선택")
-    ap.add_argument("--tag", default="event", help="새로 생성될 풀 파일 태그 (예: morning, workout, cafe)")
-    ap.add_argument("--prompt", help="상황/포즈 프롬프트 (화풍 및 캐릭터 고정 프롬프트는 자동 결합됨)")
-    ap.add_argument("--out", help="웹앱에 바로 덮어쓸 파일명 (예: gemini_morning.png)")
+    ap.add_argument("--tag", default="event", help="새로 생성될 풀 파일 태그")
+    ap.add_argument("--pool-name", help="ref_pool 내에 저장할 지정 파일명")
+    ap.add_argument("--prompt", help="상황/포즈 프롬프트")
+    ap.add_argument("--out", help="웹앱에 바로 덮어쓸 파일명")
     args = ap.parse_args()
 
     if args.status:
         show_status()
         return
-    if args.sync:
-        sync_from_pool()
-        return
     if args.trainer and args.prompt:
-        evolve_generate(args.trainer, args.tag, args.prompt, args.out)
+        evolve_generate(args.trainer, args.tag, args.prompt, args.out, args.pool_name)
         return
     show_status()
 
