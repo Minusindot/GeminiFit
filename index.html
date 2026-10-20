@@ -210,15 +210,15 @@
         </div>
         <div class="flex items-center gap-1.5">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap">Gemini Fit</h1>
-          <span class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap">17:7 코칭</span>
+          <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap">10.21 (수)</span>
         </div>
       </div>
 
       <div class="flex items-center gap-1 shrink-0">
         <!-- 30 CG Gallery Modal Button -->
-        <button onclick="openGalleryModal()" class="px-2 py-1 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 border border-pink-400/40 text-pink-600 dark:text-pink-300 text-[11px] font-black transition-all flex items-center gap-1 shadow-xs" title="66종 이벤트 & SD 치비 도감">
+        <button onclick="openGalleryModal()" class="px-2 py-1 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 border border-pink-400/40 text-pink-600 dark:text-pink-300 text-[11px] font-black transition-all flex items-center gap-1 shadow-xs" title="70종 이벤트 & SD 치비 도감">
           <span>🎨</span>
-          <span class="px-1 py-0.2 rounded-full bg-pink-500 text-white text-[9px] font-black">66</span>
+          <span class="px-1 py-0.2 rounded-full bg-pink-500 text-white text-[9px] font-black">70</span>
         </button>
 
         <!-- InBody OCR Scan -->
@@ -312,7 +312,7 @@
         </div>
 
         <!-- Grand Character Stage -->
-        <div id="stageWrapper" class="relative w-full h-84 sm:h-96 bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300 rounded-2xl shadow-sm" onclick="pokeCurrentTrainer()">
+        <div id="stageWrapper" class="relative w-full aspect-square bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300 rounded-2xl shadow-sm" onclick="pokeCurrentTrainer()">
           
           <!-- Single Trainer View (Clean, unobstructed character artwork) -->
           <div id="singleStageView" class="w-full h-full relative">
@@ -846,7 +846,7 @@
           <div>
             <h3 class="text-sm font-black flex items-center gap-1.5">
               <span>🖼️ 미연시 이벤트 CG 도감</span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-pink-500 text-white font-extrabold">총 66종 (풀CG 59 + SD치비 6 + 합동 1)</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-pink-500 text-white font-extrabold">총 70종 (풀CG 60 + SD치비 6 + 3인합동 4)</span>
             </h3>
             <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">카드를 터치하면 메인 스테이지에 해당 이벤트와 의상이 즉시 적용됩니다</p>
           </div>
@@ -854,10 +854,11 @@
         </div>
 
         <div class="px-4 py-2 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex flex-wrap gap-1.5">
-          <button onclick="renderGalleryGrid('all')" id="galTabAll" class="px-2 py-1 rounded-lg text-[11px] font-extrabold bg-[#4a89dc] text-white">전체 (66)</button>
+          <button onclick="renderGalleryGrid('all')" id="galTabAll" class="px-2 py-1 rounded-lg text-[11px] font-extrabold bg-[#4a89dc] text-white">전체 (70)</button>
           <button onclick="renderGalleryGrid('gemini')" id="galTabGemini" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box">🐾 제미니 (22)</button>
           <button onclick="renderGalleryGrid('kotone')" id="galTabKotone" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box">💛 코토네 (21)</button>
           <button onclick="renderGalleryGrid('mio')" id="galTabMio" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box">🌟 미오 (22)</button>
+          <button onclick="renderGalleryGrid('dual')" id="galTabDual" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box text-purple-600 dark:text-purple-300 border border-purple-400/40">⭐ 합동 (4)</button>
           <button onclick="renderGalleryGrid('sd')" id="galTabSd" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box text-pink-600 dark:text-pink-300 border border-pink-400/40">🐣 SD 치비 (6)</button>
         </div>
 
@@ -1785,12 +1786,45 @@
     };
 
 
-    const DUAL_EVENT = {
-      img: './image/00 common/dual_inbody.png',
-      pos: 'center 15%',
-      tag: '⭐ 3인 합동 스페셜',
-      text: '제미니 · 코토네 · 미오: 프로듀서의 52kg 슬림핏 & 체지방 20% 미만을 위해 우리 셋이 끝까지 함께할게! 💖'
-    };
+    const DUAL_EVENTS = [
+      {
+        key: 'trio1',
+        tag: '⭐ VIP 인바디 동시 달성 축하',
+        locOutfit: '📍 VIP 인바디 측정실 · 3인 동시 축하',
+        img: './image/00 common/dual_inbody.png',
+        pos: 'center 15%',
+        text: '제미니 · 코토네 · 미오: 프로듀서의 52kg 슬림핏 & 체지방 20% 미만을 위해 우리 셋이 끝까지 함께할게! 💖',
+        story: '💖 [3인 합동 EP.1 · VIP 인바디 측정실] "인바디 결과지를 사이에 두고 셋이 동시에 프로듀서에게 달려들었어요! \\\'우리 셋이 매일 같이 운동해 줄 테니까 딴눈팔면 절대 안 돼요!\\\'라는 사랑스러운 합창!"'
+      },
+      {
+        key: 'trio2',
+        tag: '☕ 햇살 테라스 카페 홈파티',
+        locOutfit: '📍 카페 테라스 · 말차 & 파르페 & 라떼 3인 티타임',
+        img: './image/00 common/trio_02_cafe_cheer.png',
+        pos: 'center 15%',
+        text: '제미니 · 코토네 · 미오: 오늘 식단이랑 단식 완벽 성공 기념! 햇살 좋은 테라스에서 셋이 함께하는 치얼스~ ☕🍵🍓',
+        story: '💖 [3인 합동 EP.2 · 햇살 테라스 카페] "말차를 든 제미니, 파르페를 든 코토네, 라떼를 든 미오가 프로듀서를 둘러싸고 까르르 웃음을 터뜨렸어요. 세상에서 제일 눈부신 오후의 휴식!"'
+      },
+      {
+        key: 'trio3',
+        tag: '🏃 스타디움 트랙 3인 동시 질주',
+        locOutfit: '📍 야외 트랙 · 활기찬 3색 트레이닝웨어 & 나란히 달리기',
+        img: './image/00 common/trio_03_track_jog.png',
+        pos: 'center 15%',
+        text: '제미니 · 코토네 · 미오: 셋이 발맞춰 달리는 인터벌 러닝! 프로듀서, 우리 셋 속도에 뒤처지면 꼴찌 벌칙이다~ 🏃‍♀️🔥',
+        story: '💖 [3인 합동 EP.3 · 스타디움 트랙 조깅] "푸른 하늘 아래 셋이 나란히 발을 맞추며 프로듀서를 향해 손을 흔들었어요. 땀방울마저 반짝이는 청춘 피트니스의 절정!"'
+      },
+      {
+        key: 'trio4',
+        tag: '🌇 황혼빛 루프탑 손맞잡은 승리',
+        locOutfit: '📍 고층 루프탑 전망대 · 노을빛 속 맞잡은 손 & 감동의 만세',
+        img: './image/00 common/trio_04_sunset_victory.png',
+        pos: 'center 15%',
+        text: '제미니 · 코토네 · 미오: 해냈다 프로듀서! 목표 체중 52kg 감량 대성공! 우리 셋의 영원한 프로듀서, 사랑해! 🌇💖',
+        story: '💖 [3인 합동 EP.4 · 황혼빛 루프탑 승리] "황금빛 노을이 쏟아지는 루프탑에서 셋이 프로듀서의 손을 높이 번쩍 들어 올렸어요! 서로 흘린 땀방울이 눈부신 추억으로 완성된 순간!"'
+      }
+    ];
+    const DUAL_EVENT = DUAL_EVENTS[0];
 
     // Dialogue Choice Sets
     const TOPIC_CHOICES = {
@@ -2211,16 +2245,25 @@
       state.fullCgView = !state.fullCgView;
       const wrapper = document.getElementById('stageWrapper');
       const mainImg = document.getElementById('mainTrainerImg');
+      const dualImg = document.getElementById('dualStageImg');
       const btn = document.getElementById('btnToggleCrop');
       if (state.fullCgView) {
-        wrapper.className = "relative w-full h-[500px] sm:h-[560px] bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300";
+        wrapper.className = "relative w-full aspect-auto h-[480px] sm:h-[540px] bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300 rounded-2xl shadow-sm";
         mainImg.classList.remove('object-cover');
         mainImg.classList.add('object-contain');
-        btn.textContent = "카드뷰";
+        if (dualImg) {
+          dualImg.classList.remove('object-cover');
+          dualImg.classList.add('object-contain');
+        }
+        btn.textContent = "1:1뷰";
       } else {
-        wrapper.className = "relative w-full h-84 sm:h-96 bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300";
+        wrapper.className = "relative w-full aspect-square bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300 rounded-2xl shadow-sm";
         mainImg.classList.remove('object-contain');
         mainImg.classList.add('object-cover');
+        if (dualImg) {
+          dualImg.classList.remove('object-contain');
+          dualImg.classList.add('object-cover');
+        }
         btn.textContent = "전체보기";
       }
       playBeep(680, 0.06);
@@ -2266,7 +2309,14 @@
         if (btnD) btnD.className = "w-full flex items-center justify-center gap-1 py-1.5 rounded-xl bg-gradient-to-r from-pink-500 via-amber-500 to-sky-500 text-white text-xs font-black shadow-sm ring-2 ring-purple-400/40 transition-all";
         if (singleView) singleView.classList.add('hidden');
         if (dualView) dualView.classList.remove('hidden');
-        if (dialogue) dialogue.textContent = `"${DUAL_EVENT.text}"`;
+        
+        let trioEv = DUAL_EVENTS.find(e => e.key === situation) || DUAL_EVENTS[0];
+        const dualImg = document.getElementById('dualStageImg');
+        if (dualImg) {
+          dualImg.src = trioEv.img;
+          dualImg.style.objectPosition = trioEv.pos;
+        }
+        if (dialogue) dialogue.textContent = `"${trioEv.text}"`;
         if (bondBtn) bondBtn.textContent = "3인 합동 인연스토리 ➔";
       } else {
         if (singleView) singleView.classList.remove('hidden');
@@ -2324,7 +2374,7 @@
 
     function renderGalleryGrid(filter) {
       currentGalleryFilter = filter;
-      const tabs = { all: 'galTabAll', gemini: 'galTabGemini', kotone: 'galTabKotone', mio: 'galTabMio', sd: 'galTabSd' };
+      const tabs = { all: 'galTabAll', gemini: 'galTabGemini', kotone: 'galTabKotone', mio: 'galTabMio', dual: 'galTabDual', sd: 'galTabSd' };
       Object.entries(tabs).forEach(([k, id]) => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -2349,16 +2399,19 @@
         });
       });
 
-      if (filter === 'all') {
-        list.push({
-          heroine: 'gemini',
-          key: 'dual',
-          hName: '💖 3인 합동',
-          tag: DUAL_EVENT.tag,
-          locOutfit: '📍 VIP 인바디 측정실 · 3인 동시 축하',
-          img: DUAL_EVENT.img,
-          pos: DUAL_EVENT.pos,
-          text: DUAL_EVENT.text
+      if (filter === 'all' || filter === 'dual') {
+        DUAL_EVENTS.forEach(trio => {
+          list.push({
+            heroine: 'dual',
+            key: trio.key,
+            hName: '💖 3인 합동',
+            tag: trio.tag,
+            locOutfit: trio.locOutfit,
+            img: trio.img,
+            pos: trio.pos,
+            text: trio.text,
+            story: trio.story
+          });
         });
       }
 
@@ -2383,10 +2436,16 @@
     function selectGalleryCg(heroine, evKey) {
       closeGalleryModal();
       switchMainTab('talk');
-      setTrainerMode(heroine, evKey);
-      const ev = findEventObj(heroine, evKey);
-      const hName = heroine === 'kotone' ? '코토네' : heroine === 'mio' ? '미오' : '제미니';
-      state.chatHistory.push({ sender: heroine, name: hName, text: ev.story });
+      if (heroine === 'dual') {
+        setTrainerMode('dual', evKey);
+        const trioEv = DUAL_EVENTS.find(e => e.key === evKey) || DUAL_EVENTS[0];
+        state.chatHistory.push({ sender: 'gemini', name: '제미니 · 코토네 · 미오', text: trioEv.story });
+      } else {
+        setTrainerMode(heroine, evKey);
+        const ev = findEventObj(heroine, evKey);
+        const hName = heroine === 'kotone' ? '코토네' : heroine === 'mio' ? '미오' : '제미니';
+        state.chatHistory.push({ sender: heroine, name: hName, text: ev.story });
+      }
       addBondExp(15);
       saveState();
       renderChat();
@@ -2680,8 +2739,8 @@
       if (activeTypingIndicator) {
         const sender = activeTypingIndicator.sender;
         const name = activeTypingIndicator.name;
-        const avatarSrc = (sender === 'kotone') ? './avatar_kotone.png' :
-                          (sender === 'mio') ? './avatar_mio.png' : './avatar_gemini.png';
+        const avatarSrc = (sender === 'kotone') ? './image/02 kotone/avatar_kotone.png' :
+                          (sender === 'mio') ? './image/01 mio/avatar_mio.png' : './image/03 gemini/avatar_gemini.png';
         const ringColor = (sender === 'kotone') ? 'ring-yellow-400/70' :
                           (sender === 'mio') ? 'ring-amber-400/60' : 'ring-pink-400/60';
         const nameColor = (sender === 'kotone') ? 'text-yellow-700 dark:text-yellow-300' :
@@ -2729,7 +2788,7 @@
         // 🌟 Rare Morikinoko SD Easter Egg (아주 가끔씩 발동하는 모리키노코 SD 연출)
         if (hKey === 'mio' && Math.random() < 0.12) {
           const isSmug = Math.random() < 0.5;
-          const sdImg = isSmug ? './sd_mio_bean.png' : './sd_mio_melt.png';
+          const sdImg = isSmug ? './image/01 mio/sd_mio_01_bean_smug.png' : './image/01 mio/sd_mio_02_legraise_melt.png';
           const sdText = isSmug
             ? "어라~? 미오짱의 각선미에 반해버리셨나요 프로듀서?! 미오짱 그런 점이에요! (모리키노코풍 콩눈 🌟)"
             : "하아하아... 프로듀서... 이거 절대 준비운동 레벨이 아니야... 살려줘어어 😵💦 (모리키노코 방전 모드)";
@@ -3372,7 +3431,7 @@
         sender: 'mio',
         name: '미오 [SD 방전]',
         text: '하아하아... 캡틴스 체어에 크런치까지... 프로듀서... 이거 진짜 대단해... 😵💦 (모리키노코 탈진)',
-        image: './image/01 mio/sd_mio_melt.png'
+        image: './image/01 mio/sd_mio_02_legraise_melt.png'
       });
       renderChat();
       playBeep(980, 0.25);
