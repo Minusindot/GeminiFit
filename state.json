@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-20T15:49:33.499Z",
+  "updatedAt": "2026-10-20T15:49:36.414Z",
   "theme": "light",
   "weight": 65.7,
   "fat": 21.5,
@@ -7,7 +7,7 @@
   "bondExp": 15,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev6",
+  "currentSituation": "ev14",
   "absDone": false,
   "runDone": true,
   "runDist": 7,
@@ -27,11 +27,6 @@
     "tea": 0
   },
   "chatHistory": [
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "💖 [미오 EP.2 · 벚꽃 공원 조깅] \"벚꽃잎 흩날리는 공원을 프로듀서랑 나란히 달리니까 마치 청춘 드라마 주인공이 된 기분이야! 내일 아침에도 같이 뛸 거지?\""
-    },
     {
       "sender": "user",
       "text": "솔직히 저녁에 살짝 입이 심심한데 어떡하지 ㅠㅠ"
@@ -115,6 +110,11 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "식단 관리 실패하면 내일 덤벨 컬 5세트 추가야. 협박 아니고 진짜니까 조심해."
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "단식 골든타임 진입! 지금부터 내일 아침 10시까지가 슬림핏 치트키 구간이야."
     }
   ]
 }
