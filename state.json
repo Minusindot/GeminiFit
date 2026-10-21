@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-21T14:47:09.635Z",
+  "updatedAt": "2026-10-21T14:47:18.746Z",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
   "bondRank": 7,
-  "bondExp": 0,
+  "bondExp": 15,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev25",
+  "currentSituation": "ev3",
   "absDone": false,
   "runDone": true,
   "runDist": 6.03,
@@ -92,6 +92,15 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "흥... 부끄럽게 대놓고 말하지 마 바보야! 내가 제일 가까이서 챙겨줄 테니까 딴 데 한눈팔지 마! 🐾💘"
+    },
+    {
+      "sender": "user",
+      "text": "향긋하고 진한 커피 한 잔 마시며 대사 부스팅했어 ☕"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "순수 블랙 커피 맞지? 설탕이나 시럽 안 넣었으면 완벽해! 카페인으로 대사량 팍팍 부스팅이야!"
     }
   ]
 }
