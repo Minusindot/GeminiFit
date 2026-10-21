@@ -2938,12 +2938,22 @@
           timer = setTimeout(() => {
             try { controller.abort(new Error('요청 시간 초과(2분): 구글 서버 응답이 지연되고 있습니다.')); } catch (_) { controller.abort(); }
           }, timeoutMs);
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${cached}:generateContent?key=${cleanKey}`, {
+          let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${cached}:generateContent?key=${cleanKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(bodyPayload),
             signal: controller.signal
           });
+          if (!res.ok && res.status === 400 && bodyPayload?.generationConfig?.thinkingConfig) {
+            const retryPayload = JSON.parse(JSON.stringify(bodyPayload));
+            delete retryPayload.generationConfig.thinkingConfig;
+            res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${cached}:generateContent?key=${cleanKey}`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(retryPayload),
+              signal: controller.signal
+            });
+          }
           clearTimeout(timer);
           if (res.ok) {
             const data = await res.json();
@@ -3013,6 +3023,30 @@
           const errMsg = errData.error?.message || ('HTTP ' + res.status);
           lastError = new Error(errMsg);
 
+          // If 400 due to thinkingConfig unsupported by legacy model, retry immediately without it
+          if (res.status === 400 && bodyPayload?.generationConfig?.thinkingConfig) {
+            try {
+              const retryPayload = JSON.parse(JSON.stringify(bodyPayload));
+              delete retryPayload.generationConfig.thinkingConfig;
+              const retryRes = await fetch(`${base}?key=${cleanKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(retryPayload),
+                signal: controller.signal
+              });
+              if (retryRes.ok) {
+                clearTimeout(timer);
+                const retryData = await retryRes.json();
+                const modelMatch = base.match(/\/models\/([^:]+):/);
+                if (modelMatch && modelMatch[1]) {
+                  localStorage.setItem('GEMINI_WORKING_MODEL', modelMatch[1]);
+                  retryData._workingModel = modelMatch[1];
+                }
+                return retryData;
+              }
+            } catch (_) {}
+          }
+
           // If invalid key, throw immediately
           if (errMsg.toLowerCase().includes('api key not valid') || (res.status === 400 && errMsg.includes('API_KEY_INVALID'))) {
             throw new Error('API 키가 올바르지 않습니다. Google AI Studio에서 새로 복사해 주세요.');
@@ -3060,7 +3094,12 @@
         // Clear old cached model to discover the fastest model for this key
         localStorage.removeItem('GEMINI_WORKING_MODEL');
         const data = await fetchGeminiWithFallback(key, {
-          contents: [{ role: 'user', parts: [{ text: '안녕! 제미니 트레이너로서 한국어로 한 문장 인사해줘.' }] }]
+          contents: [{ role: 'user', parts: [{ text: '안녕! 제미니 트레이너로서 한국어로 한 문장 인사해줘.' }] }],
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 1024,
+            thinkingConfig: { thinkingBudget: 0 }
+          }
         }, 120000);
         const testReply = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim() || '응답 수신 완료';
         const workingModel = data._workingModel || localStorage.getItem('GEMINI_WORKING_MODEL') || 'Gemini Flash';
@@ -3093,7 +3132,11 @@ ${err.message}
 
       const data = await fetchGeminiWithFallback(apiKey, {
         contents: [{ role: 'user', parts: [{ text: systemPrompt + '\n\n' + promptWithContext }] }],
-        generationConfig: { temperature: 0.85, maxOutputTokens: 600 }
+        generationConfig: {
+          temperature: 0.85,
+          maxOutputTokens: 2048,
+          thinkingConfig: { thinkingBudget: 0 }
+        }
       });
 
       const rawText = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim();
