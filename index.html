@@ -215,16 +215,11 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-1 shrink-0">
-        <!-- 30 CG Gallery Modal Button -->
-        <button onclick="openGalleryModal()" class="px-2 py-1 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 border border-pink-400/40 text-pink-600 dark:text-pink-300 text-[11px] font-black transition-all flex items-center gap-1 shadow-xs" title="90종 이벤트 & SD 치비 도감">
-          <span>🎨</span>
-          <span class="px-1 py-0.2 rounded-full bg-pink-500 text-white text-[9px] font-black">90</span>
-        </button>
-
-        <!-- InBody OCR Scan -->
-        <label for="inbodyOcrInput" class="p-1.5 px-2 rounded-lg sub-box text-xs font-bold flex items-center cursor-pointer hover:border-sky-400 transition-all shadow-xs" title="삼성헬스/인바디 스캔">
-          <span>📷</span>
+      <div class="flex items-center gap-1.5 shrink-0">
+        <!-- InBody & Samsung Health OCR Camera Scan Button (Enlarged & Prominent) -->
+        <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white text-xs font-black flex items-center gap-1.5 cursor-pointer shadow-md hover:opacity-95 active:scale-95 transition-all" title="삼성헬스 / 체중 / 인바디 사진 스캔">
+          <span class="text-base leading-none">📷</span>
+          <span id="inbodyScanBtnText" class="text-xs font-black">체중 스캔</span>
         </label>
         <input type="file" id="inbodyOcrInput" accept="image/*" class="hidden" onchange="handleInbodyScan(event)">
 
@@ -637,10 +632,7 @@
               <span>📊</span>
               <span>세트 그래프</span>
             </button>
-            <button onclick="syncGymStateCloud()" id="btnGymCloudSync" class="p-1 px-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-400/30 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all whitespace-nowrap shrink-0" title="PC/모바일 운동 기록 즉시 클라우드 동기화">
-              <span>🔄</span>
-              <span>동기화</span>
-            </button>
+            
             <span id="gymProgressBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 font-black border border-sky-400/30 whitespace-nowrap shrink-0">
               0 / 5 완료
             </span>
