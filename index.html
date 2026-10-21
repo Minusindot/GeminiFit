@@ -3829,14 +3829,19 @@ ${err.message}
       const stepMatch = unified.match(/걸음[^\d]*(\d{3,6})/i) || unified.match(/(\d{4,5})\s*걸음/);
       if (stepMatch) steps = parseInt(stepMatch[1], 10);
 
-      // 8. InBody Weight & Fat
+      // 8. InBody Weight & Fat (Samsung Health / InBody multi-format parsing)
       let weight = null;
       let fat = null;
-      const labelMatch = unified.match(/(?:체중|몸무게|Weight|체\s*중)[\s:：]*([3-9]\d(?:\.\d{1,2})?)/i);
-      if (labelMatch) {
-        const val = parseFloat(labelMatch[1]);
+
+      // Rule A: Matches 체중/체성분 64.1, Weight 64.1
+      const labelRegex = /(?:체중(?:[\/\s]*체성분)?|체성분|몸무게|Weight|체\s*중)[\s\S]{0,35}?([3-9]\d(?:\.\d{1,2})?)/i;
+      const lm = unified.match(labelRegex);
+      if (lm) {
+        const val = parseFloat(lm[1]);
         if (val >= 35 && val <= 150) weight = val;
       }
+
+      // Rule B: Number preceding explicit kg unit
       if (weight === null) {
         const kgMatches = [...unified.matchAll(/([3-9]\d(?:\.\d{1,2})?)\s*(?:kg|KG)\b/gi)];
         for (const m of kgMatches) {
@@ -3844,9 +3849,42 @@ ${err.message}
           if (val >= 35 && val <= 150) { weight = val; break; }
         }
       }
-      const fatLabelMatch = unified.match(/(?:체지방률?|체지방량?|Fat)[\s:：]*([1-4]\d(?:\.\d{1,2})?)/i);
-      if (fatLabelMatch) {
-        const val = parseFloat(fatLabelMatch[1]);
+
+      // Rule C: Line-by-line inspection around '체중', '체성분', 'weight'
+      if (weight === null) {
+        const lines = unified.split('\n').map(l => l.trim()).filter(Boolean);
+        for (let i = 0; i < lines.length; i++) {
+          const lineLower = lines[i].toLowerCase();
+          if (lineLower.includes('체중') || lineLower.includes('체성분') || lineLower.includes('weight')) {
+            for (let j = i; j <= Math.min(i + 3, lines.length - 1); j++) {
+              const numMatch = lines[j].match(/([3-9]\d(?:\.\d{1,2})?)/);
+              if (numMatch) {
+                const val = parseFloat(numMatch[1]);
+                if (val >= 35 && val <= 150) {
+                  weight = val;
+                  break;
+                }
+              }
+            }
+            if (weight !== null) break;
+          }
+        }
+      }
+
+      // Rule D: Fallback for Samsung Health screenshots with decimal number
+      if (weight === null && (lower.includes('samsung health') || lower.includes('삼성헬스'))) {
+        const anyDecimalMatch = unified.match(/([4-9]\d\.\d{1,2})/);
+        if (anyDecimalMatch) {
+          const val = parseFloat(anyDecimalMatch[1]);
+          if (val >= 40 && val <= 130) weight = val;
+        }
+      }
+
+      // Body fat parsing
+      const fatLabelRegex = /(?:체지방률?|체지방량?|골격근량?|Fat)[\s\S]{0,25}?([1-4]\d(?:\.\d{1,2})?)/i;
+      const fm = unified.match(fatLabelRegex);
+      if (fm) {
+        const val = parseFloat(fm[1]);
         if (val >= 5 && val <= 50) fat = val;
       }
       if (fat === null) {
@@ -3920,18 +3958,45 @@ ${err.message}
     }
 
     function openInbodyResultFromOcr(parsed, rawText) {
-      document.getElementById('ocrWeightInput').value = parsed.weight !== null ? parsed.weight : state.weight;
-      document.getElementById('ocrFatInput').value = parsed.fat !== null ? parsed.fat : state.fat;
-      document.getElementById('ocrRawText').textContent = rawText.trim() || "(인식된 텍스트가 없습니다. 직접 수치를 입력하거나 수정할 수 있습니다.)";
-
-      const badge = document.getElementById('ocrWeightConfidence');
+      const weightInput = document.getElementById('ocrWeightInput');
+      const wBadge = document.getElementById('ocrWeightConfidence');
       if (parsed.weight !== null) {
-        badge.textContent = "✨ 체중 감지 성공";
-        badge.className = "text-[10px] text-emerald-500 font-extrabold";
+        weightInput.value = parsed.weight;
+        weightInput.placeholder = `${state.weight || 53.8}kg`;
+        if (wBadge) {
+          wBadge.textContent = `✨ 감지 성공 (${parsed.weight}kg)`;
+          wBadge.className = "text-[10px] text-emerald-500 font-extrabold";
+        }
       } else {
-        badge.textContent = "직접 확인/수정 가능";
-        badge.className = "text-[10px] text-amber-500 font-extrabold";
+        weightInput.value = '';
+        weightInput.placeholder = `${state.weight || 53.8}kg (직접 입력 / 이전값 유지)`;
+        if (wBadge) {
+          wBadge.textContent = "직접 입력 (이전값 유지)";
+          wBadge.className = "text-[10px] text-amber-500 font-extrabold";
+        }
       }
+
+      // Body fat: if not detected, leave BLANK as requested by user!
+      const fatInput = document.getElementById('ocrFatInput');
+      const fBadge = document.getElementById('ocrFatConfidence');
+      if (parsed.fat !== null) {
+        fatInput.value = parsed.fat;
+        fatInput.placeholder = `${state.fat || 21.5}%`;
+        if (fBadge) {
+          fBadge.textContent = `✨ 감지 성공 (${parsed.fat}%)`;
+          fBadge.className = "text-[10px] text-purple-500 font-extrabold";
+        }
+      } else {
+        // LEAVE BLANK!
+        fatInput.value = '';
+        fatInput.placeholder = `${state.fat || 21.5}% (미입력시 이전값 유지)`;
+        if (fBadge) {
+          fBadge.textContent = "미감지 (이전값 유지)";
+          fBadge.className = "text-[10px] text-slate-400 font-bold";
+        }
+      }
+
+      document.getElementById('ocrRawText').textContent = rawText.trim() || "(인식된 텍스트가 없습니다. 직접 수치를 입력하거나 수정할 수 있습니다.)";
       document.getElementById('ocrResultModal').classList.remove('hidden');
     }
 
@@ -4529,16 +4594,27 @@ ${err.message}
     }
 
     function applyOcrResult() {
-      const wVal = parseFloat(document.getElementById('ocrWeightInput').value);
-      const fVal = parseFloat(document.getElementById('ocrFatInput').value);
+      const wInput = document.getElementById('ocrWeightInput').value.trim();
+      const fInput = document.getElementById('ocrFatInput').value.trim();
 
+      const wVal = parseFloat(wInput);
+      const fVal = parseFloat(fInput);
+
+      let weightUpdated = false;
+      let fatUpdated = false;
+
+      // Weight: if entered/detected, update; otherwise keep previous state.weight
       if (!isNaN(wVal) && wVal >= 35 && wVal <= 150) {
         state.weight = wVal;
         document.getElementById('currentWeightInput').value = state.weight;
+        weightUpdated = true;
       }
-      if (!isNaN(fVal) && fVal >= 5 && fVal <= 60) {
+
+      // Fat: if entered/detected, update; if BLANK, keep previous state.fat!
+      if (fInput !== '' && !isNaN(fVal) && fVal >= 5 && fVal <= 60) {
         state.fat = fVal;
         document.getElementById('currentFatInput').value = state.fat;
+        fatUpdated = true;
       }
 
       updateMetrics(false);
@@ -4549,13 +4625,18 @@ ${err.message}
       setTrainerMode('dual');
 
       const wedBonusNote = isWed ? " (수요일 보너스 EXP 2배!)" : "";
-      state.chatHistory.push({ sender: 'gemini', name: '제미니', text: `체중 ${state.weight}kg, 체지방 ${state.fat}% 반영 완료! 목표 52kg까지 방심 금물이야!${wedBonusNote} 🐾` });
-      state.chatHistory.push({ sender: 'kotone', name: '코토네', text: `헤헤, 프로듀서님 인바디 기록 완료! 목표 달성하시면 코토네랑 테라스 카페 데이트 잊지 마세요~! 💛` });
-      state.chatHistory.push({ sender: 'mio', name: '미오', text: `와아~ 꾸준히 기록 챙기는 프로듀서 너무 멋있어! 이 기세로 계속 함께 가자~ 🌟` });
+      const updateMsg = fatUpdated
+        ? `체중 ${state.weight}kg, 체지방 ${state.fat}% 반영 완료!`
+        : `체중 ${state.weight}kg 반영 완료! (체지방 ${state.fat}% 이전값 유지)`;
+
+      state.chatHistory.push({ sender: 'gemini', name: '제미니', text: `${updateMsg} 목표 52kg까지 방심 금물이야!${wedBonusNote} 🐾` });
+      state.chatHistory.push({ sender: 'kotone', name: '코토네', text: `헤헤, 프로듀서님 체중 기록 완료! 성실하게 관리하시는 모습 너무 멋져요~! 💛` });
+      state.chatHistory.push({ sender: 'mio', name: '미오', text: `와아~ 오늘 체중 기록 완료! 이 기세로 계속 함께 가자~ 🌟` });
       renderChat();
 
       closeOcrModal();
       playBeep(900, 0.18);
+      showFloatingToast(`체중 ${state.weight}kg 대시보드 반영 완료!`, '🎯');
     }
 
     function updateFastingClock() {
