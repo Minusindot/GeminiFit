@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-10-21T14:43:57.393Z",
+  "updatedAt": "2026-10-21T14:44:09.817Z",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
   "bondRank": 6,
-  "bondExp": 10,
+  "bondExp": 30,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev5",
@@ -46,6 +46,15 @@
       "sender": "mio",
       "name": "미오",
       "text": "오옷, 프로듀서 등장! 기다리고 있었다고~! 🌟 오늘 하루도 파이팅 넘치게 보냈어? 땀 흘리고 스트레칭 쫙 해주면 피로가 싹 날아갈 텐데! 일단 나랑 하이파이브부터 하자! 🖐️"
+    },
+    {
+      "sender": "user",
+      "text": "7.30km 러닝 기록 봤어? 내일은 어떻게 달릴까?"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "당연히 봤지! 1시간 24분 동안 538kcal나 불태웠잖아! 내일은 6'30\"~10'00\" 가벼운 리커버리 조깅 추천이야! 🌟"
     }
   ]
 }
