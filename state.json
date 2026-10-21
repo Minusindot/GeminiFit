@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-10-21T14:44:09.817Z",
+  "updatedAt": "2026-10-21T14:44:13.914Z",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
   "bondRank": 6,
-  "bondExp": 30,
+  "bondExp": 40,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev5",
@@ -55,6 +55,11 @@
       "sender": "mio",
       "name": "미오",
       "text": "당연히 봤지! 1시간 24분 동안 538kcal나 불태웠잖아! 내일은 6'30\"~10'00\" 가벼운 리커버리 조깅 추천이야! 🌟"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "예에이! 완전 기분 최고! 우리 호흡 점점 찰떡처럼 잘 맞아가고 있어! 다음 대화도 기대해 줘 프로듀서! 🌟"
     }
   ]
 }
