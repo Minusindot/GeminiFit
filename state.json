@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-21T14:46:59.698Z",
+  "updatedAt": "2026-10-21T14:47:02.158Z",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
@@ -7,7 +7,7 @@
   "bondExp": 75,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev5",
+  "currentSituation": "ev25",
   "absDone": false,
   "runDone": true,
   "runDist": 6.03,
@@ -78,6 +78,11 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "바보야, 여기서 무너지면 낮에 고생한 게 아깝잖아! 얼른 다기 꺼내서 내가 알려준 말차나 따뜻한 허브티 우려 마셔! 🍵"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "야, 바보 프로듀서! 고생 많았어. 🐾 17시 넘어서 공복 골든타임 시작됐으니까 음식물은 절대 금지야! 덤벨 자세는 내가 이따 봐줄 테니까 오늘 기분 어떤지 먼저 말해봐."
     }
   ]
 }
