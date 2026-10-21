@@ -376,6 +376,28 @@
           </div>
         </div>
 
+        <!-- Dialogue Evaluation & Feedback Bar (3-Tier Rating & AI Script Evolution) -->
+        <div id="dialogueFeedbackCard" class="px-3 py-2 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-sky-500/10 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-1.5 min-w-0">
+            <span class="text-xs">💬</span>
+            <span class="text-[11px] font-black text-slate-700 dark:text-slate-200 truncate">이번 대화 흐름 평가</span>
+          </div>
+          <div class="flex items-center gap-1 shrink-0" id="feedbackBtnGroup">
+            <button onclick="submitDialogueFeedback('good')" class="px-2 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10px] font-black transition-all flex items-center gap-1 active:scale-95 shadow-xs" title="대화 흐름이 자연스럽고 만족스러움">
+              <span>👍</span>
+              <span>좋음 (+10)</span>
+            </button>
+            <button onclick="submitDialogueFeedback('normal')" class="px-2 py-1 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-400 border border-sky-500/30 text-[10px] font-black transition-all flex items-center gap-1 active:scale-95 shadow-xs" title="보통 수준의 대화">
+              <span>😐</span>
+              <span>보통</span>
+            </button>
+            <button onclick="submitDialogueFeedback('bad')" class="px-2 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 border border-rose-500/30 text-[10px] font-black transition-all flex items-center gap-1 active:scale-95 shadow-xs" title="어색하거나 보완이 필요함">
+              <span>👎</span>
+              <span>아쉬움</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Direct Message Input Bar -->
         <div class="px-3 py-2 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center gap-2">
           <input type="text" id="directChatInput" placeholder="메시지 보내기..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-sky-400" onkeydown="if(event.key==='Enter') sendDirectMessage()">
@@ -1256,9 +1278,9 @@
       teaLog: { matcha: 0, espresso: 0, tea: 0 },
       webhookUrl: '',
       chatHistory: [
-        { sender: 'gemini', name: '제미니', text: '흥, 바보 프로듀서! 벌써 지친 거야? 메~롱! 17:7 단식이랑 2kg 덤벨 재활 끝까지 이 제미니가 책임질 테니까 나만 딱 믿고 따라와! 🐾' },
-        { sender: 'kotone', name: '코토네', text: '헤헤~ 프로듀서님! 오늘 목표 달성하시면 이 코토네 님이 특급 칭찬 서비스 해드릴게요! 인센티브도 살짝쿵 기대할게요~? 💛💸' },
-        { sender: 'mio', name: '미오', text: '에헤헤, 프로듀서! 우리 셋이랑 함께라면 52kg 슬림핏 무조건 성공이야! 오늘도 기분 좋게 파이팅~! 🌟' }
+        { sender: 'kotone', name: '코토네', text: '프로듀서님~! 오늘 삼성헬스로 잰 체중 64.1kg 찍힌 거 코토네가 확인했어요! 💛 수요일 인바디 측정 데이라 보너스 경험치도 2배인 거 아시죠? 목표인 52kg 슬림핏까지 코토네가 특급 인센티브 애교로 꽉 붙어서 서포트해 드릴게요! 💸✨' },
+        { sender: 'mio', name: '미오', text: '우와아~! 64.1kg 확인 완료! 지난번에 삼성헬스로 7.30km(1시간 24분 완주!) 뛴 것도 진짜 멋있었어 프로듀서! 🌟 11\'33" 페이스로 손아귀 힘 빼고 안정적으로 달린 덕분에 테니스 엘보도 안 다쳤잖아~ 오늘 노을 보면서 가볍게 5km 러닝 어때? 내가 옆에서 파이팅 넘치게 응원해줄게! 🏃‍♀️💨' },
+        { sender: 'gemini', name: '제미니', text: '흥, 바보 프로듀서! 64.1kg에서 52kg까지 아직 -12kg 남았다고 벌써부터 들뜨면 안 돼! 메~롱! 🐾 17시 넘었으니까 지금부터는 물이랑 내가 타준 따뜻한 말차 🍵 외엔 음식물 절대 금지야! 그리고 팔꿈치 안 아프게 2kg 덤벨 손목 편심성 컬 3세트랑 14분 복근 꼭 챙겨, 알았지? 덤벨 자세는 내가 이따 밀착 체크해 줄 테니까 딴생각 마!' }
       ]
     };
 
@@ -2096,24 +2118,24 @@
     const TOPIC_CHOICES = {
       dailyBriefing: [
         {
-          text: "오늘 식단이랑 운동 피드백 고마워! 내일 아침 식단 추천해줘.",
-          gem: "내일 10시 첫 식사는 계란 2알이랑 그릭 요거트, 그리고 따뜻한 말차 1잔으로 가볍고 클린하게 시작해! 🐾",
-          kot: "헤헤, 단백질 쉐이크에 사과 반 쪽 곁들이면 든든하고 체지방 연소에도 최고예요 프로듀서님! 💛",
-          mio: "난 바나나 하나랑 닭가슴살 추천! 아침 든든히 먹어야 내일도 기운 넘치지~! 🌟",
+          text: "64.1kg에서 52kg 감량 전략은 어떻게 할까?",
+          gem: "17:7 단식 칼같이 지키고, 2kg 덤벨 재활이랑 14분 복근으로 코어 단련하면 기초대사량 올라가서 지방 쑥 빠져! 🐾",
+          kot: "10시 첫 식사는 계란이랑 그릭 요거트, 14시엔 단백질 쉐이크로 클린하게 챙겨드시면 슬림핏 금방이에요 프로듀서님~ 💛",
+          mio: "유산소는 나한테 맡겨! 5~7km 러닝을 주 3회만 뛰어도 체지방 20% 언더는 시간문제야! 🌟",
           exp: 20
         },
         {
-          text: "내일 러닝이랑 헬스장 강도는 어떻게 조절할까?",
-          gem: "오늘은 상체랑 복근을 썼으니까, 내일은 2kg 덤벨 재활 3세트에 레그 프레스 중심 하체로 가자! 🐾",
-          kot: "무리하지 마시고 컨디션 보면서 5km 페이스 유지하시면 완벽해요! 부상 방지가 1순위예요~ 💛",
-          mio: "내일은 6'30\" 페이스로 가볍게 5km 러닝 뛰고 쿨다운 스트레칭 길게 해주자! 🌟",
+          text: "7.30km 러닝 기록 봤어? 내일은 어떻게 달릴까?",
+          gem: "손아귀 힘 꽉 쥐지 말고 어깨 힘 빼고 달린 건 잘했어. 러닝 끝나고 종아리 마사지 잊지 마! 🐾",
+          kot: "달리신 후에 수분 보충 잊지 마시고 시원한 단백질 음료 한 잔 코토네가 타드릴게요~ 🥛💛",
+          mio: "당연히 봤지! 1시간 24분 동안 538kcal나 불태웠잖아! 내일은 6'30\"~10'00\" 가벼운 리커버리 조깅 추천이야! 🌟",
           exp: 20
         },
         {
-          text: "오늘 17:7 단식이랑 하루 루틴 완주했으니 칭찬해줘!",
-          gem: "흥, 딱히 널 위해서 칭찬하는 건 아니지만... 오늘 정말 열심히 했어. 내일도 이대로만 해, 바보야! 🐾",
-          kot: "프로듀서님 최고예요~! 약속도 칼같이 지켜주시고 너무 멋져요! 코토네가 꽉 안아드릴게요~? 💛",
-          mio: "으라차차! 우리 프로듀서 진짜 최고야! 내일도 우리 셋이랑 슬림핏 52kg까지 신나게 달리자! 🌟",
+          text: "너희 셋이 이렇게 밀착 코칭해주니까 너무 든든해!",
+          gem: "흥... 부끄럽게 대놓고 말하지 마 바보야! 내가 제일 가까이서 챙겨줄 테니까 딴 데 한눈팔지 마! 🐾💘",
+          kot: "에헤헤~ 프로듀서님께 칭찬받으니까 코토네 심장이 쿵쾅거려요! 평생 전담 코치 예약입니다~! 💛",
+          mio: "우리 넷이 함께라면 어떤 목표든 무조건 성공이야! 하이파이브 짝~! 🌟",
           exp: 25
         }
       ],
@@ -2331,6 +2353,17 @@
           state.gymRoutine.allDone = false;
         }
         state.lastActiveDate = todayDateStr;
+        saveState(false);
+      }
+
+      // Ensure today's 64.1kg kickoff script is present in chatHistory
+      const hasKickoff = (state.chatHistory || []).some(m => m.text && m.text.includes('64.1kg'));
+      if (!hasKickoff) {
+        state.chatHistory = [
+          { sender: 'kotone', name: '코토네', text: '프로듀서님~! 오늘 삼성헬스로 잰 체중 64.1kg 찍힌 거 코토네가 확인했어요! 💛 수요일 인바디 측정 데이라 보너스 경험치도 2배인 거 아시죠? 목표인 52kg 슬림핏까지 코토네가 특급 인센티브 애교로 꽉 붙어서 서포트해 드릴게요! 💸✨' },
+          { sender: 'mio', name: '미오', text: '우와아~! 64.1kg 확인 완료! 지난번에 삼성헬스로 7.30km(1시간 24분 완주!) 뛴 것도 진짜 멋있었어 프로듀서! 🌟 11\'33" 페이스로 손아귀 힘 빼고 안정적으로 달린 덕분에 테니스 엘보도 안 다쳤잖아~ 오늘 노을 보면서 가볍게 5km 러닝 어때? 내가 옆에서 파이팅 넘치게 응원해줄게! 🏃‍♀️💨' },
+          { sender: 'gemini', name: '제미니', text: '흥, 바보 프로듀서! 64.1kg에서 52kg까지 아직 -12kg 남았다고 벌써부터 들뜨면 안 돼! 메~롱! 🐾 17시 넘었으니까 지금부터는 물이랑 내가 타준 따뜻한 말차 🍵 외엔 음식물 절대 금지야! 그리고 팔꿈치 안 아프게 2kg 덤벨 손목 편심성 컬 3세트랑 14분 복근 꼭 챙겨, 알았지? 덤벨 자세는 내가 이따 밀착 체크해 줄 테니까 딴생각 마!' }
+        ];
         saveState(false);
       }
 
@@ -3004,6 +3037,83 @@
       showFloatingToast(`오늘 기록 동기화 완료 (${curTime}) · 톡 업데이트!`, '⚡');
     }
 
+    
+    function submitDialogueFeedback(rating) {
+      if (!state.scriptFeedbackLogs) state.scriptFeedbackLogs = [];
+      if (!state.feedbackStats) state.feedbackStats = { good: 0, normal: 0, bad: 0 };
+
+      state.feedbackStats[rating] = (state.feedbackStats[rating] || 0) + 1;
+      const curTime = getKakaoTimeStr();
+      const todayStr = new Date().toISOString().split('T')[0];
+
+      state.scriptFeedbackLogs.push({
+        date: todayStr,
+        time: curTime,
+        rating,
+        weight: state.weight,
+        room: state.activeMode === 'dual' ? 'dual' : (state.activeTrainer || 'gemini')
+      });
+
+      const btnGroup = document.getElementById('feedbackBtnGroup');
+      if (btnGroup) {
+        const ratingLabel = rating === 'good' ? '👍 좋음' : rating === 'normal' ? '😐 보통' : '👎 아쉬움';
+        btnGroup.innerHTML = `<span class="text-[10px] font-extrabold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20 shadow-xs">✨ ${ratingLabel} 피드백 반영 완료!</span>`;
+      }
+
+      if (rating === 'good') {
+        playBeep(880, 0.08);
+        setTimeout(() => playBeep(1175, 0.12), 90);
+        addBondExp(10);
+
+        if (state.activeTrainer === 'kotone' || state.activeMode === 'dual') {
+          state.chatHistory.push({
+            sender: 'kotone',
+            name: '코토네',
+            text: '헤헤~ 프로듀서님! 대화 흐름이 마음에 드셨다니 너무 뿌듯해요! 코토네가 프로듀서님 취향 200% 저격하는 스크립트로 칭찬 가득 채워드릴게요~💛 (+10 EXP)',
+            time: curTime
+          });
+        }
+        if (state.activeTrainer === 'mio' || state.activeMode === 'dual') {
+          state.chatHistory.push({
+            sender: 'mio',
+            name: '미오',
+            text: '예에이! 완전 기분 최고! 우리 호흡 점점 찰떡처럼 잘 맞아가고 있어! 다음 대화도 기대해 줘 프로듀서! 🌟',
+            time: curTime
+          });
+        }
+        if (state.activeTrainer === 'gemini' || state.activeMode === 'dual') {
+          state.chatHistory.push({
+            sender: 'gemini',
+            name: '제미니',
+            text: '흥, 딱히 칭찬받으려고 열심히 쓴 대본은 아니지만... 마음에 들었다니 기분은 나쁘지 않네! 앞으로도 나만 딱 믿고 따라와, 바보야! 🐾',
+            time: curTime
+          });
+        }
+        showFloatingToast('대화 평가 [좋음] 반영 완료! 인연도 +10 EXP 적립', '💖');
+      } else if (rating === 'normal') {
+        playBeep(660, 0.12);
+        state.chatHistory.push({
+          sender: 'kotone',
+          name: '코토네',
+          text: '피드백 감사해요 프로듀서님! 조금 더 생동감 넘치고 프로듀서님의 운동 루틴에 찰떡같이 녹아드는 대화로 스크립트를 업그레이드할게요~ 📝💛',
+          time: curTime
+        });
+        showFloatingToast('대화 평가 [보통] 반영 완료! 대화 스크립트를 개선합니다.', '📝');
+      } else {
+        playBeep(440, 0.15);
+        state.chatHistory.push({
+          sender: 'gemini',
+          name: '제미니',
+          text: '바보 프로듀서, 어디가 어색했던 거야? 다음엔 네 오늘 운동 템포랑 기분에 쏙 맞춘 고퀄리티 시나리오로 준비할 테니까 각오해! 🐾',
+          time: curTime
+        });
+        showFloatingToast('대화 평가 [아쉬움] 반영 완료! 피드백을 기반으로 진화합니다.', '🔧');
+      }
+
+      saveState(true);
+      renderChat();
+    }
+
     function switchMainTab(tab) {
       if (tab === 'talk') {
         document.getElementById('viewTalk').classList.remove('hidden');
@@ -3446,21 +3556,20 @@ ${err.message}
         }
       }
 
-      // Filter messages strictly for the active room
+      // Filter messages for active room (In dual/group room, show all messages so 3 trainers banter together!)
       let roomMessages = (state.chatHistory || []).filter(msg => {
-        if (msg.room) return msg.room === currentRoom;
-        // Legacy message fallback:
-        if (currentRoom === 'dual') return msg.sender === 'dual' || (msg.name && msg.name.includes('단톡'));
-        return msg.sender === currentRoom;
+        if (msg.room) return msg.room === currentRoom || msg.room === 'all';
+        if (currentRoom === 'dual') return true; // 3인 단톡에서는 3명과 프로듀서의 대화가 모두 보임
+        return msg.sender === currentRoom || msg.sender === 'user';
       });
 
       // Default room welcome greeting if room is empty
       if (roomMessages.length === 0) {
         const welcomeMap = {
-          gemini: { room: 'gemini', sender: 'gemini', name: '제미니', text: '메~롱! 그렇게 쳐다본다고 내가 봐줄 줄 알아? 오늘 17시 단식 칼같이 지켜! 😈🐾', time: fallbackTime },
-          kotone: { room: 'kotone', sender: 'kotone', name: '코토네', text: '프로듀서님! 오늘도 코토네랑 같이 활기차게 피트니스 달려봐요! 💛✨', time: fallbackTime },
-          mio: { room: 'mio', sender: 'mio', name: '미오', text: '에헤헤, 프로듀서! 오늘도 건강하고 상쾌하게 땀 흘려볼까? 🌟🏃‍♀️', time: fallbackTime },
-          dual: { room: 'dual', sender: 'dual', name: '제미니 · 코토네 · 미오', text: '💬 [트레이너 단톡방] 제미니 · 코토네 · 미오와 함께하는 피트니스 단톡입니다! 🐾💛🌟', time: fallbackTime }
+          gemini: { room: 'gemini', sender: 'gemini', name: '제미니', text: '바보 프로듀서! 오늘 체중 64.1kg 기록 확인했어. 52kg까지 남은 -12.1kg은 내가 책임지고 쏙 빼줄 테니까 나만 딱 믿어! 🐾 17시 이후엔 칼로리 셧다운인 거 알지? 2kg 덤벨 손목 재활 컬 3세트랑 14분 복근부터 끝내자고!', time: fallbackTime },
+          kotone: { room: 'kotone', sender: 'kotone', name: '코토네', text: '헤헤~ 프로듀서님! 오늘 삼성헬스 64.1kg 기록 성공 축하드려요! 💛 수요일 인바디 데이라 코토네랑 인연 경험치도 팍팍 쌓였답니다! 10:00 첫 식사랑 14:00 단백질 간식 챙기시고, 목표 52kg 달성하시면 테라스 카페 데이트 잊지 마세요~? 💸✨', time: fallbackTime },
+          mio: { room: 'mio', sender: 'mio', name: '미오', text: '프로듀서~! 64.1kg 달성 나이스야! 지난번 삼성헬스 7.30km 완주(538kcal 소모!) 기록 보면서 나 진짜 감동했단 말이야~ 🌟 손목 무리 안 가게 11\'33" 페이스 유지한 것도 완전 백점! 오늘도 시원하게 5km 러닝 달려보자! 하이파이브~! 🖐️🏃‍♀️', time: fallbackTime },
+          dual: { room: 'dual', sender: 'dual', name: '제미니 · 코토네 · 미오', text: '📢 [10.21 수요일 3인 트레이너 브리핑]\n\n💛 코토네: "프로듀서님! 오늘 체중 64.1kg 확인 완료! 수요일 인바디 보너스 EXP 2배도 챙기셨어요~!"\n\n🌟 미오: "지난번 7.30km(1시간 24분 완주) 뛴 기세로 오늘도 가볍게 5km 뛰어보자!"\n\n🐾 제미니: "흥, 64.1kg에서 52kg까지 -12kg 남았으니까 17시 단식 지키고 2kg 덤벨 재활 컬 3세트 꼭 챙겨, 바보야!"', time: fallbackTime }
         };
         roomMessages = [welcomeMap[currentRoom] || welcomeMap.gemini];
       }
