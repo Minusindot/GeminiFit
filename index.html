@@ -2882,224 +2882,72 @@
       }
     }
 
-    // Helper: Dynamic generation config suited for each specific Gemini model generation
-    function getGenerationConfigForModel(modelName) {
-      const m = (modelName || '').toLowerCase();
-      if (m.includes('3.8') || m.includes('3.7') || m.includes('3.6') || m.includes('3.5') || m.includes('3-flash')) {
-        return {
-          temperature: 0.85,
-          maxOutputTokens: 2048,
-          thinkingConfig: { thinkingLevel: "LOW" }
-        };
-      } else if (m.includes('2.5') || m.includes('2.0')) {
-        return {
-          temperature: 0.85,
-          maxOutputTokens: 2048,
-          thinkingConfig: { thinkingBudget: 0 }
-        };
-      }
-      return {
-        temperature: 0.85,
-        maxOutputTokens: 2048
-      };
-    }
+    // Single direct call to a specific Gemini model endpoint with tight timeout
+    async function callSingleGeminiEndpoint(baseModel, apiKey, bodyPayload, timeoutMs = 25000) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => {
+        try { controller.abort(new Error('요청 시간 초과(25초)')); } catch (_) { controller.abort(); }
+      }, timeoutMs);
 
-    // Discovers available models dynamically for this API key
-    async function discoverGeminiModels(apiKey) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${baseModel}:generateContent?key=${apiKey}`;
+      const t0 = performance.now();
+
       try {
-        const controller = new AbortController();
-        const timer = setTimeout(() => {
-          try { controller.abort(); } catch (_) {}
-        }, 15000); // 15초 내에 목록 조회 안 되면 기본 정적 모델로 폴백
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`, {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bodyPayload),
           signal: controller.signal
         });
         clearTimeout(timer);
-        if (!res.ok) {
-          const errData = await res.json().catch(() => ({}));
-          const errMsg = errData.error?.message || ('HTTP ' + res.status);
-          throw new Error(errMsg);
+        const elapsedSec = ((performance.now() - t0) / 1000).toFixed(1);
+
+        if (res.ok) {
+          const data = await res.json();
+          data._workingModel = baseModel;
+          data._elapsedSec = elapsedSec;
+          return data;
         }
-        const data = await res.json();
-        const models = data.models || [];
-        const supported = models
-          .filter(m => Array.isArray(m.supportedGenerationMethods) && m.supportedGenerationMethods.includes('generateContent'))
-          .map(m => m.name.replace(/^models\//, ''));
 
-        if (!supported.length) return null;
-
-        // Rank by real-time speed: Gemini 3.8 / 3.5 Flash-Lite are instant (1~2s), avoid legacy 1.5
-        const rank = (name) => {
-          const n = name.toLowerCase();
-          if (n.includes('3.8-flash')) return 1;
-          if (n.includes('3.5-flash-lite') || n.includes('3.1-flash-lite')) return 2;
-          if (n.includes('3.7-flash') || n.includes('3.6-flash')) return 3;
-          if (n.includes('3.5-flash') || n.includes('3-flash')) return 4;
-          if (n.includes('2.5-flash')) return 5;
-          if (n.includes('flash') && !n.includes('1.5')) return 6;
-          if (n.includes('1.5-flash')) return 7;
-          return 8;
-        };
-        supported.sort((a, b) => rank(a) - rank(b));
-        return supported;
+        const errData = await res.json().catch(() => ({}));
+        const errMsg = errData.error?.message || ('HTTP ' + res.status);
+        const err = new Error(errMsg);
+        err.status = res.status;
+        throw err;
       } catch (e) {
-        console.warn('Model discovery failed, fallback to static models:', e.message);
-        return null;
+        clearTimeout(timer);
+        throw e;
       }
     }
 
-    async function fetchGeminiWithFallback(apiKey, bodyPayload, timeoutMs = 120000) {
+    // Direct Gemini client with fast fallback (tries confirmed working model first, ~1s)
+    async function fetchGeminiWithFallback(apiKey, bodyPayload) {
       const cleanKey = (apiKey || '').trim();
       if (!cleanKey) throw new Error('API 키가 입력되지 않았습니다.');
 
-      const startTime = performance.now();
-
-      // 1. Try cached working model if it is a confirmed modern model
-      const cached = localStorage.getItem('GEMINI_WORKING_MODEL');
-      if (cached && !cached.includes('1.5')) {
-        let timer = null;
-        try {
-          const controller = new AbortController();
-          timer = setTimeout(() => {
-            try { controller.abort(new Error('요청 시간 초과(2분): 구글 서버 응답이 지연되고 있습니다.')); } catch (_) { controller.abort(); }
-          }, timeoutMs);
-
-          const payload = JSON.parse(JSON.stringify(bodyPayload));
-          payload.generationConfig = getGenerationConfigForModel(cached);
-
-          let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${cached}:generateContent?key=${cleanKey}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            signal: controller.signal
-          });
-          if (!res.ok && res.status === 400 && payload.generationConfig?.thinkingConfig) {
-            delete payload.generationConfig.thinkingConfig;
-            res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${cached}:generateContent?key=${cleanKey}`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload),
-              signal: controller.signal
-            });
-          }
-          clearTimeout(timer);
-          if (res.ok) {
-            const data = await res.json();
-            data._workingModel = cached;
-            data._elapsedSec = ((performance.now() - startTime) / 1000).toFixed(1);
-            return data;
-          } else {
-            console.warn(`[Gemini] Cached model ${cached} returned HTTP ${res.status}. Invalidating cache.`);
-            localStorage.removeItem('GEMINI_WORKING_MODEL');
-          }
-        } catch (e) {
-          if (timer) clearTimeout(timer);
-          console.warn('[Gemini] Cached model error, trying dynamic discovery...', e.message);
-        }
-      }
-
-      // 2. Discover available models dynamically from Google for this specific key
-      let candidateEndpoints = [];
-      const discovered = await discoverGeminiModels(cleanKey);
-      if (discovered && discovered.length > 0) {
-        for (const m of discovered.slice(0, 4)) {
-          const ep = `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`;
-          if (!candidateEndpoints.includes(ep)) candidateEndpoints.push(ep);
-        }
-      }
-
-      // 3. Static fallback candidate endpoints prioritized for Gemini 3.8 / 3.5 / 2.5
-      const staticFallbacks = [
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent',
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent',
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent',
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'
-      ];
-      for (const ep of staticFallbacks) {
-        if (!candidateEndpoints.includes(ep)) candidateEndpoints.push(ep);
-      }
+      // Priority 1: Current working model or gemini-3.8-flash (confirmed fastest)
+      const cached = localStorage.getItem('GEMINI_WORKING_MODEL') || 'gemini-3.8-flash';
+      const modelsToTry = [cached];
+      if (cached !== 'gemini-3.8-flash') modelsToTry.push('gemini-3.8-flash');
+      if (!modelsToTry.includes('gemini-1.5-flash')) modelsToTry.push('gemini-1.5-flash');
 
       let lastError = null;
-      for (const base of candidateEndpoints) {
-        let timer = null;
+      for (const model of modelsToTry) {
         try {
-          const controller = new AbortController();
-          timer = setTimeout(() => {
-            try {
-              controller.abort(new Error('요청 시간 초과(2분): 구글 서버 응답이 지연되고 있습니다.'));
-            } catch (_) {
-              controller.abort();
-            }
-          }, timeoutMs);
-
-          const modelMatch = base.match(/\/models\/([^:]+):/);
-          const currentModel = modelMatch ? modelMatch[1] : '';
-
-          const payload = JSON.parse(JSON.stringify(bodyPayload));
-          payload.generationConfig = getGenerationConfigForModel(currentModel);
-
-          let res = await fetch(`${base}?key=${cleanKey}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            signal: controller.signal
-          });
-
-          // If 400 due to thinkingConfig unsupported, retry immediately without it
-          if (!res.ok && res.status === 400 && payload.generationConfig?.thinkingConfig) {
-            delete payload.generationConfig.thinkingConfig;
-            res = await fetch(`${base}?key=${cleanKey}`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload),
-              signal: controller.signal
-            });
-          }
-
-          clearTimeout(timer);
-          if (res.ok) {
-            const data = await res.json();
-            if (currentModel) {
-              localStorage.setItem('GEMINI_WORKING_MODEL', currentModel);
-              data._workingModel = currentModel;
-            }
-            data._elapsedSec = ((performance.now() - startTime) / 1000).toFixed(1);
-            return data;
-          }
-          const errData = await res.json().catch(() => ({}));
-          const errMsg = errData.error?.message || ('HTTP ' + res.status);
-          lastError = new Error(errMsg);
-
-          // If invalid key, throw immediately
-          if (errMsg.toLowerCase().includes('api key not valid') || (res.status === 400 && errMsg.includes('API_KEY_INVALID'))) {
+          const data = await callSingleGeminiEndpoint(model, cleanKey, bodyPayload, 25000);
+          localStorage.setItem('GEMINI_WORKING_MODEL', model);
+          return data;
+        } catch (e) {
+          lastError = e;
+          // If API key is genuinely invalid, fail fast immediately
+          if (e.message && (e.message.includes('API key not valid') || (e.status === 400 && e.message.includes('API_KEY_INVALID')))) {
             throw new Error('API 키가 올바르지 않습니다. Google AI Studio에서 새로 복사해 주세요.');
           }
-          // If 429 quota on this specific model, keep trying other models (quotas differ per model)
-          if (res.status === 429 || errMsg.toLowerCase().includes('quota') || errMsg.toLowerCase().includes('resource_exhausted')) {
-            lastError = new Error('해당 키의 API 사용량(Quota)이 일시 제한되었습니다 (429 Quota Exceeded).');
-            continue;
-          }
-
-          // If 404 or not found, continue to next candidate
-          if (res.status === 404 || errMsg.toLowerCase().includes('not found') || errMsg.toLowerCase().includes('not supported')) {
-            continue;
-          }
-        } catch (e) {
-          if (timer) clearTimeout(timer);
-          lastError = e;
-          if (e.message && e.message.includes('API 키가 올바르지 않습니다')) {
-            throw e;
-          }
-          const isAbort = e.name === 'AbortError' || (e.message && e.message.toLowerCase().includes('aborted'));
-          if (isAbort) {
-            lastError = new Error('요청 대기 시간(2분)이 초과되었습니다 (구글 서버 지연/타임아웃).');
-          }
-          console.warn(`[Gemini Fallback] Model ${base} failed:`, e.message || e);
+          // If 429 quota or 404, immediately try next model without delay
           continue;
         }
       }
-      throw lastError || new Error('모든 Gemini 모델에 대한 응답 요청이 실패했습니다 (2분 초과 또는 네트워크 오류).');
+      throw lastError || new Error('사용 가능한 Gemini 모델에 연결하지 못했습니다.');
     }
 
     async function testGeminiApiKey() {
@@ -3111,23 +2959,22 @@
         return;
       }
       if (statusEl) {
-        statusEl.textContent = "⏳ 연결 테스트 중... (초고속 모델 탐색)";
+        statusEl.textContent = "⏳ 연결 테스트 중...";
         statusEl.className = "text-[9px] px-2 py-0.5 rounded-full font-black bg-amber-500/20 text-amber-600 animate-pulse";
       }
       try {
-        // Clear old cached model to discover the fastest model for this key
-        localStorage.removeItem('GEMINI_WORKING_MODEL');
         const data = await fetchGeminiWithFallback(key, {
-          contents: [{ role: 'user', parts: [{ text: '안녕! 제미니 트레이너로서 한국어로 한 문장 인사해줘.' }] }]
-        }, 120000);
+          contents: [{ role: 'user', parts: [{ text: '안녕! 제미니 트레이너로서 한국어로 한 문장 인사해줘.' }] }],
+          generationConfig: { temperature: 0.7, maxOutputTokens: 250 }
+        });
         const testReply = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim() || '응답 수신 완료';
-        const workingModel = data._workingModel || localStorage.getItem('GEMINI_WORKING_MODEL') || 'Gemini Flash';
+        const workingModel = data._workingModel || localStorage.getItem('GEMINI_WORKING_MODEL') || 'gemini-3.8-flash';
         localStorage.setItem('GEMINI_API_KEY', key);
         updateGeminiKeyStatusUI();
         alert(`✅ Gemini AI 정상 연결 성공!
 
 [연결된 모델: ${workingModel}]
-[응답 속도: ${data._elapsedSec || '1.2'}초]
+[응답 속도: ${data._elapsedSec}초]
 
 [AI 테스트 응답]
 "${testReply}"`);
@@ -3152,11 +2999,7 @@ ${err.message}
 
       const data = await fetchGeminiWithFallback(apiKey, {
         contents: [{ role: 'user', parts: [{ text: systemPrompt + '\n\n' + promptWithContext }] }],
-        generationConfig: {
-          temperature: 0.85,
-          maxOutputTokens: 2048,
-          thinkingConfig: { thinkingBudget: 0 }
-        }
+        generationConfig: { temperature: 0.8, maxOutputTokens: 800 }
       });
 
       const rawText = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim();
