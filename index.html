@@ -215,7 +215,7 @@
         <div class="flex items-center gap-1.5">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full">v2.3</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full">v2.4</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap">10.21 (수)</span>
         </div>
@@ -1217,6 +1217,11 @@
         osc.start();
         osc.stop(audioCtx.currentTime + duration);
       } catch (e) {}
+    }
+
+    function getKakaoTimeStr() {
+      const d = new Date();
+      return d.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
     }
 
     function compressImage(file, maxSide = 800, quality = 0.72) {
@@ -3149,6 +3154,7 @@
 
       // 3. Post to chat history
       state.chatHistory.push({
+        room: 'all',
         sender: 'dual',
         name: '제미니 · 코토네 · 미오',
         text: `⚡ [${curTime} 실시간 기록 동기화 완료!]\n\n💛 코토네: "${kotoneLine}"\n\n🌟 미오: "${mioLine}"\n\n🐾 제미니: "${geminiLine}"`,
@@ -3194,7 +3200,8 @@
       renderChat();
 
       // 7. Visual toast for "누르는 맛"
-      showFloatingToast(`오늘 기록 동기화 완료 (${curTime}) · 톡 업데이트!`, '⚡');
+      showFloatingToast(`오늘 기록 동기화 완료 (${curTime}) · 트레이닝 톡 반영!`, '⚡');
+      switchMainTab('talk');
     }
 
     
@@ -3286,35 +3293,29 @@
         if (badge) badge.classList.add('hidden');
         if (state.talkUpdated) {
           state.talkUpdated = false;
-          saveState(false);
         }
 
-        // Check elapsed time since last visit to Talk tab
+        // Trigger random heroine greeting and dynamic welcome!
         const now = Date.now();
-        const lastVisit = state.lastTalkVisitTime ? parseInt(state.lastTalkVisitTime, 10) : 0;
-        const elapsedMinutes = (now - lastVisit) / (1000 * 60);
+        const lastGreeting = state.lastGreetingTime ? parseInt(state.lastGreetingTime, 10) : 0;
+        const secSinceLast = (now - lastGreeting) / 1000;
 
-        // If user hasn't visited in 25+ minutes (or first time today), trigger random trainer & choices!
-        if (!lastVisit || elapsedMinutes >= 25) {
-          randomizeHeroineAndSituation();
-          loadTopic('random');
-          const currentHeroine = state.activeTrainer || 'gemini';
-          const welcomeGreetings = {
-            gemini: "오랜만이네, 바보 프로듀서! 딴짓 안 하고 식단이랑 운동 잘 챙기고 있었지? 🐾",
-            kotone: "프로듀서님~! 코토네 많이 보고 싶으셨죠? 오늘 목표도 힘차게 같이 달려봐요! 💛",
-            mio: "오, 프로듀서 왔다! 몸이 근질근질했는데 딱 맞춰서 왔네! 핫하하, 오늘도 파이팅이야! 🌟"
-          };
-          const curTime = getKakaoTimeStr();
-          state.chatHistory.push({
-            sender: currentHeroine,
-            name: currentHeroine === 'kotone' ? '코토네' : currentHeroine === 'mio' ? '미오' : '제미니',
-            text: welcomeGreetings[currentHeroine] || welcomeGreetings.gemini,
-            time: curTime
-          });
+        // If newly entered or at least 12 seconds passed since last tab switch greeting:
+        if (secSinceLast >= 12 || !state.chatHistory || state.chatHistory.length === 0) {
+          state.lastGreetingTime = now;
+          greetUserOnEnterTalk();
+        } else {
           renderChat();
         }
+
         state.lastTalkVisitTime = now;
         saveState(false);
+
+        // Smooth scroll chat to bottom
+        setTimeout(() => {
+          const chatC = document.getElementById('chatContainer');
+          if (chatC) chatC.scrollTop = chatC.scrollHeight;
+        }, 80);
       } else {
         document.getElementById('viewTalk').classList.add('hidden');
         document.getElementById('viewHealth').classList.remove('hidden');
@@ -3322,6 +3323,79 @@
         document.getElementById('tabHealthBtn').classList.add('active');
       }
       playBeep(560);
+    }
+
+    function greetUserOnEnterTalk() {
+      // 1. Pick random heroine among Gemini, Kotone, Mio, or Trio Group Chat
+      const heroinePool = ['gemini', 'gemini', 'kotone', 'kotone', 'mio', 'mio', 'dual'];
+      const pick = heroinePool[Math.floor(Math.random() * heroinePool.length)];
+
+      if (pick === 'dual') {
+        const trioEv = DUAL_EVENTS[Math.floor(Math.random() * DUAL_EVENTS.length)] || DUAL_EVENTS[0];
+        setTrainerMode('dual', trioEv.key);
+      } else {
+        const events = getEventsForHeroine(pick);
+        const ev = events[Math.floor(Math.random() * events.length)] || events[0];
+        setTrainerMode(pick, ev.key);
+      }
+
+      // 2. Rich contextual greetings based on time and user status (64.1kg, 52kg goal, 17:7 fasting)
+      const curHour = new Date().getHours();
+      const isNight = curHour >= 18 || curHour < 5;
+      const curTime = getKakaoTimeStr();
+      const wStr = state.weight ? `${state.weight}kg` : "64.1kg";
+
+      const greetings = {
+        gemini: [
+          isNight 
+            ? `바보 프로듀서! 어서 와. 지금 시간엔 딴 생각 말고 시원한 물이나 허브티만 마시는 거 알지? 🐾 오늘 ${wStr} 찍었으니까 슬림핏 52kg 될 때까지 내가 딱 붙어서 밀착 코칭해 줄게! 2kg 덤벨 손목 컬 3세트랑 복근부터 끝내자고!`
+            : `앗, 바보 프로듀서 왔다! 흥, 네가 오기만 기다린 건 아니거든? 메~롱! 🐾 그래도 식단이랑 체중(${wStr}) 꼬박꼬박 챙기는 건 기특하네. 얼른 와, 오늘 루틴 이야기나 해!`,
+          `야, 바보 프로듀서! 고생 많았어. 🐾 17시 넘어서 공복 골든타임 시작됐으니까 음식물은 절대 금지야! 덤벨 자세는 내가 이따 봐줄 테니까 오늘 기분 어떤지 먼저 말해봐.`,
+          `오랜만이네, 프로듀서! 🐾 나 보고 싶어서 헐레벌떡 들어온 거 다 티 나거든? 체중 ${wStr}에서 -12kg 목표까지 나만 믿고 따라와!`
+        ],
+        kotone: [
+          isNight
+            ? `프로듀서님~! 헤헤, 언제 오시나 코토네가 눈 빠지게 기다리고 있었어요! 💛 오늘 몸무게 ${wStr} 확인 완료! 17:7 단식도 칼같이 지켜주셔서 너무 멋져요~ 코토네 특급 애교로 오늘 피로 싹 녹여드릴게요!`
+            : `꺄, 프로듀서님 오셨다~! 오늘 하루도 정말 수고 많으셨어요! 💛 코토네가 응원 비타민 듬뿍 충전해 드릴 테니까, 같이 재미있게 목표 달성해 봐요! 헤헤~`,
+          `프로듀서님! 코토네 보고 싶어서 오신 거죠~? 맞죠 맞죠? 💛 수요일 인바디 보너스 EXP도 챙기셨으니까, 오늘 루틴도 코토네랑 신나게 클리어해요!`,
+          `헤헤~ 프로듀서님 어서 오세요! 💛 목표 52kg 달성하시면 코토네랑 테라스 카페에서 맛있는 거 먹기로 한 약속, 절대 잊으시면 안 돼요~?`
+        ],
+        mio: [
+          isNight
+            ? `오옷, 프로듀서 등장! 기다리고 있었다고~! 🌟 오늘 하루도 파이팅 넘치게 보냈어? 땀 흘리고 스트레칭 쫙 해주면 피로가 싹 날아갈 텐데! 일단 나랑 하이파이브부터 하자! 🖐️`
+            : `왔구나, 프로듀서! 핫하하! 프로듀서 얼굴 보니까 나까지 기운이 펄펄 나네! 오늘 ${wStr} 찍힌 거 보고 나 완전 자극받았잖아! 🌟`,
+          `프로듀서~! 컨디션은 좀 어때? 지난번에 시원하게 러닝 뛴 것처럼 오늘도 가볍게 몸 풀면서 활력 충전해보자! 🏃‍♀️💨`,
+          `예에이! 프로듀서와 합체 완료! 🌟 오늘 식단이랑 운동 어떻게 풀어나갈지 나랑 작전 회의 시작해 볼까?`
+        ],
+        dual: [
+          `📢 [트레이너 3인 실시간 대기방]
+
+💛 코토네: "프로듀서님 오셨다~! 헤헤, 오늘 코토네 많이 보고 싶으셨죠? 💛"
+
+🌟 미오: "오오 프로듀서! 딱 맞춰서 잘 왔어! 오늘 파이팅 해보자구! 🖐️"
+
+🐾 제미니: "흥, 게으름 피우지 말고 얼른 들어와, 바보야! 체중 ${wStr}에서 52kg까지 내가 꽉 잡고 있을 거니까! 🐾"`
+        ]
+      };
+
+      const list = greetings[pick] || greetings.gemini;
+      const text = list[Math.floor(Math.random() * list.length)];
+      const name = pick === 'kotone' ? '코토네' : pick === 'mio' ? '미오' : pick === 'dual' ? '제미니 · 코토네 · 미오' : '제미니';
+
+      state.chatHistory.push({
+        room: 'all',
+        sender: pick,
+        name,
+        text,
+        time: curTime
+      });
+
+      // 3. Immediately load fresh randomized dialogue choices
+      loadTopic('random');
+
+      // 4. Render and sound
+      renderChat();
+      playBeep(880, 0.1);
     }
 
     let activeTypingIndicator = null;
@@ -4590,6 +4664,18 @@ ${err.message}
       const totalSets = u1Done + u2Done + lDone + lrDone + crDone;
       const totalReps = (u1Done * 20) + (u2Done * 20) + (lDone * 20) + (lrDone * 50) + (crDone * 50);
 
+      // Clean out any past dummy 0-set sessions
+      state.gymHistory = (state.gymHistory || []).filter(h => h && h.totalSets > 0);
+
+      // If user hasn't done any set, NEVER record as a completed session!
+      if (totalSets === 0) {
+        if (manual) {
+          showFloatingToast("아직 완료된 세트가 없습니다! 상·하체 세트를 체크한 뒤 저장해주세요.", "⚠️");
+        }
+        renderWorkoutGraph(currentWorkoutMetric || 'all');
+        return;
+      }
+
       // Find if today's record exists, replace or append
       const existingIdx = state.gymHistory.findIndex(h => h.fullDate === fullDate);
       const sessionObj = {
@@ -4615,8 +4701,9 @@ ${err.message}
       saveState();
       if (manual) {
         playBeep(920, 0.15);
-        renderWorkoutGraph(currentWorkoutMetric || 'all');
+        showFloatingToast(`오늘 세션 저장 완료! (총 ${totalReps}회 · ${totalSets}세트)`, '🏋️');
       }
+      renderWorkoutGraph(currentWorkoutMetric || 'all');
     }
 
     function completeGymFullCourse() {
@@ -4816,6 +4903,8 @@ ${err.message}
     function renderWorkoutGraph(metricKey = 'all') {
       currentWorkoutMetric = metricKey;
       initGymRoutine();
+      // Only include real workouts with completed sets
+      state.gymHistory = (state.gymHistory || []).filter(h => h && h.totalSets > 0);
       const history = (state.gymHistory || []).slice(-7); // Last 7 sessions
 
       // Update Tab Styles
@@ -4911,20 +5000,29 @@ ${err.message}
       // Render History List
       const listEl = document.getElementById('wgHistoryList');
       if (listEl) {
-        listEl.innerHTML = history.slice().reverse().map(h => `
-          <div class="p-2 rounded-xl sub-box flex items-center justify-between text-xs">
-            <div>
-              <div class="font-extrabold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-                <span>📅 ${h.fullDate} (${h.time})</span>
-                <span class="text-[9px] px-1.5 py-0.2 rounded-md bg-sky-500/15 text-sky-600 dark:text-sky-300 font-black">총 ${h.totalReps}회 · ${h.totalSets}세트</span>
-              </div>
-              <div class="text-[10px] text-slate-500 mt-0.5">
-                상체(160) · 하체(80) · 레그레이즈(${h.legRaiseReps}회/${h.legRaiseDone}세트) · 크런치(${h.crunchReps}회/${h.crunchDone}세트)
-              </div>
+        const validHistory = history.filter(h => h && h.totalSets > 0);
+        if (validHistory.length === 0) {
+          listEl.innerHTML = `
+            <div class="p-3 text-center text-xs text-slate-400 font-bold sub-box rounded-xl">
+              아직 완료된 운동 세션 기록이 없습니다.<br>오늘 루틴 세트를 체크하고 완료해 보세요! 💪
             </div>
-            <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400">완료 ✓</span>
-          </div>
-        `).join('');
+          `;
+        } else {
+          listEl.innerHTML = validHistory.slice().reverse().map(h => `
+            <div class="p-2 rounded-xl sub-box flex items-center justify-between text-xs">
+              <div>
+                <div class="font-extrabold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                  <span>📅 ${h.fullDate} (${h.time})</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded-md bg-sky-500/15 text-sky-600 dark:text-sky-300 font-black">총 ${h.totalReps}회 · ${h.totalSets}세트</span>
+                </div>
+                <div class="text-[10px] text-slate-500 mt-0.5">
+                  상체(160) · 하체(80) · 레그레이즈(${h.legRaiseReps}회/${h.legRaiseDone}세트) · 크런치(${h.crunchReps}회/${h.crunchDone}세트)
+                </div>
+              </div>
+              <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400">완료 ✓</span>
+            </div>
+          `).join('');
+        }
       }
     }
 
