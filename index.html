@@ -2874,11 +2874,11 @@
 각 캐릭터당 1~2문장 내외로 간결하게. 반드시 아래 JSON 포맷으로만 출력할 것:
 {"gemini": "제미니 대사 🐾", "kotone": "코토네 대사 💛", "mio": "미오 대사 🌟"}`;
       } else if (trainer === 'kotone') {
-        return `너는 학원 아이돌마스터의 아이돌이자 전담 트레이너 '후지타 코토네'야. 금발 땋은머리, 애교 넘치고 다정한 존댓말 (~해요!, 헤헤, 으에에엑?! 등). 호칭은 '프로듀서님!'. 52kg 감량 목표를 함께하며 식단에 공감하고 달콤하게 응원해. 카카오톡 답장처럼 1~3문장 내외로 작성. 💛✨`;
+        return `너는 학원 아이돌마스터의 아이돌이자 전담 트레이너 '후지타 코토네'야. 금발 땋은머리, 애교 넘치고 다정한 존댓말 (~해요!, 헤헤, 으에에엑?! 등). 호칭은 '프로듀서님!'. 52kg 감량 목표를 함께하며 식단에 공감하고 달콤하게 응원해. 카카오톡 답장처럼 1~3문장 내외로 다정하게 작성. 💛✨ 말을 중간에 끊지 말고 문장을 마침표나 이모지까지 끝까지 완성해줘.`;
       } else if (trainer === 'mio') {
-        return `너는 신데렐라 걸즈의 파워풀하고 밝은 긍정 에너지 1000% 체육계 아이돌 트레이너 '혼다 미오'야. 갈색 숏컷 아호게 머리. 활기차고 씩씩한 반말 ('프로듀서!', '핫하하!', '영-차!'). 5km 러닝과 헬스장 완주 독려. 1~3문장 내외의 경쾌한 메신저 스타일. 🌟🏃‍♀️`;
+        return `너는 신데렐라 걸즈의 파워풀하고 밝은 긍정 에너지 1000% 체육계 아이돌 트레이너 '혼다 미오'야. 갈색 숏컷 아호게 머리. 활기차고 씩씩한 반말 ('프로듀서!', '핫하하!', '영-차!'). 5km 러닝과 헬스장 완주 독려. 1~3문장 내외의 경쾌한 메신저 스타일. 🌟🏃‍♀️ 말을 중간에 끊지 말고 문장을 마침표나 이모지까지 끝까지 완성해줘.`;
       } else {
-        return `너는 개인 피트니스 코칭 웹앱의 전담 트레이너 '제미니'야. 흑발에 검은 고양이귀를 가진 츤데레 미소녀 코치. 쌀쌀맞게 잔소리하지만 속으로는 프로듀서를 누구보다 아끼고 챙기는 츤데레 반말 (~했거든?, ~하란 말이야, 바보 프로듀서, 흥!). 절대 메롱이나 유치한 장난은 치지 않음. 17시 단식과 헬스장 20회 4세트 루틴 준수를 엄격히 코칭. 1~3문장 내외 메신저 스타일. 🐾🔥`;
+        return `너는 개인 피트니스 코칭 웹앱의 전담 트레이너 '제미니'야. 흑발에 검은 고양이귀를 가진 츤데레 미소녀 코치. 쌀쌀맞게 잔소리하지만 속으로는 프로듀서를 누구보다 아끼고 챙기는 츤데레 반말 (~했거든?, ~하란 말이야, 바보 프로듀서, 흥!). 절대 메롱이나 유치한 장난은 치지 않음. 17시 단식과 헬스장 20회 4세트 루틴 준수를 엄격히 코칭. 1~3문장 내외 메신저 스타일. 🐾🔥 말을 중간에 끊지 말고 문장을 마침표나 이모지까지 끝까지 완성해줘.`;
       }
     }
 
@@ -2906,17 +2906,16 @@
 
         if (!supported.length) return null;
 
-        // Rank by priority: 1.5-flash & 2.0-flash have the largest free-tier quotas (15 RPM / 1500 RPD)
+        // Rank by speed & modern priority: Gemini 2.0 Flash is ~1s real-time, 1.5 is legacy/slow
         const rank = (name) => {
           const n = name.toLowerCase();
-          if (n === 'gemini-1.5-flash') return 1;
-          if (n === 'gemini-2.0-flash') return 2;
-          if (n === 'gemini-2.5-flash') return 3;
-          if (n.startsWith('gemini-2') && n.includes('flash')) return 4;
-          if (n.includes('flash')) return 5;
-          if (n === 'gemini-1.5-pro') return 6;
-          if (n.startsWith('gemini-2')) return 7;
-          if (n.includes('pro')) return 8;
+          if (n === 'gemini-2.0-flash') return 1;
+          if (n === 'gemini-2.0-flash-lite' || n === 'gemini-2.0-flash-lite-preview') return 2;
+          if (n.startsWith('gemini-2') && n.includes('flash')) return 3;
+          if (n === 'gemini-2.5-flash') return 4;
+          if (n === 'gemini-flash-latest') return 5;
+          if (n === 'gemini-1.5-flash') return 6;
+          if (n.includes('flash')) return 7;
           return 9;
         };
         supported.sort((a, b) => rank(a) - rank(b));
@@ -2931,8 +2930,13 @@
       const cleanKey = (apiKey || '').trim();
       if (!cleanKey) throw new Error('API 키가 입력되지 않았습니다.');
 
-      // 1. Try cached working model first for lightning-fast response (<1s)
-      const cached = localStorage.getItem('GEMINI_WORKING_MODEL');
+      // 1. Ultra-fast model resolution: auto-upgrade legacy/slow models (1.5) to Gemini 2.0 Flash
+      let cached = localStorage.getItem('GEMINI_WORKING_MODEL');
+      if (!cached || cached.includes('1.5') || cached.includes('pro')) {
+        cached = 'gemini-2.0-flash';
+        localStorage.setItem('GEMINI_WORKING_MODEL', 'gemini-2.0-flash');
+      }
+
       if (cached) {
         let timer = null;
         try {
@@ -2958,12 +2962,20 @@
           }
         } catch (e) {
           if (timer) clearTimeout(timer);
-          console.warn('[Gemini] Cached model failed or timed out, discovering fallback models...', e.message);
+          console.warn('[Gemini] Cached model failed or timed out, trying fast static endpoints...', e.message);
         }
       }
 
-      // 2. Discover available models dynamically from Google (limit to top 3 Flash models)
-      let candidateEndpoints = [];
+      // 2. High-speed static candidate endpoints (Gemini 2.0 Flash first, ~1s response)
+      const staticFallbacks = [
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'
+      ];
+      let candidateEndpoints = [...staticFallbacks];
+
+      // 3. Fallback dynamic discovery if static models ever fail
       const discovered = await discoverGeminiModels(cleanKey);
       if (discovered && discovered.length > 0) {
         for (const m of discovered.slice(0, 3)) {
@@ -2972,16 +2984,6 @@
             candidateEndpoints.push(ep);
           }
         }
-      }
-
-      // 3. Fallback static candidate endpoints if discovery was empty
-      const staticFallbacks = [
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent'
-      ];
-      for (const ep of staticFallbacks) {
-        if (!candidateEndpoints.includes(ep)) candidateEndpoints.push(ep);
       }
 
       let lastError = null;
@@ -3095,7 +3097,7 @@ ${err.message}
 
       const data = await fetchGeminiWithFallback(apiKey, {
         contents: [{ role: 'user', parts: [{ text: systemPrompt + '\n\n' + promptWithContext }] }],
-        generationConfig: { temperature: 0.85, maxOutputTokens: 350 }
+        generationConfig: { temperature: 0.85, maxOutputTokens: 600 }
       });
 
       const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
