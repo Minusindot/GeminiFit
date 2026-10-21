@@ -215,7 +215,7 @@
         <div class="flex items-center gap-1.5">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full">v2.5</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full">v2.6</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap">10.21 (수)</span>
         </div>
@@ -2156,21 +2156,37 @@
           gem: "17:7 단식 철저히 지키고 🐾||2kg 덤벨 재활이랑 14분 복근으로 코어 잡으면 지방은 알아서 타. 나만 믿어!",
           kot: "10시 첫 식사는 계란이랑 요거트! 💛||14시엔 단백질 챙기시면 슬림핏 52kg 금방이에요 프로듀서님~",
           mio: "유산소는 나한테 맡겨! 🏃‍♀️💨||5~7km 러닝 주 3회만 뛰어도 체지방 20% 언더는 금방이야!",
-          exp: 20
+          exp: 20,
+          group: [
+            { sender: 'kotone', name: '코토네', text: '10시 첫 식사는 계란이랑 요거트로 클린하게 챙기면 슬림핏 52kg 금방이에요! 💛', delay: 450 },
+            { sender: 'gemini', name: '제미니', text: '말은 쉽지. 17시 이후에 배고프다고 야식 먹으면 다 끝장이거든? 🐾', delay: 650 },
+            { sender: 'mio', name: '미오', text: '핫하하! 배고플 땐 나랑 5km 뛰고 기절하면 꿀잠 각이지! 🌟', delay: 600 },
+            { sender: 'gemini', name: '제미니', text: '야, 밤에 뛰면 각성돼서 잠 안 온다고 했잖아 바보야 🐾', delay: 600 }
+          ]
         },
         {
           text: "러닝 뛰고 왔어! 내일은 어떻게 달릴까?",
           gem: "손아귀 힘 빼고 달린 건 잘했어 🐾||러닝 끝나고 종아리 마사지 잊지 말고 푹 쉬어.",
           kot: "시원한 단백질 음료 한 잔 코토네가 타드릴게요~ 🥛💛||오늘 흘린 땀방울만큼 프로듀서님 더 멋져지셨어요!",
           mio: "최고였어 프로듀서!! 🌟||내일은 가볍게 6분 30초~9분대 리커버리 조깅으로 몸 풀자!",
-          exp: 20
+          exp: 20,
+          group: [
+            { sender: 'mio', name: '미오', text: '대박 대박!! 🌟||오늘 페이스 완전 예술이었어 프로듀서!', delay: 450 },
+            { sender: 'gemini', name: '제미니', text: '손아귀 힘 빼고 달린 건 잘했네 🐾||근데 뛰고 나서 종아리 폼롤러는 제대로 했어?', delay: 650 },
+            { sender: 'kotone', name: '코토네', text: '헤헤, 코토네가 시원한 단백질 음료 타드릴 테니까 마시면서 푹 쉬세요~ 🥛💛', delay: 600 }
+          ]
         },
         {
           text: "너희 셋이 이렇게 밀착 코칭해주니까 든든해!",
           gem: "흥... 부끄럽게 대놓고 말하지 마, 바보야! 🐾💘||내가 제일 가까이서 챙겨줄 테니까 딴 데 한눈팔지 마.",
           kot: "에헤헤~ 프로듀서님 칭찬에 코토네 심쿵했어요! 💛||평생 전담 코치 예약 도장 쾅쾅이에요~!",
           mio: "우리 넷이 함께라면 52kg 무조건 성공이지! 🌟||하이파이브 짝~! 오늘도 내일도 함께 달리자구!",
-          exp: 25
+          exp: 25,
+          group: [
+            { sender: 'gemini', name: '제미니', text: '흥... 부끄럽게 단톡방에서 대놓고 말하지 마, 바보야! 🐾💘', delay: 500 },
+            { sender: 'kotone', name: '코토네', text: '에헤헤~ 프로듀서님 칭찬에 코토네 심쿵했어요! 💛', delay: 600 },
+            { sender: 'mio', name: '미오', text: '우리 넷이 함께라면 52kg 무조건 성공이지! 하이파이브 짝~! 🌟', delay: 600 }
+          ]
         }
       ],
       diet: [
@@ -2179,21 +2195,34 @@
           sit: 'ev1', exp: 15,
           gem: "오... 바보 프로듀서 치고는 제법이네? 🐾||근손실 없이 체지방만 쏙 빼려면 단백질은 필수야. 칭찬해 줄게!",
           kot: "와아~ 프로듀서님 성실하셔라! 💛||이렇게 예쁘게 식단 지키시면 코토네가 특급 칭찬 도장 찍어드릴게요!",
-          mio: "나이스 프로듀서! 완전 최고야 🌟||역시 잘 챙겨 먹어야 달릴 때도 힘이 팍팍 나지!"
+          mio: "나이스 프로듀서! 완전 최고야 🌟||역시 잘 챙겨 먹어야 달릴 때도 힘이 팍팍 나지!",
+          group: [
+            { sender: 'kotone', name: '코토네', text: '와아~ 프로듀서님 성실하셔라! 💛||코토네가 특급 칭찬 도장 찍어드릴게요!', delay: 450 },
+            { sender: 'gemini', name: '제미니', text: '야 코토네, 칭찬만 너무 퍼주지 마 🐾||기특하긴 하지만 17시 공복까지 버텨야 진짜 성공이거든?', delay: 700 },
+            { sender: 'kotone', name: '코토네', text: '에이~ 제미니 짱도 아까 단백질 챙긴 거 보고 귀 쫑긋거렸으면서! 헤헤 💛', delay: 650 }
+          ]
         },
         {
           text: "17시 칼같이 식사 마감! 공복 골든타임 시작할게.",
           sit: 'ev5', exp: 20,
           gem: "아주 좋아. 지금부터 내일 아침까지가 진짜 승부처야 🌙||배고프면 따뜻한 물이나 차 우려 마셔. 버텨봐!",
           kot: "헤헤, 프로듀서님 의지력 대박이에요! 💛||야식 참으신 만큼 살도 쏙 빠지고 코토네랑 가까워지는 거예요~",
-          mio: "와아~ 역시 우리 프로듀서! 멋있다! 💕||내일 아침에 체중계 올라갈 때 나까지 설레는 거 있지?"
+          mio: "와아~ 역시 우리 프로듀서! 멋있다! 💕||내일 아침에 체중계 올라갈 때 나까지 설레는 거 있지?",
+          group: [
+            { sender: 'gemini', name: '제미니', text: '아주 좋아. 지금부터 내일 아침까지가 진짜 승부처야 🌙||배고프면 따뜻한 물이나 차 우려 마셔. 버텨봐!', delay: 500 },
+            { sender: 'mio', name: '미오', text: '와아~ 역시 우리 프로듀서! 멋있다! 💕||내일 아침 체중계 올라갈 때 나까지 설레는 거 있지?', delay: 650 }
+          ]
         },
         {
           text: "저녁에 살짝 입이 심심한데 어떡하지 ㅠㅠ",
           sit: 'ev2', exp: 10,
           gem: "바보야, 여기서 무너지면 낮에 고생한 게 아깝잖아! 🐾||얼른 물이나 내가 알려준 말차 우려 마셔. 딴생각 금지!",
           kot: "안 돼요 프로듀서님! 지금 참으셔야 해요 🥺||내일 코토네가 애교 백 번 보여드릴 테니까 꾹 참기예요~!",
-          mio: "으앙 배고프겠다 ㅠㅠ 그래도 조금만 참자! 🌟||물 한 잔 마시고 나랑 가볍게 스트레칭하면서 기분 전환하자!"
+          mio: "으앙 배고프겠다 ㅠㅠ 그래도 조금만 참자! 🌟||물 한 잔 마시고 나랑 가볍게 스트레칭하면서 기분 전환하자!",
+          group: [
+            { sender: 'kotone', name: '코토네', text: '안 돼요 프로듀서님! 지금 참으셔야 해요 🥺||내일 코토네가 애교 백 번 보여드릴 테니까 꾹 참기예요~!', delay: 500 },
+            { sender: 'gemini', name: '제미니', text: '바보야, 여기서 무너지면 낮에 고생한 게 아깝잖아 🐾||얼른 물이나 내가 타준 말차 마셔. 딴생각 금지!', delay: 650 }
+          ]
         }
       ],
       tea: [
@@ -2202,21 +2231,34 @@
           sit: 'ev2', exp: 15,
           gem: "말차 제대로 챙겼네 🐾||카테킨 성분이 체지방 팍팍 태워줄 거야. 합격!",
           kot: "향긋한 말차 향 너무 좋아요 프로듀서님~ 💛||코토네도 옆에서 한 모금만 주시면 안 돼요? 히히",
-          mio: "마음까지 차분해지고 활력 충전 완료! 🍵🌟||이제 나랑 다음 미션 달릴 준비 됐지?"
+          mio: "마음까지 차분해지고 활력 충전 완료! 🍵🌟||이제 나랑 다음 미션 달릴 준비 됐지?",
+          group: [
+            { sender: 'gemini', name: '제미니', text: '말차 제대로 챙겼네 🐾||카테킨 성분이 체지방 팍팍 태워줄 거야. 합격!', delay: 500 },
+            { sender: 'kotone', name: '코토네', text: '향긋한 말차 향 너무 좋아요 프로듀서님~ 💛||코토네도 옆에서 한 모금만 주시면 안 돼요? 히히', delay: 650 },
+            { sender: 'gemini', name: '제미니', text: '야 코토네, 네 찻잔은 저기 있잖아 🐾', delay: 550 }
+          ]
         },
         {
           text: "향긋한 블랙 커피로 대사 부스팅했어 ☕",
           sit: 'ev3', exp: 15,
           gem: "시럽 안 넣은 순수 블랙 맞지? 🐾||카페인 파워로 대사량 끌어올려서 지방 태우자고!",
           kot: "시원하고 향긋한 커피 타임~! ☕💛||프로듀서님 집중하시는 모습 볼 때마다 코토네 반해요!",
-          mio: "커피로 에너지 풀 충전 완료! 🌟||자자, 이제 몸 풀고 신나게 달려볼까 프로듀서?"
+          mio: "커피로 에너지 풀 충전 완료! 🌟||자자, 이제 몸 풀고 신나게 달려볼까 프로듀서?",
+          group: [
+            { sender: 'gemini', name: '제미니', text: '시럽 안 넣은 순수 블랙 맞지? 🐾||카페인 파워로 대사량 끌어올려서 지방 태우자고!', delay: 500 },
+            { sender: 'mio', name: '미오', text: '커피로 에너지 풀 충전 완료! 🌟||자자, 이제 몸 풀고 신나게 달려볼까 프로듀서?', delay: 650 }
+          ]
         },
         {
           text: "단백질 음료 시원하게 마시며 보충 완료! 🥛",
           sit: 'ev14', exp: 15,
           gem: "단백질 음료 야무지게 챙겼네 🐾||근손실 없이 슬림 탄탄 라인 만들려면 단백질은 필수야. 칭찬해!",
           kot: "프로듀서님 단백질 충전 나이스예요! 💛||코토네랑 건강한 스무디 데이트도 꼭 가요~",
-          mio: "근육 합성 골든타임 대성공! 🔥🌟||다음 세트도 힘차게 가보자고!"
+          mio: "근육 합성 골든타임 대성공! 🔥🌟||다음 세트도 힘차게 가보자고!",
+          group: [
+            { sender: 'kotone', name: '코토네', text: '프로듀서님 단백질 충전 나이스예요! 💛||코토네랑 건강한 스무디 데이트도 꼭 가요~', delay: 500 },
+            { sender: 'mio', name: '미오', text: '근육 합성 골든타임 대성공! 🔥🌟||다음 세트도 힘차게 가보자고!', delay: 600 }
+          ]
         }
       ],
       workout: [
@@ -2225,21 +2267,34 @@
           sit: 'ev2', exp: 20,
           gem: "손목에 무리 안 가게 잘 달렸어? 🐾||체지방 태우는 데는 러닝만한 게 없지. 아주 잘했어!",
           kot: "프로듀서님 체력 진짜 아이돌급이에요! 💛||시원한 물이랑 수건 여기 대령했습니다 프로듀서님~",
-          mio: "완주 축하해 프로듀서!! 🌟||바람 가르면서 달릴 때 진짜 최고였지? 하이파이브 짝!"
+          mio: "완주 축하해 프로듀서!! 🌟||바람 가르면서 달릴 때 진짜 최고였지? 하이파이브 짝!",
+          group: [
+            { sender: 'mio', name: '미오', text: '완주 축하해 프로듀서!! 🌟||바람 가르면서 달릴 때 진짜 최고였지? 하이파이브 짝!', delay: 450 },
+            { sender: 'gemini', name: '제미니', text: '손목에 무리 안 가게 잘 달렸어? 🐾||체지방 태우는 데는 러닝만한 게 없지. 아주 잘했어.', delay: 650 }
+          ]
         },
         {
           text: "2kg 덤벨 손목 편심성 재활 컬 3세트 완료! 🩹",
           sit: 'ev3', exp: 20,
           gem: "내릴 때 3~4초 천천히 버틴 거 맞지? 🐾||이리 와 봐. 손목 무리 안 갔는지 내가 직접 만져줄게.",
           kot: "재활 운동까지 챙기시는 성실함... 역시 코토네의 프로듀서님! 💛||안 아프고 건강하셔야 해요~",
-          mio: "나이스 프로듀서! 꾸준함이 챔피언의 비결이지! 🌟||팔꿈치 100% 나을 때까지 나랑 천천히 가자!"
+          mio: "나이스 프로듀서! 꾸준함이 챔피언의 비결이지! 🌟||팔꿈치 100% 나을 때까지 나랑 천천히 가자!",
+          group: [
+            { sender: 'gemini', name: '제미니', text: '내릴 때 3~4초 천천히 버틴 거 맞지? 🐾||이리 와 봐. 손목 무리 안 갔는지 내가 직접 만져줄게.', delay: 500 },
+            { sender: 'kotone', name: '코토네', text: '재활 운동까지 챙기시는 성실함... 역시 코토네의 프로듀서님! 💛||안 아프고 건강하셔야 해요~', delay: 650 }
+          ]
         },
         {
           text: "14분 복근 루틴 끝! 배가 당겨온다 🔥",
           sit: 'ev4', exp: 20,
           gem: "코어 자극 제대로 왔지? 🐾||이 기세면 선명한 11자 복근 금방이야. 아주 칭찬해!",
           kot: "우와아~ 14분 복근 완주 대단해요! 💛||프로듀서님 복근 생기시면 코토네가 제일 먼저 구경할래요~ 헤헤",
-          mio: "복근 불태우기 대성공! 🔥🌟||배에 힘 빡 들어간 그 느낌 그대로 내일도 파이팅이야!"
+          mio: "복근 불태우기 대성공! 🔥🌟||배에 힘 빡 들어간 그 느낌 그대로 내일도 파이팅이야!",
+          group: [
+            { sender: 'gemini', name: '제미니', text: '코어 자극 제대로 왔지? 🐾||이 기세면 선명한 11자 복근 금방이야. 아주 칭찬해!', delay: 450 },
+            { sender: 'mio', name: '미오', text: '복근 불태우기 대성공! 🔥🌟||배에 힘 빡 들어간 그 느낌 그대로 내일도 파이팅이야!', delay: 600 },
+            { sender: 'kotone', name: '코토네', text: '우와아~ 프로듀서님 복근 생기시면 코토네가 제일 먼저 구경할래요~ 헤헤 💛', delay: 650 }
+          ]
         }
       ],
       gym: [
@@ -2248,21 +2303,34 @@
           sit: 'ev1', exp: 25,
           gem: "오... 풀코스 정석대로 다 돌았네? 🐾||상체에 하체, 캡틴스 체어랑 크런치까지! 진짜 기특해, 바보야.",
           kot: "와아아~! 헬스장 풀코스 정복! 💛||프로듀서님 체력이 나날이 센터 아이돌급으로 진화하고 계세요~!",
-          mio: "대박 대박!! 땀 쫙 빼고 최고지? 🌟||하이파이브 짝~! 완전 멋져 프로듀서!"
+          mio: "대박 대박!! 땀 쫙 빼고 최고지? 🌟||하이파이브 짝~! 완전 멋져 프로듀서!",
+          group: [
+            { sender: 'gemini', name: '제미니', text: '오... 풀코스 정석대로 다 돌았네? 🐾||상체에 하체, 캡틴스 체어랑 크런치까지! 진짜 기특해, 바보야.', delay: 500 },
+            { sender: 'mio', name: '미오', text: '대박 대박!! 땀 쫙 빼고 최고지? 🌟||하이파이브 짝~! 완전 멋져 프로듀서!', delay: 650 },
+            { sender: 'kotone', name: '코토네', text: '와아아~! 헬스장 풀코스 정복! 💛||프로듀서님 체력이 나날이 센터 아이돌급으로 진화하고 계세요~!', delay: 650 }
+          ]
         },
         {
           text: "캡틴스 체어 레그레이즈로 하복부 자극 팍팍! 💥",
           sit: 'ev4', exp: 20,
           gem: "팔꿈치 패드에 체중 잘 실었지? 🐾||손목에 무리 안 주면서 하복부만 접어 올리는 최고의 치트키야.",
           kot: "코토네가 옆에서 봤는데 반동 1도 없이 완벽한 폼이었어요! 💛||11자 복근 예약 완료!",
-          mio: "하복부 찢어지는 자극 최고지! 🌟||코어가 단단해지면 달리기 페이스도 엄청 안정된다구~"
+          mio: "하복부 찢어지는 자극 최고지! 🌟||코어가 단단해지면 달리기 페이스도 엄청 안정된다구~",
+          group: [
+            { sender: 'gemini', name: '제미니', text: '팔꿈치 패드에 체중 잘 실었지? 🐾||손목에 무리 안 주면서 하복부만 접어 올리는 최고의 치트키야.', delay: 500 },
+            { sender: 'kotone', name: '코토네', text: '코토네가 옆에서 봤는데 반동 1도 없이 완벽한 폼이었어요! 💛||11자 복근 예약 완료!', delay: 650 }
+          ]
         },
         {
           text: "크런치 20개로 상복부까지 쥐어짜기 끝! 🧘",
           sit: 'ev6', exp: 20,
           gem: "상체 무리하게 꺾지 않고 배꼽만 쏙 말아 올렸네 🐾||체지방 20% 언더가 이제 코앞이야!",
           kot: "후- 후- 호흡하시는 프로듀서님 보면서 코토네도 같이 복근 힘줬답니다! 💛||너무 멋져요~",
-          mio: "크런치 끝내고 바닥에 누웠을 때의 그 쾌감! 🌟||우리 둘 다 오늘 진짜 최고였어!"
+          mio: "크런치 끝내고 바닥에 누웠을 때의 그 쾌감! 🌟||우리 둘 다 오늘 진짜 최고였어!",
+          group: [
+            { sender: 'mio', name: '미오', text: '크런치 끝내고 바닥에 누웠을 때의 그 쾌감! 🌟||우리 둘 다 오늘 진짜 최고였어!', delay: 450 },
+            { sender: 'gemini', name: '제미니', text: '상체 무리하게 꺾지 않고 배꼽만 쏙 말아 올렸네 🐾||체지방 20% 언더가 이제 코앞이야!', delay: 650 }
+          ]
         }
       ],
       date: [
@@ -2271,21 +2339,37 @@
           sit: 'ev3', exp: 25,
           gem: "뭐, 뭐야 갑자기...?! 🐾💘||이번 주 단식이랑 운동 성실히 했으니까... 특별히 손잡고 어울려 줄게!",
           kot: "네에에?! 데이트요?! 💛||코토네가 제일 예쁜 베레모 쓰고 갈 테니까 맛있는 디저트 카페 가요~!",
-          mio: "진짜지 프로듀서?! 나 완전 신나!! 🌟💕||예쁜 원피스 입고 기다릴 테니까 노을 지는 바닷가 걷자!"
+          mio: "진짜지 프로듀서?! 나 완전 신나!! 🌟💕||예쁜 원피스 입고 기다릴 테니까 노을 지는 바닷가 걷자!",
+          group: [
+            { sender: 'gemini', name: '제미니', text: '뭐, 뭐야 갑자기...?! 🐾💘||이번 주 단식이랑 운동 성실히 했으니까... 특별히 손잡고 어울려 줄게!', delay: 500 },
+            { sender: 'kotone', name: '코토네', text: '잠깐만요 제미니 짱! 💛||코토네가 먼저 디저트 카페 가기로 찜했거든요?! 새치기 금지예요~!', delay: 650 },
+            { sender: 'mio', name: '미오', text: '에헤헤 둘 다 다투지 마! 다 같이 노을 지는 바닷가 걷는 게 제일 신나잖아! 🌟💕', delay: 650 },
+            { sender: 'gemini', name: '제미니', text: '야! 넷이 가는 건 데이트가 아니잖아 바보야 🐾', delay: 600 }
+          ]
         },
         {
           text: "요즘 너희 덕분에 운동이랑 식단이 매일 설레고 즐거워!",
           sit: 'ev5', exp: 25, dualReply: true,
           gem: "흥... 그렇게 솔직하게 말하면 부끄럽잖아, 바보야! 🐾||내가 제일 가까이서 챙겨줄 테니까 한눈팔지 마.",
           kot: "에헤헤~ 프로듀서님 말씀에 코토네 심장이 보너스 탄 것처럼 두근거려요! 💛||평생 전담 코치 할래요!",
-          mio: "감동이야 프로듀서~! 🌟💖||우리 넷이 함께라면 어떤 목표든 무조건 성공이야! 사랑해~"
+          mio: "감동이야 프로듀서~! 🌟💖||우리 넷이 함께라면 어떤 목표든 무조건 성공이야! 사랑해~",
+          group: [
+            { sender: 'kotone', name: '코토네', text: '에헤헤~ 프로듀서님 말씀에 코토네 심장이 보너스 탄 것처럼 두근거려요! 💛||평생 전담 코치 할래요!', delay: 500 },
+            { sender: 'gemini', name: '제미니', text: '흥... 그렇게 솔직하게 말하면 부끄럽잖아, 바보야 🐾||내가 제일 가까이서 챙겨줄 테니까 한눈팔지 마.', delay: 650 },
+            { sender: 'mio', name: '미오', text: '감동이야 프로듀서~! 🌟💖||우리 넷이 함께라면 어떤 목표든 무조건 성공이야! 사랑해~', delay: 650 }
+          ]
         },
         {
           text: "오늘 정말 다들 세상에서 제일 예쁘고 최고야!",
           sit: 'ev4', exp: 20,
           gem: "흥, 당연하지! 🐾✨||흑발 롱헤어에 고양이 귀 달고 코칭해 주는 트레이너가 흔한 줄 알아? 바보!",
           kot: "헤헤헤~! 프로듀서님 방금 말씀 녹음해 뒀으니까 무르기 없기예요~! 💛",
-          mio: "와하하, 프로듀서한테 칭찬받으니까 하늘 날아갈 것 같아! 🌟||하이파이브!"
+          mio: "와하하, 프로듀서한테 칭찬받으니까 하늘 날아갈 것 같아! 🌟||하이파이브!",
+          group: [
+            { sender: 'kotone', name: '코토네', text: '헤헤헤~! 프로듀서님 방금 말씀 녹음해 뒀으니까 무르기 없기예요~! 💛', delay: 450 },
+            { sender: 'gemini', name: '제미니', text: '흥, 당연하지! 🐾✨||흑발 롱헤어에 고양이 귀 달고 코칭해 주는 트레이너가 흔한 줄 알아? 바보!', delay: 650 },
+            { sender: 'mio', name: '미오', text: '와하하, 프로듀서한테 칭찬받으니까 하늘 날아갈 것 같아! 🌟||하이파이브!', delay: 600 }
+          ]
         }
       ]
     };
@@ -3466,6 +3550,50 @@ function greetUserOnEnterTalk() {
       });
     }
 
+        function playSequentialDialogue(scriptList, onComplete) {
+      if (!scriptList || scriptList.length === 0) {
+        if (onComplete) onComplete();
+        return;
+      }
+      let idx = 0;
+      function next() {
+        if (idx >= scriptList.length) {
+          activeTypingIndicator = null;
+          renderChat();
+          if (onComplete) onComplete();
+          return;
+        }
+        const msgItem = scriptList[idx];
+        idx++;
+
+        const sName = msgItem.name || (msgItem.sender === 'kotone' ? '코토네' : msgItem.sender === 'mio' ? '미오' : '제미니');
+        activeTypingIndicator = { room: 'dual', sender: msgItem.sender, name: sName };
+        renderChat();
+
+        const delay = msgItem.delay || 650;
+        setTimeout(() => {
+          activeTypingIndicator = null;
+          const curTime = getKakaoTimeStr();
+          state.chatHistory.push({
+            room: 'dual',
+            sender: msgItem.sender,
+            name: sName,
+            text: msgItem.text,
+            time: curTime
+          });
+          playBeep(880, 0.08);
+          renderChat();
+          saveState();
+
+          const c = document.getElementById('chatContainer');
+          if (c) c.scrollTop = c.scrollHeight;
+
+          setTimeout(next, 380);
+        }, delay);
+      }
+      next();
+    }
+
     function selectTopicOption(topicKey, idx) {
       let item = null;
       if (topicKey === 'random' && window._currentRandomChoices) {
@@ -3485,23 +3613,36 @@ function greetUserOnEnterTalk() {
         setTrainerMode(state.activeMode, item.sit);
       }
 
-      triggerTrainerTypingReply(() => {
-        const curTime = getKakaoTimeStr();
-        if (item.dualReply || state.activeMode === 'dual') {
-          if (item.gem) state.chatHistory.push({ room: 'dual', sender: 'gemini', name: '제미니', text: item.gem, time: curTime });
-          if (item.kot) state.chatHistory.push({ room: 'dual', sender: 'kotone', name: '코토네', text: item.kot, time: curTime });
-          if (item.mio) state.chatHistory.push({ room: 'dual', sender: 'mio', name: '미오', text: item.mio, time: curTime });
-        } else if (state.activeTrainer === 'kotone') {
-          state.chatHistory.push({ room: 'kotone', sender: 'kotone', name: '코토네', text: item.kot || item.gem, time: curTime });
-        } else if (state.activeTrainer === 'mio') {
-          state.chatHistory.push({ room: 'mio', sender: 'mio', name: '미오', text: item.mio || item.gem, time: curTime });
-        } else {
-          state.chatHistory.push({ room: 'gemini', sender: 'gemini', name: '제미니', text: item.gem, time: curTime });
+      // In Group Chat (단톡방): play organic, sequential conversation with natural turn-taking!
+      if (state.activeMode === 'dual' || item.dualReply) {
+        let groupScript = item.group;
+        if (!groupScript || groupScript.length === 0) {
+          // Fallback to organic sequence from available lines
+          groupScript = [];
+          if (item.kot) groupScript.push({ sender: 'kotone', name: '코토네', text: item.kot, delay: 500 });
+          if (item.gem) groupScript.push({ sender: 'gemini', name: '제미니', text: item.gem, delay: 650 });
+          if (item.mio) groupScript.push({ sender: 'mio', name: '미오', text: item.mio, delay: 600 });
         }
-        addBondExp(item.exp || 15);
-        saveState();
-        renderChat();
-      }, 650);
+        playSequentialDialogue(groupScript, () => {
+          addBondExp(item.exp || 15);
+          saveState();
+        });
+      } else {
+        // In 1:1 Room: single trainer response
+        triggerTrainerTypingReply(() => {
+          const curTime = getKakaoTimeStr();
+          if (state.activeTrainer === 'kotone') {
+            state.chatHistory.push({ room: 'kotone', sender: 'kotone', name: '코토네', text: item.kot || item.gem, time: curTime });
+          } else if (state.activeTrainer === 'mio') {
+            state.chatHistory.push({ room: 'mio', sender: 'mio', name: '미오', text: item.mio || item.gem, time: curTime });
+          } else {
+            state.chatHistory.push({ room: 'gemini', sender: 'gemini', name: '제미니', text: item.gem, time: curTime });
+          }
+          addBondExp(item.exp || 15);
+          saveState();
+          renderChat();
+        }, 650);
+      }
     }
 
     // ============================================================================
