@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-21T14:46:20.553Z",
+  "updatedAt": "2026-10-21T14:46:48.607Z",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
   "bondRank": 6,
-  "bondExp": 65,
+  "bondExp": 75,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev11",
+  "currentSituation": "ev2",
   "absDone": false,
   "runDone": true,
   "runDist": 6.03,
@@ -69,6 +69,15 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "흥... 부끄럽게 대놓고 말하지 마 바보야! 내가 제일 가까이서 챙겨줄 테니까 딴 데 한눈팔지 마! 🐾💘"
+    },
+    {
+      "sender": "user",
+      "text": "솔직히 저녁에 살짝 입이 심심한데 어떡하지 ㅠㅠ"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "바보야, 여기서 무너지면 낮에 고생한 게 아깝잖아! 얼른 다기 꺼내서 내가 알려준 말차나 따뜻한 허브티 우려 마셔! 🍵"
     }
   ]
 }
