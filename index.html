@@ -217,9 +217,9 @@
 
       <div class="flex items-center gap-1.5 shrink-0">
         <!-- InBody & Samsung Health OCR Camera Scan Button (Enlarged & Prominent) -->
-        <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white text-xs font-black flex items-center gap-1.5 cursor-pointer shadow-md hover:opacity-95 active:scale-95 transition-all" title="삼성헬스 / 체중 / 인바디 사진 스캔">
+        <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white text-xs font-black flex items-center gap-1.5 cursor-pointer shadow-md hover:opacity-95 active:scale-95 transition-all" title="사진 스캔 (체중 · 인바디 · 러닝)">
           <span class="text-base leading-none">📷</span>
-          <span id="inbodyScanBtnText" class="text-xs font-black">체중 스캔</span>
+          <span id="inbodyScanBtnText" class="text-xs font-black">스캔</span>
         </label>
         <input type="file" id="inbodyOcrInput" accept="image/*" class="hidden" onchange="handleInbodyScan(event)">
 
@@ -492,7 +492,7 @@
         <div class="game-card p-3">
           <div class="text-[11px] text-slate-500 font-bold">현재 체중 (목표 49~52kg)</div>
           <div class="flex items-baseline gap-1 mt-1">
-            <input type="number" id="currentWeightInput" step="0.1" value="53.8" class="w-20 bg-transparent text-xl font-black font-mono border-b border-slate-300 dark:border-slate-600 focus:outline-none focus:border-sky-400" onchange="updateMetrics()">
+            <input type="number" id="currentWeightInput" step="0.1" value="64.1" class="w-20 bg-transparent text-xl font-black font-mono border-b border-slate-300 dark:border-slate-600 focus:outline-none focus:border-sky-400" onchange="updateMetrics()">
             <span class="text-xs text-slate-400 font-bold">kg</span>
           </div>
           <div class="mt-1.5 flex justify-between text-[11px]">
@@ -1239,7 +1239,7 @@
       updatedAt: new Date().toISOString(),
       theme: 'light',
       fullCgView: false,
-      weight: 53.8,
+      weight: 64.1,
       fat: 21.5,
       bondRank: 1,
       bondExp: 75,
@@ -2538,60 +2538,94 @@
       return decodeURIComponent(escape(atob(b64.replace(/\s/g, ''))));
     }
 
-    async function pullStateFromGitHub(manual = false) {
-      const msgEl = document.getElementById('ghSyncStatusMsg');
-      try {
-        updateGithubHeaderIndicator('syncing');
-        const headers = { 'Accept': 'application/vnd.github.v3+json' };
-        if (ghConfig.token) headers['Authorization'] = `Bearer ${ghConfig.token}`;
-
-        const url = `https://api.github.com/repos/${ghConfig.repo}/contents/${ghConfig.path}?t=${Date.now()}`;
-        const res = await fetch(url, { headers, cache: 'no-store' });
-        if (!res.ok) {
-          if (manual && msgEl) msgEl.textContent = `불러오기 실패 (${res.status}): 저장소/토큰을 확인하세요.`;
-          updateGithubHeaderIndicator(ghConfig.token ? 'error' : 'idle');
-          return;
-        }
-        const data = await res.json();
-        ghConfig.lastSha = data.sha || '';
-        if (data.content) {
-          const remoteState = JSON.parse(base64ToUtf8(data.content));
-          
-          const localTime = new Date(state.updatedAt || 0).getTime();
-          const remoteTime = new Date(remoteState.updatedAt || 0).getTime();
-
-          // Pull if remote is newer OR manual pull was requested
-          if (remoteTime >= localTime || manual) {
-            const localChats = (state.chatHistory && state.chatHistory.length > 0) ? state.chatHistory : [];
-            state = {
-              ...state,
-              ...remoteState,
-              chatHistory: (remoteState.chatHistory && remoteState.chatHistory.length > 0) ? remoteState.chatHistory : localChats,
-              mealPhotos: state.mealPhotos || remoteState.mealPhotos || ['', '', ''],
-              webhookUrl: state.webhookUrl || remoteState.webhookUrl || ''
-            };
-            saveState(false);
-            syncUI();
-            renderChat();
-            updateGithubHeaderIndicator('ok');
-            if (manual && msgEl) {
-              msgEl.textContent = `✅ 클라우드 동기화 완료! (${new Date().toLocaleTimeString()})`;
-              playBeep(820, 0.12);
-            }
-          } else {
-            // Local is newer! Push local changes to GitHub if token is present
-            if (ghConfig.token) {
-              pushStateToGitHub(false);
-            }
-            updateGithubHeaderIndicator('ok');
-          }
-        }
-      } catch (err) {
-        updateGithubHeaderIndicator(ghConfig.token ? 'error' : 'idle');
-        if (manual && msgEl) msgEl.textContent = `오류: ${err.message}`;
-      }
-    }
-
+    async function pullStateFromGitHub(force = false) {
+      const msgEl = document.getElementById('ghSyncStatusMsg');
+      try {
+        updateGithubHeaderIndicator('syncing');
+        let remoteState = null;
+        let sha = ghConfig.lastSha || '';
+
+        // 1. Try authenticated GitHub API if token exists (needed for SHA)
+        if (ghConfig.token) {
+          try {
+            const headers = {
+              'Accept': 'application/vnd.github.v3+json',
+              'Authorization': `Bearer ${ghConfig.token}`
+            };
+            const apiUrl = `https://api.github.com/repos/${ghConfig.repo || 'Minusindot/GeminiFit'}/contents/${ghConfig.path || 'state.json'}?t=${Date.now()}`;
+            const apiRes = await fetch(apiUrl, { headers, cache: 'no-store' });
+            if (apiRes.ok) {
+              const apiData = await apiRes.json();
+              if (apiData.sha) sha = apiData.sha;
+              if (apiData.content) {
+                remoteState = JSON.parse(base64ToUtf8(apiData.content));
+              }
+            }
+          } catch (e) {
+            console.warn("GitHub API pull error, falling back:", e);
+          }
+        }
+
+        // 2. Direct fallback to raw GitHub or relative state.json (no rate limits, works reliably on PC/mobile even without token)
+        if (!remoteState) {
+          const endpoints = [
+            `https://raw.githubusercontent.com/${ghConfig.repo || 'Minusindot/GeminiFit'}/main/${ghConfig.path || 'state.json'}?t=${Date.now()}`,
+            `./state.json?t=${Date.now()}`
+          ];
+          for (const ep of endpoints) {
+            try {
+              const rawRes = await fetch(ep, { cache: 'no-store' });
+              if (rawRes.ok) {
+                remoteState = await rawRes.json();
+                break;
+              }
+            } catch (e) {}
+          }
+        }
+
+        if (remoteState) {
+          if (sha) ghConfig.lastSha = sha;
+          
+          const localTime = new Date(state.updatedAt || 0).getTime();
+          const remoteTime = new Date(remoteState.updatedAt || 0).getTime();
+
+          // Sync if forced (startup/button), or remote is newer, or remote has different weight (e.g. mobile updated to 64.1)
+          const weightDiff = (remoteState.weight && remoteState.weight !== state.weight);
+          if (force || remoteTime >= localTime || weightDiff) {
+            const localChats = (state.chatHistory && state.chatHistory.length > 0) ? state.chatHistory : [];
+            state = {
+              ...state,
+              ...remoteState,
+              chatHistory: (remoteState.chatHistory && remoteState.chatHistory.length > 0) ? remoteState.chatHistory : localChats,
+              mealPhotos: state.mealPhotos || remoteState.mealPhotos || ['', '', ''],
+              webhookUrl: state.webhookUrl || remoteState.webhookUrl || ''
+            };
+            saveState(false);
+            syncUI();
+            renderChat();
+            try { updateMetrics(false); } catch (e) {}
+            updateGithubHeaderIndicator('ok');
+            if (force && msgEl) {
+              msgEl.textContent = `✅ 클라우드 동기화 완료! (${new Date().toLocaleTimeString()})`;
+              playBeep(820, 0.12);
+            }
+          } else {
+            // Local is genuinely newer: push to cloud if token is present
+            if (ghConfig.token) {
+              pushStateToGitHub(false);
+            }
+            updateGithubHeaderIndicator('ok');
+          }
+        } else {
+          updateGithubHeaderIndicator(ghConfig.token ? 'error' : 'idle');
+          if (force && msgEl) msgEl.textContent = "클라우드 상태를 불러오지 못했습니다.";
+        }
+      } catch (err) {
+        updateGithubHeaderIndicator(ghConfig.token ? 'error' : 'idle');
+        if (force && msgEl) msgEl.textContent = `오류: ${err.message}`;
+      }
+    }
+
     async function pushStateToGitHub(manual = false) {
       const msgEl = document.getElementById('ghSyncStatusMsg');
       if (!ghConfig.token) {
@@ -4181,14 +4215,14 @@ ${err.message}
       const wBadge = document.getElementById('ocrWeightConfidence');
       if (parsed.weight !== null) {
         weightInput.value = parsed.weight;
-        weightInput.placeholder = `${state.weight || 53.8}kg`;
+        weightInput.placeholder = `${state.weight || 64.1}kg`;
         if (wBadge) {
           wBadge.textContent = `✨ 감지 성공 (${parsed.weight}kg)`;
           wBadge.className = "text-[10px] text-emerald-500 font-extrabold";
         }
       } else {
         weightInput.value = '';
-        weightInput.placeholder = `${state.weight || 53.8}kg (직접 입력 / 이전값 유지)`;
+        weightInput.placeholder = `${state.weight || 64.1}kg (직접 입력 / 이전값 유지)`;
         if (wBadge) {
           wBadge.textContent = "직접 입력 (이전값 유지)";
           wBadge.className = "text-[10px] text-amber-500 font-extrabold";
