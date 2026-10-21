@@ -806,23 +806,23 @@
         </div>
       </div>
 
-      <!-- 6. 📤 오늘 기록 업로드 & 하루 마감 (트레이닝 톡 생성) -->
+      <!-- 6. ⚡ 오늘 기록 동기화 & 트레이닝 톡 반영 -->
       <div class="game-card p-3.5 space-y-3 border-2 border-indigo-500/40 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10 shadow-sm">
         <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
           <div class="flex items-center gap-2">
-            <span class="text-xl">📤</span>
+            <span class="text-xl">⚡</span>
             <div>
-              <h4 class="text-xs font-black text-slate-800 dark:text-slate-100">오늘 기록 업로드 & 데일리 마감</h4>
-              <span class="text-[9px] text-indigo-500 font-bold block">오늘 식단·러닝·헬스 저장 및 내일 트레이너 톡 생성</span>
+              <h4 class="text-xs font-black text-slate-800 dark:text-slate-100">오늘 기록 실시간 동기화</h4>
+              <span class="text-[9px] text-indigo-500 font-bold block">사진·기록을 추가할 때마다 눌러서 실시간 톡 업데이트</span>
             </div>
           </div>
           <span id="dailyStatusBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-extrabold border border-emerald-500/30 whitespace-nowrap">
-            기록 대기중
+            동기화 준비
           </span>
         </div>
 
         <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-          오늘 먹은 식단 사진과 운동 기록을 클라우드에 안전하게 저장하고, <strong>3인 트레이너가 오늘 기록을 분석한 맞춤형 내일 시나리오와 선택지</strong>를 생성합니다.
+          식단 사진을 올리거나 운동을 마칠 때마다 버튼을 눌러주세요! <strong>기록이 안전하게 동기화되고 3인 트레이너가 최신 진행 상황에 맞춰 톡을 실시간 갱신</strong>합니다.
         </p>
 
         <div class="grid grid-cols-2 gap-2 text-center text-[10px]">
@@ -836,60 +836,10 @@
           </div>
         </div>
 
-        <button onclick="finalizeDailyRecordAndUpload()" id="btnFinalizeDaily" class="w-full py-3 rounded-2xl bg-gradient-to-r from-indigo-500 via-[#5b7cfa] to-pink-500 hover:opacity-95 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-[0.99]">
-          <span>📤 오늘 기록 업로드 & 내일 트레이닝 톡 생성</span>
-          <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold">+50 EXP</span>
+        <button onclick="finalizeDailyRecordAndUpload()" id="btnFinalizeDaily" class="w-full py-3 rounded-2xl bg-gradient-to-r from-indigo-500 via-[#5b7cfa] to-pink-500 hover:opacity-95 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-[0.98]">
+          <span>⚡ 지금 기록 동기화 & 트레이닝 톡 반영</span>
+          <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold">+20 EXP</span>
         </button>
-      </div>
-
-    </div>
-
-    <!-- 3. Bottom Sticky Action Bar -->
-    <div class="fixed bottom-0 left-0 right-0 p-3 bg-white/85 dark:bg-[#111622]/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 z-30">
-      <div class="max-w-md mx-auto flex gap-2">
-        <button onclick="finalizeDailyRecordAndUpload()" id="btnBottomUpload" class="flex-1 py-2.5 rounded-2xl bg-gradient-to-r from-indigo-500 via-[#5b7cfa] to-pink-500 hover:opacity-95 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]">
-          <span>📤 오늘 기록 마감 & 톡 생성</span>
-          <span class="text-[9px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold">+50 EXP</span>
-        </button>
-        <button onclick="dispatchDiscord()" id="btnDispatch" class="py-2.5 px-3 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-400 text-slate-700 dark:text-slate-200 font-extrabold text-xs shadow-sm transition-all flex items-center justify-center gap-1 shrink-0" title="디스코드에 3인 트레이너 브리핑 전송">
-          <span>🚀</span>
-          <span class="hidden sm:inline">디스코드</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- ========================================================
-         MODAL 1: 30-CG Visual Novel Event Gallery
-         ======================================================== -->
-    
-  <!-- Workout Progress & Set Comparison Graph Modal -->
-  <div id="workoutGraphModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
-    <div class="game-card w-full max-w-lg max-h-[90vh] overflow-y-auto p-4 space-y-3.5 border-2 border-sky-400/50 shadow-2xl">
-      <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
-        <div class="flex items-center gap-1.5">
-          <span class="text-lg">📊</span>
-          <div>
-            <h3 class="text-sm font-black text-slate-900 dark:text-white">운동 기록 & 세트 비교 그래프</h3>
-            <p class="text-[10px] text-slate-400">세트 수 변경 및 날짜별 운동 볼륨 추이 실시간 비교</p>
-          </div>
-        </div>
-        <button onclick="closeWorkoutGraphModal()" class="w-7 h-7 rounded-lg sub-box flex items-center justify-center text-xs font-black text-slate-500 hover:text-rose-500 transition-colors">✕</button>
-      </div>
-
-      <!-- Quick KPI Badges -->
-      <div class="grid grid-cols-3 gap-2">
-        <div class="p-2 rounded-xl sub-box text-center">
-          <div class="text-[9px] text-slate-400 font-bold">누적 세션</div>
-          <div id="kpiTotalSessions" class="text-sm font-black text-sky-600 dark:text-sky-300 font-mono mt-0.5">3회</div>
-        </div>
-        <div class="p-2 rounded-xl sub-box text-center">
-          <div class="text-[9px] text-slate-400 font-bold">레그레이즈 설정</div>
-          <div id="kpiLegRaiseSetting" class="text-xs font-black text-pink-600 dark:text-pink-400 font-mono mt-0.5">50회 × 1세트</div>
-        </div>
-        <div class="p-2 rounded-xl sub-box text-center">
-          <div class="text-[9px] text-slate-400 font-bold">크런치 설정</div>
-          <div id="kpiCrunchSetting" class="text-xs font-black text-amber-600 dark:text-amber-400 font-mono mt-0.5">50회 × 2세트</div>
-        </div>
       </div>
 
       <!-- Metric Filter Tabs -->
@@ -2896,11 +2846,11 @@
 
       const dBadge = document.getElementById('dailyStatusBadge');
       if (dBadge) {
-        if (state.lastFinalizedDate === todayStr) {
-          dBadge.textContent = "✨ 오늘 마감 완료";
+        if (state.lastUpdatedTimeStr) {
+          dBadge.textContent = `✨ ${state.lastUpdatedTimeStr} 동기화됨`;
           dBadge.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 font-extrabold border border-emerald-500/30 whitespace-nowrap";
         } else {
-          dBadge.textContent = "기록 중";
+          dBadge.textContent = "동기화 준비";
           dBadge.className = "text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 font-extrabold border border-sky-500/30 whitespace-nowrap";
         }
       }
@@ -2922,9 +2872,32 @@
     }
 
     
+    
+    function showFloatingToast(msg, icon = '⚡') {
+      let toast = document.getElementById('globalFloatingToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'globalFloatingToast';
+        toast.className = 'fixed top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-2xl bg-slate-900/90 dark:bg-white/95 text-white dark:text-slate-900 text-xs font-black shadow-2xl border border-sky-400/40 backdrop-blur-md flex items-center gap-2 transition-all duration-300 pointer-events-none opacity-0 -translate-y-4';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = `<span class="text-sm">${icon}</span><span>${msg}</span>`;
+      toast.classList.remove('opacity-0', '-translate-y-4');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', '-translate-y-4');
+      }, 2200);
+    }
+
     function finalizeDailyRecordAndUpload() {
-      playBeep(750, 0.12);
+      playBeep(880, 0.08);
+      setTimeout(() => playBeep(1175, 0.12), 90);
+
       const todayStr = new Date().toISOString().split('T')[0];
+      const curTime = getKakaoTimeStr();
 
       const mealsDone = (state.meals || []).filter(Boolean).length;
       const mealPhotosCount = (state.mealPhotos || []).filter(Boolean).length;
@@ -2933,7 +2906,7 @@
       const gymDone = Boolean(state.gymRoutine && state.gymRoutine.allDone);
       const latestRun = state.latestRun || null;
 
-      // 1. Archive today's summary into state.dailyLogs
+      // 1. Save / Update today's ongoing summary into state.dailyLogs
       if (!state.dailyLogs) state.dailyLogs = {};
       state.dailyLogs[todayStr] = {
         date: todayStr,
@@ -2946,66 +2919,70 @@
         gymDone,
         latestRun,
         teaLog: { ...(state.teaLog || {}) },
-        finalizedAt: new Date().toISOString()
+        lastUpdated: new Date().toISOString()
       };
       state.lastFinalizedDate = todayStr;
+      state.lastUpdatedTimeStr = curTime;
 
-      // 2. Build Heroines' feedback based on today's actual achievements
+      // 2. Build Heroines' feedback tailored to current state
       let kotoneLine = "";
       let geminiLine = "";
       let mioLine = "";
 
-      if (mealsDone >= 3 || mealPhotosCount >= 2) {
-        kotoneLine = "프로듀서님! 오늘 식단 사진 꼼꼼하게 올려주셔서 감동이에요! 17:7 단식도 칼같이 지켜주셨으니 내일 아침엔 따뜻한 단백질 식단으로 활력 충전해 드릴게요~💛";
-      } else if (mealsDone > 0) {
-        kotoneLine = "식단 인증 챙겨주셔서 감사해요 프로듀서님! 내일은 3끼 모두 예쁘게 사진 찍어 올려주시면 코토네가 특별 보너스 미소를 선물해 드릴게요~💸";
+      if (mealsDone >= 3 || mealPhotosCount >= 3) {
+        kotoneLine = "프로듀서님! 오늘 3끼 식단 사진까지 완벽 클리어하셨네요! 17:7 단식도 칼같이 지켜주셔서 제가 다 뿌듯해요~💛";
+      } else if (mealsDone === 2 || mealPhotosCount === 2) {
+        kotoneLine = "단백질 간식/식사까지 2끼 기록 완료! 16:30 마감 식사까지 이 기세로 예쁘게 달려봐요 프로듀서님~! 💛";
+      } else if (mealsDone === 1 || mealPhotosCount === 1) {
+        kotoneLine = "첫 식사 인증 확인 완료! 공복 깨고 든든하게 단백질 챙기시는 모습 너무 보기 좋아요 프로듀서님~💛";
       } else {
-        kotoneLine = "프로듀서님! 오늘은 식단 기록을 깜빡하셨나 봐요. 내일은 꼭 저랑 같이 10시 첫 식사부터 챙겨 먹기로 약속해요~? 💛";
+        kotoneLine = "오늘의 실시간 기록 업데이트 확인했어요 프로듀서님! 맛있는 식단 드실 때 잊지 말고 사진 찰칵 남겨주세요~? 💛";
       }
 
       if (runDone || (latestRun && latestRun.distance >= 5)) {
         const dist = (latestRun && latestRun.distance) ? latestRun.distance : 5.0;
-        mioLine = `와아~! 오늘 ${dist}km 러닝 완주한 거 진짜 멋있었어! 땀 흠뻑 흘리고 개운하지? 내일은 가벼운 조깅이나 리커버리 스트레칭으로 다리 피로 싹 풀어주자! 🌟`;
+        mioLine = `와아~! ${dist}km 러닝 완주한 거 실시간 확인했어! 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘! 🌟`;
       } else {
-        mioLine = "오늘 러닝은 쉬어가는 날이었구나! 괜찮아, 내일 상쾌한 아침 공기 마시면서 5km 가볍게 뛰어보자! 내가 옆에서 페이스 맞춰줄게! 🏃‍♀️";
+        mioLine = "오늘 기록 차곡차곡 쌓이는 중! 조금 이따가 가볍게 5km 러닝이나 산책 어때? 내가 옆에서 페이스 맞춰줄게! 🏃‍♀️";
       }
 
-      if (gymDone || absDone) {
-        geminiLine = "흥, 헬스장이랑 복근 루틴까지 제대로 챙겨 했네? 제법 끈기 있잖아 바보 프로듀서! 내일은 2kg 덤벨 편심성 컬로 손목 힘줄 튼튼하게 회복시켜 줄 테니까 기대해. 🐾";
+      if (gymDone) {
+        geminiLine = "오... 헬스장 풀코스 머신 세트까지 전부 올킬했네? 근성 하나는 인정해 줄게 바보 프로듀서! 2kg 덤벨 편심성 컬도 잊지 마. 🐾";
+      } else if (absDone) {
+        geminiLine = "14분 복근 루틴 불태운 거 확인! 코어에 긴장감 딱 잡혔지? 남은 헬스장 세트도 빼먹지 말고 채워 넣어! 🐾";
       } else {
-        geminiLine = "바보 프로듀서! 오늘 근력 운동은 땡땡이친 거야? 메~롱! 내일은 봐주지 않고 14분 복근이랑 상체 머신 세트까지 전부 굴릴 거니까 각오해! 🐾";
+        geminiLine = "기록 업데이트 확인! 바보 프로듀서, 슬림핏 52kg 될 때까지 긴장 늦추지 말고 오늘 루틴 끝까지 달려! 🐾";
       }
 
-      // 3. Post daily briefing message to chat history
-      const curTime = getKakaoTimeStr();
+      // 3. Post to chat history
       state.chatHistory.push({
         sender: 'dual',
         name: '제미니 · 코토네 · 미오',
-        text: `📢 [${todayStr} 일일 피드백 & 내일 트레이닝 톡 도착!]\n\n💛 코토네: "${kotoneLine}"\n\n🌟 미오: "${mioLine}"\n\n🐾 제미니: "${geminiLine}"`,
+        text: `⚡ [${curTime} 실시간 기록 동기화 완료!]\n\n💛 코토네: "${kotoneLine}"\n\n🌟 미오: "${mioLine}"\n\n🐾 제미니: "${geminiLine}"`,
         time: curTime
       });
 
-      // 4. Update TOPIC_CHOICES.dailyBriefing with contextual choices
+      // 4. Update TOPIC_CHOICES.dailyBriefing with dynamic options
       TOPIC_CHOICES.dailyBriefing = [
         {
-          text: "오늘 식단이랑 운동 피드백 고마워! 내일 아침 식단 추천해줘.",
-          gem: "내일 10시 첫 식사는 계란 2알이랑 그릭 요거트, 그리고 따뜻한 말차 1잔으로 가볍고 클린하게 시작해! 🐾",
-          kot: "헤헤, 단백질 쉐이크에 사과 반 쪽 곁들이면 든든하고 체지방 연소에도 최고예요 프로듀서님! 💛",
-          mio: "난 바나나 하나랑 닭가슴살 추천! 아침 든든히 먹어야 내일도 기운 넘치지~! 🌟",
+          text: "지금까지 식단이랑 운동 피드백 들려줘!",
+          gem: `체중 ${state.weight}kg, 체지방 ${state.fat}% 유지 중이야. 17시 이후에는 절대 칼로리 섭취 금지인 거 알지? 🐾`,
+          kot: `오늘 식단 ${mealsDone}/3 완료하셨어요 프로듀서님! 코토네가 옆에서 끝까지 응원할게요~ 💛`,
+          mio: runDone ? "러닝까지 완주해서 오늘 칼로리 활활 불타는 중이야! 최고야 프로듀서! 🌟" : "시간 날 때 나랑 상쾌하게 5km 러닝 뛰러 가자! 🌟",
           exp: 20
         },
         {
-          text: "내일 러닝이랑 헬스장 강도는 어떻게 조절할까?",
-          gem: "오늘은 상체랑 복근을 썼으니까, 내일은 2kg 덤벨 재활 3세트에 레그 프레스 중심 하체로 가자! 🐾",
-          kot: "무리하지 마시고 컨디션 보면서 5km 페이스 유지하시면 완벽해요! 부상 방지가 1순위예요~ 💛",
-          mio: "내일은 6'30\" 페이스로 가볍게 5km 러닝 뛰고 쿨다운 스트레칭 길게 해주자! 🌟",
+          text: "남은 오늘 시간 어떻게 관리하면 좋을까?",
+          gem: "따뜻한 말차나 허브티 한 잔 마시면서 2kg 덤벨 손목 재활 3세트 채워 넣어! 🐾",
+          kot: "수분 충분히 섭취하시고 무리하지 마세요! 컨디션 조절이 제일 중요해요~ 💛",
+          mio: "가벼운 전신 스트레칭으로 뭉친 다리랑 어깨 풀어주면 밤에 꿀잠 잘 수 있어! 🌟",
           exp: 20
         },
         {
-          text: "오늘 17:7 단식이랑 하루 루틴 완주했으니 칭찬해줘!",
-          gem: "흥, 딱히 널 위해서 칭찬하는 건 아니지만... 오늘 정말 열심히 했어. 내일도 이대로만 해, 바보야! 🐾",
-          kot: "프로듀서님 최고예요~! 약속도 칼같이 지켜주시고 너무 멋져요! 코토네가 꽉 안아드릴게요~? 💛",
-          mio: "으라차차! 우리 프로듀서 진짜 최고야! 내일도 우리 셋이랑 슬림핏 52kg까지 신나게 달리자! 🌟",
+          text: "오늘 열심히 하고 있으니까 칭찬해줘!",
+          gem: "흥, 열심히 기록하는 모습은 봐줄 만하네. 이 기세로 52kg까지 포기하지 마, 바보야! 🐾",
+          kot: "프로듀서님 최고예요~! 실시간으로 열심히 챙기시는 모습에 코토네 심쿵했답니다! 💛",
+          mio: "우리 프로듀서 진짜 부지런해! 최고 최고! 이따가 밤에 하이파이브 백 번 해줄게! 🌟",
           exp: 25
         }
       ];
@@ -3017,29 +2994,14 @@
       const talkBadge = document.getElementById('talkNewBadge');
       if (talkBadge) talkBadge.classList.remove('hidden');
 
-      // 6. Reset daily inputs for tomorrow (clean plates & checks)
-      state.meals = [false, false, false];
-      state.mealPhotos = ['', '', ''];
-      state.runDone = false;
-      state.absDone = false;
-      if (state.gymRoutine) {
-        ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'].forEach(k => {
-          if (state.gymRoutine[k] && state.gymRoutine[k].sets) {
-            state.gymRoutine[k].sets = state.gymRoutine[k].sets.map(() => false);
-          }
-        });
-        state.gymRoutine.allDone = false;
-      }
-
-      addBondExp(50);
+      // 6. DO NOT WIPE today's inputs! Keep them proud and visible for anytime updates
+      addBondExp(20);
       saveState(true);
       syncUI();
       renderChat();
 
-      playBeep(920, 0.2);
-      setTimeout(() => playBeep(1100, 0.25), 150);
-
-      alert(`🎉 [오늘 기록 업로드 & 데일리 마감 완료!]\n\n오늘의 식단과 운동 기록이 안전하게 저장되었습니다.\n💬 [트레이닝 톡] 탭에 3인 트레이너의 피드백과 내일 시나리오가 도착했습니다!`);
+      // 7. Visual toast for "누르는 맛"
+      showFloatingToast(`오늘 기록 동기화 완료 (${curTime}) · 톡 업데이트!`, '⚡');
     }
 
     function switchMainTab(tab) {
