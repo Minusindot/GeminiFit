@@ -2906,17 +2906,16 @@
 
         if (!supported.length) return null;
 
-        // Rank by speed & modern priority: Gemini 2.0 Flash is ~1s real-time, 1.5 is legacy/slow
+        // Dynamically prioritize modern Flash models (2.5, 3.x, etc.) and avoid legacy slow 1.5
         const rank = (name) => {
           const n = name.toLowerCase();
-          if (n === 'gemini-2.0-flash') return 1;
-          if (n === 'gemini-2.0-flash-lite' || n === 'gemini-2.0-flash-lite-preview') return 2;
-          if (n.startsWith('gemini-2') && n.includes('flash')) return 3;
-          if (n === 'gemini-2.5-flash') return 4;
-          if (n === 'gemini-flash-latest') return 5;
-          if (n === 'gemini-1.5-flash') return 6;
-          if (n.includes('flash')) return 7;
-          return 9;
+          // Priority 1: Modern Flash models (e.g. 2.5-flash, 3.x-flash, flash-lite) that are not legacy 1.5
+          if (n.includes('flash') && !n.includes('1.5')) return 1;
+          // Priority 2: Modern Pro models
+          if (n.includes('pro') && !n.includes('1.5')) return 2;
+          // Priority 3: Fallback 1.5 Flash
+          if (n.includes('1.5-flash')) return 3;
+          return 4;
         };
         supported.sort((a, b) => rank(a) - rank(b));
         return supported;
@@ -2930,23 +2929,14 @@
       const cleanKey = (apiKey || '').trim();
       if (!cleanKey) throw new Error('API 키가 입력되지 않았습니다.');
 
-      // 1. Ultra-fast model resolution: auto-upgrade legacy/slow models (1.5) to Gemini 2.0 Flash
-      let cached = localStorage.getItem('GEMINI_WORKING_MODEL');
-      if (!cached || cached.includes('1.5') || cached.includes('pro')) {
-        cached = 'gemini-2.0-flash';
-        localStorage.setItem('GEMINI_WORKING_MODEL', 'gemini-2.0-flash');
-      }
-
-      if (cached) {
+      // 1. Try cached working model if it is a confirmed modern model
+      const cached = localStorage.getItem('GEMINI_WORKING_MODEL');
+      if (cached && !cached.includes('1.5')) {
         let timer = null;
         try {
           const controller = new AbortController();
           timer = setTimeout(() => {
-            try {
-              controller.abort(new Error('요청 시간 초과(2분): 구글 서버 응답이 지연되고 있습니다.'));
-            } catch (_) {
-              controller.abort();
-            }
+            try { controller.abort(new Error('요청 시간 초과(2분): 구글 서버 응답이 지연되고 있습니다.')); } catch (_) { controller.abort(); }
           }, timeoutMs);
           const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${cached}:generateContent?key=${cleanKey}`, {
             method: 'POST',
@@ -2959,31 +2949,35 @@
             const data = await res.json();
             data._workingModel = cached;
             return data;
+          } else {
+            console.warn(`[Gemini] Cached model ${cached} returned HTTP ${res.status}. Invalidating cache.`);
+            localStorage.removeItem('GEMINI_WORKING_MODEL');
           }
         } catch (e) {
           if (timer) clearTimeout(timer);
-          console.warn('[Gemini] Cached model failed or timed out, trying fast static endpoints...', e.message);
+          console.warn('[Gemini] Cached model error, trying dynamic discovery...', e.message);
         }
       }
 
-      // 2. High-speed static candidate endpoints (Gemini 2.0 Flash first, ~1s response)
+      // 2. Discover available models dynamically from Google for this specific key
+      let candidateEndpoints = [];
+      const discovered = await discoverGeminiModels(cleanKey);
+      if (discovered && discovered.length > 0) {
+        for (const m of discovered.slice(0, 4)) {
+          const ep = `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`;
+          if (!candidateEndpoints.includes(ep)) candidateEndpoints.push(ep);
+        }
+      }
+
+      // 3. Static fallback candidate endpoints
       const staticFallbacks = [
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
         'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent',
         'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent',
         'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'
       ];
-      let candidateEndpoints = [...staticFallbacks];
-
-      // 3. Fallback dynamic discovery if static models ever fail
-      const discovered = await discoverGeminiModels(cleanKey);
-      if (discovered && discovered.length > 0) {
-        for (const m of discovered.slice(0, 3)) {
-          const ep = `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`;
-          if (!candidateEndpoints.includes(ep)) {
-            candidateEndpoints.push(ep);
-          }
-        }
+      for (const ep of staticFallbacks) {
+        if (!candidateEndpoints.includes(ep)) candidateEndpoints.push(ep);
       }
 
       let lastError = null;
@@ -3063,10 +3057,12 @@
         statusEl.className = "text-[9px] px-2 py-0.5 rounded-full font-black bg-amber-500/20 text-amber-600 animate-pulse";
       }
       try {
+        // Clear old cached model to discover the fastest model for this key
+        localStorage.removeItem('GEMINI_WORKING_MODEL');
         const data = await fetchGeminiWithFallback(key, {
           contents: [{ role: 'user', parts: [{ text: '안녕! 제미니 트레이너로서 한국어로 한 문장 인사해줘.' }] }]
         }, 120000);
-        const testReply = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '응답 수신 완료';
+        const testReply = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim() || '응답 수신 완료';
         const workingModel = data._workingModel || localStorage.getItem('GEMINI_WORKING_MODEL') || 'Gemini Flash';
         localStorage.setItem('GEMINI_API_KEY', key);
         updateGeminiKeyStatusUI();
@@ -3100,7 +3096,7 @@ ${err.message}
         generationConfig: { temperature: 0.85, maxOutputTokens: 600 }
       });
 
-      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
+      const rawText = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim();
 
       if (mode === 'dual') {
         try {
