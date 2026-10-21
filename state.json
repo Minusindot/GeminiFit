@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-10-21T14:47:02.158Z",
+  "updatedAt": "2026-10-21T14:47:09.635Z",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
-  "bondRank": 6,
-  "bondExp": 75,
+  "bondRank": 7,
+  "bondExp": 0,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
   "currentSituation": "ev25",
@@ -83,6 +83,15 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "야, 바보 프로듀서! 고생 많았어. 🐾 17시 넘어서 공복 골든타임 시작됐으니까 음식물은 절대 금지야! 덤벨 자세는 내가 이따 봐줄 테니까 오늘 기분 어떤지 먼저 말해봐."
+    },
+    {
+      "sender": "user",
+      "text": "너희 셋이 이렇게 밀착 코칭해주니까 너무 든든해!"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "흥... 부끄럽게 대놓고 말하지 마 바보야! 내가 제일 가까이서 챙겨줄 테니까 딴 데 한눈팔지 마! 🐾💘"
     }
   ]
 }
