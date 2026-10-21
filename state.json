@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-21T13:57:39.846Z",
+  "updatedAt": "2026-10-21T13:57:58.109Z",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
@@ -7,7 +7,7 @@
   "bondExp": 10,
   "activeTrainer": "mio",
   "activeMode": "mio",
-  "currentSituation": "ev1",
+  "currentSituation": "ev5",
   "absDone": false,
   "runDone": true,
   "runDist": 6.03,
