@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <!-- Gemini Fit v2.1 Real-time AI Engine -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Gemini Fit - 제미니 · 코토네 · 미오 피트니스 코칭</title>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -1081,27 +1084,34 @@
         <div class="grid grid-cols-2 gap-2 text-xs">
           <div class="p-2.5 rounded-xl sub-box">
             <span class="text-[10px] text-slate-500 font-bold block mb-1">🏁 러닝 거리 (km)</span>
-            <input type="number" step="0.01" id="ocrRunDist" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black text-orange-600 dark:text-orange-400 focus:outline-none focus:border-orange-500">
+            <input type="number" step="0.01" id="ocrRunDist" placeholder="6.03" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black text-orange-600 dark:text-orange-400 focus:outline-none focus:border-orange-500">
           </div>
           <div class="p-2.5 rounded-xl sub-box">
             <span class="text-[10px] text-slate-500 font-bold block mb-1">⏱️ 운동 시간</span>
-            <input type="text" id="ocrRunDuration" placeholder="1:24:31" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black focus:outline-none focus:border-orange-500">
+            <input type="text" id="ocrRunDuration" placeholder="53:45" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black focus:outline-none focus:border-orange-500">
           </div>
           <div class="p-2.5 rounded-xl sub-box">
             <span class="text-[10px] text-slate-500 font-bold block mb-1">⚡ 평균 페이스</span>
-            <input type="text" id="ocrRunPace" placeholder="11'33\"" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black focus:outline-none focus:border-orange-500">
+            <input type="text" id="ocrRunPace" placeholder="08'54\"" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black focus:outline-none focus:border-orange-500">
           </div>
           <div class="p-2.5 rounded-xl sub-box">
             <span class="text-[10px] text-slate-500 font-bold block mb-1">🔥 소모 칼로리 (kcal)</span>
-            <input type="number" id="ocrRunCalories" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black text-rose-500 focus:outline-none focus:border-orange-500">
+            <input type="number" id="ocrRunCalories" placeholder="365" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black text-rose-500 focus:outline-none focus:border-orange-500">
           </div>
           <div class="p-2.5 rounded-xl sub-box">
             <span class="text-[10px] text-slate-500 font-bold block mb-1">❤️ 평균 심박수 (bpm)</span>
-            <input type="number" id="ocrRunHeartRate" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black focus:outline-none focus:border-orange-500">
+            <input type="number" id="ocrRunHeartRate" placeholder="144" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black focus:outline-none focus:border-orange-500">
           </div>
           <div class="p-2.5 rounded-xl sub-box">
-            <span class="text-[10px] text-slate-500 font-bold block mb-1">👣 걸음 수 / 케이던스</span>
-            <input type="number" id="ocrRunSteps" placeholder="9206" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black focus:outline-none focus:border-orange-500">
+            <span class="text-[10px] text-slate-500 font-bold block mb-1">👣 총 걸음 수 (보)</span>
+            <input type="number" id="ocrRunSteps" placeholder="7060" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1.5 text-sm font-black focus:outline-none focus:border-orange-500">
+          </div>
+          <div class="p-2 rounded-xl sub-box col-span-2 flex items-center justify-between">
+            <span class="text-[10px] text-slate-500 font-bold">👟 평균 케이던스:</span>
+            <div class="flex items-center gap-1">
+              <input type="number" id="ocrRunCadence" placeholder="131" class="w-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-1 text-xs font-black text-center focus:outline-none focus:border-orange-500">
+              <span class="text-[10px] text-slate-400 font-bold">spm</span>
+            </div>
           </div>
         </div>
 
@@ -4082,7 +4092,7 @@ ${err.message}
     function parseHealthImageText(rawText) {
       const unified = (rawText || "")
         .replace(/(\d)\s*[,.]\s*(\d)/g, '$1.$2')
-        .replace(/㎞/g, 'km')
+        .replace(/\u339E/g, 'km')
         .replace(/,/g, '')
         .replace(/\r?\n/g, '\n');
       const lower = unified.toLowerCase();
@@ -4099,7 +4109,7 @@ ${err.message}
       // Running-specific keywords
       const hasRunningKeywords = (
         lower.includes('페이스') || lower.includes('pace') ||
-        lower.includes('케이던스') || lower.includes('spm') ||
+        lower.includes('케이던스') || lower.includes('spm') || lower.includes('sem') ||
         lower.includes('구간기록') || lower.includes('달리기') || lower.includes('러닝') ||
         lower.includes('running') || lower.includes('nrc') || lower.includes('나이키런') ||
         lower.includes('킬로미터') ||
@@ -4108,35 +4118,17 @@ ${err.message}
 
       // 1. Distance (km)
       let distance = null;
-      // Pattern A: Number with explicit km/킬로미터 unit
-      const distUnitMatch = unified.match(/(\d{1,2}(?:\.\d{1,2})?)\s*(?:km|㎞|킬로미터|krn|kni|kn)\b/i);
-      if (distUnitMatch) {
-        const val = parseFloat(distUnitMatch[1]);
-        if (val >= 0.5 && val <= 100) distance = val;
+      const distMatch = unified.match(/(\d{1,2}(?:\.\d{1,2})?)\s*(?:km|㎞|킬로미터|krn|kni|kn)\b/i);
+      if (distMatch) {
+        distance = parseFloat(distMatch[1]);
       }
-
-      // Pattern B: Label before number (달리기, 러닝, 거리, distance, running)
       if (distance === null) {
         const distLabelMatch = unified.match(/(?:달리기|러닝|거리|distance|running)[\s:：\n\r]*(\d{1,2}(?:\.\d{1,2})?)/i);
-        if (distLabelMatch) {
-          const val = parseFloat(distLabelMatch[1]);
-          if (val >= 0.5 && val <= 100) distance = val;
-        }
+        if (distLabelMatch) distance = parseFloat(distLabelMatch[1]);
       }
-
-      // Pattern C: Number preceding '킬로미터' across lines (Nike Run Club)
       if (distance === null) {
-        const nrcMatch = unified.match(/(\d{1,2}(?:\.\d{1,2})?)[\s\n\r]*킬로미터/i);
-        if (nrcMatch) {
-          const val = parseFloat(nrcMatch[1]);
-          if (val >= 0.5 && val <= 100) distance = val;
-        }
-      }
-
-      // Pattern D: In running screenshots, match the prominent decimal number (e.g. 6.03 or 6.05)
-      if (distance === null && hasRunningKeywords) {
-        const allDecimals = [...unified.matchAll(/\b([1-4]?\d\.\d{1,2})\b/g)];
-        for (const m of allDecimals) {
+        // Find standalone decimal (e.g. 6.03 or 6.05) on running screens
+        for (const m of unified.matchAll(/\b([1-4]?\d\.\d{1,2})\b/g)) {
           const val = parseFloat(m[1]);
           if (val >= 0.5 && val <= 45.0) {
             distance = val;
@@ -4147,24 +4139,18 @@ ${err.message}
 
       // 2. Duration (hh:mm:ss or mm:ss)
       let duration = null;
-      const afterTime = unified.match(/(?:운동\s*시간|시간)[\s:：\n\r]*(\d{1,2}:\d{2}(?::\d{2})?)/i);
-      if (afterTime) {
-        duration = afterTime[1];
-      }
-      if (!duration) {
-        const beforeTime = unified.match(/(\d{1,2}:\d{2}(?::\d{2})?)[\s\n\r]*(?:운동\s*시간|시간)/i);
-        if (beforeTime) duration = beforeTime[1];
-      }
-      if (!duration) {
-        const timeHms = unified.match(/(\d{1,2}:\d{2}:\d{2})/);
-        if (timeHms) duration = timeHms[1];
-      }
-      if (!duration) {
-        const timeCandidates = [...unified.matchAll(/\b(\d{2}:\d{2})\b/g)];
-        for (const m of timeCandidates) {
+      for (const m of unified.matchAll(/\b(\d{1,2}:\d{2}(?::\d{2})?)\b/g)) {
+        const parts = m[1].split(':');
+        const firstNum = parseInt(parts[0], 10);
+        // Exclude clock times like 7:36 (first num < 10 unless len == 3)
+        if (parts.length === 3 || firstNum >= 10) {
           duration = m[1];
           break;
         }
+      }
+      if (!duration) {
+        const afterTime = unified.match(/(?:운동\s*시간|시간)[\s\S]{0,30}?(\d{1,2}:\d{2})/i);
+        if (afterTime) duration = afterTime[1];
       }
 
       // 3. Pace
@@ -4173,55 +4159,69 @@ ${err.message}
       if (paceQuote) {
         pace = paceQuote[1].replace('/km', '').trim();
       } else {
-        const paceLabelMatch = unified.match(/(?:평균\s*페이스|페이스|pace)[\s:：\n\r]*(\d{1,2}[''’:\.]\d{2}(?:["”]|\/km)?)/i);
-        if (paceLabelMatch) {
-          pace = paceLabelMatch[1].replace('/km', '').replace(':', "'").trim();
-        } else {
-          const beforePace = unified.match(/(\d{1,2}[''’:\.]\d{2}(?:["”]|\/km)?)[\s\n\r]*(?:평균\s*페이스|페이스|pace)/i);
-          if (beforePace) pace = beforePace[1].replace('/km', '').replace(':', "'").trim();
-        }
+        const paceMatch = unified.match(/(?:평균\s*페이스|페이스)[\s\S]{0,30}?(\d{1,2}[:''’]\d{2})/i);
+        if (paceMatch) pace = paceMatch[1].replace(':', "'").trim();
       }
 
-      // 4. Calories
+      // 4. Calories (365 kcal or 365 keal)
       let calories = null;
-      const calMatch = (unified.match(/(\d{2,4})\s*kcal/i) ||
-                        unified.match(/(\d{2,4})[\s\n\r]*(?:운동\s*칼로리|칼로리)/i) ||
-                        unified.match(/(?:운동\s*칼로리|칼로리)[\s:：\n\r]*(\d{2,4})/i));
-      if (calMatch) calories = parseInt(calMatch[1], 10);
+      const calMatch = unified.match(/(\d{2,4})\s*k[ce]al/i);
+      if (calMatch) {
+        calories = parseInt(calMatch[1], 10);
+      } else {
+        const calLabelMatch = unified.match(/(?:운동\s*칼로리|칼로리)[\s\S]{0,30}?(\d{2,4})\b/i);
+        if (calLabelMatch) calories = parseInt(calLabelMatch[1], 10);
+      }
 
       // 5. Heart Rate
       let heartRate = null;
-      const hrMatch = (unified.match(/(\d{2,3})\s*bpm/i) ||
-                      unified.match(/(\d{2,3})[\s\n\r]*(?:평균\s*심박수|심박수)/i) ||
-                      unified.match(/(?:평균\s*심박수|심박수)[\s:：\n\r]*(\d{2,3})/i));
-      if (hrMatch) heartRate = parseInt(hrMatch[1], 10);
+      const hrLineMatch = unified.match(/심박수[^\n\r]*\n\s*(\d{2,3})\b/);
+      if (hrLineMatch) {
+        heartRate = parseInt(hrLineMatch[1], 10);
+      } else {
+        const hrBpmMatch = unified.match(/(\d{2,3})\s*bpm/i);
+        if (hrBpmMatch) heartRate = parseInt(hrBpmMatch[1], 10);
+      }
 
       // 6. Cadence
       let cadence = null;
-      const cadMatch = (unified.match(/(\d{2,3})\s*spm/i) ||
-                       unified.match(/(\d{2,3})[\s\n\r]*(?:평균\s*케이던스|케이던스)/i) ||
-                       unified.match(/(?:평균\s*케이던스|케이던스)[\s:：\n\r]*(\d{2,3})/i));
-      if (cadMatch) cadence = parseInt(cadMatch[1], 10);
+      const cadMatch = unified.match(/(\d{2,3})\s*(?:spm|sem|srm|sprm)\b/i);
+      if (cadMatch) {
+        cadence = parseInt(cadMatch[1], 10);
+      } else {
+        const cadLabelMatch = unified.match(/케이던스[^\n\r]*\n\s*(\d{2,3})\b/);
+        if (cadLabelMatch) cadence = parseInt(cadLabelMatch[1], 10);
+      }
 
       // 7. Steps
       let steps = null;
-      const stepMatch = (unified.match(/(?:총\s*걸음수?|걸음수?|steps?)[\s:：\n\r]*(\d{3,6})/i) ||
-                        unified.match(/(\d{3,6})[\s\n\r]*(?:총\s*걸음수?|걸음수?|steps?)/i));
-      if (stepMatch) steps = parseInt(stepMatch[1], 10);
+      const stepLabelMatch = unified.match(/걸음[^\n\r]*\n[^\d]*(\d{3,6})\b/);
+      if (stepLabelMatch) {
+        steps = parseInt(stepLabelMatch[1], 10);
+      }
+      if (!steps) {
+        const cadLine = unified.match(/(?:spm|sem|케이던스)[^\n\r]*\b([1-9]\d{3,5})\b/i);
+        if (cadLine) steps = parseInt(cadLine[1], 10);
+      }
+      if (!steps) {
+        for (const m of unified.matchAll(/\b([1-9]\d{3,5})\b/g)) {
+          if (!m[1].startsWith('202')) {
+            steps = parseInt(m[1], 10);
+            break;
+          }
+        }
+      }
 
       // 8. InBody Weight & Fat
       let weight = null;
       let fat = null;
 
-      // Rule A: Matches 체중/체성분 64.1, Weight 64.1
       const labelRegex = /(?:체중(?:[\/\s]*체성분)?|체성분|몸무게|Weight|체\s*중)[\s\S]{0,35}?([3-9]\d(?:\.\d{1,2})?)/i;
       const lm = unified.match(labelRegex);
       if (lm) {
         const val = parseFloat(lm[1]);
         if (val >= 35 && val <= 150) weight = val;
       }
-
-      // Rule B: Number preceding explicit kg unit
       if (weight === null) {
         const kgMatches = [...unified.matchAll(/([3-9]\d(?:\.\d{1,2})?)\s*(?:kg|KG)\b/gi)];
         for (const m of kgMatches) {
@@ -4230,58 +4230,12 @@ ${err.message}
         }
       }
 
-      // Rule C: Line-by-line inspection around '체중', '체성분', 'weight'
-      if (weight === null) {
-        const lines = unified.split('\n').map(l => l.trim()).filter(Boolean);
-        for (let i = 0; i < lines.length; i++) {
-          const lineLower = lines[i].toLowerCase();
-          if (lineLower.includes('체중') || lineLower.includes('체성분') || lineLower.includes('weight')) {
-            for (let j = i; j <= Math.min(i + 3, lines.length - 1); j++) {
-              const numMatch = lines[j].match(/([3-9]\d(?:\.\d{1,2})?)/);
-              if (numMatch) {
-                const val = parseFloat(numMatch[1]);
-                if (val >= 35 && val <= 150) {
-                  weight = val;
-                  break;
-                }
-              }
-            }
-            if (weight !== null) break;
-          }
-        }
-      }
-
-      // Rule D: Fallback for Samsung Health screenshots with decimal number
-      if (weight === null && (lower.includes('samsung health') || lower.includes('삼성헬스')) && !hasRunningKeywords) {
-        const anyDecimalMatch = unified.match(/([4-9]\d\.\d{1,2})/);
-        if (anyDecimalMatch) {
-          const val = parseFloat(anyDecimalMatch[1]);
-          if (val >= 40 && val <= 130) weight = val;
-        }
-      }
-
-      // Body fat parsing
-      const fatLabelRegex = /(?:체지방률?|체지방량?|골격근량?|Fat)[\s\S]{0,25}?([1-4]\d(?:\.\d{1,2})?)/i;
-      const fm = unified.match(fatLabelRegex);
-      if (fm) {
-        const val = parseFloat(fm[1]);
-        if (val >= 5 && val <= 50) fat = val;
-      }
-      if (fat === null) {
-        const pctMatches = [...unified.matchAll(/([1-4]\d(?:\.\d{1,2})?)\s*%/g)];
-        for (const m of pctMatches) {
-          const val = parseFloat(m[1]);
-          if (val >= 5 && val <= 50) { fat = val; break; }
-        }
-      }
-
-      // Accurate Classification
+      // Classification
       const isRunning = !hasWeightKeywords && (
         hasRunningKeywords ||
         (distance !== null && (duration !== null || pace !== null || cadence !== null))
       );
 
-      // Detect Source
       let source = '삼성헬스';
       if (lower.includes('나이키') || lower.includes('nike') || lower.includes('nrc')) source = '나이키런';
       else if (lower.includes('apple') || lower.includes('garmin')) source = '애플피트니스';
@@ -4385,7 +4339,9 @@ ${err.message}
       document.getElementById('ocrRunPace').value = parsed.pace || "08'54\"";
       document.getElementById('ocrRunCalories').value = parsed.calories || 365;
       document.getElementById('ocrRunHeartRate').value = parsed.heartRate || 144;
-      document.getElementById('ocrRunSteps').value = parsed.steps || (parsed.distance ? Math.round(parsed.distance * 1170) : 7060);
+      document.getElementById('ocrRunSteps').value = parsed.steps || 7060;
+      const cadEl = document.getElementById('ocrRunCadence');
+      if (cadEl) cadEl.value = parsed.cadence || 131;
 
       const rawEl = document.getElementById('ocrRunRawText');
       if (rawEl) rawEl.textContent = rawText.trim() || "(인식 텍스트 없음)";
