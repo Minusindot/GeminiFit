@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-21T14:47:18.746Z",
+  "updatedAt": "2026-10-21T14:47:28.577Z",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
@@ -7,7 +7,7 @@
   "bondExp": 15,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev3",
+  "currentSituation": "ev9",
   "absDone": false,
   "runDone": true,
   "runDist": 6.03,
@@ -101,6 +101,11 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "순수 블랙 커피 맞지? 설탕이나 시럽 안 넣었으면 완벽해! 카페인으로 대사량 팍팍 부스팅이야!"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "오늘 식단 인증 사진 보니까 제법 합격점이네. 바보 프로듀서 치고는 장하다, 흥!"
     }
   ]
 }
