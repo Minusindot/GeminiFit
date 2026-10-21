@@ -215,7 +215,7 @@
         <div class="flex items-center gap-1.5">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full">v2.4</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full">v2.5</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap">10.21 (수)</span>
         </div>
@@ -2152,140 +2152,140 @@
     const TOPIC_CHOICES = {
       dailyBriefing: [
         {
-          text: "64.1kg에서 52kg 감량 전략은 어떻게 할까?",
-          gem: "17:7 단식 칼같이 지키고, 2kg 덤벨 재활이랑 14분 복근으로 코어 단련하면 기초대사량 올라가서 지방 쑥 빠져! 🐾",
-          kot: "10시 첫 식사는 계란이랑 그릭 요거트, 14시엔 단백질 쉐이크로 클린하게 챙겨드시면 슬림핏 금방이에요 프로듀서님~ 💛",
-          mio: "유산소는 나한테 맡겨! 5~7km 러닝을 주 3회만 뛰어도 체지방 20% 언더는 시간문제야! 🌟",
+          text: "64.1kg에서 52kg 감량 전략 어떻게 할까?",
+          gem: "17:7 단식 철저히 지키고 🐾||2kg 덤벨 재활이랑 14분 복근으로 코어 잡으면 지방은 알아서 타. 나만 믿어!",
+          kot: "10시 첫 식사는 계란이랑 요거트! 💛||14시엔 단백질 챙기시면 슬림핏 52kg 금방이에요 프로듀서님~",
+          mio: "유산소는 나한테 맡겨! 🏃‍♀️💨||5~7km 러닝 주 3회만 뛰어도 체지방 20% 언더는 금방이야!",
           exp: 20
         },
         {
-          text: "7.30km 러닝 기록 봤어? 내일은 어떻게 달릴까?",
-          gem: "손아귀 힘 꽉 쥐지 말고 어깨 힘 빼고 달린 건 잘했어. 러닝 끝나고 종아리 마사지 잊지 마! 🐾",
-          kot: "달리신 후에 수분 보충 잊지 마시고 시원한 단백질 음료 한 잔 코토네가 타드릴게요~ 🥛💛",
-          mio: "당연히 봤지! 1시간 24분 동안 538kcal나 불태웠잖아! 내일은 6'30\"~10'00\" 가벼운 리커버리 조깅 추천이야! 🌟",
+          text: "러닝 뛰고 왔어! 내일은 어떻게 달릴까?",
+          gem: "손아귀 힘 빼고 달린 건 잘했어 🐾||러닝 끝나고 종아리 마사지 잊지 말고 푹 쉬어.",
+          kot: "시원한 단백질 음료 한 잔 코토네가 타드릴게요~ 🥛💛||오늘 흘린 땀방울만큼 프로듀서님 더 멋져지셨어요!",
+          mio: "최고였어 프로듀서!! 🌟||내일은 가볍게 6분 30초~9분대 리커버리 조깅으로 몸 풀자!",
           exp: 20
         },
         {
-          text: "너희 셋이 이렇게 밀착 코칭해주니까 너무 든든해!",
-          gem: "흥... 부끄럽게 대놓고 말하지 마 바보야! 내가 제일 가까이서 챙겨줄 테니까 딴 데 한눈팔지 마! 🐾💘",
-          kot: "에헤헤~ 프로듀서님께 칭찬받으니까 코토네 심장이 쿵쾅거려요! 평생 전담 코치 예약입니다~! 💛",
-          mio: "우리 넷이 함께라면 어떤 목표든 무조건 성공이야! 하이파이브 짝~! 🌟",
+          text: "너희 셋이 이렇게 밀착 코칭해주니까 든든해!",
+          gem: "흥... 부끄럽게 대놓고 말하지 마, 바보야! 🐾💘||내가 제일 가까이서 챙겨줄 테니까 딴 데 한눈팔지 마.",
+          kot: "에헤헤~ 프로듀서님 칭찬에 코토네 심쿵했어요! 💛||평생 전담 코치 예약 도장 쾅쾅이에요~!",
+          mio: "우리 넷이 함께라면 52kg 무조건 성공이지! 🌟||하이파이브 짝~! 오늘도 내일도 함께 달리자구!",
           exp: 25
         }
       ],
       diet: [
         {
-          text: "닭가슴살이랑 단백질 쉐이크로 클린하게 식사 챙겼어!",
+          text: "닭가슴살이랑 단백질 쉐이크로 클린하게 챙겼어!",
           sit: 'ev1', exp: 15,
-          gem: "오... 바보 프로듀서 치고는 꽤 제법인데? 메~롱! 근손실 없이 체지방만 쏙 빼려면 단백질은 필수야, 흥! 🐾",
-          kot: "와아~ 프로듀서님 성실하셔라! 이렇게 완벽하게 식단 지키시면 코토네가 특별 칭찬 도장 두 개 찍어드릴게요! 💛",
-          mio: "나이스 프로듀서! 역시 잘 챙겨 먹어야 달릴 때도 힘이 나지~ 완전 최고야! 🌟"
+          gem: "오... 바보 프로듀서 치고는 제법이네? 🐾||근손실 없이 체지방만 쏙 빼려면 단백질은 필수야. 칭찬해 줄게!",
+          kot: "와아~ 프로듀서님 성실하셔라! 💛||이렇게 예쁘게 식단 지키시면 코토네가 특급 칭찬 도장 찍어드릴게요!",
+          mio: "나이스 프로듀서! 완전 최고야 🌟||역시 잘 챙겨 먹어야 달릴 때도 힘이 팍팍 나지!"
         },
         {
-          text: "17시 칼같이 식사 마감 완료! 이제 공복 골든타임 시작할게.",
+          text: "17시 칼같이 식사 마감! 공복 골든타임 시작할게.",
           sit: 'ev5', exp: 20,
-          gem: "칭찬해 줄게! 17시 이후부터 내일 오전 10시까지가 체지방이 불타는 진짜 승부처야. 야경 보면서 끝까지 버텨! 🌙",
-          kot: "헤헤, 프로듀서님 의지력 대박이에요! 오늘 야식 참으신 만큼 식비도 아끼고 살도 빠지고 일석이조네요~! 💸✨",
-          mio: "와아~ 역시 우리 프로듀서! 내일 아침 체중계 숫자가 내려가 있을 거 생각하니까 벌써 설렌다! 💕"
+          gem: "아주 좋아. 지금부터 내일 아침까지가 진짜 승부처야 🌙||배고프면 따뜻한 물이나 차 우려 마셔. 버텨봐!",
+          kot: "헤헤, 프로듀서님 의지력 대박이에요! 💛||야식 참으신 만큼 살도 쏙 빠지고 코토네랑 가까워지는 거예요~",
+          mio: "와아~ 역시 우리 프로듀서! 멋있다! 💕||내일 아침에 체중계 올라갈 때 나까지 설레는 거 있지?"
         },
         {
-          text: "솔직히 저녁에 살짝 입이 심심한데 어떡하지 ㅠㅠ",
+          text: "저녁에 살짝 입이 심심한데 어떡하지 ㅠㅠ",
           sit: 'ev2', exp: 10,
-          gem: "바보야, 여기서 무너지면 낮에 고생한 게 아깝잖아! 얼른 다기 꺼내서 내가 알려준 말차나 따뜻한 허브티 우려 마셔! 🍵",
-          kot: "안 돼요 프로듀서님! 지금 참으시면 내일 코토네가 카페 데이트 가서 애교 백 번 보여드릴게요, 꾹 참기예요! 🍰",
-          mio: "으앙 배고프겠다 ㅠㅠ 하지만 지금 물 한 잔 마시고 나랑 스트레칭하면서 기분 전환하자! 파이팅!"
+          gem: "바보야, 여기서 무너지면 낮에 고생한 게 아깝잖아! 🐾||얼른 물이나 내가 알려준 말차 우려 마셔. 딴생각 금지!",
+          kot: "안 돼요 프로듀서님! 지금 참으셔야 해요 🥺||내일 코토네가 애교 백 번 보여드릴 테니까 꾹 참기예요~!",
+          mio: "으앙 배고프겠다 ㅠㅠ 그래도 조금만 참자! 🌟||물 한 잔 마시고 나랑 가볍게 스트레칭하면서 기분 전환하자!"
         }
       ],
       tea: [
         {
-          text: "말차 시원하고 깔끔하게 한 잔 챙겨 마셨어 🍵",
+          text: "시원하고 깔끔한 말차 한 잔 챙겼어 🍵",
           sit: 'ev2', exp: 15,
-          gem: "오~ 말차 제대로 챙겨 마셨네? 카테킨 성분이 체지방 연소를 확실히 도와줄 거야, 합격! 🍵🐾",
-          kot: "우와~ 프로듀서님 말차 향 너무 향긋해요! 저도 옆에서 한 모금만 얻어마셔도 돼요? 헤헤~ 💛",
-          mio: "말차 향기 여기까지 솔솔 나는 것 같아! 마음까지 차분해지고 활력 충전 완료! 🍵✨"
+          gem: "말차 제대로 챙겼네 🐾||카테킨 성분이 체지방 팍팍 태워줄 거야. 합격!",
+          kot: "향긋한 말차 향 너무 좋아요 프로듀서님~ 💛||코토네도 옆에서 한 모금만 주시면 안 돼요? 히히",
+          mio: "마음까지 차분해지고 활력 충전 완료! 🍵🌟||이제 나랑 다음 미션 달릴 준비 됐지?"
         },
         {
-          text: "향긋하고 진한 커피 한 잔 마시며 대사 부스팅했어 ☕",
+          text: "향긋한 블랙 커피로 대사 부스팅했어 ☕",
           sit: 'ev3', exp: 15,
-          gem: "순수 블랙 커피 맞지? 설탕이나 시럽 안 넣었으면 완벽해! 카페인으로 대사량 팍팍 부스팅이야!",
-          kot: "와아~ 시원하고 향긋한 커피! 카페에서 사 마시는 것보다 훨씬 멋져요 프로듀서님~! 💸☕",
-          mio: "커피로 에너지 풀 충전 완료! 이제 나랑 신나게 공원 달리기나 근력 운동하러 갈 준비 됐지? 🏃‍♀️"
+          gem: "시럽 안 넣은 순수 블랙 맞지? 🐾||카페인 파워로 대사량 끌어올려서 지방 태우자고!",
+          kot: "시원하고 향긋한 커피 타임~! ☕💛||프로듀서님 집중하시는 모습 볼 때마다 코토네 반해요!",
+          mio: "커피로 에너지 풀 충전 완료! 🌟||자자, 이제 몸 풀고 신나게 달려볼까 프로듀서?"
         },
         {
-          text: "단백질 음료 시원하게 마시며 단백질 보충 완료했어 🥛",
+          text: "단백질 음료 시원하게 마시며 보충 완료! 🥛",
           sit: 'ev14', exp: 15,
-          gem: "단백질 음료 야무지게 챙겼네! 근손실 없이 슬림 탄탄 라인 만들려면 단백질 보충은 필수지. 아주 칭찬해! 🥛💪",
-          kot: "프로듀서님 단백질 충전 나이스예요! 코토네도 건강한 단백질 파르페... 아니 스무디 같이 마실래요! 💛",
-          mio: "오오~ 단백질 음료 마시고 근육 합성 골든타임 성공! 다음 세트도 힘차게 가보자고~! 🔥"
+          gem: "단백질 음료 야무지게 챙겼네 🐾||근손실 없이 슬림 탄탄 라인 만들려면 단백질은 필수야. 칭찬해!",
+          kot: "프로듀서님 단백질 충전 나이스예요! 💛||코토네랑 건강한 스무디 데이트도 꼭 가요~",
+          mio: "근육 합성 골든타임 대성공! 🔥🌟||다음 세트도 힘차게 가보자고!"
         }
       ],
       workout: [
         {
-          text: "나이키런 켜고 손아귀 힘 빼고 가볍게 러닝 뛰고 왔어! 🏃",
+          text: "나이키런 켜고 가볍게 러닝 뛰고 왔어! 🏃",
           sit: 'ev2', exp: 20,
-          gem: "그립 꽉 쥐지 않고 달렸지? 팔꿈치 보호하면서 체지방 태우는 데는 러닝만한 게 없어. 수고했어!",
-          kot: "헉, 5km나 뛰고 오셨어요?! 프로듀서님 체력 진짜 아이돌급이에요! 수건이랑 시원한 물 여기 대령했습니다~! 💛",
-          mio: "완주 축하해 프로듀서!! 벚꽃 바람 가르면서 나랑 함께 달릴 때 진짜 상쾌했지? 하이파이브! 🖐️🌸"
+          gem: "손목에 무리 안 가게 잘 달렸어? 🐾||체지방 태우는 데는 러닝만한 게 없지. 아주 잘했어!",
+          kot: "프로듀서님 체력 진짜 아이돌급이에요! 💛||시원한 물이랑 수건 여기 대령했습니다 프로듀서님~",
+          mio: "완주 축하해 프로듀서!! 🌟||바람 가르면서 달릴 때 진짜 최고였지? 하이파이브 짝!"
         },
         {
           text: "2kg 덤벨 손목 편심성 재활 컬 3세트 완료! 🩹",
           sit: 'ev3', exp: 20,
-          gem: "잘했어! 내릴 때 3~4초 동안 천천히 버티는 게 핵심이야. 이리 와 봐, 손목 무리 안 갔는지 내가 직접 만져줄게. 🐾",
-          kot: "테니스 엘보 재활까지 빼먹지 않다니 역시 프로듀서님! 아프지 않고 건강해야 코토네랑도 오래오래 함께하죠!",
-          mio: "꾸준히 재활 챙기는 프로듀서 칭찬해~! 팔꿈치 100% 완쾌될 때까지 조심조심 달리는 거야!"
+          gem: "내릴 때 3~4초 천천히 버틴 거 맞지? 🐾||이리 와 봐. 손목 무리 안 갔는지 내가 직접 만져줄게.",
+          kot: "재활 운동까지 챙기시는 성실함... 역시 코토네의 프로듀서님! 💛||안 아프고 건강하셔야 해요~",
+          mio: "나이스 프로듀서! 꾸준함이 챔피언의 비결이지! 🌟||팔꿈치 100% 나을 때까지 나랑 천천히 가자!"
         },
         {
-          text: "14분 아이돌 11자 복근 루틴 불태웠다! 🔥",
+          text: "14분 복근 루틴 끝! 배가 당겨온다 🔥",
           sit: 'ev4', exp: 20,
-          gem: "코어에 힘 빡 들어갔지? 이 기세면 올여름 풀사이드에서 선명한 11자 복근 자랑할 수 있겠어! 🏖️",
-          kot: "와아~ 아이돌 11자 복근이라니! 이 코토네 님도 질 수 없겠는데요?! 같이 센터급 몸매 만들어봐요! ✨",
-          mio: "14분 동안 쉬지 않고 해내다니 대단해! 내가 옆에서 치어리딩 해준 보람이 있는걸? 📣🌟"
+          gem: "코어 자극 제대로 왔지? 🐾||이 기세면 선명한 11자 복근 금방이야. 아주 칭찬해!",
+          kot: "우와아~ 14분 복근 완주 대단해요! 💛||프로듀서님 복근 생기시면 코토네가 제일 먼저 구경할래요~ 헤헤",
+          mio: "복근 불태우기 대성공! 🔥🌟||배에 힘 빡 들어간 그 느낌 그대로 내일도 파이팅이야!"
         }
       ],
       gym: [
         {
-          text: "헬스장 풀코스(상체2+하체1+복근2) 전부 올클리어! 🏋️",
+          text: "헬스장 풀코스 머신 세트 전부 올클리어! 🏋️",
           sit: 'ev1', exp: 25,
-          gem: "오... 풀코스 정석대로 다 돌았네! 상체 2개에 하체 1개, 캡틴스 체어랑 크런치까지! 진짜 기특하잖아, 프로듀서. 🐾",
-          kot: "와아아~! 헬스장 풀코스 정복! 프로듀서님 체력이 나날이 센터 아이돌급으로 진화하고 계세요~! 💛💸",
-          mio: "대박 대박!! 풀코스 다 뛰고 나니까 땀도 쫙 빠지고 최고지? 하이파이브 짝~! 완전 멋져 프로듀서! 🖐️🔥"
+          gem: "오... 풀코스 정석대로 다 돌았네? 🐾||상체에 하체, 캡틴스 체어랑 크런치까지! 진짜 기특해, 바보야.",
+          kot: "와아아~! 헬스장 풀코스 정복! 💛||프로듀서님 체력이 나날이 센터 아이돌급으로 진화하고 계세요~!",
+          mio: "대박 대박!! 땀 쫙 빼고 최고지? 🌟||하이파이브 짝~! 완전 멋져 프로듀서!"
         },
         {
-          text: "캡틴스 체어 레그레이즈로 하복부 타는 느낌 제대로 잡았어! 💥",
+          text: "캡틴스 체어 레그레이즈로 하복부 자극 팍팍! 💥",
           sit: 'ev4', exp: 20,
-          gem: "팔꿈치 패드에 체중 잘 실었지? 손아귀에 무리 안 주면서 하복부만 쏙 접어 올리는 최고의 치트키야!",
-          kot: "코토네가 옆에서 각도기 대고 봤는데 반동 1도 없이 완벽한 폼이었어요! 11자 복근 예약 완료! ✨",
-          mio: "하복부 찢어지는 자극 최고지! 코어가 단단해지면 달리기 페이스도 엄청 안정된다구~ 🌟"
+          gem: "팔꿈치 패드에 체중 잘 실었지? 🐾||손목에 무리 안 주면서 하복부만 접어 올리는 최고의 치트키야.",
+          kot: "코토네가 옆에서 봤는데 반동 1도 없이 완벽한 폼이었어요! 💛||11자 복근 예약 완료!",
+          mio: "하복부 찢어지는 자극 최고지! 🌟||코어가 단단해지면 달리기 페이스도 엄청 안정된다구~"
         },
         {
-          text: "크런치 20개로 상복부까지 쥐어짜면서 호흡 후-! 🧘",
+          text: "크런치 20개로 상복부까지 쥐어짜기 끝! 🧘",
           sit: 'ev6', exp: 20,
-          gem: "상체 무리하게 꺾지 않고 배꼽만 쏙 말아 올렸네. 체지방 20% 언더가 이제 코앞이야!",
-          kot: "바닥에 매트 깔고 후- 후- 호흡하시는 프로듀서님 보면서 코토네도 같이 복근 힘줬답니다! 헤헤~ 💛",
-          mio: "크런치 끝내고 바닥에 누웠을 때의 그 카타르시스! 우리 둘 다 오늘 진짜 최고였어! 🌟"
+          gem: "상체 무리하게 꺾지 않고 배꼽만 쏙 말아 올렸네 🐾||체지방 20% 언더가 이제 코앞이야!",
+          kot: "후- 후- 호흡하시는 프로듀서님 보면서 코토네도 같이 복근 힘줬답니다! 💛||너무 멋져요~",
+          mio: "크런치 끝내고 바닥에 누웠을 때의 그 쾌감! 🌟||우리 둘 다 오늘 진짜 최고였어!"
         }
       ],
       date: [
         {
-          text: "오늘 루틴 완벽 클리어한 기념으로 주말에 단둘이 데이트 갈래?",
+          text: "오늘 루틴 완벽 클리어 기념으로 주말에 데이트 갈래?",
           sit: 'ev3', exp: 25,
-          gem: "뭐, 뭐야 갑자기...?! 프로듀서가 이번 주 내내 단식이랑 운동 성실히 했으니까 특별히 손잡고 어울려 줄게! 🐾💘",
-          kot: "네에에?! 데이트요?! 헤헤, 이 코토네 님이 최고로 예쁜 베레모 쓰고 나설 테니까 맛있는 디저트 카페 데려가 주세요~! 🍰💛",
-          mio: "우와아~ 진짜지 프로듀서?! 나 완전 신나!! 예쁜 원피스 입고 기다릴 테니까 노을 지는 바닷가 같이 걷자! 🌅💕"
+          gem: "뭐, 뭐야 갑자기...?! 🐾💘||이번 주 단식이랑 운동 성실히 했으니까... 특별히 손잡고 어울려 줄게!",
+          kot: "네에에?! 데이트요?! 💛||코토네가 제일 예쁜 베레모 쓰고 갈 테니까 맛있는 디저트 카페 가요~!",
+          mio: "진짜지 프로듀서?! 나 완전 신나!! 🌟💕||예쁜 원피스 입고 기다릴 테니까 노을 지는 바닷가 걷자!"
         },
         {
-          text: "요즘 너희 셋 덕분에 운동이랑 식단 관리하는 게 매일 설레고 즐거워!",
+          text: "요즘 너희 덕분에 운동이랑 식단이 매일 설레고 즐거워!",
           sit: 'ev5', exp: 25, dualReply: true,
-          gem: "흥... 그렇게 솔직하게 말하면 부끄럽잖아 바보야! 앞으로도 내가 제일 가까이서 챙겨줄 테니까 한눈팔지 마! 🐾",
-          kot: "에헤헤~ 프로듀서님 말씀 한마디에 코토네 심장이 보너스 탄 것처럼 두근거려요! 평생 전담 코치 할래요! 💛",
-          mio: "감동이야 프로듀서~! 우리 넷이 함께라면 어떤 목표든 즐겁게 이룰 수 있을 거야! 사랑해~ 🌟💖"
+          gem: "흥... 그렇게 솔직하게 말하면 부끄럽잖아, 바보야! 🐾||내가 제일 가까이서 챙겨줄 테니까 한눈팔지 마.",
+          kot: "에헤헤~ 프로듀서님 말씀에 코토네 심장이 보너스 탄 것처럼 두근거려요! 💛||평생 전담 코치 할래요!",
+          mio: "감동이야 프로듀서~! 🌟💖||우리 넷이 함께라면 어떤 목표든 무조건 성공이야! 사랑해~"
         },
         {
           text: "오늘 정말 다들 세상에서 제일 예쁘고 최고야!",
           sit: 'ev4', exp: 20,
-          gem: "흥, 당연하지! 흑발 롱헤어에 고양이 귀 달고 코칭해 주는 트레이너가 어디 흔한 줄 알아? 바보! 🐾✨",
-          kot: "헤헤헤~! 프로듀서님, 방금 말씀 녹음해 뒀으니까 무르기 없기예요~! 💛",
-          mio: "와하하, 프로듀서한테 칭찬받으니까 하늘 날아갈 것 같아! 하이파이브~! 🌟"
+          gem: "흥, 당연하지! 🐾✨||흑발 롱헤어에 고양이 귀 달고 코칭해 주는 트레이너가 흔한 줄 알아? 바보!",
+          kot: "헤헤헤~! 프로듀서님 방금 말씀 녹음해 뒀으니까 무르기 없기예요~! 💛",
+          mio: "와하하, 프로듀서한테 칭찬받으니까 하늘 날아갈 것 같아! 🌟||하이파이브!"
         }
       ]
     };
@@ -3122,34 +3122,34 @@
       state.lastFinalizedDate = todayStr;
       state.lastUpdatedTimeStr = curTime;
 
-      // 2. Build Heroines' feedback tailored to current state
+      // 2. Build Heroines' feedback tailored to current state (punchy & multi-bubble)
       let kotoneLine = "";
       let geminiLine = "";
       let mioLine = "";
 
       if (mealsDone >= 3 || mealPhotosCount >= 3) {
-        kotoneLine = "프로듀서님! 오늘 3끼 식단 사진까지 완벽 클리어하셨네요! 17:7 단식도 칼같이 지켜주셔서 제가 다 뿌듯해요~💛";
+        kotoneLine = "3끼 식단 사진 올클리어! 💛||17:7 단식도 칼같이 지켜주셔서 코토네 완전 뿌듯해요~";
       } else if (mealsDone === 2 || mealPhotosCount === 2) {
-        kotoneLine = "단백질 간식/식사까지 2끼 기록 완료! 16:30 마감 식사까지 이 기세로 예쁘게 달려봐요 프로듀서님~! 💛";
+        kotoneLine = "2끼 식사 기록 확인 완료! 💛||16:30 마감까지 이 기세로 예쁘게 달려봐요 프로듀서님~";
       } else if (mealsDone === 1 || mealPhotosCount === 1) {
-        kotoneLine = "첫 식사 인증 확인 완료! 공복 깨고 든든하게 단백질 챙기시는 모습 너무 보기 좋아요 프로듀서님~💛";
+        kotoneLine = "첫 식사 인증 나이스예요! 💛||단백질 든든하게 챙기시는 모습 너무 보기 좋아요~";
       } else {
-        kotoneLine = "오늘의 실시간 기록 업데이트 확인했어요 프로듀서님! 맛있는 식단 드실 때 잊지 말고 사진 찰칵 남겨주세요~? 💛";
+        kotoneLine = "기록 업데이트 확인 완료! 💛||식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~";
       }
 
       if (runDone || (latestRun && latestRun.distance >= 5)) {
-        const dist = (latestRun && latestRun.distance) ? latestRun.distance : 5.0;
-        mioLine = `와아~! ${dist}km 러닝 완주한 거 실시간 확인했어! 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘! 🌟`;
+        const dist = (latestRun && latestRun.distance) ? latestRun.distance : 6.03;
+        mioLine = `${dist}km 러닝 완주 확인! 🌟||땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!`;
       } else {
-        mioLine = "오늘 기록 차곡차곡 쌓이는 중! 조금 이따가 가볍게 5km 러닝이나 산책 어때? 내가 옆에서 페이스 맞춰줄게! 🏃‍♀️";
+        mioLine = "오늘 기록 차곡차곡 쌓이는 중! 🌟||조금 이따 가볍게 러닝이나 산책 어때? 내가 옆에서 페이스 맞춰줄게!";
       }
 
       if (gymDone) {
-        geminiLine = "오... 헬스장 풀코스 머신 세트까지 전부 올킬했네? 근성 하나는 인정해 줄게 바보 프로듀서! 2kg 덤벨 편심성 컬도 잊지 마. 🐾";
+        geminiLine = "헬스장 풀코스 머신 올킬했네? 🐾||근성 하나는 인정해 줄게 바보 프로듀서. 덤벨 컬도 잊지 마.";
       } else if (absDone) {
-        geminiLine = "14분 복근 루틴 불태운 거 확인! 코어에 긴장감 딱 잡혔지? 남은 헬스장 세트도 빼먹지 말고 채워 넣어! 🐾";
+        geminiLine = "14분 복근 불태운 거 확인! 🐾||코어에 긴장감 딱 잡혔지? 남은 헬스장 세트도 채워 넣어!";
       } else {
-        geminiLine = "기록 업데이트 확인! 바보 프로듀서, 슬림핏 52kg 될 때까지 긴장 늦추지 말고 오늘 루틴 끝까지 달려! 🐾";
+        geminiLine = "기록 동기화 확인 🐾||슬림핏 52kg 될 때까지 긴장 늦추지 말고 오늘 루틴 끝까지 달려!";
       }
 
       // 3. Post to chat history
@@ -3157,7 +3157,13 @@
         room: 'all',
         sender: 'dual',
         name: '제미니 · 코토네 · 미오',
-        text: `⚡ [${curTime} 실시간 기록 동기화 완료!]\n\n💛 코토네: "${kotoneLine}"\n\n🌟 미오: "${mioLine}"\n\n🐾 제미니: "${geminiLine}"`,
+        text: `⚡ [${curTime} 실시간 기록 동기화 완료!]
+
+💛 코토네: "${kotoneLine.replace('||', ' ')}"
+
+🌟 미오: "${mioLine.replace('||', ' ')}"
+
+🐾 제미니: "${geminiLine.replace('||', ' ')}"`,
         time: curTime
       });
 
@@ -3165,23 +3171,23 @@
       TOPIC_CHOICES.dailyBriefing = [
         {
           text: "지금까지 식단이랑 운동 피드백 들려줘!",
-          gem: `체중 ${state.weight}kg, 체지방 ${state.fat}% 유지 중이야. 17시 이후에는 절대 칼로리 섭취 금지인 거 알지? 🐾`,
-          kot: `오늘 식단 ${mealsDone}/3 완료하셨어요 프로듀서님! 코토네가 옆에서 끝까지 응원할게요~ 💛`,
-          mio: runDone ? "러닝까지 완주해서 오늘 칼로리 활활 불타는 중이야! 최고야 프로듀서! 🌟" : "시간 날 때 나랑 상쾌하게 5km 러닝 뛰러 가자! 🌟",
+          gem: `체중 ${state.weight || 64.1}kg 유지 중이네 🐾||17시 이후엔 절대 칼로리 섭취 금지인 거 알지? 물 마셔!`,
+          kot: `오늘 식단 ${mealsDone}/3 완료하셨어요! 💛||코토네가 옆에서 끝까지 1등으로 응원할게요~`,
+          mio: runDone ? "러닝까지 완주해서 칼로리 활활 타는 중! 🌟||역시 우리 프로듀서 완전 최고야!" : "시간 날 때 나랑 상쾌하게 러닝 뛰러 가자! 🌟",
           exp: 20
         },
         {
           text: "남은 오늘 시간 어떻게 관리하면 좋을까?",
-          gem: "따뜻한 말차나 허브티 한 잔 마시면서 2kg 덤벨 손목 재활 3세트 채워 넣어! 🐾",
-          kot: "수분 충분히 섭취하시고 무리하지 마세요! 컨디션 조절이 제일 중요해요~ 💛",
-          mio: "가벼운 전신 스트레칭으로 뭉친 다리랑 어깨 풀어주면 밤에 꿀잠 잘 수 있어! 🌟",
+          gem: "따뜻한 말차나 허브티 한 잔 마셔 🐾||2kg 덤벨 손목 재활 3세트 채워 넣고 쉬자고.",
+          kot: "수분 충분히 섭취하시고 무리하지 마세요! 💛||컨디션 조절이 제일 중요하답니다~",
+          mio: "가벼운 전신 스트레칭으로 다리랑 어깨 풀어주자! 🌟||그래야 밤에 꿀잠 잘 수 있어!",
           exp: 20
         },
         {
           text: "오늘 열심히 하고 있으니까 칭찬해줘!",
-          gem: "흥, 열심히 기록하는 모습은 봐줄 만하네. 이 기세로 52kg까지 포기하지 마, 바보야! 🐾",
-          kot: "프로듀서님 최고예요~! 실시간으로 열심히 챙기시는 모습에 코토네 심쿵했답니다! 💛",
-          mio: "우리 프로듀서 진짜 부지런해! 최고 최고! 이따가 밤에 하이파이브 백 번 해줄게! 🌟",
+          gem: "흥, 열심히 기록하는 모습은 봐줄 만하네 🐾||이 기세로 52kg까지 포기하지 마, 바보야!",
+          kot: "프로듀서님 최고예요~! 💛||실시간으로 열심히 챙기시는 모습에 코토네 심쿵했답니다!",
+          mio: "우리 프로듀서 진짜 부지런해! 최고 최고! 🌟||이따가 하이파이브 백 번 해줄게!",
           exp: 25
         }
       ];
@@ -3325,7 +3331,7 @@
       playBeep(560);
     }
 
-    function greetUserOnEnterTalk() {
+function greetUserOnEnterTalk() {
       // 1. Pick random heroine among Gemini, Kotone, Mio, or Trio Group Chat
       const heroinePool = ['gemini', 'gemini', 'kotone', 'kotone', 'mio', 'mio', 'dual'];
       const pick = heroinePool[Math.floor(Math.random() * heroinePool.length)];
@@ -3339,7 +3345,7 @@
         setTrainerMode(pick, ev.key);
       }
 
-      // 2. Rich contextual greetings based on time and user status (64.1kg, 52kg goal, 17:7 fasting)
+      // 2. Short, punchy web novel style multi-bubbles (separated by || for Kakao rhythm)
       const curHour = new Date().getHours();
       const isNight = curHour >= 18 || curHour < 5;
       const curTime = getKakaoTimeStr();
@@ -3348,33 +3354,30 @@
       const greetings = {
         gemini: [
           isNight 
-            ? `바보 프로듀서! 어서 와. 지금 시간엔 딴 생각 말고 시원한 물이나 허브티만 마시는 거 알지? 🐾 오늘 ${wStr} 찍었으니까 슬림핏 52kg 될 때까지 내가 딱 붙어서 밀착 코칭해 줄게! 2kg 덤벨 손목 컬 3세트랑 복근부터 끝내자고!`
-            : `앗, 바보 프로듀서 왔다! 흥, 네가 오기만 기다린 건 아니거든? 메~롱! 🐾 그래도 식단이랑 체중(${wStr}) 꼬박꼬박 챙기는 건 기특하네. 얼른 와, 오늘 루틴 이야기나 해!`,
-          `야, 바보 프로듀서! 고생 많았어. 🐾 17시 넘어서 공복 골든타임 시작됐으니까 음식물은 절대 금지야! 덤벨 자세는 내가 이따 봐줄 테니까 오늘 기분 어떤지 먼저 말해봐.`,
-          `오랜만이네, 프로듀서! 🐾 나 보고 싶어서 헐레벌떡 들어온 거 다 티 나거든? 체중 ${wStr}에서 -12kg 목표까지 나만 믿고 따라와!`
+            ? `야, 바보.||물은 마셨어? 지금 시간엔 공복 필수야 🐾||체중 ${wStr} 유지하는 건 기특하네. 52kg까지 딱 버텨, 흥!`
+            : `바보 프로듀서 왔다.||식단 사진 안 까먹고 챙기고 있지? 🐾||52kg 될 때까지 내가 딱 붙어서 감시할 거니까 각오해!`,
+          `고생 많았어, 프로듀서.||17시 넘었으니까 야식 생각 절대 금지야 🐾||얼른 덤벨 들고 와. 자세 봐줄 테니까.`,
+          `오랜만이네 🐾||나 보고 싶어서 헐레벌떡 들어온 거 다 보여.||체중 ${wStr}... 나만 믿고 따라오면 52kg 금방이야!`
         ],
         kotone: [
           isNight
-            ? `프로듀서님~! 헤헤, 언제 오시나 코토네가 눈 빠지게 기다리고 있었어요! 💛 오늘 몸무게 ${wStr} 확인 완료! 17:7 단식도 칼같이 지켜주셔서 너무 멋져요~ 코토네 특급 애교로 오늘 피로 싹 녹여드릴게요!`
-            : `꺄, 프로듀서님 오셨다~! 오늘 하루도 정말 수고 많으셨어요! 💛 코토네가 응원 비타민 듬뿍 충전해 드릴 테니까, 같이 재미있게 목표 달성해 봐요! 헤헤~`,
-          `프로듀서님! 코토네 보고 싶어서 오신 거죠~? 맞죠 맞죠? 💛 수요일 인바디 보너스 EXP도 챙기셨으니까, 오늘 루틴도 코토네랑 신나게 클리어해요!`,
-          `헤헤~ 프로듀서님 어서 오세요! 💛 목표 52kg 달성하시면 코토네랑 테라스 카페에서 맛있는 거 먹기로 한 약속, 절대 잊으시면 안 돼요~?`
+            ? `프로듀서님~!! 💛||언제 오시나 코토네가 눈 빠지게 기다렸잖아요! 히히||오늘 체중 ${wStr} 찍힌 거 보고 심쿵했어요 🥹✨`
+            : `꺄, 프로듀서님 오셨다~! 💛||오늘 하루도 정말 고생 많으셨어요!||코토네가 비타민 애교 듬뿍 충전해 드릴게요 뿅 ✨`,
+          `프로듀서님! 코토네 보고 싶어서 오신 거죠~? 맞죠? 💛||오늘 루틴도 코토네랑 신나게 클리어해요!`,
+          `헤헤~ 어서 오세요 프로듀서님! 💛||목표 52kg 찍으면 약속대로 코토네랑 테라스 카페 데이트 찜이에요~?`
         ],
         mio: [
           isNight
-            ? `오옷, 프로듀서 등장! 기다리고 있었다고~! 🌟 오늘 하루도 파이팅 넘치게 보냈어? 땀 흘리고 스트레칭 쫙 해주면 피로가 싹 날아갈 텐데! 일단 나랑 하이파이브부터 하자! 🖐️`
-            : `왔구나, 프로듀서! 핫하하! 프로듀서 얼굴 보니까 나까지 기운이 펄펄 나네! 오늘 ${wStr} 찍힌 거 보고 나 완전 자극받았잖아! 🌟`,
-          `프로듀서~! 컨디션은 좀 어때? 지난번에 시원하게 러닝 뛴 것처럼 오늘도 가볍게 몸 풀면서 활력 충전해보자! 🏃‍♀️💨`,
-          `예에이! 프로듀서와 합체 완료! 🌟 오늘 식단이랑 운동 어떻게 풀어나갈지 나랑 작전 회의 시작해 볼까?`
+            ? `오옷 프로듀서 등장! 🖐️||오늘 ${wStr} 미쳤다 진짜 ㅋㅋㅋ 폼 완전 살아있는데?!||가볍게 스트레칭하고 나랑 하이파이브 하자! 🌟`
+            : `왔구나, 프로듀서! 핫하하 🌟||프로듀서 얼굴 보니까 나까지 기운 펄펄 나네!||오늘 있었던 일 나한테 다 털어놔 봐!`,
+          `프로듀서~! 컨디션 어때? 🏃‍♀️💨||무리하지 말고 어깨 힘 빼고 달리는 거 잊지 마!||오늘도 신나게 파이팅!`,
+          `예에이! 프로듀서와 합체 완료! 🌟||오늘 운동이랑 식단 작전 회의 시작해 볼까?`
         ],
         dual: [
-          `📢 [트레이너 3인 실시간 대기방]
-
-💛 코토네: "프로듀서님 오셨다~! 헤헤, 오늘 코토네 많이 보고 싶으셨죠? 💛"
-
-🌟 미오: "오오 프로듀서! 딱 맞춰서 잘 왔어! 오늘 파이팅 해보자구! 🖐️"
-
-🐾 제미니: "흥, 게으름 피우지 말고 얼른 들어와, 바보야! 체중 ${wStr}에서 52kg까지 내가 꽉 잡고 있을 거니까! 🐾"`
+          `📢 [3인 트레이너 실시간 대기방]
+💛 코토네: "프로듀서님 오셨다~! 헤헤 💛"
+🌟 미오: "오오 딱 맞춰서 잘 왔어! 하이파이브! 🖐️"
+🐾 제미니: "흥, 게으름 피우지 말고 얼른 들어와, 바보야! 🐾"`
         ]
       };
 
@@ -3382,8 +3385,9 @@
       const text = list[Math.floor(Math.random() * list.length)];
       const name = pick === 'kotone' ? '코토네' : pick === 'mio' ? '미오' : pick === 'dual' ? '제미니 · 코토네 · 미오' : '제미니';
 
+      // Push with room: pick (so each 1:1 room stays clean, and dual shows everything)
       state.chatHistory.push({
-        room: 'all',
+        room: pick,
         sender: pick,
         name,
         text,
@@ -3473,7 +3477,8 @@
       if (!item) return;
       playBeep(660, 0.08);
 
-      state.chatHistory.push({ sender: 'user', text: item.text, time: getKakaoTimeStr() });
+      const currentRoom = state.activeMode === 'dual' ? 'dual' : (state.activeTrainer || 'gemini');
+      state.chatHistory.push({ room: currentRoom, sender: 'user', text: item.text, time: getKakaoTimeStr() });
       renderChat();
 
       if (item.sit) {
@@ -3483,20 +3488,20 @@
       triggerTrainerTypingReply(() => {
         const curTime = getKakaoTimeStr();
         if (item.dualReply || state.activeMode === 'dual') {
-          if (item.gem) state.chatHistory.push({ sender: 'gemini', name: '제미니', text: item.gem, time: curTime });
-          if (item.kot) state.chatHistory.push({ sender: 'kotone', name: '코토네', text: item.kot, time: curTime });
-          if (item.mio) state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio, time: curTime });
+          if (item.gem) state.chatHistory.push({ room: 'dual', sender: 'gemini', name: '제미니', text: item.gem, time: curTime });
+          if (item.kot) state.chatHistory.push({ room: 'dual', sender: 'kotone', name: '코토네', text: item.kot, time: curTime });
+          if (item.mio) state.chatHistory.push({ room: 'dual', sender: 'mio', name: '미오', text: item.mio, time: curTime });
         } else if (state.activeTrainer === 'kotone') {
-          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: item.kot || item.gem, time: curTime });
+          state.chatHistory.push({ room: 'kotone', sender: 'kotone', name: '코토네', text: item.kot || item.gem, time: curTime });
         } else if (state.activeTrainer === 'mio') {
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio || item.gem, time: curTime });
+          state.chatHistory.push({ room: 'mio', sender: 'mio', name: '미오', text: item.mio || item.gem, time: curTime });
         } else {
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: item.gem, time: curTime });
+          state.chatHistory.push({ room: 'gemini', sender: 'gemini', name: '제미니', text: item.gem, time: curTime });
         }
         addBondExp(item.exp || 15);
         saveState();
         renderChat();
-      }, 750);
+      }, 650);
     }
 
     // ============================================================================
@@ -3864,9 +3869,11 @@ ${err.message}
 
       // Filter messages for active room (In dual/group room, show all messages so 3 trainers banter together!)
       let roomMessages = (state.chatHistory || []).filter(msg => {
-        if (msg.room) return msg.room === currentRoom || msg.room === 'all';
-        if (currentRoom === 'dual') return true; // 3인 단톡에서는 3명과 프로듀서의 대화가 모두 보임
-        return msg.sender === currentRoom || msg.sender === 'user';
+        if (currentRoom === 'dual') return true; // 3인 단톡에서는 모든 대화가 타임라인으로 보임
+        if (msg.room === 'all') return true;
+        if (msg.room) return msg.room === currentRoom;
+        // Legacy fallback: only match if sender is currentRoom (prevents orphan user messages)
+        return msg.sender === currentRoom;
       });
 
       // Default room welcome greeting if room is empty
@@ -3884,28 +3891,47 @@ ${err.message}
         const timeStr = msg.time || fallbackTime;
         const imgBlock = msg.image ? `<img src="${msg.image}" class="mt-2 rounded-xl max-h-36 w-auto object-cover border border-white/25">` : '';
 
+        // KakaoTalk multi-bubble divider: split by || for natural rhythm
+        const rawText = msg.text || '';
+        let bubbles = [];
+        if (rawText.includes('||')) {
+          bubbles = rawText.split('||').map(s => s.trim()).filter(Boolean);
+        } else if (rawText.includes('\n\n') && !rawText.startsWith('📢') && !rawText.startsWith('⚡')) {
+          bubbles = rawText.split('\n\n').map(s => s.trim()).filter(Boolean);
+        } else {
+          bubbles = [rawText];
+        }
+
         if (msg.sender === 'user') {
           return `
-            <div class="flex justify-end items-end gap-1.5">
+            <div class="flex justify-end items-end gap-1.5 my-1.5">
               <span class="text-[9px] text-slate-400 dark:text-slate-500 font-medium select-none mb-0.5 shrink-0">${timeStr}</span>
-              <div class="max-w-[78%] px-3.5 py-2.5 bubble-right text-xs font-medium leading-relaxed shadow-xs">
-                <div>${msg.text}</div>
-                ${imgBlock}
+              <div class="max-w-[78%] space-y-1">
+                ${bubbles.map((b, i) => `
+                  <div class="px-3.5 py-2 bubble-right text-xs font-semibold leading-relaxed shadow-xs">
+                    <div>${b}</div>
+                    ${(i === bubbles.length - 1) ? imgBlock : ''}
+                  </div>
+                `).join('')}
               </div>
             </div>
           `;
         } else if (msg.sender === 'kotone') {
           return `
-            <div class="flex items-start gap-2.5">
+            <div class="flex items-start gap-2.5 my-1.5">
               <div class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-yellow-400/70 bg-yellow-50 shrink-0 shadow-sm">
                 <img src="./image/02 kotone/avatar_kotone.png" alt="코토네" class="w-full h-full object-cover" onerror="this.src='./image/02 kotone/kotone_01_studio.png'">
               </div>
               <div class="max-w-[76%] space-y-1">
-                <div class="text-xs font-extrabold text-yellow-700 dark:text-yellow-300">코토네</div>
+                <div class="text-xs font-black text-yellow-700 dark:text-yellow-300">코토네</div>
                 <div class="flex items-end gap-1.5">
-                  <div class="px-3.5 py-2.5 bubble-left-kotone text-xs font-medium leading-relaxed shadow-xs">
-                    ${msg.text}
-                    ${imgBlock}
+                  <div class="space-y-1">
+                    ${bubbles.map((b, i) => `
+                      <div class="px-3.5 py-2 bubble-left-kotone text-xs font-semibold leading-relaxed shadow-xs">
+                        ${b}
+                        ${(i === bubbles.length - 1) ? imgBlock : ''}
+                      </div>
+                    `).join('')}
                   </div>
                   <span class="text-[9px] text-slate-400 dark:text-slate-500 font-medium select-none mb-0.5 shrink-0">${timeStr}</span>
                 </div>
@@ -3914,16 +3940,20 @@ ${err.message}
           `;
         } else if (msg.sender === 'mio') {
           return `
-            <div class="flex items-start gap-2.5">
+            <div class="flex items-start gap-2.5 my-1.5">
               <div class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-amber-400/60 bg-amber-50 shrink-0 shadow-sm">
                 <img src="./image/01 mio/avatar_mio.png" alt="미오" class="w-full h-full object-cover" onerror="this.src='./image/90 repository/trainer_mio.png'">
               </div>
               <div class="max-w-[76%] space-y-1">
-                <div class="text-xs font-extrabold text-amber-700 dark:text-amber-300">${msg.name || '미오'}</div>
+                <div class="text-xs font-black text-amber-700 dark:text-amber-300">${msg.name || '미오'}</div>
                 <div class="flex items-end gap-1.5">
-                  <div class="px-3.5 py-2.5 bubble-left-mio text-xs font-medium leading-relaxed shadow-xs">
-                    ${msg.text}
-                    ${imgBlock}
+                  <div class="space-y-1">
+                    ${bubbles.map((b, i) => `
+                      <div class="px-3.5 py-2 bubble-left-mio text-xs font-semibold leading-relaxed shadow-xs">
+                        ${b}
+                        ${(i === bubbles.length - 1) ? imgBlock : ''}
+                      </div>
+                    `).join('')}
                   </div>
                   <span class="text-[9px] text-slate-400 dark:text-slate-500 font-medium select-none mb-0.5 shrink-0">${timeStr}</span>
                 </div>
@@ -3932,16 +3962,20 @@ ${err.message}
           `;
         } else {
           return `
-            <div class="flex items-start gap-2.5">
+            <div class="flex items-start gap-2.5 my-1.5">
               <div class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-pink-400/60 bg-pink-50 shrink-0 shadow-sm">
                 <img src="./image/03 gemini/avatar_gemini.png" alt="제미니" class="w-full h-full object-cover" onerror="this.src='./image/90 repository/trainer_gemini.png'">
               </div>
               <div class="max-w-[76%] space-y-1">
-                <div class="text-xs font-extrabold text-pink-600 dark:text-pink-300">${msg.name || '제미니'}</div>
+                <div class="text-xs font-black text-pink-600 dark:text-pink-300">${msg.name || '제미니'}</div>
                 <div class="flex items-end gap-1.5">
-                  <div class="px-3.5 py-2.5 bubble-left text-xs font-medium leading-relaxed shadow-xs">
-                    ${msg.text}
-                    ${imgBlock}
+                  <div class="space-y-1">
+                    ${bubbles.map((b, i) => `
+                      <div class="px-3.5 py-2 bubble-left text-xs font-semibold leading-relaxed shadow-xs">
+                        ${b}
+                        ${(i === bubbles.length - 1) ? imgBlock : ''}
+                      </div>
+                    `).join('')}
                   </div>
                   <span class="text-[9px] text-slate-400 dark:text-slate-500 font-medium select-none mb-0.5 shrink-0">${timeStr}</span>
                 </div>
