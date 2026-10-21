@@ -246,22 +246,23 @@
       </div>
     </header>
 
-    <!-- 2. Main Navigation Tabs: 톡 & 트레이닝 / 루틴 & 식단 (50:50 균형 배치) -->
+    <!-- 2. Main Navigation Tabs: 루틴 & 식단 / 트레이닝 톡 -->
     <div class="grid grid-cols-2 gap-1.5 game-card p-1 text-xs font-black">
-      <button onclick="switchMainTab('talk')" id="tabTalkBtn" class="nav-tab active py-2 rounded-xl text-center flex items-center justify-center gap-1.5 transition-all">
-        <span>💬 톡 & 트레이닝</span>
-        <span class="text-[9px] bg-pink-500/20 text-pink-600 dark:text-pink-300 px-1.5 py-0.5 rounded-full font-black">3인 코칭</span>
-      </button>
-      <button onclick="switchMainTab('health')" id="tabHealthBtn" class="nav-tab py-2 rounded-xl text-center flex items-center justify-center gap-1.5 transition-all">
+      <button onclick="switchMainTab('health')" id="tabHealthBtn" class="nav-tab active py-2 rounded-xl text-center flex items-center justify-center gap-1.5 transition-all">
         <span>📊 루틴 & 식단</span>
-        <span class="text-[9px] bg-sky-500/20 text-sky-600 dark:text-sky-300 px-1.5 py-0.5 rounded-full font-black">D-1 인바디</span>
+        <span class="text-[9px] bg-sky-500/20 text-sky-600 dark:text-sky-300 px-1.5 py-0.5 rounded-full font-black">데일리 관리</span>
+      </button>
+      <button onclick="switchMainTab('talk')" id="tabTalkBtn" class="nav-tab py-2 rounded-xl text-center flex items-center justify-center gap-1.5 transition-all relative">
+        <span>💬 트레이닝 톡</span>
+        <span id="talkNewBadge" class="hidden text-[9px] bg-rose-500 text-white px-1.5 py-0.5 rounded-full font-black animate-pulse shadow-xs">NEW</span>
+        <span id="talkSubBadge" class="text-[9px] bg-pink-500/20 text-pink-600 dark:text-pink-300 px-1.5 py-0.5 rounded-full font-black">3인 코칭</span>
       </button>
     </div>
 
     <!-- ========================================================
          VIEW A: 톡 & 트레이닝 (3-Heroine Showcase & Interactive VN)
          ======================================================== -->
-    <div id="viewTalk" class="space-y-2.5">
+    <div id="viewTalk" class="space-y-2.5 hidden">
 
       <!-- Trainer Showcase Card -->
       <div id="trainerCardContainer" class="game-card overflow-hidden">
@@ -357,6 +358,24 @@
           <!-- Dynamically populated -->
         </div>
 
+        <!-- Topic Selection Tabs & Interactive Dialogue Choices (Instant VN Responses) -->
+        <div class="p-2.5 bg-slate-50/90 dark:bg-slate-800/70 border-t border-slate-200/80 dark:border-slate-700/60 space-y-2">
+          <!-- Topic Selector Pills -->
+          <div class="flex items-center gap-1.5 overflow-x-auto clean-scroll pb-1">
+            <button onclick="loadTopic('dailyBriefing')" id="topicBtn_dailyBriefing" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-gradient-to-r from-indigo-500 to-pink-500 text-white shadow-xs whitespace-nowrap">✨ 내일 톡 브리핑</button>
+            <button onclick="loadTopic('diet')" id="topicBtn_diet" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🥗 식단</button>
+            <button onclick="loadTopic('workout')" id="topicBtn_workout" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🏃 러닝&재활</button>
+            <button onclick="loadTopic('gym')" id="topicBtn_gym" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🏋️ 헬스장</button>
+            <button onclick="loadTopic('tea')" id="topicBtn_tea" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🍵 홈카페</button>
+            <button onclick="loadTopic('date')" id="topicBtn_date" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">💖 인연</button>
+          </div>
+
+          <!-- Dynamic Choice Options Container -->
+          <div id="choicesContainer" class="space-y-1.5">
+            <!-- Dynamically populated choices -->
+          </div>
+        </div>
+
         <!-- Direct Message Input Bar -->
         <div class="px-3 py-2 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center gap-2">
           <input type="text" id="directChatInput" placeholder="메시지 보내기..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-sky-400" onkeydown="if(event.key==='Enter') sendDirectMessage()">
@@ -379,7 +398,7 @@
     <!-- ========================================================
          VIEW B: Health, Fasting, Tea Log & Routine Management
          ======================================================== -->
-    <div id="viewHealth" class="space-y-3 hidden">
+    <div id="viewHealth" class="space-y-3">
 
       <!-- 1. 🍵 Tea & Coffee 홈카페 / 말차 로그 카드 -->
       <div class="game-card p-3.5 border-l-4 border-l-emerald-400">
@@ -787,13 +806,54 @@
         </div>
       </div>
 
+      <!-- 6. 📤 오늘 기록 업로드 & 하루 마감 (트레이닝 톡 생성) -->
+      <div class="game-card p-3.5 space-y-3 border-2 border-indigo-500/40 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10 shadow-sm">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">📤</span>
+            <div>
+              <h4 class="text-xs font-black text-slate-800 dark:text-slate-100">오늘 기록 업로드 & 데일리 마감</h4>
+              <span class="text-[9px] text-indigo-500 font-bold block">오늘 식단·러닝·헬스 저장 및 내일 트레이너 톡 생성</span>
+            </div>
+          </div>
+          <span id="dailyStatusBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-extrabold border border-emerald-500/30 whitespace-nowrap">
+            기록 대기중
+          </span>
+        </div>
+
+        <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+          오늘 먹은 식단 사진과 운동 기록을 클라우드에 안전하게 저장하고, <strong>3인 트레이너가 오늘 기록을 분석한 맞춤형 내일 시나리오와 선택지</strong>를 생성합니다.
+        </p>
+
+        <div class="grid grid-cols-2 gap-2 text-center text-[10px]">
+          <div class="p-2 rounded-xl sub-box">
+            <span class="text-slate-400 block text-[9px]">오늘 식단 인증</span>
+            <span id="dailyMealStatus" class="font-extrabold text-slate-700 dark:text-slate-200">0 / 3 완료</span>
+          </div>
+          <div class="p-2 rounded-xl sub-box">
+            <span class="text-slate-400 block text-[9px]">오늘 운동 달성</span>
+            <span id="dailyWorkoutStatus" class="font-extrabold text-slate-700 dark:text-slate-200">0 / 3 완료</span>
+          </div>
+        </div>
+
+        <button onclick="finalizeDailyRecordAndUpload()" id="btnFinalizeDaily" class="w-full py-3 rounded-2xl bg-gradient-to-r from-indigo-500 via-[#5b7cfa] to-pink-500 hover:opacity-95 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-[0.99]">
+          <span>📤 오늘 기록 업로드 & 내일 트레이닝 톡 생성</span>
+          <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold">+50 EXP</span>
+        </button>
+      </div>
+
     </div>
 
     <!-- 3. Bottom Sticky Action Bar -->
     <div class="fixed bottom-0 left-0 right-0 p-3 bg-white/85 dark:bg-[#111622]/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 z-30">
       <div class="max-w-md mx-auto flex gap-2">
-        <button onclick="dispatchDiscord()" id="btnDispatch" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-[#4a89dc] via-[#5b7cfa] to-[#f4869d] hover:opacity-95 text-white font-extrabold text-xs shadow-lg transition-all flex items-center justify-center gap-2">
-          <span>🚀 디스코드에 3인 트레이너 브리핑 전송</span>
+        <button onclick="finalizeDailyRecordAndUpload()" id="btnBottomUpload" class="flex-1 py-2.5 rounded-2xl bg-gradient-to-r from-indigo-500 via-[#5b7cfa] to-pink-500 hover:opacity-95 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]">
+          <span>📤 오늘 기록 마감 & 톡 생성</span>
+          <span class="text-[9px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold">+50 EXP</span>
+        </button>
+        <button onclick="dispatchDiscord()" id="btnDispatch" class="py-2.5 px-3 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-400 text-slate-700 dark:text-slate-200 font-extrabold text-xs shadow-sm transition-all flex items-center justify-center gap-1 shrink-0" title="디스코드에 3인 트레이너 브리핑 전송">
+          <span>🚀</span>
+          <span class="hidden sm:inline">디스코드</span>
         </button>
       </div>
     </div>
@@ -2084,6 +2144,29 @@
 
     // Dialogue Choice Sets
     const TOPIC_CHOICES = {
+      dailyBriefing: [
+        {
+          text: "오늘 식단이랑 운동 피드백 고마워! 내일 아침 식단 추천해줘.",
+          gem: "내일 10시 첫 식사는 계란 2알이랑 그릭 요거트, 그리고 따뜻한 말차 1잔으로 가볍고 클린하게 시작해! 🐾",
+          kot: "헤헤, 단백질 쉐이크에 사과 반 쪽 곁들이면 든든하고 체지방 연소에도 최고예요 프로듀서님! 💛",
+          mio: "난 바나나 하나랑 닭가슴살 추천! 아침 든든히 먹어야 내일도 기운 넘치지~! 🌟",
+          exp: 20
+        },
+        {
+          text: "내일 러닝이랑 헬스장 강도는 어떻게 조절할까?",
+          gem: "오늘은 상체랑 복근을 썼으니까, 내일은 2kg 덤벨 재활 3세트에 레그 프레스 중심 하체로 가자! 🐾",
+          kot: "무리하지 마시고 컨디션 보면서 5km 페이스 유지하시면 완벽해요! 부상 방지가 1순위예요~ 💛",
+          mio: "내일은 6'30\" 페이스로 가볍게 5km 러닝 뛰고 쿨다운 스트레칭 길게 해주자! 🌟",
+          exp: 20
+        },
+        {
+          text: "오늘 17:7 단식이랑 하루 루틴 완주했으니 칭찬해줘!",
+          gem: "흥, 딱히 널 위해서 칭찬하는 건 아니지만... 오늘 정말 열심히 했어. 내일도 이대로만 해, 바보야! 🐾",
+          kot: "프로듀서님 최고예요~! 약속도 칼같이 지켜주시고 너무 멋져요! 코토네가 꽉 안아드릴게요~? 💛",
+          mio: "으라차차! 우리 프로듀서 진짜 최고야! 내일도 우리 셋이랑 슬림핏 52kg까지 신나게 달리자! 🌟",
+          exp: 25
+        }
+      ],
       diet: [
         {
           text: "닭가슴살이랑 단백질 쉐이크로 클린하게 식사 챙겼어!",
@@ -2266,6 +2349,41 @@
       } catch (e) {}
 
       // Automatically choose situation based on time of day if not set or default
+      // Automatic Day-Change Detection & Clean Reset
+      const todayDateStr = new Date().toISOString().split('T')[0];
+      if (!state.lastActiveDate) {
+        state.lastActiveDate = todayDateStr;
+      } else if (state.lastActiveDate !== todayDateStr) {
+        if (!state.dailyLogs) state.dailyLogs = {};
+        if (!state.dailyLogs[state.lastActiveDate]) {
+          state.dailyLogs[state.lastActiveDate] = {
+            date: state.lastActiveDate,
+            weight: state.weight,
+            fat: state.fat,
+            mealsDone: (state.meals || []).filter(Boolean).length,
+            mealPhotosCount: (state.mealPhotos || []).filter(Boolean).length,
+            runDone: Boolean(state.runDone),
+            absDone: Boolean(state.absDone),
+            gymDone: Boolean(state.gymRoutine && state.gymRoutine.allDone),
+            autoArchived: true
+          };
+        }
+        state.meals = [false, false, false];
+        state.mealPhotos = ['', '', ''];
+        state.runDone = false;
+        state.absDone = false;
+        if (state.gymRoutine) {
+          ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'].forEach(k => {
+            if (state.gymRoutine[k] && state.gymRoutine[k].sets) {
+              state.gymRoutine[k].sets = state.gymRoutine[k].sets.map(() => false);
+            }
+          });
+          state.gymRoutine.allDone = false;
+        }
+        state.lastActiveDate = todayDateStr;
+        saveState(false);
+      }
+
       state.currentSituation = getTimeBasedSituation();
 
       applyTheme();
@@ -2760,6 +2878,168 @@
       renderGymUI();
       updateBondUI();
       setTrainerMode(state.activeMode || state.activeTrainer || 'gemini', state.currentSituation || 'ev1');
+
+      // Update Daily Status & Header Date
+      const todayStr = new Date().toISOString().split('T')[0];
+      const todayMealsDone = (state.meals || []).filter(Boolean).length;
+      const todayPhotosCount = (state.mealPhotos || []).filter(Boolean).length;
+      const runDone = Boolean(state.runDone);
+      const absDone = Boolean(state.absDone);
+      const gymDone = Boolean(state.gymRoutine && state.gymRoutine.allDone);
+      const workoutCount = (runDone ? 1 : 0) + (absDone ? 1 : 0) + (gymDone ? 1 : 0);
+
+      const dMealEl = document.getElementById('dailyMealStatus');
+      if (dMealEl) dMealEl.textContent = `${todayMealsDone} / 3 완료 (사진 ${todayPhotosCount}장)`;
+
+      const dWorkEl = document.getElementById('dailyWorkoutStatus');
+      if (dWorkEl) dWorkEl.textContent = `${workoutCount} / 3 완료 (${runDone ? '러닝 ' : ''}${gymDone ? '헬스 ' : ''}${absDone ? '복근' : ''})`.trim() || '0 / 3 완료';
+
+      const dBadge = document.getElementById('dailyStatusBadge');
+      if (dBadge) {
+        if (state.lastFinalizedDate === todayStr) {
+          dBadge.textContent = "✨ 오늘 마감 완료";
+          dBadge.className = "text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 font-extrabold border border-emerald-500/30 whitespace-nowrap";
+        } else {
+          dBadge.textContent = "기록 중";
+          dBadge.className = "text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 font-extrabold border border-sky-500/30 whitespace-nowrap";
+        }
+      }
+
+      // Talk Tab NEW Badge
+      const talkBadge = document.getElementById('talkNewBadge');
+      if (talkBadge) {
+        if (state.talkUpdated) talkBadge.classList.remove('hidden');
+        else talkBadge.classList.add('hidden');
+      }
+
+      // Dynamic Header Today Date
+      const headerDateEl = document.getElementById('headerTodayDate');
+      if (headerDateEl) {
+        const d = new Date();
+        const days = ['일', '월', '화', '수', '목', '금', '토'];
+        headerDateEl.textContent = `${d.getMonth() + 1}.${d.getDate()} (${days[d.getDay()]})`;
+      }
+    }
+
+    
+    function finalizeDailyRecordAndUpload() {
+      playBeep(750, 0.12);
+      const todayStr = new Date().toISOString().split('T')[0];
+
+      const mealsDone = (state.meals || []).filter(Boolean).length;
+      const mealPhotosCount = (state.mealPhotos || []).filter(Boolean).length;
+      const runDone = Boolean(state.runDone);
+      const absDone = Boolean(state.absDone);
+      const gymDone = Boolean(state.gymRoutine && state.gymRoutine.allDone);
+      const latestRun = state.latestRun || null;
+
+      // 1. Archive today's summary into state.dailyLogs
+      if (!state.dailyLogs) state.dailyLogs = {};
+      state.dailyLogs[todayStr] = {
+        date: todayStr,
+        weight: state.weight,
+        fat: state.fat,
+        mealsDone,
+        mealPhotosCount,
+        runDone,
+        absDone,
+        gymDone,
+        latestRun,
+        teaLog: { ...(state.teaLog || {}) },
+        finalizedAt: new Date().toISOString()
+      };
+      state.lastFinalizedDate = todayStr;
+
+      // 2. Build Heroines' feedback based on today's actual achievements
+      let kotoneLine = "";
+      let geminiLine = "";
+      let mioLine = "";
+
+      if (mealsDone >= 3 || mealPhotosCount >= 2) {
+        kotoneLine = "프로듀서님! 오늘 식단 사진 꼼꼼하게 올려주셔서 감동이에요! 17:7 단식도 칼같이 지켜주셨으니 내일 아침엔 따뜻한 단백질 식단으로 활력 충전해 드릴게요~💛";
+      } else if (mealsDone > 0) {
+        kotoneLine = "식단 인증 챙겨주셔서 감사해요 프로듀서님! 내일은 3끼 모두 예쁘게 사진 찍어 올려주시면 코토네가 특별 보너스 미소를 선물해 드릴게요~💸";
+      } else {
+        kotoneLine = "프로듀서님! 오늘은 식단 기록을 깜빡하셨나 봐요. 내일은 꼭 저랑 같이 10시 첫 식사부터 챙겨 먹기로 약속해요~? 💛";
+      }
+
+      if (runDone || (latestRun && latestRun.distance >= 5)) {
+        const dist = (latestRun && latestRun.distance) ? latestRun.distance : 5.0;
+        mioLine = `와아~! 오늘 ${dist}km 러닝 완주한 거 진짜 멋있었어! 땀 흠뻑 흘리고 개운하지? 내일은 가벼운 조깅이나 리커버리 스트레칭으로 다리 피로 싹 풀어주자! 🌟`;
+      } else {
+        mioLine = "오늘 러닝은 쉬어가는 날이었구나! 괜찮아, 내일 상쾌한 아침 공기 마시면서 5km 가볍게 뛰어보자! 내가 옆에서 페이스 맞춰줄게! 🏃‍♀️";
+      }
+
+      if (gymDone || absDone) {
+        geminiLine = "흥, 헬스장이랑 복근 루틴까지 제대로 챙겨 했네? 제법 끈기 있잖아 바보 프로듀서! 내일은 2kg 덤벨 편심성 컬로 손목 힘줄 튼튼하게 회복시켜 줄 테니까 기대해. 🐾";
+      } else {
+        geminiLine = "바보 프로듀서! 오늘 근력 운동은 땡땡이친 거야? 메~롱! 내일은 봐주지 않고 14분 복근이랑 상체 머신 세트까지 전부 굴릴 거니까 각오해! 🐾";
+      }
+
+      // 3. Post daily briefing message to chat history
+      const curTime = getKakaoTimeStr();
+      state.chatHistory.push({
+        sender: 'dual',
+        name: '제미니 · 코토네 · 미오',
+        text: `📢 [${todayStr} 일일 피드백 & 내일 트레이닝 톡 도착!]\n\n💛 코토네: "${kotoneLine}"\n\n🌟 미오: "${mioLine}"\n\n🐾 제미니: "${geminiLine}"`,
+        time: curTime
+      });
+
+      // 4. Update TOPIC_CHOICES.dailyBriefing with contextual choices
+      TOPIC_CHOICES.dailyBriefing = [
+        {
+          text: "오늘 식단이랑 운동 피드백 고마워! 내일 아침 식단 추천해줘.",
+          gem: "내일 10시 첫 식사는 계란 2알이랑 그릭 요거트, 그리고 따뜻한 말차 1잔으로 가볍고 클린하게 시작해! 🐾",
+          kot: "헤헤, 단백질 쉐이크에 사과 반 쪽 곁들이면 든든하고 체지방 연소에도 최고예요 프로듀서님! 💛",
+          mio: "난 바나나 하나랑 닭가슴살 추천! 아침 든든히 먹어야 내일도 기운 넘치지~! 🌟",
+          exp: 20
+        },
+        {
+          text: "내일 러닝이랑 헬스장 강도는 어떻게 조절할까?",
+          gem: "오늘은 상체랑 복근을 썼으니까, 내일은 2kg 덤벨 재활 3세트에 레그 프레스 중심 하체로 가자! 🐾",
+          kot: "무리하지 마시고 컨디션 보면서 5km 페이스 유지하시면 완벽해요! 부상 방지가 1순위예요~ 💛",
+          mio: "내일은 6'30\" 페이스로 가볍게 5km 러닝 뛰고 쿨다운 스트레칭 길게 해주자! 🌟",
+          exp: 20
+        },
+        {
+          text: "오늘 17:7 단식이랑 하루 루틴 완주했으니 칭찬해줘!",
+          gem: "흥, 딱히 널 위해서 칭찬하는 건 아니지만... 오늘 정말 열심히 했어. 내일도 이대로만 해, 바보야! 🐾",
+          kot: "프로듀서님 최고예요~! 약속도 칼같이 지켜주시고 너무 멋져요! 코토네가 꽉 안아드릴게요~? 💛",
+          mio: "으라차차! 우리 프로듀서 진짜 최고야! 내일도 우리 셋이랑 슬림핏 52kg까지 신나게 달리자! 🌟",
+          exp: 25
+        }
+      ];
+
+      loadTopic('dailyBriefing');
+
+      // 5. Activate NEW badge on Training Talk Tab
+      state.talkUpdated = true;
+      const talkBadge = document.getElementById('talkNewBadge');
+      if (talkBadge) talkBadge.classList.remove('hidden');
+
+      // 6. Reset daily inputs for tomorrow (clean plates & checks)
+      state.meals = [false, false, false];
+      state.mealPhotos = ['', '', ''];
+      state.runDone = false;
+      state.absDone = false;
+      if (state.gymRoutine) {
+        ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'].forEach(k => {
+          if (state.gymRoutine[k] && state.gymRoutine[k].sets) {
+            state.gymRoutine[k].sets = state.gymRoutine[k].sets.map(() => false);
+          }
+        });
+        state.gymRoutine.allDone = false;
+      }
+
+      addBondExp(50);
+      saveState(true);
+      syncUI();
+      renderChat();
+
+      playBeep(920, 0.2);
+      setTimeout(() => playBeep(1100, 0.25), 150);
+
+      alert(`🎉 [오늘 기록 업로드 & 데일리 마감 완료!]\n\n오늘의 식단과 운동 기록이 안전하게 저장되었습니다.\n💬 [트레이닝 톡] 탭에 3인 트레이너의 피드백과 내일 시나리오가 도착했습니다!`);
     }
 
     function switchMainTab(tab) {
@@ -2768,6 +3048,13 @@
         document.getElementById('viewHealth').classList.add('hidden');
         document.getElementById('tabTalkBtn').classList.add('active');
         document.getElementById('tabHealthBtn').classList.remove('active');
+        // Clear NEW badge
+        const badge = document.getElementById('talkNewBadge');
+        if (badge) badge.classList.add('hidden');
+        if (state.talkUpdated) {
+          state.talkUpdated = false;
+          saveState(false);
+        }
       } else {
         document.getElementById('viewTalk').classList.add('hidden');
         document.getElementById('viewHealth').classList.remove('hidden');
@@ -2779,48 +3066,27 @@
 
     function loadTopic(topicKey) {
       currentTopic = topicKey;
-      const list = TOPIC_CHOICES[topicKey] || TOPIC_CHOICES.diet;
+      const list = TOPIC_CHOICES[topicKey] || TOPIC_CHOICES.dailyBriefing || TOPIC_CHOICES.diet;
       const container = document.getElementById('choicesContainer');
-      if (!container) return;
-      container.innerHTML = list.map((item, idx) => `
-        <button onclick="selectTopicOption('${topicKey}', ${idx})" class="momo-choice-btn">
-          <span>${idx + 1}. ${item.text}</span>
-          <span class="text-xs text-[#4a89dc] font-black shrink-0 ml-2">➔</span>
-        </button>
-      `).join('');
-    }
-
-    // Helper: KakaoTalk-style Korean 12-hour timestamp string (e.g. "오전 1:04")
-    function getKakaoTimeStr() {
-      const now = new Date();
-      const h = now.getHours();
-      const m = String(now.getMinutes()).padStart(2, '0');
-      const period = h < 12 ? '오전' : '오후';
-      const displayH = h % 12 === 0 ? 12 : h % 12;
-      return `${period} ${displayH}:${m}`;
-    }
-
-    let activeTypingIndicator = null; // { sender: 'gemini'|'kotone'|'mio'|'dual', name: '...' }
-
-    function triggerTrainerTypingReply(replyFn, customDelay = 850) {
-      let typingSender = state.activeTrainer || 'gemini';
-      let typingName = typingSender === 'kotone' ? '코토네' : typingSender === 'mio' ? '미오' : '제미니';
-      if (state.activeMode === 'dual') {
-        typingSender = 'dual';
-        typingName = '제미니 · 코토네 · 미오';
+      if (container && list) {
+        container.innerHTML = list.map((item, idx) => `
+          <button onclick="selectTopicOption('${topicKey}', ${idx})" class="momo-choice-btn flex items-center justify-between">
+            <span class="truncate text-xs font-bold">${idx + 1}. ${item.text}</span>
+            <span class="text-xs text-[#4a89dc] font-black shrink-0 ml-2">➔</span>
+          </button>
+        `).join('');
       }
 
-      activeTypingIndicator = { sender: typingSender, name: typingName };
-      renderChat();
-
-      setTimeout(() => {
-        activeTypingIndicator = null;
-        if (typeof replyFn === 'function') {
-          replyFn();
+      const topicKeys = ['dailyBriefing', 'diet', 'workout', 'gym', 'tea', 'date'];
+      topicKeys.forEach(k => {
+        const btn = document.getElementById(`topicBtn_${k}`);
+        if (!btn) return;
+        if (k === topicKey) {
+          btn.className = "px-2.5 py-1 rounded-lg text-[10px] font-black bg-gradient-to-r from-indigo-500 to-pink-500 text-white shadow-xs whitespace-nowrap";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap hover:border-sky-400";
         }
-        playBeep(880, 0.08);
-        renderChat();
-      }, customDelay);
+      });
     }
 
     function selectTopicOption(topicKey, idx) {
@@ -2828,14 +3094,6 @@
       if (!list || !list[idx]) return;
       const item = list[idx];
       playBeep(660, 0.08);
-
-      const localApiKey = localStorage.getItem('GEMINI_API_KEY');
-      if (localApiKey) {
-        if (item.sit) setTrainerMode(state.activeMode, item.sit);
-        document.getElementById('directChatInput').value = item.text;
-        sendDirectMessage();
-        return;
-      }
 
       state.chatHistory.push({ sender: 'user', text: item.text, time: getKakaoTimeStr() });
       renderChat();
@@ -2851,15 +3109,16 @@
           if (item.kot) state.chatHistory.push({ sender: 'kotone', name: '코토네', text: item.kot, time: curTime });
           if (item.mio) state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio, time: curTime });
         } else if (state.activeTrainer === 'kotone') {
-          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: item.kot, time: curTime });
+          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: item.kot || item.gem, time: curTime });
         } else if (state.activeTrainer === 'mio') {
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio, time: curTime });
+          state.chatHistory.push({ sender: 'mio', name: '미오', text: item.mio || item.gem, time: curTime });
         } else {
           state.chatHistory.push({ sender: 'gemini', name: '제미니', text: item.gem, time: curTime });
         }
         addBondExp(item.exp || 15);
         saveState();
-      }, 850);
+        renderChat();
+      }, 750);
     }
 
     // ============================================================================
@@ -3536,19 +3795,28 @@ ${err.message}
         .replace(/\r?\n/g, '\n');
       const lower = unified.toLowerCase();
 
-      // Check if this is a Running Workout screenshot (Samsung Health, Nike Run, Apple Fitness, Garmin)
-      const hasRunningKeywords = (
-        lower.includes('페이스') || lower.includes('pace') ||
-        lower.includes('km') || lower.includes('케이던스') || lower.includes('spm') ||
-        lower.includes('구간기록') || lower.includes('러닝') || lower.includes('달리기') ||
-        lower.includes('나이키') || lower.includes('nike') || lower.includes('삼성헬스') ||
-        lower.includes('bpm') || (lower.includes('운동 시간') && lower.includes('칼로리'))
+      // Weight & Body composition keywords (Samsung Health tracks weight too!)
+      const hasWeightKeywords = (
+        lower.includes('체중') || lower.includes('몸무게') || lower.includes('weight') ||
+        lower.includes('골격근') || lower.includes('골격근량') || lower.includes('체지방') ||
+        lower.includes('체질량') || lower.includes('인바디') || lower.includes('inbody') ||
+        lower.includes('bmi') || lower.includes('기초대사량') || lower.includes('내장지방') ||
+        lower.includes('근육량') || lower.includes('비만')
       );
 
-      // 1. Distance (km)
+      // Running-specific keywords (Samsung Health is a general app, NOT exclusively running!)
+      const hasRunningKeywords = (
+        lower.includes('페이스') || lower.includes('pace') ||
+        lower.includes('케이던스') || lower.includes('spm') ||
+        lower.includes('구간기록') || lower.includes('달리기') || lower.includes('러닝') ||
+        lower.includes('running') || lower.includes('nrc') || lower.includes('나이키런') ||
+        (lower.includes('km') && (lower.includes('거리') || lower.includes('운동시간') || lower.includes('평균')))
+      );
+
+      // 1. Distance (km) - Must have explicit 'km' unit or '거리' label! Never match naked decimals!
       let distance = null;
-      const distMatch = unified.match(/(\d{1,2}(?:\.\d{1,2})?)\s*km/i) ||
-                        unified.match(/(\d{1,2}\.\d{1,2})/);
+      const distMatch = unified.match(/(\d{1,2}(?:\.\d{1,2})?)\s*km\b/i) ||
+                        unified.match(/(?:거리|distance)[\s:：]*(\d{1,2}(?:\.\d{1,2})?)/i);
       if (distMatch) {
         const val = parseFloat(distMatch[1]);
         if (val >= 0.5 && val <= 100) distance = val;
@@ -3599,42 +3867,47 @@ ${err.message}
       const stepMatch = unified.match(/걸음[^\d]*(\d{3,6})/i) || unified.match(/(\d{4,5})\s*걸음/);
       if (stepMatch) steps = parseInt(stepMatch[1], 10);
 
-      const isRunning = Boolean(hasRunningKeywords || (distance !== null && (duration !== null || calories !== null)));
+      // 8. InBody Weight & Fat
+      let weight = null;
+      let fat = null;
+      const labelMatch = unified.match(/(?:체중|몸무게|Weight|체\s*중)[\s:：]*([3-9]\d(?:\.\d{1,2})?)/i);
+      if (labelMatch) {
+        const val = parseFloat(labelMatch[1]);
+        if (val >= 35 && val <= 150) weight = val;
+      }
+      if (weight === null) {
+        const kgMatches = [...unified.matchAll(/([3-9]\d(?:\.\d{1,2})?)\s*(?:kg|KG)\b/gi)];
+        for (const m of kgMatches) {
+          const val = parseFloat(m[1]);
+          if (val >= 35 && val <= 150) { weight = val; break; }
+        }
+      }
+      const fatLabelMatch = unified.match(/(?:체지방률?|체지방량?|Fat)[\s:：]*([1-4]\d(?:\.\d{1,2})?)/i);
+      if (fatLabelMatch) {
+        const val = parseFloat(fatLabelMatch[1]);
+        if (val >= 5 && val <= 50) fat = val;
+      }
+      if (fat === null) {
+        const pctMatches = [...unified.matchAll(/([1-4]\d(?:\.\d{1,2})?)\s*%/g)];
+        for (const m of pctMatches) {
+          const val = parseFloat(m[1]);
+          if (val >= 5 && val <= 50) { fat = val; break; }
+        }
+      }
+
+      // Accurate Classification:
+      // If weight keywords exist or weight is detected, and no explicit pace/cadence is found, it is definitely Weight/InBody
+      const isRunning = !hasWeightKeywords && (
+        hasRunningKeywords ||
+        (distance !== null && (duration !== null || pace !== null || cadence !== null))
+      );
 
       // Detect Source
       let source = '삼성헬스';
       if (lower.includes('나이키') || lower.includes('nike') || lower.includes('nrc')) source = '나이키런';
       else if (lower.includes('apple') || lower.includes('garmin')) source = '애플피트니스';
 
-      // 8. InBody Weight & Fat
-      let weight = null;
-      let fat = null;
-      const labelMatch = unified.match(/(?:체중|몸무게|Weight|체\s*중)[\s:：]*([4-9]\d(?:\.\d{1,2})?)/i);
-      if (labelMatch) {
-        const val = parseFloat(labelMatch[1]);
-        if (val >= 40 && val <= 120) weight = val;
-      }
-      if (weight === null) {
-        const kgMatches = [...unified.matchAll(/([4-9]\d(?:\.\d{1,2})?)\s*(?:kg|KG)\b/gi)];
-        for (const m of kgMatches) {
-          const val = parseFloat(m[1]);
-          if (val >= 40 && val <= 120) { weight = val; break; }
-        }
-      }
-      const fatLabelMatch = unified.match(/(?:체지방률?|체지방량?|Fat)[\s:：]*([1-4]\d(?:\.\d{1,2})?)/i);
-      if (fatLabelMatch) {
-        const val = parseFloat(fatLabelMatch[1]);
-        if (val >= 10 && val <= 45) fat = val;
-      }
-      if (fat === null) {
-        const pctMatches = [...unified.matchAll(/([1-4]\d(?:\.\d{1,2})?)\s*%/g)];
-        for (const m of pctMatches) {
-          const val = parseFloat(m[1]);
-          if (val >= 10 && val <= 45) { fat = val; break; }
-        }
-      }
-
-      return { isRunning, source, distance, duration, pace, calories, heartRate, cadence, steps, weight, fat };
+      return { isRunning, hasWeightKeywords, source, distance, duration, pace, calories, heartRate, cadence, steps, weight, fat };
     }
 
     async function handleInbodyScan(e) {
@@ -3650,7 +3923,7 @@ ${err.message}
         const text = res.data.text || "";
         const parsed = parseHealthImageText(text);
 
-        if (parsed.isRunning) {
+        if (parsed.isRunning && parsed.weight === null && !parsed.hasWeightKeywords) {
           openRunningResultFromOcr(parsed);
         } else {
           openInbodyResultFromOcr(parsed, text);
