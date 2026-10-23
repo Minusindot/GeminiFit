@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-10-23T03:40:50.915Z",
+  "updatedAt": "2026-10-23T03:40:56.071Z",
   "theme": "light",
   "weight": 65.6,
   "fat": 21.5,
   "bondRank": 7,
-  "bondExp": 70,
+  "bondExp": 85,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
   "currentSituation": "ev3",
@@ -65,6 +65,15 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
+    },
+    {
+      "sender": "user",
+      "text": "📸 [홈카페 찻잔/커피 인증 사진]"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "우와~ 찻잔 너무 고급스러워요 프로듀서님! 코토네한테도 한 잔 타주세요~ 헤헤! 💛"
     }
   ]
 }
