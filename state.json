@@ -1,19 +1,19 @@
 {
-  "updatedAt": "2026-10-23T06:38:12.479Z",
+  "updatedAt": "2026-10-23T12:03:43.651Z",
   "lastActiveDate": "2026-10-23",
   "theme": "light",
   "weight": 65.6,
   "fat": 21.5,
-  "bondRank": 7,
-  "bondExp": 85,
+  "bondRank": 9,
+  "bondExp": 15,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
-  "currentSituation": "ev1",
+  "currentSituation": "ev2",
   "absDone": false,
-  "runDone": false,
-  "runDist": 6.03,
+  "runDone": true,
+  "runDist": 6.32,
   "rehab": [
-    false,
+    true,
     false,
     false
   ],
@@ -31,10 +31,10 @@
     "upper1": {
       "name": "사레레",
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ],
       "weight": "4kg",
       "reps": 20
@@ -42,10 +42,10 @@
     "upper2": {
       "name": "시티드 케이블 로우",
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ],
       "weight": "25kg",
       "reps": 20
@@ -53,10 +53,10 @@
     "lower": {
       "name": "레그 컬",
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ],
       "weight": "25kg",
       "reps": 20
@@ -78,8 +78,129 @@
       "target": "20회",
       "reps": 50
     },
-    "allDone": false
+    "allDone": true
   },
+  "gymHistory": [
+    {
+      "id": "gym-1",
+      "date": "10/18",
+      "fullDate": "2026-10-18",
+      "time": "20:15",
+      "upper1Done": 4,
+      "upper1Reps": 80,
+      "upper2Done": 4,
+      "upper2Reps": 80,
+      "lowerDone": 4,
+      "lowerReps": 80,
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
+      "legRaiseTarget": 1,
+      "crunchDone": 2,
+      "crunchReps": 100,
+      "crunchTarget": 2,
+      "totalSets": 15,
+      "totalReps": 390
+    },
+    {
+      "id": "gym-2",
+      "date": "10/19",
+      "fullDate": "2026-10-19",
+      "time": "19:40",
+      "upper1Done": 4,
+      "upper1Reps": 80,
+      "upper2Done": 4,
+      "upper2Reps": 80,
+      "lowerDone": 4,
+      "lowerReps": 80,
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
+      "legRaiseTarget": 1,
+      "crunchDone": 2,
+      "crunchReps": 100,
+      "crunchTarget": 2,
+      "totalSets": 15,
+      "totalReps": 390
+    },
+    {
+      "id": "gym-1792756992061",
+      "date": "10/23",
+      "fullDate": "2026-10-23",
+      "time": "오후 09:03",
+      "upper1Done": 4,
+      "upper1Reps": 80,
+      "upper2Done": 4,
+      "upper2Reps": 80,
+      "lowerDone": 4,
+      "lowerReps": 80,
+      "legRaiseDone": 0,
+      "legRaiseReps": 0,
+      "legRaiseTarget": 1,
+      "crunchDone": 0,
+      "crunchReps": 0,
+      "crunchTarget": 2,
+      "totalSets": 12,
+      "totalReps": 240
+    }
+  ],
+  "latestRun": {
+    "id": "run-1792756985416",
+    "date": "2026-10-23",
+    "distance": 6.32,
+    "duration": "58:48",
+    "pace": "09'17\"",
+    "calories": 442,
+    "heartRate": 135,
+    "steps": 5007,
+    "source": "삼성헬스"
+  },
+  "runningLogs": [
+    {
+      "id": "run-1792756985416",
+      "date": "2026-10-23",
+      "distance": 6.32,
+      "duration": "58:48",
+      "pace": "09'17\"",
+      "calories": 442,
+      "heartRate": 135,
+      "steps": 5007,
+      "source": "삼성헬스"
+    },
+    {
+      "id": "run-1792591016566",
+      "date": "2026-10-21",
+      "distance": 6.03,
+      "duration": "53:45",
+      "pace": "08'54\"",
+      "calories": 144,
+      "heartRate": 144,
+      "steps": 131,
+      "source": "삼성헬스"
+    },
+    {
+      "id": "run-1792591010802",
+      "date": "2026-10-21",
+      "distance": 6.03,
+      "duration": "53:45",
+      "pace": "08'54\"",
+      "calories": 144,
+      "heartRate": 144,
+      "steps": 131,
+      "source": "삼성헬스"
+    },
+    {
+      "id": "run-1",
+      "date": "2026-10-20",
+      "distance": 7.3,
+      "duration": "1:24:31",
+      "pace": "11'33\"",
+      "calories": 538,
+      "heartRate": 130,
+      "cadence": 108,
+      "steps": 9206,
+      "source": "삼성헬스"
+    }
+  ],
+  "absVideoUrl": "https://www.youtube.com/watch?v=EnToE4ezGsQ",
   "dailyLogs": {
     "2026-10-21": {
       "date": "2026-10-21",
@@ -102,6 +223,33 @@
       "absDone": false,
       "gymDone": false,
       "autoArchived": true
+    },
+    "2026-10-23": {
+      "date": "2026-10-23",
+      "weight": 65.6,
+      "fat": 21.5,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "runDone": true,
+      "absDone": false,
+      "gymDone": true,
+      "latestRun": {
+        "id": "run-1792756985416",
+        "date": "2026-10-23",
+        "distance": 6.32,
+        "duration": "58:48",
+        "pace": "09'17\"",
+        "calories": 442,
+        "heartRate": 135,
+        "steps": 5007,
+        "source": "삼성헬스"
+      },
+      "teaLog": {
+        "matcha": 0,
+        "espresso": 1,
+        "tea": 0
+      },
+      "lastUpdated": "2026-10-23T12:03:31.432Z"
     }
   },
   "chatHistory": [
@@ -152,6 +300,60 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "우와~ 찻잔 너무 고급스러워요 프로듀서님! 코토네한테도 한 잔 타주세요~ 헤헤! 💛"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "와아아아 대박!! 6.32km 완주 나이스!! 58:48 동안 442kcal나 불태웠잖아! 손목 힘 빼고 달린 폼 진짜 최고였어 프로듀서!! 🌟🏃‍♀️"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "6.32km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "헉! 442kcal 소모에 5,007걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "오... 세트 루틴에 캡틴스 체어랑 크런치까지 헬스장 풀코스 올 클리어? 바보 프로듀서 치고는 꽤 독하게 해냈네! 기특하니까 이리 와, 어깨 주물러줄게. 🐾"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "우와아~ 헬스장 풀코스 완주 대박이에요 프로듀서님! 복근이랑 슬림핏에 한 걸음 더 가까워졌어요! 💛"
+    },
+    {
+      "sender": "mio",
+      "name": "미오 [SD 방전]",
+      "text": "하아하아... 캡틴스 체어에 크런치까지... 프로듀서... 이거 진짜 대단해... 😵💦 (모리키노코 탈진)"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 09:03 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.32km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 머신 올킬했네? 🐾 근성 하나는 인정해 줄게 바보 프로듀서. 덤벨 컬도 잊지 마.\""
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "헤헤~ 어서 오세요 프로듀서님! 💛||목표 52kg 찍으면 약속대로 코토네랑 테라스 카페 데이트 찜이에요~?"
+    },
+    {
+      "sender": "user",
+      "text": "저녁에 살짝 입이 심심한데 어떡하지 ㅠㅠ"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "안 돼요 프로듀서님! 지금 참으셔야 해요 🥺||내일 코토네가 애교 백 번 보여드릴 테니까 꾹 참기예요~!"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "헤헤~ 프로듀서님! 대화 흐름이 마음에 드셨다니 너무 뿌듯해요! 코토네가 프로듀서님 취향 200% 저격하는 스크립트로 칭찬 가득 채워드릴게요~💛 (+10 EXP)"
     }
   ]
 }
