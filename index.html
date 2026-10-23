@@ -4461,21 +4461,66 @@ ${err.message}
         }
       }
 
-      // 8. InBody Weight & Fat
+      // 8. InBody & Samsung Health Weight & Fat
       let weight = null;
       let fat = null;
 
-      const labelRegex = /(?:체중(?:[\/\s]*체성분)?|체성분|몸무게|Weight|체\s*중)[\s\S]{0,35}?([3-9]\d(?:\.\d{1,2})?)/i;
-      const lm = unified.match(labelRegex);
-      if (lm) {
-        const val = parseFloat(lm[1]);
-        if (val >= 35 && val <= 150) weight = val;
+      // --- WEIGHT EXTRACTION ---
+      // Priority 1: Label 체중/몸무게/Weight (not navigation title '체중/체성분') followed by number and kg
+      // Ex: '체중 > 65.6 kg', '체중 (kg) 65.6', '체중 65.6kg'
+      const wLabelKg = unified.match(/(?<!\/)(?:체중|몸무게|Weight)(?![\s]*\/)[\s:：>▶()（）a-zA-Z]{0,15}?[\s:：>▶\n\r]{1,15}(?<![\d.])([3-9]\d(?:\.\d{1,2})?)\s*(?:k\s*g|kg|KG)\b/i);
+      if (wLabelKg) {
+        const v = parseFloat(wLabelKg[1]);
+        if (v >= 35 && v <= 150) weight = v;
       }
+
+      // Priority 2: Label 체중/몸무게/Weight followed by standalone number (without kg)
       if (weight === null) {
-        const kgMatches = [...unified.matchAll(/([3-9]\d(?:\.\d{1,2})?)\s*(?:kg|KG)\b/gi)];
+        const wLabelPlain = unified.match(/(?<!\/)(?:체중|몸무게|Weight)(?![\s]*\/)[\s:：>▶()（）a-zA-Z]{0,15}?[\s:：>▶\n\r]{1,15}(?<![\d.])([3-9]\d(?:\.\d{1,2})?)(?![\d.])/i);
+        if (wLabelPlain) {
+          const v = parseFloat(wLabelPlain[1]);
+          if (v >= 35 && v <= 150) weight = v;
+        }
+      }
+
+      // Priority 3: Any standalone number explicitly followed by kg unit
+      if (weight === null) {
+        const kgMatches = [...unified.matchAll(/(?<![\d.])([3-9]\d(?:\.\d{1,2})?)\s*(?:k\s*g|kg|KG)\b/gi)];
         for (const m of kgMatches) {
-          const val = parseFloat(m[1]);
-          if (val >= 35 && val <= 150) { weight = val; break; }
+          const v = parseFloat(m[1]);
+          if (v >= 35 && v <= 150) {
+            weight = v;
+            break;
+          }
+        }
+      }
+
+      // --- BODY FAT (%) EXTRACTION ---
+      // Priority 1: Label 체지방률/체지방율/체지방 (excluding 체지방량) followed by %
+      const fLabelPct = unified.match(/(?:체지방[률율]|체지방(?!량)|body\s*fat|fat|pbf)[\s:：>▶()（）%/\w-]{0,20}?(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)\s*%/i);
+      if (fLabelPct) {
+        const v = parseFloat(fLabelPct[1]);
+        if (v >= 5 && v <= 55) fat = v;
+      }
+
+      // Priority 2: Label 체지방률 without % (excluding kg)
+      if (fat === null) {
+        const fLabelPlain = unified.match(/(?:체지방[률율]|체지방(?!량)|body\s*fat|fat|pbf)[\s:：>▶()（）%/\w-]{0,20}?(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)(?!\s*kg)(?![\d.])/i);
+        if (fLabelPlain) {
+          const v = parseFloat(fLabelPlain[1]);
+          if (v >= 5 && v <= 55) fat = v;
+        }
+      }
+
+      // Priority 3: Standalone percentage number between 5% and 50%
+      if (fat === null) {
+        const pctMatches = [...unified.matchAll(/(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)\s*%/g)];
+        for (const m of pctMatches) {
+          const v = parseFloat(m[1]);
+          if (v >= 5 && v <= 50) {
+            fat = v;
+            break;
+          }
         }
       }
 
