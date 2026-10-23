@@ -7,6 +7,15 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <!-- PWA & Mobile Web App Manifest -->
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" href="./favicon.png">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <meta name="theme-color" content="#f4869d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Gemini Fit">
   <title>Gemini Fit - 제미니 · 코토네 · 미오 피트니스 코칭</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
@@ -204,6 +213,29 @@
       <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-amber-400 text-slate-950 text-xs font-black shrink-0 cursor-pointer hover:bg-amber-300 shadow-sm">
         측정 스캔
       </label>
+    </div>
+
+    <!-- PWA Smart Install Banner (like unspecialty.com) -->
+    <div id="pwaInstallBanner" class="hidden mb-2.5 p-2 rounded-2xl bg-gradient-to-r from-rose-500/15 via-pink-500/15 to-purple-500/15 border border-pink-400/40 backdrop-blur-md flex items-center justify-between gap-2 shadow-xs transition-all duration-300">
+      <div class="flex items-center gap-2 min-w-0">
+        <img src="./icon-192.png" alt="Gemini Fit" class="w-8 h-8 rounded-xl shadow-xs shrink-0 object-cover border border-white/30">
+        <div class="min-w-0">
+          <div class="text-[11px] font-black text-slate-800 dark:text-slate-100 flex items-center gap-1 truncate">
+            <span>Gemini Fit 앱으로 설치</span>
+            <span class="text-[8px] bg-rose-500 text-white font-extrabold px-1 rounded">PWA</span>
+          </div>
+          <div class="text-[9px] text-slate-500 dark:text-slate-400 truncate">홈 화면에 추가하여 전체화면 앱으로 실행</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-1 shrink-0">
+        <button type="button" onclick="triggerPwaInstall()" class="px-2.5 py-1 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 hover:opacity-95 text-white text-[11px] font-black shadow-xs flex items-center gap-1 active:scale-95 transition-all">
+          <span>📲</span>
+          <span>설치</span>
+        </button>
+        <button type="button" onclick="dismissPwaBanner()" class="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs font-bold rounded-lg" title="닫기">
+          ✕
+        </button>
+      </div>
     </div>
 
     <!-- 1. Top Clean Header: Gemini Fit -->
@@ -6020,6 +6052,75 @@ ${err.message}
     }
 
     window.addEventListener('DOMContentLoaded', loadState);
+  </script>
+  <!-- PWA Service Worker & Install Prompt Registration -->
+  <script>
+    let deferredPwaPrompt = null;
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+          console.log('Gemini Fit PWA Service Worker ready:', reg.scope);
+        }).catch((err) => {
+          console.warn('PWA SW register error:', err);
+        });
+      });
+    }
+
+    const isAppStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPwaPrompt = e;
+      if (!isAppStandalone && !sessionStorage.getItem('pwa_dismissed')) {
+        const banner = document.getElementById('pwaInstallBanner');
+        if (banner) banner.classList.remove('hidden');
+      }
+    });
+
+    // Check on startup (e.g. for iOS or browser visit)
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!isAppStandalone && !sessionStorage.getItem('pwa_dismissed')) {
+        const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
+        const banner = document.getElementById('pwaInstallBanner');
+        if (banner && (deferredPwaPrompt || isIos)) {
+          banner.classList.remove('hidden');
+        }
+      }
+    });
+
+    async function triggerPwaInstall() {
+      if (deferredPwaPrompt) {
+        deferredPwaPrompt.prompt();
+        const { outcome } = await deferredPwaPrompt.userChoice;
+        if (outcome === 'accepted') {
+          showFloatingToast('Gemini Fit 앱이 설치되었습니다! 🎉', '📲');
+        }
+        deferredPwaPrompt = null;
+        const banner = document.getElementById('pwaInstallBanner');
+        if (banner) banner.classList.add('hidden');
+      } else {
+        const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
+        if (isIos) {
+          alert("📱 아이폰(Safari) 홈 화면 앱 설치 방법:\n\n1. 화면 하단 중앙의 [공유 버튼(⬆️)]을 누릅니다.\n2. 아래 메뉴에서 ['홈 화면에 추가']를 선택하세요!\n\n설치 후 홈 화면의 Gemini Fit 아이콘으로 주소창 없이 앱처럼 실행됩니다.");
+        } else {
+          showFloatingToast("브라우저 메뉴(⋮)에서 '앱 설치' 또는 '홈 화면에 추가'를 눌러주세요!", "📲");
+        }
+      }
+    }
+
+    function dismissPwaBanner() {
+      sessionStorage.setItem('pwa_dismissed', 'true');
+      const banner = document.getElementById('pwaInstallBanner');
+      if (banner) banner.classList.add('hidden');
+    }
+
+    window.addEventListener('appinstalled', () => {
+      deferredPwaPrompt = null;
+      const banner = document.getElementById('pwaInstallBanner');
+      if (banner) banner.classList.add('hidden');
+      showFloatingToast('Gemini Fit 앱 설치 완료! 홈 화면에서 실행하세요 ✨', '🎉');
+    });
   </script>
 </body>
 </html>

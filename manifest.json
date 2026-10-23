@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "Gemini Fit - 피트니스 코칭",
+  "short_name": "Gemini Fit",
+  "description": "제미니, 코토네, 미오와 함께하는 1:1 스마트 다이어트 & 피트니스 코칭",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#f4869d",
+  "background_color": "#0f172a",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
