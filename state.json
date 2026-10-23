@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-10-23T12:07:20.927Z",
+  "updatedAt": "2026-10-23T12:15:07.008Z",
   "lastActiveDate": "2026-10-23",
   "theme": "light",
   "weight": 65.6,
   "fat": 21.5,
   "bondRank": 9,
-  "bondExp": 15,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
-  "currentSituation": "ev2",
+  "bondExp": 55,
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev5",
   "absDone": false,
   "runDone": true,
   "runDist": 6.32,
@@ -73,7 +73,7 @@
       "name": "크런치",
       "sets": [
         false,
-        false
+        true
       ],
       "target": "20회",
       "reps": 50
@@ -125,7 +125,7 @@
       "id": "gym-1792756992061",
       "date": "10/23",
       "fullDate": "2026-10-23",
-      "time": "오후 09:07",
+      "time": "오후 09:14",
       "upper1Done": 4,
       "upper1Reps": 80,
       "upper2Done": 4,
@@ -135,11 +135,11 @@
       "legRaiseDone": 1,
       "legRaiseReps": 50,
       "legRaiseTarget": 1,
-      "crunchDone": 0,
-      "crunchReps": 0,
+      "crunchDone": 1,
+      "crunchReps": 50,
       "crunchTarget": 2,
-      "totalSets": 13,
-      "totalReps": 290
+      "totalSets": 14,
+      "totalReps": 340
     }
   ],
   "latestRun": {
@@ -249,7 +249,7 @@
         "espresso": 1,
         "tea": 0
       },
-      "lastUpdated": "2026-10-23T12:03:31.432Z"
+      "lastUpdated": "2026-10-23T12:14:55.944Z"
     }
   },
   "chatHistory": [
@@ -354,6 +354,25 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "헤헤~ 프로듀서님! 대화 흐름이 마음에 드셨다니 너무 뿌듯해요! 코토네가 프로듀서님 취향 200% 저격하는 스크립트로 칭찬 가득 채워드릴게요~💛 (+10 EXP)"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 09:14 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.32km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 머신 올킬했네? 🐾 근성 하나는 인정해 줄게 바보 프로듀서. 덤벨 컬도 잊지 마.\""
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "프로듀서님~!! 💛||언제 오시나 코토네가 눈 빠지게 기다렸잖아요! 히히||오늘 체중 65.6kg 찍힌 거 보고 심쿵했어요 🥹✨"
+    },
+    {
+      "sender": "user",
+      "text": "17시 칼같이 식사 마감! 공복 골든타임 시작할게."
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "아주 좋아. 지금부터 내일 아침까지가 진짜 승부처야 🌙||배고프면 따뜻한 물이나 차 우려 마셔. 버텨봐!"
     }
   ]
 }
