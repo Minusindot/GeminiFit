@@ -1299,7 +1299,7 @@
       activeMode: 'gemini',    // 'gemini' | 'kotone' | 'mio' | 'dual'
       currentSituation: 'ev1',
       absDone: false,
-      runDone: true,
+      runDone: false,
       runDist: 7.30,
       latestRun: {
         distance: 7.30,
@@ -2446,6 +2446,22 @@
       playBeep(850, 0.09);
     }
 
+    function buildDailySnapshot(s, date) {
+      return {
+        date,
+        weight: s.weight,
+        fat: s.fat,
+        mealsDone: (s.meals || []).filter(Boolean).length,
+        mealPhotosCount: (s.mealPhotos || []).filter(Boolean).length,
+        runDone: Boolean(s.runDone),
+        absDone: Boolean(s.absDone),
+        rehabDone: (s.rehab || []).filter(Boolean).length,
+        gymDone: Boolean(s.gymRoutine && s.gymRoutine.allDone),
+        teaLog: { ...(s.teaLog || { matcha: 0, espresso: 0, tea: 0 }) },
+        autoArchived: true
+      };
+    }
+
     function checkAndResetDayChange(force = false) {
       const todayStr = getLocalDateString(new Date());
 
@@ -2464,19 +2480,7 @@
         const prevDate = state.lastActiveDate || todayStr;
         if (!state.dailyLogs) state.dailyLogs = {};
         if (!state.dailyLogs[prevDate]) {
-          state.dailyLogs[prevDate] = {
-            date: prevDate,
-            weight: state.weight,
-            fat: state.fat,
-            mealsDone: (state.meals || []).filter(Boolean).length,
-            mealPhotosCount: (state.mealPhotos || []).filter(Boolean).length,
-            runDone: Boolean(state.runDone),
-            absDone: Boolean(state.absDone),
-            rehabDone: (state.rehab || []).filter(Boolean).length,
-            gymDone: Boolean(state.gymRoutine && state.gymRoutine.allDone),
-            teaLog: { ...(state.teaLog || { matcha: 0, espresso: 0, tea: 0 }) },
-            autoArchived: true
-          };
+          state.dailyLogs[prevDate] = buildDailySnapshot(state, prevDate);
         }
 
         // Clean Daily Reset
@@ -2497,7 +2501,9 @@
         }
 
         state.lastActiveDate = todayStr;
-        saveState(false);
+        // NOTE: do not bump updatedAt here. A reset is not a user edit; bumping it would make this
+        // device look "newer" than another device's real edits from today and block/overwrite them.
+        persistLocal();
         try { syncUI(); } catch (e) {}
         return true;
       }
@@ -2554,15 +2560,16 @@
       // Automatic Day-Change Detection & Clean Reset
       checkAndResetDayChange();
 
-      // Ensure today's 64.1kg kickoff script is present in chatHistory
-      const hasKickoff = (state.chatHistory || []).some(m => m.text && m.text.includes('64.1kg'));
-      if (!hasKickoff) {
+      // Seed a greeting only for a brand-new (empty) chat. Never replace existing history.
+      if (!state.chatHistory || state.chatHistory.length === 0) {
+        const w = state.weight;
+        const remain = Math.max(0, (w - 52)).toFixed(1);
         state.chatHistory = [
-          { sender: 'kotone', name: '코토네', text: '프로듀서님~! 오늘 삼성헬스로 잰 체중 64.1kg 찍힌 거 코토네가 확인했어요! 💛 수요일 인바디 측정 데이라 보너스 경험치도 2배인 거 아시죠? 목표인 52kg 슬림핏까지 코토네가 특급 인센티브 애교로 꽉 붙어서 서포트해 드릴게요! 💸✨' },
-          { sender: 'mio', name: '미오', text: '우와아~! 64.1kg 확인 완료! 지난번에 삼성헬스로 7.30km(1시간 24분 완주!) 뛴 것도 진짜 멋있었어 프로듀서! 🌟 11\'33" 페이스로 손아귀 힘 빼고 안정적으로 달린 덕분에 테니스 엘보도 안 다쳤잖아~ 오늘 노을 보면서 가볍게 5km 러닝 어때? 내가 옆에서 파이팅 넘치게 응원해줄게! 🏃‍♀️💨' },
-          { sender: 'gemini', name: '제미니', text: '흥, 바보 프로듀서! 64.1kg에서 52kg까지 아직 -12kg 남았다고 벌써부터 들뜨면 안 돼! 메~롱! 🐾 17시 넘었으니까 지금부터는 물이랑 내가 타준 따뜻한 말차 🍵 외엔 음식물 절대 금지야! 그리고 팔꿈치 안 아프게 2kg 덤벨 손목 편심성 컬 3세트랑 14분 복근 꼭 챙겨, 알았지? 덤벨 자세는 내가 이따 밀착 체크해 줄 테니까 딴생각 마!' }
+          { sender: 'kotone', name: '코토네', text: `프로듀서님~! 현재 체중 ${w}kg 확인했어요! 💛 목표인 52kg 슬림핏까지 코토네가 꽉 붙어서 서포트해 드릴게요! 💸✨` },
+          { sender: 'mio', name: '미오', text: `우와아~! 오늘도 같이 힘내자 프로듀서! 🌟 손아귀 힘 빼고 편하게 달리면 테니스 엘보도 걱정 없어~ 🏃‍♀️💨` },
+          { sender: 'gemini', name: '제미니', text: `흥, 바보 프로듀서! 52kg까지 아직 ${remain}kg 남았으니까 방심하지 마! 🐾 17시 이후엔 물이랑 말차 🍵 외엔 금지야, 알았지?` }
         ];
-        saveState(false);
+        persistLocal();
       }
 
       state.currentSituation = getTimeBasedSituation();
@@ -2579,12 +2586,65 @@
       }
     }
 
+    function writeLocalState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        return true;
+      } catch (e) {
+        // Most likely QuotaExceededError from base64 photos piling up in chatHistory.
+        try {
+          let keptImages = 0;
+          const hist = state.chatHistory || [];
+          for (let i = hist.length - 1; i >= 0; i--) {
+            if (hist[i] && hist[i].image) {
+              keptImages++;
+              if (keptImages > 6) delete hist[i].image;
+            }
+          }
+          if (hist.length > 200) state.chatHistory = hist.slice(-200);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          showFloatingToast('기기 저장 공간이 부족해 오래된 채팅 사진을 정리했어요.', '🧹');
+          return true;
+        } catch (e2) {
+          console.error('localStorage save failed:', e2);
+          showFloatingToast('⚠️ 기기 저장 공간 부족으로 저장에 실패했어요!', '⚠️');
+          return false;
+        }
+      }
+    }
+
+    // Persist without marking as a user edit (does not bump updatedAt, does not push).
+    function persistLocal() {
+      writeLocalState();
+    }
+
+    // A user edit: bump updatedAt, persist, and schedule a (debounced) cloud push.
     function saveState(triggerCloud = true) {
       state.updatedAt = new Date().toISOString();
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
-      if (triggerCloud && ghConfig.autoSync && ghConfig.token) {
-        clearTimeout(syncTimeout);
-        syncTimeout = setTimeout(() => pushStateToGitHub(false), 1200);
+      writeLocalState();
+      if (triggerCloud && ghConfig.autoSync && ghConfig.token) schedulePush();
+    }
+
+    let pushPending = false;
+    let pushInFlight = false;
+
+    function schedulePush(delayMs = 8000) {
+      pushPending = true;
+      clearTimeout(syncTimeout);
+      syncTimeout = setTimeout(flushPush, delayMs);
+    }
+
+    async function flushPush() {
+      clearTimeout(syncTimeout);
+      if (!pushPending || !ghConfig.token) return;
+      if (pushInFlight) { schedulePush(2000); return; }
+      pushPending = false;
+      pushInFlight = true;
+      try {
+        const ok = await pushStateToGitHub(false);
+        if (!ok) schedulePush(30000); // retry later instead of silently dropping the change
+      } finally {
+        pushInFlight = false;
       }
     }
 
@@ -2667,8 +2727,27 @@
 
       if (container.classList.contains('hidden')) {
         const url = generateMobileSyncUrl();
-        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}`;
-        container.classList.remove('hidden');
+        // The URL contains the GitHub token, so the QR must be rendered locally (never via a remote QR API).
+        const render = () => {
+          try {
+            const qr = qrcode(0, 'L');
+            qr.addData(url);
+            qr.make();
+            img.src = qr.createDataURL(4, 8);
+            container.classList.remove('hidden');
+          } catch (e) {
+            alert('QR 생성에 실패했습니다. "모바일 연동 링크 복사하기"를 이용해 주세요.');
+          }
+        };
+        if (typeof qrcode === 'function') {
+          render();
+        } else {
+          const s = document.createElement('script');
+          s.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js';
+          s.onload = render;
+          s.onerror = () => alert('QR 라이브러리를 불러오지 못했습니다. 링크 복사를 이용해 주세요.');
+          document.head.appendChild(s);
+        }
       } else {
         container.classList.add('hidden');
       }
@@ -2697,6 +2776,44 @@
 
     function base64ToUtf8(b64) {
       return decodeURIComponent(escape(atob(b64.replace(/\s/g, ''))));
+    }
+
+    function mergeById(localArr, remoteArr, keyFn) {
+      const map = new Map();
+      (localArr || []).forEach(x => { if (x) map.set(keyFn(x), x); });
+      (remoteArr || []).forEach(x => { if (x) map.set(keyFn(x), x); });
+      return [...map.values()];
+    }
+
+    function mergeRemoteState(remote) {
+      const local = state;
+      const remoteDate = remote.lastActiveDate || getLocalDateString(remote.updatedAt);
+
+      const mergedHistory = {
+        dailyLogs: { ...(remote.dailyLogs || {}), ...(local.dailyLogs || {}) },
+        gymHistory: mergeById(local.gymHistory, remote.gymHistory, h => h.fullDate || h.id),
+        runningLogs: mergeById(local.runningLogs, remote.runningLogs, r => r.id || `${r.date}-${r.distance}`)
+      };
+
+      if (remoteDate && local.lastActiveDate && remoteDate < local.lastActiveDate) {
+        // Remote copy is from a previous day: archive it, but keep today's local progress.
+        mergedHistory.dailyLogs[remoteDate] = buildDailySnapshot(remote, remoteDate);
+        state = { ...local, ...mergedHistory };
+      } else {
+        state = {
+          ...local,
+          ...remote,
+          ...mergedHistory,
+          // Local-only data that the cloud copy does not carry (photos, full chat with images, secrets).
+          chatHistory: (local.chatHistory && local.chatHistory.length > 0) ? local.chatHistory : (remote.chatHistory || []),
+          mealPhotos: (remoteDate === local.lastActiveDate) ? (local.mealPhotos || ['', '', '']) : ['', '', ''],
+          webhookUrl: local.webhookUrl || remote.webhookUrl || '',
+          updatedAt: remote.updatedAt || local.updatedAt
+        };
+      }
+      checkAndResetDayChange();
+      persistLocal(); // keep remote's updatedAt so this device doesn't look newer than it is
+      try { updateMetrics(false); } catch (e) {}
     }
 
     async function pullStateFromGitHub(force = false) {
@@ -2746,34 +2863,29 @@
 
         if (remoteState) {
           if (sha) ghConfig.lastSha = sha;
-          
+
           const localTime = new Date(state.updatedAt || 0).getTime();
           const remoteTime = new Date(remoteState.updatedAt || 0).getTime();
 
-          // Sync if forced (startup/button), or remote is newer, or remote has different weight (e.g. mobile updated to 64.1)
-          const weightDiff = (remoteState.weight && remoteState.weight !== state.weight);
-          if (force || remoteTime >= localTime || weightDiff) {
-            const localChats = (state.chatHistory && state.chatHistory.length > 0) ? state.chatHistory : [];
-            state = {
-              ...state,
-              ...remoteState,
-              chatHistory: (remoteState.chatHistory && remoteState.chatHistory.length > 0) ? remoteState.chatHistory : localChats,
-              mealPhotos: state.mealPhotos || remoteState.mealPhotos || ['', '', ''],
-              webhookUrl: state.webhookUrl || remoteState.webhookUrl || ''
-            };
-            checkAndResetDayChange();
-            saveState(false);
+          // Only accept the remote copy if it is strictly newer (or the user forced it).
+          // Never pull over local edits that are still waiting to be pushed.
+          const hasUnpushedLocal = pushPending || pushInFlight;
+          if ((force && !hasUnpushedLocal) || (!hasUnpushedLocal && remoteTime > localTime)) {
+            mergeRemoteState(remoteState);
             syncUI();
             renderChat();
-            try { updateMetrics(false); } catch (e) {}
             updateGithubHeaderIndicator('ok');
             if (force && msgEl) {
               msgEl.textContent = `✅ 클라우드 동기화 완료! (${new Date().toLocaleTimeString()})`;
               playBeep(820, 0.12);
             }
           } else {
-            // Local is up to date or newer; no need to push during periodic check
             updateGithubHeaderIndicator('ok');
+            if (force && msgEl) {
+              msgEl.textContent = hasUnpushedLocal
+                ? '⏳ 이 기기의 변경사항을 먼저 업로드하는 중입니다.'
+                : `✅ 이 기기가 최신 상태입니다. (${new Date().toLocaleTimeString()})`;
+            }
           }
         } else {
           updateGithubHeaderIndicator(ghConfig.token ? 'error' : 'idle');
@@ -2789,7 +2901,7 @@
       const msgEl = document.getElementById('ghSyncStatusMsg');
       if (!ghConfig.token) {
         if (manual && msgEl) msgEl.textContent = "⚠️ 먼저 GitHub Personal Access Token (PAT)을 입력해주세요!";
-        return;
+        return false;
       }
       try {
         updateGithubHeaderIndicator('syncing');
@@ -2799,16 +2911,16 @@
           'Content-Type': 'application/json'
         };
 
-        const getUrl = `https://api.github.com/repos/${ghConfig.repo}/contents/${ghConfig.path}?t=${Date.now()}`;
-        const getRes = await fetch(getUrl, { headers, cache: 'no-store' });
-        let sha = ghConfig.lastSha;
-        if (getRes.ok) {
-          const getJson = await getRes.json();
-          sha = getJson.sha;
-        }
+        const getUrl = `https://api.github.com/repos/${ghConfig.repo}/contents/${ghConfig.path}`;
+        const fetchSha = async () => {
+          const r = await fetch(`${getUrl}?t=${Date.now()}`, { headers, cache: 'no-store' });
+          if (r.ok) return (await r.json()).sha;
+          return ghConfig.lastSha;
+        };
+        let sha = await fetchSha();
 
         const cloudPayload = {
-          updatedAt: new Date().toISOString(),
+          updatedAt: state.updatedAt || new Date().toISOString(),
           lastActiveDate: state.lastActiveDate || getLocalDateString(),
           theme: state.theme,
           weight: state.weight,
@@ -2825,21 +2937,31 @@
           meals: state.meals,
           teaLog: state.teaLog,
           gymRoutine: state.gymRoutine,
+          gymHistory: state.gymHistory,
+          latestRun: state.latestRun,
+          runningLogs: state.runningLogs,
+          absVideoUrl: state.absVideoUrl,
           dailyLogs: state.dailyLogs,
-          chatHistory: (state.chatHistory || []).slice(-18).map(m => ({ sender: m.sender, name: m.name, text: m.text }))
+          chatHistory: (state.chatHistory || []).slice(-30).map(m => ({ sender: m.sender, name: m.name, text: m.text }))
         };
 
-        const body = {
-          message: `Sync state.json (${new Date().toLocaleString('ko-KR')})`,
-          content: utf8ToBase64(JSON.stringify(cloudPayload, null, 2))
-        };
-        if (sha) body.sha = sha;
-
-        const putRes = await fetch(`https://api.github.com/repos/${ghConfig.repo}/contents/${ghConfig.path}`, {
+        const content = utf8ToBase64(JSON.stringify(cloudPayload, null, 2));
+        const doPut = (s) => fetch(getUrl, {
           method: 'PUT',
           headers,
-          body: JSON.stringify(body)
+          body: JSON.stringify({
+            message: `Sync state.json (${new Date().toLocaleString('ko-KR')})`,
+            content,
+            ...(s ? { sha: s } : {})
+          })
         });
+
+        let putRes = await doPut(sha);
+        if (putRes.status === 409 || putRes.status === 422) {
+          // Another device pushed in between: refresh sha and retry once (this device holds the latest edit).
+          sha = await fetchSha();
+          putRes = await doPut(sha);
+        }
 
         if (!putRes.ok) {
           const errText = await putRes.text();
@@ -2852,13 +2974,21 @@
           msgEl.textContent = `✅ GitHub state.json 저장 성공! (${new Date().toLocaleTimeString()})`;
           playBeep(880, 0.12);
         }
+        return true;
       } catch (err) {
+        console.warn('GitHub push failed:', err);
         updateGithubHeaderIndicator('error');
         if (manual && msgEl) msgEl.textContent = `저장 실패: ${err.message}`;
+        return false;
       }
     }
 
+    window.addEventListener('pagehide', () => { if (pushPending) flushPush(); });
     document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        if (pushPending) flushPush();
+        return;
+      }
       if (document.visibilityState === 'visible') {
         checkAndResetDayChange();
         if (ghConfig.autoSync && (ghConfig.token || ghConfig.repo)) {
@@ -2951,7 +3081,7 @@
       }
     }
 
-    function setTrainerMode(mode, situation = null) {
+    function setTrainerMode(mode, situation = null, shouldSave = true) {
       state.activeMode = mode;
       if (situation) state.currentSituation = situation;
       if (['gemini', 'kotone', 'mio'].includes(mode)) state.activeTrainer = mode;
@@ -3027,9 +3157,11 @@
           if (bondBtn) bondBtn.textContent = "제미니 인연스토리 ➔";
         }
       }
-      playBeep(650);
-      saveState();
-      renderChat();
+      if (shouldSave) {
+        playBeep(650);
+        saveState();
+        renderChat();
+      }
     }
 
     // ============================================================================
@@ -3177,7 +3309,7 @@
       renderRunningUI();
       renderGymUI();
       updateBondUI();
-      setTrainerMode(state.activeMode || state.activeTrainer || 'gemini', state.currentSituation || 'ev1');
+      setTrainerMode(state.activeMode || state.activeTrainer || 'gemini', state.currentSituation || 'ev1', false);
 
       // Update Daily Status & Header Date
       const todayStr = getLocalDateString();
@@ -3467,7 +3599,7 @@
         }
 
         state.lastTalkVisitTime = now;
-        saveState(false);
+        persistLocal();
 
         // Smooth scroll chat to bottom
         setTimeout(() => {
@@ -3776,11 +3908,13 @@ function greetUserOnEnterTalk() {
       const cleanKey = (apiKey || '').trim();
       if (!cleanKey) throw new Error('API 키가 입력되지 않았습니다.');
 
-      // Priority 1: Current working model or gemini-3.8-flash (confirmed fastest)
-      const cached = localStorage.getItem('GEMINI_WORKING_MODEL') || 'gemini-3.8-flash';
+      // Priority 1: Current confirmed working model or gemini-2.5-flash / gemini-2.0-flash / gemini-1.5-flash
+      let cached = (localStorage.getItem('GEMINI_WORKING_MODEL') || '').trim();
+      if (!cached || cached.includes('3.8')) cached = 'gemini-2.5-flash';
       const modelsToTry = [cached];
-      if (cached !== 'gemini-3.8-flash') modelsToTry.push('gemini-3.8-flash');
-      if (!modelsToTry.includes('gemini-1.5-flash')) modelsToTry.push('gemini-1.5-flash');
+      for (const m of ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash']) {
+        if (!modelsToTry.includes(m)) modelsToTry.push(m);
+      }
 
       let lastError = null;
       for (const model of modelsToTry) {
@@ -3819,7 +3953,7 @@ function greetUserOnEnterTalk() {
           generationConfig: { temperature: 0.7, maxOutputTokens: 250 }
         });
         const testReply = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim() || '응답 수신 완료';
-        const workingModel = data._workingModel || localStorage.getItem('GEMINI_WORKING_MODEL') || 'gemini-3.8-flash';
+        const workingModel = data._workingModel || localStorage.getItem('GEMINI_WORKING_MODEL') || 'gemini-2.5-flash';
         localStorage.setItem('GEMINI_API_KEY', key);
         updateGeminiKeyStatusUI();
         alert(`✅ Gemini AI 정상 연결 성공!
@@ -3946,6 +4080,7 @@ ${err.message}
           activeTypingIndicator = null;
           const senderName = currentTrainer === 'kotone' ? '코토네' : currentTrainer === 'mio' ? '미오' : '제미니';
           state.chatHistory.push({
+            room: currentRoom,
             sender: currentTrainer,
             name: senderName,
             text: `⚠️ [Gemini AI 연결 오류: ${e.message}] 설정(⚙️) 창에서 [⚡ 연결 테스트]를 눌러 키를 확인해 주세요!`,
@@ -3974,12 +4109,12 @@ ${err.message}
           activeTypingIndicator = null;
 
           if (data.mode === 'dual' && data.replies) {
-            if (data.replies.gemini) state.chatHistory.push({ sender: 'gemini', name: '제미니', text: data.replies.gemini, time: curTime });
-            if (data.replies.kotone) state.chatHistory.push({ sender: 'kotone', name: '코토네', text: data.replies.kotone, time: curTime });
-            if (data.replies.mio) state.chatHistory.push({ sender: 'mio', name: '미오', text: data.replies.mio, time: curTime });
+            if (data.replies.gemini) state.chatHistory.push({ room: 'dual', sender: 'gemini', name: '제미니', text: data.replies.gemini, time: curTime });
+            if (data.replies.kotone) state.chatHistory.push({ room: 'dual', sender: 'kotone', name: '코토네', text: data.replies.kotone, time: curTime });
+            if (data.replies.mio) state.chatHistory.push({ room: 'dual', sender: 'mio', name: '미오', text: data.replies.mio, time: curTime });
           } else if (data.reply) {
             const senderName = currentTrainer === 'kotone' ? '코토네' : currentTrainer === 'mio' ? '미오' : '제미니';
-            state.chatHistory.push({ sender: currentTrainer, name: senderName, text: data.reply, time: curTime });
+            state.chatHistory.push({ room: currentRoom, sender: currentTrainer, name: senderName, text: data.reply, time: curTime });
           }
           addBondExp(20);
           saveState();
@@ -3998,18 +4133,18 @@ ${err.message}
 
       if (currentMode === 'dual') {
         setTrainerMode('dual', gemObj.sit || 'ev1');
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: gemObj.text, time: curTime });
-        state.chatHistory.push({ sender: 'kotone', name: '코토네', text: kotObj.text, time: curTime });
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: mioObj.text, time: curTime });
+        state.chatHistory.push({ room: 'dual', sender: 'gemini', name: '제미니', text: gemObj.text, time: curTime });
+        state.chatHistory.push({ room: 'dual', sender: 'kotone', name: '코토네', text: kotObj.text, time: curTime });
+        state.chatHistory.push({ room: 'dual', sender: 'mio', name: '미오', text: mioObj.text, time: curTime });
       } else if (currentTrainer === 'kotone') {
         setTrainerMode('kotone', kotObj.sit || 'ev1');
-        state.chatHistory.push({ sender: 'kotone', name: '코토네', text: kotObj.text, time: curTime });
+        state.chatHistory.push({ room: currentRoom, sender: 'kotone', name: '코토네', text: kotObj.text, time: curTime });
       } else if (currentTrainer === 'mio') {
         setTrainerMode('mio', mioObj.sit || 'ev1');
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: mioObj.text, time: curTime });
+        state.chatHistory.push({ room: currentRoom, sender: 'mio', name: '미오', text: mioObj.text, time: curTime });
       } else {
         setTrainerMode('gemini', gemObj.sit || 'ev1');
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: gemObj.text, time: curTime });
+        state.chatHistory.push({ room: currentRoom, sender: 'gemini', name: '제미니', text: gemObj.text, time: curTime });
       }
       addBondExp(15);
       saveState();
@@ -4021,9 +4156,9 @@ ${err.message}
       const curTime = getKakaoTimeStr();
       if (state.activeMode === 'dual') {
         setTrainerMode('dual');
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '💬 [3인 단톡 에피소드] "흥, 프로듀서가 매일 식단이랑 재활 챙기는 거... 사실 우리 셋이 단톡방에서 엄청 칭찬하고 있었거든! 🐾"', time: curTime });
-        state.chatHistory.push({ sender: 'kotone', name: '코토네', text: '💖 "맞아요 맞아요! 제미니 짱이 프로듀서님 기록 올라올 때마다 고양이 귀 쫑긋거리는 거 제가 다 봤다구요~ 헤헤! 💛"', time: curTime });
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: '💖 "에헤헤, 우리 셋이 프로듀서 평생 전담 파트너니까 52kg 달성할 때까지 매일매일 즐겁게 달리자! 🌟"', time: curTime });
+        state.chatHistory.push({ room: 'dual', sender: 'gemini', name: '제미니', text: '💬 [3인 단톡 에피소드] "흥, 프로듀서가 매일 식단이랑 재활 챙기는 거... 사실 우리 셋이 단톡방에서 엄청 칭찬하고 있었거든! 🐾"', time: curTime });
+        state.chatHistory.push({ room: 'dual', sender: 'kotone', name: '코토네', text: '💖 "맞아요 맞아요! 제미니 짱이 프로듀서님 기록 올라올 때마다 고양이 귀 쫑긋거리는 거 제가 다 봤다구요~ 헤헤! 💛"', time: curTime });
+        state.chatHistory.push({ room: 'dual', sender: 'mio', name: '미오', text: '💖 "에헤헤, 우리 셋이 프로듀서 평생 전담 파트너니까 52kg 달성할 때까지 매일매일 즐겁게 달리자! 🌟"', time: curTime });
       } else {
         const heroine = state.activeTrainer || 'gemini';
         const events = getEventsForHeroine(heroine);
@@ -4032,7 +4167,7 @@ ${err.message}
         const hName = heroine === 'kotone' ? '코토네' : heroine === 'mio' ? '미오' : '제미니';
 
         setTrainerMode(heroine, nextEv.key);
-        state.chatHistory.push({ sender: heroine, name: hName, text: nextEv.story, time: curTime });
+        state.chatHistory.push({ room: heroine, sender: heroine, name: hName, text: nextEv.story, time: curTime });
       }
       addBondExp(25);
       saveState();
@@ -4085,13 +4220,17 @@ ${err.message}
         return msg.sender === currentRoom;
       });
 
-      // Default room welcome greeting if room is empty
+      // Default room welcome greeting if room is empty (dynamically adapted to current weight & date)
       if (roomMessages.length === 0) {
+        const curW = (typeof state.weight === 'number' && state.weight > 0) ? state.weight.toFixed(1) : '64.1';
+        const remKg = Math.max(0, (parseFloat(curW) - 52.0)).toFixed(1);
+        const nowD = new Date();
+        const dateBrief = `${nowD.getMonth() + 1}.${nowD.getDate()} ${['일','월','화','수','목','금','토'][nowD.getDay()]}요일`;
         const welcomeMap = {
-          gemini: { room: 'gemini', sender: 'gemini', name: '제미니', text: '바보 프로듀서! 오늘 체중 64.1kg 기록 확인했어. 52kg까지 남은 -12.1kg은 내가 책임지고 쏙 빼줄 테니까 나만 딱 믿어! 🐾 17시 이후엔 칼로리 셧다운인 거 알지? 2kg 덤벨 손목 재활 컬 3세트랑 14분 복근부터 끝내자고!', time: fallbackTime },
-          kotone: { room: 'kotone', sender: 'kotone', name: '코토네', text: '헤헤~ 프로듀서님! 오늘 삼성헬스 64.1kg 기록 성공 축하드려요! 💛 수요일 인바디 데이라 코토네랑 인연 경험치도 팍팍 쌓였답니다! 10:00 첫 식사랑 14:00 단백질 간식 챙기시고, 목표 52kg 달성하시면 테라스 카페 데이트 잊지 마세요~? 💸✨', time: fallbackTime },
-          mio: { room: 'mio', sender: 'mio', name: '미오', text: '프로듀서~! 64.1kg 달성 나이스야! 지난번 삼성헬스 7.30km 완주(538kcal 소모!) 기록 보면서 나 진짜 감동했단 말이야~ 🌟 손목 무리 안 가게 11\'33" 페이스 유지한 것도 완전 백점! 오늘도 시원하게 5km 러닝 달려보자! 하이파이브~! 🖐️🏃‍♀️', time: fallbackTime },
-          dual: { room: 'dual', sender: 'dual', name: '제미니 · 코토네 · 미오', text: '📢 [10.21 수요일 3인 트레이너 브리핑]\n\n💛 코토네: "프로듀서님! 오늘 체중 64.1kg 확인 완료! 수요일 인바디 보너스 EXP 2배도 챙기셨어요~!"\n\n🌟 미오: "지난번 7.30km(1시간 24분 완주) 뛴 기세로 오늘도 가볍게 5km 뛰어보자!"\n\n🐾 제미니: "흥, 64.1kg에서 52kg까지 -12kg 남았으니까 17시 단식 지키고 2kg 덤벨 재활 컬 3세트 꼭 챙겨, 바보야!"', time: fallbackTime }
+          gemini: { room: 'gemini', sender: 'gemini', name: '제미니', text: `바보 프로듀서! 오늘 체중 ${curW}kg 기록 확인했어. 52kg까지 남은 -${remKg}kg은 내가 책임지고 쏙 빼줄 테니까 나만 딱 믿어! 🐾 17시 이후엔 칼로리 셧다운인 거 알지? 2kg 덤벨 손목 재활 컬 3세트랑 14분 복근부터 끝내자고!`, time: fallbackTime },
+          kotone: { room: 'kotone', sender: 'kotone', name: '코토네', text: `헤헤~ 프로듀서님! 오늘 체중 ${curW}kg 기록 성공 축하드려요! 💛 10:00 첫 식사랑 14:00 단백질 간식 꼭 챙기시고, 목표 52kg 달성하시면 테라스 카페 데이트 잊지 마세요~? 💸✨`, time: fallbackTime },
+          mio: { room: 'mio', sender: 'mio', name: '미오', text: `프로듀서~! 오늘 체중 ${curW}kg 달성 나이스야! 🌟 손목 무리 안 가게 페이스 유지하면서 오늘도 시원하게 5km 러닝 달려보자! 하이파이브~! 🖐️🏃‍♀️`, time: fallbackTime },
+          dual: { room: 'dual', sender: 'dual', name: '제미니 · 코토네 · 미오', text: `📢 [${dateBrief} 3인 트레이너 브리핑]\n\n💛 코토네: "프로듀서님! 오늘 체중 ${curW}kg 확인 완료! 코토네가 언제나 함께 응원할게요~!"\n\n🌟 미오: "기세 몰아서 오늘도 시원하게 5km 뛰어보자!"\n\n🐾 제미니: "흥, ${curW}kg에서 52kg까지 -${remKg}kg 남았으니까 17시 단식 지키고 재활 루틴 꼭 챙겨, 바보야!"`, time: fallbackTime }
         };
         roomMessages = [welcomeMap[currentRoom] || welcomeMap.gemini];
       }
@@ -4312,21 +4451,25 @@ ${err.message}
     }
 
     async function handleTeaPhoto(e) {
+      checkAndResetDayChange();
       const file = e.target.files[0];
       if (!file) return;
       playBeep(650, 0.1);
       const dataUrl = await compressImage(file);
-      state.chatHistory.push({ sender: 'user', text: "📸 [홈카페 찻잔/커피 인증 사진]", image: dataUrl });
+      const currentRoom = state.activeMode === 'dual' ? 'dual' : (state.activeTrainer || 'gemini');
+      const curTime = getKakaoTimeStr();
+      state.chatHistory.push({ room: currentRoom, sender: 'user', text: "📸 [홈카페 찻잔/커피 인증 사진]", image: dataUrl, time: curTime });
       renderChat();
 
       setTimeout(() => {
+        const replyTime = getKakaoTimeStr();
         if (state.activeTrainer === 'kotone') {
-          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: "우와~ 찻잔 너무 고급스러워요 프로듀서님! 코토네한테도 한 잔 타주세요~ 헤헤! 💛" });
+          state.chatHistory.push({ room: currentRoom, sender: 'kotone', name: '코토네', text: "우와~ 찻잔 너무 고급스러워요 프로듀서님! 코토네한테도 한 잔 타주세요~ 헤헤! 💛", time: replyTime });
         } else if (state.activeTrainer === 'mio') {
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: "우와~ 찻잔 너무 예쁘다 프로듀서! 나도 나중에 같이 마시자~ ☕✨" });
+          state.chatHistory.push({ room: currentRoom, sender: 'mio', name: '미오', text: "우와~ 찻잔 너무 예쁘다 프로듀서! 나도 나중에 같이 마시자~ ☕✨", time: replyTime });
         } else {
           setTrainerMode('gemini', 'ev2');
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: "흥... 감성 챙기면서 17:7 단식 룰 유지하는 건 확실히 인정해 줄게! 🐾🍵" });
+          state.chatHistory.push({ room: currentRoom, sender: 'gemini', name: '제미니', text: "흥... 감성 챙기면서 17:7 단식 룰 유지하는 건 확실히 인정해 줄게! 🐾🍵", time: replyTime });
         }
         addBondExp(15);
         saveState();
@@ -4336,6 +4479,7 @@ ${err.message}
     }
 
     async function uploadMealPhoto(e, idx) {
+      checkAndResetDayChange();
       const file = e.target.files[0];
       if (!file) return;
       playBeep(650, 0.1);
@@ -4348,16 +4492,20 @@ ${err.message}
       document.getElementById(`prevBox${idx}`).classList.remove('hidden');
 
       const mealTitle = idx === 1 ? '10:00 첫 식사' : idx === 2 ? '14:00 단백질 간식' : '16:30 마감 식사';
-      state.chatHistory.push({ sender: 'user', text: `📸 [${mealTitle} 인증 사진]`, image: dataUrl });
+      const currentRoom = state.activeMode === 'dual' ? 'dual' : (state.activeTrainer || 'gemini');
+      const curTime = getKakaoTimeStr();
+      state.chatHistory.push({ room: currentRoom, sender: 'user', text: `📸 [${mealTitle} 인증 사진]`, image: dataUrl, time: curTime });
       renderChat();
 
       setTimeout(() => {
+        const replyTime = getKakaoTimeStr();
         if (state.activeTrainer === 'kotone') {
-          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: '식단 인증 확인 완료! 정성껏 챙겨 드시는 모습 너무 보기 좋아요 프로듀서님~! 💛' });
+          state.chatHistory.push({ room: currentRoom, sender: 'kotone', name: '코토네', text: '식단 인증 확인 완료! 정성껏 챙겨 드시는 모습 너무 보기 좋아요 프로듀서님~! 💛', time: replyTime });
         } else if (state.activeTrainer === 'mio') {
-          state.chatHistory.push({ sender: 'mio', name: '미오', text: '맛있어 보인다~ 단백질도 영양 밸런스도 완벽해! 이 기세로 저녁까지 가자! 🌟' });
+          state.chatHistory.push({ room: currentRoom, sender: 'mio', name: '미오', text: '맛있어 보인다~ 단백질도 영양 밸런스도 완벽해! 이 기세로 저녁까지 가자! 🌟', time: replyTime });
         } else {
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '식단 사진 확인 완료! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 칼로리 섭취 금지야! 🐾' });
+          setTrainerMode('gemini', 'ev14');
+          state.chatHistory.push({ room: currentRoom, sender: 'gemini', name: '제미니', text: '식단 사진 확인 완료! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 칼로리 섭취 금지야! 🐾', time: replyTime });
         }
         addBondExp(15);
         saveState();
@@ -4702,21 +4850,30 @@ ${err.message}
     }
 
     function openRunningResultFromOcr(parsed, rawText = '') {
-      document.getElementById('ocrRunDist').value = parsed.distance !== null ? parsed.distance : 6.03;
-      document.getElementById('ocrRunDuration').value = parsed.duration || "53:45";
-      document.getElementById('ocrRunPace').value = parsed.pace || "08'54\"";
-      document.getElementById('ocrRunCalories').value = parsed.calories || 365;
-      document.getElementById('ocrRunHeartRate').value = parsed.heartRate || 144;
-      document.getElementById('ocrRunSteps').value = parsed.steps || 7060;
+      document.getElementById('ocrRunDist').value = (parsed.distance !== null && parsed.distance !== undefined) ? parsed.distance : '';
+      document.getElementById('ocrRunDuration').value = parsed.duration || "";
+      document.getElementById('ocrRunPace').value = parsed.pace || "";
+      document.getElementById('ocrRunCalories').value = (parsed.calories !== null && parsed.calories !== undefined) ? parsed.calories : '';
+      document.getElementById('ocrRunHeartRate').value = (parsed.heartRate !== null && parsed.heartRate !== undefined) ? parsed.heartRate : '';
+      document.getElementById('ocrRunSteps').value = (parsed.steps !== null && parsed.steps !== undefined) ? parsed.steps : '';
       const cadEl = document.getElementById('ocrRunCadence');
-      if (cadEl) cadEl.value = parsed.cadence || 131;
+      if (cadEl) cadEl.value = (parsed.cadence !== null && parsed.cadence !== undefined) ? parsed.cadence : '';
 
       const rawEl = document.getElementById('ocrRunRawText');
       if (rawEl) rawEl.textContent = rawText.trim() || "(인식 텍스트 없음)";
 
+      const badge = document.getElementById('runSourceBadge');
+      if (badge) {
+        if (parsed.distance !== null && parsed.distance !== undefined) {
+          badge.textContent = (parsed.source || "삼성헬스") + " 감지 성공";
+          badge.className = "text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold";
+        } else {
+          badge.textContent = "수치 미감지 (직접 입력 필요)";
+          badge.className = "text-[9px] px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold";
+        }
+      }
       if (parsed.source) {
         document.getElementById('ocrRunAppSource').value = parsed.source;
-        document.getElementById('runSourceBadge').textContent = parsed.source + " 자동 감지";
       }
       document.getElementById('runningResultModal').classList.remove('hidden');
     }
@@ -4740,14 +4897,21 @@ ${err.message}
     }
 
     function applyRunningResult() {
-      const dist = parseFloat(document.getElementById('ocrRunDist').value) || 5.0;
+      checkAndResetDayChange();
+      const distRaw = document.getElementById('ocrRunDist').value;
+      const dist = parseFloat(distRaw);
+      if (isNaN(dist) || dist <= 0) {
+        alert('러닝 거리(km)를 올바르게 입력해 주세요!');
+        return;
+      }
       const duration = document.getElementById('ocrRunDuration').value || "45:00";
       const pace = document.getElementById('ocrRunPace').value || "09'00\"";
-      const calories = parseInt(document.getElementById('ocrRunCalories').value, 10) || 350;
+      const calories = parseInt(document.getElementById('ocrRunCalories').value, 10) || Math.round(dist * 70);
       const heartRate = parseInt(document.getElementById('ocrRunHeartRate').value, 10) || 135;
       const steps = parseInt(document.getElementById('ocrRunSteps').value, 10) || Math.round(dist * 1300);
       const source = document.getElementById('ocrRunAppSource').value || "삼성헬스";
       const todayStr = getLocalDateString();
+      const curTime = getKakaoTimeStr();
 
       const runEntry = {
         id: 'run-' + Date.now(),
@@ -4776,19 +4940,25 @@ ${err.message}
 
       // Add enthusiastic responses to chat stream
       state.chatHistory.push({
+        room: 'all',
         sender: 'mio',
         name: '미오',
-        text: `와아아아 대박!! ${dist}km 완주 나이스!! ${duration} 동안 ${calories}kcal나 불태웠잖아! 손목 힘 빼고 달린 폼 진짜 최고였어 프로듀서!! 🌟🏃‍♀️`
+        text: `와아아아 대박!! ${dist}km 완주 나이스!! ${duration} 동안 ${calories}kcal나 불태웠잖아! 손목 힘 빼고 달린 폼 진짜 최고였어 프로듀서!! 🌟🏃‍♀️`,
+        time: curTime
       });
       state.chatHistory.push({
+        room: 'all',
         sender: 'gemini',
         name: '제미니',
-        text: `${dist}km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾`
+        text: `${dist}km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾`,
+        time: curTime
       });
       state.chatHistory.push({
+        room: 'all',
         sender: 'kotone',
         name: '코토네',
-        text: `헉! ${calories}kcal 소모에 ${steps.toLocaleString()}걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛`
+        text: `헉! ${calories}kcal 소모에 ${steps.toLocaleString()}걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛`,
+        time: curTime
       });
       renderChat();
 
@@ -5001,13 +5171,14 @@ ${err.message}
     }
 
     function completeGymFullCourse() {
+      checkAndResetDayChange();
       initGymRoutine();
       const gr = state.gymRoutine;
-      gr.upper1.sets = [true, true, true, true];
-      gr.upper2.sets = [true, true, true, true];
-      gr.lower.sets = [true, true, true, true];
-      gr.legRaise.sets = gr.legRaise.sets.map(() => true);
-      gr.crunch.sets = gr.crunch.sets.map(() => true);
+      gr.upper1.sets = (gr.upper1.sets || [false, false, false, false]).map(() => true);
+      gr.upper2.sets = (gr.upper2.sets || [false, false, false, false]).map(() => true);
+      gr.lower.sets = (gr.lower.sets || [false, false, false, false]).map(() => true);
+      gr.legRaise.sets = (gr.legRaise.sets || [false, false, false]).map(() => true);
+      gr.crunch.sets = (gr.crunch.sets || [false, false, false]).map(() => true);
       gr.allDone = true;
 
       addBondExp(40);
@@ -5017,21 +5188,28 @@ ${err.message}
 
       setTrainerMode('gemini', 'ev1');
 
+      const curTime = getKakaoTimeStr();
       state.chatHistory.push({
+        room: 'all',
         sender: 'gemini',
         name: '제미니',
-        text: '오... 20회 4세트 루틴에 캡틴스 체어랑 크런치까지 헬스장 풀코스 올 클리어? 바보 프로듀서 치고는 꽤 독하게 해냈네! 기특하니까 이리 와, 어깨 주물러줄게. 🐾'
+        text: '오... 세트 루틴에 캡틴스 체어랑 크런치까지 헬스장 풀코스 올 클리어? 바보 프로듀서 치고는 꽤 독하게 해냈네! 기특하니까 이리 와, 어깨 주물러줄게. 🐾',
+        time: curTime
       });
       state.chatHistory.push({
+        room: 'all',
         sender: 'kotone',
         name: '코토네',
-        text: '우와아~ 헬스장 풀코스 완주 대박이에요 프로듀서님! 복근이랑 슬림핏에 한 걸음 더 가까워졌어요! 💛'
+        text: '우와아~ 헬스장 풀코스 완주 대박이에요 프로듀서님! 복근이랑 슬림핏에 한 걸음 더 가까워졌어요! 💛',
+        time: curTime
       });
       state.chatHistory.push({
+        room: 'all',
         sender: 'mio',
         name: '미오 [SD 방전]',
         text: '하아하아... 캡틴스 체어에 크런치까지... 프로듀서... 이거 진짜 대단해... 😵💦 (모리키노코 탈진)',
-        image: './image/01 mio/sd_mio_02_legraise_melt.png'
+        image: './image/01 mio/sd_mio_02_legraise_melt.png',
+        time: curTime
       });
       renderChat();
       playBeep(980, 0.25);
@@ -5367,9 +5545,10 @@ ${err.message}
           ? `체중 ${state.weight}kg, 체지방 ${state.fat}% 반영 완료!`
           : `체중 ${state.weight}kg 반영 완료! (체지방 ${state.fat}% 이전값 유지)`;
 
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: `${updateMsg} 목표 52kg까지 방심 금물이야!${wedBonusNote} 🐾` });
-        state.chatHistory.push({ sender: 'kotone', name: '코토네', text: `헤헤, 프로듀서님 체중 기록 완료! 성실하게 관리하시는 모습 너무 멋져요~! 💛` });
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: `와아~ 오늘 체중 기록 완료! 이 기세로 계속 함께 가자~ 🌟` });
+        const curTime = getKakaoTimeStr();
+        state.chatHistory.push({ room: 'all', sender: 'gemini', name: '제미니', text: `${updateMsg} 목표 52kg까지 방심 금물이야!${wedBonusNote} 🐾`, time: curTime });
+        state.chatHistory.push({ room: 'all', sender: 'kotone', name: '코토네', text: `헤헤, 프로듀서님 체중 기록 완료! 성실하게 관리하시는 모습 너무 멋져요~! 💛`, time: curTime });
+        state.chatHistory.push({ room: 'all', sender: 'mio', name: '미오', text: `와아~ 오늘 체중 기록 완료! 이 기세로 계속 함께 가자~ 🌟`, time: curTime });
         try { renderChat(); } catch (e) {}
         try { playBeep(900, 0.18); } catch (e) {}
 
@@ -5436,20 +5615,35 @@ ${err.message}
     updateFastingClock();
 
     function updateMetrics(shouldSave = true) {
-      const w = parseFloat(document.getElementById('currentWeightInput').value) || 52;
-      const f = parseFloat(document.getElementById('currentFatInput').value) || 20;
-      state.weight = w;
-      state.fat = f;
+      const wEl = document.getElementById('currentWeightInput');
+      const fEl = document.getElementById('currentFatInput');
+
+      if (shouldSave) {
+        const wRaw = wEl ? parseFloat(wEl.value) : NaN;
+        const fRaw = fEl ? parseFloat(fEl.value) : NaN;
+        if (!isNaN(wRaw) && wRaw >= 30 && wRaw <= 200) state.weight = wRaw;
+        if (!isNaN(fRaw) && fRaw >= 3 && fRaw <= 60) state.fat = fRaw;
+      } else {
+        if (wEl && document.activeElement !== wEl) wEl.value = state.weight;
+        if (fEl && document.activeElement !== fEl) fEl.value = state.fat;
+      }
+
+      const w = state.weight || 64.1;
+      const f = state.fat || 21.5;
 
       const deltaW = (w - 52.0).toFixed(1);
       const deltaElem = document.getElementById('weightDelta');
-      deltaElem.textContent = w <= 52.0 ? "달성! 🎉" : `+${deltaW} kg`;
-      deltaElem.className = w <= 52.0 ? "font-bold text-emerald-500 font-mono" : "font-bold text-rose-500 font-mono";
+      if (deltaElem) {
+        deltaElem.textContent = w <= 52.0 ? "달성! 🎉" : `+${deltaW} kg`;
+        deltaElem.className = w <= 52.0 ? "font-bold text-emerald-500 font-mono" : "font-bold text-rose-500 font-mono";
+      }
 
       const deltaF = (f - 20.0).toFixed(1);
       const deltaFatElem = document.getElementById('fatDelta');
-      deltaFatElem.textContent = f <= 20.0 ? "달성! 🎉" : `+${deltaF} %`;
-      deltaFatElem.className = f <= 20.0 ? "font-bold text-emerald-500 font-mono" : "font-bold text-rose-500 font-mono";
+      if (deltaFatElem) {
+        deltaFatElem.textContent = f <= 20.0 ? "달성! 🎉" : `+${deltaF} %`;
+        deltaFatElem.className = f <= 20.0 ? "font-bold text-emerald-500 font-mono" : "font-bold text-rose-500 font-mono";
+      }
       if (shouldSave) saveState();
     }
 
@@ -5466,20 +5660,22 @@ ${err.message}
     }
 
     function updateRoutine() {
+      checkAndResetDayChange();
       const prevRun = state.runDone;
       const prevAbs = state.absDone;
       state.absDone = document.getElementById('chkAbs') ? document.getElementById('chkAbs').checked : false;
       state.runDone = document.getElementById('chkRun').checked;
       state.runDist = parseFloat(document.getElementById('runDistInput').value) || 5.0;
+      const curTime = getKakaoTimeStr();
 
       if (!prevRun && state.runDone) {
         setTrainerMode('mio', 'ev2');
-        state.chatHistory.push({ sender: 'mio', name: '미오', text: `나이키런 ${state.runDist}km 완주 대박! 벚꽃 산책로 페이스 완전 좋았어 프로듀서~ 최고야! 🏃‍♀️🌸` });
+        state.chatHistory.push({ room: 'all', sender: 'mio', name: '미오', text: `나이키런 ${state.runDist}km 완주 대박! 벚꽃 산책로 페이스 완전 좋았어 프로듀서~ 최고야! 🏃‍♀️🌸`, time: curTime });
         addBondExp(20);
         renderChat();
       } else if (!prevAbs && state.absDone) {
         setTrainerMode('gemini', 'ev1');
-        state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '14분 복근 루틴 완료! 코어 제대로 쪼이는 느낌 받았지? 메~롱! 내일도 똑같이 하는 거야! 🐾' });
+        state.chatHistory.push({ room: 'all', sender: 'gemini', name: '제미니', text: '14분 복근 루틴 완료! 코어 제대로 쪼이는 느낌 받았지? 바보 프로듀서, 내일도 똑같이 하는 거야! 🐾', time: curTime });
         addBondExp(20);
         renderChat();
       }
@@ -5488,13 +5684,15 @@ ${err.message}
     }
 
     function toggleRehab(num) {
+      checkAndResetDayChange();
       const idx = num - 1;
       state.rehab[idx] = !state.rehab[idx];
       updateRehabBtnUI(num, state.rehab[idx]);
       if (state.rehab[idx]) {
         setTrainerMode('gemini', 'ev3');
         if (state.rehab.filter(Boolean).length === 3) {
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '2kg 덤벨 편심성 재활 3세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾' });
+          const curTime = getKakaoTimeStr();
+          state.chatHistory.push({ room: 'all', sender: 'gemini', name: '제미니', text: '2kg 덤벨 편심성 재활 3세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾', time: curTime });
           addBondExp(15);
           renderChat();
         }
