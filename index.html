@@ -776,11 +776,6 @@
           </div>
         </div>
 
-        <!-- Full Course Complete Action Button -->
-        <button onclick="completeGymFullCourse()" id="btnGymFullCourse" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-500 text-white text-xs font-black shadow-md hover:opacity-95 transition-all flex items-center justify-center gap-1.5">
-          <span>🏆 헬스장 풀코스 완료 체크</span>
-          <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold">+40 EXP</span>
-        </button>
       </div>
 
       <!-- 5. Meal Photo Camera & Gallery Log -->
@@ -1330,8 +1325,8 @@
         upper1: { name: '체스트 프레스', sets: [false, false, false, false], weight: '40kg' },
         upper2: { name: '시티드 케이블 로우', sets: [false, false, false, false], weight: '35kg' },
         lower: { name: '레그 프레스', sets: [false, false, false, false], weight: '80kg' },
-        legRaise: { name: '캡틴스 체어 레그레이즈', sets: [false, false, false, false], target: '15회' },
-        crunch: { name: '크런치', sets: [false, false, false, false], target: '20회' },
+        legRaise: { name: '캡틴스 체어 레그레이즈', sets: [false], reps: 50, target: '50회 × 1세트' },
+        crunch: { name: '크런치', sets: [false, false], reps: 50, target: '50회 × 2세트' },
         allDone: false
       },
       rehab: [false, false, false],
@@ -2446,6 +2441,14 @@
       playBeep(850, 0.09);
     }
 
+    function isGymRoutineDone(gr) {
+      const routine = gr || (typeof state !== 'undefined' ? state.gymRoutine : null);
+      if (!routine) return false;
+      if (routine.allDone) return true;
+      const keys = ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'];
+      return keys.every(k => routine[k] && Array.isArray(routine[k].sets) && routine[k].sets.length > 0 && routine[k].sets.every(Boolean));
+    }
+
     function buildDailySnapshot(s, date) {
       return {
         date,
@@ -2456,7 +2459,7 @@
         runDone: Boolean(s.runDone),
         absDone: Boolean(s.absDone),
         rehabDone: (s.rehab || []).filter(Boolean).length,
-        gymDone: Boolean(s.gymRoutine && s.gymRoutine.allDone),
+        gymDone: isGymRoutineDone(s.gymRoutine),
         teaLog: { ...(s.teaLog || { matcha: 0, espresso: 0, tea: 0 }) },
         autoArchived: true
       };
@@ -3317,7 +3320,7 @@
       const todayPhotosCount = (state.mealPhotos || []).filter(Boolean).length;
       const runDone = Boolean(state.runDone);
       const absDone = Boolean(state.absDone);
-      const gymDone = Boolean(state.gymRoutine && state.gymRoutine.allDone);
+      const gymDone = isGymRoutineDone(state.gymRoutine);
       const workoutCount = (runDone ? 1 : 0) + (absDone ? 1 : 0) + (gymDone ? 1 : 0);
 
       const dMealEl = document.getElementById('dailyMealStatus');
@@ -3385,7 +3388,7 @@
       const mealPhotosCount = (state.mealPhotos || []).filter(Boolean).length;
       const runDone = Boolean(state.runDone);
       const absDone = Boolean(state.absDone);
-      const gymDone = Boolean(state.gymRoutine && state.gymRoutine.allDone);
+      const gymDone = isGymRoutineDone(state.gymRoutine);
       const latestRun = state.latestRun || null;
 
       // 1. Save / Update today's ongoing summary into state.dailyLogs
@@ -4560,13 +4563,164 @@ ${err.message}
     // ============================================================================
     // DUAL-PURPOSE OCR PARSER: RUNNING (SAMSUNG HEALTH & NRC) + INBODY COMPOSITION
     // ============================================================================
-    function parseHealthImageText(rawText) {
+    // Helper: Convert File to Base64 data string
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const res = reader.result || '';
+          const b64 = res.includes(',') ? res.split(',')[1] : res;
+          resolve(b64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Direct Gemini Vision API Parser for 100% Precision Multimodal Extraction
+    async function parseFitnessImageWithGemini(file, apiKey) {
+      const base64Data = await fileToBase64(file);
+      const mimeType = file.type || 'image/jpeg';
+      const prompt = `당신은 피트니스 & 러닝 기록 및 체성분 데이터 분석 전문가입니다.
+사용자가 업로드한 스크린샷(삼성헬스, 나이키런 NRC, 애플 피트니스, 가민, 인바디 등)을 정밀하게 읽고 아래 JSON 형식으로만 응답하세요. 백틱(\`\`\`json) 없이 오직 유효한 JSON 문자열만 출력하세요.
+
+{
+  "is_running": true 또는 false,
+  "source": "삼성헬스" | "나이키런" | "애플피트니스" | "인바디",
+  "distance": 숫자 (킬로미터 km, 예: 6.32),
+  "duration": 문자열 ("mm:ss" 또는 "hh:mm:ss", 예: "58:48"),
+  "pace": 문자열 ("mm'ss\"", 예: "09'17\""),
+  "calories": 정수 (소모 칼로리 kcal, 예: 401),
+  "heartRate": 정수 (평균 심박수 bpm, 예: 115),
+  "cadence": 정수 (평균 케이던스 spm, 예: 125),
+  "steps": 정수 (총 걸음수, 예: 7380),
+  "weight": 숫자 (체중 kg, 없으면 null),
+  "fat": 숫자 (체지방률 %, 없으면 null)
+}`;
+
+      const data = await fetchGeminiWithFallback(apiKey, {
+        contents: [{
+          role: 'user',
+          parts: [
+            { text: prompt },
+            { inline_data: { mime_type: mimeType, data: base64Data } }
+          ]
+        }],
+        generationConfig: { temperature: 0.1, maxOutputTokens: 600 }
+      });
+
+      const raw = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim();
+      const cleaned = raw.replace(/```json/gi, '').replace(/```/g, '').trim();
+      const p = JSON.parse(cleaned);
+      return {
+        isRunning: Boolean(p.is_running || (p.distance !== null && p.distance !== undefined)),
+        hasWeightKeywords: Boolean(p.weight !== null && p.weight !== undefined),
+        source: p.source || '삼성헬스',
+        distance: (p.distance !== undefined && p.distance !== null) ? Number(p.distance) : null,
+        duration: p.duration || null,
+        pace: p.pace || null,
+        calories: (p.calories !== undefined && p.calories !== null) ? Math.round(Number(p.calories)) : null,
+        heartRate: (p.heartRate !== undefined && p.heartRate !== null) ? Math.round(Number(p.heartRate)) : null,
+        cadence: (p.cadence !== undefined && p.cadence !== null) ? Math.round(Number(p.cadence)) : null,
+        steps: (p.steps !== undefined && p.steps !== null) ? Math.round(Number(p.steps)) : null,
+        weight: (p.weight !== undefined && p.weight !== null) ? Number(p.weight) : null,
+        fat: (p.fat !== undefined && p.fat !== null) ? Number(p.fat) : null
+      };
+    }
+
+    // Layout-Aware Multi-Region Segmented Tesseract Scanner for Mobile Screenshots
+    async function scanRunningImageWithTesseract(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          const img = new Image();
+          img.onload = async () => {
+            const w = img.width;
+            const h = img.height;
+
+            const cropBlob = (sx, sy, sw, sh) => {
+              const c = document.createElement('canvas');
+              c.width = Math.round(sw * 1.5);
+              c.height = Math.round(sh * 1.5);
+              const ctx = c.getContext('2d');
+              ctx.drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height);
+              return new Promise(r => c.toBlob(r, 'image/png'));
+            };
+
+            try {
+              if (h / w > 1.3) {
+                // Samsung Health / NRC layout: Top header + Mid details card (Left/Right columns)
+                const midY = Math.round(h * 0.25);
+                const midH = Math.round(h * 0.42);
+                const colW = Math.round(w * 0.52);
+
+                const [bTop, bLeft, bRight, bMidFull] = await Promise.all([
+                  cropBlob(0, 0, w, Math.round(h * 0.35)),
+                  cropBlob(0, midY, colW, midH),
+                  cropBlob(Math.round(w * 0.48), midY, colW, midH),
+                  cropBlob(0, midY, w, midH)
+                ]);
+
+                const [rTop, rLeft, rRight, rMid] = await Promise.all([
+                  Tesseract.recognize(bTop, 'kor+eng'),
+                  Tesseract.recognize(bLeft, 'kor+eng'),
+                  Tesseract.recognize(bRight, 'kor+eng'),
+                  Tesseract.recognize(bMidFull, 'kor+eng')
+                ]);
+
+                const tTop = rTop.data.text || '';
+                const tLeft = rLeft.data.text || '';
+                const tRight = rRight.data.text || '';
+                const tMid = rMid.data.text || '';
+
+                const combinedRaw = `--- TOP ---\n${tTop}\n--- LEFT ---\n${tLeft}\n--- RIGHT ---\n${tRight}\n--- MID ---\n${tMid}`;
+                const parsed = parseHealthImageText(combinedRaw, tTop, tLeft, tRight, tMid);
+                resolve({ parsed, text: combinedRaw });
+              } else {
+                const processedBlob = await preprocessOcrImage(file);
+                const res = await Tesseract.recognize(processedBlob, 'kor+eng');
+                const text = res.data.text || "";
+                const parsed = parseHealthImageText(text);
+                resolve({ parsed, text });
+              }
+            } catch (err) {
+              console.error("Segmented OCR error, falling back to full:", err);
+              try {
+                const processedBlob = await preprocessOcrImage(file);
+                const res = await Tesseract.recognize(processedBlob, 'kor+eng');
+                const text = res.data.text || "";
+                const parsed = parseHealthImageText(text);
+                resolve({ parsed, text });
+              } catch (e2) {
+                resolve({ parsed: {}, text: '' });
+              }
+            }
+          };
+          img.onerror = () => resolve({ parsed: {}, text: '' });
+          img.src = e.target.result;
+        };
+        reader.onerror = () => resolve({ parsed: {}, text: '' });
+        reader.readAsDataURL(file);
+      });
+    }
+
+
+    function parseHealthImageText(rawText, topText = '', leftText = '', rightText = '', midText = '') {
       const unified = (rawText || "")
         .replace(/(\d)\s*[,.]\s*(\d)/g, '$1.$2')
         .replace(/\u339E/g, 'km')
         .replace(/,/g, '')
         .replace(/\r?\n/g, '\n');
       const lower = unified.toLowerCase();
+
+      // Combined localized lookup buffers
+      const distTarget = (topText ? (topText + '\n' + unified) : unified).replace(/,/g, '');
+      const durTarget = (leftText ? (leftText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
+      const paceTarget = (rightText ? (rightText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
+      const hrTarget = (leftText ? (leftText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
+      const calTarget = (rightText ? (rightText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
+      const cadTarget = (leftText ? (leftText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
+      const stepTarget = (rightText ? (rightText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
 
       // Weight & Body composition keywords
       const hasWeightKeywords = (
@@ -4589,17 +4743,16 @@ ${err.message}
 
       // 1. Distance (km)
       let distance = null;
-      const distMatch = unified.match(/(\d{1,2}(?:\.\d{1,2})?)\s*(?:km|㎞|킬로미터|krn|kni|kn)\b/i);
+      const distMatch = distTarget.match(/(\d{1,2}(?:\.\d{1,2})?)\s*(?:km|㎞|킬로미터|krn|kni|kn)\b/i);
       if (distMatch) {
         distance = parseFloat(distMatch[1]);
       }
       if (distance === null) {
-        const distLabelMatch = unified.match(/(?:달리기|러닝|거리|distance|running)[\s:：\n\r]*(\d{1,2}(?:\.\d{1,2})?)/i);
+        const distLabelMatch = distTarget.match(/(?:달리기|러닝|거리|distance|running)[\s:：\n\r]*(\d{1,2}(?:\.\d{1,2})?)/i);
         if (distLabelMatch) distance = parseFloat(distLabelMatch[1]);
       }
       if (distance === null) {
-        // Find standalone decimal (e.g. 6.03 or 6.05) on running screens
-        for (const m of unified.matchAll(/\b([1-4]?\d\.\d{1,2})\b/g)) {
+        for (const m of distTarget.matchAll(/\b([1-4]?\d\.\d{1,2})\b/g)) {
           const val = parseFloat(m[1]);
           if (val >= 0.5 && val <= 45.0) {
             distance = val;
@@ -4610,75 +4763,89 @@ ${err.message}
 
       // 2. Duration (hh:mm:ss or mm:ss)
       let duration = null;
-      for (const m of unified.matchAll(/\b(\d{1,2}:\d{2}(?::\d{2})?)\b/g)) {
+      for (const m of durTarget.matchAll(/\b(\d{1,2}:\d{2}(?::\d{2})?)\b/g)) {
         const parts = m[1].split(':');
         const firstNum = parseInt(parts[0], 10);
-        // Exclude clock times like 7:36 (first num < 10 unless len == 3)
         if (parts.length === 3 || firstNum >= 10) {
           duration = m[1];
           break;
         }
       }
       if (!duration) {
-        const afterTime = unified.match(/(?:운동\s*시간|시간)[\s\S]{0,30}?(\d{1,2}:\d{2})/i);
+        const afterTime = durTarget.match(/(?:운동\s*시간|시간)[\s\S]{0,30}?(\d{1,2}:\d{2})/i);
         if (afterTime) duration = afterTime[1];
       }
 
-      // 3. Pace
+      // 3. Pace (e.g. 09'17", 09"17", 09:17)
       let pace = null;
-      const paceQuote = unified.match(/(\d{1,2}[''’]\d{2}(?:["”]|\/km)?)/);
+      const paceQuote = paceTarget.match(/(\d{1,2})\s*[''’"”:]\s*(\d{2})(?:["”]|(?:\s*(?:\/|f|l)?km))?/i);
       if (paceQuote) {
-        pace = paceQuote[1].replace('/km', '').trim();
-      } else {
-        const paceMatch = unified.match(/(?:평균\s*페이스|페이스)[\s\S]{0,30}?(\d{1,2}[:''’]\d{2})/i);
-        if (paceMatch) pace = paceMatch[1].replace(':', "'").trim();
+        pace = `${paceQuote[1].padStart(2, '0')}'${paceQuote[2]}"`;
+      }
+      if (!pace) {
+        const paceMatch = paceTarget.match(/(?:평균\s*페이스|페이스|pace)[\s\S]{0,30}?(\d{1,2}[:''’"”:]\d{2})/i);
+        if (paceMatch) {
+          const pParts = paceMatch[1].split(/[''’"”:]/);
+          if (pParts.length >= 2) pace = `${pParts[0].padStart(2, '0')}'${pParts[1]}"`;
+        }
       }
 
-      // 4. Calories (365 kcal or 365 keal)
+      // 4. Calories (e.g. 401 kcal, 401 keal, 401 ea)
       let calories = null;
-      const calMatch = unified.match(/(\d{2,4})\s*k[ce]al/i);
+      const calMatch = calTarget.match(/(\d{2,4})\s*(?:k[ce]al|ea|cal)\b/i);
       if (calMatch) {
         calories = parseInt(calMatch[1], 10);
       } else {
-        const calLabelMatch = unified.match(/(?:운동\s*칼로리|칼로리)[\s\S]{0,30}?(\d{2,4})\b/i);
+        const calLabelMatch = calTarget.match(/(?:운동\s*칼로리|소모\s*칼로리|칼로리|calories?|cal)[\s\S]{0,30}?(\d{2,4})\b/i);
         if (calLabelMatch) calories = parseInt(calLabelMatch[1], 10);
       }
 
-      // 5. Heart Rate
+      // 5. Heart Rate (e.g. 115 bpm, 115 bem, 115 bom)
       let heartRate = null;
-      const hrLineMatch = unified.match(/심박수[^\n\r]*\n\s*(\d{2,3})\b/);
-      if (hrLineMatch) {
-        heartRate = parseInt(hrLineMatch[1], 10);
+      const hrBpmMatch = hrTarget.match(/(\d{2,3})\s*(?:bpm|bem|bom|b0m|bprn)\b/i);
+      if (hrBpmMatch) {
+        heartRate = parseInt(hrBpmMatch[1], 10);
       } else {
-        const hrBpmMatch = unified.match(/(\d{2,3})\s*bpm/i);
-        if (hrBpmMatch) heartRate = parseInt(hrBpmMatch[1], 10);
+        const hrLabelMatch = hrTarget.match(/(?:평균\s*심박수|심박수|heart\s*rate|hr)[\s\S]{0,30}?(\d{2,3})\b/i);
+        if (hrLabelMatch) heartRate = parseInt(hrLabelMatch[1], 10);
       }
 
-      // 6. Cadence
+      // 6. Cadence (e.g. 125 spm, 125 sem, 125 sm)
       let cadence = null;
-      const cadMatch = unified.match(/(\d{2,3})\s*(?:spm|sem|srm|sprm)\b/i);
+      const cadMatch = cadTarget.match(/(\d{2,3})\s*(?:spm|sem|srm|sprm|s0m|sm)\b/i);
       if (cadMatch) {
         cadence = parseInt(cadMatch[1], 10);
       } else {
-        const cadLabelMatch = unified.match(/케이던스[^\n\r]*\n\s*(\d{2,3})\b/);
+        const cadLabelMatch = cadTarget.match(/(?:평균\s*케이던스|케이던스|cadence)[\s\S]{0,30}?(\d{2,3})\b/i);
         if (cadLabelMatch) cadence = parseInt(cadLabelMatch[1], 10);
       }
 
-      // 7. Steps
+      // 7. Steps (e.g. 7,380 or 7380)
       let steps = null;
-      const stepLabelMatch = unified.match(/걸음[^\n\r]*\n[^\d]*(\d{3,6})\b/);
-      if (stepLabelMatch) {
-        steps = parseInt(stepLabelMatch[1], 10);
-      }
-      if (!steps) {
-        const cadLine = unified.match(/(?:spm|sem|케이던스)[^\n\r]*\b([1-9]\d{3,5})\b/i);
-        if (cadLine) steps = parseInt(cadLine[1], 10);
-      }
-      if (!steps) {
-        for (const m of unified.matchAll(/\b([1-9]\d{3,5})\b/g)) {
-          if (!m[1].startsWith('202')) {
-            steps = parseInt(m[1], 10);
+      if (rightText) {
+        for (const m of rightText.replace(/,/g, '').matchAll(/\b([1-9]\d{3,5})\b/g)) {
+          const val = parseInt(m[1], 10);
+          if (val >= 1000 && val !== calories && val !== heartRate && val !== cadence) {
+            steps = val;
             break;
+          }
+        }
+      }
+      if (!steps) {
+        const stepLabelMatch = stepTarget.match(/(?:걸음|steps?|걸음\s*수|결음)[\s\S]{0,30}?(?:(\d{1,3}[,.]\d{3})|(\d{4,6}))\b/i);
+        if (stepLabelMatch) {
+          const rawNum = (stepLabelMatch[1] || stepLabelMatch[2]).replace(/[,.]/g, '');
+          steps = parseInt(rawNum, 10);
+        }
+      }
+      if (!steps) {
+        for (const m of stepTarget.matchAll(/\b([1-9]\d{3,5})\b/g)) {
+          if (!m[1].startsWith('202')) {
+            const val = parseInt(m[1], 10);
+            if (val >= 1000 && val !== calories) {
+              steps = val;
+              break;
+            }
           }
         }
       }
@@ -4687,16 +4854,11 @@ ${err.message}
       let weight = null;
       let fat = null;
 
-      // --- WEIGHT EXTRACTION ---
-      // Priority 1: Label 체중/몸무게/Weight (not navigation title '체중/체성분') followed by number and kg
-      // Ex: '체중 > 65.6 kg', '체중 (kg) 65.6', '체중 65.6kg'
       const wLabelKg = unified.match(/(?<!\/)(?:체중|몸무게|Weight)(?![\s]*\/)[\s:：>▶()（）a-zA-Z]{0,15}?[\s:：>▶\n\r]{1,15}(?<![\d.])([3-9]\d(?:\.\d{1,2})?)\s*(?:k\s*g|kg|KG)\b/i);
       if (wLabelKg) {
         const v = parseFloat(wLabelKg[1]);
         if (v >= 35 && v <= 150) weight = v;
       }
-
-      // Priority 2: Label 체중/몸무게/Weight followed by standalone number (without kg)
       if (weight === null) {
         const wLabelPlain = unified.match(/(?<!\/)(?:체중|몸무게|Weight)(?![\s]*\/)[\s:：>▶()（）a-zA-Z]{0,15}?[\s:：>▶\n\r]{1,15}(?<![\d.])([3-9]\d(?:\.\d{1,2})?)(?![\d.])/i);
         if (wLabelPlain) {
@@ -4704,8 +4866,6 @@ ${err.message}
           if (v >= 35 && v <= 150) weight = v;
         }
       }
-
-      // Priority 3: Any standalone number explicitly followed by kg unit
       if (weight === null) {
         const kgMatches = [...unified.matchAll(/(?<![\d.])([3-9]\d(?:\.\d{1,2})?)\s*(?:k\s*g|kg|KG)\b/gi)];
         for (const m of kgMatches) {
@@ -4717,15 +4877,11 @@ ${err.message}
         }
       }
 
-      // --- BODY FAT (%) EXTRACTION ---
-      // Priority 1: Label 체지방률/체지방율/체지방 (excluding 체지방량) followed by %
       const fLabelPct = unified.match(/(?:체지방[률율]|체지방(?!량)|body\s*fat|fat|pbf)[\s:：>▶()（）%/\w-]{0,20}?(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)\s*%/i);
       if (fLabelPct) {
         const v = parseFloat(fLabelPct[1]);
         if (v >= 5 && v <= 55) fat = v;
       }
-
-      // Priority 2: Label 체지방률 without % (excluding kg)
       if (fat === null) {
         const fLabelPlain = unified.match(/(?:체지방[률율]|체지방(?!량)|body\s*fat|fat|pbf)[\s:：>▶()（）%/\w-]{0,20}?(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)(?!\s*kg)(?![\d.])/i);
         if (fLabelPlain) {
@@ -4733,8 +4889,6 @@ ${err.message}
           if (v >= 5 && v <= 55) fat = v;
         }
       }
-
-      // Priority 3: Standalone percentage number between 5% and 50%
       if (fat === null) {
         const pctMatches = [...unified.matchAll(/(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)\s*%/g)];
         for (const m of pctMatches) {
@@ -4765,17 +4919,34 @@ ${err.message}
 
       const scanBtnText = document.getElementById('inbodyScanBtnText');
       if (scanBtnText) scanBtnText.textContent = "⌛ 분석중...";
+      showFloatingToast('체성분 & 러닝 이미지 정밀 분석중...', '🔍');
 
       try {
-        const processedBlob = await preprocessOcrImage(file);
-        const res = await Tesseract.recognize(processedBlob, 'kor+eng');
-        const text = res.data.text || "";
-        const parsed = parseHealthImageText(text);
+        const localApiKey = (localStorage.getItem('GEMINI_API_KEY') || '').trim();
+        let parsed = null;
+        let rawText = '';
+
+        // Priority 1: Gemini AI Multimodal Vision (if API key available)
+        if (localApiKey) {
+          try {
+            parsed = await parseFitnessImageWithGemini(file, localApiKey);
+            rawText = "[Gemini AI 비전 정밀 추출]\n" + JSON.stringify(parsed, null, 2);
+          } catch (gemErr) {
+            console.warn("Gemini vision scan error, falling back to local OCR:", gemErr);
+          }
+        }
+
+        // Priority 2: Local Layout-Aware Tesseract Scanner
+        if (!parsed) {
+          const tRes = await scanRunningImageWithTesseract(file);
+          parsed = tRes.parsed;
+          rawText = tRes.text;
+        }
 
         if (parsed.isRunning && parsed.weight === null && !parsed.hasWeightKeywords) {
-          openRunningResultFromOcr(parsed, text);
+          openRunningResultFromOcr(parsed, rawText);
         } else {
-          openInbodyResultFromOcr(parsed, text);
+          openInbodyResultFromOcr(parsed, rawText);
         }
         playBeep(880, 0.15);
       } catch (err) {
@@ -4791,12 +4962,31 @@ ${err.message}
       const file = e.target.files[0];
       if (!file) return;
 
+      showFloatingToast('삼성헬스 러닝 결과 정밀 분석중...', '🏃');
+
       try {
-        const processedBlob = await preprocessOcrImage(file);
-        const res = await Tesseract.recognize(processedBlob, 'kor+eng');
-        const text = res.data.text || "";
-        const parsed = parseHealthImageText(text);
-        openRunningResultFromOcr(parsed, text);
+        const localApiKey = (localStorage.getItem('GEMINI_API_KEY') || '').trim();
+        let parsed = null;
+        let rawText = '';
+
+        // Priority 1: Gemini AI Multimodal Vision (if API key available)
+        if (localApiKey) {
+          try {
+            parsed = await parseFitnessImageWithGemini(file, localApiKey);
+            rawText = "[Gemini AI 비전 정밀 추출]\n" + JSON.stringify(parsed, null, 2);
+          } catch (gemErr) {
+            console.warn("Gemini vision running scan error, falling back to local OCR:", gemErr);
+          }
+        }
+
+        // Priority 2: Local Layout-Aware Segmented Tesseract Scanner
+        if (!parsed || (parsed.distance === null && parsed.duration === null)) {
+          const tRes = await scanRunningImageWithTesseract(file);
+          parsed = tRes.parsed;
+          rawText = tRes.text;
+        }
+
+        openRunningResultFromOcr(parsed, rawText);
         playBeep(880, 0.15);
       } catch (err) {
         console.error("Running scan error:", err);
@@ -5076,9 +5266,21 @@ ${err.message}
         ex.sets = ex.sets.slice(0, newLen);
       }
       playBeep(delta > 0 ? 820 : 420, 0.08);
+
+      const gr = state.gymRoutine;
+      const isDone = isGymRoutineDone(gr);
+      if (isDone && !gr.allDone) {
+        gr.allDone = true;
+        addBondExp(40);
+        showFloatingToast('헬스장 5종목 모든 세트 올 클리어! (+40 EXP)', '🏆');
+        playBeep(980, 0.25);
+      } else if (!isDone) {
+        gr.allDone = false;
+      }
+
       saveState();
-      renderGymUI();
       saveCurrentGymSession(false);
+      syncUI();
     }
 
     function toggleGymSet(exKey, setIdx) {
@@ -5086,9 +5288,21 @@ ${err.message}
       if (!state.gymRoutine[exKey] || !state.gymRoutine[exKey].sets) return;
       state.gymRoutine[exKey].sets[setIdx] = !state.gymRoutine[exKey].sets[setIdx];
       playBeep(state.gymRoutine[exKey].sets[setIdx] ? 750 : 380, 0.08);
+
+      const gr = state.gymRoutine;
+      const isDone = isGymRoutineDone(gr);
+      if (isDone && !gr.allDone) {
+        gr.allDone = true;
+        addBondExp(40);
+        showFloatingToast('헬스장 5종목 모든 세트 올 클리어! (+40 EXP)', '🏆');
+        playBeep(980, 0.25);
+      } else if (!isDone) {
+        gr.allDone = false;
+      }
+
       saveState();
-      renderGymUI();
       saveCurrentGymSession(false);
+      syncUI();
     }
 
     function saveGymRoutineConfig() {
@@ -5329,22 +5543,19 @@ ${err.message}
       // Progress Badge
       const badge = document.getElementById('gymProgressBadge');
       if (badge) {
-        badge.textContent = `${completedExCount} / 5 완료`;
-        badge.className = (completedExCount === 5)
-          ? "text-[10px] px-2 py-0.5 rounded-full bg-emerald-500 text-white font-black shadow-xs animate-bounce"
-          : "text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 font-black border border-sky-400/30";
+        if (completedExCount === 5 || gr.allDone) {
+          badge.textContent = `🎉 5 / 5 완료 (올 클리어!)`;
+          badge.className = "text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500 text-white font-black shadow-xs ring-1 ring-emerald-400";
+        } else {
+          badge.textContent = `${completedExCount} / 5 완료`;
+          badge.className = "text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 font-black border border-sky-400/30 whitespace-nowrap shrink-0";
+        }
       }
 
-      // Full course button
+      // Full course button (hidden/guarded if element ever present)
       const fullBtn = document.getElementById('btnGymFullCourse');
       if (fullBtn) {
-        if (completedExCount === 5 || gr.allDone) {
-          fullBtn.className = "w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-sky-500 text-white text-xs font-black shadow-md flex items-center justify-center gap-1.5 ring-2 ring-emerald-400/50";
-          fullBtn.innerHTML = "<span>🎉 헬스장 풀코스 올 클리어 달성!</span><span class='text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold'>완료됨</span>";
-        } else {
-          fullBtn.className = "w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-500 text-white text-xs font-black shadow-md hover:opacity-95 transition-all flex items-center justify-center gap-1.5";
-          fullBtn.innerHTML = "<span>🏆 헬스장 풀코스 완료 체크</span><span class='text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold'>+40 EXP</span>";
-        }
+        fullBtn.style.display = 'none';
       }
 
       if (gr.upper1 && document.getElementById('gymUpper1Name')) document.getElementById('gymUpper1Name').value = gr.upper1.name;
