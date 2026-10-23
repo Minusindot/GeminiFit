@@ -1,5 +1,6 @@
 {
-  "updatedAt": "2026-10-23T06:38:08.748Z",
+  "updatedAt": "2026-10-23T06:38:12.479Z",
+  "lastActiveDate": "2026-10-23",
   "theme": "light",
   "weight": 65.6,
   "fat": 21.5,
@@ -7,7 +8,7 @@
   "bondExp": 85,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
-  "currentSituation": "ev3",
+  "currentSituation": "ev1",
   "absDone": false,
   "runDone": false,
   "runDist": 6.03,
@@ -25,6 +26,83 @@
     "matcha": 0,
     "espresso": 1,
     "tea": 0
+  },
+  "gymRoutine": {
+    "upper1": {
+      "name": "사레레",
+      "sets": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "weight": "4kg",
+      "reps": 20
+    },
+    "upper2": {
+      "name": "시티드 케이블 로우",
+      "sets": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "weight": "25kg",
+      "reps": 20
+    },
+    "lower": {
+      "name": "레그 컬",
+      "sets": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "weight": "25kg",
+      "reps": 20
+    },
+    "legRaise": {
+      "name": "캡틴스 체어 레그레이즈",
+      "sets": [
+        false
+      ],
+      "target": "15회",
+      "reps": 50
+    },
+    "crunch": {
+      "name": "크런치",
+      "sets": [
+        false,
+        false
+      ],
+      "target": "20회",
+      "reps": 50
+    },
+    "allDone": false
+  },
+  "dailyLogs": {
+    "2026-10-21": {
+      "date": "2026-10-21",
+      "weight": 64.1,
+      "fat": 21.5,
+      "mealsDone": 1,
+      "mealPhotosCount": 1,
+      "runDone": true,
+      "absDone": false,
+      "gymDone": false,
+      "autoArchived": true
+    },
+    "2026-10-22": {
+      "date": "2026-10-22",
+      "weight": 64.1,
+      "fat": 21.5,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "runDone": false,
+      "absDone": false,
+      "gymDone": false,
+      "autoArchived": true
+    }
   },
   "chatHistory": [
     {
