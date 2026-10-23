@@ -441,23 +441,41 @@
         </p>
 
         <div class="grid grid-cols-3 gap-2 mt-2.5">
-          <button onclick="logTea('matcha')" class="p-2.5 rounded-xl sub-box hover:border-emerald-400 text-center transition-all">
-            <div class="text-lg">🍵</div>
-            <div class="text-[11px] font-extrabold text-emerald-700 dark:text-emerald-300 mt-0.5">말차</div>
-            <div id="matchaCount" class="text-[10px] text-slate-500 font-mono">0회</div>
-          </button>
+          <div class="p-2 rounded-xl sub-box hover:border-emerald-400 text-center transition-all flex flex-col justify-between">
+            <button onclick="logTea('matcha', 1)" class="w-full text-center hover:opacity-85 active:scale-95 transition-all">
+              <div class="text-lg leading-tight">🍵</div>
+              <div class="text-[11px] font-extrabold text-emerald-700 dark:text-emerald-300 mt-0.5">말차</div>
+            </button>
+            <div class="flex items-center justify-center gap-1.5 mt-1 pt-1 border-t border-slate-200/60 dark:border-slate-700/60">
+              <button onclick="logTea('matcha', -1)" class="w-5 h-5 rounded-md bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-[11px] font-black flex items-center justify-center text-slate-700 dark:text-slate-200 active:scale-90" title="1회 취소">-</button>
+              <span id="matchaCount" class="text-[11px] font-black font-mono">0회</span>
+              <button onclick="logTea('matcha', 1)" class="w-5 h-5 rounded-md bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/30 text-[11px] font-black flex items-center justify-center active:scale-90" title="1회 추가">+</button>
+            </div>
+          </div>
 
-          <button onclick="logTea('espresso')" class="p-2.5 rounded-xl sub-box hover:border-amber-400 text-center transition-all">
-            <div class="text-lg">☕</div>
-            <div class="text-[11px] font-extrabold text-amber-700 dark:text-amber-300 mt-0.5">커피</div>
-            <div id="espressoCount" class="text-[10px] text-slate-500 font-mono">0회</div>
-          </button>
+          <div class="p-2 rounded-xl sub-box hover:border-amber-400 text-center transition-all flex flex-col justify-between">
+            <button onclick="logTea('espresso', 1)" class="w-full text-center hover:opacity-85 active:scale-95 transition-all">
+              <div class="text-lg leading-tight">☕</div>
+              <div class="text-[11px] font-extrabold text-amber-700 dark:text-amber-300 mt-0.5">커피</div>
+            </button>
+            <div class="flex items-center justify-center gap-1.5 mt-1 pt-1 border-t border-slate-200/60 dark:border-slate-700/60">
+              <button onclick="logTea('espresso', -1)" class="w-5 h-5 rounded-md bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-[11px] font-black flex items-center justify-center text-slate-700 dark:text-slate-200 active:scale-90" title="1회 취소">-</button>
+              <span id="espressoCount" class="text-[11px] font-black font-mono">0회</span>
+              <button onclick="logTea('espresso', 1)" class="w-5 h-5 rounded-md bg-amber-500/20 text-amber-700 dark:text-amber-300 hover:bg-amber-500/30 text-[11px] font-black flex items-center justify-center active:scale-90" title="1회 추가">+</button>
+            </div>
+          </div>
 
-          <button onclick="logTea('tea')" class="p-2.5 rounded-xl sub-box hover:border-sky-400 text-center transition-all">
-            <div class="text-lg">🥛</div>
-            <div class="text-[11px] font-extrabold text-sky-700 dark:text-sky-300 mt-0.5">단백질 음료</div>
-            <div id="teaCount" class="text-[10px] text-slate-500 font-mono">0회</div>
-          </button>
+          <div class="p-2 rounded-xl sub-box hover:border-sky-400 text-center transition-all flex flex-col justify-between">
+            <button onclick="logTea('tea', 1)" class="w-full text-center hover:opacity-85 active:scale-95 transition-all">
+              <div class="text-lg leading-tight">🥛</div>
+              <div class="text-[11px] font-extrabold text-sky-700 dark:text-sky-300 mt-0.5">단백질 음료</div>
+            </button>
+            <div class="flex items-center justify-center gap-1.5 mt-1 pt-1 border-t border-slate-200/60 dark:border-slate-700/60">
+              <button onclick="logTea('tea', -1)" class="w-5 h-5 rounded-md bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-[11px] font-black flex items-center justify-center text-slate-700 dark:text-slate-200 active:scale-90" title="1회 취소">-</button>
+              <span id="teaCount" class="text-[11px] font-black font-mono">0회</span>
+              <button onclick="logTea('tea', 1)" class="w-5 h-5 rounded-md bg-sky-500/20 text-sky-700 dark:text-sky-300 hover:bg-sky-500/30 text-[11px] font-black flex items-center justify-center active:scale-90" title="1회 추가">+</button>
+            </div>
+          </div>
         </div>
 
         <div class="mt-2.5 pt-2 border-t border-slate-200/70 dark:border-slate-700/60 flex items-center justify-between">
@@ -1219,6 +1237,15 @@
       } catch (e) {}
     }
 
+    function getLocalDateString(d = new Date()) {
+      const dateObj = (typeof d === 'string' || typeof d === 'number') ? new Date(d) : d;
+      if (!dateObj || isNaN(dateObj.getTime())) return '';
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
     function getKakaoTimeStr() {
       const d = new Date();
       return d.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
@@ -1261,6 +1288,7 @@
 
     let state = {
       updatedAt: new Date().toISOString(),
+      lastActiveDate: getLocalDateString(),
       theme: 'light',
       fullCgView: false,
       weight: 64.1,
@@ -2418,6 +2446,64 @@
       playBeep(850, 0.09);
     }
 
+    function checkAndResetDayChange(force = false) {
+      const todayStr = getLocalDateString(new Date());
+
+      // If state.lastActiveDate is not set, infer from state.updatedAt or default to today
+      if (!state.lastActiveDate) {
+        const updatedDate = getLocalDateString(state.updatedAt);
+        if (updatedDate && updatedDate !== todayStr) {
+          state.lastActiveDate = updatedDate;
+        } else {
+          state.lastActiveDate = todayStr;
+          return false;
+        }
+      }
+
+      if (state.lastActiveDate !== todayStr || force) {
+        const prevDate = state.lastActiveDate || todayStr;
+        if (!state.dailyLogs) state.dailyLogs = {};
+        if (!state.dailyLogs[prevDate]) {
+          state.dailyLogs[prevDate] = {
+            date: prevDate,
+            weight: state.weight,
+            fat: state.fat,
+            mealsDone: (state.meals || []).filter(Boolean).length,
+            mealPhotosCount: (state.mealPhotos || []).filter(Boolean).length,
+            runDone: Boolean(state.runDone),
+            absDone: Boolean(state.absDone),
+            rehabDone: (state.rehab || []).filter(Boolean).length,
+            gymDone: Boolean(state.gymRoutine && state.gymRoutine.allDone),
+            teaLog: { ...(state.teaLog || { matcha: 0, espresso: 0, tea: 0 }) },
+            autoArchived: true
+          };
+        }
+
+        // Clean Daily Reset
+        state.meals = [false, false, false];
+        state.mealPhotos = ['', '', ''];
+        state.runDone = false;
+        state.absDone = false;
+        state.rehab = [false, false, false];
+        state.teaLog = { matcha: 0, espresso: 0, tea: 0 };
+
+        if (state.gymRoutine) {
+          ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'].forEach(k => {
+            if (state.gymRoutine[k] && state.gymRoutine[k].sets) {
+              state.gymRoutine[k].sets = state.gymRoutine[k].sets.map(() => false);
+            }
+          });
+          state.gymRoutine.allDone = false;
+        }
+
+        state.lastActiveDate = todayStr;
+        saveState(false);
+        try { syncUI(); } catch (e) {}
+        return true;
+      }
+      return false;
+    }
+
     function loadState() {
       // 1. Mobile 1-sec Pairing via URL hash or query param (e.g. #syncConfig=...)
       try {
@@ -2465,41 +2551,8 @@
         }
       } catch (e) {}
 
-      // Automatically choose situation based on time of day if not set or default
       // Automatic Day-Change Detection & Clean Reset
-      const todayDateStr = new Date().toISOString().split('T')[0];
-      if (!state.lastActiveDate) {
-        state.lastActiveDate = todayDateStr;
-      } else if (state.lastActiveDate !== todayDateStr) {
-        if (!state.dailyLogs) state.dailyLogs = {};
-        if (!state.dailyLogs[state.lastActiveDate]) {
-          state.dailyLogs[state.lastActiveDate] = {
-            date: state.lastActiveDate,
-            weight: state.weight,
-            fat: state.fat,
-            mealsDone: (state.meals || []).filter(Boolean).length,
-            mealPhotosCount: (state.mealPhotos || []).filter(Boolean).length,
-            runDone: Boolean(state.runDone),
-            absDone: Boolean(state.absDone),
-            gymDone: Boolean(state.gymRoutine && state.gymRoutine.allDone),
-            autoArchived: true
-          };
-        }
-        state.meals = [false, false, false];
-        state.mealPhotos = ['', '', ''];
-        state.runDone = false;
-        state.absDone = false;
-        if (state.gymRoutine) {
-          ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'].forEach(k => {
-            if (state.gymRoutine[k] && state.gymRoutine[k].sets) {
-              state.gymRoutine[k].sets = state.gymRoutine[k].sets.map(() => false);
-            }
-          });
-          state.gymRoutine.allDone = false;
-        }
-        state.lastActiveDate = todayDateStr;
-        saveState(false);
-      }
+      checkAndResetDayChange();
 
       // Ensure today's 64.1kg kickoff script is present in chatHistory
       const hasKickoff = (state.chatHistory || []).some(m => m.text && m.text.includes('64.1kg'));
@@ -2708,6 +2761,7 @@
               mealPhotos: state.mealPhotos || remoteState.mealPhotos || ['', '', ''],
               webhookUrl: state.webhookUrl || remoteState.webhookUrl || ''
             };
+            checkAndResetDayChange();
             saveState(false);
             syncUI();
             renderChat();
@@ -2755,6 +2809,7 @@
 
         const cloudPayload = {
           updatedAt: new Date().toISOString(),
+          lastActiveDate: state.lastActiveDate || getLocalDateString(),
           theme: state.theme,
           weight: state.weight,
           fat: state.fat,
@@ -2769,6 +2824,8 @@
           rehab: state.rehab,
           meals: state.meals,
           teaLog: state.teaLog,
+          gymRoutine: state.gymRoutine,
+          dailyLogs: state.dailyLogs,
           chatHistory: (state.chatHistory || []).slice(-18).map(m => ({ sender: m.sender, name: m.name, text: m.text }))
         };
 
@@ -2802,9 +2859,15 @@
     }
 
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible' && ghConfig.autoSync && (ghConfig.token || ghConfig.repo)) {
-        pullStateFromGitHub(false);
+      if (document.visibilityState === 'visible') {
+        checkAndResetDayChange();
+        if (ghConfig.autoSync && (ghConfig.token || ghConfig.repo)) {
+          pullStateFromGitHub(false);
+        }
       }
+    });
+    window.addEventListener('focus', () => {
+      checkAndResetDayChange();
     });
 
     setInterval(() => {
@@ -3099,10 +3162,15 @@
       setTxt('teaCount', `${state.teaLog.tea || 0}회`);
 
       for (let i = 1; i <= 3; i++) {
-        updateRehabBtnUI(i, state.rehab[i - 1]);
+        updateRehabBtnUI(i, state.rehab ? state.rehab[i - 1] : false);
+        const prevBox = document.getElementById(`prevBox${i}`);
+        const prevImg = document.getElementById(`prevImg${i}`);
         if (state.mealPhotos && state.mealPhotos[i - 1]) {
-          document.getElementById(`prevImg${i}`).src = state.mealPhotos[i - 1];
-          document.getElementById(`prevBox${i}`).classList.remove('hidden');
+          if (prevImg) prevImg.src = state.mealPhotos[i - 1];
+          if (prevBox) prevBox.classList.remove('hidden');
+        } else {
+          if (prevBox) prevBox.classList.add('hidden');
+          if (prevImg) prevImg.src = '';
         }
       }
       updateMetrics(false);
@@ -3112,7 +3180,7 @@
       setTrainerMode(state.activeMode || state.activeTrainer || 'gemini', state.currentSituation || 'ev1');
 
       // Update Daily Status & Header Date
-      const todayStr = new Date().toISOString().split('T')[0];
+      const todayStr = getLocalDateString();
       const todayMealsDone = (state.meals || []).filter(Boolean).length;
       const todayPhotosCount = (state.mealPhotos || []).filter(Boolean).length;
       const runDone = Boolean(state.runDone);
@@ -3178,7 +3246,7 @@
       playBeep(880, 0.08);
       setTimeout(() => playBeep(1175, 0.12), 90);
 
-      const todayStr = new Date().toISOString().split('T')[0];
+      const todayStr = getLocalDateString();
       const curTime = getKakaoTimeStr();
 
       const mealsDone = (state.meals || []).filter(Boolean).length;
@@ -3301,7 +3369,7 @@
 
       state.feedbackStats[rating] = (state.feedbackStats[rating] || 0) + 1;
       const curTime = getKakaoTimeStr();
-      const todayStr = new Date().toISOString().split('T')[0];
+      const todayStr = getLocalDateString();
 
       state.scriptFeedbackLogs.push({
         date: todayStr,
@@ -4210,31 +4278,37 @@ ${err.message}
       renderChat();
     }
 
-    function logTea(type) {
-      playBeep(700, 0.1);
-      state.teaLog[type] = (state.teaLog[type] || 0) + 1;
+    function logTea(type, delta = 1) {
+      checkAndResetDayChange();
+      playBeep(delta > 0 ? 700 : 450, 0.1);
+      if (!state.teaLog) state.teaLog = { matcha: 0, espresso: 0, tea: 0 };
+      const cur = state.teaLog[type] || 0;
+      const next = Math.max(0, cur + delta);
+      state.teaLog[type] = next;
       saveState();
       syncUI();
 
-      const name = type === 'matcha' ? '말차 🍵' : type === 'espresso' ? '커피 ☕' : '단백질 음료 🥛';
-      state.chatHistory.push({ sender: 'user', text: `[음료 기록] ${name} 1잔을 챙겨 마셨어!` });
-      renderChat();
-
-      setTimeout(() => {
-        if (type === 'matcha') {
-          setTrainerMode('gemini', 'ev2');
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '오... 말차 챙겨 마셨네? 카테킨 성분이 체지방 연소를 확실히 도와줄 거야! 🍵🐾' });
-        } else if (type === 'espresso') {
-          setTrainerMode('kotone', 'ev3');
-          state.chatHistory.push({ sender: 'kotone', name: '코토네', text: '와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛' });
-        } else {
-          setTrainerMode('gemini', 'ev14');
-          state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '단백질 음료 야무지게 챙겼네! 근손실 없이 슬림 탄탄 라인 만들려면 단백질 충전은 필수지, 기특해! 🥛💪' });
-        }
-        addBondExp(10);
-        saveState();
+      if (delta > 0) {
+        const name = type === 'matcha' ? '말차 🍵' : type === 'espresso' ? '커피 ☕' : '단백질 음료 🥛';
+        state.chatHistory.push({ sender: 'user', text: `[음료 기록] ${name} 1잔을 챙겨 마셨어!` });
         renderChat();
-      }, 450);
+
+        setTimeout(() => {
+          if (type === 'matcha') {
+            setTrainerMode('gemini', 'ev2');
+            state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '오... 말차 챙겨 마셨네? 카테킨 성분이 체지방 연소를 확실히 도와줄 거야! 🍵🐾' });
+          } else if (type === 'espresso') {
+            setTrainerMode('kotone', 'ev3');
+            state.chatHistory.push({ sender: 'kotone', name: '코토네', text: '와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛' });
+          } else {
+            setTrainerMode('gemini', 'ev14');
+            state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '단백질 음료 야무지게 챙겼네! 근손실 없이 슬림 탄탄 라인 만들려면 단백질 충전은 필수지, 기특해! 🥛💪' });
+          }
+          addBondExp(10);
+          saveState();
+          renderChat();
+        }, 450);
+      }
     }
 
     async function handleTeaPhoto(e) {
@@ -4673,7 +4747,7 @@ ${err.message}
       const heartRate = parseInt(document.getElementById('ocrRunHeartRate').value, 10) || 135;
       const steps = parseInt(document.getElementById('ocrRunSteps').value, 10) || Math.round(dist * 1300);
       const source = document.getElementById('ocrRunAppSource').value || "삼성헬스";
-      const todayStr = new Date().toISOString().split('T')[0];
+      const todayStr = getLocalDateString();
 
       const runEntry = {
         id: 'run-' + Date.now(),
@@ -4871,7 +4945,7 @@ ${err.message}
       initGymRoutine();
       const gr = state.gymRoutine;
       const now = new Date();
-      const fullDate = now.toISOString().split('T')[0];
+      const fullDate = getLocalDateString(now);
       const dateLabel = `${now.getMonth() + 1}/${now.getDate()}`;
       const timeStr = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
 
@@ -5355,7 +5429,10 @@ ${err.message}
         pctText.textContent = `${pct}%`;
       }
     }
-    setInterval(updateFastingClock, 1000);
+    setInterval(() => {
+      checkAndResetDayChange();
+      updateFastingClock();
+    }, 1000);
     updateFastingClock();
 
     function updateMetrics(shouldSave = true) {
@@ -5436,9 +5513,11 @@ ${err.message}
     }
 
     function handleMeal(idx) {
+      checkAndResetDayChange();
       state.meals[idx - 1] = document.getElementById(`chkMeal${idx}`).checked;
       playBeep(600);
       saveState();
+      syncUI();
     }
 
     function openWebhookModal() {
