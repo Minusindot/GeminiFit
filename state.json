@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T12:03:43.651Z",
+  "updatedAt": "2026-10-23T12:07:20.927Z",
   "lastActiveDate": "2026-10-23",
   "theme": "light",
   "weight": 65.6,
@@ -64,7 +64,7 @@
     "legRaise": {
       "name": "캡틴스 체어 레그레이즈",
       "sets": [
-        false
+        true
       ],
       "target": "15회",
       "reps": 50
@@ -125,21 +125,21 @@
       "id": "gym-1792756992061",
       "date": "10/23",
       "fullDate": "2026-10-23",
-      "time": "오후 09:03",
+      "time": "오후 09:07",
       "upper1Done": 4,
       "upper1Reps": 80,
       "upper2Done": 4,
       "upper2Reps": 80,
       "lowerDone": 4,
       "lowerReps": 80,
-      "legRaiseDone": 0,
-      "legRaiseReps": 0,
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
       "legRaiseTarget": 1,
       "crunchDone": 0,
       "crunchReps": 0,
       "crunchTarget": 2,
-      "totalSets": 12,
-      "totalReps": 240
+      "totalSets": 13,
+      "totalReps": 290
     }
   ],
   "latestRun": {
