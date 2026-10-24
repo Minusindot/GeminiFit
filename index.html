@@ -67,6 +67,14 @@
       --chat-bg: #151b2b;
     }
 
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+      width: 100%;
+      touch-action: pan-y;
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
       background-color: var(--bg-main);
       background-image: 
@@ -196,7 +204,7 @@
 <body class="min-h-screen selection:bg-sky-400 selection:text-white">
 
   <!-- Mobile Container (Max width 460px) -->
-  <div class="max-w-md mx-auto min-h-screen p-3 sm:p-4 pb-36 relative space-y-2.5">
+  <div class="w-full max-w-md mx-auto min-h-screen p-3 sm:p-4 pb-36 relative space-y-2.5 overflow-x-hidden">
 
     <!-- Wednesday InBody Day Banner -->
     <div id="inbodyDayBanner" class="hidden p-3 rounded-2xl bg-gradient-to-r from-amber-400/25 via-rose-400/20 to-amber-400/25 border border-amber-400/60 flex items-center justify-between shadow-sm">
@@ -238,42 +246,42 @@
       </div>
     </div>
 
-    <!-- 1. Top Clean Header: Gemini Fit -->
-    <header class="game-card px-3 py-2 flex items-center justify-between border-t-4 border-t-[#f4869d] shadow-xs">
-      <div class="flex items-center gap-1.5 shrink-0">
+    <!-- 1. Top Clean Header: Gemini Fit (Fully Responsive & Overflow-Protected) -->
+    <header class="game-card px-2.5 sm:px-3 py-2 flex items-center justify-between border-t-4 border-t-[#f4869d] shadow-xs gap-1 w-full overflow-hidden">
+      <div class="flex items-center gap-1.5 min-w-0">
         <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-[#f4869d] to-[#fb7185] flex items-center justify-center text-white text-xs font-black shadow-xs shrink-0">
           ✨
         </div>
-        <div class="flex items-center gap-1.5">
+        <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full">v2.7</span>
+            <span class="hidden sm:inline-block text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full">v2.7</span>
           </h1>
-          <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap">10.21 (수)</span>
+          <span id="headerTodayDate" class="hidden min-[380px]:inline-block text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap">10.24 (토)</span>
         </div>
       </div>
 
-      <div class="flex items-center gap-1.5 shrink-0">
-        <!-- InBody & Samsung Health OCR Camera Scan Button (Enlarged & Prominent) -->
-        <label for="inbodyOcrInput" class="px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white text-xs font-black flex items-center gap-1.5 cursor-pointer shadow-md hover:opacity-95 active:scale-95 transition-all" title="사진 스캔 (체중 · 인바디 · 러닝)">
-          <span class="text-base leading-none">📷</span>
-          <span id="inbodyScanBtnText" class="text-xs font-black">스캔</span>
+      <div class="flex items-center gap-1 shrink-0">
+        <!-- InBody & Samsung Health OCR Camera Scan Button -->
+        <label for="inbodyOcrInput" class="px-2 py-1.5 sm:px-2.5 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white text-[11px] sm:text-xs font-black flex items-center gap-1 cursor-pointer shadow-md hover:opacity-95 active:scale-95 transition-all" title="사진 스캔 (체중 · 인바디 · 러닝)">
+          <span class="text-sm sm:text-base leading-none">📷</span>
+          <span id="inbodyScanBtnText" class="text-[11px] sm:text-xs font-black">스캔</span>
         </label>
         <input type="file" id="inbodyOcrInput" accept="image/*" class="hidden" onchange="handleInbodyScan(event)">
 
         <!-- GitHub Cloud Sync Button -->
-        <button onclick="openGithubSyncModal()" id="githubSyncHeaderBtn" class="p-1.5 px-2 rounded-lg sub-box text-xs font-bold flex items-center gap-1 hover:border-emerald-400 transition-all shadow-xs" title="PC ↔ 폰 GitHub 실시간 연동">
+        <button onclick="openGithubSyncModal()" id="githubSyncHeaderBtn" class="p-1.5 px-1.5 sm:px-2 rounded-lg sub-box text-xs font-bold flex items-center gap-0.5 hover:border-emerald-400 transition-all shadow-xs" title="PC ↔ 폰 GitHub 실시간 연동">
           <span id="syncStatusDot" class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
           <span>☁️</span>
         </button>
 
         <!-- Theme Toggle -->
-        <button onclick="toggleTheme()" id="themeToggleBtn" class="p-1.5 px-2 rounded-lg sub-box text-xs hover:border-amber-400 transition-all shadow-xs" title="라이트/다크 테마 전환">
+        <button onclick="toggleTheme()" id="themeToggleBtn" class="p-1.5 px-1.5 sm:px-2 rounded-lg sub-box text-xs hover:border-amber-400 transition-all shadow-xs" title="라이트/다크 테마 전환">
           ☀️
         </button>
 
         <!-- Webhook Settings -->
-        <button onclick="openWebhookModal()" class="p-1.5 px-2 rounded-lg sub-box text-xs hover:border-slate-400 transition-all shadow-xs" title="설정">
+        <button onclick="openWebhookModal()" class="p-1.5 px-1.5 sm:px-2 rounded-lg sub-box text-xs hover:border-slate-400 transition-all shadow-xs shrink-0" title="설정">
           ⚙️
         </button>
       </div>
@@ -3043,11 +3051,13 @@
 
     function applyTheme() {
       const html = document.documentElement;
-      const btn = document.getElementById('themeToggleBtn');
       if (state.theme === 'dark') {
         html.classList.add('dark');
-        if (btn) btn.textContent = '🌙';
       } else {
+        html.classList.remove('dark');
+      }
+      try { updateThemeUI(); } catch (e) {}
+    } else {
         html.classList.remove('dark');
         if (btn) btn.textContent = '☀️';
       }
@@ -4680,7 +4690,10 @@ ${err.message}
             };
 
             try {
-              if (h / w > 1.3) {
+              // Only apply multi-segment crop for tall mobile screenshots (e.g. Samsung Health/NRC ratio >= 1.7)
+              // Full-page documents (like InBody A4 sheet ratio ~1.41) must be scanned as a unified image!
+              const isTallRunningApp = (h / w >= 1.7);
+              if (isTallRunningApp) {
                 // Samsung Health / NRC layout: Top header + Mid details card (Left/Right columns)
                 const midY = Math.round(h * 0.25);
                 const midH = Math.round(h * 0.42);
@@ -4810,12 +4823,12 @@ ${err.message}
 
       // 3. Pace (e.g. 09'17", 09"17", 09:17)
       let pace = null;
-      const paceQuote = paceTarget.match(/(\d{1,2})\s*[''’"”:]\s*(\d{2})(?:["”]|(?:\s*(?:\/|f|l)?km))?/i);
+      const paceQuote = paceTarget.match(/(\d{1,2})\s*[''’"”:]\s*(\d{2})(?:["”]|(?:\s*(?:분|초|\/km))|\b)/);
       if (paceQuote) {
         pace = `${paceQuote[1].padStart(2, '0')}'${paceQuote[2]}"`;
       }
       if (!pace) {
-        const paceMatch = paceTarget.match(/(?:평균\s*페이스|페이스|pace)[\s\S]{0,30}?(\d{1,2}[:''’"”:]\d{2})/i);
+        const paceMatch = paceTarget.match(/(?:평균\s*페이스|페이스|pace)[\s\S]{0,30}?(\d{1,2}[:'’"”:]\d{2})/i);
         if (paceMatch) {
           const pParts = paceMatch[1].split(/[''’"”:]/);
           if (pParts.length >= 2) pace = `${pParts[0].padStart(2, '0')}'${pParts[1]}"`;
@@ -4828,7 +4841,7 @@ ${err.message}
       if (calMatch) {
         calories = parseInt(calMatch[1], 10);
       } else {
-        const calLabelMatch = calTarget.match(/(?:운동\s*칼로리|소모\s*칼로리|칼로리|calories?|cal)[\s\S]{0,30}?(\d{2,4})\b/i);
+        const calLabelMatch = calTarget.match(/(?:운동\s*칼로리|소모\s*칼로리|칼로리|calories?|cal)[\s\S]{0,30}?(\d{2,4})/i);
         if (calLabelMatch) calories = parseInt(calLabelMatch[1], 10);
       }
 
@@ -4838,7 +4851,7 @@ ${err.message}
       if (hrBpmMatch) {
         heartRate = parseInt(hrBpmMatch[1], 10);
       } else {
-        const hrLabelMatch = hrTarget.match(/(?:평균\s*심박수|심박수|heart\s*rate|hr)[\s\S]{0,30}?(\d{2,3})\b/i);
+        const hrLabelMatch = hrTarget.match(/(?:평균\s*심박수|심박수|heart\s*rate|hr)[\s\S]{0,30}?(\d{2,3})/i);
         if (hrLabelMatch) heartRate = parseInt(hrLabelMatch[1], 10);
       }
 
@@ -4848,7 +4861,7 @@ ${err.message}
       if (cadMatch) {
         cadence = parseInt(cadMatch[1], 10);
       } else {
-        const cadLabelMatch = cadTarget.match(/(?:평균\s*케이던스|케이던스|cadence)[\s\S]{0,30}?(\d{2,3})\b/i);
+        const cadLabelMatch = cadTarget.match(/(?:평균\s*케이던스|케이던스|cadence)[\s\S]{0,30}?(\d{2,3})/i);
         if (cadLabelMatch) cadence = parseInt(cadLabelMatch[1], 10);
       }
 
@@ -4864,7 +4877,7 @@ ${err.message}
         }
       }
       if (!steps) {
-        const stepLabelMatch = stepTarget.match(/(?:걸음|steps?|걸음\s*수|결음)[\s\S]{0,30}?(?:(\d{1,3}[,.]\d{3})|(\d{4,6}))\b/i);
+        const stepLabelMatch = stepTarget.match(/(?:걸음수|steps?|총\s*걸음|걸음)[\s\S]{0,30}?(?:(\d{1,3}(?:,\d{3})+)|(\d{4,6}))/i);
         if (stepLabelMatch) {
           const rawNum = (stepLabelMatch[1] || stepLabelMatch[2]).replace(/[,.]/g, '');
           steps = parseInt(rawNum, 10);
@@ -4882,24 +4895,33 @@ ${err.message}
         }
       }
 
-      // 8. InBody & Samsung Health Weight & Fat
+      // 8. InBody & Samsung Health Weight & Fat (Precision Multi-Source Extraction)
       let weight = null;
       let fat = null;
 
-      const wLabelKg = unified.match(/(?<!\/)(?:체중|몸무게|Weight)(?![\s]*\/)[\s:：>▶()（）a-zA-Z]{0,15}?[\s:：>▶\n\r]{1,15}(?<![\d.])([3-9]\d(?:\.\d{1,2})?)\s*(?:k\s*g|kg|KG)\b/i);
-      if (wLabelKg) {
-        const v = parseFloat(wLabelKg[1]);
+      // Filter out target/adjustment lines so '적정체중 57kg', '체중조절 -8.6kg' are NEVER matched as current weight
+      const cleanWeightUnified = unified
+        .replace(/(?:적정|목표|조절|권장|제지방)[^\n]*?(?:체중|몸무게|weight)?[^\n]*?(?:[3-9]\d(?:\.\d{1,2})?)\s*(?:kg)?/gi, ' ')
+        .replace(/(?:적정체중|체중조절|지방조절|근육조절)[\s:：>▶()（）a-zA-Z0-9.\-+/\s]{0,25}/gi, ' ');
+
+      // Prioritize explicit "체중" or "몸무게" row label followed by number
+      // In InBody tables, rows are formatted as: "체중 (kg) 65.6 (48.5~65.6)" or "체중 (kg) 65.6" WITHOUT 'kg' next to the value!
+      const wLabelNumber = cleanWeightUnified.match(/(?<![\/적정목표조절권장])(?:체중|몸무게|Weight|체\s*중)(?![\s]*(?:\/|조절))[\s:：>▶()（）a-zA-Z]{0,20}?(\d{2,3}(?:\.\d{1,2})?)/i);
+      if (wLabelNumber) {
+        const v = parseFloat(wLabelNumber[1]);
         if (v >= 35 && v <= 150) weight = v;
       }
+
       if (weight === null) {
-        const wLabelPlain = unified.match(/(?<!\/)(?:체중|몸무게|Weight)(?![\s]*\/)[\s:：>▶()（）a-zA-Z]{0,15}?[\s:：>▶\n\r]{1,15}(?<![\d.])([3-9]\d(?:\.\d{1,2})?)(?![\d.])/i);
-        if (wLabelPlain) {
-          const v = parseFloat(wLabelPlain[1]);
+        const wLabelKg = cleanWeightUnified.match(/(?<![\/적정목표조절권장])(?:체중|몸무게|Weight)(?![\s]*(?:\/|조절))[\s:：>▶()（）a-zA-Z]{0,15}?[\s:：>▶\n\r]{1,15}(?<![\d.])([3-9]\d(?:\.\d{1,2})?)\s*(?:k\s*g|kg|KG)\b/i);
+        if (wLabelKg) {
+          const v = parseFloat(wLabelKg[1]);
           if (v >= 35 && v <= 150) weight = v;
         }
       }
+
       if (weight === null) {
-        const kgMatches = [...unified.matchAll(/(?<![\d.])([3-9]\d(?:\.\d{1,2})?)\s*(?:k\s*g|kg|KG)\b/gi)];
+        const kgMatches = [...cleanWeightUnified.matchAll(/(?<![\d.])([3-9]\d(?:\.\d{1,2})?)\s*(?:k\s*g|kg|KG)\b/gi)];
         for (const m of kgMatches) {
           const v = parseFloat(m[1]);
           if (v >= 35 && v <= 150) {
@@ -4909,17 +4931,12 @@ ${err.message}
         }
       }
 
-      const fLabelPct = unified.match(/(?:체지방[률율]|체지방(?!량)|body\s*fat|fat|pbf)[\s:：>▶()（）%/\w-]{0,20}?(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)\s*%/i);
-      if (fLabelPct) {
-        const v = parseFloat(fLabelPct[1]);
+      // Body Fat % (체지방률 / Percent Body Fat / PBF)
+      // In InBody result sheets, the row header is "체지방률 (%)" and the value is just "32.2" WITHOUT '%' directly next to it!
+      const fLabelNumber = unified.match(/(?:체지방[률율]|체지방(?!량)|body\s*fat|fat|pbf)[\s:：>▶()（）%\/\w-]{0,25}?(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)(?!\s*kg)/i);
+      if (fLabelNumber) {
+        const v = parseFloat(fLabelNumber[1]);
         if (v >= 5 && v <= 55) fat = v;
-      }
-      if (fat === null) {
-        const fLabelPlain = unified.match(/(?:체지방[률율]|체지방(?!량)|body\s*fat|fat|pbf)[\s:：>▶()（）%/\w-]{0,20}?(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)(?!\s*kg)(?![\d.])/i);
-        if (fLabelPlain) {
-          const v = parseFloat(fLabelPlain[1]);
-          if (v >= 5 && v <= 55) fat = v;
-        }
       }
       if (fat === null) {
         const pctMatches = [...unified.matchAll(/(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)\s*%/g)];
@@ -4940,6 +4957,7 @@ ${err.message}
 
       let source = '삼성헬스';
       if (lower.includes('나이키') || lower.includes('nike') || lower.includes('nrc')) source = '나이키런';
+      else if (lower.includes('인바디') || lower.includes('inbody')) source = '인바디';
       else if (lower.includes('apple') || lower.includes('garmin')) source = '애플피트니스';
 
       return { isRunning, hasWeightKeywords, source, distance, duration, pace, calories, heartRate, cadence, steps, weight, fat };
