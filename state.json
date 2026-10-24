@@ -1,19 +1,19 @@
 {
-  "updatedAt": "2026-10-23T12:15:07.008Z",
-  "lastActiveDate": "2026-10-23",
+  "updatedAt": "2026-10-24T08:00:15.021Z",
+  "lastActiveDate": "2026-10-24",
   "theme": "light",
   "weight": 65.6,
   "fat": 21.5,
-  "bondRank": 9,
-  "bondExp": 55,
-  "activeTrainer": "gemini",
-  "activeMode": "gemini",
-  "currentSituation": "ev5",
+  "bondRank": 10,
+  "bondExp": 5,
+  "activeTrainer": "mio",
+  "activeMode": "mio",
+  "currentSituation": "ev1",
   "absDone": false,
   "runDone": true,
   "runDist": 6.32,
   "rehab": [
-    true,
+    false,
     false,
     false
   ],
@@ -24,17 +24,17 @@
   ],
   "teaLog": {
     "matcha": 0,
-    "espresso": 1,
+    "espresso": 0,
     "tea": 0
   },
   "gymRoutine": {
     "upper1": {
       "name": "사레레",
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "weight": "4kg",
       "reps": 20
@@ -42,10 +42,10 @@
     "upper2": {
       "name": "시티드 케이블 로우",
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "weight": "25kg",
       "reps": 20
@@ -53,10 +53,10 @@
     "lower": {
       "name": "레그 컬",
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "weight": "25kg",
       "reps": 20
@@ -64,7 +64,7 @@
     "legRaise": {
       "name": "캡틴스 체어 레그레이즈",
       "sets": [
-        true
+        false
       ],
       "target": "15회",
       "reps": 50
@@ -73,12 +73,12 @@
       "name": "크런치",
       "sets": [
         false,
-        true
+        false
       ],
       "target": "20회",
       "reps": 50
     },
-    "allDone": true
+    "allDone": false
   },
   "gymHistory": [
     {
@@ -143,17 +143,28 @@
     }
   ],
   "latestRun": {
-    "id": "run-1792756985416",
-    "date": "2026-10-23",
+    "id": "run-1792828815013",
+    "date": "2026-10-24",
     "distance": 6.32,
     "duration": "58:48",
     "pace": "09'17\"",
-    "calories": 442,
-    "heartRate": 135,
-    "steps": 5007,
+    "calories": 401,
+    "heartRate": 115,
+    "steps": 7380,
     "source": "삼성헬스"
   },
   "runningLogs": [
+    {
+      "id": "run-1792828815013",
+      "date": "2026-10-24",
+      "distance": 6.32,
+      "duration": "58:48",
+      "pace": "09'17\"",
+      "calories": 401,
+      "heartRate": 115,
+      "steps": 7380,
+      "source": "삼성헬스"
+    },
     {
       "id": "run-1792756985416",
       "date": "2026-10-23",
@@ -373,6 +384,21 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "아주 좋아. 지금부터 내일 아침까지가 진짜 승부처야 🌙||배고프면 따뜻한 물이나 차 우려 마셔. 버텨봐!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "와아아아 대박!! 6.32km 완주 나이스!! 58:48 동안 401kcal나 불태웠잖아! 손목 힘 빼고 달린 폼 진짜 최고였어 프로듀서!! 🌟🏃‍♀️"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "6.32km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "헉! 401kcal 소모에 7,380걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛"
     }
   ]
 }
