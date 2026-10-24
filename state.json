@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-10-24T08:00:15.021Z",
+  "updatedAt": "2026-10-24T08:20:12.656Z",
   "lastActiveDate": "2026-10-24",
   "theme": "light",
   "weight": 65.6,
   "fat": 21.5,
   "bondRank": 10,
-  "bondExp": 5,
+  "bondExp": 25,
   "activeTrainer": "mio",
   "activeMode": "mio",
-  "currentSituation": "ev1",
+  "currentSituation": "sd2",
   "absDone": false,
   "runDone": true,
   "runDist": 6.32,
@@ -31,7 +31,7 @@
     "upper1": {
       "name": "사레레",
       "sets": [
-        false,
+        true,
         false,
         false,
         false
@@ -140,6 +140,26 @@
       "crunchTarget": 2,
       "totalSets": 14,
       "totalReps": 340
+    },
+    {
+      "id": "gym-1792830005023",
+      "date": "10/24",
+      "fullDate": "2026-10-24",
+      "time": "오후 05:20",
+      "upper1Done": 1,
+      "upper1Reps": 20,
+      "upper2Done": 0,
+      "upper2Reps": 0,
+      "lowerDone": 0,
+      "lowerReps": 0,
+      "legRaiseDone": 0,
+      "legRaiseReps": 0,
+      "legRaiseTarget": 1,
+      "crunchDone": 0,
+      "crunchReps": 0,
+      "crunchTarget": 2,
+      "totalSets": 1,
+      "totalReps": 20
     }
   ],
   "latestRun": {
@@ -261,6 +281,33 @@
         "tea": 0
       },
       "lastUpdated": "2026-10-23T12:14:55.944Z"
+    },
+    "2026-10-24": {
+      "date": "2026-10-24",
+      "weight": 65.6,
+      "fat": 21.5,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "runDone": true,
+      "absDone": false,
+      "gymDone": false,
+      "latestRun": {
+        "id": "run-1792828815013",
+        "date": "2026-10-24",
+        "distance": 6.32,
+        "duration": "58:48",
+        "pace": "09'17\"",
+        "calories": 401,
+        "heartRate": 115,
+        "steps": 7380,
+        "source": "삼성헬스"
+      },
+      "teaLog": {
+        "matcha": 0,
+        "espresso": 0,
+        "tea": 0
+      },
+      "lastUpdated": "2026-10-24T08:20:12.648Z"
     }
   },
   "chatHistory": [
@@ -399,6 +446,16 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "헉! 401kcal 소모에 7,380걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 05:20 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.32km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"기록 동기화 확인 🐾 슬림핏 52kg 될 때까지 긴장 늦추지 말고 오늘 루틴 끝까지 달려!\""
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "프로듀서~! 컨디션 어때? 🏃‍♀️💨||무리하지 말고 어깨 힘 빼고 달리는 거 잊지 마!||오늘도 신나게 파이팅!"
     }
   ]
 }
