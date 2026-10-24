@@ -3049,6 +3049,19 @@
       }
     }, 30000);
 
+    function updateThemeUI() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const btnIcon = document.getElementById('settingsThemeBtnIcon');
+      const btnText = document.getElementById('settingsThemeBtnText');
+      const modeText = document.getElementById('settingsThemeText');
+      const icon = document.getElementById('settingsThemeIcon');
+
+      if (btnIcon) btnIcon.textContent = isDark ? '☀️' : '🌙';
+      if (btnText) btnText.textContent = isDark ? '라이트모드' : '다크모드';
+      if (modeText) modeText.textContent = isDark ? '현재: 다크 모드' : '현재: 라이트 모드';
+      if (icon) icon.textContent = isDark ? '🌙' : '☀️';
+    }
+
     function applyTheme() {
       const html = document.documentElement;
       if (state.theme === 'dark') {
@@ -3057,10 +3070,6 @@
         html.classList.remove('dark');
       }
       try { updateThemeUI(); } catch (e) {}
-    } else {
-        html.classList.remove('dark');
-        if (btn) btn.textContent = '☀️';
-      }
     }
 
     function toggleTheme() {
