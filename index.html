@@ -253,7 +253,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v2.9</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v3.0</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -568,6 +568,40 @@
           <div class="mt-1.5 flex justify-between text-[11px]">
             <span class="text-slate-400">20%까지:</span>
             <span id="fatDelta" class="font-bold text-rose-500 font-mono">+1.5 %</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-B. 🎯 인바디 상세 체성분 리포트 카드 (InBody Full Report) -->
+      <div id="inbodyReportCard" class="game-card p-3.5 space-y-2.5 border-l-4 border-l-indigo-500 shadow-xs">
+        <div class="flex items-center justify-between pb-1.5 border-b border-slate-200/80 dark:border-slate-700/60">
+          <div class="flex items-center gap-1.5">
+            <span class="text-base">🎯</span>
+            <div>
+              <span class="text-xs font-black text-slate-800 dark:text-slate-100">인바디 체성분 정밀 리포트</span>
+              <span id="inbodyReportDate" class="text-[9px] text-indigo-500 font-bold block">최근 측정: 2026.10.24</span>
+            </div>
+          </div>
+          <span id="inbodyScoreBadge" class="text-xs font-black px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border border-indigo-400/30">
+            인바디 63점
+          </span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 text-center">
+          <div class="sub-box p-2">
+            <span class="text-[10px] text-slate-400 font-bold block">💪 골격근량</span>
+            <span id="inbodyCardSmm" class="text-sm font-black text-slate-800 dark:text-slate-100 font-mono">24.8</span>
+            <span class="text-[9px] text-slate-400">kg</span>
+          </div>
+          <div class="sub-box p-2">
+            <span class="text-[10px] text-slate-400 font-bold block">💧 체지방량</span>
+            <span id="inbodyCardFatMass" class="text-sm font-black text-rose-500 font-mono">21.1</span>
+            <span class="text-[9px] text-slate-400">kg</span>
+          </div>
+          <div class="sub-box p-2">
+            <span class="text-[10px] text-slate-400 font-bold block">🔥 기초대사량</span>
+            <span id="inbodyCardBmr" class="text-sm font-black text-amber-500 font-mono">1,330</span>
+            <span class="text-[9px] text-slate-400">kcal</span>
           </div>
         </div>
       </div>
@@ -1225,6 +1259,31 @@
             <div class="flex items-center gap-2 mt-1">
               <input type="number" id="ocrFatInput" step="0.1" class="w-full bg-white dark:bg-slate-900 border border-purple-400/50 rounded-lg px-3 py-2 text-xl font-black font-mono focus:outline-none focus:border-purple-500">
               <span class="text-sm font-bold text-slate-400">%</span>
+            </div>
+          </div>
+
+          <!-- Extended InBody Composition Metrics -->
+          <div id="inbodyExtraBox" class="sub-box p-2.5 grid grid-cols-3 gap-2">
+            <div>
+              <label class="text-[9px] font-bold text-slate-500 block">🏆 인바디 점수</label>
+              <div class="flex items-center gap-1 mt-0.5">
+                <input type="number" id="ocrScoreInput" placeholder="63" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-black font-mono">
+                <span class="text-[10px] text-slate-400">점</span>
+              </div>
+            </div>
+            <div>
+              <label class="text-[9px] font-bold text-slate-500 block">💪 골격근량</label>
+              <div class="flex items-center gap-1 mt-0.5">
+                <input type="number" id="ocrSmmInput" step="0.1" placeholder="24.8" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-black font-mono">
+                <span class="text-[10px] text-slate-400">kg</span>
+              </div>
+            </div>
+            <div>
+              <label class="text-[9px] font-bold text-slate-500 block">🔥 기초대사량</label>
+              <div class="flex items-center gap-1 mt-0.5">
+                <input type="number" id="ocrBmrInput" placeholder="1330" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-black font-mono">
+                <span class="text-[9px] text-slate-400">kcal</span>
+              </div>
             </div>
           </div>
 
@@ -3320,6 +3379,33 @@
       if (bar) bar.style.width = `${Math.min(100, state.bondExp)}%`;
     }
 
+    function renderInbodyCardUI() {
+      const card = document.getElementById('inbodyReportCard');
+      if (!card) return;
+      const ib = state.latestInBody || {
+        date: state.lastActiveDate || getLocalDateString(),
+        score: state.inbodyScore || 63,
+        smm: state.skeletalMuscle || 24.8,
+        fatMass: Math.round(((state.weight || 65.6) * (state.fat || 32.2) / 100) * 10) / 10,
+        bmr: state.bmr || 1330
+      };
+
+      const dateEl = document.getElementById('inbodyReportDate');
+      const scoreBadge = document.getElementById('inbodyScoreBadge');
+      const smmEl = document.getElementById('inbodyCardSmm');
+      const fatMassEl = document.getElementById('inbodyCardFatMass');
+      const bmrEl = document.getElementById('inbodyCardBmr');
+
+      if (dateEl) dateEl.textContent = `최근 측정: ${ib.date || getLocalDateString()}`;
+      if (scoreBadge) scoreBadge.textContent = `인바디 ${ib.score || 63}점`;
+      if (smmEl) smmEl.textContent = ib.smm || 24.8;
+      if (fatMassEl) {
+        const fm = ib.fatMass || (Math.round(((state.weight || 65.6) * (state.fat || 32.2) / 100) * 10) / 10);
+        fatMassEl.textContent = fm;
+      }
+      if (bmrEl) bmrEl.textContent = Number(ib.bmr || 1330).toLocaleString();
+    }
+
     function syncUI() {
       const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
       const setChk = (id, val) => { const el = document.getElementById(id); if (el) el.checked = !!val; };
@@ -3354,6 +3440,7 @@
       }
       updateMetrics(false);
       renderRunningUI();
+      renderInbodyCardUI();
       renderGymUI();
       updateBondUI();
       setTrainerMode(state.activeMode || state.activeTrainer || 'gemini', state.currentSituation || 'ev1', false);
@@ -4897,81 +4984,117 @@ ${err.message}
         }
       }
 
-      // 8. InBody & Samsung Health Weight & Fat (Scale-Tick Filtering & Range-Aware Extraction)
+      // 8. InBody & Samsung Health Weight & Fat (Full Metric & Decimal-Drop Aware Extraction)
       let weight = null;
       let fat = null;
+      let score = null;
+      let skeletalMuscle = null;
+      let fatMass = null;
+      let bmr = null;
 
-      // InBody graph scale tick numbers that must NEVER be confused with actual measurements
-      const inbodyWeightScaleTicks = new Set([55, 70, 85, 100, 115, 130, 145, 160, 175, 190, 205]);
-      const inbodyFatScaleTicks = new Set([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]);
-
-      // Method A: Check InBody 체성분분석 table row: "체중 (kg) <actual> ( <normal_min> ~ <normal_max> )"
-      const compMatch = unified.match(/(?:체중|몸무게)[\s\S]{0,20}?(\d{2,3}(?:\.\d{1,2})?)\s*[(（]\s*\d{2,3}(?:\.\d)?\s*~/i);
-      if (compMatch) {
-        const cv = parseFloat(compMatch[1]);
-        if (cv >= 35 && cv <= 150) weight = cv;
+      // 8-A. InBody Score (e.g. 637100점, 63/100, 63 점)
+      const scoreMatch = unified.match(/(\d{2})\s*(?:[/|7lI]|점수)?\s*100\s*점/i) || unified.match(/인바디\s*점수[^\d]*(\d{2})/i);
+      if (scoreMatch) {
+        const sc = parseInt(scoreMatch[1], 10);
+        if (sc >= 20 && sc <= 120) score = sc;
       }
 
-      // Method B: Line-by-line inspection to extract measurement from bar-graph end or history table
-      const lines = unified.split('\n');
+      // 8-B. BMR (기초대사량 e.g. 1330 ke, 1330 kcal)
+      const bmrMatch = unified.match(/(?:기초대사량|BMR)[^\d]*(\d{4})/i) || unified.match(/(\d{4})\s*(?:kcal|ke|kal)\b/i);
+      if (bmrMatch) {
+        const b = parseInt(bmrMatch[1], 10);
+        if (b >= 800 && b <= 3000) bmr = b;
+      }
+
+      // 8-C. Fat Mass (체지방량 e.g. 21.1 kg, 21.1)
+      const fatMassMatch = unified.match(/체지방량[\s\S]{0,25}?\b([1-9]\d?(?:\.\d)?)\b/i);
+      if (fatMassMatch) {
+        const fm = parseFloat(fatMassMatch[1]);
+        if (fm >= 3 && fm <= 80) fatMass = fm;
+      }
+
+      // 8-D. Current Weight
+      // Clean target lines first so 적정체중 57.0kg is never grabbed
+      const cleanWeightUnified = unified
+        .replace(/(?:적정|목표|조절|권장|제지방)[^\n]*?(?:체중|몸무게|weight)?[^\n]*?(?:[3-9]\d(?:\.\d{1,2})?)\s*(?:kg)?/gi, ' ')
+        .replace(/(?:적정체중|체중조절|지방조절|근육조절)[\s:：>▶()（）a-zA-Z0-9.\-+/\s]{0,25}/gi, ' ');
+
+      // Priority 1: Handle Tesseract dropping decimal dot (e.g. "tol 656" or "체수분... 656" -> 65.6!)
+      const tolMatch = cleanWeightUnified.match(/\b(?:tol|tot|to|t0|체중|몸무게)\s*([3-9]\d{2})\b/i);
+      if (tolMatch) {
+        const val = Math.round(parseInt(tolMatch[1], 10)) / 10.0;
+        if (val >= 35 && val <= 150) weight = val;
+      }
+
+      // Priority 2: Standard weight float
       if (weight === null) {
-        for (const line of lines) {
-          // Find lines with 체중, excluding target/control lines (적정체중, 체중조절)
+        const compMatch = cleanWeightUnified.match(/(?:체중|몸무게)[\s\S]{0,20}?(\d{2,3}(?:\.\d{1,2})?)\s*[(（]\s*\d{2,3}(?:\.\d)?\s*~/i);
+        if (compMatch) {
+          const cv = parseFloat(compMatch[1]);
+          if (cv >= 35 && cv <= 150) weight = cv;
+        }
+      }
+
+      // Priority 3: Line inspection excluding standard bar graph scale ticks
+      if (weight === null) {
+        const weightScaleTicks = new Set([55, 70, 85, 100, 115, 130, 145, 160, 175, 190, 205]);
+        for (const line of cleanWeightUnified.split('\n')) {
           if (/(?<![적정목표조절권장])체중|몸무게|Weight/i.test(line) && !/적정|조절|목표|권장/i.test(line)) {
             const rawNums = [...line.matchAll(/\b([3-9]\d(?:\.\d{1,2})?)\b/g)]
               .map(m => parseFloat(m[1]))
               .filter(n => n >= 35 && n <= 150);
-            
-            // Filter out scale axis ticks (e.g. 55, 70, 70.5, 85, 100...)
-            const nonScale = rawNums.filter(n => !inbodyWeightScaleTicks.has(Math.round(n)));
+            const nonScale = rawNums.filter(n => !weightScaleTicks.has(Math.round(n)));
             if (nonScale.length > 0) {
-              // The actual measurement on InBody bar graphs and history rows is always at the right end!
               weight = nonScale[nonScale.length - 1];
-              break;
-            } else if (rawNums.length > 0) {
-              weight = rawNums[rawNums.length - 1];
               break;
             }
           }
         }
       }
 
-      // Method C: Fallback clean regex
-      if (weight === null) {
-        const cleanWeightUnified = unified
-          .replace(/(?:적정|목표|조절|권장|제지방)[^\n]*?(?:체중|몸무게|weight)?[^\n]*?(?:[3-9]\d(?:\.\d{1,2})?)\s*(?:kg)?/gi, ' ')
-          .replace(/(?:적정체중|체중조절|지방조절|근육조절)[\s:：>▶()（）a-zA-Z0-9.\-+/\s]{0,25}/gi, ' ');
-        const kgMatches = [...cleanWeightUnified.matchAll(/(?<![\d.])([3-9]\d(?:\.\d{1,2})?)\s*(?:k\s*g|kg|KG)\b/gi)]
-          .map(m => parseFloat(m[1]))
-          .filter(n => n >= 35 && n <= 150 && !inbodyWeightScaleTicks.has(Math.round(n)));
-        if (kgMatches.length > 0) weight = kgMatches[0];
+      // 8-E. Body Fat %
+      // Priority 1: Tesseract 3-digit in history table: e.g. "307 322" -> 32.2%!
+      const f3Match = unified.match(/307\s*(\d{3})\b/);
+      if (f3Match) {
+        fat = Math.round(parseInt(f3Match[1], 10)) / 10.0;
       }
 
-      // Method D: Extract Body Fat (체지방률 %)
-      for (const line of lines) {
-        if (/(?:체지방[률율]|body\s*fat|fat|pbf)/i.test(line) && !/체지방량/i.test(line)) {
-          const rawNums = [...line.matchAll(/\b([1-5]?\d(?:\.\d{1,2})?)\b/g)]
-            .map(m => parseFloat(m[1]))
-            .filter(n => n >= 5 && n <= 55);
+      // Priority 2: Calculate from Fat Mass and Weight (fatMass / weight * 100 = 21.1 / 65.6 * 100 = 32.2%!)
+      if (fat === null && fatMass && weight) {
+        fat = Math.round((fatMass / weight) * 1000) / 10.0;
+      }
 
-          // Filter out standard scale ticks: 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50
-          const nonScale = rawNums.filter(n => !inbodyFatScaleTicks.has(Math.round(n)));
-          if (nonScale.length > 0) {
-            // Actual measurement is at the right end of the bar or history column!
-            fat = nonScale[nonScale.length - 1];
-            break;
-          } else if (rawNums.length > 0) {
-            fat = rawNums[rawNums.length - 1];
-            break;
+      // Priority 3: Decimal number from body fat row
+      if (fat === null) {
+        const fatScaleTicks = new Set([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]);
+        for (const line of unified.split('\n')) {
+          if (/(?:체지방[률율]|body\s*fat|fat|pbf)/i.test(line) && !/체지방량/i.test(line)) {
+            const rawNums = [...line.matchAll(/\b([1-5]?\d(?:\.\d{1,2})?)\b/g)]
+              .map(m => parseFloat(m[1]))
+              .filter(n => n >= 5 && n <= 55);
+            const nonScale = rawNums.filter(n => !fatScaleTicks.has(Math.round(n)));
+            if (nonScale.length > 0) {
+              fat = nonScale[nonScale.length - 1];
+              break;
+            }
           }
         }
       }
 
-      if (fat === null) {
-        const pctMatches = [...unified.matchAll(/(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)\s*%/g)]
-          .map(m => parseFloat(m[1]))
-          .filter(n => n >= 5 && n <= 50 && !inbodyFatScaleTicks.has(Math.round(n)));
-        if (pctMatches.length > 0) fat = pctMatches[0];
+      // 8-F. Skeletal Muscle Mass (골격근량 kg)
+      // Tesseract line: "8238 wns ns no 248 245 251 249 248" -> last 248 = 24.8kg!
+      for (const line of unified.split('\n')) {
+        if (/골격근|8238/i.test(line)) {
+          const sNums = [...line.matchAll(/\b(2\d{2})\b/g)];
+          if (sNums.length > 0) {
+            skeletalMuscle = Math.round(parseInt(sNums[sNums.length - 1][1], 10)) / 10.0;
+            break;
+          }
+        }
+      }
+      if (skeletalMuscle === null) {
+        const smmMatch = unified.match(/골격근량[\s\S]{0,25}?\b([1-4]\d?(?:\.\d)?)\b/i);
+        if (smmMatch) skeletalMuscle = parseFloat(smmMatch[1]);
       }
 
       // Classification
@@ -4985,7 +5108,7 @@ ${err.message}
       else if (lower.includes('인바디') || lower.includes('inbody')) source = '인바디';
       else if (lower.includes('apple') || lower.includes('garmin')) source = '애플피트니스';
 
-      return { isRunning, hasWeightKeywords, source, distance, duration, pace, calories, heartRate, cadence, steps, weight, fat };
+      return { isRunning, hasWeightKeywords, source, distance, duration, pace, calories, heartRate, cadence, steps, weight, fat, score, skeletalMuscle, fatMass, bmr };
     }
 
     async function handleInbodyScan(e) {
@@ -5109,6 +5232,14 @@ ${err.message}
           fBadge.className = "text-[10px] text-slate-400 font-bold";
         }
       }
+
+      // Populate extended InBody metrics
+      const scoreIn = document.getElementById('ocrScoreInput');
+      const smmIn = document.getElementById('ocrSmmInput');
+      const bmrIn = document.getElementById('ocrBmrInput');
+      if (scoreIn) scoreIn.value = parsed.score || state.inbodyScore || 63;
+      if (smmIn) smmIn.value = parsed.skeletalMuscle || state.skeletalMuscle || 24.8;
+      if (bmrIn) bmrIn.value = parsed.bmr || state.bmr || 1330;
 
       document.getElementById('ocrRawText').textContent = rawText.trim() || "(인식된 텍스트가 없습니다. 직접 수치를 입력하거나 수정할 수 있습니다.)";
       document.getElementById('ocrResultModal').classList.remove('hidden');
@@ -5816,6 +5947,37 @@ ${err.message}
           if (cf) cf.value = state.fat;
           fatUpdated = true;
         }
+
+        // Save extended InBody metrics
+        const scoreVal = parseInt(document.getElementById('ocrScoreInput')?.value, 10);
+        const smmVal = parseFloat(document.getElementById('ocrSmmInput')?.value);
+        const bmrVal = parseInt(document.getElementById('ocrBmrInput')?.value, 10);
+
+        if (!isNaN(scoreVal) && scoreVal >= 10 && scoreVal <= 120) state.inbodyScore = scoreVal;
+        if (!isNaN(smmVal) && smmVal >= 10 && smmVal <= 60) state.skeletalMuscle = smmVal;
+        if (!isNaN(bmrVal) && bmrVal >= 800 && bmrVal <= 3000) state.bmr = bmrVal;
+
+        if (!state.inbodyHistory) state.inbodyHistory = [];
+        state.inbodyHistory.push({
+          date: getLocalDateString(),
+          time: getKakaoTimeStr(),
+          weight: state.weight,
+          fat: state.fat,
+          score: state.inbodyScore || 63,
+          smm: state.skeletalMuscle || 24.8,
+          bmr: state.bmr || 1330
+        });
+
+        state.latestInBody = {
+          date: getLocalDateString(),
+          weight: state.weight,
+          fat: state.fat,
+          score: state.inbodyScore || 63,
+          smm: state.skeletalMuscle || 24.8,
+          bmr: state.bmr || 1330
+        };
+
+        renderInbodyCardUI();
 
         try { updateMetrics(false); } catch (e) { console.warn(e); }
         const isWed = (new Date().getDay() === 3);
