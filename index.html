@@ -253,7 +253,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v3.1</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v3.2</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -4774,6 +4774,20 @@ ${err.message}
       };
     }
 
+        // Dedicated Full-Document Scanner for InBody & Health Reports (No mobile running segments)
+    async function scanInbodyImageWithTesseract(file) {
+      try {
+        const processedBlob = await preprocessOcrImage(file);
+        const res = await Tesseract.recognize(processedBlob, 'kor+eng');
+        const text = res.data.text || "";
+        const parsed = parseHealthImageText(text);
+        return { parsed, text };
+      } catch (err) {
+        console.error("InBody full OCR error:", err);
+        return { parsed: {}, text: '' };
+      }
+    }
+
     // Layout-Aware Multi-Region Segmented Tesseract Scanner for Mobile Screenshots
     async function scanRunningImageWithTesseract(file) {
       return new Promise((resolve) => {
@@ -5007,6 +5021,17 @@ ${err.message}
       let fatMass = null;
       let bmr = null;
 
+      // Separate current section from history table & impedance section
+      // Crucial: The history section at the bottom contains past dates/weights (like 70.5kg, 29.9%)
+      // and must never be accidentally picked up as the current measurement!
+      let currentSection = unified;
+      let historySection = '';
+      const histIdx = unified.search(/(?:신체변화|신체변|신체\s*변|임피던스|impedance)/i);
+      if (histIdx !== -1) {
+        currentSection = unified.slice(0, histIdx);
+        historySection = unified.slice(histIdx);
+      }
+
       // 8-A. InBody Score (e.g. 637100점, 63/100, 63 점)
       const scoreMatch = unified.match(/(\d{2})\s*(?:[/|7lI]|점수)?\s*100\s*점/i) || unified.match(/인바디\s*점수[^\d]*(\d{2})/i);
       if (scoreMatch) {
@@ -5021,43 +5046,93 @@ ${err.message}
         if (b >= 800 && b <= 3000) bmr = b;
       }
 
-      // 8-C. Fat Mass (체지방량 e.g. 21.1 kg, 21.1)
-      const fatMassMatch = unified.match(/체지방량[\s\S]{0,25}?\b([1-9]\d?(?:\.\d)?)\b/i);
+      // 8-C. Body Composition Components
+      // 1) 체지방량 (Fat Mass e.g. 21.1 kg, 21.1)
+      const fatMassMatch = currentSection.match(/체지방량[\s\S]{0,25}?\b([1-9]\d{1,2}(?:\.\d)?)\b/i);
       if (fatMassMatch) {
-        const fm = parseFloat(fatMassMatch[1]);
+        let fm = parseFloat(fatMassMatch[1]);
+        if (fm > 100) fm = Math.round(fm) / 10.0;
         if (fm >= 3 && fm <= 80) fatMass = fm;
+      }
+
+      // 2) 체수분, 단백질, 무기질
+      let water = null;
+      const waterMatch = currentSection.match(/(?:체수분|water)[^\d]*(\d{2,3}(?:\.\d)?)/i);
+      if (waterMatch) {
+        let w = parseFloat(waterMatch[1]);
+        if (w > 100) w = Math.round(w) / 10.0;
+        if (w >= 15 && w <= 70) water = w;
+      }
+
+      let protein = null;
+      const proteinMatch = currentSection.match(/(?:단백질|protein)[^\d]*(\d{1,3}(?:\.\d)?)/i);
+      if (proteinMatch) {
+        let p = parseFloat(proteinMatch[1]);
+        if (p > 50) p = Math.round(p) / 10.0;
+        if (p >= 4 && p <= 25) protein = p;
+      }
+
+      let minerals = null;
+      const mineralsMatch = currentSection.match(/(?:무기질|mineral)[^\d]*(\d{1,3}(?:\.\d{1,2})?)/i);
+      if (mineralsMatch) {
+        let m = parseFloat(mineralsMatch[1]);
+        if (m > 20) m = Math.round(m) / 100.0;
+        if (m >= 1.5 && m <= 8) minerals = m;
       }
 
       // 8-D. Current Weight
       // Clean target lines first so 적정체중 57.0kg is never grabbed
-      const cleanWeightUnified = unified
+      const cleanCurrent = currentSection
         .replace(/(?:적정|목표|조절|권장|제지방)[^\n]*?(?:체중|몸무게|weight)?[^\n]*?(?:[3-9]\d(?:\.\d{1,2})?)\s*(?:kg)?/gi, ' ')
-        .replace(/(?:적정체중|체중조절|지방조절|근육조절)[\s:：>▶()（）a-zA-Z0-9.\-+/\s]{0,25}/gi, ' ');
+        .replace(/(?:적정체중|체중조절|지방조절|근육조절)[\s:：>▶()（）a-zA-Z0-9.\-+/s]{0,25}/gi, ' ');
 
-      // Priority 1: Handle Tesseract dropping decimal dot (e.g. "tol 656" or "체수분... 656" -> 65.6!)
-      const tolMatch = cleanWeightUnified.match(/\b(?:tol|tot|to|t0|체중|몸무게)\s*([3-9]\d{2})\b/i);
-      if (tolMatch) {
-        const val = Math.round(parseInt(tolMatch[1], 10)) / 10.0;
-        if (val >= 35 && val <= 150) weight = val;
+      // Rule 1: Look for weight right after 체수분/단백질/무기질/체지방 sum line
+      // e.g. "tol 656", "gn 656", "656 (", "65.6 ("
+      const bodyCompWeightMatch = cleanCurrent.match(/(?:체수분[\s\S]{0,100}?합하면[\s\S]{0,30}?(?:체중)?|tol|tot|to|t0|gn|me|kg)\s*([3-9]\d(?:\.\d)?|[3-9]\d{2})\s*(?:[(（]|\b)/i)
+        || cleanCurrent.match(/\b([3-9]\d{2})\s*[(（]\s*[3-5]\d/);
+      if (bodyCompWeightMatch) {
+        let val = parseFloat(bodyCompWeightMatch[1]);
+        if (val > 200) val = Math.round(val) / 10.0;
+        if (val >= 35 && val <= 160) weight = val;
       }
 
-      // Priority 2: Standard weight float
+      // Rule 2: Component sum (체수분 + 단백질 + 무기질 + 체지방량 = 체중)
+      // e.g. 32.6 + 8.9 + 3.03 + 21.1 = 65.63kg!
+      if (weight === null && water && protein && minerals && fatMass) {
+        const sum = Math.round((water + protein + minerals + fatMass) * 10) / 10;
+        if (sum >= 35 && sum <= 160) weight = sum;
+      }
+
+      // Rule 3: tolMatch / 3-digit decimal-dropped weight in cleanCurrent
       if (weight === null) {
-        const compMatch = cleanWeightUnified.match(/(?:체중|몸무게)[\s\S]{0,20}?(\d{2,3}(?:\.\d{1,2})?)\s*[(（]\s*\d{2,3}(?:\.\d)?\s*~/i);
-        if (compMatch) {
-          const cv = parseFloat(compMatch[1]);
-          if (cv >= 35 && cv <= 150) weight = cv;
+        const tolMatch = cleanCurrent.match(/\b(?:tol|tot|to|t0|체중|몸무게)\s*([3-9]\d{2})\b/i);
+        if (tolMatch) {
+          const val = Math.round(parseInt(tolMatch[1], 10)) / 10.0;
+          if (val >= 35 && val <= 160) weight = val;
         }
       }
 
-      // Priority 3: Line inspection excluding standard bar graph scale ticks
+      // Rule 4: Standard weight float in cleanCurrent (with normal range in parentheses)
       if (weight === null) {
-        const weightScaleTicks = new Set([55, 70, 85, 100, 115, 130, 145, 160, 175, 190, 205]);
-        for (const line of cleanWeightUnified.split('\n')) {
+        const compMatch = cleanCurrent.match(/(?:체중|몸무게)[\s\S]{0,20}?(\d{2,3}(?:\.\d{1,2})?)\s*[(（]\s*\d{2,3}(?:\.\d)?\s*~/i);
+        if (compMatch) {
+          const cv = parseFloat(compMatch[1]);
+          if (cv >= 35 && cv <= 160) weight = cv;
+        }
+      }
+
+      // Rule 5: Line inspection excluding standard bar graph scale ticks
+      if (weight === null) {
+        const weightScaleTicks = new Set([40, 55, 70, 85, 100, 115, 130, 145, 160, 175, 190, 205]);
+        for (const line of cleanCurrent.split('\n')) {
           if (/(?<![적정목표조절권장])체중|몸무게|Weight/i.test(line) && !/적정|조절|목표|권장/i.test(line)) {
-            const rawNums = [...line.matchAll(/\b([3-9]\d(?:\.\d{1,2})?)\b/g)]
-              .map(m => parseFloat(m[1]))
-              .filter(n => n >= 35 && n <= 150);
+            const rawNums = [...line.matchAll(/\b([3-9]\d(?:\.\d{1,2})?|[3-9]\d{2})\b/g)]
+              .map(m => {
+                let n = parseFloat(m[1]);
+                if (n > 250) n = Math.round(n) / 10.0;
+                return n;
+              })
+              .filter(n => n >= 35 && n <= 160);
             const nonScale = rawNums.filter(n => !weightScaleTicks.has(Math.round(n)));
             if (nonScale.length > 0) {
               weight = nonScale[nonScale.length - 1];
@@ -5068,25 +5143,37 @@ ${err.message}
       }
 
       // 8-E. Body Fat %
-      // Priority 1: Tesseract 3-digit in history table: e.g. "307 322" -> 32.2%!
-      const f3Match = unified.match(/307\s*(\d{3})\b/);
-      if (f3Match) {
-        fat = Math.round(parseInt(f3Match[1], 10)) / 10.0;
+      // Rule 1: Mathematical Truth (fatMass / weight * 100)
+      // In InBody, 체지방률 (Percent Body Fat, PBF) is defined as exactly (Fat Mass / Weight) * 100
+      // e.g. 21.1 / 65.6 * 100 = 32.1646... -> 32.2%!
+      if (fatMass && weight) {
+        const calcFat = Math.round((fatMass / weight) * 1000) / 10.0;
+        if (calcFat >= 5 && calcFat <= 60) {
+          fat = calcFat;
+        }
       }
 
-      // Priority 2: Calculate from Fat Mass and Weight (fatMass / weight * 100 = 21.1 / 65.6 * 100 = 32.2%!)
-      if (fat === null && fatMass && weight) {
-        fat = Math.round((fatMass / weight) * 1000) / 10.0;
+      // Rule 2: History table rightmost entry (today's test): e.g. "BN ; 307 322" -> 32.2%!
+      if (fat === null && historySection) {
+        const f3Match = historySection.match(/307\s*(\d{3})\b/) || historySection.match(/(?:체지방률|체지방|fat|BN)[\s\S]{0,40}?\b([1-5]\d{2})\b/i);
+        if (f3Match) {
+          const fv = Math.round(parseInt(f3Match[1], 10)) / 10.0;
+          if (fv >= 5 && fv <= 60) fat = fv;
+        }
       }
 
-      // Priority 3: Decimal number from body fat row
+      // Rule 3: Current section body fat row
       if (fat === null) {
         const fatScaleTicks = new Set([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]);
-        for (const line of unified.split('\n')) {
+        for (const line of currentSection.split('\n')) {
           if (/(?:체지방[률율]|body\s*fat|fat|pbf)/i.test(line) && !/체지방량/i.test(line)) {
-            const rawNums = [...line.matchAll(/\b([1-5]?\d(?:\.\d{1,2})?)\b/g)]
-              .map(m => parseFloat(m[1]))
-              .filter(n => n >= 5 && n <= 55);
+            const rawNums = [...line.matchAll(/\b([1-5]?\d(?:\.\d{1,2})?|[1-5]\d{2})\b/g)]
+              .map(m => {
+                let n = parseFloat(m[1]);
+                if (n > 60) n = Math.round(n) / 10.0;
+                return n;
+              })
+              .filter(n => n >= 5 && n <= 60);
             const nonScale = rawNums.filter(n => !fatScaleTicks.has(Math.round(n)));
             if (nonScale.length > 0) {
               fat = nonScale[nonScale.length - 1];
@@ -5097,18 +5184,23 @@ ${err.message}
       }
 
       // 8-F. Skeletal Muscle Mass (골격근량 kg)
-      // Tesseract line: "8238 wns ns no 248 245 251 249 248" -> last 248 = 24.8kg!
+      // History table rightmost entry: "8238 wns ns no 248 245 251 249 248" -> last 248 = 24.8kg!
       for (const line of unified.split('\n')) {
         if (/골격근|8238/i.test(line)) {
-          const sNums = [...line.matchAll(/\b(2\d{2})\b/g)];
+          const sNums = [...line.matchAll(/\b(2\d{2}|[1-4]\d\.\d)\b/g)].map(m => {
+            let v = parseFloat(m[1]);
+            if (v > 100) v = Math.round(v) / 10.0;
+            return v;
+          });
           if (sNums.length > 0) {
-            skeletalMuscle = Math.round(parseInt(sNums[sNums.length - 1][1], 10)) / 10.0;
+            skeletalMuscle = sNums[sNums.length - 1];
             break;
           }
         }
       }
       if (skeletalMuscle === null) {
-        const smmMatch = unified.match(/골격근량[\s\S]{0,25}?\b([1-4]\d?(?:\.\d)?)\b/i);
+        const smmMatch = currentSection.match(/골격근량[^\d\n]*(\d{1,2}(?:\.\d)?)\s*(?:[(（]|\b)/i)
+          || currentSection.match(/골격근량[\s\S]{0,25}?\b([1-4]\d?(?:\.\d)?)\b/i);
         if (smmMatch) skeletalMuscle = parseFloat(smmMatch[1]);
       }
 
@@ -5151,7 +5243,7 @@ ${err.message}
 
         // Priority 2: Local Layout-Aware Tesseract Scanner
         if (!parsed) {
-          const tRes = await scanRunningImageWithTesseract(file);
+          const tRes = await scanInbodyImageWithTesseract(file);
           parsed = tRes.parsed;
           rawText = tRes.text;
         }
