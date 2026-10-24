@@ -253,7 +253,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v2.8</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v2.9</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -4897,58 +4897,81 @@ ${err.message}
         }
       }
 
-      // 8. InBody & Samsung Health Weight & Fat (Precision Multi-Source Extraction)
+      // 8. InBody & Samsung Health Weight & Fat (Scale-Tick Filtering & Range-Aware Extraction)
       let weight = null;
       let fat = null;
 
-      // Filter out target/adjustment lines so '적정체중 57kg', '체중조절 -8.6kg' are NEVER matched as current weight
-      const cleanWeightUnified = unified
-        .replace(/(?:적정|목표|조절|권장|제지방)[^\n]*?(?:체중|몸무게|weight)?[^\n]*?(?:[3-9]\d(?:\.\d{1,2})?)\s*(?:kg)?/gi, ' ')
-        .replace(/(?:적정체중|체중조절|지방조절|근육조절)[\s:：>▶()（）a-zA-Z0-9.\-+/\s]{0,25}/gi, ' ');
+      // InBody graph scale tick numbers that must NEVER be confused with actual measurements
+      const inbodyWeightScaleTicks = new Set([55, 70, 85, 100, 115, 130, 145, 160, 175, 190, 205]);
+      const inbodyFatScaleTicks = new Set([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]);
 
-      // Prioritize explicit "체중" or "몸무게" row label followed by number
-      // In InBody tables, rows are formatted as: "체중 (kg) 65.6 (48.5~65.6)" or "체중 (kg) 65.6" WITHOUT 'kg' next to the value!
-      const wLabelNumber = cleanWeightUnified.match(/(?<![\/적정목표조절권장])(?:체중|몸무게|Weight|체\s*중)(?![\s]*(?:\/|조절))[\s:：>▶()（）a-zA-Z]{0,20}?(\d{2,3}(?:\.\d{1,2})?)/i);
-      if (wLabelNumber) {
-        const v = parseFloat(wLabelNumber[1]);
-        if (v >= 35 && v <= 150) weight = v;
+      // Method A: Check InBody 체성분분석 table row: "체중 (kg) <actual> ( <normal_min> ~ <normal_max> )"
+      const compMatch = unified.match(/(?:체중|몸무게)[\s\S]{0,20}?(\d{2,3}(?:\.\d{1,2})?)\s*[(（]\s*\d{2,3}(?:\.\d)?\s*~/i);
+      if (compMatch) {
+        const cv = parseFloat(compMatch[1]);
+        if (cv >= 35 && cv <= 150) weight = cv;
       }
 
+      // Method B: Line-by-line inspection to extract measurement from bar-graph end or history table
+      const lines = unified.split('\n');
       if (weight === null) {
-        const wLabelKg = cleanWeightUnified.match(/(?<![\/적정목표조절권장])(?:체중|몸무게|Weight)(?![\s]*(?:\/|조절))[\s:：>▶()（）a-zA-Z]{0,15}?[\s:：>▶\n\r]{1,15}(?<![\d.])([3-9]\d(?:\.\d{1,2})?)\s*(?:k\s*g|kg|KG)\b/i);
-        if (wLabelKg) {
-          const v = parseFloat(wLabelKg[1]);
-          if (v >= 35 && v <= 150) weight = v;
+        for (const line of lines) {
+          // Find lines with 체중, excluding target/control lines (적정체중, 체중조절)
+          if (/(?<![적정목표조절권장])체중|몸무게|Weight/i.test(line) && !/적정|조절|목표|권장/i.test(line)) {
+            const rawNums = [...line.matchAll(/\b([3-9]\d(?:\.\d{1,2})?)\b/g)]
+              .map(m => parseFloat(m[1]))
+              .filter(n => n >= 35 && n <= 150);
+            
+            // Filter out scale axis ticks (e.g. 55, 70, 70.5, 85, 100...)
+            const nonScale = rawNums.filter(n => !inbodyWeightScaleTicks.has(Math.round(n)));
+            if (nonScale.length > 0) {
+              // The actual measurement on InBody bar graphs and history rows is always at the right end!
+              weight = nonScale[nonScale.length - 1];
+              break;
+            } else if (rawNums.length > 0) {
+              weight = rawNums[rawNums.length - 1];
+              break;
+            }
+          }
         }
       }
 
+      // Method C: Fallback clean regex
       if (weight === null) {
-        const kgMatches = [...cleanWeightUnified.matchAll(/(?<![\d.])([3-9]\d(?:\.\d{1,2})?)\s*(?:k\s*g|kg|KG)\b/gi)];
-        for (const m of kgMatches) {
-          const v = parseFloat(m[1]);
-          if (v >= 35 && v <= 150) {
-            weight = v;
+        const cleanWeightUnified = unified
+          .replace(/(?:적정|목표|조절|권장|제지방)[^\n]*?(?:체중|몸무게|weight)?[^\n]*?(?:[3-9]\d(?:\.\d{1,2})?)\s*(?:kg)?/gi, ' ')
+          .replace(/(?:적정체중|체중조절|지방조절|근육조절)[\s:：>▶()（）a-zA-Z0-9.\-+/\s]{0,25}/gi, ' ');
+        const kgMatches = [...cleanWeightUnified.matchAll(/(?<![\d.])([3-9]\d(?:\.\d{1,2})?)\s*(?:k\s*g|kg|KG)\b/gi)]
+          .map(m => parseFloat(m[1]))
+          .filter(n => n >= 35 && n <= 150 && !inbodyWeightScaleTicks.has(Math.round(n)));
+        if (kgMatches.length > 0) weight = kgMatches[0];
+      }
+
+      // Method D: Extract Body Fat (체지방률 %)
+      for (const line of lines) {
+        if (/(?:체지방[률율]|body\s*fat|fat|pbf)/i.test(line) && !/체지방량/i.test(line)) {
+          const rawNums = [...line.matchAll(/\b([1-5]?\d(?:\.\d{1,2})?)\b/g)]
+            .map(m => parseFloat(m[1]))
+            .filter(n => n >= 5 && n <= 55);
+
+          // Filter out standard scale ticks: 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50
+          const nonScale = rawNums.filter(n => !inbodyFatScaleTicks.has(Math.round(n)));
+          if (nonScale.length > 0) {
+            // Actual measurement is at the right end of the bar or history column!
+            fat = nonScale[nonScale.length - 1];
+            break;
+          } else if (rawNums.length > 0) {
+            fat = rawNums[rawNums.length - 1];
             break;
           }
         }
       }
 
-      // Body Fat % (체지방률 / Percent Body Fat / PBF)
-      // In InBody result sheets, the row header is "체지방률 (%)" and the value is just "32.2" WITHOUT '%' directly next to it!
-      const fLabelNumber = unified.match(/(?:체지방[률율]|체지방(?!량)|body\s*fat|fat|pbf)[\s:：>▶()（）%\/\w-]{0,25}?(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)(?!\s*kg)/i);
-      if (fLabelNumber) {
-        const v = parseFloat(fLabelNumber[1]);
-        if (v >= 5 && v <= 55) fat = v;
-      }
       if (fat === null) {
-        const pctMatches = [...unified.matchAll(/(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)\s*%/g)];
-        for (const m of pctMatches) {
-          const v = parseFloat(m[1]);
-          if (v >= 5 && v <= 50) {
-            fat = v;
-            break;
-          }
-        }
+        const pctMatches = [...unified.matchAll(/(?<![\d.])([1-5]?\d(?:\.\d{1,2})?)\s*%/g)]
+          .map(m => parseFloat(m[1]))
+          .filter(n => n >= 5 && n <= 50 && !inbodyFatScaleTicks.has(Math.round(n)));
+        if (pctMatches.length > 0) fat = pctMatches[0];
       }
 
       // Classification
