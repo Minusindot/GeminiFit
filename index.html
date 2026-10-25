@@ -247,13 +247,10 @@
     <!-- 1. Top Clean Header: Gemini Fit (v2.8) -->
     <header class="game-card px-2.5 sm:px-3 py-2 flex items-center justify-between border-t-4 border-t-[#f4869d] shadow-xs gap-1.5 w-full">
       <div class="flex items-center gap-1.5 min-w-0">
-        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-[#f4869d] to-[#fb7185] flex items-center justify-center text-white text-xs font-black shadow-xs shrink-0">
-          ✨
-        </div>
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v3.2</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v3.4</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -4685,9 +4682,24 @@ ${err.message}
             try {
               const imgData = ctx.getImageData(0, 0, w, h);
               const d = imgData.data;
-              // Clean grayscale preserving font anti-aliasing on textured backgrounds
+
+              // 1. Calculate average luminance across image
+              let totalLuminance = 0;
+              const totalPixels = d.length / 4;
               for (let i = 0; i < d.length; i += 4) {
-                const gray = Math.round(0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]);
+                totalLuminance += (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]);
+              }
+              const avgLuminance = totalLuminance / totalPixels;
+              // Mobile dark mode screenshot detection (dark background with light text)
+              const isDarkMode = avgLuminance < 125;
+
+              // 2. Grayscale with automatic inversion for dark mode
+              // Tesseract OCR engine performs dramatically better on dark text on light backgrounds
+              for (let i = 0; i < d.length; i += 4) {
+                let gray = Math.round(0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]);
+                if (isDarkMode) {
+                  gray = 255 - gray; // Invert to white background + dark text
+                }
                 d[i] = gray;
                 d[i + 1] = gray;
                 d[i + 2] = gray;
@@ -4775,71 +4787,49 @@ ${err.message}
     }
 
         // Dedicated Full-Document Scanner for InBody & Health Reports (No mobile running segments)
+        // Unified Direct Scanner for InBody & Health Reports
     async function scanInbodyImageWithTesseract(file) {
       try {
-        const processedBlob = await preprocessOcrImage(file);
-        const res = await Tesseract.recognize(processedBlob, 'kor+eng');
+        // Priority 1: Raw unified image scan (best for font anti-aliasing & crisp gradients)
+        const res = await Tesseract.recognize(file, 'kor+eng');
         const text = res.data.text || "";
         const parsed = parseHealthImageText(text);
-        return { parsed, text };
+        if (parsed.weight !== null || parsed.fat !== null || parsed.score !== null) {
+          return { parsed, text };
+        }
+        // Priority 2: Fallback to preprocessed/inverted image if initial pass didn't catch weight
+        const processedBlob = await preprocessOcrImage(file);
+        const res2 = await Tesseract.recognize(processedBlob, 'kor+eng');
+        const text2 = res2.data.text || "";
+        const parsed2 = parseHealthImageText(text2);
+        return { parsed: parsed2, text: text2 + "\n--- RAW PASS ---\n" + text };
       } catch (err) {
-        console.error("InBody full OCR error:", err);
+        console.error("InBody OCR error:", err);
         return { parsed: {}, text: '' };
       }
     }
 
-    // Layout-Aware Multi-Region Segmented Tesseract Scanner for Mobile Screenshots
+    // Unified High-Precision Scanner for Mobile Running Screenshots
     async function scanRunningImageWithTesseract(file) {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-          const img = new Image();
-          img.onload = async () => {
-            const w = img.width;
-            const h = img.height;
-
-            const cropBlob = (sx, sy, sw, sh) => {
-              const c = document.createElement('canvas');
-              c.width = Math.round(sw * 1.5);
-              c.height = Math.round(sh * 1.5);
-              const ctx = c.getContext('2d');
-              ctx.drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height);
-              return new Promise(r => c.toBlob(r, 'image/png'));
-            };
-
-            try {
-              // Only apply multi-segment crop for tall mobile screenshots (e.g. Samsung Health/NRC ratio >= 1.7)
-              // Full-page documents (like InBody A4 sheet ratio ~1.41) must be scanned as a unified image!
-              const isTallRunningApp = (h / w >= 1.7);
-              if (isTallRunningApp) {
-                // Samsung Health / NRC layout: Top header + Mid details card (Left/Right columns)
-                const midY = Math.round(h * 0.25);
-                const midH = Math.round(h * 0.42);
-                const colW = Math.round(w * 0.52);
-
-                const [bTop, bLeft, bRight, bMidFull] = await Promise.all([
-                  cropBlob(0, 0, w, Math.round(h * 0.35)),
-                  cropBlob(0, midY, colW, midH),
-                  cropBlob(Math.round(w * 0.48), midY, colW, midH),
-                  cropBlob(0, midY, w, midH)
-                ]);
-
-                const [rTop, rLeft, rRight, rMid] = await Promise.all([
-                  Tesseract.recognize(bTop, 'kor+eng'),
-                  Tesseract.recognize(bLeft, 'kor+eng'),
-                  Tesseract.recognize(bRight, 'kor+eng'),
-                  Tesseract.recognize(bMidFull, 'kor+eng')
-                ]);
-
-                const tTop = rTop.data.text || '';
-                const tLeft = rLeft.data.text || '';
-                const tRight = rRight.data.text || '';
-                const tMid = rMid.data.text || '';
-
-                const combinedRaw = `--- TOP ---\n${tTop}\n--- LEFT ---\n${tLeft}\n--- RIGHT ---\n${tRight}\n--- MID ---\n${tMid}`;
-                const parsed = parseHealthImageText(combinedRaw, tTop, tLeft, tRight, tMid);
-                resolve({ parsed, text: combinedRaw });
-              } else {
+      try {
+        // Priority 1: Direct unified full-resolution scan (captures top header distance + mid details)
+        const res = await Tesseract.recognize(file, 'kor+eng');
+        const text = res.data.text || "";
+        const parsed = parseHealthImageText(text);
+        if (parsed.distance !== null || parsed.duration !== null) {
+          return { parsed, text };
+        }
+        // Priority 2: Fallback with preprocessing if primary scan missed essential fields
+        const processedBlob = await preprocessOcrImage(file);
+        const res2 = await Tesseract.recognize(processedBlob, 'kor+eng');
+        const text2 = res2.data.text || "";
+        const parsed2 = parseHealthImageText(text2);
+        return { parsed: parsed2, text: text2 + "\n--- RAW PASS ---\n" + text };
+      } catch (err) {
+        console.error("Running OCR error:", err);
+        return { parsed: {}, text: '' };
+      }
+    } else {
                 const processedBlob = await preprocessOcrImage(file);
                 const res = await Tesseract.recognize(processedBlob, 'kor+eng');
                 const text = res.data.text || "";
@@ -4869,25 +4859,23 @@ ${err.message}
 
 
     function parseHealthImageText(rawText, topText = '', leftText = '', rightText = '', midText = '') {
-      const unified = (rawText || "")
+      // 0. Pre-clean common OCR misrecognitions for mobile health screenshots
+      // e.g. "64.716" -> "64.7 kg", "64.7 。" -> "64.7 kg", "64.7 k9" -> "64.7 kg", "64.7 ko" -> "64.7 kg"
+      const preCleaned = (rawText || "")
+        .replace(/\b([3-9]\d\.\d)16\b/g, '$1 kg')
+        .replace(/\b([3-9]\d(?:\.\d)?)\s*(?:k9|ko|ka|qg|ke|。)(?!\w)/gi, '$1 kg');
+
+      const unified = preCleaned
         .replace(/(\d)\s*[,.]\s*(\d)/g, '$1.$2')
         .replace(/\u339E/g, 'km')
         .replace(/,/g, '')
         .replace(/\r?\n/g, '\n');
       const lower = unified.toLowerCase();
 
-      // Combined localized lookup buffers
-      const distTarget = (topText ? (topText + '\n' + unified) : unified).replace(/,/g, '');
-      const durTarget = (leftText ? (leftText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
-      const paceTarget = (rightText ? (rightText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
-      const hrTarget = (leftText ? (leftText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
-      const calTarget = (rightText ? (rightText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
-      const cadTarget = (leftText ? (leftText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
-      const stepTarget = (rightText ? (rightText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
-
       // Weight & Body composition keywords
       const hasWeightKeywords = (
         lower.includes('체중') || lower.includes('몸무게') || lower.includes('weight') ||
+        lower.includes('체성분') || lower.includes('체중계') ||
         lower.includes('골격근') || lower.includes('골격근량') || lower.includes('체지방') ||
         lower.includes('체질량') || lower.includes('인바디') || lower.includes('inbody') ||
         lower.includes('bmi') || lower.includes('기초대사량') || lower.includes('내장지방') ||
@@ -4904,110 +4892,158 @@ ${err.message}
         (lower.includes('km') && (lower.includes('거리') || lower.includes('운동시간') || lower.includes('시간') || lower.includes('평균')))
       );
 
+      // Combined localized lookup buffers
+      const distTarget = (topText ? (topText + '\n' + unified) : unified).replace(/,/g, '');
+      const durTarget = (leftText ? (leftText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
+      const paceTarget = (rightText ? (rightText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
+      const hrTarget = (leftText ? (leftText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
+      const calTarget = (rightText ? (rightText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
+      const cadTarget = (leftText ? (leftText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
+      const stepTarget = (rightText ? (rightText + '\n' + midText + '\n' + unified) : unified).replace(/,/g, '');
+
+      // Extract BMI if present (e.g. "BMI > 25.0" or "BMI 25.0")
+      let bmi = null;
+      const bmiMatch = unified.match(/BMI[\s:：>〉]*[\r\n\s]*([1-4]\d(?:\.\d)?)/i);
+      if (bmiMatch) {
+        const bVal = parseFloat(bmiMatch[1]);
+        if (bVal >= 12 && bVal <= 50) bmi = bVal;
+      }
+
       // 1. Distance (km)
       let distance = null;
-      const distMatch = distTarget.match(/(\d{1,2}(?:\.\d{1,2})?)\s*(?:km|㎞|킬로미터|krn|kni|kn)\b/i);
-      if (distMatch) {
-        distance = parseFloat(distMatch[1]);
-      }
-      if (distance === null) {
-        const distLabelMatch = distTarget.match(/(?:달리기|러닝|거리|distance|running)[\s:：\n\r]*(\d{1,2}(?:\.\d{1,2})?)/i);
-        if (distLabelMatch) distance = parseFloat(distLabelMatch[1]);
-      }
-      if (distance === null) {
-        for (const m of distTarget.matchAll(/\b([1-4]?\d\.\d{1,2})\b/g)) {
-          const val = parseFloat(m[1]);
-          if (val >= 0.5 && val <= 45.0) {
-            distance = val;
-            break;
+      if (!hasWeightKeywords) {
+        // Pattern 1: standard xx.xx km
+        const distMatch = unified.match(/(\d{1,2}(?:\.\d{1,2})?)\s*(?:km|㎞|킬로미터|krn|kni|kn)\b/i);
+        if (distMatch) {
+          distance = parseFloat(distMatch[1]);
+        }
+        // Pattern 2: "달리기" or "러닝" header followed by distance
+        if (distance === null) {
+          const runHeaderMatch = unified.match(/(?:달리기|러닝|running|거리|distance)[\s:：>〉▶]*[\r\n\s]*(\d{1,2}(?:\.\d{1,2})?)\s*(?:km)?/i);
+          if (runHeaderMatch) {
+            distance = parseFloat(runHeaderMatch[1]);
+          }
+        }
+        // Pattern 3: Lone floating distance
+        if (distance === null) {
+          for (const m of unified.matchAll(/(?<![-+])\b([1-4]?\d\.\d{1,2})\b/g)) {
+            const val = parseFloat(m[1]);
+            if (val >= 0.5 && val <= 45.0) {
+              distance = val;
+              break;
+            }
           }
         }
       }
 
       // 2. Duration (hh:mm:ss or mm:ss)
       let duration = null;
-      for (const m of durTarget.matchAll(/\b(\d{1,2}:\d{2}(?::\d{2})?)\b/g)) {
-        const parts = m[1].split(':');
-        const firstNum = parseInt(parts[0], 10);
-        if (parts.length === 3 || firstNum >= 10) {
-          duration = m[1];
-          break;
-        }
-      }
-      if (!duration) {
-        const afterTime = durTarget.match(/(?:운동\s*시간|시간)[\s\S]{0,30}?(\d{1,2}:\d{2})/i);
-        if (afterTime) duration = afterTime[1];
-      }
-
-      // 3. Pace (e.g. 09'17", 09"17", 09:17)
-      let pace = null;
-      const paceQuote = paceTarget.match(/(\d{1,2})\s*[''’"”:]\s*(\d{2})(?:["”]|(?:\s*(?:분|초|\/km))|\b)/);
-      if (paceQuote) {
-        pace = `${paceQuote[1].padStart(2, '0')}'${paceQuote[2]}"`;
-      }
-      if (!pace) {
-        const paceMatch = paceTarget.match(/(?:평균\s*페이스|페이스|pace)[\s\S]{0,30}?(\d{1,2}[:'’"”:]\d{2})/i);
-        if (paceMatch) {
-          const pParts = paceMatch[1].split(/[''’"”:]/);
-          if (pParts.length >= 2) pace = `${pParts[0].padStart(2, '0')}'${pParts[1]}"`;
-        }
-      }
-
-      // 4. Calories (e.g. 401 kcal, 401 keal, 401 ea)
-      let calories = null;
-      const calMatch = calTarget.match(/(\d{2,4})\s*(?:k[ce]al|ea|cal)\b/i);
-      if (calMatch) {
-        calories = parseInt(calMatch[1], 10);
-      } else {
-        const calLabelMatch = calTarget.match(/(?:운동\s*칼로리|소모\s*칼로리|칼로리|calories?|cal)[\s\S]{0,30}?(\d{2,4})/i);
-        if (calLabelMatch) calories = parseInt(calLabelMatch[1], 10);
-      }
-
-      // 5. Heart Rate (e.g. 115 bpm, 115 bem, 115 bom)
-      let heartRate = null;
-      const hrBpmMatch = hrTarget.match(/(\d{2,3})\s*(?:bpm|bem|bom|b0m|bprn)\b/i);
-      if (hrBpmMatch) {
-        heartRate = parseInt(hrBpmMatch[1], 10);
-      } else {
-        const hrLabelMatch = hrTarget.match(/(?:평균\s*심박수|심박수|heart\s*rate|hr)[\s\S]{0,30}?(\d{2,3})/i);
-        if (hrLabelMatch) heartRate = parseInt(hrLabelMatch[1], 10);
-      }
-
-      // 6. Cadence (e.g. 125 spm, 125 sem, 125 sm)
-      let cadence = null;
-      const cadMatch = cadTarget.match(/(\d{2,3})\s*(?:spm|sem|srm|sprm|s0m|sm)\b/i);
-      if (cadMatch) {
-        cadence = parseInt(cadMatch[1], 10);
-      } else {
-        const cadLabelMatch = cadTarget.match(/(?:평균\s*케이던스|케이던스|cadence)[\s\S]{0,30}?(\d{2,3})/i);
-        if (cadLabelMatch) cadence = parseInt(cadLabelMatch[1], 10);
-      }
-
-      // 7. Steps (e.g. 7,380 or 7380)
-      let steps = null;
-      if (rightText) {
-        for (const m of rightText.replace(/,/g, '').matchAll(/\b([1-9]\d{3,5})\b/g)) {
-          const val = parseInt(m[1], 10);
-          if (val >= 1000 && val !== calories && val !== heartRate && val !== cadence) {
-            steps = val;
-            break;
+      if (!hasWeightKeywords) {
+        const hmsMatch = unified.match(/\b(\d{1,2}:\d{2}:\d{2})\b/);
+        if (hmsMatch) {
+          duration = hmsMatch[1];
+        } else {
+          const durLabelMatch = unified.match(/(?:운동\s*시간|시간|duration)[\s:：]*[\r\n\s]*(\d{1,2}:\d{2}(?::\d{2})?)/i);
+          if (durLabelMatch) {
+            duration = durLabelMatch[1];
+          } else {
+            const msMatch = unified.match(/\b(\d{2}:\d{2})\b/);
+            if (msMatch) duration = msMatch[1];
           }
         }
       }
-      if (!steps) {
-        const stepLabelMatch = stepTarget.match(/(?:걸음수|steps?|총\s*걸음|걸음)[\s\S]{0,30}?(?:(\d{1,3}(?:,\d{3})+)|(\d{4,6}))/i);
-        if (stepLabelMatch) {
-          const rawNum = (stepLabelMatch[1] || stepLabelMatch[2]).replace(/[,.]/g, '');
-          steps = parseInt(rawNum, 10);
+
+      // 3. Pace (e.g. 10'47", 10°47", 10"47", 10'47)
+      let pace = null;
+      if (!hasWeightKeywords) {
+        // Priority A: Right after "페이스" keyword
+        const paceNearLabel = unified.match(/(?:평균\s*페이스|페이스|pace)[\s\S]{0,40}?\b(\d{1,2})[\s'’"”°o*\^:：]+(\d{2})(?:["”]|(?:\s*(?:분|초|\/km|~))|\b)/i);
+        if (paceNearLabel) {
+          const p1 = paceNearLabel[1];
+          const p2 = paceNearLabel[2];
+          if (!duration || !duration.startsWith(`${p1}:${p2}`)) {
+            pace = `${p1.padStart(2, '0')}'${p2}"`;
+          }
+        }
+        // Priority B: Any pattern with quote or /km (excluding date/time lines)
+        if (!pace) {
+          const cleanForPace = unified.replace(/202\d[^\n]*?(?:오전|오후|\d{1,2}:\d{2})/gi, ' ');
+          const paceQuote = cleanForPace.match(/(\d{1,2})\s*[''’"”°o*\^]\s*(\d{2})(?:["”]|(?:\s*(?:분|초|\/km|~))|\b)/);
+          if (paceQuote) {
+            const p1 = paceQuote[1];
+            const p2 = paceQuote[2];
+            if (!duration || !duration.startsWith(`${p1}:${p2}`)) {
+              pace = `${p1.padStart(2, '0')}'${p2}"`;
+            }
+          }
         }
       }
-      if (!steps) {
-        for (const m of stepTarget.matchAll(/\b([1-9]\d{3,5})\b/g)) {
-          if (!m[1].startsWith('202')) {
-            const val = parseInt(m[1], 10);
-            if (val >= 1000 && val !== calories) {
-              steps = val;
-              break;
+
+      // 4 & 5. 2-column Grid: 심박수 (Heart Rate) & 칼로리 (Calories)
+      // Samsung Health layout:
+      // "평균 심박수    운동 칼로리"
+      // "127           471"
+      let calories = null;
+      let heartRate = null;
+      if (!hasWeightKeywords) {
+        const hrCalGrid = unified.match(/(?:심박수|heart)[\s\S]{0,40}?(?:칼로리|cal)[\s\S]{0,20}?[\r\n]+[^\d\n]*(\d{2,3})\b[^\d\n]+(\d{2,4})\b/i);
+        if (hrCalGrid) {
+          heartRate = parseInt(hrCalGrid[1], 10);
+          calories = parseInt(hrCalGrid[2], 10);
+        }
+        if (calories === null) {
+          const calMatch = unified.match(/(\d{2,4})\s*(?:k[ce]al|ea|cal)\b/i);
+          if (calMatch) {
+            calories = parseInt(calMatch[1], 10);
+          } else {
+            const calLabelMatch = unified.match(/(?:운동\s*칼로리|소모\s*칼로리|칼로리|calories?|cal)[\s:：]*[\r\n\s]*(\d{2,4})/i);
+            if (calLabelMatch) calories = parseInt(calLabelMatch[1], 10);
+          }
+        }
+        if (heartRate === null) {
+          const hrBpmMatch = unified.match(/(\d{2,3})\s*(?:bpm|bem|bom|b0m|bprn)\b/i);
+          if (hrBpmMatch) {
+            heartRate = parseInt(hrBpmMatch[1], 10);
+          } else {
+            const hrLabelMatch = unified.match(/(?:평균\s*심박수|심박수|heart\s*rate|hr)[\s:：]*[\r\n\s]*(\d{2,3})/i);
+            if (hrLabelMatch) heartRate = parseInt(hrLabelMatch[1], 10);
+          }
+        }
+      }
+
+      // 6 & 7. 2-column Grid: 케이던스 (Cadence) & 걸음수 (Steps)
+      // Samsung Health layout:
+      // "평균 케이던스   걸음"
+      // "115 spm        8,787"
+      let cadence = null;
+      let steps = null;
+      if (!hasWeightKeywords) {
+        if (cadence === null) {
+          const cadMatch = unified.match(/(\d{2,3})\s*(?:spm|sem|srm|sprm|s0m|sm)\b/i);
+          if (cadMatch) {
+            cadence = parseInt(cadMatch[1], 10);
+          } else {
+            const cadLabelMatch = unified.match(/(?:평균\s*케이던스|케이던스|cadence)[\s:：]*[\r\n\s]*(\d{2,3})/i);
+            if (cadLabelMatch) cadence = parseInt(cadLabelMatch[1], 10);
+          }
+        }
+        // Steps extraction (handles both 8787 and 8.787 from comma-to-dot conversion)
+        const stepNearLabel = unified.match(/(?:걸음수|총\s*걸음|걸음|steps?)[\s\S]{0,60}?\b([1-9]\d{0,2}(?:\.\d{3})+|[1-9]\d{3,5})\b/i);
+        if (stepNearLabel) {
+          const rawS = stepNearLabel[1];
+          steps = Math.round(parseFloat(rawS) * (rawS.includes('.') ? 1000 : 1));
+        } else {
+          const cadStepMatch = unified.match(/(?:케이던스|cadence)[\s\S]{0,60}?\b([1-9]\d{0,2}(?:\.\d{3})+|[1-9]\d{3,5})\b/i);
+          if (cadStepMatch) {
+            const rawS = cadStepMatch[1];
+            steps = Math.round(parseFloat(rawS) * (rawS.includes('.') ? 1000 : 1));
+          } else {
+            for (const m of unified.matchAll(/\b([1-9]\d{3,5})\b/g)) {
+              const val = parseInt(m[1], 10);
+              if (val >= 1000 && val !== calories && val !== heartRate && val !== cadence && !m[1].startsWith('202')) {
+                steps = val;
+                break;
+              }
             }
           }
         }
@@ -5086,14 +5122,52 @@ ${err.message}
         .replace(/(?:적정|목표|조절|권장|제지방)[^\n]*?(?:체중|몸무게|weight)?[^\n]*?(?:[3-9]\d(?:\.\d{1,2})?)\s*(?:kg)?/gi, ' ')
         .replace(/(?:적정체중|체중조절|지방조절|근육조절)[\s:：>▶()（）a-zA-Z0-9.\-+/s]{0,25}/gi, ' ');
 
+      // --- MOBILE SCREENSHOT SPECIFIC WEIGHT PATTERNS (Samsung Health, MiFit, Apple Health) ---
+      // Pattern A: "체중 >" followed immediately on next line by weight
+      // e.g. "체중 >\n64.7 kg -0.9" or "체중\n64.7"
+      const nextLineMatch = cleanCurrent.match(/(?:체중|몸무게|Weight)[\s:：>〉▶]*[\r\n]+[^\d\n\-+]*([3-9]\d(?:\.\d)?|[1-2]\d{2}(?:\.\d)?)\s*(?:kg)?/i);
+      if (nextLineMatch) {
+        const val = parseFloat(nextLineMatch[1]);
+        if (val >= 35 && val <= 180 && (!bmi || Math.abs(val - bmi) > 1.0)) {
+          weight = val;
+        }
+      }
+
+      // Pattern B: Prominent large weight header at top of Samsung Health screen
+      // e.g. "< 체중/체성분 ... 오늘 ... 64.7 kg ... 보통"
+      if (weight === null) {
+        const topWeightMatch = cleanCurrent.match(/(?:체중\/체성분|체중\s*[\n\r]|오늘)[\s\S]{0,120}?\b([3-9]\d\.\d)\s*(?:kg)?\b/i);
+        if (topWeightMatch) {
+          const val = parseFloat(topWeightMatch[1]);
+          if (val >= 35 && val <= 180 && (!bmi || Math.abs(val - bmi) > 1.0)) {
+            weight = val;
+          }
+        }
+      }
+
+      // Pattern C: Any explicit "xx.x kg" in cleaned text
+      if (weight === null) {
+        const kgMatches = [...cleanCurrent.matchAll(/\b([3-9]\d(?:\.\d)?)\s*kg\b/gi)];
+        for (const m of kgMatches) {
+          const val = parseFloat(m[1]);
+          if (val >= 35 && val <= 180 && (!bmi || Math.abs(val - bmi) > 1.0)) {
+            weight = val;
+            break;
+          }
+        }
+      }
+
+      // --- INBODY REPORT SPECIFIC WEIGHT PATTERNS ---
       // Rule 1: Look for weight right after 체수분/단백질/무기질/체지방 sum line
       // e.g. "tol 656", "gn 656", "656 (", "65.6 ("
-      const bodyCompWeightMatch = cleanCurrent.match(/(?:체수분[\s\S]{0,100}?합하면[\s\S]{0,30}?(?:체중)?|tol|tot|to|t0|gn|me|kg)\s*([3-9]\d(?:\.\d)?|[3-9]\d{2})\s*(?:[(（]|\b)/i)
-        || cleanCurrent.match(/\b([3-9]\d{2})\s*[(（]\s*[3-5]\d/);
-      if (bodyCompWeightMatch) {
-        let val = parseFloat(bodyCompWeightMatch[1]);
-        if (val > 200) val = Math.round(val) / 10.0;
-        if (val >= 35 && val <= 160) weight = val;
+      if (weight === null) {
+        const bodyCompWeightMatch = cleanCurrent.match(/(?:체수분[\s\S]{0,100}?합하면[\s\S]{0,30}?(?:체중)?|tol|tot|to|t0|gn|me|kg)\s*([3-9]\d(?:\.\d)?|[3-9]\d{2})\s*(?:[(（]|\b)/i)
+          || cleanCurrent.match(/\b([3-9]\d{2})\s*[(（]\s*[3-5]\d/);
+        if (bodyCompWeightMatch) {
+          let val = parseFloat(bodyCompWeightMatch[1]);
+          if (val > 200) val = Math.round(val) / 10.0;
+          if (val >= 35 && val <= 160) weight = val;
+        }
       }
 
       // Rule 2: Component sum (체수분 + 단백질 + 무기질 + 체지방량 = 체중)
@@ -5144,8 +5218,6 @@ ${err.message}
 
       // 8-E. Body Fat %
       // Rule 1: Mathematical Truth (fatMass / weight * 100)
-      // In InBody, 체지방률 (Percent Body Fat, PBF) is defined as exactly (Fat Mass / Weight) * 100
-      // e.g. 21.1 / 65.6 * 100 = 32.1646... -> 32.2%!
       if (fatMass && weight) {
         const calcFat = Math.round((fatMass / weight) * 1000) / 10.0;
         if (calcFat >= 5 && calcFat <= 60) {
@@ -5184,24 +5256,25 @@ ${err.message}
       }
 
       // 8-F. Skeletal Muscle Mass (골격근량 kg)
-      // History table rightmost entry: "8238 wns ns no 248 245 251 249 248" -> last 248 = 24.8kg!
-      for (const line of unified.split('\n')) {
-        if (/골격근|8238/i.test(line)) {
-          const sNums = [...line.matchAll(/\b(2\d{2}|[1-4]\d\.\d)\b/g)].map(m => {
-            let v = parseFloat(m[1]);
-            if (v > 100) v = Math.round(v) / 10.0;
-            return v;
-          });
-          if (sNums.length > 0) {
-            skeletalMuscle = sNums[sNums.length - 1];
-            break;
-          }
-        }
+      const smmMatch = currentSection.match(/골격근량[^\d\n]*(\d{1,2}(?:\.\d)?)\s*(?:[(（]|\b)/i)
+        || currentSection.match(/골격근량[\s\S]{0,25}?\b([1-4]\d?(?:\.\d)?)\b/i);
+      if (smmMatch) {
+        skeletalMuscle = parseFloat(smmMatch[1]);
       }
       if (skeletalMuscle === null) {
-        const smmMatch = currentSection.match(/골격근량[^\d\n]*(\d{1,2}(?:\.\d)?)\s*(?:[(（]|\b)/i)
-          || currentSection.match(/골격근량[\s\S]{0,25}?\b([1-4]\d?(?:\.\d)?)\b/i);
-        if (smmMatch) skeletalMuscle = parseFloat(smmMatch[1]);
+        for (const line of unified.split('\n')) {
+          if (/골격근|8238/i.test(line)) {
+            const sNums = [...line.matchAll(/\b(2\d{2}|[1-4]\d\.\d)\b/g)].map(m => {
+              let v = parseFloat(m[1]);
+              if (v > 100) v = Math.round(v) / 10.0;
+              return v;
+            });
+            if (sNums.length > 0) {
+              skeletalMuscle = sNums[sNums.length - 1];
+              break;
+            }
+          }
+        }
       }
 
       // Classification
@@ -5215,7 +5288,7 @@ ${err.message}
       else if (lower.includes('인바디') || lower.includes('inbody')) source = '인바디';
       else if (lower.includes('apple') || lower.includes('garmin')) source = '애플피트니스';
 
-      return { isRunning, hasWeightKeywords, source, distance, duration, pace, calories, heartRate, cadence, steps, weight, fat, score, skeletalMuscle, fatMass, bmr };
+      return { isRunning, hasWeightKeywords, source, distance, duration, pace, calories, heartRate, cadence, steps, weight, bmi, fat, score, skeletalMuscle, fatMass, bmr };
     }
 
     async function handleInbodyScan(e) {
@@ -6372,7 +6445,7 @@ ${err.message}
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').then((reg) => {
+        navigator.serviceWorker.register('./sw.js?v=3.4').then((reg) => {
           console.log('Gemini Fit PWA Service Worker ready:', reg.scope);
         }).catch((err) => {
           console.warn('PWA SW register error:', err);
