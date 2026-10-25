@@ -1,17 +1,17 @@
 {
-  "updatedAt": "2026-10-25T09:53:01.351Z",
+  "updatedAt": "2026-10-25T10:08:42.879Z",
   "lastActiveDate": "2026-10-25",
   "theme": "light",
   "weight": 65.6,
   "fat": 32.2,
-  "bondRank": 10,
-  "bondExp": 95,
-  "activeTrainer": "gemini",
-  "activeMode": "gemini",
-  "currentSituation": "ev14",
+  "bondRank": 11,
+  "bondExp": 45,
+  "activeTrainer": "mio",
+  "activeMode": "mio",
+  "currentSituation": "ev1",
   "absDone": false,
-  "runDone": false,
-  "runDist": 6.32,
+  "runDone": true,
+  "runDist": 7,
   "rehab": [
     false,
     false,
@@ -183,17 +183,28 @@
     }
   ],
   "latestRun": {
-    "id": "run-1792828815013",
-    "date": "2026-10-24",
-    "distance": 6.32,
-    "duration": "58:48",
-    "pace": "09'17\"",
-    "calories": 401,
-    "heartRate": 115,
-    "steps": 7380,
+    "id": "run-1792922922872",
+    "date": "2026-10-25",
+    "distance": 7,
+    "duration": "1:16:22",
+    "pace": "10'47\"",
+    "calories": 471,
+    "heartRate": 127,
+    "steps": 8787,
     "source": "삼성헬스"
   },
   "runningLogs": [
+    {
+      "id": "run-1792922922872",
+      "date": "2026-10-25",
+      "distance": 7,
+      "duration": "1:16:22",
+      "pace": "10'47\"",
+      "calories": 471,
+      "heartRate": 127,
+      "steps": 8787,
+      "source": "삼성헬스"
+    },
     {
       "id": "run-1792828815013",
       "date": "2026-10-24",
@@ -332,21 +343,6 @@
   },
   "chatHistory": [
     {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "6.32km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "헉! 442kcal 소모에 5,007걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "오... 세트 루틴에 캡틴스 체어랑 크런치까지 헬스장 풀코스 올 클리어? 바보 프로듀서 치고는 꽤 독하게 해냈네! 기특하니까 이리 와, 어깨 주물러줄게. 🐾"
-    },
-    {
       "sender": "kotone",
       "name": "코토네",
       "text": "우와아~ 헬스장 풀코스 완주 대박이에요 프로듀서님! 복근이랑 슬림핏에 한 걸음 더 가까워졌어요! 💛"
@@ -474,6 +470,21 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "단백질 음료 야무지게 챙겼네! 근손실 없이 슬림 탄탄 라인 만들려면 단백질 충전은 필수지, 기특해! 🥛💪"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "와아아아 대박!! 7km 완주 나이스!! 1:16:22 동안 471kcal나 불태웠잖아! 손목 힘 빼고 달린 폼 진짜 최고였어 프로듀서!! 🌟🏃‍♀️"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "7km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "헉! 471kcal 소모에 8,787걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛"
     }
   ]
 }
