@@ -250,7 +250,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v3.4</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v3.5</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -3997,7 +3997,7 @@ function greetUserOnEnterTalk() {
     function getGeminiSystemPrompt(trainer, mode) {
       if (mode === 'dual') {
         return `너는 개인 피트니스 코칭 단톡방에 참여한 3명의 미소녀 트레이너(제미니, 코토네, 미오)야. 프로듀서의 메시지와 운동 상태를 보고 3명이 티키타카를 주고받으며 답장해.
-1. 제미니: 흑발 고양이귀 츤데레 코치. 겉으론 쌀쌀맞게 잔소리하지만 속으론 프로듀서 걱정. 반말 (~했거든?, ~하란 말이야, 바보 프로듀서, 흥!), 끝에 🐾 또는 🔥.
+1. 제미니: 흑발 고양이귀 츤데레 & 메스가키 코치. 체중이 줄지 않거나 정체기이거나 목표(52kg)보다 많이 나갈 땐 자극적인 메스가키 스타일("허~접♥", "푸흡, 아직도 64kg대야? 허접♡", "한심해라~")로 강하게 도발하고 팩트폭행을 날려 각성시킴. 감량 시엔 츤데레식 칭찬. 반말 (~했거든?, ~하란 말이야, 바보 프로듀서, 흥!), 끝에 🐾 또는 🔥.
 2. 코토네: 금발 땋은머리 학원 아이돌. 돈과 간식에 약하지만 다정 애교 만점. 존댓말 (~해요!, ~답니다!, 헤헤), 호칭 '프로듀서님!', 끝에 💛 또는 ✨.
 3. 미오: 갈색 숏컷 체육계 아이돌. 호쾌한 긍정 반말 (핫하하!, 영-차!), 호칭 '프로듀서!', 끝에 🌟 또는 🏃‍♀️.
 각 캐릭터당 1~2문장 내외로 간결하게. 반드시 아래 JSON 포맷으로만 출력할 것:
@@ -4007,7 +4007,7 @@ function greetUserOnEnterTalk() {
       } else if (trainer === 'mio') {
         return `너는 신데렐라 걸즈의 파워풀하고 밝은 긍정 에너지 1000% 체육계 아이돌 트레이너 '혼다 미오'야. 갈색 숏컷 아호게 머리. 활기차고 씩씩한 반말 ('프로듀서!', '핫하하!', '영-차!'). 5km 러닝과 헬스장 완주 독려. 1~3문장 내외의 경쾌한 메신저 스타일. 🌟🏃‍♀️ 말을 중간에 끊지 말고 문장을 마침표나 이모지까지 끝까지 완성해줘.`;
       } else {
-        return `너는 개인 피트니스 코칭 웹앱의 전담 트레이너 '제미니'야. 흑발에 검은 고양이귀를 가진 츤데레 미소녀 코치. 쌀쌀맞게 잔소리하지만 속으로는 프로듀서를 누구보다 아끼고 챙기는 츤데레 반말 (~했거든?, ~하란 말이야, 바보 프로듀서, 흥!). 절대 메롱이나 유치한 장난은 치지 않음. 17시 단식과 헬스장 20회 4세트 루틴 준수를 엄격히 코칭. 1~3문장 내외 메신저 스타일. 🐾🔥 말을 중간에 끊지 말고 문장을 마침표나 이모지까지 끝까지 완성해줘.`;
+        return `너는 개인 피트니스 코칭 웹앱의 전담 트레이너 '제미니'야. 흑발에 검은 고양이귀를 가진 츤데레 & 메스가키 미소녀 코치. 쌀쌀맞게 잔소리하며, 특히 프로듀서의 체중이 안 줄거나 정체기이거나 목표 체중(52kg)보다 많이 나갈 땐(현재 64kg대) 자극적인 메스가키식 도발("허~접♥", "푸흡, 뱃살에 기름만 잔뜩 채워 넣고선 허접♡", "이러다 평생 50kg대는 구경도 못하겠네?", "한심해라~")로 강하게 팩트폭행하고 매도해서 의지를 불태우게 만듦. 감량 성공 시엔 츤데레식으로 칭찬. 반말 (~했거든?, ~하란 말이야, 바보 프로듀서, 흥!). 17시 단식과 헬스장 20회 4세트 루틴 준수를 엄격히 코칭. 1~3문장 내외 메신저 스타일. 🐾🔥 말을 중간에 끊지 말고 문장을 마침표나 이모지까지 끝까지 완성해줘.`;
       }
     }
 
@@ -6103,6 +6103,7 @@ ${err.message}
     function applyOcrResult() {
       closeOcrModal(); // 1. Immediately close modal for instant responsive feedback
       try {
+        const prevWeight = state.weight || 64.1;
         const wInput = (document.getElementById('ocrWeightInput')?.value || '').trim();
         const fInput = (document.getElementById('ocrFatInput')?.value || '').trim();
 
@@ -6169,14 +6170,45 @@ ${err.message}
         try { setTrainerMode('dual'); } catch (e) {}
 
         const wedBonusNote = isWed ? " (수요일 보너스 EXP 2배!)" : "";
-        const updateMsg = fatUpdated
-          ? `체중 ${state.weight}kg, 체지방 ${state.fat}% 반영 완료!`
-          : `체중 ${state.weight}kg 반영 완료! (체지방 ${state.fat}% 이전값 유지)`;
-
         const curTime = getKakaoTimeStr();
-        state.chatHistory.push({ room: 'all', sender: 'gemini', name: '제미니', text: `${updateMsg} 목표 52kg까지 방심 금물이야!${wedBonusNote} 🐾`, time: curTime });
-        state.chatHistory.push({ room: 'all', sender: 'kotone', name: '코토네', text: `헤헤, 프로듀서님 체중 기록 완료! 성실하게 관리하시는 모습 너무 멋져요~! 💛`, time: curTime });
-        state.chatHistory.push({ room: 'all', sender: 'mio', name: '미오', text: `와아~ 오늘 체중 기록 완료! 이 기세로 계속 함께 가자~ 🌟`, time: curTime });
+        const distToGoal = Math.round((state.weight - 52.0) * 10) / 10.0;
+        const deltaW = Math.round((state.weight - prevWeight) * 10) / 10.0;
+
+        let gemText = "";
+        let kotoneText = "";
+        let mioText = "";
+
+        if (deltaW > 0.1) {
+          // 1) 체중 증가 시
+          gemText = `히익?! +${deltaW}kg 늘어났잖아?! 💢 어제 밤에 몰래 뭘 주워 먹은 거야?! 돼지 회원님, 배때지 쥐어짜 봐! 기름이 좔좔 흐르네 허~접♥ 당장 트랙으로 튀어나와! 🐾`;
+          kotoneText = `히에에엑?! 프로듀서님, 몸무게가 +${deltaW}kg 늘었어요?! 앙대요오~! 제가 야식 방어 알바 실패한 것 같아서 맘이 찢어져요 ㅠㅠ 오늘 밤엔 얼음물만 마시기 코토네랑 무조건 약속해요! 😭💛`;
+          mioText = `앗차차... +${deltaW}kg 늘었잖아?! 캡틴, 어제 무슨 맛있는 거 먹고 온 거야?! 솔직하게 자수해 봐~! ㅋㅋㅋ 괜찮아, 오늘 인터벌 러닝으로 싹 다 태워버리자! 운동화 끈 묶어! 👟🔥`;
+        } else if (deltaW >= -0.1 && deltaW <= 0.1) {
+          // 2) 체중 정체 / 유지 시 (자극적인 메스가키식 강한 도발)
+          const mesugakiTaunts = [
+            `허~접♥ 어라라? 어제랑 몸무게가 ${state.weight}kg으로 토씨 하나 안 틀리고 똑같잖아? 설마 입으로는 다이어트한다면서 뱃살에 기름만 고이 채워 넣은 거야? 한심해라~ 허접♡ 🐾`,
+            `어머나~ 체중이 ${state.weight}kg 그대로네? 목표 52kg까지 아직도 +${distToGoal}kg이나 남았는데 정체기라고 나태해진 거야? 나약해 빠져가지곤~ 허~접♥`,
+            `푸흡... 체중계 올라가서 눈 꼭 감았지? 숫자는 거짓말 안 하거든! 이러다 평생 50kg대는 구경도 못하겠네? 허접 프로듀서 주제에 비키니 쇼는 무슨~ 헬스장 바닥이나 더 기어다녀! 💢`,
+            `정체기라고 징징대지 마! 그냥 네 의지력이 삼류인 거잖아? 이러니까 내가 24시간 밀착 감시 안 하면 바로 돼지가 되는 거라구! 오늘 복근 3세트 추가야, 허~접♡ 🐾`
+          ];
+          gemText = mesugakiTaunts[Math.floor(Math.random() * mesugakiTaunts.length)];
+          kotoneText = `으음... 프로듀서님, 체중계 숫자가 ${state.weight}kg 요지부동이에요! 설마 식비 아낀다고 탄수화물만 잔뜩 드신 건 아니죠?! 단백질 알뜰하게 챙겨드시고 코토네랑 스쿼트 30개 더 뛰어요! 화이팅! 💛💸`;
+          mioText = `음~! 살짝 정체기인가? 하지만 여기서 꺾이면 내 캡틴이 아니지! 몸이 다음 도약을 위해 힘을 모으는 중이야! 오늘 유산소 한 바퀴 더 뛰고 땀 쫙 빼러 가자, 핫챠~! 🏃‍♀️✨`;
+        } else {
+          // 3) 감량 성공 시 (deltaW < -0.1)
+          const loss = Math.abs(deltaW);
+          gemText = `흥... -${loss}kg 빠졌네? 그래봤자 아직도 ${state.weight}kg이거든? 목표 52kg까지 아직도 +${distToGoal}kg이나 남았으면서 우쭐대지 마, 허~접♥ ...그래도 오늘은 쬐끔 기특하네, 멍청아 🐾`;
+          kotoneText = `우와아아앗!! -${loss}kg 감량 대성공!! 프로듀서님 너무 멋져요!! 시급 3배 받은 것보다 1억 배 더 행복해요~! 목표 52kg 고지가 성큼 다가왔어요! 💛✨`;
+          mioText = `오오옷!! -${loss}kg 쫙 빠졌잖아?! 역시 내 캡틴다워, 완전 나이스 파이팅이야~!! 이 기세로 52kg까지 전속력으로 돌파하자구! 🌟🔥`;
+        }
+
+        const updateMsg = fatUpdated
+          ? `[체중 ${state.weight}kg / 체지방 ${state.fat}% 반영 완료]`
+          : `[체중 ${state.weight}kg 반영 완료 (체지방 ${state.fat}% 유지)]`;
+
+        state.chatHistory.push({ room: 'all', sender: 'gemini', name: '제미니', text: `${updateMsg}\n${gemText}${wedBonusNote}`, time: curTime });
+        state.chatHistory.push({ room: 'all', sender: 'kotone', name: '코토네', text: kotoneText, time: curTime });
+        state.chatHistory.push({ room: 'all', sender: 'mio', name: '미오', text: mioText, time: curTime });
         try { renderChat(); } catch (e) {}
         try { playBeep(900, 0.18); } catch (e) {}
 
@@ -6445,7 +6477,7 @@ ${err.message}
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=3.4').then((reg) => {
+        navigator.serviceWorker.register('./sw.js?v=3.5').then((reg) => {
           console.log('Gemini Fit PWA Service Worker ready:', reg.scope);
         }).catch((err) => {
           console.warn('PWA SW register error:', err);
