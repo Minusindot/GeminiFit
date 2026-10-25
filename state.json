@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-10-25T05:53:33.836Z",
+  "updatedAt": "2026-10-25T09:53:01.351Z",
   "lastActiveDate": "2026-10-25",
   "theme": "light",
   "weight": 65.6,
   "fat": 32.2,
   "bondRank": 10,
-  "bondExp": 70,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
-  "currentSituation": "ev3",
+  "bondExp": 95,
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev14",
   "absDone": false,
   "runDone": false,
   "runDist": 6.32,
@@ -25,7 +25,7 @@
   "teaLog": {
     "matcha": 0,
     "espresso": 1,
-    "tea": 0
+    "tea": 1
   },
   "gymRoutine": {
     "upper1": {
@@ -332,25 +332,6 @@
   },
   "chatHistory": [
     {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
-    },
-    {
-      "sender": "user",
-      "text": "📸 [홈카페 찻잔/커피 인증 사진]"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "우와~ 찻잔 너무 고급스러워요 프로듀서님! 코토네한테도 한 잔 타주세요~ 헤헤! 💛"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "와아아아 대박!! 6.32km 완주 나이스!! 58:48 동안 442kcal나 불태웠잖아! 손목 힘 빼고 달린 폼 진짜 최고였어 프로듀서!! 🌟🏃‍♀️"
-    },
-    {
       "sender": "gemini",
       "name": "제미니",
       "text": "6.32km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾"
@@ -475,6 +456,24 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "우와~ 찻잔 너무 고급스러워요 프로듀서님! 코토네한테도 한 잔 타주세요~ 헤헤! 💛"
+    },
+    {
+      "sender": "user",
+      "text": "📸 [홈카페 찻잔/커피 인증 사진]"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "우와~ 찻잔 너무 고급스러워요 프로듀서님! 코토네한테도 한 잔 타주세요~ 헤헤! 💛"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 단백질 음료 🥛 1잔을 챙겨 마셨어!"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "단백질 음료 야무지게 챙겼네! 근손실 없이 슬림 탄탄 라인 만들려면 단백질 충전은 필수지, 기특해! 🥛💪"
     }
   ]
 }
