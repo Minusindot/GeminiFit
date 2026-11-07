@@ -261,7 +261,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.4</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.5</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -6535,14 +6535,76 @@ ${err.message}
     }
 
     function copyAntigravityUpdatePrompt() {
-      const promptText = `안티그라야! 오늘 정기 업데이트 날이야. 제미니의 교토·오사카벤 신규 에피소드랑 퀴즈, 이벤트 CG, 다이얼로그 정기 업데이트 진행해줘!`;
+      const todayStr = getLocalDateString();
+      const curW = state.weight || 65.6;
+      const targetW = state.targetWeight || 52.0;
+      const curFat = state.fat || 32.2;
+      const diffKg = (curW - targetW).toFixed(1);
+
+      // Fasting & Meals
+      const mealsDone = (state.meals || []).filter(Boolean).length;
+      const teaCount = (state.teaLog && state.teaLog.matcha) || 0;
+
+      // Workout
+      const runDone = state.runDone ? '오늘 완료' : '미완료';
+      const latestRunDist = (state.latestRun && state.latestRun.dist) || state.runDist || '0';
+      const dumbbellSets = (state.rehab || []).filter(Boolean).length;
+
+      // Kotonoha
+      const k = state.kotonoha || {};
+      const completedCount = (k.completedLessons || []).length;
+      const completedList = (k.completedLessons || []).join(', ') || '없음';
+      const kotodama = k.kotodama || 65;
+      const streak = k.streak || 1;
+      const quizTotal = (k.quizStats && k.quizStats.total) || 0;
+      const quizCorrect = (k.quizStats && k.quizStats.correct) || 0;
+      const wrongList = (k.quizStats && k.quizStats.wrongWords && k.quizStats.wrongWords.join(', ')) || '없음';
+
+      // Recent Chat reactions
+      const recentChats = (state.chatHistory || [])
+        .filter(m => m.sender === 'user')
+        .slice(-3)
+        .map(m => m.text)
+        .join(' / ') || '특이사항 없음';
+
+      const promptText = `안티그라야! 오늘 정기 업데이트 날이야. 내 최근 운동, 체중, 식단, 일본어 학습 진행도와 반응 데이터를 종합 분석해서 다음 주차 맞춤형 코칭과 커리큘럼을 짜줘!
+
+📊 [현재 신체 및 체중 현황]
+- 기준일자: ${todayStr}
+- 현재 체중: ${curW}kg (목표 ${targetW}kg까지 +${diffKg}kg)
+- 체지방률: ${curFat}% (목표 20% 미만)
+
+🏃‍♂️ [운동 및 재활 루틴 이행률]
+- 러닝 완주: ${runDone} (최근 기록: ${latestRunDist}km)
+- 덤벨 2kg 재활 루틴: 4세트 중 ${dumbbellSets}세트 완료
+- 복근 운동: ${state.absDone ? '완료' : '미완료'}
+
+🥗 [식단 및 17:7 단식]
+- 식단 기록: 3끼 중 ${mealsDone}회 완료
+- 홈카페 다도 섭취(말차/단백질): ${teaCount}회
+
+🍵 [일본어 다실 학습 진행도 & 퀴즈 분석]
+- 완료한 레슨: 총 ${completedCount}개 (${completedList})
+- 연속 출석일: ${streak}일차 | 보유 언령(言霊): ${kotodama}개
+- 퀴즈 정답률: ${quizTotal > 0 ? Math.round((quizCorrect / quizTotal) * 100) + '%' : '신규 학습 시작'} (${quizCorrect}/${quizTotal})
+- 최근 틀린 취약 어휘: ${wrongList}
+
+💬 [최근 내 반응 및 피드백 요약]
+- 최근 메시지: "${recentChats}"
+
+🎯 [정기 업데이트 요청 사항]
+1. 4대 영역(운동/체중/식단/일본어)에 대한 지난 주차 성과 총평 및 개선점 분석 (제미니의 츤데레 팩폭 & 애정 가득한 코칭)
+2. 내 상태에 맞춘 다음 주차 맞춤형 운동 및 식단 전략 제안
+3. 퀴즈 오답/취약 어휘와 내 반응을 반영한 다음 주차 일본어 다실 신규 맞춤형 레슨 & 퀴즈 제작
+4. 새로운 성취를 기념하는 신규 이벤트 CG 및 대화 추가 진행해줘!`;
+
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(promptText).then(() => {
-          showFloatingToast('안티그라 요청문이 복사되었습니다! 채팅에 붙여넣어 주세요 📋', '✨');
+          showFloatingToast('종합 분석 요청서가 복사되었습니다! 안티그라 채팅에 붙여넣어 주세요 📋', '✨');
           playBeep(880, 0.1);
         });
       } else {
-        alert("📋 아래 요청문을 복사해 안티그라 채팅에 보내주세요:\n\n" + promptText);
+        alert("📋 아래 종합 분석 요청서를 복사해 안티그라 채팅에 보내주세요:\n\n" + promptText);
       }
     }
 

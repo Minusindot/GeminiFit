@@ -267,7 +267,13 @@ function submitKotonohaQuizAnswer(optionIdx) {
     points: isCorrect ? '+10' : '+2'
   });
 
+  if (!state.kotonoha.quizStats) {
+    state.kotonoha.quizStats = { total: 0, correct: 0, wrongWords: [] };
+  }
+  state.kotonoha.quizStats.total = (state.kotonoha.quizStats.total || 0) + 1;
+
   if (isCorrect) {
+    state.kotonoha.quizStats.correct = (state.kotonoha.quizStats.correct || 0) + 1;
     playBeep(880, 0.1);
     state.kotonoha.coins = (state.kotonoha.coins || 655) + 15;
     state.kotonoha.kotodama = (state.kotonoha.kotodama || 65) + 10;
@@ -276,7 +282,14 @@ function submitKotonohaQuizAnswer(optionIdx) {
     playBeep(360, 0.14);
     state.kotonoha.coins = (state.kotonoha.coins || 655) + 5;
     state.kotonoha.kotodama = (state.kotonoha.kotodama || 65) + 2;
+    if (q.targetWord) {
+      if (!state.kotonoha.quizStats.wrongWords) state.kotonoha.quizStats.wrongWords = [];
+      if (!state.kotonoha.quizStats.wrongWords.includes(q.targetWord)) {
+        state.kotonoha.quizStats.wrongWords.push(q.targetWord);
+      }
+    }
   }
+  saveState(true);
 
   // 2. Gemini reaction bubble + Green explanation card
   const reactJp = isCorrect
