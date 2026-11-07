@@ -66,9 +66,12 @@ const CHARACTER_VOICE_PROFILES = {
   }
 };
 
-function speakJapanese(text, speaker = 'gemini', customRate = null) {
+function speakJapanese(text, speaker = 'gemini', customRate = null, onEndCallback = null) {
   try {
-    if (!('speechSynthesis' in window)) return;
+    if (!('speechSynthesis' in window)) {
+      if (typeof onEndCallback === 'function') setTimeout(onEndCallback, 300);
+      return;
+    }
     window.speechSynthesis.cancel();
     // Strip ruby tags or HTML if any
     const clean = (text || '')
@@ -76,13 +79,33 @@ function speakJapanese(text, speaker = 'gemini', customRate = null) {
       .replace(/<[^>]+>/g, '')
       .replace(/[🌸🍵🐾💛✨🌟💸🏃‍♀️🥗⏰💦💖🎉🔥🗣️🇯🇵]/g, '')
       .trim();
-    if (!clean) return;
+    if (!clean) {
+      if (typeof onEndCallback === 'function') setTimeout(onEndCallback, 300);
+      return;
+    }
 
     const profile = CHARACTER_VOICE_PROFILES[speaker] || CHARACTER_VOICE_PROFILES.gemini;
     const utter = new SpeechSynthesisUtterance(clean);
     utter.lang = 'ja-JP';
     utter.pitch = profile.pitch;
     utter.rate = customRate || profile.rate;
+
+    // Estimate speaking duration in ms for safe fallback
+    const estDurationMs = Math.max(2200, Math.round((clean.length / (profile.rate || 0.9)) * 190 + 700));
+
+    let callbackFired = false;
+    const handleComplete = () => {
+      if (!callbackFired) {
+        callbackFired = true;
+        if (typeof onEndCallback === 'function') onEndCallback();
+      }
+    };
+
+    utter.onend = handleComplete;
+    utter.onerror = handleComplete;
+
+    // Safety timeout in case TTS engine does not fire onend (common mobile WebKit issue)
+    setTimeout(handleComplete, estDurationMs + 800);
 
     const voices = window.speechSynthesis.getVoices() || [];
     const jpVoices = voices.filter(v => v.lang && (v.lang.includes('ja') || v.lang.startsWith('ja')));
@@ -107,6 +130,7 @@ function speakJapanese(text, speaker = 'gemini', customRate = null) {
     window.speechSynthesis.speak(utter);
   } catch (e) {
     console.warn('TTS error:', e);
+    if (typeof onEndCallback === 'function') setTimeout(onEndCallback, 300);
   }
 }
 
@@ -211,9 +235,9 @@ function pushQuizQuestionToChat(qIdx) {
     targetSub: q.targetSub
   });
   setTimeout(() => {
-    speakJapanese(q.targetWord || q.promptJp);
+    speakJapanese(q.targetWord || q.promptJp, 'gemini');
     scrollKotonohaQuizBottom();
-  }, 200);
+  }, 450);
 }
 
 function scrollKotonohaQuizBottom() {
@@ -277,39 +301,47 @@ function submitKotonohaQuizAnswer(optionIdx) {
 
   renderKotonohaView();
   scrollKotonohaQuizBottom();
-  speakJapanese(reactJp);
+  // 음성 피드백 완료 후 여유 있게 다음 문제로 진행하는 안전 콜백
+  let hasAdvanced = false;
+  const proceedToNextStep = () => {
+    if (hasAdvanced) return;
+    hasAdvanced = true;
 
-  // 3. Advance to next question or finish after short delay
-  setTimeout(() => {
-    if (qIdx + 1 < lesson.quizzes.length) {
-      kotonohaRuntime.quizIdx = qIdx + 1;
-      kotonohaRuntime.quizAnswered = false;
-      pushQuizQuestionToChat(qIdx + 1);
-      renderKotonohaView();
-      scrollKotonohaQuizBottom();
-    } else {
-      // Completed all quizzes in lesson!
-      const todayStr = getLocalDateString();
-      if (state.kotonoha.lastStudyDate !== todayStr) {
-        state.kotonoha.streak = (state.kotonoha.streak || 0) + 1;
-        state.kotonoha.lastStudyDate = todayStr;
-      }
-      if (!state.kotonoha.completedLessons.includes(lesson.id)) {
-        state.kotonoha.completedLessons.push(lesson.id);
-      }
-      state.kotonoha.coins += 50;
-      state.kotonoha.kotodama += 25;
-      addBondExp(30);
-      saveState(true);
+    // 음성이 완전히 끝난 후, 정답 리액션과 해설(녹색 박스)을 충분히 읽을 수 있도록 1.4초 여유 대기
+    setTimeout(() => {
+      if (qIdx + 1 < lesson.quizzes.length) {
+        kotonohaRuntime.quizIdx = qIdx + 1;
+        kotonohaRuntime.quizAnswered = false;
+        pushQuizQuestionToChat(qIdx + 1);
+        renderKotonohaView();
+        scrollKotonohaQuizBottom();
+      } else {
+        // 모든 퀴즈 완료!
+        const todayStr = getLocalDateString();
+        if (state.kotonoha.lastStudyDate !== todayStr) {
+          state.kotonoha.streak = (state.kotonoha.streak || 0) + 1;
+          state.kotonoha.lastStudyDate = todayStr;
+        }
+        if (!state.kotonoha.completedLessons.includes(lesson.id)) {
+          state.kotonoha.completedLessons.push(lesson.id);
+        }
+        state.kotonoha.coins += 50;
+        state.kotonoha.kotodama += 25;
+        addBondExp(30);
+        saveState(true);
 
-      kotonohaRuntime.quizChatMessages.push({
-        role: 'lesson_complete',
-        lessonTitle: lesson.titleKo
-      });
-      renderKotonohaView();
-      scrollKotonohaQuizBottom();
-    }
-  }, 1100);
+        kotonohaRuntime.quizChatMessages.push({
+          role: 'lesson_complete',
+          lessonTitle: lesson.titleKo
+        });
+        renderKotonohaView();
+        scrollKotonohaQuizBottom();
+      }
+    }, 1400);
+  };
+
+  // 리액션 음성 재생 (음성이 완전히 끝난 후 proceedToNextStep 호출)
+  speakJapanese(reactJp, 'gemini', null, proceedToNextStep);
 }
 
 // Generate a brand-new Kansai/Kyoto Daily Lesson using Gemini AI!
