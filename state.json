@@ -1,21 +1,21 @@
 {
-  "updatedAt": "2026-10-25T10:08:42.879Z",
-  "lastActiveDate": "2026-10-25",
+  "updatedAt": "2026-11-07T11:06:31.081Z",
+  "lastActiveDate": "2026-11-07",
   "theme": "light",
   "weight": 65.6,
   "fat": 32.2,
   "bondRank": 11,
   "bondExp": 45,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
-  "currentSituation": "ev1",
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev3",
   "absDone": false,
-  "runDone": true,
+  "runDone": false,
   "runDist": 7,
   "rehab": [
     false,
     false,
-    false
+    true
   ],
   "meals": [
     false,
@@ -24,8 +24,8 @@
   ],
   "teaLog": {
     "matcha": 0,
-    "espresso": 1,
-    "tea": 1
+    "espresso": 0,
+    "tea": 0
   },
   "gymRoutine": {
     "upper1": {
@@ -45,7 +45,7 @@
         false,
         false,
         false,
-        false
+        true
       ],
       "weight": "25kg",
       "reps": 20
@@ -56,7 +56,7 @@
         false,
         false,
         false,
-        false
+        true
       ],
       "weight": "25kg",
       "reps": 20
@@ -64,7 +64,7 @@
     "legRaise": {
       "name": "캡틴스 체어 레그레이즈",
       "sets": [
-        false
+        true
       ],
       "target": "15회",
       "reps": 50
@@ -73,7 +73,7 @@
       "name": "크런치",
       "sets": [
         false,
-        false
+        true
       ],
       "target": "20회",
       "reps": 50
@@ -180,6 +180,26 @@
       "crunchTarget": 2,
       "totalSets": 15,
       "totalReps": 390
+    },
+    {
+      "id": "gym-1794049575180",
+      "date": "11/7",
+      "fullDate": "2026-11-07",
+      "time": "오후 08:06",
+      "upper1Done": 0,
+      "upper1Reps": 0,
+      "upper2Done": 1,
+      "upper2Reps": 20,
+      "lowerDone": 1,
+      "lowerReps": 20,
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
+      "legRaiseTarget": 1,
+      "crunchDone": 1,
+      "crunchReps": 50,
+      "crunchTarget": 2,
+      "totalSets": 4,
+      "totalReps": 140
     }
   ],
   "latestRun": {
@@ -339,9 +359,41 @@
         "tea": 0
       },
       "lastUpdated": "2026-10-24T08:20:12.648Z"
+    },
+    "2026-10-25": {
+      "date": "2026-10-25",
+      "weight": 65.6,
+      "fat": 32.2,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "runDone": true,
+      "absDone": false,
+      "rehabDone": 0,
+      "gymDone": false,
+      "teaLog": {
+        "matcha": 0,
+        "espresso": 1,
+        "tea": 1
+      },
+      "autoArchived": true
     }
   },
   "chatHistory": [
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "6.32km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "헉! 442kcal 소모에 5,007걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "오... 세트 루틴에 캡틴스 체어랑 크런치까지 헬스장 풀코스 올 클리어? 바보 프로듀서 치고는 꽤 독하게 해냈네! 기특하니까 이리 와, 어깨 주물러줄게. 🐾"
+    },
     {
       "sender": "kotone",
       "name": "코토네",
@@ -470,21 +522,6 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "단백질 음료 야무지게 챙겼네! 근손실 없이 슬림 탄탄 라인 만들려면 단백질 충전은 필수지, 기특해! 🥛💪"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "와아아아 대박!! 7km 완주 나이스!! 1:16:22 동안 471kcal나 불태웠잖아! 손목 힘 빼고 달린 폼 진짜 최고였어 프로듀서!! 🌟🏃‍♀️"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "7km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "헉! 471kcal 소모에 8,787걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛"
     }
   ]
 }
