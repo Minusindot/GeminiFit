@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "msedge-tts": "^2.1.1",
     "tesseract.js": "^7.0.0"
   }
 }

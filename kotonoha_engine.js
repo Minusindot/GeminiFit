@@ -73,6 +73,24 @@ const CHARACTER_VOICE_PROFILES = {
 let currentKotonohaAudio = null;
 const kotonohaAudioCache = {};
 
+// Pre-bundled high quality VOICEVOX MP3 assets (Instant 0ms latency & authentic anime voices)
+const KOTONOHA_PRESET_AUDIO = {
+  "靴": "./audio/kotonoha/word_kutsu.mp3",
+  "おいでやす": "./audio/kotonoha/word_oideyasu.mp3",
+  "白": "./audio/kotonoha/word_shiro.mp3",
+  "正解どす！": "./audio/kotonoha/react_correct_gemini.mp3",
+  "正解どす": "./audio/kotonoha/react_correct_gemini.mp3",
+  "ピンポン-！お見事どすえ🍵": "./audio/kotonoha/react_migoto_gemini.mp3",
+  "ピンポン！お見事どすえ": "./audio/kotonoha/react_migoto_gemini.mp3",
+  "月曜日の朝。ジェミニの茶屋どす。": "./audio/kotonoha/day1_step1.mp3",
+  "プロデューサーはん、おいでやす。今日もおきばりやす！": "./audio/kotonoha/day1_step2.mp3",
+  "ヤッホー！新しい白い靴を買ったよ！": "./audio/kotonoha/day1_step3.mp3",
+  "わあ、高そうな靴ですね！何円ですか？！": "./audio/kotonoha/day1_step4.mp3",
+  "ちょっとミオはん、茶屋の中で靴を履いたらあかんやん！": "./audio/kotonoha/day1_step5.mp3",
+  "あ、ほんとだ！ここは土足厳禁でしたね！": "./audio/kotonoha/day1_step6.mp3",
+  "あら、ほんまどすなぁ。ふふ、ほな皆でお抹茶を飲みましょか。": "./audio/kotonoha/day1_step7.mp3"
+};
+
 // VOICEVOX Subculture Anime Character Voice Mapping
 const VOICEVOX_SPEAKERS = {
   gemini: 2,  // 四国めたん (Shikoku Metan - elegant tsundere ojousama)
@@ -135,12 +153,60 @@ function speakJapaneseFallback(clean, speaker = 'gemini', customRate = null, onE
 // Main High-Quality VOICEVOX Anime Speech Player
 async function speakJapanese(text, speaker = 'gemini', customRate = null, onEndCallback = null) {
   try {
+    // Check if target is directly an audio file (.mp3)
+    let audioTarget = null;
+    if (typeof text === 'string' && (text.endsWith('.mp3') || text.startsWith('./audio/'))) {
+      audioTarget = text;
+    }
+
     // 1. Clean HTML / ruby tags / special emojis
     const clean = (text || '')
       .replace(/<rt>.*?<\/rt>/g, '')
       .replace(/<[^>]+>/g, '')
       .replace(/[🌸🍵🐾💛✨🌟💸🏃‍♀️🥗⏰💦💖🎉🔥🗣️🇯🇵]/g, '')
       .trim();
+
+    if (!audioTarget && KOTONOHA_PRESET_AUDIO[clean]) {
+      audioTarget = KOTONOHA_PRESET_AUDIO[clean];
+    }
+
+    // Stop currently playing audio or speech
+    if (currentKotonohaAudio) {
+      try {
+        currentKotonohaAudio.pause();
+        currentKotonohaAudio.currentTime = 0;
+      } catch (_) {}
+      currentKotonohaAudio = null;
+    }
+    if ('speechSynthesis' in window) {
+      try { window.speechSynthesis.cancel(); } catch (_) {}
+    }
+
+    // Direct Instant High-Quality MP3 Playback (VOICEVOX)
+    if (audioTarget) {
+      try {
+        const audio = new Audio(audioTarget);
+        currentKotonohaAudio = audio;
+        let finished = false;
+        const done = () => {
+          if (!finished) {
+            finished = true;
+            if (typeof onEndCallback === 'function') onEndCallback();
+          }
+        };
+        audio.onended = done;
+        audio.onerror = () => {
+          speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
+        };
+        audio.play().catch(() => {
+          speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
+        });
+        return;
+      } catch (_) {
+        speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
+        return;
+      }
+    }
 
     if (!clean) {
       if (typeof onEndCallback === 'function') setTimeout(onEndCallback, 300);
@@ -202,7 +268,7 @@ async function speakJapanese(text, speaker = 'gemini', customRate = null, onEndC
     }
 
     const data = await resp.json();
-    const audioUrl = data.mp3StreamingUrl || data.mp3DownloadUrl;
+    const audioUrl = data.mp3DownloadUrl || data.wavDownloadUrl || data.mp3StreamingUrl;
 
     if (!audioUrl) {
       executeFallback();
@@ -278,7 +344,7 @@ function startKotonohaStory(lessonIdx) {
 
   const lesson = getCurrentKotonohaLesson();
   if (lesson && lesson.story && lesson.story[0]) {
-    setTimeout(() => speakJapanese(lesson.story[0].jpPlain || lesson.story[0].jpRuby, lesson.story[0].speaker || 'gemini'), 250);
+    setTimeout(() => speakJapanese(lesson.story[0].audio || lesson.story[0].jpPlain || lesson.story[0].jpRuby, lesson.story[0].speaker || 'gemini'), 250);
   }
 }
 
@@ -297,7 +363,7 @@ function stepKotonohaStory(delta) {
   renderKotonohaView();
   const step = lesson.story[nextIdx];
   if (step) {
-    speakJapanese(step.jpPlain || step.jpRuby, step.speaker || 'gemini');
+    speakJapanese(step.audio || step.jpPlain || step.jpRuby, step.speaker || 'gemini');
   }
 }
 
