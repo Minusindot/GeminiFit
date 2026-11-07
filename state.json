@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-07T11:06:31.081Z",
+  "updatedAt": "2026-11-07T11:06:39.921Z",
   "lastActiveDate": "2026-11-07",
   "theme": "light",
   "weight": 65.6,
   "fat": 32.2,
   "bondRank": 11,
-  "bondExp": 45,
+  "bondExp": 65,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev3",
+  "currentSituation": "ev2",
   "absDone": false,
   "runDone": false,
   "runDist": 7,
@@ -376,19 +376,36 @@
         "tea": 1
       },
       "autoArchived": true
+    },
+    "2026-11-07": {
+      "date": "2026-11-07",
+      "weight": 65.6,
+      "fat": 32.2,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "runDone": false,
+      "absDone": false,
+      "gymDone": false,
+      "latestRun": {
+        "id": "run-1792922922872",
+        "date": "2026-10-25",
+        "distance": 7,
+        "duration": "1:16:22",
+        "pace": "10'47\"",
+        "calories": 471,
+        "heartRate": 127,
+        "steps": 8787,
+        "source": "삼성헬스"
+      },
+      "teaLog": {
+        "matcha": 0,
+        "espresso": 0,
+        "tea": 0
+      },
+      "lastUpdated": "2026-11-07T11:06:39.907Z"
     }
   },
   "chatHistory": [
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "6.32km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "헉! 442kcal 소모에 5,007걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛"
-    },
     {
       "sender": "gemini",
       "name": "제미니",
@@ -522,6 +539,16 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "단백질 음료 야무지게 챙겼네! 근손실 없이 슬림 탄탄 라인 만들려면 단백질 충전은 필수지, 기특해! 🥛💪"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 08:06 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"7km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"기록 동기화 확인 🐾 슬림핏 52kg 될 때까지 긴장 늦추지 말고 오늘 루틴 끝까지 달려!\""
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "고생 많았어, 프로듀서.||17시 넘었으니까 야식 생각 절대 금지야 🐾||얼른 덤벨 들고 와. 자세 봐줄 테니까."
     }
   ]
 }
