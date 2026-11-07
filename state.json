@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-07T13:53:07.107Z",
+  "updatedAt": "2026-11-07T14:01:01.088Z",
   "lastActiveDate": "2026-11-07",
   "theme": "light",
   "weight": 65.6,
   "fat": 32.2,
   "bondRank": 14,
-  "bondExp": 20,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
-  "currentSituation": "ev5",
+  "bondExp": 60,
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev15",
   "absDone": false,
   "runDone": false,
   "runDist": 7,
@@ -407,11 +407,6 @@
   },
   "chatHistory": [
     {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "6.32km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾"
-    },
-    {
       "sender": "kotone",
       "name": "코토네",
       "text": "헉! 401kcal 소모에 7,380걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛"
@@ -548,6 +543,11 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "프로듀서님~!! 💛||언제 오시나 코토네가 눈 빠지게 기다렸잖아요! 히히||오늘 체중 65.6kg 찍힌 거 보고 심쿵했어요 🥹✨"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "「うちのこと、会いたかったんどすか？ふふ🍵」 (우치노 코토, 아이타캇탄 도스카? 후후 / 저를 보고 싶으셨던 건가요? 후후)||체중 65.6kg... 저만 믿고 따라오시면 52kg은 금방이랍니다 🌸"
     }
   ]
 }
