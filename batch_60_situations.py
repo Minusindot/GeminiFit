@@ -59,6 +59,8 @@ MIO_POOL_FILES = [
 
 # 60 Bespoke Camera Angles, Framing & Head/Body Orientations to prevent repetitive frontal poses
 CAMERA_BY_FILE = {
+    "gemini_26_kyoto_teahouse.png": "OVER-THE-SHOULDER TATAMI TEA CEREMONY SHOT from behind her right shoulder looking down at her hands whisking green matcha in a ceramic bowl on the tatami mat, her face turned 3/4 back toward the viewer with a serene Kyoto ojousama smile.",
+    "gemini_27_kyoto_cherry_walk.png": "LOW-ANGLE WALKING-AHEAD REAR-3/4 VIEW on a stone-paved Gion street under weeping cherry blossoms, her kimono sleeves fluttering in the breeze as she pauses and glances back over her left shoulder.",
     "gemini_28_genkan_shoes_off.png": "LOW-ANGLE FLOOR-LEVEL POV from the stone entryway looking UP at her full body stepping onto the raised wooden tatami floor, her body turned 45-degrees sideways bending down toward the camera.",
     "mio_26_sneaker_showoff_grin.png": "EXTREME LOW-ANGLE WORM'S-EYE WIDE SHOT from ground level with her lifted white sneaker sole huge in the foreground perspective, her torso leaning back dynamically.",
     "kotone_26_osaka_bargain_sparkle.png": "OVER-THE-SHOULDER SHOPKEEPER POV looking slightly DOWN at her leaning far forward across a market stall counter, head tilted UP with chin resting near her clasped hands.",
@@ -149,6 +151,20 @@ CHAR_MIO = (
 # 60 JOBS ORDERED BY PRIORITY (Kotonoha Lesson Matchers First -> Seasons -> Expressions/SD)
 # ==============================================================================
 JOBS = [
+    (
+        "gemini_26_kyoto_teahouse.png",
+        "image/03 gemini/gemini_26_kyoto_teahouse.png",
+        [REF_GEMINI_MAIN, REF_GEMINI_TEA],
+        f"{STYLE_SSR} {CHAR_GEMINI} SCENE & POSE: Inside a traditional Kyoto wooden teahouse room with open shoji doors showing a bamboo courtyard. "
+        "Gemini kneeling in seiza on tatami wearing an elegant floral kimono, delicately whisking emerald-green matcha tea with a bamboo chasen, glancing back over her shoulder with a refined smile."
+    ),
+    (
+        "gemini_27_kyoto_cherry_walk.png",
+        "image/03 gemini/gemini_27_kyoto_cherry_walk.png",
+        [REF_GEMINI_MAIN, REF_GEMINI_TEA],
+        f"{STYLE_SSR} {CHAR_GEMINI} SCENE & POSE: Historic Kyoto Gion cobblestone path lined with wooden machiya townhouses and blooming weeping cherry blossom trees. "
+        "Gemini walking ahead holding a traditional red paper wagasa umbrella tilted over her shoulder, turning back toward the viewer with cherry petals drifting past."
+    ),
     # --------------------------------------------------------------------------
     # BATCH 1: THEME A - KOTONOHA TEAHOUSE & KANSAI TRAVEL (12 CGs)
     # --------------------------------------------------------------------------
