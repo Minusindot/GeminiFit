@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-07T13:06:06.927Z",
+  "updatedAt": "2026-11-07T13:37:04.931Z",
   "lastActiveDate": "2026-11-07",
   "theme": "light",
   "weight": 65.6,
   "fat": 32.2,
   "bondRank": 13,
-  "bondExp": 40,
+  "bondExp": 70,
   "activeTrainer": "kotone",
-  "activeMode": "dual",
-  "currentSituation": "trio5",
+  "activeMode": "kotone",
+  "currentSituation": "ev5",
   "absDone": false,
   "runDone": false,
   "runDist": 7,
@@ -407,11 +407,6 @@
   },
   "chatHistory": [
     {
-      "sender": "mio",
-      "name": "미오",
-      "text": "와아아아 대박!! 6.32km 완주 나이스!! 58:48 동안 401kcal나 불태웠잖아! 손목 힘 빼고 달린 폼 진짜 최고였어 프로듀서!! 🌟🏃‍♀️"
-    },
-    {
       "sender": "gemini",
       "name": "제미니",
       "text": "6.32km 완주... 흥, 바보 프로듀서 치고는 꽤 독하게 달렸잖아? 이 정도 유산소면 공복 골든타임 체지방 연소 효율 극대화야. 뭉친 다리랑 팔꿈치 스트레칭 꼭 해! 🐾"
@@ -548,6 +543,11 @@
       "sender": "dual",
       "name": "제미니 · 코토네 · 미오",
       "text": "📢 [3인 트레이너 실시간 대기방]\n💛 코토네: \"프로듀서님 오셨다~! 헤헤 💛\"\n🌟 미오: \"오오 딱 맞춰서 잘 왔어! 하이파이브! 🖐️\"\n🐾 제미니: \"흥, 게으름 피우지 말고 얼른 들어와, 바보야! 🐾\""
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "프로듀서님~!! 💛||언제 오시나 코토네가 눈 빠지게 기다렸잖아요! 히히||오늘 체중 65.6kg 찍힌 거 보고 심쿵했어요 🥹✨"
     }
   ]
 }
