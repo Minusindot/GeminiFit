@@ -43,7 +43,7 @@ JOBS = [
         (
             "CRITICAL ART STYLE: Gakumas (Gakuen Idolmaster) official SSR anime game CG illustration, "
             "vibrant cell-shaded anime visual novel CG, cinematic gym studio rim lighting, clean delicate lineart. "
-            "CHARACTER (Gemini): 19-year-old Japanese anime girl, glossy raven-black long hair tied in low side bunches, "
+            "CHARACTER (Gemini): elegant Japanese anime idol girl, glossy raven-black long hair tied in low side bunches, "
             "cute black cat ears with soft inner fur, striking crimson-amber eyes, straight bangs, tsundere personality. "
             "SCENE & POSE: Seated cable row machine in modern fitness gym, camera viewed from three-quarter back angle showcasing "
             "her beautifully toned scapula and back muscles pulling the V-bar cable tight to her abdomen, "

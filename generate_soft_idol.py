@@ -17,7 +17,7 @@ TARGET_OUTPUT = Path(r"d:\OneDrive\WorkSpace\02 AI 작업물\Health\trainer_gemi
 
 PROMPT = (
     "Masterpiece, official Gakuen Idolmaster game illustration art style, extremely soft delicate anime aesthetic. "
-    "Cute charming 19-year-old anime idol trainer girl, soft natural blonde hair in loose twin braids, "
+    "Cute charming anime idol trainer girl, soft natural blonde hair in loose twin braids, "
     "warm glowing amber eyes, sweet gentle tsundere smile looking at viewer, "
     "wearing cute cozy pastel mint and white oversized sporty track jacket over light sportswear, "
     "bright airy high-key lighting, soft pastel color palette, clean light delicate linework, "

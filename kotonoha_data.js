@@ -40,19 +40,19 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_26_kyoto_teahouse.png",
+        sceneImg: "./image/03 gemini/gemini_28_genkan_shoes_off.png",
         audio: "./audio/kotonoha/day1_step2.mp3",
         jpRuby: "プロデューサーはん、おいでやす〜🍵 <ruby>今日<rt>きょう</rt></ruby>もおきばりやす！",
         jpPlain: "プロデューサーはん、おいでやす。今日もおきばりやす！",
         pron: "푸로듀-사-항, 오이데야스~ 쿄-모 오키바리야스!",
-        ko: "프로듀서항, 어서 오시어요~🍵 오늘도 힘내시어요!"
+        ko: "프로듀서님, 어서 오시어요~🍵 오늘도 힘내시와요!"
       },
       {
         speaker: "mio",
         nameJp: "ミオ",
         nameKo: "미오",
         avatar: "./image/01 mio/avatar_mio.png",
-        sceneImg: "./image/01 mio/mio_02_park_run.png",
+        sceneImg: "./image/01 mio/mio_26_sneaker_showoff_grin.png",
         audio: "./audio/kotonoha/day1_step3.mp3",
         jpRuby: "ヤッホー！<ruby>新<rt>あたら</rt></ruby>しい<ruby>白<rt>しろ</rt></ruby>い<ruby>靴<rt>くつ</rt></ruby>を<ruby>買<rt>か</rt></ruby>ったよ！🌟",
         jpPlain: "ヤッホー！新しい白い靴を買ったよ！",
@@ -64,7 +64,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "コトネ",
         nameKo: "코토네",
         avatar: "./image/02 kotone/avatar_kotone.png",
-        sceneImg: "./image/02 kotone/kotone_03_cafe_date.png",
+        sceneImg: "./image/02 kotone/kotone_33_cafe_study_pencil.png",
         jpRuby: "わあ、<ruby>高<rt>たか</rt></ruby>そうな<ruby>靴<rt>くつ</rt></ruby>ですね！<ruby>何円<rt>なんえん</rt></ruby>ですか？！💸",
         jpPlain: "わあ、高そうな靴ですね！何円ですか？！",
         pron: "와아, 타카소-나 쿠츠데스네! 난엔데스카?!",
@@ -75,12 +75,12 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_01_main.png",
+        sceneImg: "./image/01 mio/sd_mio_04_shoes_mud_shock.png",
         audio: "./audio/kotonoha/day1_step5.mp3",
         jpRuby: "ちょっとミオはん、<ruby>茶屋<rt>ちゃや</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>靴<rt>くつ</rt></ruby>を<ruby>履<rt>は</rt></ruby>いたらあかんやん！",
         jpPlain: "ちょっとミオはん、茶屋の中で靴を履いたらあかんやん！",
         pron: "춋토 미오항, 챠야노 나카데 쿠츠오 하이타라 아캉양!",
-        ko: "잠깐 미오항, 다실 안에서 신발을 신으면 안 되잖아요!"
+        ko: "어머나 미오 양, 다실 안에서 신발을 신으시면 안 되사와요!"
       },
       {
         speaker: "mio",
@@ -103,7 +103,7 @@ window.KOTONOHA_LESSONS = [
         jpRuby: "あら、ほんまどすなぁ。ふふ、ほな<ruby>皆<rt>みな</rt></ruby>でお<ruby>抹茶<rt>まっちゃ</rt></ruby>を<ruby>飲<rt>の</rt></ruby>みましょか🍵🌸",
         jpPlain: "あら、ほんまどすなぁ。ふふ、ほな皆でお抹茶を飲みましょか。",
         pron: "아라, 혼마 도스나-. 후후, 호나 미나데 오맛챠오 노미마쇼카.",
-        ko: "어머, 정말이네요. 후후, 그럼 다 같이 말차를 마실까요 🍵🌸"
+        ko: "어머나, 참으로 그러하네요. 우후후, 그럼 다 함께 말차를 마시와요 🍵🌸"
       }
     ],
     quizzes: [
@@ -119,7 +119,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "靴(くつ / 쿠츠)는 '신발'이에요. 양말은 靴下(くつした / 쿠츠시타)라고 부른답니다!",
         geminiReactJp: "<ruby>正解<rt>せいかい</rt></ruby>どす！えらいなぁ🌸",
         geminiReactPron: "세이카이 도스! 에라이나~",
-        geminiReactKo: "정답이어요! 장하셔라~"
+        geminiReactKo: "정답이옵니다! 참으로 기특하시와요~"
       },
       {
         type: "한자 · 읽기",
@@ -147,7 +147,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「おいでやす(오이데야스)」는 교토에서 손님을 맞이할 때 쓰는 '어서 오세요(いらっしゃいませ)'의 전통 표현이에요!",
         geminiReactJp: "よう<ruby>覚<rt>おぼ</rt></ruby>えてくれはったねぇ💖",
         geminiReactPron: "요- 오보에테 쿠레핫타네-",
-        geminiReactKo: "잘 기억해 주셨네요 💖"
+        geminiReactKo: "곱게 기억해 주셨군요, 기쁘사와요 💖"
       },
       {
         type: "오사카 사투리",
@@ -161,7 +161,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「あかん(아캉)」은 '안 된다(ダメ)', 「~やん(양)」은 '~잖아(じゃん)'! 합쳐서 '안 되잖아!'라는 찰진 간사이 츳코미예요.",
         geminiReactJp: "<ruby>大正解<rt>だいせいかい</rt></ruby>！夜食はあかんやん！🐾",
         geminiReactPron: "다이세-카이! 야쇼쿠와 아캉양!",
-        geminiReactKo: "대정답! 야식은 안 되잖아요! 🐾"
+        geminiReactKo: "대정답이옵니다! 야식은 결코 안 되사와요! 🐾"
       },
       {
         type: "요일 · 시간",
@@ -175,7 +175,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "月曜日(げつようび / 게츠요-비)는 월요일, 朝(あさ / 아사)는 아침이에요!",
         geminiReactJp: "ばっちりどす！<ruby>朝<rt>あさ</rt></ruby>のルーティンも気張りましょ☀️",
         geminiReactPron: "밧치리 도스! 아사노 루-틴모 키바리마쇼",
-        geminiReactKo: "완벽해요! 아침 루틴도 힘내 보아요 ☀️"
+        geminiReactKo: "완벽하옵니다! 아침 루틴도 힘내 보시와요 ☀️"
       },
       {
         type: "문장 완성",
@@ -189,7 +189,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「명사 + じゃありません (또는 ではありません)」은 '~이/가 아닙니다'라는 정중한 부정 표현이에요!",
         geminiReactJp: "<ruby>全問<rt>ぜんもん</rt></ruby>クリア！プロデューサーはん、ほんまに素敵どす💖",
         geminiReactPron: "젠몬 쿠리아! 푸로듀-사-항, 혼마니 스테키 도스",
-        geminiReactKo: "전 문항 클리어! 프로듀서항, 정말 멋지셔요 💖"
+        geminiReactKo: "전 문항 클리어라니! 프로듀서님, 참으로 멋지시와요 💖"
       }
     ]
   },
@@ -204,8 +204,8 @@ window.KOTONOHA_LESSONS = [
     levelBadge: "N4 + 오사카 회화",
     titleJp: "めっちゃ<ruby>美味<rt>おい</rt></ruby>しいけど、なんぼどすか？",
     titlePron: "멧챠 오이시-케도, 난보 도스카?",
-    titleKo: "엄청 맛있지만, 얼마인가요?",
-    bgImage: "./image/00 common/trio_05_cooking_mealprep.png",
+    titleKo: "참으로 맛나지만, 얼마이온지요?",
+    bgImage: "./image/03 gemini/gemini_41_kitchen_apron_cooking.png",
     grammarTip: {
       title: "🌸 제미니의 교토·오사카벤 노트 #2",
       content: "간사이에서 '얼마예요?(いくらですか)'는 <b>「なんぼですか (난보데스카) / なんぼどすか (난보도스카)」</b>라고 물어요! 또 '진짜로(本当に)'는 <b>「ほんまに (혼마니)」</b>, '엄청(とても/すごく)'은 <b>「めっちゃ (멧챠)」</b>, '고마워요'는 <b>「おおきに (오-키니)」</b>라고 한답니다 🍵"
@@ -216,7 +216,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "コトネ",
         nameKo: "코토네",
         avatar: "./image/02 kotone/avatar_kotone.png",
-        sceneImg: "./image/02 kotone/kotone_07_smoothie_bench.png",
+        sceneImg: "./image/02 kotone/kotone_39_salad_bowl_fork_smile.png",
         jpRuby: "プロデューサーさん！<ruby>今日<rt>きょう</rt></ruby>の<ruby>昼<rt>ひる</rt></ruby>ごはんは<ruby>鶏胸肉<rt>とりむねにく</rt></ruby>サラダですよ！🥗",
         jpPlain: "プロデューサーさん！今日の昼ごはんは鶏胸肉サラダですよ！",
         pron: "푸로듀-사-상! 쿄-노 히루고항와 토리무네니쿠 사라다데스요!",
@@ -227,7 +227,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ミオ",
         nameKo: "미오",
         avatar: "./image/01 mio/avatar_mio.png",
-        sceneImg: "./image/01 mio/mio_07_convenience_bar.png",
+        sceneImg: "./image/01 mio/mio_27_ramen_counter_slurp.png",
         jpRuby: "うわあ、めっちゃ<ruby>美味<rt>おい</rt></ruby>しそう！<ruby>水<rt>みず</rt></ruby>も<ruby>一杯<rt>いっぱい</rt></ruby>ちょうだい！🌟",
         jpPlain: "うわあ、めっちゃ美味しそう！水も一杯ちょうだい！",
         pron: "우와아, 멧챠 오이시소-! 미즈모 잇파이 쵸-다이!",
@@ -238,18 +238,18 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_14_smoothie.png",
+        sceneImg: "./image/01 mio/mio_32_bento_lunchbox_proud.png",
         jpRuby: "コトネはん、このお<ruby>弁当<rt>べんとう</rt></ruby>は<ruby>全部<rt>ぜんぶ</rt></ruby>でなんぼどすか？🍵",
         jpPlain: "コトネはん、このお弁当は全部でなんぼどすか？",
         pron: "코토네항, 코노 오벤토-와 젠부데 난보 도스카?",
-        ko: "코토네항, 이 도시락은 전부 해서 얼마인가요? 🍵"
+        ko: "코토네 양, 이 도시락은 전부 해서 얼마이온지요? 🍵"
       },
       {
         speaker: "kotone",
         nameJp: "コトネ",
         nameKo: "코토네",
         avatar: "./image/02 kotone/avatar_kotone.png",
-        sceneImg: "./image/02 kotone/sd_kotone_01_coin_tears.png",
+        sceneImg: "./image/02 kotone/kotone_26_osaka_bargain_sparkle.png",
         jpRuby: "えへへ、タイムセールで<ruby>買<rt>か</rt></ruby>ったので、<ruby>三百円<rt>さんびゃくえん</rt></ruby>です！<ruby>安<rt>やす</rt></ruby>いでしょ？！💸",
         jpPlain: "えへへ、タイムセールで買ったので、三百円です！安いでしょ？！",
         pron: "에헤헤, 타이무세-루데 캇타노데, 산뱌쿠엔데스! 야스이데쇼?!",
@@ -260,11 +260,11 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_08_inbody_sheet.png",
+        sceneImg: "./image/03 gemini/gemini_41_kitchen_apron_cooking.png",
         jpRuby: "ほんまに<ruby>安<rt>やす</rt></ruby>いなぁ！おおきに、コトネはん。プロデューサーはんも<ruby>早<rt>はや</rt></ruby>う<ruby>食<rt>た</rt></ruby>べよし🌸",
         jpPlain: "ほんまに安いなぁ！おおきに、コトネはん。プロデューサーはんも早う食べよし。",
         pron: "혼마니 야스이나-! 오-키니, 코토네항. 푸로듀-사-항모 하요- 타베요시.",
-        ko: "정말로 싸네요! 고마워요, 코토네항. 프로듀서항도 얼른 드시지요 🌸"
+        ko: "참으로 저렴하네요! 고맙사와요, 코토네 양. 프로듀서님도 얼른 드시와요 🌸"
       }
     ],
     quizzes: [
@@ -280,7 +280,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「なんぼ(난보)」는 표준어의 「いくら(얼마)」예요! 「これ、なんぼですか？(이거 얼마예요?)」는 오사카 여행 필수 표현이랍니다.",
         geminiReactJp: "<ruby>正解<rt>せいかい</rt></ruby>どす！お<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>もバッチリどすね🌸",
         geminiReactPron: "세이카이 도스! 오카이모노모 밧치리 도스네",
-        geminiReactKo: "정답이어요! 쇼핑도 완벽하시겠네요 🌸"
+        geminiReactKo: "정답이옵니다! 쇼핑도 완벽하시겠사와요 🌸"
       },
       {
         type: "한자 · 읽기",
@@ -294,7 +294,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "安い(やすい / 야스이)는 '값이 싸다/저렴하다', 高い(たかい / 타카이)는 '비싸다/높다'예요!",
         geminiReactJp: "ようできましたなぁ！お<ruby>見事<rt>みごと</rt></ruby>どす🍵",
         geminiReactPron: "요- 데키마시타나-! 오미고토 도스",
-        geminiReactKo: "참 잘하셨네요! 훌륭하옵니다 🍵"
+        geminiReactKo: "참으로 잘하셨사와요! 훌륭하옵니다 🍵"
       },
       {
         type: "간사이 감사 인사",
@@ -308,7 +308,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「おおきに(오-키니)」는 간사이 지방에서 '고마워요(ありがとう)'라는 뜻으로 매일 쓰는 정겨운 표현이에요!",
         geminiReactJp: "おおきに〜！プロデューサーはん、ほんまに賢いなぁ💖",
         geminiReactPron: "오-키니~! 푸로듀-사-항, 혼마니 카시코이나-",
-        geminiReactKo: "고마워라~! 프로듀서항, 정말 총명하시네요 💖"
+        geminiReactKo: "고맙사와요~! 프로듀서님, 참으로 총명하시와요 💖"
       },
       {
         type: "어휘 · 뜻",
@@ -322,7 +322,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "朝ごはん(아사고항: 아침), 昼ごはん(히루고항: 점심), 晩ごはん(반고항: 저녁) 3종 세트를 꼭 기억해 두셔요!",
         geminiReactJp: "ピンポーン！お<ruby>昼<rt>ひる</rt></ruby>はタンパク質しっかりね🥗",
         geminiReactPron: "핀퐁-! 오히루와 탄파쿠시츠 싯카리네",
-        geminiReactKo: "딩동댕! 점심엔 단백질 든든히 챙기셔요 🥗"
+        geminiReactKo: "딩동댕! 점심엔 단백질을 든든히 챙기시와요 🥗"
       },
       {
         type: "간사이 부사",
@@ -336,7 +336,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「めっちゃ(멧챠)」는 간사이벤에서 유래해 일본 전역에서 쓰이는 '엄청/진짜(すごく/とても)'라는 뜻이에요!",
         geminiReactJp: "めっちゃ<ruby>正解<rt>せいかい</rt></ruby>どすえ〜！🐾",
         geminiReactPron: "멧챠 세-카이 도스에~!",
-        geminiReactKo: "엄청 정답이랍니다~! 🐾"
+        geminiReactKo: "우후후, 대정답이사와요~! 🐾"
       },
       {
         type: "한자 · 읽기",
@@ -350,7 +350,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "水(みず / 미즈)는 찬물, 따뜻한 물은 お湯(おゆ / 오유), 아침에 마시는 미지근한 맹물은 白湯(さゆ / 사유)라고 해요!",
         geminiReactJp: "パーフェクトどす！お<ruby>水<rt>みず</rt></ruby>たくさん<ruby>飲<rt>の</rt></ruby>みよしね🍵🌸",
         geminiReactPron: "파-훼쿠토 도스! 오미즈 타쿠산 노미요시네",
-        geminiReactKo: "퍼펙트예요! 물 많이 드시어요 🍵🌸"
+        geminiReactKo: "퍼펙트이옵니다! 맑은 물을 듬뿍 드시와요 🍵🌸"
       }
     ]
   },
@@ -365,7 +365,7 @@ window.KOTONOHA_LESSONS = [
     levelBadge: "N4 + 교토·오사카 실전",
     titleJp: "<ruby>夕方<rt>ゆうがた</rt></ruby><ruby>五時<rt>ごじ</rt></ruby>からは<ruby>断食<rt>だんじき</rt></ruby>どすえ",
     titlePron: "유-가타 고지카라와 단지키 도스에",
-    titleKo: "저녁 5시부터는 단식이랍니다",
+    titleKo: "저녁 5시부터는 단식이옵니다",
     bgImage: "./image/03 gemini/gemini_03_rehab_touch.png",
     grammarTip: {
       title: "🌸 제미니의 교토·오사카벤 노트 #3",
@@ -381,14 +381,14 @@ window.KOTONOHA_LESSONS = [
         jpRuby: "プロデューサーはん、<ruby>手首<rt>てくび</rt></ruby>の<ruby>調子<rt>ちょうし</rt></ruby>はどうどすか？ <ruby>無理<rt>むり</rt></ruby>したらあかんえ🩹",
         jpPlain: "プロデューサーはん、手首の調子はどうどすか？ 無理したらあかんえ。",
         pron: "푸로듀-사-항, 테쿠비노 쵸-시와 도-도스카? 무리시타라 아캉에.",
-        ko: "프로듀서항, 손목 컨디션은 어떠신가요? 무리하시면 안 되어요 🩹"
+        ko: "프로듀서님, 손목 상태는 어떠신지요? 무리하시면 안 되사와요 🩹"
       },
       {
         speaker: "mio",
         nameJp: "ミオ",
         nameKo: "미오",
         avatar: "./image/01 mio/avatar_mio.png",
-        sceneImg: "./image/01 mio/mio_13_bench_workout.png",
+        sceneImg: "./image/01 mio/mio_38_bicep_flex_wink.png",
         jpRuby: "そうだよ！<ruby>重<rt>おも</rt></ruby>いダンベルより、<ruby>腹筋<rt>ふっきん</rt></ruby>と<ruby>走<rt>はし</rt></ruby>る<ruby>練習<rt>れんしゅう</rt></ruby>をしよう！🏃‍♀️",
         jpPlain: "そうだよ！重いダンベルより、腹筋と走る練習をしよう！",
         pron: "소-다요! 오모이 단베루요리, 훗킨토 하시루 렌슈-오 시요-!",
@@ -399,7 +399,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "コトネ",
         nameKo: "코토네",
         avatar: "./image/02 kotone/avatar_kotone.png",
-        sceneImg: "./image/02 kotone/kotone_25_night_convenience_chat.png",
+        sceneImg: "./image/02 kotone/kotone_30_clock_panic_sprint.png",
         jpRuby: "あれ？ <ruby>今<rt>いま</rt></ruby>、<ruby>時計<rt>とけい</rt></ruby>を<ruby>見<rt>み</rt></ruby>たら<ruby>夕方<rt>ゆうがた</rt></ruby>の<ruby>五時<rt>ごじ</rt></ruby>ですよ！⏰",
         jpPlain: "あれ？ 今、時計を見たら夕方の五時ですよ！",
         pron: "아레? 이마, 토케-오 미타라 유-가타노 고지데스요!",
@@ -410,11 +410,11 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_05_night_secret.png",
+        sceneImg: "./image/03 gemini/gemini_45_ikezu_cold_smile_fan.png",
         jpRuby: "ほんまや！<ruby>五時<rt>ごじ</rt></ruby>からは<ruby>断食<rt>だんじき</rt></ruby>の時間どす。<ruby>夜食<rt>やしょく</rt></ruby>を食べたら<ruby>絶対<rt>ぜったい</rt></ruby>に許しまへんえ（ニコッ）🌸",
         jpPlain: "ほんまや！五時からは断食の時間どす。夜食を食べたら絶対に許しまへんえ。",
         pron: "혼마야! 고지카라와 단지키노 지칸 도스. 야쇼쿠오 타베타라 젯타이니 유루시마헨에.",
-        ko: "정말이네! 5시부터는 단식 시간이랍니다. 야식을 드시면 절대 용서치 않사옵니다 (방긋) 🌸"
+        ko: "어머나, 정말이네요! 5시부터는 단식 시간이오니, 야식을 드시면 결코 용서치 않겠사와요 (방긋) 🌸"
       },
       {
         speaker: "mio",
@@ -432,11 +432,11 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_20_sunset.png",
+        sceneImg: "./image/03 gemini/gemini_44_extreme_blush_hide_face.png",
         jpRuby: "なんでやねん！うちはプロデューサーはんのことが<ruby>好<rt>す</rt></ruby>きやから<ruby>言<rt>い</rt></ruby>うてるんどすえ💖🐾",
         jpPlain: "なんでやねん！うちはプロデューサーはんのことが好きやから言うてるんどすえ。",
         pron: "난데야넨! 우치와 푸로듀-사-항노 코토가 스키야카라 유-테룬 도스에.",
-        ko: "왜 그러는 건데요! 저는 프로듀서항을 좋아하니까 말씀드리는 거랍니다 💖🐾"
+        ko: "어머나, 무슨 말씀이시어요! 소녀는 프로듀서님을 사모하오니 드리는 말씀이라지요 💖🐾"
       }
     ],
     quizzes: [
@@ -452,7 +452,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「なんでやねん(난데야넨)」은 표준어의 「なんでだよ！(왜 그래! / 무슨 소리야!)」에 해당하는 간사이 최고의 츳코미 표현이에요!",
         geminiReactJp: "ツッコミも<ruby>完璧<rt>かんぺき</rt></ruby>どすなぁ！🌸",
         geminiReactPron: "츳코미모 칸페키 도스나-!",
-        geminiReactKo: "츳코미도 완벽하시네요! 🌸"
+        geminiReactKo: "츳코미까지 완벽하시와요! 🌸"
       },
       {
         type: "한자 · 읽기",
@@ -466,7 +466,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "走る(はしる / 하시루)는 '달리다', 歩く(あるく / 아루쿠)는 '걷다', 休む(やすむ / 야스무)는 '쉬다'예요!",
         geminiReactJp: "<ruby>大正解<rt>だいせいかい</rt></ruby>！<ruby>走<rt>はし</rt></ruby>るフォームも綺麗どすえ🏃‍♀️",
         geminiReactPron: "다이세-카이! 하시루 호-무모 키레이 도스에",
-        geminiReactKo: "대정답! 달리는 폼도 아름다우셔요 🏃‍♀️"
+        geminiReactKo: "대정답이옵니다! 달리시는 자태도 참으로 고우시와요 🏃‍♀️"
       },
       {
         type: "오사카 유행어",
@@ -480,7 +480,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「知らんけど(시란케도)」는 오사카 사람들이 자기 생각을 말한 뒤 끝에 '뭐, 확실한 건 모르겠지만(아님 말고)~' 하고 붙이는 유머러스한 표현이에요!",
         geminiReactJp: "ふふ、これでプロデューサーはんも関西人どすね🍵",
         geminiReactPron: "후후, 코레데 푸로듀-사-항모 칸사이진 도스네",
-        geminiReactKo: "후후, 이제 프로듀서항도 간사이 사람이시네요 🍵"
+        geminiReactKo: "우후후, 이제 프로듀서님도 어엿한 간사이 분이시와요 🍵"
       },
       {
         type: "교토·간사이 연애 표현",
@@ -494,7 +494,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "교토와 오사카에서 여성들이 자신을 부를 때 「わたし」 대신 다정하고 부드럽게 「うち(우치)」라고 부른답니다!",
         geminiReactJp: "そうどす、うちの心はプロデューサーはんのものどすえ💖",
         geminiReactPron: "소-도스, 우치노 코코로와 푸로듀-사-항노 모노 도스에",
-        geminiReactKo: "맞아요, 제 마음은 프로듀서항의 것이랍니다 💖"
+        geminiReactKo: "그러하옵니다, 소녀의 마음은 온전히 프로듀서님의 것이라지요 💖"
       },
       {
         type: "어휘 · 뜻",
@@ -508,7 +508,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "時計(とけい / 토케-)는 '시계'예요. 참고로 체중계는 体重計(たいじゅうけい / 타이쥬-케-)라고 읽는답니다!",
         geminiReactJp: "ぴんぽーん！<ruby>五時<rt>ごじ</rt></ruby>になったら時計見よしね⏰",
         geminiReactPron: "핀퐁-! 고지니 낫타라 토케- 미요시네",
-        geminiReactKo: "딩동댕! 5시가 되면 시계를 보셔요 ⏰"
+        geminiReactKo: "딩동댕! 5시가 되면 시계를 확인하시와요 ⏰"
       },
       {
         type: "교토벤 부정 표현",
@@ -522,7 +522,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "표준어의 「〜ません(~하지 않습니다)」이 교토·오사카에서는 부드럽게 「〜まへん(~마헨)」으로 바뀐답니다! (예: わかりまへん = 알지 못합니다)",
         geminiReactJp: "<ruby>全問<rt>ぜんもん</rt></ruby>正解どす！ご褒美に頭なでなでしてあげましょね🐾🌸",
         geminiReactPron: "젠몬 세-카이 도스! 고호-비니 아타마 나데나데 시테 아게마쇼네",
-        geminiReactKo: "전 문항 정답이어요! 상으로 머리를 쓰담쓰담해 드릴게요 🐾🌸"
+        geminiReactKo: "전 문항 정답이옵니다! 상으로 머리를 곱게 쓰다듬어 드리겠사와요 🐾🌸"
       }
     ]
   },
@@ -549,7 +549,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ミオ",
         nameKo: "미오",
         avatar: "./image/01 mio/avatar_mio.png",
-        sceneImg: "./image/01 mio/mio_16_conveni_bench.png",
+        sceneImg: "./image/01 mio/mio_30_bus_stop_map_point.png",
         jpRuby: "あれれ？ <ruby>道<rt>みち</rt></ruby>に<ruby>迷<rt>まよ</rt></ruby>っちゃった！<ruby>駅<rt>えき</rt></ruby>はどこだろう？💦",
         jpPlain: "あれれ？ 道に迷っちゃった！駅はどこだろう？",
         pron: "아레레? 미치니 마욧챳타! 에키와 도코다로-?",
@@ -560,7 +560,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "コトネ",
         nameKo: "코토네",
         avatar: "./image/02 kotone/avatar_kotone.png",
-        sceneImg: "./image/02 kotone/kotone_14_morning_jog.png",
+        sceneImg: "./image/02 kotone/kotone_31_ticket_machine_confused.png",
         jpRuby: "タクシーに<ruby>乗<rt>の</rt></ruby>ったらお金がもったいないですよ！<ruby>歩<rt>ある</rt></ruby>きましょう！💸",
         jpPlain: "タクシーに乗ったらお金がもったいないですよ！歩きましょう！",
         pron: "타쿠시-니 놋타라 오카네가 못타이나이데스요! 아루키마쇼-!",
@@ -575,14 +575,14 @@ window.KOTONOHA_LESSONS = [
         jpRuby: "ふふ、慌てんといて。<ruby>京都駅<rt>きょうとえき</rt></ruby>なら、この<ruby>道<rt>みち</rt></ruby>をまっすぐ<ruby>行<rt>い</rt></ruby>くだけどすえ🌸",
         jpPlain: "ふふ、慌てんといて。京都駅なら、この道をまっすぐ行くだけどすえ。",
         pron: "후후, 아와텐토이테. 쿄-토에키나라, 코노 미치오 맛스구 이쿠 다케 도스에.",
-        ko: "후후, 당황하지 마셔요. 교토역이라면 이 길을 쭉 직진하기만 하면 된답니다 🌸"
+        ko: "우후후, 당황하지 마시어요. 교토역이라면 이 길을 따라 쭉 가기만 하면 된다지요 🌸"
       },
       {
         speaker: "mio",
         nameJp: "ミオ",
         nameKo: "미오",
         avatar: "./image/01 mio/avatar_mio.png",
-        sceneImg: "./image/01 mio/mio_20_sunset_highfive.png",
+        sceneImg: "./image/01 mio/mio_28_arashiyama_bamboo_jog.png",
         jpRuby: "ほんまに？！ ジェミニちゃん、どないして<ruby>知<rt>し</rt></ruby>ってるの？🌟",
         jpPlain: "ほんまに？！ ジェミニちゃん、どないして知ってるの？",
         pron: "혼마니?! 제미니짱, 도나이시테 싯테루노?",
@@ -593,11 +593,11 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_01_main.png",
+        sceneImg: "./image/03 gemini/gemini_30_osaka_takoyaki_tsukkomi.png",
         jpRuby: "うちは<ruby>京都<rt>きょうと</rt></ruby>のアイドルどすさかいね🍵 ほな、<ruby>早<rt>はや</rt></ruby>う<ruby>行<rt>い</rt></ruby>きましょか！",
         jpPlain: "うちは京都のアイドルどすさかいね。ほな、早う行きましょか！",
         pron: "우치와 쿄-토노 아이도루 도스 사카이네. 호나, 하요- 이키마쇼카!",
-        ko: "저는 교토의 아이돌이니까요 🍵 자, 그럼 얼른 가볼까요!"
+        ko: "소녀는 교토의 아이돌이니까요 🍵 자, 그럼 얼른 가보시와요!"
       }
     ],
     quizzes: [
@@ -613,7 +613,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「どない(도나이)」는 '어떻게(どう)'라는 뜻이에요! 「どないして行くん？(어떻게 가는 거야?)」처럼 쓴답니다.",
         geminiReactJp: "<ruby>大正解<rt>だいせいかい</rt></ruby>どす！道案内もバッチリどすね🌸",
         geminiReactPron: "다이세-카이 도스! 미치안나이모 밧치리 도스네",
-        geminiReactKo: "대정답이어요! 길 안내도 완벽하시네요 🌸"
+        geminiReactKo: "대정답이옵니다! 길 안내도 완벽하시와요 🌸"
       },
       {
         type: "한자 · 읽기",
@@ -627,7 +627,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "駅(えき / 에키)는 '역', 道(みち / 미치)는 '길', 店(みせ / 미세)는 '가게'예요!",
         geminiReactJp: "ぴんぽーん！<ruby>駅<rt>えき</rt></ruby>まで歩いてカロリー消費どす🚶‍♀️",
         geminiReactPron: "핀퐁-! 에키마데 아루이테 카로리- 쇼-히 도스",
-        geminiReactKo: "딩동댕! 역까지 걸어서 칼로리 소비예요 🚶‍♀️"
+        geminiReactKo: "딩동댕! 역까지 걸으시며 칼로리를 태워보시와요 🚶‍♀️"
       },
       {
         type: "교토·간사이 접속사",
@@ -641,7 +641,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「〜さかい(사카이)」는 '~하니까/~이므로'라는 뜻의 전통 간사이 표현이에요! (예: 危ないさかい気ぃつけよし = 위험하니까 조심하셔요)",
         geminiReactJp: "よう<ruby>知<rt>し</rt></ruby>ってはるねぇ、感心しましたえ🍵",
         geminiReactPron: "요- 싯테 하루네-, 칸신 시마시타에",
-        geminiReactKo: "잘 알고 계시네요, 감탄했사옵니다 🍵"
+        geminiReactKo: "참으로 잘 알고 계시네요, 감탄했사옵니다 🍵"
       },
       {
         type: "어휘 · 뜻",
@@ -655,7 +655,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「もったいない(못타이나이)」는 시간이나 돈, 물건 등이 낭비될 때 '아깝다!'라고 하는 필수 형용사예요.",
         geminiReactJp: "<ruby>正解<rt>せいかい</rt></ruby>！タクシー代がもったいないどすね💸",
         geminiReactPron: "세-카이! 타쿠시-다이가 못타이나이 도스네",
-        geminiReactKo: "정답! 택시비가 아깝지요 💸"
+        geminiReactKo: "정답이옵니다! 택시비가 아깝사오니 걸어가시지요 💸"
       },
       {
         type: "간사이 인사·전환어",
@@ -669,7 +669,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「ほな(호나)」는 표준어 「それじゃあ(그럼/그러면)」예요! 헤어질 때 「ほな、またね(그럼 또 봐)」라고 하면 자연스러운 간사이벤 완성!",
         geminiReactJp: "お<ruby>見事<rt>みごと</rt></ruby>どす！ほな、次のレッスンも楽しみにしといてね🌸🐾",
         geminiReactPron: "오미고토 도스! 호나, 츠기노 렛슨모 타노시미니 시토이테네",
-        geminiReactKo: "훌륭해요! 그럼 다음 수업도 기대해 주셔요 🌸🐾"
+        geminiReactKo: "훌륭하옵니다! 그럼 다음 수업도 기대해 주시와요 🌸🐾"
       }
     ]
   },
@@ -684,7 +684,7 @@ window.KOTONOHA_LESSONS = [
     levelBadge: "N3 + 심쿵 간사이벤",
     titleJp: "<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>傘<rt>かさ</rt></ruby>に<ruby>入<rt>はい</rt></ruby>りよし☔",
     titlePron: "잇쇼니 카사니 하이리요시",
-    titleKo: "함께 우산 속으로 들어오시지요 ☔",
+    titleKo: "함께 우산 속으로 들어오시와요 ☔",
     bgImage: "./image/03 gemini/gemini_09_rain_locker.png",
     grammarTip: {
       title: "🌸 제미니의 교토·오사카벤 노트 #5",
@@ -722,7 +722,7 @@ window.KOTONOHA_LESSONS = [
         jpRuby: "プロデューサーはん、<ruby>濡<rt>ぬ</rt></ruby>れたら<ruby>風邪<rt>かぜ</rt></ruby>ひきまっせ。ほら、うちの<ruby>傘<rt>かさ</rt></ruby>に<ruby>入<rt>はい</rt></ruby>りよし🌸",
         jpPlain: "プロデューサーはん、濡れたら風邪ひきまっせ。ほら、うちの傘に入りよし。",
         pron: "푸로듀-사-항, 누레타라 카제 히키맛세. 호라, 우치노 카사니 하이리요시.",
-        ko: "프로듀서항, 젖으면 감기 걸릴 거예요. 자, 제 우산 속으로 들어오시지요 🌸"
+        ko: "프로듀서님, 비에 젖으시면 감기 드시와요. 자, 소녀의 우산 속으로 들어오시지요 🌸"
       },
       {
         speaker: "gemini",
@@ -733,18 +733,18 @@ window.KOTONOHA_LESSONS = [
         jpRuby: "<ruby>肩<rt>かた</rt></ruby>がぶつかってドキドキしはる？ ふふ、もっと<ruby>近<rt>ちか</rt></ruby>う寄ってもええんどすえ💖🐾",
         jpPlain: "肩がぶつかってドキドキしはる？ ふふ、もっと近う寄ってもええんどすえ。",
         pron: "카타가 부츠캇테 도키도키 시하루? 후후, 못토 치코- 욧테모 에-응 도스에.",
-        ko: "어깨가 닿아서 두근거리시나요? 후후, 더 가까이 붙으셔도 괜찮답니다 💖🐾"
+        ko: "어깨가 닿아 두근거리시나요? 우후후, 좀 더 가까이 다가오셔도 괜찮사와요 💖🐾"
       },
       {
         speaker: "gemini",
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_02_matcha.png",
+        sceneImg: "./image/03 gemini/gemini_31_ryokan_yukata_lantern.png",
         jpRuby: "<ruby>家<rt>いえ</rt></ruby>に<ruby>帰<rt>かえ</rt></ruby>ったら、しんどくならんように<ruby>温<rt>あたた</rt></ruby>かいお<ruby>抹茶<rt>まっちゃ</rt></ruby>を淹れてあげましょね🍵",
         jpPlain: "家に帰ったら、しんどくならんように温かいお抹茶を淹れてあげましょね。",
         pron: "이에니 카엣타라, 신도쿠 나란 요-니 아타타카이 오맛챠오 이레테 아게마쇼네.",
-        ko: "집에 돌아가면 몸살 나지(힘들지) 않도록 따뜻한 말차를 우려 드릴게요 🍵"
+        ko: "집에 돌아가시면 고단하지 않도록 따뜻한 말차를 우려 드리겠사와요 🍵"
       }
     ],
     quizzes: [
@@ -760,7 +760,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "傘(かさ / 카사)는 '우산', 雨(あめ / 아메)는 '비', 風邪(かぜ / 카제)는 '감기'예요!",
         geminiReactJp: "<ruby>正解<rt>せいかい</rt></ruby>どす！相合傘（あいあいがさ）、嬉しおすなぁ☔💖",
         geminiReactPron: "세-카이 도스! 아이아이가사, 우레시오스나-",
-        geminiReactKo: "정답이어요! 우산 같이 쓰기, 참 기쁘네요 ☔💖"
+        geminiReactKo: "정답이옵니다! 한 우산을 함께 쓰다니 참으로 기쁘사와요 ☔💖"
       },
       {
         type: "간사이 필수 형용사",
@@ -774,7 +774,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "「しんどい(신도이)」는 '피곤하다, 지친다, 힘들다(疲れた/つらい)'라는 뜻의 간사이벤 대표 어휘예요!",
         geminiReactJp: "しんどい時はいつでもうちに甘えよしね🐾🌸",
         geminiReactPron: "신도이 토키와 이츠데모 우치니 아마에요시네",
-        geminiReactKo: "힘들 때는 언제든 저한테 기대시어요 🐾🌸"
+        geminiReactKo: "고단하실 때는 언제든 소녀에게 기대시와요 🐾🌸"
       },
       {
         type: "교토벤 권유 표현",
@@ -788,7 +788,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "교토벤에서 동사 연용형 + 「よし」는 상대방에게 부드럽게 '~하셔요/~하렴(〜なさい)' 하고 권유하는 아주 다정한 표현이에요!",
         geminiReactJp: "ぴんぽーん！遠慮せんと、もっと近う寄りよし💖",
         geminiReactPron: "핀퐁-! 엔료센토, 못토 치코- 요리요시",
-        geminiReactKo: "딩동댕! 사양 말고 더 가까이 다가오시지요 💖"
+        geminiReactKo: "딩동댕! 사양 마시고 더 가까이 다가오시와요 💖"
       },
       {
         type: "어휘 · 뜻",
@@ -802,7 +802,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "風邪(かぜ / 카제)는 '감기'이고, 감기에 걸리다는 항상 동사 「ひく(引く)」를 써서 「風邪をひく」라고 표현해요!",
         geminiReactJp: "<ruby>大正解<rt>だいせいかい</rt></ruby>！プロデューサーはんの健康はうちが守りますえ🍵",
         geminiReactPron: "다이세-카이! 푸로듀-사-항노 켄코-와 우치가 마모리마스에",
-        geminiReactKo: "대정답! 프로듀서항의 건강은 제가 지킬 거예요 🍵"
+        geminiReactKo: "대정답이옵니다! 프로듀서님의 건강은 소녀가 지키겠사와요 🍵"
       },
       {
         type: "교토·간사이 긍정 허락",
@@ -816,7 +816,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "표준어의 「いい(좋다/괜찮다)」는 간사이벤에서 「ええ(에-)」라고 발음해요! 「ええよ〜(좋아~/괜찮아~)」는 일상에서 100번 쓰이는 표현이랍니다.",
         geminiReactJp: "<ruby>全問<rt>ぜんもん</rt></ruby>クリア！プロデューサーはん、ほんまに最高どすえ🌸🐾",
         geminiReactPron: "젠몬 쿠리아! 푸로듀-사-항, 혼마니 사이코- 도스에",
-        geminiReactKo: "전 문항 클리어! 프로듀서항, 정말 최고이십니다 🌸🐾"
+        geminiReactKo: "전 문항 클리어! 프로듀서님, 참으로 으뜸이시와요 🌸🐾"
       }
     ]
   },
@@ -832,7 +832,7 @@ window.KOTONOHA_LESSONS = [
     titleJp: "お<ruby>茶<rt>ちゃ</rt></ruby>を一<ruby>服<rt>ぷく</rt></ruby>、いかがどすか？",
     titlePron: "오챠오 잇푸쿠, 이카가 도스카?",
     titleKo: "차 한 잔, 어떠신가요?",
-    bgImage: "./image/03 gemini/gemini_02_matcha.png",
+    bgImage: "./image/03 gemini/gemini_29_wagashi_sweet_smile.png",
     grammarTip: {
       title: "🌸 제미니의 교토·오사카벤 노트 #6",
       content: "식당이나 카페에서 주문할 때는 <b>「~を ください (~오 쿠다사이 / ~을 주세요)」</b> 하나면 충분해요! 또 일본 상점가나 노포에 들어가면 상인분들이 <b>『まいど (마이도)』</b>라고 정겹게 인사해 주시는데, '매번 찾아주셔서 감사합니다(まいどありがとうございます)'의 친근한 간사이식 줄임말이랍니다 🍵"
@@ -847,14 +847,14 @@ window.KOTONOHA_LESSONS = [
         jpRuby: "プロデューサーはん、お<ruby>抹茶<rt>まっちゃ</rt></ruby>を一<ruby>服<rt>ぷく</rt></ruby>、いかがどすか？",
         jpPlain: "プロデューサーはん、お抹茶を一服、いかがどすか？",
         pron: "프로듀-사-항, 오맛챠오 잇푸쿠, 이카가 도스카?",
-        ko: "프로듀서항, 말차 한 잔 어떠신가요?"
+        ko: "프로듀서님, 말차 한 잔 어떠신지요? 🍵"
       },
       {
         speaker: "kotone",
         nameJp: "コトネ",
         nameKo: "코토네",
         avatar: "./image/02 kotone/avatar_kotone.png",
-        sceneImg: "./image/02 kotone/kotone_03_cafe_date.png",
+        sceneImg: "./image/02 kotone/kotone_27_matcha_bitter_wink.png",
         jpRuby: "わぁ、いい<ruby>香<rt>かお</rt></ruby>り！あ、でもこの<ruby>和菓子<rt>わがし</rt></ruby>、すっごく<ruby>甘<rt>あま</rt></ruby>いですね！",
         jpPlain: "わぁ、いい香り！あ、でもこの和菓子、すっごく甘いですね！",
         pron: "와-, 이이 카오리! 아, 데모 코노 와가시, 숫고쿠 아마이데스네!",
@@ -865,18 +865,18 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/sd_gemini_02_matcha_whisk.png",
+        sceneImg: "./image/03 gemini/gemini_29_wagashi_sweet_smile.png",
         jpRuby: "<ruby>苦<rt>にが</rt></ruby>いお<ruby>茶<rt>ちゃ</rt></ruby>と<ruby>甘<rt>あま</rt></ruby>いお<ruby>菓子<rt>かし</rt></ruby>は、<ruby>相性<rt>あいしょう</rt></ruby>がええんどすえ🌸",
         jpPlain: "苦いお茶と甘いお菓子は、相性がええんどすえ。",
         pron: "니가이 오챠토 아마이 오카시와, 아이쇼-가 에엔도스에.",
-        ko: "쌉싸름한 차와 달콤한 과자는 궁합이 참 좋답니다."
+        ko: "쌉싸름한 차와 달콤한 화과자는 궁합이 참으로 좋사와요 🌸"
       },
       {
         speaker: "mio",
         nameJp: "ミオ",
         nameKo: "미오",
         avatar: "./image/01 mio/avatar_mio.png",
-        sceneImg: "./image/01 mio/mio_07_convenience_bar.png",
+        sceneImg: "./image/01 mio/mio_27_ramen_counter_slurp.png",
         jpRuby: "へへっ、<ruby>運動<rt>うんどう</rt></ruby>の<ruby>後<rt>あと</rt></ruby>は<ruby>水<rt>みず</rt></ruby>をいっぱい<ruby>飲<rt>の</rt></ruby>まなきゃ！すみません、お<ruby>水<rt>みず</rt></ruby>をください！",
         jpPlain: "へへっ、運動の後は水をいっぱい飲まなきゃ！すみません、お水をください！",
         pron: "헤헷, 운도-노 아토와 미즈오 잇파이 노마나캬! 스미마센, 오미즈오 쿠다사이!",
@@ -887,11 +887,11 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_02_matcha.png",
+        sceneImg: "./image/03 gemini/gemini_36_summer_handfan_ice.png",
         jpRuby: "ふふ、プロデューサーはんも、しっかり<ruby>水分<rt>すいぶん</rt></ruby><ruby>補給<rt>ほきゅう</rt></ruby>しはっとくれやすね🍵🐾",
         jpPlain: "ふふ、プロデューサーはんも、しっかり水分補給しはっとくれやすね。",
         pron: "후후, 프로듀-사-항모, 싯카리 스이분 호큐- 시핫토쿠레야스네.",
-        ko: "후후, 프로듀서항도 수분 보충 꼭 든든히 해주시어요 🍵🐾"
+        ko: "우후후, 프로듀서님도 수분 보충을 든든히 해주시와요 🍵🐾"
       }
     ],
     quizzes: [
@@ -907,7 +907,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "甘い(あまい / 아마이)는 '달다'입니다. 반대로 쌉싸름한 맛은 苦い(にがい / 니가이)라고 해요!",
         geminiReactJp: "<ruby>正解<rt>せいかい</rt></ruby>どす！お<ruby>見事<rt>みごと</rt></ruby>どすえ🍵",
         geminiReactPron: "세이카이 도스! 오미고토 도스에~",
-        geminiReactKo: "정답이어요! 훌륭하옵니다~"
+        geminiReactKo: "정답이옵니다! 참으로 훌륭하시와요~"
       },
       {
         type: "기초 문법 · 주문",
@@ -921,7 +921,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "『~を ください (~을 주세요)』는 일본 여행 식당 주문의 기본이자 핵심 표현입니다!",
         geminiReactJp: "ピンポン！その<ruby>調子<rt>ちょうし</rt></ruby>どす🌸",
         geminiReactPron: "핀퐁! 소노 쵸-시 도스~",
-        geminiReactKo: "딩동! 바로 그 느낌이어요~"
+        geminiReactKo: "딩동! 바로 그 기세이옵니다~"
       },
       {
         type: "간사이 방언 · 인사",
@@ -935,7 +935,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "まいど(마이도)는 '매번 찾아주셔서 감사합니다(まいどありがとうございます)'의 줄임말입니다!",
         geminiReactJp: "ほんまにえらいどすなぁ✨",
         geminiReactPron: "혼마니 에라이 도스나~",
-        geminiReactKo: "정말로 장하십니다~"
+        geminiReactKo: "참으로 기특하시와요~"
       },
       {
         type: "한자 · 읽기",
@@ -963,7 +963,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "苦い(にがい / 니가이)는 '쓰다, 쌉싸름하다'라는 뜻입니다. 커피나 말차에 자주 써요!",
         geminiReactJp: "さすがプロデューサーはん！💯",
         geminiReactPron: "사스가 프로듀-사-항!",
-        geminiReactKo: "역시 프로듀서님이셔요!"
+        geminiReactKo: "과연 제가 모시는 프로듀서님이시와요!"
       }
     ]
   },
@@ -979,7 +979,7 @@ window.KOTONOHA_LESSONS = [
     titleJp: "<ruby>今日<rt>きょう</rt></ruby>は<ruby>走<rt>はし</rt></ruby>るのにええ<ruby>天気<rt>てんき</rt></ruby>やなぁ！",
     titlePron: "쿄-와 하시루노니 에에 텐키야나-!",
     titleKo: "오늘은 달리기 참 좋은 날씨네!",
-    bgImage: "./image/01 mio/mio_02_park_run.png",
+    bgImage: "./image/01 mio/mio_34_spring_wind_stretch.png",
     grammarTip: {
       title: "🌸 제미니의 교토·오사카벤 노트 #7",
       content: "간사이 사람들은 좋다(良い/いい) 대신 <b>『ええ (에에)』</b>를 정말 많이 써요! '좋은 날씨'는 <b>『ええ天気 (에에 텐키)』</b>, '좋은 느낌'은 <b>『ええ感じ (에에 칸지)』</b>! 반대로 안 된다, 나쁘다는 <b>『あかん (아칸)』</b>이라고 한답니다 🏃‍♀️"
@@ -990,7 +990,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ミオ",
         nameKo: "미오",
         avatar: "./image/01 mio/avatar_mio.png",
-        sceneImg: "./image/01 mio/mio_02_park_run.png",
+        sceneImg: "./image/01 mio/mio_34_spring_wind_stretch.png",
         jpRuby: "プロデューサー！<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>は</rt></ruby>れてて、ええ<ruby>天気<rt>てんき</rt></ruby>だよ！",
         jpPlain: "プロデューサー！今日は晴れてて、ええ天気だよ！",
         pron: "프로듀-사-! 쿄-와 하레테테, 에에 텐키다요!",
@@ -1001,18 +1001,18 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_27_kyoto_cherry_walk.png",
+        sceneImg: "./image/03 gemini/gemini_36_summer_handfan_ice.png",
         jpRuby: "ほんまどすなぁ。でも、<ruby>暑<rt>あつ</rt></ruby>いから<ruby>無理<rt>むり</rt></ruby>したらあきまへんえ。",
         jpPlain: "ほんまどすなぁ。でも、暑いから無理したらあきまへんえ。",
         pron: "혼마 도스나-. 데모, 아츠이카라 무리시타라 아키마헨에.",
-        ko: "정말이네요. 하지만 더우니까 무리하시면 안 되어요."
+        ko: "참으로 그러하옵니다. 하지만 날이 더우니 무리하시면 안 되사와요."
       },
       {
         speaker: "kotone",
         nameJp: "コトネ",
         nameKo: "코토네",
         avatar: "./image/02 kotone/avatar_kotone.png",
-        sceneImg: "./image/02 kotone/kotone_14_morning_jog.png",
+        sceneImg: "./image/02 kotone/kotone_35_summer_sunscreen_hat.png",
         jpRuby: "ふぅ、ちょっと<ruby>走<rt>はし</rt></ruby>っただけで<ruby>汗<rt>あせ</rt></ruby>がすごいです〜！",
         jpPlain: "ふぅ、ちょっと走っただけで汗がすごいです〜！",
         pron: "후-, 촛토 하싯타 다케데 아세가 스고이데스~!",
@@ -1023,11 +1023,11 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_14_smoothie.png",
+        sceneImg: "./image/01 mio/mio_35_summer_water_hose_laugh.png",
         jpRuby: "お<ruby>二人<rt>ふたり</rt></ruby>とも、えらいおきばりやす。タオルをどうぞ🌸",
         jpPlain: "お二人とも、えらいおきばりやす。タオルをどうぞ。",
         pron: "오후타리토모, 에라이 오키바리야스. 타오루오 도-조.",
-        ko: "두 분 다 참 수고 많으셔요. 수건 받으시지요 🌸"
+        ko: "두 분 다 참으로 애쓰셨사와요. 자, 수건을 받으시지요 🌸"
       }
     ],
     quizzes: [
@@ -1043,7 +1043,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "晴れ(はれ / 하레)는 '맑음'입니다. 비는 雨(あめ / 아메), 눈은 雪(ゆき / 유키)예요!",
         geminiReactJp: "<ruby>正解<rt>せいかい</rt></ruby>どす！よう<ruby>覚<rt>おぼ</rt></ruby>えてはりましたね🌸",
         geminiReactPron: "세이카이 도스! 요- 오보에테하리마시타네~",
-        geminiReactKo: "정답이어요! 잘 기억하고 계셨군요~"
+        geminiReactKo: "정답이옵니다! 곱게 기억하고 계셨군요~"
       },
       {
         type: "간사이 방언 · 형용사",
@@ -1071,7 +1071,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "暑い(あつい / 아츠이)는 날씨가 '덥다'입니다. 반대로 춥다는 寒い(さむい / 사무이)예요.",
         geminiReactJp: "バッチリどす！えらいなぁ👏",
         geminiReactPron: "밧치리 도스! 에라이나~",
-        geminiReactKo: "완벽해요! 장하셔라~"
+        geminiReactKo: "완벽하옵니다! 참으로 기특하시와요~"
       },
       {
         type: "한자 · 읽기",
@@ -1085,7 +1085,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "走る(はしる / 하시루)는 '달리다'입니다. 걷다는 歩く(あるく / 아루쿠)예요!",
         geminiReactJp: "<ruby>正解<rt>せいかい</rt></ruby>！ミオはんも<ruby>喜<rt>よろこ</rt></ruby>びますえ🏃‍♀️",
         geminiReactPron: "세이카이! 미오항모 요로코비마스에",
-        geminiReactKo: "정답! 미오도 기뻐하겠네요~"
+        geminiReactKo: "정답이옵니다! 미오 양도 기뻐하겠사와요~"
       },
       {
         type: "간사이 방언 · 부정",
@@ -1099,7 +1099,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "あかん(아칸)은 '안 된다, 곤란하다'라는 뜻의 대표 간사이 방언입니다. 야식 금지 때 딱이죠!",
         geminiReactJp: "ふふ、夜食はあきまへんえ！🐾",
         geminiReactPron: "후후, 야쇼쿠와 아키마헨에!",
-        geminiReactKo: "후후, 야식은 안 되옵니다!"
+        geminiReactKo: "우후후, 야식은 결코 안 되사와요!"
       }
     ]
   },
@@ -1115,7 +1115,7 @@ window.KOTONOHA_LESSONS = [
     titleJp: "<ruby>背中<rt>せなか</rt></ruby>と<ruby>肩<rt>かた</rt></ruby>、<ruby>筋肉痛<rt>きんにくつう</rt></ruby>は<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>どすか？",
     titlePron: "세나카토 카타, 킨니쿠츠-와 다이죠-부 도스카?",
     titleKo: "등과 어깨, 근육통은 괜찮으신가요?",
-    bgImage: "./image/03 gemini/gemini_03_rehab_touch.png",
+    bgImage: "./image/03 gemini/gemini_40_shoulder_massage_care.png",
     grammarTip: {
       title: "🌸 제미니의 교토·오사카벤 노트 #8",
       content: "몸이 아플 때는 <b>「~が 痛い (~가 이타이 / ~가 아프다)」</b>라고 말해요. 머리가 아프면 '頭が痛い(아타마가 이타이)', 배가 아프면 'お腹が痛い(오나카가 이타이)'! 그리고 상대방이 엉뚱한 변명을 할 때는 <b>『なんでやねん (난데야넨 / 무슨 소리야!)』</b>으로 유쾌하게 받아쳐 보세요 🐾"
@@ -1126,18 +1126,18 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_03_rehab_touch.png",
+        sceneImg: "./image/03 gemini/gemini_40_shoulder_massage_care.png",
         jpRuby: "プロデューサーはん、<ruby>肩<rt>かた</rt></ruby>や<ruby>背中<rt>せなか</rt></ruby>は<ruby>痛<rt>いた</rt></ruby>くありまへんか？",
         jpPlain: "プロデューサーはん、肩や背中は痛くありまへんか？",
         pron: "프로듀-사-항, 카타야 세나카와 이타쿠 아리마헨카?",
-        ko: "프로듀서항, 어깨나 등은 아프지 않으신가요?"
+        ko: "프로듀서님, 어깨나 등은 결리지 않으신지요?"
       },
       {
         speaker: "kotone",
         nameJp: "コトネ",
         nameKo: "코토네",
         avatar: "./image/02 kotone/avatar_kotone.png",
-        sceneImg: "./image/02 kotone/kotone_25_night_convenience_chat.png",
+        sceneImg: "./image/02 kotone/kotone_38_calf_cramp_tears.png",
         jpRuby: "うぅ…<ruby>私<rt>わたし</rt></ruby>は<ruby>足<rt>あし</rt></ruby>がパンパンで<ruby>痛<rt>いた</rt></ruby>いです〜！",
         jpPlain: "うぅ…私は足がパンパンで痛いです〜！",
         pron: "우-… 와타시와 아시가 판판데 이타이데스~!",
@@ -1148,7 +1148,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ミオ",
         nameKo: "미오",
         avatar: "./image/01 mio/avatar_mio.png",
-        sceneImg: "./image/01 mio/mio_13_bench_workout.png",
+        sceneImg: "./image/01 mio/mio_38_bicep_flex_wink.png",
         jpRuby: "あっはは！それは<ruby>筋肉<rt>きんにく</rt></ruby>が<ruby>育<rt>そだ</rt></ruby>ってる<ruby>証拠<rt>しょうこ</rt></ruby>だよ！",
         jpPlain: "あっはは！それは筋肉が育ってる証拠だよ！",
         pron: "앗하하! 소레와 킨니쿠가 소닷테루 쇼-코다요!",
@@ -1163,7 +1163,7 @@ window.KOTONOHA_LESSONS = [
         jpRuby: "ほな、ゆっくりストレッチしまひょ。うちがお<ruby>手伝<rt>てつだ</rt></ruby>いしますえ🌸",
         jpPlain: "ほな、ゆっくりストレッチしまひょ。うちがお手伝いしますえ。",
         pron: "호나, 육쿠리 스트렛치 시마효. 우치가 오테츠다이 시마스에.",
-        ko: "그럼 천천히 스트레칭하지요. 제가 도와드릴게요 🌸"
+        ko: "그럼 천천히 스트레칭하시지요. 소녀가 곁에서 도와드리겠사와요 🌸"
       }
     ],
     quizzes: [
@@ -1179,7 +1179,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "肩(かた / 카타)는 '어깨'입니다. 등은 背中(せなか / 세나카), 배는 お腹(おなか / 오나카)예요!",
         geminiReactJp: "<ruby>正解<rt>せいかい</rt></ruby>どす！よくご<ruby>存<rt>ぞん</rt></ruby>じどすね👏",
         geminiReactPron: "세이카이 도스! 요쿠 고존지 도스네~",
-        geminiReactKo: "정답이어요! 잘 알고 계시네요~"
+        geminiReactKo: "정답이옵니다! 참으로 잘 알고 계시와요~"
       },
       {
         type: "어휘 · 상태",
@@ -1207,7 +1207,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "足(あし / 아시)는 '발 또는 다리'를 뜻합니다. 손은 手(て / 테), 머리는 頭(あたま / 아타마)예요!",
         geminiReactJp: "<ruby>大正解<rt>だいせいかい</rt></ruby>どす！さすがやわぁ✨",
         geminiReactPron: "다이세이카이 도스! 사스가야와~",
-        geminiReactKo: "대정답이어요! 역시 최고예요~"
+        geminiReactKo: "대정답이옵니다! 과연 으뜸이시와요~"
       },
       {
         type: "간사이 츳코미",
@@ -1221,7 +1221,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "なんでやねん(난데야넨)은 일본 코미디와 일상에서 가장 유명한 오사카 츳코미 표현입니다!",
         geminiReactJp: "ふふ、なんでやねん！🐾",
         geminiReactPron: "후후, 난데야넨!",
-        geminiReactKo: "후후, 무슨 소리예요!"
+        geminiReactKo: "어머나, 무슨 말씀이시어요!"
       },
       {
         type: "어휘 · 확인",
@@ -1235,7 +1235,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "大丈夫(だいじょうぶ / 다이죠-부)는 '괜찮음'입니다. '大丈夫ですか？(괜찮으신가요?)'로 물어봐요.",
         geminiReactJp: "満点どす！完璧やわぁ💯",
         geminiReactPron: "만텐 도스! 칸페키야와~",
-        geminiReactKo: "만점이옵니다! 완벽해요~"
+        geminiReactKo: "만점이옵니다! 참으로 완벽하시와요~"
       }
     ]
   },
@@ -1251,7 +1251,7 @@ window.KOTONOHA_LESSONS = [
     titleJp: "<ruby>今<rt>いま</rt></ruby><ruby>何時<rt>なんじ</rt></ruby>？ジムは<ruby>何時<rt>なんじ</rt></ruby>からどすか？",
     titlePron: "이마 난지? 지무와 난지카라 도스카?",
     titleKo: "지금 몇 시? 헬스장은 몇 시부터인가요?",
-    bgImage: "./image/00 common/trio_03_inbody_gym.png",
+    bgImage: "./image/03 gemini/gemini_34_wrist_watch_late_glare.png",
     grammarTip: {
       title: "🌸 제미니의 교토·오사카벤 노트 #9",
       content: "시간을 나타낼 때는 <b>「~時から ~時まで (~지카라 ~지마데 / ~시부터 ~시까지)」</b>를 씁니다. '1시부터 3시까지'는 '一時から三時まで'! 그리고 오사카 사람들은 빨리(早く/하야쿠) 대신 <b>『はよ (하요)』</b>를 정말 자주 써요! 'はよ行こ(하요 이코 / 얼른 가자)'처럼 쓴답니다 ⏰"
@@ -1262,7 +1262,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "コトネ",
         nameKo: "코토네",
         avatar: "./image/02 kotone/avatar_kotone.png",
-        sceneImg: "./image/02 kotone/kotone_04_rain_locker.png",
+        sceneImg: "./image/02 kotone/kotone_30_clock_panic_sprint.png",
         jpRuby: "プロデューサーさん、<ruby>今<rt>いま</rt></ruby><ruby>何時<rt>なんじ</rt></ruby>ですか？！",
         jpPlain: "プロデューサーさん、今何時ですか？！",
         pron: "프로듀-사-상, 이마 난지데스카?!",
@@ -1273,7 +1273,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ミオ",
         nameKo: "미오",
         avatar: "./image/01 mio/avatar_mio.png",
-        sceneImg: "./image/01 mio/mio_16_conveni_bench.png",
+        sceneImg: "./image/01 mio/mio_39_timer_stopwatch_shout.png",
         jpRuby: "<ruby>今<rt>いま</rt></ruby>はちょうど<ruby>夕方<rt>ゆうがた</rt></ruby>5<ruby>時<rt>じ</rt></ruby>！ジムが<ruby>始<rt>はじ</rt></ruby>まる<ruby>時間<rt>じかん</rt></ruby>だよ！",
         jpPlain: "今はちょうど夕方5時！ジムが始まる時間だよ！",
         pron: "이마와 쵸-도 유-가타 고지! 지무가 하지마루 지칸다요!",
@@ -1284,11 +1284,11 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_01_main.png",
+        sceneImg: "./image/03 gemini/gemini_34_wrist_watch_late_glare.png",
         jpRuby: "はよ<ruby>行<rt>い</rt></ruby>きまひょ！<ruby>今日<rt>きょう</rt></ruby>はダンベル4セットどすえ🐾",
         jpPlain: "はよ行きまひょ！今日はダンベル4セットどすえ。",
         pron: "하요 이키마효! 쿄-와 단베루 욘셋토 도스에.",
-        ko: "얼른 가보지요! 오늘은 덤벨 4세트랍니다 🐾"
+        ko: "얼른 가보시와요! 오늘은 덤벨 4세트이옵니다 🐾"
       }
     ],
     quizzes: [
@@ -1304,7 +1304,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "今(いま / 이마)는 '지금'입니다. 今日(きょう / 쿄-)는 '오늘', 明日(あした / 아시타)는 '내일'이에요!",
         geminiReactJp: "<ruby>正解<rt>せいかい</rt></ruby>どす！バッチリやわぁ🌸",
         geminiReactPron: "세이카이 도스! 밧치리야와~",
-        geminiReactKo: "정답이어요! 완벽해요~"
+        geminiReactKo: "정답이옵니다! 완벽하시와요~"
       },
       {
         type: "조사 · 범위",
@@ -1332,7 +1332,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "はよ(하요)는 早く(하야쿠)의 간사이 방언입니다. 'はよ起き(얼른 일어나)'처럼 가족끼리도 많이 써요!",
         geminiReactJp: "<ruby>大正解<rt>だいせいかい</rt></ruby>！はよ<ruby>次<rt>つぎ</rt></ruby>へ進みましょ🌸",
         geminiReactPron: "다이세이카이! 하요 츠기에 스스미마쇼~",
-        geminiReactKo: "대정답! 얼른 다음으로 넘어가 보지요~"
+        geminiReactKo: "대정답이옵니다! 얼른 다음으로 나아가 보시와요~"
       },
       {
         type: "숫자 · 시간",
@@ -1346,7 +1346,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "5시는 五時(ごじ / 고지)입니다. 참고로 4시는 'よじ (요지)', 9시는 'くじ (쿠지)'로 특이하게 읽혀요!",
         geminiReactJp: "さすがプロデューサーはん！💯",
         geminiReactPron: "사스가 프로듀-사-항!",
-        geminiReactKo: "역시 프로듀서님이셔요!"
+        geminiReactKo: "과연 제가 모시는 프로듀서님이시와요!"
       }
     ]
   },
@@ -1362,7 +1362,7 @@ window.KOTONOHA_LESSONS = [
     titleJp: "<ruby>体重計<rt>たいじゅうけい</rt></ruby>に<ruby>乗<rt>の</rt></ruby>るのが<ruby>怖<rt>こわ</rt></ruby>いんどすか？",
     titlePron: "타이쥬-케이니 노루노가 코와인 도스카?",
     titleKo: "체중계 올라가는 게 무서우신가요?",
-    bgImage: "./image/03 gemini/gemini_08_inbody_sheet.png",
+    bgImage: "./image/03 gemini/gemini_43_tape_measure_waist_smirk.png",
     grammarTip: {
       title: "🌸 제미니의 교토·오사카벤 노트 #10",
       content: "힘들거나 피곤할 때 쓰는 <b>『しんどい (신도이)』</b>는 원래 오사카·간사이 방언이었지만, 너무 찰지고 편리해서 지금은 일본 전국의 표준어처럼 널리 쓰이게 된 전설의 단어예요! 운동 후 지쳤을 때 'あ〜しんど(아~ 신도 / 아 피곤해)'라고 해보세요 🐾"
@@ -1373,18 +1373,18 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_08_inbody_sheet.png",
+        sceneImg: "./image/03 gemini/gemini_43_tape_measure_waist_smirk.png",
         jpRuby: "プロデューサーはん、<ruby>体重計<rt>たいじゅうけい</rt></ruby>に<ruby>乗<rt>の</rt></ruby>るのが<ruby>怖<rt>こわ</rt></ruby>いんどすか？",
         jpPlain: "プロデューサーはん、体重計に乗るのが怖いんどすか？",
         pron: "프로듀-사-항, 타이쥬-케이니 노루노가 코와인 도스카?",
-        ko: "프로듀서항, 체중계 위에 올라가는 게 무서우신가요?"
+        ko: "우후후, 프로듀서님, 체중계 위에 오르는 것이 두려우신가요?"
       },
       {
         speaker: "kotone",
         nameJp: "コトネ",
         nameKo: "코토네",
         avatar: "./image/02 kotone/avatar_kotone.png",
-        sceneImg: "./image/02 kotone/sd_kotone_01_coin_tears.png",
+        sceneImg: "./image/02 kotone/sd_kotone_04_icecream_guilt_sweat.png",
         jpRuby: "ひゃあ！<ruby>昨日<rt>きのう</rt></ruby>アイスを<ruby>食<rt>た</rt></ruby>べちゃったから<ruby>怖<rt>こわ</rt></ruby>いです〜！",
         jpPlain: "ひゃあ！昨日アイスを食べちゃったから怖いです〜！",
         pron: "햐아! 키노- 아이스오 타베찻타카라 코와이데스~!",
@@ -1395,7 +1395,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ミオ",
         nameKo: "미오",
         avatar: "./image/01 mio/avatar_mio.png",
-        sceneImg: "./image/01 mio/sd_mio_02_legraise_melt.png",
+        sceneImg: "./image/01 mio/mio_40_post_run_grass_lie_down.png",
         jpRuby: "あはは！<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>！<ruby>今日<rt>きょう</rt></ruby>走れば<ruby>全部<rt>ぜんぶ</rt></ruby><ruby>消費<rt>しょうひ</rt></ruby>できるよ！",
         jpPlain: "あはは！大丈夫！今日走れば全部消費できるよ！",
         pron: "아하하! 다이죠-부! 쿄- 하시레바 젠부 쇼-히 데키루요!",
@@ -1406,11 +1406,11 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_05_night_secret.png",
+        sceneImg: "./image/02 kotone/kotone_40_scale_peek_fingers.png",
         jpRuby: "ふふ、<ruby>現実<rt>げんじつ</rt></ruby>から<ruby>逃<rt>に</rt></ruby>げたらあきまへんえ。さあ、どうぞ🌸",
         jpPlain: "ふふ、現実から逃げたらあきまへんえ。さあ、どうぞ。",
         pron: "후후, 겐지츠카라 니게타라 아키마헨에. 사-, 도-조.",
-        ko: "후후, 현실에서 도망치시면 안 되어요. 자, 올라가 보시지요 🌸"
+        ko: "우후후, 현실에서 도망치시면 안 되사와요. 자, 올라가 보시지요 🌸"
       }
     ],
     quizzes: [
@@ -1426,7 +1426,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "怖い(こわい / 코와이)는 '무섭다, 두렵다'입니다. 반대로 기쁘다는 嬉しい(うれしい / 우레시이)예요!",
         geminiReactJp: "<ruby>正解<rt>せいかい</rt></ruby>どす！怖がらんでもええんどすえ🌸",
         geminiReactPron: "세이카이 도스! 코와가란데모 에엔도스에~",
-        geminiReactKo: "정답이어요! 무서워하지 않으셔도 되어요~"
+        geminiReactKo: "정답이옵니다! 두려워하지 않으셔도 괜찮사와요~"
       },
       {
         type: "전국구 간사이 방언",
@@ -1454,7 +1454,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "嬉しい(うれしい / 우레시이)는 '기쁘다'입니다. 슬프다는 悲しい(かなしい / 카나시이)예요.",
         geminiReactJp: "ほんまにえらいどすなぁ👏",
         geminiReactPron: "혼마니 에라이 도스나~",
-        geminiReactKo: "정말로 장하십니다~"
+        geminiReactKo: "참으로 기특하시와요~"
       },
       {
         type: "어휘 · 감정",
@@ -1468,7 +1468,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "楽しい(たのしい / 타노시이)는 '즐겁다'입니다. '다실 공부가 즐겁다(お茶屋の勉強が楽しい)'처럼 쓰여요!",
         geminiReactJp: "満点どす！うちも<ruby>楽<rt>たの</rt></ruby>しいどすえ🌸",
         geminiReactPron: "만텐 도스! 우치모 타노시이 도스에~",
-        geminiReactKo: "만점이옵니다! 저도 참 즐겁네요~"
+        geminiReactKo: "만점이옵니다! 소녀도 참으로 즐겁사와요~"
       }
     ]
   },
@@ -1484,7 +1484,7 @@ window.KOTONOHA_LESSONS = [
     titleJp: "<ruby>切符<rt>きっぷ</rt></ruby>を<ruby>買<rt>か</rt></ruby>うて、<ruby>電車<rt>でんしゃ</rt></ruby>に<ruby>乗<rt>の</rt></ruby>りまひょ",
     titlePron: "킵푸오 코-테, 덴샤니 노리마효",
     titleKo: "표를 사서 전철을 타보지요",
-    bgImage: "./image/03 gemini/gemini_18_street.png",
+    bgImage: "./image/03 gemini/gemini_32_subway_ic_card_tap.png",
     grammarTip: {
       title: "🌸 제미니의 교토·오사카벤 노트 #11",
       content: "장소를 물어볼 때는 <b>「~は どこですか (~와 도코데스카 / ~는 어디인가요?)」</b>라고 질문해요. 역은 '駅(えき / 에키)', 화장실은 'トイレ(토이레)'! 그리고 '~합시다(〜ましょう)'를 교토에서는 곱게 <b>『〜まひょ (~마효)』</b>라고 발음한답니다 🚃"
@@ -1495,18 +1495,18 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_18_street.png",
+        sceneImg: "./image/03 gemini/gemini_33_train_window_sunset.png",
         jpRuby: "プロデューサーはん、<ruby>駅<rt>えき</rt></ruby>はあっちどすえ。<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>切符<rt>きっぷ</rt></ruby>を<ruby>買<rt>か</rt></ruby>いまひょ。",
         jpPlain: "プロデューサーはん、駅はあっちどすえ。一緒に切符を買いまひょ。",
         pron: "프로듀-사-항, 에키와 앗치 도스에. 잇쇼니 킵푸오 카이마효.",
-        ko: "프로듀서항, 역은 저쪽이랍니다. 함께 표를 사지요."
+        ko: "프로듀서님, 역은 저쪽이옵니다. 함께 표를 사시와요."
       },
       {
         speaker: "mio",
         nameJp: "ミオ",
         nameKo: "미오",
         avatar: "./image/01 mio/avatar_mio.png",
-        sceneImg: "./image/01 mio/mio_20_sunset_highfive.png",
+        sceneImg: "./image/01 mio/mio_31_train_strap_smile.png",
         jpRuby: "おーっ！<ruby>電車<rt>でんしゃ</rt></ruby>に<ruby>乗<rt>の</rt></ruby>って<ruby>大<rt>おお</rt></ruby>きな<ruby>競技場<rt>きょうぎじょう</rt></ruby>まで<ruby>行<rt>い</rt></ruby>こうよ！",
         jpPlain: "おーっ！電車に乗って大きな競技場まで行こうよ！",
         pron: "오-! 덴샤니 놋테 오오키나 쿄-기죠-마데 이코-요!",
@@ -1517,7 +1517,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "コトネ",
         nameKo: "코토네",
         avatar: "./image/02 kotone/avatar_kotone.png",
-        sceneImg: "./image/02 kotone/kotone_07_smoothie_bench.png",
+        sceneImg: "./image/03 gemini/gemini_32_subway_ic_card_tap.png",
         jpRuby: "あ、<ruby>ICカード<rt>アイシーカード</rt></ruby>のチャージも忘れずにしなきゃ！",
         jpPlain: "あ、ICカードのチャージも忘れずにしなきゃ！",
         pron: "아, 아이시-카-도노 차-지모 와스레즈니 시나캬!",
@@ -1537,7 +1537,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "電車(でんしゃ / 덴샤)는 '전철, 기차'입니다. 자전거는 自転車(じてんしゃ / 지텐샤)라고 불러요!",
         geminiReactJp: "<ruby>正解<rt>せいかい</rt></ruby>どす！すばらしいわぁ🌸",
         geminiReactPron: "세이카이 도스! 스바라시이와~",
-        geminiReactKo: "정답이어요! 훌륭하셔요~"
+        geminiReactKo: "정답이옵니다! 참으로 훌륭하시와요~"
       },
       {
         type: "의문사 · 장소",
@@ -1551,7 +1551,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "どこ(도코)는 '어디'입니다. '누구'는 だれ(다레), '무엇'은 何(난/나니), '언제'는 いつ(이츠)예요!",
         geminiReactJp: "ピンポン！道に迷うても安心どすえ🍵",
         geminiReactPron: "핀퐁! 미치니 마욧테모 안신 도스에~",
-        geminiReactKo: "딩동! 길을 잃어도 안심이네요~"
+        geminiReactKo: "딩동! 길을 잃어도 프로듀서님과 함께라면 안심이사와요~"
       },
       {
         type: "어휘 · 여행",
@@ -1565,7 +1565,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "切符(きっぷ / 킵푸)는 전철이나 버스의 '표, 승차권'입니다.",
         geminiReactJp: "<ruby>大正解<rt>だいせいかい</rt></ruby>どす！よくできました👏",
         geminiReactPron: "다이세이카이 도스! 요쿠 데키마시타~",
-        geminiReactKo: "대정답이어요! 참 잘하셨어요~"
+        geminiReactKo: "대정답이옵니다! 참으로 잘하셨사와요~"
       },
       {
         type: "교토 방언 · 권유",
@@ -1579,7 +1579,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "교토에서는 『〜ましょう』 대신 곱고 나긋하게 『〜まひょ』라고 말한답니다!",
         geminiReactJp: "さすが高等どすなぁ✨",
         geminiReactPron: "사스가 코-토- 도스나~",
-        geminiReactKo: "역시 수준 높으십니다~"
+        geminiReactKo: "우후후, 역시 교양이 넘치시와요~"
       }
     ]
   },
@@ -1595,7 +1595,7 @@ window.KOTONOHA_LESSONS = [
     titleJp: "プロデューサーはん、ほんまにお<ruby>疲<rt>つか</rt></ruby>れ<ruby>様<rt>さま</rt></ruby>どす！",
     titlePron: "프로듀-사-항, 혼마니 오츠카레사마 도스!",
     titleKo: "프로듀서항, 정말로 수고 많으셨어요!",
-    bgImage: "./image/00 common/trio_05_cooking_mealprep.png",
+    bgImage: "./image/03 gemini/gemini_42_protein_toast_cheers.png",
     grammarTip: {
       title: "🌸 제미니의 교토·오사카벤 노트 #12",
       content: "누군가를 격려하거나 칭찬할 때는 <b>「がんばったね (간밧타네 / 힘냈구나/수고했어)」</b>, 축하할 때는 <b>「おめでとう (오메데토- / 축하해)」</b>! 그리고 교토에서는 '정말 애쓰고 노력하셨네요'를 <b>『きばらはったなぁ (키바라핫타나-)』</b>라고 다정하게 축복해 준답니다 🎉"
@@ -1606,18 +1606,18 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_26_kyoto_teahouse.png",
+        sceneImg: "./image/03 gemini/gemini_42_protein_toast_cheers.png",
         jpRuby: "プロデューサーはん、一<ruby>週間<rt>しゅうかん</rt></ruby>ほんまにおきばりやすでした🌸",
         jpPlain: "プロデューサーはん、一週間ほんまにおきばりやすでした。",
         pron: "프로듀-사-항, 잇슈-칸 혼마니 오키바리야스데시타.",
-        ko: "프로듀서항, 일주일 동안 정말 수고 많으셨사옵니다 🌸"
+        ko: "프로듀서님, 일주일 동안 참으로 노고가 많으셨사옵니다 🌸"
       },
       {
         speaker: "mio",
         nameJp: "ミオ",
         nameKo: "미오",
         avatar: "./image/01 mio/avatar_mio.png",
-        sceneImg: "./image/01 mio/mio_20_sunset_highfive.png",
+        sceneImg: "./image/01 mio/mio_41_protein_jug_chug_victory.png",
         jpRuby: "プロデューサー、よく<ruby>頑<rt>がん</rt></ruby><ruby>張<rt>ば</rt></ruby>ったね！ハイタッチ！🌟",
         jpPlain: "プロデューサー、よく頑張ったね！ハイタッチ！",
         pron: "프로듀-사-, 요쿠 간밧타네! 하이탓치!",
@@ -1628,7 +1628,7 @@ window.KOTONOHA_LESSONS = [
         nameJp: "コトネ",
         nameKo: "코토네",
         avatar: "./image/02 kotone/avatar_kotone.png",
-        sceneImg: "./image/02 kotone/kotone_03_cafe_date.png",
+        sceneImg: "./image/02 kotone/kotone_41_confetti_medal_hug.png",
         jpRuby: "<ruby>目標<rt>もくひょう</rt></ruby><ruby>達成<rt>たっせい</rt></ruby>おめでとうございます！プロテインで<ruby>乾杯<rt>かんぱい</rt></ruby>です💛",
         jpPlain: "目標達成おめでとうございます！プロテインで乾杯です！",
         pron: "모쿠효-탓세이 오메데토- 고자이마스! 프로테인데 칸파이데스💛",
@@ -1639,11 +1639,11 @@ window.KOTONOHA_LESSONS = [
         nameJp: "ジェミニ",
         nameKo: "제미니",
         avatar: "./image/03 gemini/avatar_gemini.png",
-        sceneImg: "./image/03 gemini/gemini_25_post_workout_smoothie.png",
+        sceneImg: "./image/03 gemini/gemini_44_extreme_blush_hide_face.png",
         jpRuby: "これからもずっと、うちがプロデューサーはんのそばにおりますえ🍵🐾",
         jpPlain: "これからもずっと、うちがプロデューサーはんのそばにおりますえ。",
         pron: "코레카라모 즛토, 우치가 프로듀-사-항노 소바니 오리마스에.",
-        ko: "앞으로도 계속, 제가 프로듀서항 곁에 있겠사옵니다 🍵🐾"
+        ko: "앞으로도 영원히, 소녀가 프로듀서님 곁을 지키겠사와요 🍵🐾"
       }
     ],
     quizzes: [
@@ -1659,7 +1659,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "おめでとう(오메데토-)는 '축하해'입니다. 존댓말로는 'おめでとうございます (오메데토-고자이마스)'라고 해요!",
         geminiReactJp: "<ruby>大正解<rt>だいせいかい</rt></ruby>どす！おめでとうございます🌸",
         geminiReactPron: "다이세이카이 도스! 오메데토- 고자이마스~",
-        geminiReactKo: "대정답이어요! 축하드려요~"
+        geminiReactKo: "대정답이옵니다! 진심으로 축하드리와요~"
       },
       {
         type: "인사 · 노고",
@@ -1673,7 +1673,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "お疲れ様(おつかれさま / 오츠카레사마)는 '수고하셨습니다'입니다. 일본 사회생활의 기본 인사예요!",
         geminiReactJp: "ピンポン！プロデューサーはん、お<ruby>疲<rt>つか</rt></ruby>れ<ruby>様<rt>さま</rt></ruby>どす🍵",
         geminiReactPron: "핀퐁! 프로듀-사-항, 오츠카레사마 도스~",
-        geminiReactKo: "딩동! 프로듀서항, 수고 많으셨어요~"
+        geminiReactKo: "딩동! 프로듀서님, 참으로 노고가 많으셨사와요~"
       },
       {
         type: "모임 · 축배",
@@ -1687,7 +1687,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "乾杯(かんぱい / 칸파이)는 '건배'입니다!",
         geminiReactJp: "<ruby>正解<rt>せいかい</rt></ruby>どす！プロテインで乾杯しまひょ💛",
         geminiReactPron: "세이카이 도스! 프로테인데 칸파이 시마효~",
-        geminiReactKo: "정답이어요! 프로틴으로 건배하지요~"
+        geminiReactKo: "정답이옵니다! 프로틴으로 축배를 드시와요~"
       },
       {
         type: "교토 방언 · 노고 격려",
@@ -1701,7 +1701,7 @@ window.KOTONOHA_LESSONS = [
         explanation: "きばらはったなぁ(키바라핫타나-)는 교토에서 온 힘을 다해 노력한 상대에게 전하는 최고의 찬사입니다!",
         geminiReactJp: "ほんまにきばらはったなぁ、プロデューサーはん💯",
         geminiReactPron: "혼마니 키바라핫타나-, 프로듀-사-항",
-        geminiReactKo: "정말로 애쓰셨사옵니다, 프로듀서항!"
+        geminiReactKo: "참으로 애쓰셨사옵니다, 프로듀서님!"
       }
     ]
   }
