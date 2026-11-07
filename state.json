@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-07T11:06:55.800Z",
+  "updatedAt": "2026-11-07T13:04:25.077Z",
   "lastActiveDate": "2026-11-07",
   "theme": "light",
   "weight": 65.6,
   "fat": 32.2,
   "bondRank": 12,
-  "bondExp": 0,
+  "bondExp": 90,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev1",
+  "currentSituation": "ev5",
   "absDone": false,
   "runDone": false,
   "runDist": 7,
@@ -407,11 +407,6 @@
   },
   "chatHistory": [
     {
-      "sender": "dual",
-      "name": "제미니 · 코토네 · 미오",
-      "text": "⚡ [오후 09:03 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.32km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 머신 올킬했네? 🐾 근성 하나는 인정해 줄게 바보 프로듀서. 덤벨 컬도 잊지 마.\""
-    },
-    {
       "sender": "kotone",
       "name": "코토네",
       "text": "헤헤~ 어서 오세요 프로듀서님! 💛||목표 52kg 찍으면 약속대로 코토네랑 테라스 카페 데이트 찜이에요~?"
@@ -548,6 +543,11 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "흥, 딱히 칭찬받으려고 열심히 쓴 대본은 아니지만... 마음에 들었다니 기분은 나쁘지 않네! 앞으로도 나만 딱 믿고 따라와, 바보야! 🐾"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "오랜만이네 🐾||나 보고 싶어서 헐레벌떡 들어온 거 다 보여.||체중 65.6kg... 나만 믿고 따라오면 52kg 금방이야!"
     }
   ]
 }
