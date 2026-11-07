@@ -45,7 +45,28 @@ function getCurrentKotonohaLesson() {
 }
 
 // Speak Japanese text using Web Speech API (Kyoto/Female tone preference)
-function speakJapanese(text, rate = 0.92) {
+const CHARACTER_VOICE_PROFILES = {
+  gemini: {
+    name: '제미니',
+    pitch: 0.95, // 차분하고 단아한 교토 아가씨 톤
+    rate: 0.88,  // 여유롭고 부드러운 교토벤 템포
+    preferredNames: ['kyoko', 'haruka', 'keiko', 'standard-a', 'google 日本語']
+  },
+  mio: {
+    name: '미오',
+    pitch: 1.18, // 활기차고 당찬 체육계 톰보이 톤
+    rate: 1.08,  // 시원시원하고 빠른 스포티 템포
+    preferredNames: ['nanami', 'otoya', 'standard-c', 'microsoft nanami']
+  },
+  kotone: {
+    name: '코토네',
+    pitch: 1.42, // 확실히 높고 통통 튀는 아이돌 하이톤!
+    rate: 0.98,  // 리드미컬하고 애교 있는 템포
+    preferredNames: ['ayumi', 'sora', 'standard-b', 'microsoft ayumi']
+  }
+};
+
+function speakJapanese(text, speaker = 'gemini', customRate = null) {
   try {
     if (!('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
@@ -53,16 +74,36 @@ function speakJapanese(text, rate = 0.92) {
     const clean = (text || '')
       .replace(/<rt>.*?<\/rt>/g, '')
       .replace(/<[^>]+>/g, '')
-      .replace(/[🌸🍵🐾💛✨🌟💸🏃‍♀️🥗⏰💦💖🎉🔥]/g, '')
+      .replace(/[🌸🍵🐾💛✨🌟💸🏃‍♀️🥗⏰💦💖🎉🔥🗣️🇯🇵]/g, '')
       .trim();
     if (!clean) return;
+
+    const profile = CHARACTER_VOICE_PROFILES[speaker] || CHARACTER_VOICE_PROFILES.gemini;
     const utter = new SpeechSynthesisUtterance(clean);
     utter.lang = 'ja-JP';
-    utter.rate = rate;
-    utter.pitch = 1.12; // Slightly higher, gentle feminine pitch for Sae/Gemini vibe
-    const voices = window.speechSynthesis.getVoices();
-    const jpVoice = voices.find(v => v.lang.includes('ja') && (v.name.includes('Kyoko') || v.name.includes('Haruka') || v.name.includes('Nanami') || v.name.includes('Google'))) || voices.find(v => v.lang.includes('ja'));
-    if (jpVoice) utter.voice = jpVoice;
+    utter.pitch = profile.pitch;
+    utter.rate = customRate || profile.rate;
+
+    const voices = window.speechSynthesis.getVoices() || [];
+    const jpVoices = voices.filter(v => v.lang && (v.lang.includes('ja') || v.lang.startsWith('ja')));
+
+    if (jpVoices.length > 0) {
+      // 1. 이름 선호도로 우선 매칭
+      let matched = jpVoices.find(v => {
+        const vName = (v.name || '').toLowerCase();
+        return profile.preferredNames.some(p => vName.includes(p));
+      });
+
+      // 2. 여러 일본어 음성이 있는데 특정 이름이 없으면 캐릭터별로 다른 인덱스 음성 할당
+      if (!matched && jpVoices.length > 1) {
+        if (speaker === 'mio') matched = jpVoices[1 % jpVoices.length];
+        else if (speaker === 'kotone') matched = jpVoices[2 % jpVoices.length];
+        else matched = jpVoices[0];
+      }
+
+      utter.voice = matched || jpVoices[0];
+    }
+
     window.speechSynthesis.speak(utter);
   } catch (e) {
     console.warn('TTS error:', e);
@@ -117,7 +158,7 @@ function startKotonohaStory(lessonIdx) {
 
   const lesson = getCurrentKotonohaLesson();
   if (lesson && lesson.story && lesson.story[0]) {
-    setTimeout(() => speakJapanese(lesson.story[0].jpPlain || lesson.story[0].jpRuby), 250);
+    setTimeout(() => speakJapanese(lesson.story[0].jpPlain || lesson.story[0].jpRuby, lesson.story[0].speaker || 'gemini'), 250);
   }
 }
 
@@ -136,7 +177,7 @@ function stepKotonohaStory(delta) {
   renderKotonohaView();
   const step = lesson.story[nextIdx];
   if (step) {
-    speakJapanese(step.jpPlain || step.jpRuby);
+    speakJapanese(step.jpPlain || step.jpRuby, step.speaker || 'gemini');
   }
 }
 
@@ -558,13 +599,16 @@ function renderKotonohaView() {
         </div>
 
         <!-- Character Scene Artwork + Dialogue Box Overlay (Screenshot 3 layout) -->
-        <div class="relative w-full min-h-[470px] sm:min-h-[520px] flex flex-col justify-between bg-[#120e10] cursor-pointer" onclick="stepKotonohaStory(1)">
-          <!-- Top Half: Scene Image -->
-          <div class="relative w-full h-64 sm:h-72 overflow-hidden">
-            <img src="${step.sceneImg || lesson.bgImage}" class="w-full h-full object-cover object-top transition-all duration-300">
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#141013]"></div>
+        <div class="relative w-full min-h-[500px] sm:min-h-[550px] flex flex-col justify-between bg-[#0e0a0c] cursor-pointer" onclick="stepKotonohaStory(1)">
+          <!-- Top Half: Scene Image with Ambient Blur + Full Character Contain (Never cuts off face/body) -->
+          <div class="relative w-full h-72 sm:h-84 overflow-hidden bg-[#0c080a] flex items-center justify-center">
+            <!-- Ambient blurred background filling all aspect ratios -->
+            <img src="${step.sceneImg || lesson.bgImage}" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-45 scale-125 pointer-events-none" style="object-position: center 25%;">
+            <!-- Full character / scene illustration (never cut off) -->
+            <img src="${step.sceneImg || lesson.bgImage}" class="relative z-10 max-h-full max-w-full object-contain mx-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.85)] transition-all duration-300">
+            <!-- Smooth gradient blend into dialogue box -->
+            <div class="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-[#141013]"></div>
           </div>
-
           <!-- Bottom Half: Dark Translucent VN Card -->
           <div class="relative z-10 mx-3 mb-3 p-4 rounded-2xl bg-[#1e161a]/95 border border-[#452e38] shadow-xl space-y-2.5">
             <div class="flex items-center justify-between">
