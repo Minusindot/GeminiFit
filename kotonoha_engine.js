@@ -1,16 +1,26 @@
 // ============================================================================
-// 言の葉茶屋 (KOTONOHA CHAYA) - INTERACTIVE ENGINE (Hub / VN Story / Chat Quiz)
+// 言の葉茶屋 (KOTONOHA CHAYA) - INTERACTIVE ENGINE (Hub / TTS Preloader / VN Story / Chat Quiz)
 // ============================================================================
 
 let kotonohaRuntime = {
-  currentMode: 'hub', // 'hub' | 'story' | 'quiz'
+  currentMode: 'hub', // 'hub' | 'loading_tts' | 'story' | 'quiz'
   lessonIdx: 0,
   storyStepIdx: 0,
   quizIdx: 0,
   quizChatMessages: [],
   quizAnswered: false,
   showPronunciation: true, // Aa button toggle: show Korean pronunciation + furigana
-  isAiGenerating: false
+  isAiGenerating: false,
+  ttsLoading: {
+    active: false,
+    done: 0,
+    total: 1,
+    percent: 0,
+    currentSpeaker: 'gemini',
+    currentText: '',
+    targetMode: 'story',
+    runId: 0
+  }
 };
 
 function initKotonohaState() {
@@ -67,11 +77,12 @@ const CHARACTER_VOICE_PROFILES = {
 };
 
 // ============================================================================
-// VOICEVOX SUBCULTURE ANIME TTS ENGINE & CACHE (Metan / Tsumugi / Zundamon)
+// VOICEVOX SUBCULTURE ANIME TTS ENGINE & BATCH PRELOADER (Metan / Tsumugi / Zundamon)
 // ============================================================================
 
 let currentKotonohaAudio = null;
 const kotonohaAudioCache = {};
+const kotonohaPreloadedAudio = {};
 
 // Pre-bundled high quality VOICEVOX MP3 assets (Instant 0ms latency & authentic anime voices)
 const KOTONOHA_PRESET_AUDIO = {
@@ -98,7 +109,201 @@ const VOICEVOX_SPEAKERS = {
   mio: 3      // ずんだもん (Zundamon - spirited mascot runner)
 };
 
-// Fallback Browser Web Speech API (When offline or network timeout)
+function cleanKotonohaTtsText(text) {
+  return (text || '')
+    .replace(/<rt>.*?<\/rt>/g, '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/[🌸🍵🐾💛✨🌟💸🏃‍♀️🥗⏰💦💖🎉🔥🗣️🇯🇵⛩️♨️🚇🌇📚🎐🍁❄️🌨️💆‍♀️👩‍🍳🥂📏🪭🐣🐙👓🔒🎋📦👒🍂🧤😭🍅🙈⚖️🏅😠🐹🤩🍨🎶💃🏷️⚡👟💧🎍🦶🗺️🚃🍱✏️🧥💪⏱️📣🌿😊🥤💓🤝😱🥇👍🌪️]/g, '')
+    .trim();
+}
+
+function getKotonohaCacheKey(text, speaker = 'gemini') {
+  if (typeof text === 'string' && (text.endsWith('.mp3') || text.startsWith('./audio/'))) {
+    return `FILE_${text}`;
+  }
+  const clean = cleanKotonohaTtsText(text);
+  if (KOTONOHA_PRESET_AUDIO[clean]) {
+    return `FILE_${KOTONOHA_PRESET_AUDIO[clean]}`;
+  }
+  const spkId = VOICEVOX_SPEAKERS[speaker] || 2;
+  return `${spkId}_${clean}`;
+}
+
+function sleepMs(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Wait until an audio URL is actually playable and buffered by the browser
+function bufferAudioElement(audioUrl, timeoutMs = 6000) {
+  return new Promise((resolve) => {
+    try {
+      const audio = new Audio();
+      audio.preload = 'auto';
+      let settled = false;
+      const finish = (ok) => {
+        if (!settled) {
+          settled = true;
+          resolve(ok ? audio : null);
+        }
+      };
+      const timer = setTimeout(() => finish(true), timeoutMs);
+      audio.oncanplaythrough = () => { clearTimeout(timer); finish(true); };
+      audio.onloadeddata = () => { clearTimeout(timer); finish(true); };
+      audio.onerror = () => { clearTimeout(timer); finish(false); };
+      audio.src = audioUrl;
+      audio.load();
+    } catch (_) {
+      resolve(null);
+    }
+  });
+}
+
+// Wait for VOICEVOX audioStatusUrl to report isAudioReady === true before playing/buffering
+async function waitVoicevoxAudioReady(statusUrl, maxWaitMs = 9000) {
+  if (!statusUrl) return true;
+  const start = Date.now();
+  while (Date.now() - start < maxWaitMs) {
+    try {
+      const r = await fetch(statusUrl);
+      if (r.ok) {
+        const st = await r.json();
+        if (st.isAudioReady) return true;
+        if (st.isAudioError) return false;
+      }
+    } catch (_) {}
+    await sleepMs(420);
+  }
+  return false;
+}
+
+// Synthesize & pre-buffer a single line so playback is 100% genuine VOICEVOX with 0ms latency
+async function synthesizeAndBufferVoicevox(text, speaker = 'gemini') {
+  let audioTarget = null;
+  if (typeof text === 'string' && (text.endsWith('.mp3') || text.startsWith('./audio/'))) {
+    audioTarget = text;
+  }
+  const clean = cleanKotonohaTtsText(text);
+  if (!audioTarget && KOTONOHA_PRESET_AUDIO[clean]) {
+    audioTarget = KOTONOHA_PRESET_AUDIO[clean];
+  }
+
+  const cacheKey = getKotonohaCacheKey(text, speaker);
+
+  // 1. Preset local MP3 file
+  if (audioTarget) {
+    kotonohaAudioCache[cacheKey] = audioTarget;
+    if (!kotonohaPreloadedAudio[cacheKey]) {
+      const buffered = await bufferAudioElement(audioTarget, 3000);
+      if (buffered) kotonohaPreloadedAudio[cacheKey] = buffered;
+    }
+    return audioTarget;
+  }
+
+  if (!clean) return null;
+
+  // 2. Already synthesized & buffered in this session
+  if (kotonohaAudioCache[cacheKey] && kotonohaPreloadedAudio[cacheKey]) {
+    return kotonohaAudioCache[cacheKey];
+  }
+
+  const spkId = VOICEVOX_SPEAKERS[speaker] || 2;
+  const apiUrl = `https://api.tts.quest/v3/voicevox/synthesis?text=${encodeURIComponent(clean)}&speaker=${spkId}`;
+
+  // Up to 3 attempts (respecting retryAfter rate-limit responses from tts.quest)
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 7000);
+      const resp = await fetch(apiUrl, { signal: controller.signal });
+      clearTimeout(timeout);
+
+      const data = await resp.json().catch(() => ({}));
+      if (data && typeof data.retryAfter === 'number' && data.retryAfter > 0) {
+        await sleepMs((data.retryAfter + 0.8) * 1000);
+        continue;
+      }
+
+      const audioUrl = data.mp3DownloadUrl || data.wavDownloadUrl || data.mp3StreamingUrl;
+      if (!audioUrl) {
+        await sleepMs(600);
+        continue;
+      }
+
+      // CRITICAL FIX: Wait until VOICEVOX server finishes rendering the MP3 before attempting to load/play!
+      if (data.audioStatusUrl) {
+        const ready = await waitVoicevoxAudioReady(data.audioStatusUrl, 9500);
+        if (!ready) {
+          await sleepMs(500);
+          continue;
+        }
+      }
+
+      const buffered = await bufferAudioElement(audioUrl, 5500);
+      if (buffered) {
+        kotonohaAudioCache[cacheKey] = audioUrl;
+        kotonohaPreloadedAudio[cacheKey] = buffered;
+        return audioUrl;
+      }
+    } catch (_) {
+      await sleepMs(600);
+    }
+  }
+  return null;
+}
+
+// Collect all unique voice items across Story + Quiz for a lesson
+function collectLessonVoiceItems(lesson) {
+  if (!lesson) return [];
+  const items = [];
+  const seen = new Set();
+
+  const addItem = (rawText, speaker, label) => {
+    if (!rawText) return;
+    const key = getKotonohaCacheKey(rawText, speaker);
+    if (seen.has(key)) return;
+    seen.add(key);
+    items.push({ rawText, speaker: speaker || 'gemini', key, label });
+  };
+
+  // 1. All story steps
+  (lesson.story || []).forEach((st, idx) => {
+    addItem(
+      st.audio || st.jpPlain || st.jpRuby,
+      st.speaker || 'gemini',
+      `스토리 ${idx + 1}/${lesson.story.length} (${st.nameKo || '제미니'})`
+    );
+  });
+
+  // 2. All quiz questions & reactions
+  (lesson.quizzes || []).forEach((q, idx) => {
+    addItem(
+      q.targetWord || q.promptJp,
+      'gemini',
+      `퀴즈 Q${idx + 1} 출제 어휘`
+    );
+    addItem(
+      q.geminiReactJp || "<ruby>正解<rt>せいかい</rt></ruby>どす！",
+      'gemini',
+      `퀴즈 Q${idx + 1} 정답 리액션`
+    );
+  });
+
+  // 3. Common wrong answer reaction
+  addItem(
+    "おしい！もう<ruby>一度<rt>いちど</rt></ruby><ruby>確認<rt>かくにん</rt></ruby>しましょね🌸",
+    'gemini',
+    '퀴즈 오답 격려 보이스'
+  );
+
+  return items;
+}
+
+function isLessonVoiceFullyCached(lesson) {
+  const items = collectLessonVoiceItems(lesson);
+  return items.every(it => Boolean(kotonohaAudioCache[it.key] && kotonohaPreloadedAudio[it.key]));
+}
+
+// Fallback Browser Web Speech API (Only when completely offline)
 function speakJapaneseFallback(clean, speaker = 'gemini', customRate = null, onEndCallback = null) {
   try {
     if (!('speechSynthesis' in window)) {
@@ -152,24 +357,8 @@ function speakJapaneseFallback(clean, speaker = 'gemini', customRate = null, onE
 
 // Main High-Quality VOICEVOX Anime Speech Player
 async function speakJapanese(text, speaker = 'gemini', customRate = null, onEndCallback = null) {
+  const clean = cleanKotonohaTtsText(text);
   try {
-    // Check if target is directly an audio file (.mp3)
-    let audioTarget = null;
-    if (typeof text === 'string' && (text.endsWith('.mp3') || text.startsWith('./audio/'))) {
-      audioTarget = text;
-    }
-
-    // 1. Clean HTML / ruby tags / special emojis
-    const clean = (text || '')
-      .replace(/<rt>.*?<\/rt>/g, '')
-      .replace(/<[^>]+>/g, '')
-      .replace(/[🌸🍵🐾💛✨🌟💸🏃‍♀️🥗⏰💦💖🎉🔥🗣️🇯🇵]/g, '')
-      .trim();
-
-    if (!audioTarget && KOTONOHA_PRESET_AUDIO[clean]) {
-      audioTarget = KOTONOHA_PRESET_AUDIO[clean];
-    }
-
     // Stop currently playing audio or speech
     if (currentKotonohaAudio) {
       try {
@@ -182,60 +371,27 @@ async function speakJapanese(text, speaker = 'gemini', customRate = null, onEndC
       try { window.speechSynthesis.cancel(); } catch (_) {}
     }
 
-    // Direct Instant High-Quality MP3 Playback (VOICEVOX)
-    if (audioTarget) {
-      try {
-        const audio = new Audio(audioTarget);
-        currentKotonohaAudio = audio;
-        let finished = false;
-        const done = () => {
-          if (!finished) {
-            finished = true;
-            if (typeof onEndCallback === 'function') onEndCallback();
-          }
-        };
-        audio.onended = done;
-        audio.onerror = () => {
-          speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
-        };
-        audio.play().catch(() => {
-          speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
-        });
-        return;
-      } catch (_) {
-        speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
-        return;
-      }
-    }
-
-    if (!clean) {
+    if (!clean && !(typeof text === 'string' && text.endsWith('.mp3'))) {
       if (typeof onEndCallback === 'function') setTimeout(onEndCallback, 300);
       return;
     }
 
-    // Stop currently playing audio or speech
-    if (currentKotonohaAudio) {
-      try {
-        currentKotonohaAudio.pause();
-        currentKotonohaAudio.currentTime = 0;
-      } catch (_) {}
-      currentKotonohaAudio = null;
-    }
-    if ('speechSynthesis' in window) {
-      try { window.speechSynthesis.cancel(); } catch (_) {}
-    }
-
-    const spkId = VOICEVOX_SPEAKERS[speaker] || 2;
-    const cacheKey = `${spkId}_${clean}`;
-
+    const cacheKey = getKotonohaCacheKey(text, speaker);
     const executeFallback = () => {
       speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
     };
 
-    // 2. Play from cache if available (instant 0ms playback!)
-    if (kotonohaAudioCache[cacheKey]) {
+    // 1. Instant 0ms playback from preloaded Audio buffer or cache
+    let audioUrl = kotonohaAudioCache[cacheKey];
+    if (!audioUrl) {
+      audioUrl = await synthesizeAndBufferVoicevox(text, speaker);
+    }
+
+    if (audioUrl) {
       try {
-        const audio = new Audio(kotonohaAudioCache[cacheKey]);
+        const preloaded = kotonohaPreloadedAudio[cacheKey];
+        const audio = preloaded || new Audio(audioUrl);
+        audio.currentTime = 0;
         currentKotonohaAudio = audio;
         let finished = false;
         const done = () => {
@@ -254,44 +410,8 @@ async function speakJapanese(text, speaker = 'gemini', customRate = null, onEndC
       }
     }
 
-    // 3. Request high-quality anime audio from VOICEVOX endpoint with timeout
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 3500);
-
-    const apiUrl = `https://api.tts.quest/v3/voicevox/synthesis?text=${encodeURIComponent(clean)}&speaker=${spkId}`;
-    const resp = await fetch(apiUrl, { signal: controller.signal });
-    clearTimeout(timeout);
-
-    if (!resp.ok) {
-      executeFallback();
-      return;
-    }
-
-    const data = await resp.json();
-    const audioUrl = data.mp3DownloadUrl || data.wavDownloadUrl || data.mp3StreamingUrl;
-
-    if (!audioUrl) {
-      executeFallback();
-      return;
-    }
-
-    // Save to cache for instant future replays
-    kotonohaAudioCache[cacheKey] = audioUrl;
-
-    const audio = new Audio(audioUrl);
-    currentKotonohaAudio = audio;
-    let finished = false;
-    const done = () => {
-      if (!finished) {
-        finished = true;
-        if (typeof onEndCallback === 'function') onEndCallback();
-      }
-    };
-    audio.onended = done;
-    audio.onerror = executeFallback;
-    audio.play().catch(executeFallback);
+    executeFallback();
   } catch (err) {
-    // Graceful automatic failover to browser TTS
     speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
   }
 }
@@ -326,17 +446,25 @@ function selectKotonohaLesson(idx) {
 }
 
 function openKotonohaHub() {
+  kotonohaRuntime.ttsLoading.runId++;
+  kotonohaRuntime.ttsLoading.active = false;
   kotonohaRuntime.currentMode = 'hub';
   playBeep(580, 0.06);
   renderKotonohaView();
 }
 
-function startKotonohaStory(lessonIdx) {
-  initKotonohaState();
-  if (typeof lessonIdx === 'number') {
-    kotonohaRuntime.lessonIdx = lessonIdx;
-    state.kotonoha.activeLessonIdx = lessonIdx;
+function skipKotonohaTtsPreload() {
+  kotonohaRuntime.ttsLoading.runId++;
+  kotonohaRuntime.ttsLoading.active = false;
+  const targetMode = kotonohaRuntime.ttsLoading.targetMode || 'story';
+  if (targetMode === 'quiz') {
+    launchKotonohaQuizImmediate();
+  } else {
+    launchKotonohaStoryImmediate();
   }
+}
+
+function launchKotonohaStoryImmediate() {
   kotonohaRuntime.currentMode = 'story';
   kotonohaRuntime.storyStepIdx = 0;
   playBeep(720, 0.08);
@@ -344,8 +472,101 @@ function startKotonohaStory(lessonIdx) {
 
   const lesson = getCurrentKotonohaLesson();
   if (lesson && lesson.story && lesson.story[0]) {
-    setTimeout(() => speakJapanese(lesson.story[0].audio || lesson.story[0].jpPlain || lesson.story[0].jpRuby, lesson.story[0].speaker || 'gemini'), 250);
+    setTimeout(() => speakJapanese(lesson.story[0].audio || lesson.story[0].jpPlain || lesson.story[0].jpRuby, lesson.story[0].speaker || 'gemini'), 150);
   }
+}
+
+function launchKotonohaQuizImmediate() {
+  const lesson = getCurrentKotonohaLesson();
+  if (!lesson || !lesson.quizzes || lesson.quizzes.length === 0) return;
+  kotonohaRuntime.currentMode = 'quiz';
+  kotonohaRuntime.quizIdx = 0;
+  kotonohaRuntime.quizAnswered = false;
+  kotonohaRuntime.quizChatMessages = [];
+
+  pushQuizQuestionToChat(0);
+  playBeep(760, 0.08);
+  renderKotonohaView();
+}
+
+// Pre-synthesize & buffer ALL Story + Quiz voices for the lesson with a live 0%~100% progress bar!
+async function prepareAndStartKotonoha(targetMode = 'story', lessonIdx = undefined) {
+  initKotonohaState();
+  if (typeof lessonIdx === 'number') {
+    kotonohaRuntime.lessonIdx = lessonIdx;
+    state.kotonoha.activeLessonIdx = lessonIdx;
+  }
+
+  const lesson = getCurrentKotonohaLesson();
+  if (!lesson) return;
+
+  const items = collectLessonVoiceItems(lesson);
+  const uncached = items.filter(it => !(kotonohaAudioCache[it.key] && kotonohaPreloadedAudio[it.key]));
+
+  // If 100% of Story + Quiz voices are already ready in memory, start immediately!
+  if (uncached.length === 0) {
+    if (targetMode === 'quiz') {
+      launchKotonohaQuizImmediate();
+    } else {
+      launchKotonohaStoryImmediate();
+    }
+    return;
+  }
+
+  const myRunId = ++kotonohaRuntime.ttsLoading.runId;
+  kotonohaRuntime.currentMode = 'loading_tts';
+  kotonohaRuntime.ttsLoading = {
+    active: true,
+    done: items.length - uncached.length,
+    total: items.length,
+    percent: Math.round(((items.length - uncached.length) / items.length) * 100),
+    currentSpeaker: uncached[0]?.speaker || 'gemini',
+    currentText: uncached[0]?.label || '보이스 준비 중...',
+    targetMode: targetMode,
+    runId: myRunId
+  };
+  playBeep(660, 0.06);
+  renderKotonohaView();
+
+  for (let i = 0; i < items.length; i++) {
+    if (kotonohaRuntime.ttsLoading.runId !== myRunId) return;
+    const it = items[i];
+    if (!(kotonohaAudioCache[it.key] && kotonohaPreloadedAudio[it.key])) {
+      kotonohaRuntime.ttsLoading.currentSpeaker = it.speaker;
+      kotonohaRuntime.ttsLoading.currentText = it.label;
+      updateKotonohaLoadingDom();
+      await synthesizeAndBufferVoicevox(it.rawText, it.speaker);
+    }
+    if (kotonohaRuntime.ttsLoading.runId !== myRunId) return;
+    kotonohaRuntime.ttsLoading.done = i + 1;
+    kotonohaRuntime.ttsLoading.percent = Math.min(100, Math.round(((i + 1) / items.length) * 100));
+    updateKotonohaLoadingDom();
+  }
+
+  if (kotonohaRuntime.ttsLoading.runId !== myRunId) return;
+  kotonohaRuntime.ttsLoading.active = false;
+  await sleepMs(220);
+
+  if (targetMode === 'quiz') {
+    launchKotonohaQuizImmediate();
+  } else {
+    launchKotonohaStoryImmediate();
+  }
+}
+
+function updateKotonohaLoadingDom() {
+  const pctEl = document.getElementById('kotonohaTtsPctText');
+  const barEl = document.getElementById('kotonohaTtsPctBar');
+  const cntEl = document.getElementById('kotonohaTtsCountText');
+  const lblEl = document.getElementById('kotonohaTtsLabelText');
+  if (pctEl) pctEl.textContent = `${kotonohaRuntime.ttsLoading.percent}%`;
+  if (barEl) barEl.style.width = `${kotonohaRuntime.ttsLoading.percent}%`;
+  if (cntEl) cntEl.textContent = `${kotonohaRuntime.ttsLoading.done} / ${kotonohaRuntime.ttsLoading.total} 대사 완료`;
+  if (lblEl) lblEl.textContent = kotonohaRuntime.ttsLoading.currentText;
+}
+
+function startKotonohaStory(lessonIdx) {
+  prepareAndStartKotonoha('story', lessonIdx);
 }
 
 function stepKotonohaStory(delta) {
@@ -354,8 +575,8 @@ function stepKotonohaStory(delta) {
   const nextIdx = kotonohaRuntime.storyStepIdx + delta;
   if (nextIdx < 0) return;
   if (nextIdx >= lesson.story.length) {
-    // Transition directly to Daily Chat Quiz!
-    startKotonohaQuiz();
+    // Transition directly to Daily Chat Quiz (already 100% preloaded!)
+    launchKotonohaQuizImmediate();
     return;
   }
   kotonohaRuntime.storyStepIdx = nextIdx;
@@ -368,17 +589,7 @@ function stepKotonohaStory(delta) {
 }
 
 function startKotonohaQuiz() {
-  const lesson = getCurrentKotonohaLesson();
-  if (!lesson || !lesson.quizzes || lesson.quizzes.length === 0) return;
-  kotonohaRuntime.currentMode = 'quiz';
-  kotonohaRuntime.quizIdx = 0;
-  kotonohaRuntime.quizAnswered = false;
-  kotonohaRuntime.quizChatMessages = [];
-
-  // Push first question from Gemini
-  pushQuizQuestionToChat(0);
-  playBeep(760, 0.08);
-  renderKotonohaView();
+  prepareAndStartKotonoha('quiz');
 }
 
 function pushQuizQuestionToChat(qIdx) {
@@ -461,8 +672,8 @@ function submitKotonohaQuizAnswer(optionIdx) {
     ? (q.geminiReactPron || "세이카이 도스!")
     : "오시-! 모- 이치도 카쿠닌 시마쇼네";
   const reactKo = isCorrect
-    ? (q.geminiReactKo || "정답이어요!")
-    : `아까워라! 정답은 「${q.options[q.answerIndex]}」이랍니다.`;
+    ? (q.geminiReactKo || "정답이옵니다!")
+    : `아까워라! 정답은 「${q.options[q.answerIndex]}」이라지요.`;
 
   kotonohaRuntime.quizChatMessages.push({
     role: 'gemini_feedback',
@@ -524,7 +735,7 @@ async function generateAiKotonohaLesson() {
   initKotonohaState();
   const apiKey = (localStorage.getItem('GEMINI_API_KEY') || '').trim();
   if (!apiKey) {
-    alert("✨ 실시간 AI 새 수업 생성을 위해 우측 상단 [⚙️ 설정]에서 Gemini API 키를 먼저 등록해 주세요!\n(기본 내장 수업 1~3화는 API 키 없이도 언제든 플레이 가능합니다 🍵)");
+    alert("✨ 실시간 AI 새 수업 생성을 위해 우측 상단 [⚙️ 설정]에서 Gemini API 키를 먼저 등록해 주세요!\n(기본 내장 수업 1~12화는 API 키 없이도 언제든 플레이 가능합니다 🍵)");
     openWebhookModal();
     return;
   }
@@ -586,7 +797,7 @@ async function generateAiKotonohaLesson() {
       "explanation": "정답 해설 (단어 뜻과 발음 설명)",
       "geminiReactJp": "<ruby>正解<rt>せいかい</rt></ruby>どす！🌸",
       "geminiReactPron": "세이카이 도스!",
-      "geminiReactKo": "정답이어요!"
+      "geminiReactKo": "정답이옵니다!"
     }
   ]
 }
@@ -628,9 +839,68 @@ function renderKotonohaView() {
   const rank = getChayaRankInfo(kState.kotodama);
   const showPron = kotonohaRuntime.showPronunciation;
 
+  // MODE 0: BATCH VOICEVOX PRE-SYNTHESIS LOADER (0% ~ 100% Real-time Progress)
+  if (kotonohaRuntime.currentMode === 'loading_tts') {
+    const tl = kotonohaRuntime.ttsLoading;
+    const spkAvatar = tl.currentSpeaker === 'kotone'
+      ? './image/02 kotone/avatar_kotone.png'
+      : tl.currentSpeaker === 'mio'
+        ? './image/01 mio/avatar_mio.png'
+        : './image/03 gemini/avatar_gemini.png';
+
+    container.innerHTML = `
+      <div class="rounded-3xl bg-[#181316] text-[#f5ebe6] border border-[#452e38] shadow-2xl overflow-hidden p-6 sm:p-8">
+        <div class="max-w-md mx-auto text-center space-y-5">
+          <!-- Animated Avatar & Soundwave Ring -->
+          <div class="relative w-24 h-24 mx-auto">
+            <div class="absolute inset-0 rounded-full bg-[#e0465a]/30 animate-ping"></div>
+            <img src="${spkAvatar}" class="relative z-10 w-24 h-24 rounded-full object-cover ring-4 ring-[#e0465a] shadow-xl mx-auto">
+            <span class="absolute -bottom-1 -right-1 z-20 px-2 py-0.5 rounded-full bg-[#e0465a] text-white text-[10px] font-black shadow">
+              VOICEVOX
+            </span>
+          </div>
+
+          <div class="space-y-1.5">
+            <div class="text-xs font-extrabold text-[#f28b9b] tracking-wide">${lesson.dateLabel} · ${lesson.titleKo}</div>
+            <h3 class="text-lg font-black text-white">🎙️ 레슨~퀴즈 성우 보이스 일괄 준비 중...</h3>
+            <p class="text-xs text-[#b89d97] leading-relaxed">
+              중간에 기본 기계음으로 바뀌지 않도록, 이번 화의 <strong class="text-[#ffd6de]">모든 스토리 대사와 퀴즈 보이스</strong>를 한꺼번에 준비하고 있사옵니다 🍵
+            </p>
+          </div>
+
+          <!-- Big Percentage Counter & Smooth Progress Bar -->
+          <div class="p-4 rounded-2xl bg-[#23191e] border border-[#3f2b34] space-y-2.5">
+            <div class="flex items-baseline justify-between">
+              <span id="kotonohaTtsLabelText" class="text-xs font-bold text-[#f2a6b2] truncate">${tl.currentText}</span>
+              <span id="kotonohaTtsPctText" class="text-2xl font-black text-[#ff6b81] font-mono">${tl.percent}%</span>
+            </div>
+            <div class="w-full h-3 rounded-full bg-[#150f12] overflow-hidden border border-[#38252d]">
+              <div id="kotonohaTtsPctBar" class="h-full bg-gradient-to-r from-[#e0465a] via-[#ff758c] to-[#ffb199] transition-all duration-300 rounded-full" style="width: ${tl.percent}%"></div>
+            </div>
+            <div class="flex items-center justify-between text-[11px] text-[#9e847e] font-bold">
+              <span id="kotonohaTtsCountText">${tl.done} / ${tl.total} 대사 완료</span>
+              <span>100% 도달 시 자동 시작 🌸</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-center gap-2 pt-1">
+            <button onclick="openKotonohaHub()" class="px-4 py-2 rounded-xl bg-[#261c21] hover:bg-[#34262d] border border-[#422f37] text-xs font-bold text-[#c9b1aa]">
+              취소하고 로비로
+            </button>
+            <button onclick="skipKotonohaTtsPreload()" class="px-4 py-2 rounded-xl bg-[#35222a] hover:bg-[#472d38] border border-[#633d4c] text-xs font-bold text-[#f5d0d8]">
+              ⚡ 대기 없이 바로 시작
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
   // MODE 1: TEAROOM HUB (Screenshot 1 & 2 vibe: Dark Kyoto Chaya Village + Stats + Episode Selector)
   if (kotonohaRuntime.currentMode === 'hub') {
     const unreadCount = Math.max(1, lessons.length - (kState.completedLessons?.length || 0));
+    const isCurrentCached = isLessonVoiceFullyCached(lesson);
     container.innerHTML = `
       <div class="rounded-3xl bg-[#181316] text-[#f5ebe6] border border-[#3a2830] shadow-2xl overflow-hidden">
         <!-- Top Header Bar (Screenshot 2 style) -->
@@ -685,7 +955,7 @@ function renderKotonohaView() {
               <span class="px-2.5 py-1 rounded-full bg-[#e0465a] text-white text-[11px] font-black shadow-md animate-bounce">
                 새 톡 ${unreadCount} · ${lesson.levelBadge}
               </span>
-              <button onclick="event.stopPropagation(); speakJapanese('プロデューサーはん、おいでやす。今日もおきばりやす！')" class="px-2.5 py-1 rounded-full bg-black/65 hover:bg-black/80 text-[#ffd6de] border border-white/20 text-[11px] font-bold backdrop-blur-xs">
+              <button onclick="event.stopPropagation(); speakJapanese('プロデューサーはん、おいでやす。今日もおきばりやす！', 'gemini')" class="px-2.5 py-1 rounded-full bg-black/65 hover:bg-black/80 text-[#ffd6de] border border-white/20 text-[11px] font-bold backdrop-blur-xs">
                 🔊 제미니 인사 듣기
               </button>
             </div>
@@ -747,7 +1017,7 @@ function renderKotonohaView() {
               <div class="flex items-center gap-3 text-left">
                 <img src="./image/03 gemini/avatar_gemini.png" class="w-10 h-10 rounded-full object-cover ring-2 ring-[#e0465a]">
                 <div>
-                  <div class="text-[10px] font-bold text-[#c7aca5]">ジェミニ (제미니)</div>
+                  <div class="text-[10px] font-bold text-[#c7aca5]">ジェミニ (제미니) · ${isCurrentCached ? '⚡ 보이스 준비완료' : '🎙️ 풀보이스 자동합성'}</div>
                   <div class="text-xs font-black text-white">오늘 수업 준비됐어! 이야기 보기</div>
                 </div>
               </div>
@@ -795,7 +1065,7 @@ function renderKotonohaView() {
             <button onclick="toggleKotonohaPronunciation()" class="px-2.5 py-1.5 rounded-xl border text-xs font-black ${showPron ? 'bg-[#e0465a] text-white border-[#ff7588]' : 'bg-[#2a1f24] text-[#9c847f] border-[#453139]'}">
               Aa
             </button>
-            <button onclick="startKotonohaQuiz()" class="px-3 py-1.5 rounded-xl bg-[#2b1f25] hover:bg-[#3d2b34] border border-[#523843] text-xs font-bold text-[#e6d0ca]">
+            <button onclick="launchKotonohaQuizImmediate()" class="px-3 py-1.5 rounded-xl bg-[#2b1f25] hover:bg-[#3d2b34] border border-[#523843] text-xs font-bold text-[#e6d0ca]">
               건너뛰기
             </button>
           </div>
@@ -825,7 +1095,7 @@ function renderKotonohaView() {
                 <span class="text-xs font-black text-[#f4869d]">${step.nameJp}</span>
                 <span class="text-[11px] text-[#a88e88] font-bold">(${step.nameKo})</span>
               </div>
-              <button onclick="event.stopPropagation(); speakJapanese('${(step.jpPlain || '').replace(/'/g, "\\'")}')" class="px-2.5 py-1 rounded-lg bg-[#2e2027] hover:bg-[#3d2a33] text-[11px] font-bold text-[#f2a6b2] border border-[#543844]">
+              <button onclick="event.stopPropagation(); speakJapanese('${(step.audio || step.jpPlain || '').replace(/'/g, "\\'")}', '${step.speaker || 'gemini'}')" class="px-2.5 py-1 rounded-lg bg-[#2e2027] hover:bg-[#3d2a33] text-[11px] font-bold text-[#f2a6b2] border border-[#543844]">
                 🔊 음성 듣기
               </button>
             </div>
@@ -914,14 +1184,14 @@ function renderKotonohaView() {
                   <div class="space-y-2 max-w-[85%]">
                     <div class="text-[11px] font-bold text-[#b89d97]">ジェミニ</div>
                     <!-- Prompt Bubble -->
-                    <div onclick="speakJapanese('${(msg.targetWord || '').replace(/'/g, "\\'")}')" class="p-3 rounded-2xl bg-[#241c20] border border-[#382b31] cursor-pointer hover:border-[#634551] transition-all inline-block">
+                    <div onclick="speakJapanese('${(msg.targetWord || '').replace(/'/g, "\\'")}', 'gemini')" class="p-3 rounded-2xl bg-[#241c20] border border-[#382b31] cursor-pointer hover:border-[#634551] transition-all inline-block">
                       <div class="text-sm font-black text-white">${msg.promptJp}</div>
                       ${showPron && msg.promptPron ? `<div class="text-[11px] text-[#f29aa8] mt-0.5">${msg.promptPron}</div>` : ''}
                       <div class="text-xs text-[#b89d97] mt-0.5">${msg.promptKo}</div>
                     </div>
 
                     <!-- Big Target Kanji / Phrase Card (Screenshot 4 Q2 style) -->
-                    <div onclick="speakJapanese('${(msg.targetWord || '').replace(/'/g, "\\'")}')" class="p-4 rounded-2xl bg-[#241c20] border border-[#3d2d35] cursor-pointer hover:border-[#e0465a] transition-all">
+                    <div onclick="speakJapanese('${(msg.targetWord || '').replace(/'/g, "\\'")}', 'gemini')" class="p-4 rounded-2xl bg-[#241c20] border border-[#3d2d35] cursor-pointer hover:border-[#e0465a] transition-all">
                       <div class="flex items-center justify-between text-[11px] font-black text-[#e0465a] mb-2">
                         <span>Q${msg.qIdx + 1} · ${msg.type}</span>
                         <span class="text-[10px] text-[#a88e88]">🔊 터치해서 발음 듣기</span>
@@ -956,7 +1226,7 @@ function renderKotonohaView() {
                   <div class="space-y-2 max-w-[85%]">
                     <div class="text-[11px] font-bold text-[#b89d97]">ジェミニ</div>
                     <!-- Reaction Bubble -->
-                    <div onclick="speakJapanese('${(msg.speakText || '').replace(/'/g, "\\'")}')" class="p-3 rounded-2xl bg-[#241c20] border border-[#382b31] cursor-pointer inline-block">
+                    <div onclick="speakJapanese('${(msg.reactJp || msg.speakText || '').replace(/'/g, "\\'")}', 'gemini')" class="p-3 rounded-2xl bg-[#241c20] border border-[#382b31] cursor-pointer inline-block">
                       <div class="text-base font-black text-white">${msg.reactJp}</div>
                       ${showPron ? `<div class="text-[11px] text-[#f29aa8] mt-0.5">${msg.reactPron}</div>` : ''}
                       <div class="text-xs text-[#d9c5bf] mt-0.5">${msg.reactKo}</div>
@@ -976,12 +1246,12 @@ function renderKotonohaView() {
               return `
                 <div class="p-4 rounded-2xl bg-gradient-to-br from-[#3b1d29] to-[#241822] border border-[#e0465a]/60 text-center space-y-2 my-2">
                   <div class="text-lg font-black text-white">🎉 오늘의 다실 수업 올클리어!</div>
-                  <p class="text-xs text-[#f2c2cb]">「プロデューサーはん、ほんまによう頑張らはったなぁ🍵💖」<br>(프로듀서항, 정말 열심히 잘하셨어요! 엽전 +50 · 언령 +25 · 인연 +30 EXP)</p>
+                  <p class="text-xs text-[#f2c2cb]">「プロデューサーはん、ほんまによう頑張らはったなぁ🍵💖」<br>(프로듀서항, 정말 열심히 잘하셨사옵니다! 엽전 +50 · 언령 +25 · 인연 +30 EXP)</p>
                   <div class="flex justify-center gap-2 pt-2">
                     <button onclick="openKotonohaHub()" class="px-4 py-2 rounded-xl bg-[#e0465a] text-white text-xs font-black shadow">
                       🍵 다실 로비로 돌아가기
                     </button>
-                    <button onclick="startKotonohaQuiz()" class="px-4 py-2 rounded-xl bg-[#2b1f25] border border-[#543844] text-xs font-bold text-[#e6d0ca]">
+                    <button onclick="launchKotonohaQuizImmediate()" class="px-4 py-2 rounded-xl bg-[#2b1f25] border border-[#543844] text-xs font-bold text-[#e6d0ca]">
                       🔄 다시 풀기
                     </button>
                   </div>
