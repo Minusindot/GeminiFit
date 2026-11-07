@@ -2,10 +2,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 .grok_profile/
+.firefox_grok_profile/
 .env
-
 ref_pool/mio_old_backup/
- 
 node_modules/
 *.traineddata
-
+image/90 repository/

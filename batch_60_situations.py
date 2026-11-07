@@ -785,8 +785,14 @@ def generate_image(driver, filename, dest_rel, ref_paths, prompt):
 
             target_path = BASE_DIR / dest_rel
             target_path.parent.mkdir(parents=True, exist_ok=True)
-            cand.save(target_path, format="PNG")
-            print(f"✨ [생성 완료] {target_path.relative_to(BASE_DIR)} ({cand.size})")
+            w, h = cand.size
+            if max(w, h) > 1200:
+                scale = 1200.0 / max(w, h)
+                cand_opt = cand.convert("RGBA").resize((int(w * scale), int(h * scale)), Image.Resampling.LANCZOS).quantize(256, method=2)
+            else:
+                cand_opt = cand.convert("RGBA").quantize(256, method=2)
+            cand_opt.save(target_path, format="PNG", optimize=True)
+            print(f"✨ [생성 완료] {target_path.relative_to(BASE_DIR)} ({cand_opt.size}, {target_path.stat().st_size // 1024}KB)")
 
             try:
                 ART_DIR.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,8 @@
+# Exclude reference-only repository & local Python automation scripts from Vercel deployment
+image/90 repository/**
+*.py
+*.log
+*.bat
+*.sh
+__pycache__/
+.firefox_grok_profile/
