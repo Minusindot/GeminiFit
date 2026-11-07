@@ -66,23 +66,28 @@ const CHARACTER_VOICE_PROFILES = {
   }
 };
 
-function speakJapanese(text, speaker = 'gemini', customRate = null, onEndCallback = null) {
+// ============================================================================
+// VOICEVOX SUBCULTURE ANIME TTS ENGINE & CACHE (Metan / Tsumugi / Zundamon)
+// ============================================================================
+
+let currentKotonohaAudio = null;
+const kotonohaAudioCache = {};
+
+// VOICEVOX Subculture Anime Character Voice Mapping
+const VOICEVOX_SPEAKERS = {
+  gemini: 2,  // 四国めたん (Shikoku Metan - elegant tsundere ojousama)
+  kotone: 8,  // 春日部つむぎ (Kasukabe Tsumugi - lively cute idol)
+  mio: 3      // ずんだもん (Zundamon - spirited mascot runner)
+};
+
+// Fallback Browser Web Speech API (When offline or network timeout)
+function speakJapaneseFallback(clean, speaker = 'gemini', customRate = null, onEndCallback = null) {
   try {
     if (!('speechSynthesis' in window)) {
       if (typeof onEndCallback === 'function') setTimeout(onEndCallback, 300);
       return;
     }
     window.speechSynthesis.cancel();
-    // Strip ruby tags or HTML if any
-    const clean = (text || '')
-      .replace(/<rt>.*?<\/rt>/g, '')
-      .replace(/<[^>]+>/g, '')
-      .replace(/[🌸🍵🐾💛✨🌟💸🏃‍♀️🥗⏰💦💖🎉🔥🗣️🇯🇵]/g, '')
-      .trim();
-    if (!clean) {
-      if (typeof onEndCallback === 'function') setTimeout(onEndCallback, 300);
-      return;
-    }
 
     const profile = CHARACTER_VOICE_PROFILES[speaker] || CHARACTER_VOICE_PROFILES.gemini;
     const utter = new SpeechSynthesisUtterance(clean);
@@ -90,7 +95,6 @@ function speakJapanese(text, speaker = 'gemini', customRate = null, onEndCallbac
     utter.pitch = profile.pitch;
     utter.rate = customRate || profile.rate;
 
-    // Estimate speaking duration in ms for safe fallback
     const estDurationMs = Math.max(2200, Math.round((clean.length / (profile.rate || 0.9)) * 190 + 700));
 
     let callbackFired = false;
@@ -103,34 +107,126 @@ function speakJapanese(text, speaker = 'gemini', customRate = null, onEndCallbac
 
     utter.onend = handleComplete;
     utter.onerror = handleComplete;
-
-    // Safety timeout in case TTS engine does not fire onend (common mobile WebKit issue)
     setTimeout(handleComplete, estDurationMs + 800);
 
     const voices = window.speechSynthesis.getVoices() || [];
     const jpVoices = voices.filter(v => v.lang && (v.lang.includes('ja') || v.lang.startsWith('ja')));
 
     if (jpVoices.length > 0) {
-      // 1. 이름 선호도로 우선 매칭
       let matched = jpVoices.find(v => {
         const vName = (v.name || '').toLowerCase();
         return profile.preferredNames.some(p => vName.includes(p));
       });
-
-      // 2. 여러 일본어 음성이 있는데 특정 이름이 없으면 캐릭터별로 다른 인덱스 음성 할당
       if (!matched && jpVoices.length > 1) {
         if (speaker === 'mio') matched = jpVoices[1 % jpVoices.length];
         else if (speaker === 'kotone') matched = jpVoices[2 % jpVoices.length];
         else matched = jpVoices[0];
       }
-
       utter.voice = matched || jpVoices[0];
     }
 
     window.speechSynthesis.speak(utter);
   } catch (e) {
-    console.warn('TTS error:', e);
+    console.warn('Fallback TTS error:', e);
     if (typeof onEndCallback === 'function') setTimeout(onEndCallback, 300);
+  }
+}
+
+// Main High-Quality VOICEVOX Anime Speech Player
+async function speakJapanese(text, speaker = 'gemini', customRate = null, onEndCallback = null) {
+  try {
+    // 1. Clean HTML / ruby tags / special emojis
+    const clean = (text || '')
+      .replace(/<rt>.*?<\/rt>/g, '')
+      .replace(/<[^>]+>/g, '')
+      .replace(/[🌸🍵🐾💛✨🌟💸🏃‍♀️🥗⏰💦💖🎉🔥🗣️🇯🇵]/g, '')
+      .trim();
+
+    if (!clean) {
+      if (typeof onEndCallback === 'function') setTimeout(onEndCallback, 300);
+      return;
+    }
+
+    // Stop currently playing audio or speech
+    if (currentKotonohaAudio) {
+      try {
+        currentKotonohaAudio.pause();
+        currentKotonohaAudio.currentTime = 0;
+      } catch (_) {}
+      currentKotonohaAudio = null;
+    }
+    if ('speechSynthesis' in window) {
+      try { window.speechSynthesis.cancel(); } catch (_) {}
+    }
+
+    const spkId = VOICEVOX_SPEAKERS[speaker] || 2;
+    const cacheKey = `${spkId}_${clean}`;
+
+    const executeFallback = () => {
+      speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
+    };
+
+    // 2. Play from cache if available (instant 0ms playback!)
+    if (kotonohaAudioCache[cacheKey]) {
+      try {
+        const audio = new Audio(kotonohaAudioCache[cacheKey]);
+        currentKotonohaAudio = audio;
+        let finished = false;
+        const done = () => {
+          if (!finished) {
+            finished = true;
+            if (typeof onEndCallback === 'function') onEndCallback();
+          }
+        };
+        audio.onended = done;
+        audio.onerror = executeFallback;
+        audio.play().catch(executeFallback);
+        return;
+      } catch (_) {
+        executeFallback();
+        return;
+      }
+    }
+
+    // 3. Request high-quality anime audio from VOICEVOX endpoint with timeout
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3500);
+
+    const apiUrl = `https://api.tts.quest/v3/voicevox/synthesis?text=${encodeURIComponent(clean)}&speaker=${spkId}`;
+    const resp = await fetch(apiUrl, { signal: controller.signal });
+    clearTimeout(timeout);
+
+    if (!resp.ok) {
+      executeFallback();
+      return;
+    }
+
+    const data = await resp.json();
+    const audioUrl = data.mp3StreamingUrl || data.mp3DownloadUrl;
+
+    if (!audioUrl) {
+      executeFallback();
+      return;
+    }
+
+    // Save to cache for instant future replays
+    kotonohaAudioCache[cacheKey] = audioUrl;
+
+    const audio = new Audio(audioUrl);
+    currentKotonohaAudio = audio;
+    let finished = false;
+    const done = () => {
+      if (!finished) {
+        finished = true;
+        if (typeof onEndCallback === 'function') onEndCallback();
+      }
+    };
+    audio.onended = done;
+    audio.onerror = executeFallback;
+    audio.play().catch(executeFallback);
+  } catch (err) {
+    // Graceful automatic failover to browser TTS
+    speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
   }
 }
 
