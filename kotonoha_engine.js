@@ -1266,18 +1266,13 @@ function renderKotonohaView() {
     return;
   }
 
-  // MODE 2: VISUAL NOVEL STORY READER (Hybrid VN Engine: BG + SCG default + Climax ECG)
+  // MODE 2: VISUAL NOVEL STORY READER (Clean Full-Illustration ECG Presentation)
   if (kotonohaRuntime.currentMode === 'story') {
     const steps = lesson.story || [];
     const curIdx = Math.min(kotonohaRuntime.storyStepIdx, steps.length - 1);
     const step = steps[curIdx] || steps[0];
     const progressPct = Math.round(((curIdx + 1) / steps.length) * 100);
-
-    // Determine whether this step is an Event CG (ECG) or Standing Character + Stage Background (SCG)
-    // Default: Final step or explicitly tagged steps are ECG; dialogue banter steps are SCG over stage BG
-    const isEcg = step.renderType === 'ecg' || (step.renderType !== 'scg' && (curIdx === steps.length - 1 || curIdx === 0 && steps.length <= 4));
-    const stageBg = step.bg || lesson.bgImage || './image/03 gemini/gemini_26_kyoto_teahouse.png';
-    const characterImg = step.scg || step.sceneImg || lesson.bgImage;
+    const sceneImage = step.sceneImg || lesson.bgImage || './image/03 gemini/gemini_26_kyoto_teahouse.png';
 
     container.innerHTML = `
       <div class="rounded-3xl bg-[#141013] text-[#f5ebe6] border border-[#3d2932] shadow-2xl overflow-hidden select-none flex flex-col">
@@ -1310,44 +1305,20 @@ function renderKotonohaView() {
           <div class="h-full bg-gradient-to-r from-[#e0465a] to-[#ff758c] transition-all duration-300" style="width: ${progressPct}%"></div>
         </div>
 
-        <!-- Hybrid VN Stage Area: Click anywhere to advance -->
+        <!-- Full Illustration Cinematic Stage: Click anywhere to advance -->
         <div class="relative w-full min-h-[500px] sm:min-h-[560px] flex flex-col justify-between bg-[#0e0a0c] cursor-pointer overflow-hidden" onclick="stepKotonohaStory(1)">
           
-          <!-- Mode Indicator Badge (ECG vs SCG Dialogue) -->
-          <div class="absolute top-3 left-3 z-30 flex items-center gap-1.5 pointer-events-none">
-            ${isEcg ? `
-              <span class="px-2.5 py-1 rounded-full bg-gradient-to-r from-[#e0465a] to-[#9b4dca] text-white text-[10px] font-black shadow-lg flex items-center gap-1 animate-pulse">
-                <span>✨</span><span>EVENT CG</span>
-              </span>
-            ` : `
-              <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[#ffd6de] text-[10px] font-bold flex items-center gap-1">
-                <span>🍵</span><span>다실 일상 회화</span>
-              </span>
-            `}
-          </div>
-
-          <!-- Stage Visual Area -->
+          <!-- Cinematic Image Presentation: Ambient Blur Backdrop + Crisp Center Illustration (Never Cut Off) -->
           <div class="relative w-full h-72 sm:h-84 overflow-hidden bg-[#0c080a] flex items-center justify-center">
-            ${isEcg ? `
-              <!-- [MODE A: EVENT CG] Fullscreen Cinematic Illustration -->
-              <img src="${characterImg}" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-40 scale-125 pointer-events-none" style="object-position: center 25%;">
-              <img src="${characterImg}" class="relative z-10 max-h-full max-w-full object-contain mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)] transition-all duration-300">
-            ` : `
-              <!-- [MODE B: BG + SCG STANDING] Classic Visual Novel Stage -->
-              <!-- Layer 1: Background Location (Teahouse, Street, Ryokan, etc.) -->
-              <img src="${stageBg}" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.72] contrast-[1.05] pointer-events-none transition-all duration-500" style="object-position: center 30%;">
-              <div class="absolute inset-0 bg-gradient-to-t from-[#0e0a0c] via-transparent to-black/30 pointer-events-none"></div>
-
-              <!-- Layer 2: Standing Character (SCG) with ambient drop shadow -->
-              <div class="relative z-10 h-full flex items-end justify-center pointer-events-none">
-                <img src="${characterImg}" class="max-h-[92%] max-w-[90%] object-contain object-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.9)] transition-all duration-300 transform group-hover:scale-102">
-              </div>
-            `}
+            <!-- Ambient blurred background filling all screen aspect ratios -->
+            <img src="${sceneImage}" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-45 scale-125 pointer-events-none" style="object-position: center 25%;">
+            <!-- Crisp center illustration with soft shadow -->
+            <img src="${sceneImage}" class="relative z-10 max-h-full max-w-full object-contain mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)] transition-all duration-300">
             <!-- Smooth Gradient Blend into Dialogue Box -->
-            <div class="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-[#0e0a0c]"></div>
+            <div class="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-[#141013]"></div>
           </div>
 
-          <!-- Bottom Dialogue Box: Translucent VN Glass Card -->
+          <!-- Bottom Dialogue Box: Translucent VN Card -->
           <div class="relative z-30 mx-3 mb-3 p-4 rounded-2xl bg-[#1e161a]/95 border border-[#48303a] shadow-2xl backdrop-blur-md space-y-2.5">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
