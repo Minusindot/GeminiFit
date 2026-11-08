@@ -1139,7 +1139,6 @@ function renderKotonohaView() {
             </div>
 
             <div class="flex items-center gap-1.5">
-              <span class="px-2 sm:px-2.5 py-1 rounded-full bg-[#2a1f24] border border-[#453139] text-[11px] sm:text-xs font-bold text-[#e6d5cf]">제미니 사범</span>
               <button onclick="toggleKotonohaPronunciation()" class="px-2.5 py-1 rounded-full border text-xs font-black transition-all ${showPron ? 'bg-[#e0465a] text-white border-[#ff7588]' : 'bg-[#2a1f24] text-[#9c847f] border-[#453139]'}" title="발음/후리가나 표시 전환">
                 Aa
               </button>
