@@ -8,4 +8,5 @@ ref_pool/mio_old_backup/
 node_modules/
 *.traineddata
 image/90 repository/
+image/_scg_work/
 state_backup_*.json

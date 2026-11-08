@@ -102,3 +102,36 @@
 @char gemini.shy pos:50
 제미니: そ、そんなに見つめられたら…照れてしまいますえ…///
 ```
+
+---
+
+## 🛠️ 4. 에셋 생산 파이프라인 (v4.3.10 준비, 쿼터 해제 후 재개)
+
+> 상태(2026-11-08): 이미지 생성 API 무료 쿼터 초과 → **SCG 24종·BG 7종 생성 대기 중** (약 22.5h 후 재시도).
+> 아래 절차대로 그대로 재개하면 된다. 레퍼런스 폴더는 `image/90 repository/`(레포 내장) 기준.
+
+### 4-1. 레퍼런스 앵커 (캐릭터·화풍 일관성)
+* 화풍: `image/90 repository/gakumas_style/` (U149 아트풍 = 본 프로젝트 미연시 스타일)
+* 제미니: `image/90 repository/reference_gemini/` + `image/03 gemini/gemini_01_main.png`, `avatar_gemini.png`
+* 코토네: `image/02 kotone/kotone_01_studio.png`, `avatar_kotone.png`
+* 미오: `image/01 mio/mio_01_main.png`, `avatar_mio.png`
+
+### 4-2. 생성 순서
+1. **BG 7종** → `image/bg/bg_{장소}.png` (16:9, 인물 없음, 그대로 커밋)
+2. **캐릭터당 베이스 스탠딩 1장** → `image/_scg_work/{char}/base.png`
+   * 솔리드 마젠타 `#FF00FF` 배경 전체, 전신·정면·팔 내린 포즈, 참조 이미지로 얼굴/의상 고정
+3. **표정 7종 편집** → `idle`을 제외한 7장을 베이스를 입력으로 편집 생성
+   (동일 포즈·의상·마젠타 배경 유지, **표정만** 변경 지시)
+4. **투명화**: `python make_scg_transparent.py` (크로마키 + idle 기준 공통 트림 박스 + 1080×2560 캔버스)
+   → `image/scg/{char}/{char}_default_{expr}.png` (8종 × 3인 = 24장)
+
+### 4-3. 데이터 연동
+* 스텝에 `expr`/`bg`/`outfit` 필드를 추가하면 엔진(`resolveKotonohaVisuals`)이 자동 SCG 모드 전환.
+* 현재 `kotonoha_data.js`는 `sceneImg`/`bgImage`만 있어 전부 ECG 모드 (v4.3.10 폴백도 동작).
+* 에셋 도착 후 `expr` 값 매핑(감정 키워드 기준) → Naninovel 변환은 본 규격 표 참조.
+
+### 4-4. 마무리 체크리스트
+- [ ] BG 7종 `image/bg/` 저장 확인
+- [ ] SCG 24종 `image/scg/{char}/` 저장 + 투명 채널 확인
+- [ ] 엔진 렌더링 스팟 체크 (SCG/BG/ECG 폴백)
+- [ ] 버전 범프 **v4.3.11** (`index.html`, `sw.js`) → 커밋·푸시
