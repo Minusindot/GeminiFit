@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-08T20:11:40.844Z",
+  "updatedAt": "2026-11-08T20:12:19.653Z",
   "lastActiveDate": "2026-11-09",
   "theme": "light",
   "weight": 65.6,
   "fat": 32.2,
   "bondRank": 23,
-  "bondExp": 65,
+  "bondExp": 80,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev6",
+  "currentSituation": "ev5",
   "absDone": false,
   "runDone": false,
   "runDist": 7,
@@ -424,29 +424,6 @@
   },
   "chatHistory": [
     {
-      "sender": "mio",
-      "name": "미오",
-      "text": "플랭크 60초 버티기! 배꼽 쏙 집어넣고! 10초 남았어! 프로듀서 할 수 있어~!!"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "어머나, 소녀가 그렇게나 보고 싶으셨던 건가요? 우후후 🍵||체중 65.6kg… 저만 믿고 따라오시면 52kg은 금방이라지요 🌸"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 말차 🍵 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "오... 말차 챙겨 마셨네? 카테킨 성분이 체지방 연소를 확실히 도와줄 거야! 🍵🐾"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 커피 ☕ 1잔을 챙겨 마셨어!"
-    },
-    {
       "sender": "user",
       "text": "[음료 기록] 단백질 음료 🥛 1잔을 챙겨 마셨어!"
     },
@@ -564,6 +541,31 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "소녀가 눈 깜빡할 새에 배민 켜는 걸 다 봤어요. 치킨이 먹고 싶은 건 알겠어요... 하지만 17시 셔틀이 출발하면 절대 안 된다고요!"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "특히 오늘은 슬림핏 골든타임 구간. 지금 참으면 내일 아침 체중계에서 웃을 수 있어요."
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "차 한 잔 하면서 버틸래요 🍵"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "훗, 그 답변이 제일 현명하네요. 소녀가 정성껏 우리지요."
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "따뜻한 무카페인 차 한 잔이면 위장이 달래져요. 내일도 17시 셔틀, 잘 잡아보시지요 🍵"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "어느 쪽을 골라도, 소녀는 프로듀서항 편이예요. 셔틀만 놓치지 않으면 됩니다 🐾"
     }
   ]
 }
