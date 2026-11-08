@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-08T09:52:58.229Z",
+  "updatedAt": "2026-11-08T09:53:23.729Z",
   "lastActiveDate": "2026-11-08",
   "theme": "light",
   "weight": 65.6,
   "fat": 32.2,
   "bondRank": 19,
-  "bondExp": 20,
+  "bondExp": 60,
   "activeTrainer": "mio",
   "activeMode": "dual",
   "currentSituation": "ev3",
