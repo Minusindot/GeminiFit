@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T11:43:26.233Z",
+  "updatedAt": "2026-11-08T12:00:51.243Z",
   "lastActiveDate": "2026-11-08",
   "theme": "light",
   "weight": 65.6,
@@ -8,7 +8,7 @@
   "bondExp": 30,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
-  "currentSituation": "ev16",
+  "currentSituation": "ev41",
   "absDone": false,
   "runDone": false,
   "runDist": 7,
@@ -409,16 +409,6 @@
     {
       "sender": "gemini",
       "name": "제미니",
-      "text": "거울 봐봐! 자세 흐트러졌잖아. 내가 뒤에서 허리 딱 잡아줄 테니까 버텨!"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "캡틴스 체어 레그레이즈 준비! 손잡이에 매달리지 말고 팔꿈치 패드에 체중 싣고 하복부 말아 올려!"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
       "text": "17:7 단식 칼같이 지키는 프로듀서... 솔직히 조금 멋있을지도? 아주 조금!"
     },
     {
@@ -548,6 +538,16 @@
       "sender": "user",
       "name": "프로듀서",
       "text": "🎬 에피소드 재생: 💸 프로듀서 카페 알바 의혹"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "예에이! 프로듀서와 합체 완료! 🌟||오늘 운동이랑 식단 작전 회의 시작해 볼까?"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "오늘도 참으로 수고 많으셨사옵니다 🌸||야식 같은 걸 드시면 절대 안 되사와요! 🐾||얼른 2kg 덤벨을 들고 이리로 오시지요, 프로듀서님~"
     }
   ]
 }
