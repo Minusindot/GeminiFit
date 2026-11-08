@@ -1157,8 +1157,25 @@ async function generateAiKotonohaLesson() {
 // ============================================================================
 // VISUAL NOVEL HYBRID VISUAL RESOLVER (Seamless SCG + BG & Full ECG Fallback)
 // ============================================================================
-function resolveKotonohaVisuals(step, lesson) {
-  // 1. If step explicitly specifies SCG expression (e.g. expr: 'shy', 'smile', 'angry')
+function resolveKotonohaVisuals(step, lesson, stepIdx = -1, prevSceneImg = '') {
+  // 1. Adaptive mixing: ECG for impactful beats (emotion peaks / cinematic scenes),
+  //    SCG for calm beats. Deterministic so the mix is stable across sessions.
+  if (step.sceneImg) {
+    const sceneLower = (step.sceneImg || '').toLowerCase();
+    const prevLower = (prevSceneImg || '').toLowerCase();
+    const cinematic = /(night|rooftop|sunset|splash|pool|secret|ikezu|blush|extreme|massive|fireworks|beach|winter|osaka|takoyaki|yukata|ryokan|onsen|lantern)/.test(sceneLower);
+    const emotionalExpr = ['shock', 'dark', 'cry', 'love', 'sleepy', 'smirk', 'angry'].includes(step.expr || '');
+    const sceneChange = prevLower && prevLower !== sceneLower;
+    const every3rd = stepIdx >= 0 && (stepIdx % 3 === 0);
+    if (emotionalExpr || cinematic || sceneChange || every3rd) {
+      return {
+        isScg: false,
+        ecgUrl: step.sceneImg,
+        ecgFallback: './image/03 gemini/gemini_26_kyoto_teahouse.png'
+      };
+    }
+  }
+  // 2. If step explicitly specifies SCG expression (e.g. expr: 'shy', 'smile', 'angry')
   if (step.expr && step.speaker) {
     const outfit = step.outfit || 'default';
     const scgPath = step.scg || ('./image/scg/' + step.speaker + '/' + step.speaker + '_' + outfit + '_' + step.expr + '.png');
@@ -1465,7 +1482,8 @@ function renderKotonohaView() {
     const curIdx = Math.min(kotonohaRuntime.storyStepIdx, steps.length - 1);
     const step = steps[curIdx] || steps[0];
     const progressPct = Math.round(((curIdx + 1) / steps.length) * 100);
-    const visuals = resolveKotonohaVisuals(step, lesson);
+    const prevStep = curIdx > 0 ? steps[curIdx - 1] : null;
+    const visuals = resolveKotonohaVisuals(step, lesson, curIdx, prevStep ? (prevStep.sceneImg || '') : '');
     const sceneImage = visuals.ecgUrl || visuals.scgUrl;
 
     container.innerHTML = `

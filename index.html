@@ -424,12 +424,7 @@
           </div>
 
           <div id="messengerRoomBody" class="hidden">
-            <!-- Chat Stream (Expanded Roomy Height) -->
-            <div class="p-3.5 min-h-[340px] max-h-[460px] overflow-y-auto clean-scroll space-y-3 bg-[var(--chat-bg)]" id="chatContainer">
-              <!-- Dynamically populated -->
-            </div>
-
-            <!-- Episode cards strip (shown inside a trainer room) -->
+            <!-- Episode cards strip (inside a trainer room, messenger style: episodes sit at top of the conversation) -->
             <div id="episodeCardsWrap" class="hidden px-3 py-2.5 bg-slate-50/90 dark:bg-slate-800/70 border-t border-slate-200/80 dark:border-slate-700/60">
               <div class="flex items-center gap-1.5 text-[11px] font-black text-slate-500 dark:text-slate-400 mb-1.5">
                 <span>🎬</span><span>에피소드</span>
@@ -438,45 +433,14 @@
               <div id="episodeCardsList" class="flex gap-2 overflow-x-auto clean-scroll pb-1"></div>
             </div>
 
-            <!-- Topic Selection Tabs & Interactive Dialogue Choices (Instant VN Responses) -->
-            <div class="p-2.5 bg-slate-50/90 dark:bg-slate-800/70 border-t border-slate-200/80 dark:border-slate-700/60 space-y-2">
-              <!-- Topic Selector Pills -->
-              <div class="flex items-center gap-1.5 overflow-x-auto clean-scroll pb-1">
-                <button onclick="loadTopic('random')" id="topicBtn_random" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-xs whitespace-nowrap">🎲 랜덤</button>
-                <button onclick="loadTopic('dailyBriefing')" id="topicBtn_dailyBriefing" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-gradient-to-r from-indigo-500 to-pink-500 text-white shadow-xs whitespace-nowrap">✨ 내일 톡 브리핑</button>
-                <button onclick="loadTopic('diet')" id="topicBtn_diet" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🥗 식단</button>
-                <button onclick="loadTopic('workout')" id="topicBtn_workout" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🏃 러닝&재활</button>
-                <button onclick="loadTopic('gym')" id="topicBtn_gym" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🏋️ 헬스장</button>
-                <button onclick="loadTopic('tea')" id="topicBtn_tea" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🍵 홈카페</button>
-                <button onclick="loadTopic('date')" id="topicBtn_date" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">💖 인연</button>
-              </div>
-
-              <!-- Dynamic Choice Options Container -->
-              <div id="choicesContainer" class="space-y-1.5">
-                <!-- Dynamically populated choices -->
-              </div>
+            <!-- Chat Stream (Expanded Roomy Height) -->
+            <div class="p-3.5 min-h-[340px] max-h-[460px] overflow-y-auto clean-scroll space-y-3 bg-[var(--chat-bg)]" id="chatContainer">
+              <!-- Dynamically populated -->
             </div>
 
-            <!-- Dialogue Evaluation & Feedback Bar (3-Tier Rating & AI Script Evolution) -->
-            <div id="dialogueFeedbackCard" class="px-3 py-2 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-sky-500/10 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-2">
-              <div class="flex items-center gap-1.5 min-w-0">
-                <span class="text-xs">💬</span>
-                <span class="text-[11px] font-black text-slate-700 dark:text-slate-200 truncate">이번 대화 흐름 평가</span>
-              </div>
-              <div class="flex items-center gap-1 shrink-0" id="feedbackBtnGroup">
-                <button onclick="submitDialogueFeedback('good')" class="px-2 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10px] font-black transition-all flex items-center gap-1 active:scale-95 shadow-xs" title="대화 흐름이 자연스럽고 만족스러움">
-                  <span>👍</span>
-                  <span>좋음 (+10)</span>
-                </button>
-                <button onclick="submitDialogueFeedback('normal')" class="px-2 py-1 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-400 border border-sky-500/30 text-[10px] font-black transition-all flex items-center gap-1 active:scale-95 shadow-xs" title="보통 수준의 대화">
-                  <span>😐</span>
-                  <span>보통</span>
-                </button>
-                <button onclick="submitDialogueFeedback('bad')" class="px-2 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 border border-rose-500/30 text-[10px] font-black transition-all flex items-center gap-1 active:scale-95 shadow-xs" title="어색하거나 보완이 필요함">
-                  <span>👎</span>
-                  <span>아쉬움</span>
-                </button>
-              </div>
+            <!-- Dynamic Choice Options Container (episode choices) -->
+            <div id="choicesContainer" class="px-3 py-2 bg-slate-50/90 dark:bg-slate-800/70 border-t border-slate-200/80 dark:border-slate-700/60 space-y-1.5">
+              <!-- Dynamically populated choices -->
             </div>
 
             <!-- Direct Message Input Bar -->
@@ -1626,10 +1590,10 @@
 
   </div>
 
-  <script src="./dialogue_pool.js?v=4.3.27"></script>
-  <script src="./trainer_episodes.js?v=4.3.27"></script>
-  <script src="./kotonoha_data.js?v=4.3.27"></script>
-  <script src="./kotonoha_engine.js?v=4.3.27"></script>
+  <script src="./dialogue_pool.js?v=4.3.28"></script>
+  <script src="./trainer_episodes.js?v=4.3.28"></script>
+  <script src="./kotonoha_data.js?v=4.3.28"></script>
+  <script src="./kotonoha_engine.js?v=4.3.28"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
