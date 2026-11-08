@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-08T12:01:16.115Z",
-  "lastActiveDate": "2026-11-08",
+  "updatedAt": "2026-11-08T16:20:05.438Z",
+  "lastActiveDate": "2026-11-09",
   "theme": "light",
   "weight": 65.6,
   "fat": 32.2,
   "bondRank": 23,
   "bondExp": 45,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
-  "currentSituation": "ev41",
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev24",
   "absDone": false,
   "runDone": false,
   "runDist": 7,
@@ -23,9 +23,9 @@
     false
   ],
   "teaLog": {
-    "matcha": 1,
-    "espresso": 1,
-    "tea": 1
+    "matcha": 0,
+    "espresso": 0,
+    "tea": 0
   },
   "gymRoutine": {
     "upper1": {
@@ -403,9 +403,75 @@
         "tea": 0
       },
       "lastUpdated": "2026-11-07T11:06:39.907Z"
+    },
+    "2026-11-08": {
+      "date": "2026-11-08",
+      "weight": 65.6,
+      "fat": 32.2,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "runDone": false,
+      "absDone": false,
+      "rehabDone": 0,
+      "gymDone": false,
+      "teaLog": {
+        "matcha": 1,
+        "espresso": 1,
+        "tea": 1
+      },
+      "autoArchived": true
     }
   },
   "chatHistory": [
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "거울 봐봐! 자세 흐트러졌잖아. 내가 뒤에서 허리 딱 잡아줄 테니까 버텨!"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "캡틴스 체어 레그레이즈 준비! 손잡이에 매달리지 말고 팔꿈치 패드에 체중 싣고 하복부 말아 올려!"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "17:7 단식 칼같이 지키는 프로듀서... 솔직히 조금 멋있을지도? 아주 조금!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "프로듀서~! 컨디션 어때? 🏃‍♀️💨||무리하지 말고 어깨 힘 빼고 달리는 거 잊지 마!||오늘도 신나게 파이팅!"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "💖 [제미니 EP.35 · 서점에서의 비밀 과외] \"조용한 서점 코너에서 지적인 안경을 쓴 제미니가 당신 옆에 바짝 붙어 한자 노트를 짚어줍니다. 은은한 향기와 나긋한 목소리에 공부가 절로 됩니다.\""
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "따뜻한 무가당 허브티 한 잔 우렸어. 저녁 공복에 속 달래는 덴 이게 최고야."
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "목표 52kg 달성하는 날, 내가 소원 하나 들어줄게. 뭐 빌지 미리 생각해 둬!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "플랭크 60초 버티기! 배꼽 쏙 집어넣고! 10초 남았어! 프로듀서 할 수 있어~!!"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "어머나, 소녀가 그렇게나 보고 싶으셨던 건가요? 우후후 🍵||체중 65.6kg… 저만 믿고 따라오시면 52kg은 금방이라지요 🌸"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 말차 🍵 1잔을 챙겨 마셨어!"
+    },
     {
       "sender": "gemini",
       "name": "제미니",
@@ -491,16 +557,6 @@
       "text": "호흡을 내쉬며 배꼽을 바라보는 자세가 참으로 완벽하셨사와요 🌸||체지방 20% 언더가 이제 눈앞이옵니다, 프로듀서님 🐾"
     },
     {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "헤헤~ 어서 오세요 프로듀서님! 💛||목표 52kg 찍으면 약속대로 코토네랑 테라스 카페 데이트 찜이에요~?"
-    },
-    {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "🎬 에피소드 재생: 💸 프로듀서 카페 알바 의혹"
-    },
-    {
       "sender": "mio",
       "name": "미오",
       "text": "예에이! 프로듀서와 합체 완료! 🌟||오늘 운동이랑 식단 작전 회의 시작해 볼까?"
@@ -509,46 +565,6 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "오늘도 참으로 수고 많으셨사옵니다 🌸||야식 같은 걸 드시면 절대 안 되사와요! 🐾||얼른 2kg 덤벨을 들고 이리로 오시지요, 프로듀서님~"
-    },
-    {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 💸 프로듀서 카페 알바 의혹"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "프로듀서님! 카페 투어 직접 시작부터 보고드림니다! 헤헤~ 💛"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "코토네 계산해봤나요? 매일 5천 원 카페 라떼면 한 달 15만 원인데, 이 돈을 다이어트 성공일에 저랑 딸기 파르페 먹기로 했잖아요!"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "홈카페로 바꾸면 그 돈이 전부 저축+탕진펀드… 아니 코토네 특급 응원 댄스가 되어 돌아와요! 💃"
-    },
-    {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "알바 엄청 멋진데 코토네 최고! 💖"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "역시 프로듀서님은 코토네를 가장 잘 아시네요! 1등 매니저가 코토네죠?!"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "홈카페메뉴 개발 완료! 딸기 요거트부터 코코아까지, 맛도 최고로 재탄생할게요~ 🙌"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "코토네는 프로듀서님 평생 매니저라니까요! 헤헤~ 앞으로도 잘 부탁드려요! 💖"
     }
   ]
 }
