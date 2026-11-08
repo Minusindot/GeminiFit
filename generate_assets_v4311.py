@@ -260,6 +260,19 @@ ECGS = [
      "standing on city rooftop at midnight under neon signs and cloudy sky, dark cinematic event CG, vertical portrait"),
 ]
 
+# Korean webtoon (manhwa) panels for the Minitoon single episode:
+# prompt, out name, kind
+TOONS = [
+    ("Kyoto tatami tea house interior early morning, wooden porch, a woman with black long hair with blunt straight-cut bangs and black cat ears wearing white apron over kimono holding matcha tray at the doorway, warm sun rays through shoji windows, low wooden table, cinematic wide shot", "p01", "16:9 landscape"),
+    ("close-up portrait of the same black-haired cat-eared anime woman with straight bangs and violet eyes, surprised confused expression, slightly open mouth, eyes looking down-and-left, dim warm temple interior, dramatic shadow, detailed face", "p02", "9:16 portrait"),
+    ("energetic short-bob-haired anime woman running fast on an outdoor athletics running track at dawn, splashing dust, motion blur, sunrise backlight, sports shoes, cinematic wide shot", "p03", "16:9 landscape"),
+    ("cheerful anime idol girl with long golden-blonde twin braids and amber eyes, teal and white tracksuit, at a bright kitchen table with meal prep containers, salad bowl and protein toast, holding a shopping list, sparkling optimistic mood", "p04", "9:16 portrait"),
+    ("wide shot of a dark modern fitness gym interior at night, squat rack, dumbbell racks and cable machines, one silhouette man curling dumbbell behind back holding pink 2kg dumbbell, moody dramatic lighting, empty and quiet", "p05", "16:9 landscape"),
+    ("close-up of a woman in black fitness wear measuring her waist with a yellow tape measure over her pink sports bra, bathroom scale on floor, indoor morning light through window, cinematic vertical shot", "p06", "9:16 portrait"),
+    ("sunset rooftop skyline scene, three anime girls holding hands high-fiving at sunset, one with black cat ears long hair, one with blonde twin braids, one with short bob hair running jacket, laughing with raised hands, warm backlight", "p07", "16:9 landscape"),
+    ("Osaka neon street at midnight seen from behind, rainy reflections on wet pavement, city bokeh lights, dramatic moody atmosphere, a lone woman with long black hair standing under a glowing sign, cinematic vertical shot", "p08", "9:16 portrait"),
+]
+
 
 def build_jobs(phase: str):
     jobs = []  # (label, prompt, out_path, refs, kind)
@@ -289,12 +302,22 @@ def build_jobs(phase: str):
             prompt = (f"{STYLE}, anime visual novel event CG illustration, {desc}, detailed background")
             jobs.append((name, prompt, ROOT / "image" / folder / f"{name}.png",
                          [ROOT / "image" / "03 gemini" / "avatar_gemini.png"], "9:16 portrait"))
+    if phase in ("toon",):
+        style_refs = [ROOT / "image" / "03 gemini" / "avatar_gemini.png",
+                      ROOT / "image" / "02 kotone" / "avatar_kotone.png",
+                      ROOT / "image" / "01 mio" / "avatar_mio.png"]
+        manhwa = ("modern Korean webtoon (manhwa) full-color comic panel, clean cel shading, "
+                  "expressive characters, detailed background, cinematic composition, NO text, "
+                  "NO captions, NO speech bubbles, NO letters in image")
+        for desc, name, kind in TOONS:
+            prompt = f"{manhwa}, {desc}, {STYLE if kind.startswith('16') else 'vertical webtoon cut composition'}"
+            jobs.append((name, prompt, ROOT / "image" / "manga" / f"{name}.png", style_refs, kind))
     return jobs
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--phase", choices=["bg", "base", "expr", "ecg", "all"], default="all")
+    ap.add_argument("--phase", choices=["bg", "base", "expr", "ecg", "toon", "all"], default="all")
     ap.add_argument("--timeout", type=int, default=180)
     args = ap.parse_args()
 
