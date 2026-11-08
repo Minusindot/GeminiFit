@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T08:21:20.342Z",
+  "updatedAt": "2026-11-08T09:48:12.543Z",
   "lastActiveDate": "2026-11-08",
   "theme": "light",
   "weight": 65.6,
@@ -8,7 +8,7 @@
   "bondExp": 10,
   "activeTrainer": "mio",
   "activeMode": "dual",
-  "currentSituation": "trio5",
+  "currentSituation": "ev3",
   "absDone": false,
   "runDone": false,
   "runDist": 7,
