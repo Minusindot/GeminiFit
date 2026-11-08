@@ -40,34 +40,20 @@
 * **네이밍 포맷**: `{캐릭터}_{의상}_{표정}.png`
 
 #### 제미니 (Gemini - 흑발 네코미미 사범)
-* `image/scg/gemini/gemini_default_idle.png`
-* `image/scg/gemini/gemini_default_smile.png`
-* `image/scg/gemini/gemini_default_sad.png`
-* `image/scg/gemini/gemini_default_angry.png`
-* `image/scg/gemini/gemini_default_shy.png`
-* `image/scg/gemini/gemini_default_shock.png`
-* `image/scg/gemini/gemini_default_dark.png`
-* `image/scg/gemini/gemini_default_joke.png`
+* `image/scg/gemini/gemini_default_idle.png` — 기본 (스포츠브라·레깅스)
+* `image/scg/gemini/gemini_teahouse_smile.png` — 다실 유카타+에이프론 (전 표정 14종)
+* `image/scg/gemini/gemini_menhera_dark.png` — 멘헤라 패션 (전 표정 14종)
+* 그 외 표정: `{idle, smile, sad, angry, shy, shock, dark, joke, wink, pout, cry, smirk, love, sleepy}`
 
 #### 코토네 (Kotone - 자본주의 조교)
-* `image/scg/kotone/kotone_default_idle.png`
-* `image/scg/kotone/kotone_default_smile.png`
-* `image/scg/kotone/kotone_default_sad.png`
-* `image/scg/kotone/kotone_default_angry.png`
-* `image/scg/kotone/kotone_default_shy.png`
-* `image/scg/kotone/kotone_default_shock.png`
-* `image/scg/kotone/kotone_default_dark.png`
-* `image/scg/kotone/kotone_default_joke.png`
+* `image/scg/kotone/kotone_default_idle.png` — 기본 (민트 트랙탑)
+* `image/scg/kotone/kotone_dress_smile.png` — 아이돌 핑크 프릴 드레스 (전 표정 14종)
+* 그 외 표정: `{idle, smile, sad, angry, shy, shock, dark, joke, wink, pout, cry, smirk, love, sleepy}`
 
 #### 미오 (Mio - 에너제틱 러닝돌)
-* `image/scg/mio/mio_default_idle.png`
-* `image/scg/mio/mio_default_smile.png`
-* `image/scg/mio/mio_default_sad.png`
-* `image/scg/mio/mio_default_angry.png`
-* `image/scg/mio/mio_default_shy.png`
-* `image/scg/mio/mio_default_shock.png`
-* `image/scg/mio/mio_default_dark.png`
-* `image/scg/mio/mio_default_joke.png`
+* `image/scg/mio/mio_default_idle.png` — 기본 (레드/화이트 트랙탑)
+* `image/scg/mio/mio_runwear_smile.png` — 러닝웨어 (전 표정 14종)
+* 그 외 표정: `{idle, smile, sad, angry, shy, shock, dark, joke, wink, pout, cry, smirk, love, sleepy}`
 
 ---
 

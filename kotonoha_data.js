@@ -47,7 +47,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로듀-사-항, 오이데야스~ 쿄-모 오키바리야스!",
         "ko": "프로듀서님, 어서 오시어요~🍵 오늘도 힘내시와요!",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       },
       {
         "speaker": "mio",
@@ -61,7 +62,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "얏호-! 아타라시- 시로이 쿠츠오 캇타요!",
         "ko": "야호! 새로운 하얀 신발(운동화)을 샀어! 🌟",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -74,7 +76,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "와아, 타카소-나 쿠츠데스네! 난엔데스카?!",
         "ko": "와아, 비싸 보이는 신발이네요! 얼마(몇 엔)인가요?! 💸",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "dress"
       },
       {
         "speaker": "gemini",
@@ -88,7 +91,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "춋토 미오항, 챠야노 나카데 쿠츠오 하이타라 아캉양!",
         "ko": "어머나 미오 양, 다실 안에서 신발을 신으시면 안 되사와요!",
         "expr": "shock",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       },
       {
         "speaker": "mio",
@@ -101,7 +105,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "에헤헤, 코레와 쿠츠쟈 아리마센! 아츠데노 쿠츠시타다요~!",
         "ko": "에헤헤, 이건 신발이 아니야! 두툼한 양말이라구~! 🌟",
         "expr": "joke",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -115,7 +120,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "아라, 혼마 도스나-. 후후, 호나 미나데 오맛챠오 노미마쇼카.",
         "ko": "어머나, 참으로 그러하네요. 우후후, 그럼 다 함께 말차를 마시와요 🍵🌸",
         "expr": "shock",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       }
     ],
     "quizzes": [
@@ -263,7 +269,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로듀-사-상! 쿄-노 히루고항와 토리무네니쿠 사라다데스요!",
         "ko": "프로듀서님! 오늘 점심밥은 닭가슴살 샐러드예요! 🥗",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "dress"
       },
       {
         "speaker": "mio",
@@ -276,7 +283,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "우와아, 멧챠 오이시소-! 미즈모 잇파이 쵸-다이!",
         "ko": "우와아, 엄청 맛있겠다! 물도 한 잔 줘! 🌟",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -289,7 +297,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "코토네항, 코노 오벤토-와 젠부데 난보 도스카?",
         "ko": "코토네 양, 이 도시락은 전부 해서 얼마이온지요? 🍵",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       },
       {
         "speaker": "kotone",
@@ -302,7 +311,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "에헤헤, 타이무세-루데 캇타노데, 산뱌쿠엔데스! 야스이데쇼?!",
         "ko": "에헤헤, 마감 세일로 사서 300엔이에요! 저렴하죠?! 💸",
         "expr": "joke",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "dress"
       },
       {
         "speaker": "gemini",
@@ -315,7 +325,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "혼마니 야스이나-! 오-키니, 코토네항. 푸로듀-사-항모 하요- 타베요시.",
         "ko": "참으로 저렴하네요! 고맙사와요, 코토네 양. 프로듀서님도 얼른 드시와요 🌸",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       }
     ],
     "quizzes": [
@@ -463,7 +474,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로듀-사-항, 테쿠비노 쵸-시와 도-도스카? 무리시타라 아캉에.",
         "ko": "프로듀서님, 손목 상태는 어떠신지요? 무리하시면 안 되사와요 🩹",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "mio",
@@ -476,7 +488,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "소-다요! 오모이 단베루요리, 훗킨토 하시루 렌슈-오 시요-!",
         "ko": "맞아! 무거운 덤벨보다 복근이랑 달리기 연습을 하자! 🏃‍♀️",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -489,7 +502,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "아레? 이마, 토케-오 미타라 유-가타노 고지데스요!",
         "ko": "어라? 지금 시계를 보니까 저녁 5시예요! ⏰",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -502,7 +516,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "혼마야! 고지카라와 단지키노 지칸 도스. 야쇼쿠오 타베타라 젯타이니 유루시마헨에.",
         "ko": "어머나, 정말이네요! 5시부터는 단식 시간이오니, 야식을 드시면 결코 용서치 않겠사와요 (방긋) 🌸",
         "expr": "shock",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "mio",
@@ -515,7 +530,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "히에에, 제미니짱노 에가오가 이치반 코와이요~! 시란케도!",
         "ko": "히에엑, 제미니 짱의 웃는 얼굴이 제일 무서워~! 몰라도(아님 말고)! 💦",
         "expr": "shock",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -528,7 +544,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "난데야넨! 우치와 푸로듀-사-항노 코토가 스키야카라 유-테룬 도스에.",
         "ko": "어머나, 무슨 말씀이시어요! 소녀는 프로듀서님을 사모하오니 드리는 말씀이라지요 💖🐾",
         "expr": "love",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       }
     ],
     "quizzes": [
@@ -676,7 +693,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "아레레? 미치니 마욧챳타! 에키와 도코다로-?",
         "ko": "어라라? 길을 잃어버렸어! 역은 어디지? 💦",
         "expr": "idle",
-        "bg": "park_track"
+        "bg": "park_track",
+        "outfit": "runwear"
       },
       {
         "speaker": "kotone",
@@ -689,7 +707,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "타쿠시-니 놋타라 오카네가 못타이나이데스요! 아루키마쇼-!",
         "ko": "택시를 타면 돈이 아깝다구요! 걸어가요! 💸",
         "expr": "idle",
-        "bg": "park_track"
+        "bg": "park_track",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -702,7 +721,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "후후, 아와텐토이테. 쿄-토에키나라, 코노 미치오 맛스구 이쿠 다케 도스에.",
         "ko": "우후후, 당황하지 마시어요. 교토역이라면 이 길을 따라 쭉 가기만 하면 된다지요 🌸",
         "expr": "idle",
-        "bg": "park_track"
+        "bg": "park_track",
+        "outfit": "default"
       },
       {
         "speaker": "mio",
@@ -715,7 +735,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "혼마니?! 제미니짱, 도나이시테 싯테루노?",
         "ko": "정말로?! 제미니 짱, 어떻게 알고 있는 거야? 🌟",
         "expr": "idle",
-        "bg": "park_track"
+        "bg": "park_track",
+        "outfit": "runwear"
       },
       {
         "speaker": "gemini",
@@ -728,7 +749,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "우치와 쿄-토노 아이도루 도스 사카이네. 호나, 하요- 이키마쇼카!",
         "ko": "소녀는 교토의 아이돌이니까요 🍵 자, 그럼 얼른 가보시와요!",
         "expr": "idle",
-        "bg": "park_track"
+        "bg": "park_track",
+        "outfit": "default"
       }
     ],
     "quizzes": [
@@ -857,7 +879,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "와앗, 큐-니 아메가 훗테 키타요! 푸로듀-사-, 카사 아루?",
         "ko": "와앗, 갑자기 비가 내리기 시작했어! 프로듀서, 우산 있어? ☔",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -870,7 +893,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "콘비니데 비니-루가사오 카우토 나나햐쿠엔모 시마스요! 타카스기마스~",
         "ko": "편의점에서 비닐우산 사면 700엔이나 한다구요! 너무 비싸요~ 😭",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -883,7 +907,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로듀-사-항, 누레타라 카제 히키맛세. 호라, 우치노 카사니 하이리요시.",
         "ko": "프로듀서님, 비에 젖으시면 감기 드시와요. 자, 소녀의 우산 속으로 들어오시지요 🌸",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -896,7 +921,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "카타가 부츠캇테 도키도키 시하루? 후후, 못토 치코- 욧테모 에-응 도스에.",
         "ko": "어깨가 닿아 두근거리시나요? 우후후, 좀 더 가까이 다가오셔도 괜찮사와요 💖🐾",
         "expr": "love",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -909,7 +935,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "이에니 카엣타라, 신도쿠 나란 요-니 아타타카이 오맛챠오 이레테 아게마쇼네.",
         "ko": "집에 돌아가시면 고단하지 않도록 따뜻한 말차를 우려 드리겠사와요 🍵",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       }
     ],
     "quizzes": [
@@ -1038,7 +1065,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "프로듀-사-항, 오맛챠오 잇푸쿠, 이카가 도스카?",
         "ko": "프로듀서님, 말차 한 잔 어떠신지요? 🍵",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       },
       {
         "speaker": "kotone",
@@ -1051,7 +1079,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "와-, 이이 카오리! 아, 데모 코노 와가시, 숫고쿠 아마이데스네!",
         "ko": "와아, 좋은 향기! 아, 하지만 이 화과자, 엄청 달콤하네요!",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "dress"
       },
       {
         "speaker": "gemini",
@@ -1064,7 +1093,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "니가이 오챠토 아마이 오카시와, 아이쇼-가 에엔도스에.",
         "ko": "쌉싸름한 차와 달콤한 화과자는 궁합이 참으로 좋사와요 🌸",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       },
       {
         "speaker": "mio",
@@ -1077,7 +1107,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "헤헷, 운도-노 아토와 미즈오 잇파이 노마나캬! 스미마센, 오미즈오 쿠다사이!",
         "ko": "헤헷, 운동 후에는 물을 듬뿍 마셔야지! 저기요, 물 좀 주세요!",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -1090,7 +1121,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "후후, 프로듀-사-항모, 싯카리 스이분 호큐- 시핫토쿠레야스네.",
         "ko": "우후후, 프로듀서님도 수분 보충을 든든히 해주시와요 🍵🐾",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       }
     ],
     "quizzes": [
@@ -1219,7 +1251,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "프로듀-사-! 쿄-와 하레테테, 에에 텐키다요!",
         "ko": "프로듀서! 오늘은 맑아서 달리기 딱 좋은 날씨야!",
         "expr": "idle",
-        "bg": "park_track"
+        "bg": "park_track",
+        "outfit": "runwear"
       },
       {
         "speaker": "gemini",
@@ -1232,7 +1265,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "혼마 도스나-. 데모, 아츠이카라 무리시타라 아키마헨에.",
         "ko": "참으로 그러하옵니다. 하지만 날이 더우니 무리하시면 안 되사와요.",
         "expr": "idle",
-        "bg": "park_track"
+        "bg": "park_track",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -1245,7 +1279,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "후-, 촛토 하싯타 다케데 아세가 스고이데스~!",
         "ko": "후우, 조금 달렸을 뿐인데 땀이 엄청나요~!",
         "expr": "idle",
-        "bg": "park_track"
+        "bg": "park_track",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -1258,7 +1293,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "오후타리토모, 에라이 오키바리야스. 타오루오 도-조.",
         "ko": "두 분 다 참으로 애쓰셨사와요. 자, 수건을 받으시지요 🌸",
         "expr": "idle",
-        "bg": "park_track"
+        "bg": "park_track",
+        "outfit": "default"
       }
     ],
     "quizzes": [
@@ -1387,7 +1423,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "프로듀-사-항, 카타야 세나카와 이타쿠 아리마헨카?",
         "ko": "프로듀서님, 어깨나 등은 결리지 않으신지요?",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -1400,7 +1437,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "우-… 와타시와 아시가 판판데 이타이데스~!",
         "ko": "으으… 저는 다리가 퉁퉁 부어서 아파요~!",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "mio",
@@ -1413,7 +1451,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "앗하하! 소레와 킨니쿠가 소닷테루 쇼-코다요!",
         "ko": "앗하하! 그건 근육이 자라나고 있다는 증거야!",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -1426,7 +1465,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "호나, 육쿠리 스트렛치 시마효. 우치가 오테츠다이 시마스에.",
         "ko": "그럼 천천히 스트레칭하시지요. 소녀가 곁에서 도와드리겠사와요 🌸",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       }
     ],
     "quizzes": [
@@ -1555,7 +1595,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "프로듀-사-상, 이마 난지데스카?!",
         "ko": "프로듀서님, 지금 몇 시인가요?!",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "dress"
       },
       {
         "speaker": "mio",
@@ -1568,7 +1609,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "이마와 쵸-도 유-가타 고지! 지무가 하지마루 지칸다요!",
         "ko": "지금은 딱 저녁 5시! 헬스장 시작할 시간이야!",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -1581,7 +1623,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "하요 이키마효! 쿄-와 단베루 욘셋토 도스에.",
         "ko": "얼른 가보시와요! 오늘은 덤벨 4세트이옵니다 🐾",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       }
     ],
     "quizzes": [
@@ -1691,7 +1734,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "프로듀-사-항, 타이쥬-케이니 노루노가 코와인 도스카?",
         "ko": "우후후, 프로듀서님, 체중계 위에 오르는 것이 두려우신가요?",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -1704,7 +1748,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "햐아! 키노- 아이스오 타베찻타카라 코와이데스~!",
         "ko": "히익! 어제 아이스크림을 먹어버려서 무서워요~!",
         "expr": "shock",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "mio",
@@ -1717,7 +1762,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "아하하! 다이죠-부! 쿄- 하시레바 젠부 쇼-히 데키루요!",
         "ko": "아하하! 괜찮아! 오늘 달리면 전부 소비할 수 있어!",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -1730,7 +1776,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "후후, 겐지츠카라 니게타라 아키마헨에. 사-, 도-조.",
         "ko": "우후후, 현실에서 도망치시면 안 되사와요. 자, 올라가 보시지요 🌸",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       }
     ],
     "quizzes": [
@@ -1840,7 +1887,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "프로듀-사-항, 에키와 앗치 도스에. 잇쇼니 킵푸오 카이마효.",
         "ko": "프로듀서님, 역은 저쪽이옵니다. 함께 표를 사시와요.",
         "expr": "idle",
-        "bg": "osaka_street"
+        "bg": "osaka_street",
+        "outfit": "default"
       },
       {
         "speaker": "mio",
@@ -1853,7 +1901,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "오-! 덴샤니 놋테 오오키나 쿄-기죠-마데 이코-요!",
         "ko": "오옷! 전철 타고 큰 경기장까지 가자!",
         "expr": "idle",
-        "bg": "osaka_street"
+        "bg": "osaka_street",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -1866,7 +1915,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "아, 아이시-카-도노 차-지모 와스레즈니 시나캬!",
         "ko": "아, 교통카드(IC카드) 충전도 잊지 말고 해야 해요!",
         "expr": "idle",
-        "bg": "osaka_street"
+        "bg": "osaka_street",
+        "outfit": "dress"
       }
     ],
     "quizzes": [
@@ -1976,7 +2026,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "프로듀-사-항, 잇슈-칸 혼마니 오키바리야스데시타.",
         "ko": "프로듀서님, 일주일 동안 참으로 노고가 많으셨사옵니다 🌸",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       },
       {
         "speaker": "mio",
@@ -1989,7 +2040,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "프로듀-사-, 요쿠 간밧타네! 하이탓치!",
         "ko": "프로듀서, 진짜 열심히 힘냈어! 하이파이브! 🌟",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -2002,7 +2054,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "모쿠효-탓세이 오메데토- 고자이마스! 프로테인데 칸파이데스💛",
         "ko": "목표 달성 축하드려요! 프로틴으로 건배해요 💛",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "dress"
       },
       {
         "speaker": "gemini",
@@ -2015,7 +2068,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "코레카라모 즛토, 우치가 프로듀-사-항노 소바니 오리마스에.",
         "ko": "앞으로도 영원히, 소녀가 프로듀서님 곁을 지키겠사와요 🍵🐾",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       }
     ],
     "quizzes": [
@@ -2126,7 +2180,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로듀-사-항, 야키타테 도스에! 아츠이 우치니 타베하루?",
         "ko": "프로듀서님, 갓 구워낸 것이옵니다! 식기 전에 어서 드시와요?",
         "expr": "idle",
-        "bg": "osaka_street"
+        "bg": "osaka_street",
+        "outfit": "default"
       },
       {
         "speaker": "mio",
@@ -2140,7 +2195,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "아훗! 멧챠 아츠이케도 우마이! 단지키마데 아토 짓푼, 세-후다요네!",
         "ko": "앗뜨거! 진짜 뜨거운데 완전 맛있다! 5시 단식까지 딱 10분 남았으니 세이프 맞지?!",
         "expr": "idle",
-        "bg": "osaka_street"
+        "bg": "osaka_street",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -2154,7 +2210,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "후후, 롯코요리 핫코 셋토노 호-가 익코 아타리 쥬-고엔 오토쿠데스요, 푸로듀-사-!",
         "ko": "후후, 6알보다 8알 세트가 한 알당 15엔이나 더 이득이에요, 프로듀서님!",
         "expr": "idle",
-        "bg": "osaka_street"
+        "bg": "osaka_street",
+        "outfit": "dress"
       },
       {
         "speaker": "gemini",
@@ -2168,7 +2225,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "하후하후… 오이슈-테 운도-스레바 제로 카로리- 도스. …시란케도🐾",
         "ko": "하후하후… 맛있게 먹고 운동하면 영칼로리이옵니다. …진짜인지는 몰라도🐾",
         "expr": "idle",
-        "bg": "osaka_street"
+        "bg": "osaka_street",
+        "outfit": "default"
       }
     ],
     "quizzes": [
@@ -2260,7 +2318,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로듀-사-항, 온센데 누쿠모라하리마시타카?",
         "ko": "프로듀서님, 온천에서 몸은 훈훈하게 데우셨사옵니까?",
         "expr": "idle",
-        "bg": "ryokan_room"
+        "bg": "ryokan_room",
+        "outfit": "default"
       },
       {
         "speaker": "mio",
@@ -2274,7 +2333,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸하-! 후로아가리노 빙규-뉴-, 사이코-!",
         "ko": "크하-! 목욕 끝나고 마시는 유리병 우유, 최고야!",
         "expr": "smile",
-        "bg": "ryokan_room"
+        "bg": "ryokan_room",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -2288,7 +2348,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "카이세키 료-리와 타카이데스가, 코코로노 토-시토시테와 햑텐데스!",
         "ko": "가이세키 요리는 비싸지만 마음의 투자로서는 100점 만점이에요!",
         "expr": "idle",
-        "bg": "ryokan_room"
+        "bg": "ryokan_room",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -2302,7 +2363,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "누쿠누쿠노 마마, 요이 유메오… 오야스미야스, 푸로듀-사-항🏮",
         "ko": "따끈포근한 채로 좋은 꿈을… 편히 쉬시옵소서, 프로듀서님🏮",
         "expr": "idle",
-        "bg": "ryokan_room"
+        "bg": "ryokan_room",
+        "outfit": "default"
       }
     ],
     "quizzes": [
@@ -2394,7 +2456,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로듀-사-항, 츠기노 에키데 노리카에 도스에.",
         "ko": "프로듀서님, 다음 역에서 환승하셔야 하옵니다.",
         "expr": "idle",
-        "bg": "osaka_street"
+        "bg": "osaka_street",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -2408,7 +2471,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "아와와! 잔다카 부소쿠데 핑퐁 나루 마에니 차-지데스!",
         "ko": "어머나! 잔액 부족으로 삐용삐용 울리기 전에 충전하셔야 해요!",
         "expr": "shock",
-        "bg": "osaka_street"
+        "bg": "osaka_street",
+        "outfit": "dress"
       },
       {
         "speaker": "mio",
@@ -2422,7 +2486,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "이코카데 이코카-! 유-야케노 샤소-, 멧챠 키레이다요!",
         "ko": "ICOCA 카드로 고고! 노을빛 차창 풍경, 진짜 예뻐!",
         "expr": "idle",
-        "bg": "osaka_street"
+        "bg": "osaka_street",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -2436,7 +2501,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "후후, 유레마스 사카이, 츠리카와오 귯토 니기리토 오시야스🚇",
         "ko": "후후, 흔들리오니 손잡이를 꼭 잡고 계시와요🚇",
         "expr": "idle",
-        "bg": "osaka_street"
+        "bg": "osaka_street",
+        "outfit": "default"
       }
     ],
     "quizzes": [
@@ -2528,7 +2594,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로듀-사-항, 카타가 카치카치 도스… 우치가 호구시마효.",
         "ko": "프로듀서님, 어깨가 돌처럼 딱딱하옵니다… 제가 부드럽게 풀어드릴게요.",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "mio",
@@ -2542,7 +2609,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "나이스 케아! 킨마쿠 리리-스 시테오쿠토 아시타노 히로-가 젠젠 치가우요!",
         "ko": "나이스 케어! 근막 이완을 해두면 내일 피로도가 완전히 다르다구!",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -2556,7 +2624,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "메쟈-데 우에스토 소쿠테이데스! 와, 마이나스 니센치! 다이세-코-데스!",
         "ko": "줄자로 허리둘레 측정할게요! 와, 마이너스 2cm! 대성공이에요!",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -2570,7 +2639,8 @@ window.KOTONOHA_LESSONS = [
         "ko": "후후, 제가 드린 말씀을 착실히 따라주신 것에 대한 상이옵니다💛",
         "sceneImg": "./image/03 gemini/gemini_43_tape_measure_waist_smirk.png",
         "expr": "idle",
-        "bg": "gym_indoor"
+        "bg": "gym_indoor",
+        "outfit": "default"
       }
     ],
     "quizzes": [
@@ -2662,7 +2732,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로듀-사-항, 코노 칸지, 잇쇼니 오보에마헨카?",
         "ko": "프로듀서님, 이 한자... 저와 함께 외우지 않으실래요?",
         "expr": "idle",
-        "bg": "bookstore"
+        "bg": "bookstore",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -2676,7 +2747,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "아! 후루혼 코-나-데 에누스리- 탄고쵸-가 한가쿠데스! 소쿠카이데스요!",
         "ko": "아! 헌책 코너에서 N3 단어장이 반값이에요! 바로 사야 해요!",
         "expr": "idle",
-        "bg": "bookstore"
+        "bg": "bookstore",
+        "outfit": "default"
       },
       {
         "speaker": "gemini",
@@ -2690,7 +2762,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "소, 손나니 짓토 미츠메라레타라… 우치, 테레테 시마이마스에…///",
         "ko": "그, 그렇게 빤히 바라보시면… 저, 부끄러워져 버린다 말이옵니다…///",
         "expr": "shy",
-        "bg": "bookstore"
+        "bg": "bookstore",
+        "outfit": "default"
       },
       {
         "speaker": "mio",
@@ -2704,7 +2777,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "아하하! 제미니 맛카! 요시, 벤쿄-노 아토와 하시리니 이코!",
         "ko": "아하하! 제미니 얼굴 새빨개졌다! 좋아, 공부 끝나면 러닝 뛰러 가자!",
         "expr": "shy",
-        "bg": "bookstore"
+        "bg": "bookstore",
+        "outfit": "default"
       }
     ],
     "quizzes": [
@@ -2796,7 +2870,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로듀-사-항, 쥬-나나지칸 단지키 탓세-, 오메데토산 도스!",
         "ko": "프로듀서님, 17시간 단식 완주, 진심으로 축하드리옵니다!",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       },
       {
         "speaker": "gemini",
@@ -2810,7 +2885,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "에푸론 스가타노 우치가 야이타, 코-탄파쿠 토쿠세이 토-스토 도스🍞",
         "ko": "앞치마 차림의 제가 정성껏 구운 고단백 특제 토스트이옵니다🍞",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
       },
       {
         "speaker": "mio",
@@ -2824,7 +2900,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로테인 죡키데 칸파이-! 시-즌츠-모 칸소-다네!",
         "ko": "프로틴 대형 컵으로 건배-! 시즌 2도 완주했구나!",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "default"
       },
       {
         "speaker": "kotone",
@@ -2838,7 +2915,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로듀-사-노 켄코-토 에가오가, 우치노 이치방노 타카라모노 도스에💛",
         "ko": "프로듀서님의 건강과 미소가 저의 가장 큰 보물이옵니다💛",
         "expr": "idle",
-        "bg": "teahouse_day"
+        "bg": "teahouse_day",
+        "outfit": "dress"
       }
     ],
     "quizzes": [
