@@ -84,6 +84,8 @@ const CHARACTER_VOICE_PROFILES = {
 // ============================================================================
 
 let currentKotonohaAudio = null;
+// Pending quiz-advance: survives per-utterance interruption (e.g. '다시 듣기' replay clicks)
+let pendingQuizAdvance = null;
 const kotonohaAudioCache = {};
 const kotonohaPreloadedAudio = {};
 
@@ -432,6 +434,11 @@ function speakJapaneseFallback(clean, speaker = 'gemini', customRate = null, onE
       if (!callbackFired) {
         callbackFired = true;
         if (typeof onEndCallback === 'function') onEndCallback();
+        if (typeof pendingQuizAdvance === 'function') {
+          const adv = pendingQuizAdvance;
+          pendingQuizAdvance = null;
+          adv();
+        }
       }
     };
 
@@ -505,6 +512,12 @@ async function speakJapanese(text, speaker = 'gemini', customRate = null, onEndC
           if (!finished) {
             finished = true;
             if (typeof onEndCallback === 'function') onEndCallback();
+            // Fire any pending quiz-advance registered by quiz submit (survives replay interruptions)
+            if (typeof pendingQuizAdvance === 'function') {
+              const adv = pendingQuizAdvance;
+              pendingQuizAdvance = null;
+              adv();
+            }
           }
         };
         audio.onended = done;
@@ -581,6 +594,47 @@ function openKotonohaHub() {
   kotonohaRuntime.currentMode = 'hub';
   playBeep(580, 0.06);
   renderKotonohaView();
+}
+
+// Short-toon manga navigation
+function openMangaList() {
+  kotonohaRuntime.ttsLoading.runId++;
+  kotonohaRuntime.ttsLoading.active = false;
+  kotonohaRuntime.currentMode = 'manga_list';
+  playBeep(580, 0.06);
+  renderKotonohaView();
+}
+
+function openMangaRead(idx) {
+  initKotonohaState();
+  const all = getAllKotonohaLessons();
+  if (idx < 0 || idx >= all.length) return;
+  kotonohaRuntime.lessonIdx = idx;
+  state.kotonoha.activeLessonIdx = idx;
+  const selLesson = all[idx];
+  if (selLesson && selLesson.season) {
+    kotonohaRuntime.selectedSeason = selLesson.season;
+    state.kotonoha.selectedSeason = selLesson.season;
+  }
+  saveState(true);
+  playBeep(620, 0.06);
+  kotonohaRuntime.currentMode = 'manga_read';
+  renderKotonohaView();
+}
+
+function backToMangaList() {
+  kotonohaRuntime.ttsLoading.runId++;
+  kotonohaRuntime.ttsLoading.active = false;
+  kotonohaRuntime.currentMode = 'manga_list';
+  playBeep(580, 0.06);
+  renderKotonohaView();
+}
+
+function openNextMangaEp() {
+  const next = kotonohaRuntime.lessonIdx + 1;
+  const all = getAllKotonohaLessons();
+  if (next < all.length) { openMangaRead(next); return; }
+  openMangaList();
 }
 
 function skipKotonohaTtsPreload() {
@@ -870,9 +924,11 @@ function submitKotonohaQuizAnswer(optionIdx) {
   const proceedToNextStep = () => {
     if (hasAdvanced) return;
     hasAdvanced = true;
+    if (pendingQuizAdvance === proceedToNextStep) pendingQuizAdvance = null;
 
     // 음성이 완전히 끝난 후, 정답 리액션과 해설(녹색 박스)을 충분히 읽을 수 있도록 1.4초 여유 대기
     setTimeout(() => {
+      if (kotonohaRuntime.currentMode !== 'quiz') return;
       if (qIdx + 1 < lesson.quizzes.length) {
         kotonohaRuntime.quizIdx = qIdx + 1;
         kotonohaRuntime.quizAnswered = false;
@@ -903,6 +959,17 @@ function submitKotonohaQuizAnswer(optionIdx) {
       }
     }, 1400);
   };
+
+  // QUIZ-ADVANCE BINDING: registered in module scope so replay clicks ('다시 듣기')
+  // never trap the flow — whether speech ends/cancelled, the advance still fires.
+  pendingQuizAdvance = proceedToNextStep;
+  // Watchdog: if TTS errors/cancel swallow callbacks, advance after 12s anyway.
+  setTimeout(() => {
+    if (pendingQuizAdvance === proceedToNextStep) {
+      pendingQuizAdvance = null;
+      proceedToNextStep();
+    }
+  }, 12000);
 
   // 리액션 음성 재생 (음성이 완전히 끝난 후 proceedToNextStep 호출)
   speakJapanese(reactJp, 'gemini', null, proceedToNextStep);
@@ -1212,6 +1279,18 @@ function renderKotonohaView() {
             <p class="text-xs text-[#e2cfc9] leading-relaxed">${lesson.grammarTip.content}</p>
           </div>
           ` : ''}
+
+          <!-- Short-Toon Manga Entry -->
+          <button onclick="openMangaList()" class="mt-2.5 w-full p-3 rounded-2xl bg-gradient-to-r from-[#2d4038] to-[#1c2a26] hover:opacity-95 border border-[#4a6a5c] flex items-center justify-between transition-all shadow-md group">
+            <div class="flex items-center gap-2.5 text-left min-w-0">
+              <span class="text-lg shrink-0">📖</span>
+              <div class="min-w-0">
+                <div class="text-xs font-black text-[#d8f5e8] truncate">숏툰 만화 보기</div>
+                <div class="text-[10px] text-[#9eb8ad] font-bold truncate">3인 히로인 웹툰 - 화별 만화 리더</div>
+              </div>
+            </div>
+            <span class="text-[#7ad3b8] text-sm font-black group-hover:translate-x-1 transition-transform pl-1 shrink-0">›</span>
+          </button>
 
           <!-- Season Selector Tabs + Vertical Curriculum List -->
           <div class="mt-3 space-y-2">
@@ -1600,5 +1679,119 @@ function renderKotonohaView() {
         ` : ''}
       </div>
     `;
+  }
+
+  // MODE 4: SHORT-TOON MANGA - Episode List
+  if (kotonohaRuntime.currentMode === 'manga_list') {
+    const activeSeason = kotonohaRuntime.selectedSeason || 1;
+    const seasonLessons = lessons.map((item, idx) => ({ ...item, globalIdx: idx }))
+      .filter(item => (item.season || 1) === activeSeason);
+    container.innerHTML = `
+      <div class="rounded-3xl bg-[#181316] text-[#f5ebe6] border border-[#3a2830] shadow-2xl overflow-hidden">
+        <div class="p-3.5 bg-gradient-to-b from-[#241a1f] to-[#181316] border-b border-[#332228] flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <button onclick="openKotonohaHub()" class="w-8 h-8 rounded-xl bg-[#2b1f25] hover:bg-[#3b2a33] text-[#e0c8c2] font-black text-sm flex items-center justify-center">‹</button>
+            <div>
+              <h2 class="text-sm font-black text-[#e86b7e]">📖 숏툰 만화</h2>
+              <p class="text-[11px] text-[#b59e99] font-bold">3인 히로인 웹툰 - 편당 1화</p>
+            </div>
+          </div>
+          <span class="text-[10px] px-2 py-1 rounded-full bg-[#352329] text-[#f2a6b2] font-bold border border-[#52343d]">시즌 ${activeSeason}</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 p-3">
+          <button onclick="switchKotonohaSeason(1)" class="p-2 rounded-xl border text-center ${activeSeason === 1 ? 'bg-[#3e242f] border-[#e0465a] text-white font-black' : 'bg-[#21181c] border-[#38282f] text-[#a8908b]'}">🍵 시즌 1</button>
+          <button onclick="switchKotonohaSeason(2)" class="p-2 rounded-xl border text-center ${activeSeason === 2 ? 'bg-[#3e242f] border-[#e0465a] text-white font-black' : 'bg-[#21181c] border-[#38282f] text-[#a8908b]'}">🌸 시즌 2</button>
+        </div>
+
+        <div class="p-3 pt-0 space-y-3 max-h-[560px] overflow-y-auto clean-scroll">
+          ${seasonLessons.map(item => {
+            const isDone = (kState.completedLessons || []).includes(item.id);
+            const epBadge = item.epCode || (item.season ? item.season + '-' + (item.episode || 1) : '1-' + item.dayNum);
+            return `
+              <div class="rounded-2xl overflow-hidden border border-[#422c35] bg-[#1d1519] cursor-pointer group" onclick="openMangaRead(${item.globalIdx})">
+                <div class="relative h-32 overflow-hidden">
+                  <img src="${item.bgImage || './image/03 gemini/gemini_02_matcha.png'}" onerror="this.src='./image/03 gemini/gemini_26_kyoto_teahouse.png'" class="w-full h-full object-cover object-[center_15%] group-hover:scale-105 transition-all duration-500">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/10"></div>
+                  <div class="absolute top-2 left-2 flex gap-1.5">
+                    <span class="px-2 py-0.5 rounded-full bg-[#e0465a] text-white text-[10px] font-black shadow">${isDone ? '✅ ' : ''}${epBadge}</span>
+                    <span class="px-2 py-0.5 rounded-full bg-black/60 text-[#ffd6de] text-[10px] font-bold border border-white/20">${item.levelBadge.split('+')[0]}</span>
+                  </div>
+                </div>
+                <div class="p-2.5 flex items-center justify-between gap-2">
+                  <div class="min-w-0">
+                    <div class="text-xs font-bold text-white truncate">${item.titleKo}</div>
+                    <div class="text-[10px] text-[#9c847f] truncate mt-0.5">${item.titleJp.replace(/<[^>]+>/g, '')}</div>
+                  </div>
+                  <span class="text-xs font-black text-[#ff6b81]">읽기 ›</span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  // MODE 5: SHORT-TOON MANGA - Vertical Panel Reader (per episode)
+  if (kotonohaRuntime.currentMode === 'manga_read') {
+    const steps = (lesson.story || []).slice(0, 12);
+    container.innerHTML = `
+      <div class="rounded-3xl bg-[#181316] text-[#f5ebe6] border border-[#3a2830] shadow-2xl overflow-hidden">
+        <div class="p-3 bg-gradient-to-b from-[#241a1f] to-[#181316] border-b border-[#332228] flex items-center justify-between sticky top-0 z-30">
+          <div class="flex items-center gap-2 min-w-0">
+            <button onclick="backToMangaList()" class="w-8 h-8 shrink-0 rounded-xl bg-[#2b1f25] hover:bg-[#3b2a33] text-[#e0c8c2] font-black text-sm flex items-center justify-center">‹</button>
+            <div class="min-w-0">
+              <div class="text-[10px] text-[#b89d97] font-bold">제${lesson.epCode || ''}화 · ${lesson.levelBadge.split('+')[0]}</div>
+              <div class="text-xs font-black text-white truncate">${lesson.titleJp}</div>
+            </div>
+          </div>
+          <button onclick="event.stopPropagation(); speakJapanese('${lesson.titleJp.replace(/<[^>]+>/g, '').replace(/'/g, "\\'")}', 'gemini')" class="px-2.5 py-1 rounded-xl bg-[#2e2027] hover:bg-[#3d2b34] text-[11px] font-bold text-[#f2a6b2] border border-[#543844]">🔊 제목</button>
+        </div>
+
+        <div class="bg-[#0d0a0c]">
+          ${steps.map((step, i) => {
+            const visuals = resolveKotonohaVisuals(step, lesson);
+            const sceneImage = visuals.ecgUrl || visuals.scgUrl;
+            const audioArg = (step.audio || step.jpPlain || step.jpRuby || '').replace(/'/g, "\\'");
+            const speaker = step.speaker || 'gemini';
+            const speakerImg = step.avatar || (speaker === 'kotone' ? './image/02 kotone/avatar_kotone.png' : speaker === 'mio' ? './image/01 mio/avatar_mio.png' : './image/03 gemini/avatar_gemini.png');
+            return `
+              <div class="relative ${i > 0 ? 'mt-2' : ''}">
+                <div class="relative h-80 sm:h-96 overflow-hidden bg-[#0c080a] flex items-start justify-center">
+                  ${visuals.isScg ? `
+                    <img src="${visuals.bgUrl}" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.85] pointer-events-none">
+                    <img src="${visuals.scgUrl}" onerror="this.src='${visuals.ecgFallback}'" class="relative z-10 h-[125%] w-auto max-w-none object-contain object-top drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] pointer-events-none">
+                  ` : `
+                    <img src="${sceneImage}" onerror="this.src='${visuals.ecgFallback}'" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-40 scale-125 pointer-events-none" style="object-position: center 25%;">
+                    <img src="${sceneImage}" onerror="this.src='${visuals.ecgFallback}'" class="relative z-10 max-h-full max-w-full object-contain mx-auto pointer-events-none">
+                  `}
+                  <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/75 to-transparent pointer-events-none"></div>
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/55 text-[#ffd6de] text-[10px] font-black border border-white/20">컷 ${i + 1}</span>
+                </div>
+                <div class="p-3 bg-[#1d1519]" onclick="event.stopPropagation(); speakJapanese('${audioArg}', '${speaker}')">
+                  <div class="flex items-center gap-2 cursor-pointer">
+                    <img src="${speakerImg}" class="w-6 h-6 rounded-full object-cover ring-1 ring-[#e0465a] shrink-0">
+                    <span class="text-[11px] font-black text-[#f4869d]">${step.nameJp}</span>
+                    <span class="text-[10px] text-[#b89f99] font-bold">(${step.nameKo})</span>
+                    <span class="ml-auto text-[10px] text-[#9e847e]">🔊 터치 재생</span>
+                  </div>
+                  <div class="text-sm font-extrabold text-white leading-relaxed mt-1">${step.jpRuby}</div>
+                  ${showPron ? `<div class="text-[11px] text-[#f29aa8] mt-0.5">${step.pron}</div>` : ''}
+                  <div class="text-xs font-bold text-[#e0cfca] mt-1">${step.ko}</div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+        <div class="p-3 bg-[#181316] border-t border-[#332228] flex items-center justify-between">
+          <button onclick="backToMangaList()" class="px-3 py-1.5 rounded-xl bg-[#261c21] border border-[#422f37] text-xs font-bold text-[#e6d0ca]">← 목록</button>
+          <button onclick="openNextMangaEp()" class="px-3 py-1.5 rounded-xl bg-[#e0465a] text-white text-xs font-black shadow">다음 화 ›</button>
+        </div>
+      </div>
+    `;
+    return;
   }
 }
