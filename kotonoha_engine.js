@@ -598,9 +598,14 @@ function openKotonohaHub() {
 
 // Short-toon manga navigation
 function openMangaList() {
+  openMinitun();
+}
+
+// MiniToon: single original episode (record-based manhwa, not the JP curriculum)
+function openMinitun() {
   kotonohaRuntime.ttsLoading.runId++;
   kotonohaRuntime.ttsLoading.active = false;
-  kotonohaRuntime.currentMode = 'manga_list';
+  kotonohaRuntime.currentMode = 'minitoon';
   playBeep(580, 0.06);
   renderKotonohaView();
 }
@@ -1226,7 +1231,7 @@ function renderKotonohaView() {
               <span>🔥 연속 ${kState.streak || 1}일</span>
             </div>
             <button onclick="openMangaList()" class="ml-auto px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#2d4038] to-[#1c2a26] hover:opacity-95 border border-[#4a6a5c] text-[11px] font-black text-[#d8f5e8] flex items-center gap-1 shadow transition-all active:scale-95">
-              📖 숏툰 만화
+              📖 미니툰
             </button>
           </div>
         </div>
@@ -1683,7 +1688,7 @@ function renderKotonohaView() {
           <div class="flex items-center gap-2">
             <button onclick="openKotonohaHub()" class="w-8 h-8 rounded-xl bg-[#2b1f25] hover:bg-[#3b2a33] text-[#e0c8c2] font-black text-sm flex items-center justify-center">‹</button>
             <div>
-              <h2 class="text-sm font-black text-[#e86b7e]">📖 숏툰 만화</h2>
+              <h2 class="text-sm font-black text-[#e86b7e]">📖 미니툰</h2>
               <p class="text-[11px] text-[#b59e99] font-bold">3인 히로인 웹툰 - 편당 1화</p>
             </div>
           </div>
@@ -1793,6 +1798,61 @@ function renderKotonohaView() {
             <button onclick="backToMangaList()" class="px-3 py-1.5 rounded-xl bg-[#261c21] border border-[#422f37] text-xs font-bold text-[#e6d0ca]">← 목록</button>
             <button onclick="openNextMangaEp()" class="px-3 py-1.5 rounded-xl bg-[#e0465a] text-white text-xs font-black shadow">다음 화 ›</button>
           </div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  // MODE 6: MINITOON - single original record-based episode (manhwa webtoon cuts)
+  if (kotonohaRuntime.currentMode === 'minitoon') {
+    const mt = window.MINITOON || { panels: [] };
+    container.innerHTML = `
+      <div class="rounded-3xl bg-white text-[#141013] border border-[#3a2830] shadow-2xl overflow-hidden">
+        <div class="p-3 bg-[#1d1519] text-[#f5ebe6] border-b border-[#332228] flex items-center justify-between sticky top-0 z-30">
+          <div class="flex items-center gap-2 min-w-0">
+            <button onclick="openKotonohaHub()" class="w-8 h-8 shrink-0 rounded-xl bg-[#2b1f25] hover:bg-[#3b2a33] text-[#e0c8c2] font-black text-sm flex items-center justify-center">‹</button>
+            <div class="min-w-0">
+              <div class="text-[10px] text-[#b89d97] font-bold">미니툰 · 프롤로그</div>
+              <div class="text-xs font-black text-white truncate">${mt.titleKo || ''}</div>
+            </div>
+          </div>
+          <span class="text-[10px] px-2 py-1 rounded-full bg-[#352329] text-[#f2a6b2] font-bold border border-[#52343d]">기록으로 그린 이야기</span>
+        </div>
+
+        <div class="bg-white p-1.5 space-y-1.5">
+          ${(mt.panels || []).map((p, i) => {
+            const hCls = p.size === 'tall' ? 'h-[480px] sm:h-[560px]' : 'h-[390px] sm:h-[480px]';
+            const bubbleSide = i % 2 === 0 ? 'left-2.5 items-start' : 'right-2.5 items-end';
+            const tailClass = i % 2 === 0 ? 'absolute -bottom-1.5 left-5 w-3 h-3 bg-white border-b border-r border-[#2b2b2b] rotate-45' : 'absolute -bottom-1.5 right-5 w-3 h-3 bg-white border-b border-l border-[#2b2b2b] rotate-45';
+            return `
+              <div class="border-[3px] border-black bg-white">
+                <div class="relative ${hCls} w-full overflow-hidden bg-[#0c080a]">
+                  <img src="${p.img}" onerror="this.src='./image/manga/p01.png'" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
+                  <span class="absolute top-2 left-2 px-1.5 py-0.5 bg-black/70 text-white text-[10px] font-black rounded-sm z-20">${i + 1}</span>
+                </div>
+                ${p.speech ? `
+                <div class="relative px-2 pt-2 pb-2 flex ${bubbleSide}">
+                  <div class="relative bg-white border-2 border-[#2b2b2b] rounded-2xl px-3 py-2 max-w-[78%] shadow-md">
+                    <div class="${tailClass}"></div>
+                    <div class="text-[10px] font-bold text-[#7a5c63] mb-0.5">${p.speech.name || ''}</div>
+                    <div class="text-[13px] font-extrabold text-[#141013] leading-snug">${p.speech.text || ''}</div>
+                  </div>
+                </div>` : ''}
+                ${p.caption ? `
+                <div class="px-2 pb-2">
+                  <div class="bg-white border-[1.5px] border-black px-3 py-2">
+                    <div class="text-xs font-bold text-[#141013] leading-relaxed">${p.caption}</div>
+                  </div>
+                </div>` : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+        <div class="p-3 bg-[#1d1519] border-t border-[#332228] flex items-center justify-between">
+          <button onclick="openKotonohaHub()" class="px-3 py-1.5 rounded-xl bg-[#261c21] border border-[#422f37] text-xs font-bold text-[#e6d0ca]">← 다실 홈</button>
+          <span class="text-[10px] text-[#8a7a77] font-mono">— ${mt.panels.length} —</span>
         </div>
       </div>
     `;
