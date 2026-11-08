@@ -266,7 +266,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.13</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.14</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -1598,9 +1598,9 @@
 
   </div>
 
-  <script src="./dialogue_pool.js?v=4.3.13"></script>
-  <script src="./kotonoha_data.js?v=4.3.13"></script>
-  <script src="./kotonoha_engine.js?v=4.3.13"></script>
+  <script src="./dialogue_pool.js?v=4.3.14"></script>
+  <script src="./kotonoha_data.js?v=4.3.14"></script>
+  <script src="./kotonoha_engine.js?v=4.3.14"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -5691,7 +5691,20 @@ ${err.message}
         const res = await Tesseract.recognize(file, 'kor+eng');
         const text = res.data.text || "";
         const parsed = parseHealthImageText(text);
+        const strong = parsed.weight !== null && (parsed.bmi !== null || parsed.score !== null || parsed.skeletalMuscle !== null || parsed.fat !== null);
         if (parsed.weight !== null || parsed.fat !== null || parsed.score !== null) {
+          if (strong) return { parsed, text };
+          // Weight detected WITHOUT any corroborating fields: risky (could be a stray number)
+          // -> run the preprocessed (grayscale-cleaned) pass and merge, preferring label-anchored parses.
+          const processedBlob = await preprocessOcrImage(file);
+          const res2 = await Tesseract.recognize(processedBlob, 'kor+eng');
+          const text2 = res2.data.text || "";
+          const parsed2 = parseHealthImageText(text2);
+          const fallbackStrong = parsed2.weight !== null && (parsed2.bmi !== null || parsed2.score !== null || parsed2.skeletalMuscle !== null || parsed2.fat !== null);
+          if (!fallbackStrong) return { parsed, text };
+          // Prefer the parsed set with more corroborating fields; otherwise the first pass.
+          const score = p => (p.weight !== null ? 1 : 0) + (p.bmi !== null ? 1 : 0) + (p.score !== null ? 1 : 0) + (p.skeletalMuscle !== null ? 1 : 0) + (p.fat !== null ? 1 : 0) + (p.fatMass !== null ? 1 : 0) + (p.bmr !== null ? 1 : 0);
+          if (score(parsed2) > score(parsed)) return { parsed: parsed2, text: text2 + "\n--- PREPROCESSED ---\n" + text };
           return { parsed, text };
         }
         // Priority 2: Fallback to preprocessed/inverted image if initial pass didn't catch weight
@@ -5923,8 +5936,33 @@ ${err.message}
         .replace(/(?:적정|목표|조절|권장|제지방)[^\n]*?(?:체중|몸무게|weight)?[^\n]*?(?:[3-9]\d(?:\.\d{1,2})?)\s*(?:kg)?/gi, ' ')
         .replace(/(?:적정체중|체중조절|지방조절|근육조절)[\s:：>▶()（）a-zA-Z0-9.\-+/s]{0,25}/gi, ' ');
 
-      // Pattern 0: InBody Component Sum Cross-Validation (체수분 + 단백질 + 무기질 + 체지방량 = 체중)
-      // When InBody report is scanned, the sum of components is 100% mathematically exact!
+      // ---------- Pattern InBody-Structure: value (lo~hi) rows, 5th value is 체중 ----------
+      // When Korean labels garble/miss, InBody sheet rows still have shape
+      //   "32.5 ( 32.0~39.2 ) / 8.9 ( 8.6~10.4 ) / 3.04 ( 2.97~3.63 ) / 21.5 ( 6.8~13.7 ) / 65.9 ( 48.5~65.6 )"
+      // The 5th value is the weight. Digits could have leading zeroes etc.
+      const rowValuePattern = /(?:^|\n|\s)(\d{2,3}(?:\.\d{1,2})?)\s*[\(\[]\s*\d{2,3}(?:\.\d{1,2})?\s*[~\-–]\s*\d{2,3}(?:\.\d{1,2})?\s*[\)\]]/g;
+      const structureValues = [...cleanCurrent.matchAll(rowValuePattern)].map(m => parseFloat(m[1]));
+      const structureWeight = structureValues.length >= 2 ? structureValues[structureValues.length - 1] : (structureValues.length === 1 ? structureValues[0] : null);
+
+      // Height (키) for BMI cross-validation
+      const heightMatch = unified.match(/(?:신장|키|height)[^\d]{0,24}?(\d{2,3}(?:\.\d)?)\s*(?:cm)?/i)
+        || unified.match(/\b(1[4-9]\d|2[0-2]\d)\s*(?:cm|\s*키\b)/i);
+      let heightCm = null;
+      if (heightMatch) {
+        const hVal = parseFloat(heightMatch[1]);
+        if (hVal >= 130 && hVal <= 230) heightCm = hVal;
+      }
+
+      // ---------- Pattern 1 (InBody row order): 체중 값(범위1~범위2) ----------
+      // PrinteInBody layout is deterministic: weight value directly followed by (lo~hi) range.
+      const inbodyWeightRow = cleanCurrent.match(/(?:체중|몸무게|weight)[\s\S]{0,40}?\b([3-9]\d(?:\.\d)?)\b[\s]*[(（]\s*\d{2}[\s]*[~\-]/i);
+      if (inbodyWeightRow) {
+        const val = parseFloat(inbodyWeightRow[1]);
+        if (val >= 35 && val <= 180) weight = val;
+      }
+
+      // ---------- Pattern 0: InBody Component Sum Cross-Validation ----------
+      // 체수분 + 단백질 + 무기질 + 체지방량 = 체중 (시트에서 수학적으로 정확).
       const waterMatch = cleanCurrent.match(/(?:체수분|water)[^\d]*(\d{2,3}(?:\.\d)?)/i);
       const proteinMatch = cleanCurrent.match(/(?:단백질|protein)[^\d]*(\d{1,3}(?:\.\d)?)/i);
       const mineralsMatch = cleanCurrent.match(/(?:무기질|mineral)[^\d]*(\d{1,3}(?:\.\d{1,2})?)/i);
@@ -5933,24 +5971,45 @@ ${err.message}
       let water = waterMatch ? parseFloat(waterMatch[1]) : null;
       let protein = proteinMatch ? parseFloat(proteinMatch[1]) : null;
       let minerals = mineralsMatch ? parseFloat(mineralsMatch[1]) : null;
-      if (fatMassMatch) {
+      let componentSum = null;
+      if (water && protein && minerals) {
+        if (water > 100) water = water / 10.0;
+        if (protein > 50) protein = protein / 10.0;
+        if (minerals > 20) minerals = minerals / 100.0;
+        if (fatMassMatch) {
+          let fm = parseFloat(fatMassMatch[1]);
+          if (fm > 100) fm = Math.round(fm) / 10.0;
+          if (fm >= 3 && fm <= 80) fatMass = fm;
+        }
+        componentSum = Math.round((water + protein + minerals + (fatMass || 0)) * 10) / 10.0;
+        if (!(componentSum >= 35 && componentSum <= 160)) componentSum = null;
+      } else if (fatMassMatch) {
         let fm = parseFloat(fatMassMatch[1]);
         if (fm > 100) fm = Math.round(fm) / 10.0;
         if (fm >= 3 && fm <= 80) fatMass = fm;
       }
 
-      if (water && protein && minerals && fatMass) {
-        if (water > 100) water = water / 10.0;
-        if (protein > 50) protein = protein / 10.0;
-        if (minerals > 20) minerals = minerals / 100.0;
-        const sum = Math.round((water + protein + minerals + fatMass) * 10) / 10.0;
-        if (sum >= 35 && sum <= 160) {
-          weight = sum;
-        }
+      // Physical predictions for candidate validation (BMI×height, component sum, InBody structure)
+      const predictions = [];
+      if (bmi && heightCm) predictions.push(Math.round(bmi * Math.pow(heightCm / 100, 2) * 10) / 10);
+      if (componentSum) predictions.push(componentSum);
+      if (structureWeight !== null && structureWeight >= 35 && structureWeight <= 180) predictions.push(structureWeight);
+      const predictedWeight = predictions.length
+        ? Math.round(predictions.reduce((a, b) => a + b, 0) / predictions.length * 10) / 10
+        : null;
+
+      // If determination relied ONLY on OCR value-regex soup with no labels,
+      // and the structure detector found the sheet's 5 rows, prefer its 5th value.
+      if (weight === null && structureValues.length === 5 && structureValues[4] >= 35 && structureValues[4] <= 180) {
+        weight = structureValues[4];
+      } else if (weight === null && structureValues.length > 5) {
+        // Sometimes extra value-range rows (history graphs) leak in; use the value whose row
+        // is closest to the end of the current section (last 5th-from-end is still weight).
+        const cand = structureValues[structureValues.length - 5];
+        if (cand >= 35 && cand <= 180) weight = cand;
       }
 
-      // Pattern 1: Samsung Health / Scale Prominent Explicit "xx.x kg"
-      // Matches: "64.7 kg", "64.7kg", "64.7 kg 보통", "64.7kg -0.5"
+      // ---------- Pattern 2: explicit "xx.x kg" ----------
       if (weight === null) {
         const explicitKgMatch = cleanCurrent.match(/\b([3-9]\d\.\d)\s*kg\b/i) || cleanCurrent.match(/\b([1-2]\d{2}\.\d)\s*kg\b/i);
         if (explicitKgMatch) {
@@ -5961,7 +6020,7 @@ ${err.message}
         }
       }
 
-      // Pattern 2: "체중" or "몸무게" label followed by number (even across newlines & whitespace)
+      // ---------- Pattern 3: label-adjacent number (multi-candidate + prediction pick) ----------
       if (weight === null) {
         const weightLabelMatch = cleanCurrent.match(/(?:체중|몸무게|Weight|체성분)[\s:：>〉▶=]*[\r\n\s]*[^0-9\n\-+]{0,15}([3-9]\d(?:\.\d)?|[1-2]\d{2}(?:\.\d)?)\s*(?:kg)?/i);
         if (weightLabelMatch) {
@@ -5972,52 +6031,61 @@ ${err.message}
         }
       }
 
-      // Pattern 4: InBody Row inspection - prefer decimal value right before normal range (e.g. 65.6 (48.5~65.5))
-      if (weight === null) {
-        const beforeRangeMatch = cleanCurrent.match(/(?:체중|몸무게)[\s\S]{0,80}?\b([3-9]\d\.\d)\b[\s]*[(（][\s]*\d{2}/i);
-        if (beforeRangeMatch) {
-          const val = parseFloat(beforeRangeMatch[1]);
-          if (val >= 35 && val <= 180) weight = val;
-        }
-      }
-
+      // ---------- Pattern 4: 체중 line floats, pick the one nearest the physical prediction ----------
       if (weight === null) {
         const weightScaleTicks = new Set([40, 55, 70, 85, 100, 115, 130, 145, 160, 175, 190, 205]);
         for (const line of cleanCurrent.split('\n')) {
           if (/(?<![적정목표조절권장])체중|몸무게|Weight/i.test(line) && !/적정|조절|목표|권장/i.test(line)) {
-            // Pick decimals first (ticks are integers 40, 55, 70)
             const decNums = [...line.matchAll(/\b([3-9]\d\.\d{1,2})\b/g)].map(m => parseFloat(m[1])).filter(n => n >= 35 && n <= 180);
             if (decNums.length > 0) {
-              weight = decNums[0];
-              break;
+              if (predictedWeight !== null) {
+                const best = decNums.slice().sort((a, b) => Math.abs(a - predictedWeight) - Math.abs(b - predictedWeight))[0];
+                if (Math.abs(best - predictedWeight) <= 12) { weight = best; break; }
+              } else { weight = decNums[0]; break; }
             }
             const rawNums = [...line.matchAll(/\b([3-9]\d|[1-2]\d{2})\b/g)]
               .map(m => parseInt(m[1], 10))
               .filter(n => n >= 35 && n <= 180 && !weightScaleTicks.has(n));
             if (rawNums.length > 0) {
-              weight = rawNums[0];
-              break;
+              if (predictedWeight !== null) {
+                const best = rawNums.slice().sort((a, b) => Math.abs(a - predictedWeight) - Math.abs(b - predictedWeight))[0];
+                if (Math.abs(best - predictedWeight) <= 12) { weight = best; break; }
+              } else { weight = rawNums[0]; break; }
             }
           }
         }
       }
 
-      // Pattern 5: Smart fallback for smart scales (isolated 2-digit float without running context)
+      // ---------- Pattern 5: Smart fallback (first valid decimal, but must agree with prediction if any) ----------
       if (weight === null && !hasRunningKeywords && distance === null && duration === null) {
-        for (const m of cleanCurrent.matchAll(/\b([3-9]\d\.\d)\b/g)) {
-          const val = parseFloat(m[1]);
-          if (val >= 40 && val <= 130 && (!bmi || Math.abs(val - bmi) > 1.0)) {
-            weight = val;
-            break;
+        const floats = [...cleanCurrent.matchAll(/\b([3-9]\d\.\d)\b/g)]
+          .map(m => parseFloat(m[1]))
+          .filter(val => val >= 40 && val <= 130 && (!bmi || Math.abs(val - bmi) > 1.0));
+        if (floats.length > 0) {
+          if (predictedWeight !== null) {
+            const best = floats.slice().sort((a, b) => Math.abs(a - predictedWeight) - Math.abs(b - predictedWeight))[0];
+            if (Math.abs(best - predictedWeight) <= 12) weight = best;
+          } else {
+            weight = floats[0];
           }
         }
+      }
+
+      // ---------- Final cross-validation: reject implausible picks ----------
+      if (predictedWeight !== null && weight !== null) {
+        if (Math.abs(weight - predictedWeight) > 10) {
+          weight = predictedWeight > 0 ? predictedWeight : weight;
+        }
+      } else if (weight === null && predictedWeight !== null && componentSum) {
+        weight = componentSum;
       }
 
       // =========================================================================
       // 9. BODY FAT PERCENTAGE (%) & SKELETAL MUSCLE (kg)
       // =========================================================================
       // Fat % (체지방률) - strictly distinguish % from kg (체지방량)
-      const fatPctExplicit = cleanCurrent.match(/(?:체지방률|체지방율|PBF)[\s:：>▶]*[\r\n\s]*([1-5]?\d(?:\.\d)?)\s*(?:%|프로|퍼센트)?/i)
+      // InBody sheet layout: "체지방률 (%) 32.6" (the % can appear BEFORE the number!)
+      const fatPctExplicit = cleanCurrent.match(/(?:체지방률|체지방율|PBF)[^\d]{0,14}([1-5]?\d(?:\.\d)?)\b/i)
         || cleanCurrent.match(/([1-5]?\d\.\d)\s*%/);
       if (fatPctExplicit) {
         let fv = parseFloat(fatPctExplicit[1]);
@@ -8123,7 +8191,7 @@ ${err.message}
 
       <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
         <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-          <span>현재 앱 버전: v4.3.13 (言の葉茶屋)</span>
+          <span>현재 앱 버전: v4.3.14 (言の葉茶屋)</span>
           <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
         </div>
         <div class="text-[10px] text-[#9e847e]">아래 버튼을 눌러 요청문을 복사한 뒤, 안티그라에 바로 붙여넣기 하시면 즉시 업데이트가 진행됩니다.</div>
