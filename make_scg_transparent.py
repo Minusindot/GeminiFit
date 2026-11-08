@@ -109,10 +109,13 @@ def process_character(char: str, only_expr: str | None = None):
     cw, ch = x1 - x0, y1 - y0
     print(f"  [{char}] trim box {box} size {cw}x{ch}")
 
-    # 3) fit trimmed content onto the shared portrait canvas
-    scale = min(CANVAS_W / cw, CANVAS_H / ch) if cw and ch else 1.0
+    # 3) Fit trimmed content to fill the portrait canvas nearly top-to-bottom
+    # so the character renders LARGE (commercial VN style) with head visible: feet
+    # sit at the canvas bottom, head near the top — no internal padding loss.
+    MARGIN = 20
+    scale = min((CANVAS_H - MARGIN * 2) / ch, (CANVAS_W - MARGIN * 2) / cw)
     tw, th = max(1, round(cw * scale)), max(1, round(ch * scale))
-    ox, oy = (CANVAS_W - tw) // 2, (CANVAS_H - th) // 2
+    ox, oy = (CANVAS_W - tw) // 2, CANVAS_H - MARGIN - th
 
     ok = True
     for expr, rgba_img in rgba_by_expr.items():

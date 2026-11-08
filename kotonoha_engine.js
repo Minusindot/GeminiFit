@@ -1349,9 +1349,9 @@ function renderKotonohaView() {
               <img src="${visuals.bgUrl}" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.85] contrast-[1.02] pointer-events-none transition-all duration-500">
               <div class="absolute inset-0 bg-gradient-to-t from-[#141013] via-transparent to-black/25 pointer-events-none"></div>
 
-              <!-- Pure Standing Character Sprite (Alpha Transparent PNG) — scaled to ~135% for commercial VN presence -->
+              <!-- Pure Standing Character Sprite (Alpha Transparent PNG) — commercial VN full-height placement -->
               <div class="relative z-10 h-full flex items-end justify-center pointer-events-none w-full">
-                <img src="${visuals.scgUrl}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="relative h-[135%] w-auto max-w-none object-contain object-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
+                <img src="${visuals.scgUrl}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="relative h-[100%] w-auto max-w-none object-contain object-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
               </div>
             ` : `
               <!-- [CLEAN FULL ECG MODE] Cinematic Ambient Blur + Center Illustration (Never Cut Off) -->
