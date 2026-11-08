@@ -45,7 +45,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、おいでやす〜🍵 <ruby>今日<rt>きょう</rt></ruby>もおきばりやす！",
         "jpPlain": "プロデューサーはん、おいでやす。今日もおきばりやす！",
         "pron": "푸로듀-사-항, 오이데야스~ 쿄-모 오키바리야스!",
-        "ko": "프로듀서님, 어서 오시어요~🍵 오늘도 힘내시와요!"
+        "ko": "프로듀서님, 어서 오시어요~🍵 오늘도 힘내시와요!",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "mio",
@@ -57,7 +59,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ヤッホー！<ruby>新<rt>あたら</rt></ruby>しい<ruby>白<rt>しろ</rt></ruby>い<ruby>靴<rt>くつ</rt></ruby>を<ruby>買<rt>か</rt></ruby>ったよ！🌟",
         "jpPlain": "ヤッホー！新しい白い靴を買ったよ！",
         "pron": "얏호-! 아타라시- 시로이 쿠츠오 캇타요!",
-        "ko": "야호! 새로운 하얀 신발(운동화)을 샀어! 🌟"
+        "ko": "야호! 새로운 하얀 신발(운동화)을 샀어! 🌟",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "kotone",
@@ -68,7 +72,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "わあ、<ruby>高<rt>たか</rt></ruby>そうな<ruby>靴<rt>くつ</rt></ruby>ですね！<ruby>何円<rt>なんえん</rt></ruby>ですか？！💸",
         "jpPlain": "わあ、高そうな靴ですね！何円ですか？！",
         "pron": "와아, 타카소-나 쿠츠데스네! 난엔데스카?!",
-        "ko": "와아, 비싸 보이는 신발이네요! 얼마(몇 엔)인가요?! 💸"
+        "ko": "와아, 비싸 보이는 신발이네요! 얼마(몇 엔)인가요?! 💸",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "gemini",
@@ -80,7 +86,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ちょっとミオはん、<ruby>茶屋<rt>ちゃや</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>靴<rt>くつ</rt></ruby>を<ruby>履<rt>は</rt></ruby>いたらあかんやん！",
         "jpPlain": "ちょっとミオはん、茶屋の中で靴を履いたらあかんやん！",
         "pron": "춋토 미오항, 챠야노 나카데 쿠츠오 하이타라 아캉양!",
-        "ko": "어머나 미오 양, 다실 안에서 신발을 신으시면 안 되사와요!"
+        "ko": "어머나 미오 양, 다실 안에서 신발을 신으시면 안 되사와요!",
+        "expr": "shock",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "mio",
@@ -91,7 +99,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "えへへ、これは<ruby>靴<rt>くつ</rt></ruby>じゃありません！<ruby>厚手<rt>あつで</rt></ruby>の<ruby>靴下<rt>くつした</rt></ruby>だよ〜！🌟",
         "jpPlain": "えへへ、これは靴じゃありません！厚手の靴下だよ〜！",
         "pron": "에헤헤, 코레와 쿠츠쟈 아리마센! 아츠데노 쿠츠시타다요~!",
-        "ko": "에헤헤, 이건 신발이 아니야! 두툼한 양말이라구~! 🌟"
+        "ko": "에헤헤, 이건 신발이 아니야! 두툼한 양말이라구~! 🌟",
+        "expr": "joke",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "gemini",
@@ -103,7 +113,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "あら、ほんまどすなぁ。ふふ、ほな<ruby>皆<rt>みな</rt></ruby>でお<ruby>抹茶<rt>まっちゃ</rt></ruby>を<ruby>飲<rt>の</rt></ruby>みましょか🍵🌸",
         "jpPlain": "あら、ほんまどすなぁ。ふふ、ほな皆でお抹茶を飲みましょか。",
         "pron": "아라, 혼마 도스나-. 후후, 호나 미나데 오맛챠오 노미마쇼카.",
-        "ko": "어머나, 참으로 그러하네요. 우후후, 그럼 다 함께 말차를 마시와요 🍵🌸"
+        "ko": "어머나, 참으로 그러하네요. 우후후, 그럼 다 함께 말차를 마시와요 🍵🌸",
+        "expr": "shock",
+        "bg": "teahouse_day"
       }
     ],
     "quizzes": [
@@ -249,7 +261,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーさん！<ruby>今日<rt>きょう</rt></ruby>の<ruby>昼<rt>ひる</rt></ruby>ごはんは<ruby>鶏胸肉<rt>とりむねにく</rt></ruby>サラダですよ！🥗",
         "jpPlain": "プロデューサーさん！今日の昼ごはんは鶏胸肉サラダですよ！",
         "pron": "푸로듀-사-상! 쿄-노 히루고항와 토리무네니쿠 사라다데스요!",
-        "ko": "프로듀서님! 오늘 점심밥은 닭가슴살 샐러드예요! 🥗"
+        "ko": "프로듀서님! 오늘 점심밥은 닭가슴살 샐러드예요! 🥗",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "mio",
@@ -260,7 +274,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "うわあ、めっちゃ<ruby>美味<rt>おい</rt></ruby>しそう！<ruby>水<rt>みず</rt></ruby>も<ruby>一杯<rt>いっぱい</rt></ruby>ちょうだい！🌟",
         "jpPlain": "うわあ、めっちゃ美味しそう！水も一杯ちょうだい！",
         "pron": "우와아, 멧챠 오이시소-! 미즈모 잇파이 쵸-다이!",
-        "ko": "우와아, 엄청 맛있겠다! 물도 한 잔 줘! 🌟"
+        "ko": "우와아, 엄청 맛있겠다! 물도 한 잔 줘! 🌟",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "gemini",
@@ -271,7 +287,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "コトネはん、このお<ruby>弁当<rt>べんとう</rt></ruby>は<ruby>全部<rt>ぜんぶ</rt></ruby>でなんぼどすか？🍵",
         "jpPlain": "コトネはん、このお弁当は全部でなんぼどすか？",
         "pron": "코토네항, 코노 오벤토-와 젠부데 난보 도스카?",
-        "ko": "코토네 양, 이 도시락은 전부 해서 얼마이온지요? 🍵"
+        "ko": "코토네 양, 이 도시락은 전부 해서 얼마이온지요? 🍵",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "kotone",
@@ -282,7 +300,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "えへへ、タイムセールで<ruby>買<rt>か</rt></ruby>ったので、<ruby>三百円<rt>さんびゃくえん</rt></ruby>です！<ruby>安<rt>やす</rt></ruby>いでしょ？！💸",
         "jpPlain": "えへへ、タイムセールで買ったので、三百円です！安いでしょ？！",
         "pron": "에헤헤, 타이무세-루데 캇타노데, 산뱌쿠엔데스! 야스이데쇼?!",
-        "ko": "에헤헤, 마감 세일로 사서 300엔이에요! 저렴하죠?! 💸"
+        "ko": "에헤헤, 마감 세일로 사서 300엔이에요! 저렴하죠?! 💸",
+        "expr": "joke",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "gemini",
@@ -293,7 +313,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ほんまに<ruby>安<rt>やす</rt></ruby>いなぁ！おおきに、コトネはん。プロデューサーはんも<ruby>早<rt>はや</rt></ruby>う<ruby>食<rt>た</rt></ruby>べよし🌸",
         "jpPlain": "ほんまに安いなぁ！おおきに、コトネはん。プロデューサーはんも早う食べよし。",
         "pron": "혼마니 야스이나-! 오-키니, 코토네항. 푸로듀-사-항모 하요- 타베요시.",
-        "ko": "참으로 저렴하네요! 고맙사와요, 코토네 양. 프로듀서님도 얼른 드시와요 🌸"
+        "ko": "참으로 저렴하네요! 고맙사와요, 코토네 양. 프로듀서님도 얼른 드시와요 🌸",
+        "expr": "idle",
+        "bg": "teahouse_day"
       }
     ],
     "quizzes": [
@@ -439,7 +461,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、<ruby>手首<rt>てくび</rt></ruby>の<ruby>調子<rt>ちょうし</rt></ruby>はどうどすか？ <ruby>無理<rt>むり</rt></ruby>したらあかんえ🩹",
         "jpPlain": "プロデューサーはん、手首の調子はどうどすか？ 無理したらあかんえ。",
         "pron": "푸로듀-사-항, 테쿠비노 쵸-시와 도-도스카? 무리시타라 아캉에.",
-        "ko": "프로듀서님, 손목 상태는 어떠신지요? 무리하시면 안 되사와요 🩹"
+        "ko": "프로듀서님, 손목 상태는 어떠신지요? 무리하시면 안 되사와요 🩹",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "mio",
@@ -450,7 +474,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "そうだよ！<ruby>重<rt>おも</rt></ruby>いダンベルより、<ruby>腹筋<rt>ふっきん</rt></ruby>と<ruby>走<rt>はし</rt></ruby>る<ruby>練習<rt>れんしゅう</rt></ruby>をしよう！🏃‍♀️",
         "jpPlain": "そうだよ！重いダンベルより、腹筋と走る練習をしよう！",
         "pron": "소-다요! 오모이 단베루요리, 훗킨토 하시루 렌슈-오 시요-!",
-        "ko": "맞아! 무거운 덤벨보다 복근이랑 달리기 연습을 하자! 🏃‍♀️"
+        "ko": "맞아! 무거운 덤벨보다 복근이랑 달리기 연습을 하자! 🏃‍♀️",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "kotone",
@@ -461,7 +487,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "あれ？ <ruby>今<rt>いま</rt></ruby>、<ruby>時計<rt>とけい</rt></ruby>を<ruby>見<rt>み</rt></ruby>たら<ruby>夕方<rt>ゆうがた</rt></ruby>の<ruby>五時<rt>ごじ</rt></ruby>ですよ！⏰",
         "jpPlain": "あれ？ 今、時計を見たら夕方の五時ですよ！",
         "pron": "아레? 이마, 토케-오 미타라 유-가타노 고지데스요!",
-        "ko": "어라? 지금 시계를 보니까 저녁 5시예요! ⏰"
+        "ko": "어라? 지금 시계를 보니까 저녁 5시예요! ⏰",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "gemini",
@@ -472,7 +500,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ほんまや！<ruby>五時<rt>ごじ</rt></ruby>からは<ruby>断食<rt>だんじき</rt></ruby>の時間どす。<ruby>夜食<rt>やしょく</rt></ruby>を食べたら<ruby>絶対<rt>ぜったい</rt></ruby>に許しまへんえ（ニコッ）🌸",
         "jpPlain": "ほんまや！五時からは断食の時間どす。夜食を食べたら絶対に許しまへんえ。",
         "pron": "혼마야! 고지카라와 단지키노 지칸 도스. 야쇼쿠오 타베타라 젯타이니 유루시마헨에.",
-        "ko": "어머나, 정말이네요! 5시부터는 단식 시간이오니, 야식을 드시면 결코 용서치 않겠사와요 (방긋) 🌸"
+        "ko": "어머나, 정말이네요! 5시부터는 단식 시간이오니, 야식을 드시면 결코 용서치 않겠사와요 (방긋) 🌸",
+        "expr": "shock",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "mio",
@@ -483,7 +513,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ひええ、ジェミニちゃんの<ruby>笑顔<rt>えがお</rt></ruby>が一番<ruby>怖<rt>こわ</rt></ruby>いよ〜！<ruby>知<rt>し</rt></ruby>らんけど！💦",
         "jpPlain": "ひええ、ジェミニちゃんの笑顔が一番怖いよ〜！知らんけど！",
         "pron": "히에에, 제미니짱노 에가오가 이치반 코와이요~! 시란케도!",
-        "ko": "히에엑, 제미니 짱의 웃는 얼굴이 제일 무서워~! 몰라도(아님 말고)! 💦"
+        "ko": "히에엑, 제미니 짱의 웃는 얼굴이 제일 무서워~! 몰라도(아님 말고)! 💦",
+        "expr": "shock",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "gemini",
@@ -494,7 +526,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "なんでやねん！うちはプロデューサーはんのことが<ruby>好<rt>す</rt></ruby>きやから<ruby>言<rt>い</rt></ruby>うてるんどすえ💖🐾",
         "jpPlain": "なんでやねん！うちはプロデューサーはんのことが好きやから言うてるんどすえ。",
         "pron": "난데야넨! 우치와 푸로듀-사-항노 코토가 스키야카라 유-테룬 도스에.",
-        "ko": "어머나, 무슨 말씀이시어요! 소녀는 프로듀서님을 사모하오니 드리는 말씀이라지요 💖🐾"
+        "ko": "어머나, 무슨 말씀이시어요! 소녀는 프로듀서님을 사모하오니 드리는 말씀이라지요 💖🐾",
+        "expr": "shock",
+        "bg": "gym_indoor"
       }
     ],
     "quizzes": [
@@ -640,7 +674,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "あれれ？ <ruby>道<rt>みち</rt></ruby>に<ruby>迷<rt>まよ</rt></ruby>っちゃった！<ruby>駅<rt>えき</rt></ruby>はどこだろう？💦",
         "jpPlain": "あれれ？ 道に迷っちゃった！駅はどこだろう？",
         "pron": "아레레? 미치니 마욧챳타! 에키와 도코다로-?",
-        "ko": "어라라? 길을 잃어버렸어! 역은 어디지? 💦"
+        "ko": "어라라? 길을 잃어버렸어! 역은 어디지? 💦",
+        "expr": "idle",
+        "bg": "park_track"
       },
       {
         "speaker": "kotone",
@@ -651,7 +687,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "タクシーに<ruby>乗<rt>の</rt></ruby>ったらお金がもったいないですよ！<ruby>歩<rt>ある</rt></ruby>きましょう！💸",
         "jpPlain": "タクシーに乗ったらお金がもったいないですよ！歩きましょう！",
         "pron": "타쿠시-니 놋타라 오카네가 못타이나이데스요! 아루키마쇼-!",
-        "ko": "택시를 타면 돈이 아깝다구요! 걸어가요! 💸"
+        "ko": "택시를 타면 돈이 아깝다구요! 걸어가요! 💸",
+        "expr": "idle",
+        "bg": "park_track"
       },
       {
         "speaker": "gemini",
@@ -662,7 +700,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ふふ、慌てんといて。<ruby>京都駅<rt>きょうとえき</rt></ruby>なら、この<ruby>道<rt>みち</rt></ruby>をまっすぐ<ruby>行<rt>い</rt></ruby>くだけどすえ🌸",
         "jpPlain": "ふふ、慌てんといて。京都駅なら、この道をまっすぐ行くだけどすえ。",
         "pron": "후후, 아와텐토이테. 쿄-토에키나라, 코노 미치오 맛스구 이쿠 다케 도스에.",
-        "ko": "우후후, 당황하지 마시어요. 교토역이라면 이 길을 따라 쭉 가기만 하면 된다지요 🌸"
+        "ko": "우후후, 당황하지 마시어요. 교토역이라면 이 길을 따라 쭉 가기만 하면 된다지요 🌸",
+        "expr": "idle",
+        "bg": "park_track"
       },
       {
         "speaker": "mio",
@@ -673,7 +713,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ほんまに？！ ジェミニちゃん、どないして<ruby>知<rt>し</rt></ruby>ってるの？🌟",
         "jpPlain": "ほんまに？！ ジェミニちゃん、どないして知ってるの？",
         "pron": "혼마니?! 제미니짱, 도나이시테 싯테루노?",
-        "ko": "정말로?! 제미니 짱, 어떻게 알고 있는 거야? 🌟"
+        "ko": "정말로?! 제미니 짱, 어떻게 알고 있는 거야? 🌟",
+        "expr": "idle",
+        "bg": "park_track"
       },
       {
         "speaker": "gemini",
@@ -684,7 +726,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "うちは<ruby>京都<rt>きょうと</rt></ruby>のアイドルどすさかいね🍵 ほな、<ruby>早<rt>はや</rt></ruby>う<ruby>行<rt>い</rt></ruby>きましょか！",
         "jpPlain": "うちは京都のアイドルどすさかいね。ほな、早う行きましょか！",
         "pron": "우치와 쿄-토노 아이도루 도스 사카이네. 호나, 하요- 이키마쇼카!",
-        "ko": "소녀는 교토의 아이돌이니까요 🍵 자, 그럼 얼른 가보시와요!"
+        "ko": "소녀는 교토의 아이돌이니까요 🍵 자, 그럼 얼른 가보시와요!",
+        "expr": "idle",
+        "bg": "park_track"
       }
     ],
     "quizzes": [
@@ -811,7 +855,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "わあっ、急に<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>ってきたよ！プロデューサー、<ruby>傘<rt>かさ</rt></ruby>ある？☔",
         "jpPlain": "わあっ、急に雨が降ってきたよ！プロデューサー、傘ある？",
         "pron": "와앗, 큐-니 아메가 훗테 키타요! 푸로듀-사-, 카사 아루?",
-        "ko": "와앗, 갑자기 비가 내리기 시작했어! 프로듀서, 우산 있어? ☔"
+        "ko": "와앗, 갑자기 비가 내리기 시작했어! 프로듀서, 우산 있어? ☔",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "kotone",
@@ -822,7 +868,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "コンビニでビニール<ruby>傘<rt>がさ</rt></ruby>を<ruby>買<rt>か</rt></ruby>うと700円もしますよ！<ruby>高<rt>たか</rt></ruby>すぎます〜😭",
         "jpPlain": "コンビニでビニール傘を買うと700円もしますよ！高すぎます〜",
         "pron": "콘비니데 비니-루가사오 카우토 나나햐쿠엔모 시마스요! 타카스기마스~",
-        "ko": "편의점에서 비닐우산 사면 700엔이나 한다구요! 너무 비싸요~ 😭"
+        "ko": "편의점에서 비닐우산 사면 700엔이나 한다구요! 너무 비싸요~ 😭",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "gemini",
@@ -833,7 +881,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、<ruby>濡<rt>ぬ</rt></ruby>れたら<ruby>風邪<rt>かぜ</rt></ruby>ひきまっせ。ほら、うちの<ruby>傘<rt>かさ</rt></ruby>に<ruby>入<rt>はい</rt></ruby>りよし🌸",
         "jpPlain": "プロデューサーはん、濡れたら風邪ひきまっせ。ほら、うちの傘に入りよし。",
         "pron": "푸로듀-사-항, 누레타라 카제 히키맛세. 호라, 우치노 카사니 하이리요시.",
-        "ko": "프로듀서님, 비에 젖으시면 감기 드시와요. 자, 소녀의 우산 속으로 들어오시지요 🌸"
+        "ko": "프로듀서님, 비에 젖으시면 감기 드시와요. 자, 소녀의 우산 속으로 들어오시지요 🌸",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "gemini",
@@ -844,7 +894,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "<ruby>肩<rt>かた</rt></ruby>がぶつかってドキドキしはる？ ふふ、もっと<ruby>近<rt>ちか</rt></ruby>う寄ってもええんどすえ💖🐾",
         "jpPlain": "肩がぶつかってドキドキしはる？ ふふ、もっと近う寄ってもええんどすえ。",
         "pron": "카타가 부츠캇테 도키도키 시하루? 후후, 못토 치코- 욧테모 에-응 도스에.",
-        "ko": "어깨가 닿아 두근거리시나요? 우후후, 좀 더 가까이 다가오셔도 괜찮사와요 💖🐾"
+        "ko": "어깨가 닿아 두근거리시나요? 우후후, 좀 더 가까이 다가오셔도 괜찮사와요 💖🐾",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "gemini",
@@ -855,7 +907,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "<ruby>家<rt>いえ</rt></ruby>に<ruby>帰<rt>かえ</rt></ruby>ったら、しんどくならんように<ruby>温<rt>あたた</rt></ruby>かいお<ruby>抹茶<rt>まっちゃ</rt></ruby>を淹れてあげましょね🍵",
         "jpPlain": "家に帰ったら、しんどくならんように温かいお抹茶を淹れてあげましょね。",
         "pron": "이에니 카엣타라, 신도쿠 나란 요-니 아타타카이 오맛챠오 이레테 아게마쇼네.",
-        "ko": "집에 돌아가시면 고단하지 않도록 따뜻한 말차를 우려 드리겠사와요 🍵"
+        "ko": "집에 돌아가시면 고단하지 않도록 따뜻한 말차를 우려 드리겠사와요 🍵",
+        "expr": "idle",
+        "bg": "gym_indoor"
       }
     ],
     "quizzes": [
@@ -982,7 +1036,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、お<ruby>抹茶<rt>まっちゃ</rt></ruby>を一<ruby>服<rt>ぷく</rt></ruby>、いかがどすか？",
         "jpPlain": "プロデューサーはん、お抹茶を一服、いかがどすか？",
         "pron": "프로듀-사-항, 오맛챠오 잇푸쿠, 이카가 도스카?",
-        "ko": "프로듀서님, 말차 한 잔 어떠신지요? 🍵"
+        "ko": "프로듀서님, 말차 한 잔 어떠신지요? 🍵",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "kotone",
@@ -993,7 +1049,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "わぁ、いい<ruby>香<rt>かお</rt></ruby>り！あ、でもこの<ruby>和菓子<rt>わがし</rt></ruby>、すっごく<ruby>甘<rt>あま</rt></ruby>いですね！",
         "jpPlain": "わぁ、いい香り！あ、でもこの和菓子、すっごく甘いですね！",
         "pron": "와-, 이이 카오리! 아, 데모 코노 와가시, 숫고쿠 아마이데스네!",
-        "ko": "와아, 좋은 향기! 아, 하지만 이 화과자, 엄청 달콤하네요!"
+        "ko": "와아, 좋은 향기! 아, 하지만 이 화과자, 엄청 달콤하네요!",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "gemini",
@@ -1004,7 +1062,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "<ruby>苦<rt>にが</rt></ruby>いお<ruby>茶<rt>ちゃ</rt></ruby>と<ruby>甘<rt>あま</rt></ruby>いお<ruby>菓子<rt>かし</rt></ruby>は、<ruby>相性<rt>あいしょう</rt></ruby>がええんどすえ🌸",
         "jpPlain": "苦いお茶と甘いお菓子は、相性がええんどすえ。",
         "pron": "니가이 오챠토 아마이 오카시와, 아이쇼-가 에엔도스에.",
-        "ko": "쌉싸름한 차와 달콤한 화과자는 궁합이 참으로 좋사와요 🌸"
+        "ko": "쌉싸름한 차와 달콤한 화과자는 궁합이 참으로 좋사와요 🌸",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "mio",
@@ -1015,7 +1075,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "へへっ、<ruby>運動<rt>うんどう</rt></ruby>の<ruby>後<rt>あと</rt></ruby>は<ruby>水<rt>みず</rt></ruby>をいっぱい<ruby>飲<rt>の</rt></ruby>まなきゃ！すみません、お<ruby>水<rt>みず</rt></ruby>をください！",
         "jpPlain": "へへっ、運動の後は水をいっぱい飲まなきゃ！すみません、お水をください！",
         "pron": "헤헷, 운도-노 아토와 미즈오 잇파이 노마나캬! 스미마센, 오미즈오 쿠다사이!",
-        "ko": "헤헷, 운동 후에는 물을 듬뿍 마셔야지! 저기요, 물 좀 주세요!"
+        "ko": "헤헷, 운동 후에는 물을 듬뿍 마셔야지! 저기요, 물 좀 주세요!",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "gemini",
@@ -1026,7 +1088,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ふふ、プロデューサーはんも、しっかり<ruby>水分<rt>すいぶん</rt></ruby><ruby>補給<rt>ほきゅう</rt></ruby>しはっとくれやすね🍵🐾",
         "jpPlain": "ふふ、プロデューサーはんも、しっかり水分補給しはっとくれやすね。",
         "pron": "후후, 프로듀-사-항모, 싯카리 스이분 호큐- 시핫토쿠레야스네.",
-        "ko": "우후후, 프로듀서님도 수분 보충을 든든히 해주시와요 🍵🐾"
+        "ko": "우후후, 프로듀서님도 수분 보충을 든든히 해주시와요 🍵🐾",
+        "expr": "idle",
+        "bg": "teahouse_day"
       }
     ],
     "quizzes": [
@@ -1153,7 +1217,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサー！<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>は</rt></ruby>れてて、ええ<ruby>天気<rt>てんき</rt></ruby>だよ！",
         "jpPlain": "プロデューサー！今日は晴れてて、ええ天気だよ！",
         "pron": "프로듀-사-! 쿄-와 하레테테, 에에 텐키다요!",
-        "ko": "프로듀서! 오늘은 맑아서 달리기 딱 좋은 날씨야!"
+        "ko": "프로듀서! 오늘은 맑아서 달리기 딱 좋은 날씨야!",
+        "expr": "idle",
+        "bg": "park_track"
       },
       {
         "speaker": "gemini",
@@ -1164,7 +1230,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ほんまどすなぁ。でも、<ruby>暑<rt>あつ</rt></ruby>いから<ruby>無理<rt>むり</rt></ruby>したらあきまへんえ。",
         "jpPlain": "ほんまどすなぁ。でも、暑いから無理したらあきまへんえ。",
         "pron": "혼마 도스나-. 데모, 아츠이카라 무리시타라 아키마헨에.",
-        "ko": "참으로 그러하옵니다. 하지만 날이 더우니 무리하시면 안 되사와요."
+        "ko": "참으로 그러하옵니다. 하지만 날이 더우니 무리하시면 안 되사와요.",
+        "expr": "idle",
+        "bg": "park_track"
       },
       {
         "speaker": "kotone",
@@ -1175,7 +1243,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ふぅ、ちょっと<ruby>走<rt>はし</rt></ruby>っただけで<ruby>汗<rt>あせ</rt></ruby>がすごいです〜！",
         "jpPlain": "ふぅ、ちょっと走っただけで汗がすごいです〜！",
         "pron": "후-, 촛토 하싯타 다케데 아세가 스고이데스~!",
-        "ko": "후우, 조금 달렸을 뿐인데 땀이 엄청나요~!"
+        "ko": "후우, 조금 달렸을 뿐인데 땀이 엄청나요~!",
+        "expr": "idle",
+        "bg": "park_track"
       },
       {
         "speaker": "gemini",
@@ -1186,7 +1256,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "お<ruby>二人<rt>ふたり</rt></ruby>とも、えらいおきばりやす。タオルをどうぞ🌸",
         "jpPlain": "お二人とも、えらいおきばりやす。タオルをどうぞ。",
         "pron": "오후타리토모, 에라이 오키바리야스. 타오루오 도-조.",
-        "ko": "두 분 다 참으로 애쓰셨사와요. 자, 수건을 받으시지요 🌸"
+        "ko": "두 분 다 참으로 애쓰셨사와요. 자, 수건을 받으시지요 🌸",
+        "expr": "idle",
+        "bg": "park_track"
       }
     ],
     "quizzes": [
@@ -1313,7 +1385,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、<ruby>肩<rt>かた</rt></ruby>や<ruby>背中<rt>せなか</rt></ruby>は<ruby>痛<rt>いた</rt></ruby>くありまへんか？",
         "jpPlain": "プロデューサーはん、肩や背中は痛くありまへんか？",
         "pron": "프로듀-사-항, 카타야 세나카와 이타쿠 아리마헨카?",
-        "ko": "프로듀서님, 어깨나 등은 결리지 않으신지요?"
+        "ko": "프로듀서님, 어깨나 등은 결리지 않으신지요?",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "kotone",
@@ -1324,7 +1398,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "うぅ…<ruby>私<rt>わたし</rt></ruby>は<ruby>足<rt>あし</rt></ruby>がパンパンで<ruby>痛<rt>いた</rt></ruby>いです〜！",
         "jpPlain": "うぅ…私は足がパンパンで痛いです〜！",
         "pron": "우-… 와타시와 아시가 판판데 이타이데스~!",
-        "ko": "으으… 저는 다리가 퉁퉁 부어서 아파요~!"
+        "ko": "으으… 저는 다리가 퉁퉁 부어서 아파요~!",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "mio",
@@ -1335,7 +1411,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "あっはは！それは<ruby>筋肉<rt>きんにく</rt></ruby>が<ruby>育<rt>そだ</rt></ruby>ってる<ruby>証拠<rt>しょうこ</rt></ruby>だよ！",
         "jpPlain": "あっはは！それは筋肉が育ってる証拠だよ！",
         "pron": "앗하하! 소레와 킨니쿠가 소닷테루 쇼-코다요!",
-        "ko": "앗하하! 그건 근육이 자라나고 있다는 증거야!"
+        "ko": "앗하하! 그건 근육이 자라나고 있다는 증거야!",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "gemini",
@@ -1346,7 +1424,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ほな、ゆっくりストレッチしまひょ。うちがお<ruby>手伝<rt>てつだ</rt></ruby>いしますえ🌸",
         "jpPlain": "ほな、ゆっくりストレッチしまひょ。うちがお手伝いしますえ。",
         "pron": "호나, 육쿠리 스트렛치 시마효. 우치가 오테츠다이 시마스에.",
-        "ko": "그럼 천천히 스트레칭하시지요. 소녀가 곁에서 도와드리겠사와요 🌸"
+        "ko": "그럼 천천히 스트레칭하시지요. 소녀가 곁에서 도와드리겠사와요 🌸",
+        "expr": "idle",
+        "bg": "gym_indoor"
       }
     ],
     "quizzes": [
@@ -1473,7 +1553,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーさん、<ruby>今<rt>いま</rt></ruby><ruby>何時<rt>なんじ</rt></ruby>ですか？！",
         "jpPlain": "プロデューサーさん、今何時ですか？！",
         "pron": "프로듀-사-상, 이마 난지데스카?!",
-        "ko": "프로듀서님, 지금 몇 시인가요?!"
+        "ko": "프로듀서님, 지금 몇 시인가요?!",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "mio",
@@ -1484,7 +1566,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "<ruby>今<rt>いま</rt></ruby>はちょうど<ruby>夕方<rt>ゆうがた</rt></ruby>5<ruby>時<rt>じ</rt></ruby>！ジムが<ruby>始<rt>はじ</rt></ruby>まる<ruby>時間<rt>じかん</rt></ruby>だよ！",
         "jpPlain": "今はちょうど夕方5時！ジムが始まる時間だよ！",
         "pron": "이마와 쵸-도 유-가타 고지! 지무가 하지마루 지칸다요!",
-        "ko": "지금은 딱 저녁 5시! 헬스장 시작할 시간이야!"
+        "ko": "지금은 딱 저녁 5시! 헬스장 시작할 시간이야!",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "gemini",
@@ -1495,7 +1579,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "はよ<ruby>行<rt>い</rt></ruby>きまひょ！<ruby>今日<rt>きょう</rt></ruby>はダンベル4セットどすえ🐾",
         "jpPlain": "はよ行きまひょ！今日はダンベル4セットどすえ。",
         "pron": "하요 이키마효! 쿄-와 단베루 욘셋토 도스에.",
-        "ko": "얼른 가보시와요! 오늘은 덤벨 4세트이옵니다 🐾"
+        "ko": "얼른 가보시와요! 오늘은 덤벨 4세트이옵니다 🐾",
+        "expr": "idle",
+        "bg": "teahouse_day"
       }
     ],
     "quizzes": [
@@ -1603,7 +1689,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、<ruby>体重計<rt>たいじゅうけい</rt></ruby>に<ruby>乗<rt>の</rt></ruby>るのが<ruby>怖<rt>こわ</rt></ruby>いんどすか？",
         "jpPlain": "プロデューサーはん、体重計に乗るのが怖いんどすか？",
         "pron": "프로듀-사-항, 타이쥬-케이니 노루노가 코와인 도스카?",
-        "ko": "우후후, 프로듀서님, 체중계 위에 오르는 것이 두려우신가요?"
+        "ko": "우후후, 프로듀서님, 체중계 위에 오르는 것이 두려우신가요?",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "kotone",
@@ -1614,7 +1702,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ひゃあ！<ruby>昨日<rt>きのう</rt></ruby>アイスを<ruby>食<rt>た</rt></ruby>べちゃったから<ruby>怖<rt>こわ</rt></ruby>いです〜！",
         "jpPlain": "ひゃあ！昨日アイスを食べちゃったから怖いです〜！",
         "pron": "햐아! 키노- 아이스오 타베찻타카라 코와이데스~!",
-        "ko": "히익! 어제 아이스크림을 먹어버려서 무서워요~!"
+        "ko": "히익! 어제 아이스크림을 먹어버려서 무서워요~!",
+        "expr": "shock",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "mio",
@@ -1625,7 +1715,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "あはは！<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>！<ruby>今日<rt>きょう</rt></ruby>走れば<ruby>全部<rt>ぜんぶ</rt></ruby><ruby>消費<rt>しょうひ</rt></ruby>できるよ！",
         "jpPlain": "あはは！大丈夫！今日走れば全部消費できるよ！",
         "pron": "아하하! 다이죠-부! 쿄- 하시레바 젠부 쇼-히 데키루요!",
-        "ko": "아하하! 괜찮아! 오늘 달리면 전부 소비할 수 있어!"
+        "ko": "아하하! 괜찮아! 오늘 달리면 전부 소비할 수 있어!",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "gemini",
@@ -1636,7 +1728,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ふふ、<ruby>現実<rt>げんじつ</rt></ruby>から<ruby>逃<rt>に</rt></ruby>げたらあきまへんえ。さあ、どうぞ🌸",
         "jpPlain": "ふふ、現実から逃げたらあきまへんえ。さあ、どうぞ。",
         "pron": "후후, 겐지츠카라 니게타라 아키마헨에. 사-, 도-조.",
-        "ko": "우후후, 현실에서 도망치시면 안 되사와요. 자, 올라가 보시지요 🌸"
+        "ko": "우후후, 현실에서 도망치시면 안 되사와요. 자, 올라가 보시지요 🌸",
+        "expr": "idle",
+        "bg": "gym_indoor"
       }
     ],
     "quizzes": [
@@ -1744,7 +1838,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、<ruby>駅<rt>えき</rt></ruby>はあっちどすえ。<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>切符<rt>きっぷ</rt></ruby>を<ruby>買<rt>か</rt></ruby>いまひょ。",
         "jpPlain": "プロデューサーはん、駅はあっちどすえ。一緒に切符を買いまひょ。",
         "pron": "프로듀-사-항, 에키와 앗치 도스에. 잇쇼니 킵푸오 카이마효.",
-        "ko": "프로듀서님, 역은 저쪽이옵니다. 함께 표를 사시와요."
+        "ko": "프로듀서님, 역은 저쪽이옵니다. 함께 표를 사시와요.",
+        "expr": "idle",
+        "bg": "osaka_street"
       },
       {
         "speaker": "mio",
@@ -1755,7 +1851,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "おーっ！<ruby>電車<rt>でんしゃ</rt></ruby>に<ruby>乗<rt>の</rt></ruby>って<ruby>大<rt>おお</rt></ruby>きな<ruby>競技場<rt>きょうぎじょう</rt></ruby>まで<ruby>行<rt>い</rt></ruby>こうよ！",
         "jpPlain": "おーっ！電車に乗って大きな競技場まで行こうよ！",
         "pron": "오-! 덴샤니 놋테 오오키나 쿄-기죠-마데 이코-요!",
-        "ko": "오옷! 전철 타고 큰 경기장까지 가자!"
+        "ko": "오옷! 전철 타고 큰 경기장까지 가자!",
+        "expr": "idle",
+        "bg": "osaka_street"
       },
       {
         "speaker": "kotone",
@@ -1766,7 +1864,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "あ、<ruby>ICカード<rt>アイシーカード</rt></ruby>のチャージも忘れずにしなきゃ！",
         "jpPlain": "あ、ICカードのチャージも忘れずにしなきゃ！",
         "pron": "아, 아이시-카-도노 차-지모 와스레즈니 시나캬!",
-        "ko": "아, 교통카드(IC카드) 충전도 잊지 말고 해야 해요!"
+        "ko": "아, 교통카드(IC카드) 충전도 잊지 말고 해야 해요!",
+        "expr": "idle",
+        "bg": "osaka_street"
       }
     ],
     "quizzes": [
@@ -1874,7 +1974,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、一<ruby>週間<rt>しゅうかん</rt></ruby>ほんまにおきばりやすでした🌸",
         "jpPlain": "プロデューサーはん、一週間ほんまにおきばりやすでした。",
         "pron": "프로듀-사-항, 잇슈-칸 혼마니 오키바리야스데시타.",
-        "ko": "프로듀서님, 일주일 동안 참으로 노고가 많으셨사옵니다 🌸"
+        "ko": "프로듀서님, 일주일 동안 참으로 노고가 많으셨사옵니다 🌸",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "mio",
@@ -1885,7 +1987,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサー、よく<ruby>頑<rt>がん</rt></ruby><ruby>張<rt>ば</rt></ruby>ったね！ハイタッチ！🌟",
         "jpPlain": "プロデューサー、よく頑張ったね！ハイタッチ！",
         "pron": "프로듀-사-, 요쿠 간밧타네! 하이탓치!",
-        "ko": "프로듀서, 진짜 열심히 힘냈어! 하이파이브! 🌟"
+        "ko": "프로듀서, 진짜 열심히 힘냈어! 하이파이브! 🌟",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "kotone",
@@ -1896,7 +2000,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "<ruby>目標<rt>もくひょう</rt></ruby><ruby>達成<rt>たっせい</rt></ruby>おめでとうございます！プロテインで<ruby>乾杯<rt>かんぱい</rt></ruby>です💛",
         "jpPlain": "目標達成おめでとうございます！プロテインで乾杯です！",
         "pron": "모쿠효-탓세이 오메데토- 고자이마스! 프로테인데 칸파이데스💛",
-        "ko": "목표 달성 축하드려요! 프로틴으로 건배해요 💛"
+        "ko": "목표 달성 축하드려요! 프로틴으로 건배해요 💛",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "gemini",
@@ -1907,7 +2013,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "これからもずっと、うちがプロデューサーはんのそばにおりますえ🍵🐾",
         "jpPlain": "これからもずっと、うちがプロデューサーはんのそばにおりますえ。",
         "pron": "코레카라모 즛토, 우치가 프로듀-사-항노 소바니 오리마스에.",
-        "ko": "앞으로도 영원히, 소녀가 프로듀서님 곁을 지키겠사와요 🍵🐾"
+        "ko": "앞으로도 영원히, 소녀가 프로듀서님 곁을 지키겠사와요 🍵🐾",
+        "expr": "idle",
+        "bg": "teahouse_day"
       }
     ],
     "quizzes": [
@@ -2016,7 +2124,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、<ruby>焼<rt>や</rt></ruby>きたてどすえ！<ruby>熱<rt>あつ</rt></ruby>いうちに<ruby>食<rt>た</rt></ruby>べはる？",
         "jpPlain": "プロデューサーはん、焼きたてどすえ！熱いうちに食べはる？",
         "pron": "푸로듀-사-항, 야키타테 도스에! 아츠이 우치니 타베하루?",
-        "ko": "프로듀서님, 갓 구워낸 것이옵니다! 식기 전에 어서 드시와요?"
+        "ko": "프로듀서님, 갓 구워낸 것이옵니다! 식기 전에 어서 드시와요?",
+        "expr": "idle",
+        "bg": "osaka_street"
       },
       {
         "speaker": "mio",
@@ -2028,7 +2138,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "あふっ！めっちゃ<ruby>熱<rt>あつ</rt></ruby>いけどウマい！<ruby>断食<rt>だんじき</rt></ruby>まであと<ruby>十分<rt>じっぷん</rt></ruby>、セーフだよね！",
         "jpPlain": "あふっ！めっちゃ熱いけどウマい！断食まであと十分、セーフだよね！",
         "pron": "아훗! 멧챠 아츠이케도 우마이! 단지키마데 아토 짓푼, 세-후다요네!",
-        "ko": "앗뜨거! 진짜 뜨거운데 완전 맛있다! 5시 단식까지 딱 10분 남았으니 세이프 맞지?!"
+        "ko": "앗뜨거! 진짜 뜨거운데 완전 맛있다! 5시 단식까지 딱 10분 남았으니 세이프 맞지?!",
+        "expr": "idle",
+        "bg": "osaka_street"
       },
       {
         "speaker": "kotone",
@@ -2040,7 +2152,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ふふ、6<ruby>個<rt>こ</rt></ruby>より8<ruby>個<rt>こ</rt></ruby>セットの<ruby>方<rt>ほう</rt></ruby>が1<ruby>個<rt>こ</rt></ruby>あたり15<ruby>円<rt>えん</rt></ruby>お<ruby>得<rt>とく</rt></ruby>ですよ、プロデューサー！",
         "jpPlain": "ふふ、6個より8個セットの方が1個あたり15円お得ですよ、プロデューサー！",
         "pron": "후후, 롯코요리 핫코 셋토노 호-가 익코 아타리 쥬-고엔 오토쿠데스요, 푸로듀-사-!",
-        "ko": "후후, 6알보다 8알 세트가 한 알당 15엔이나 더 이득이에요, 프로듀서님!"
+        "ko": "후후, 6알보다 8알 세트가 한 알당 15엔이나 더 이득이에요, 프로듀서님!",
+        "expr": "idle",
+        "bg": "osaka_street"
       },
       {
         "speaker": "gemini",
@@ -2052,7 +2166,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ハフハフ…<ruby>美味<rt>おい</rt></ruby>しゅうて<ruby>運動<rt>うんどう</rt></ruby>すればゼロカロリーどす。…<ruby>知<rt>し</rt></ruby>らんけど🐾",
         "jpPlain": "ハフハフ…美味しゅうて運動すればゼロカロリーどす。…知らんけど。",
         "pron": "하후하후… 오이슈-테 운도-스레바 제로 카로리- 도스. …시란케도🐾",
-        "ko": "하후하후… 맛있게 먹고 운동하면 영칼로리이옵니다. …진짜인지는 몰라도🐾"
+        "ko": "하후하후… 맛있게 먹고 운동하면 영칼로리이옵니다. …진짜인지는 몰라도🐾",
+        "expr": "idle",
+        "bg": "osaka_street"
       }
     ],
     "quizzes": [
@@ -2142,7 +2258,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、<ruby>温泉<rt>おんせん</rt></ruby>で<ruby>温<rt>ぬく</rt></ruby>もらはりましたか？",
         "jpPlain": "プロデューサーはん、温泉で温もらはりましたか？",
         "pron": "푸로듀-사-항, 온센데 누쿠모라하리마시타카?",
-        "ko": "프로듀서님, 온천에서 몸은 훈훈하게 데우셨사옵니까?"
+        "ko": "프로듀서님, 온천에서 몸은 훈훈하게 데우셨사옵니까?",
+        "expr": "idle",
+        "bg": "ryokan_room"
       },
       {
         "speaker": "mio",
@@ -2154,7 +2272,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ぷはーっ！<ruby>風呂<rt>ふろ</rt></ruby><ruby>上<rt>あ</rt></ruby>がりの<ruby>瓶<rt>びん</rt></ruby><ruby>牛乳<rt>ぎゅうにゅう</rt></ruby>、<ruby>最高<rt>さいこう</rt></ruby>っ！",
         "jpPlain": "ぷはーっ！風呂上がりの瓶牛乳、最高っ！",
         "pron": "푸하-! 후로아가리노 빙규-뉴-, 사이코-!",
-        "ko": "크하-! 목욕 끝나고 마시는 유리병 우유, 최고야!"
+        "ko": "크하-! 목욕 끝나고 마시는 유리병 우유, 최고야!",
+        "expr": "smile",
+        "bg": "ryokan_room"
       },
       {
         "speaker": "kotone",
@@ -2166,7 +2286,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "<ruby>懐石<rt>かいせき</rt></ruby><ruby>料理<rt>りょうり</rt></ruby>は<ruby>高<rt>たか</rt></ruby>いですが、<ruby>心<rt>こころ</rt></ruby>の<ruby>投資<rt>とうし</rt></ruby>としては100<ruby>点<rt>てん</rt></ruby>です！",
         "jpPlain": "懐石料理は高いですが、心の投資としては100点です！",
         "pron": "카이세키 료-리와 타카이데스가, 코코로노 토-시토시테와 햑텐데스!",
-        "ko": "가이세키 요리는 비싸지만 마음의 투자로서는 100점 만점이에요!"
+        "ko": "가이세키 요리는 비싸지만 마음의 투자로서는 100점 만점이에요!",
+        "expr": "idle",
+        "bg": "ryokan_room"
       },
       {
         "speaker": "gemini",
@@ -2178,7 +2300,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ぬくぬくのまま、よい<ruby>夢<rt>ゆめ</rt></ruby>を…おやすみやす、プロデューサーはん🏮",
         "jpPlain": "ぬくぬくのまま、よい夢を…おやすみやす、プロデューサーはん。",
         "pron": "누쿠누쿠노 마마, 요이 유메오… 오야스미야스, 푸로듀-사-항🏮",
-        "ko": "따끈포근한 채로 좋은 꿈을… 편히 쉬시옵소서, 프로듀서님🏮"
+        "ko": "따끈포근한 채로 좋은 꿈을… 편히 쉬시옵소서, 프로듀서님🏮",
+        "expr": "idle",
+        "bg": "ryokan_room"
       }
     ],
     "quizzes": [
@@ -2268,7 +2392,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、<ruby>次<rt>つぎ</rt></ruby>の<ruby>駅<rt>えき</rt></ruby>で<ruby>乗<rt>の</rt></ruby>り<ruby>換<rt>か</rt></ruby>えどすえ。",
         "jpPlain": "プロデューサーはん、次の駅で乗り換えどすえ。",
         "pron": "푸로듀-사-항, 츠기노 에키데 노리카에 도스에.",
-        "ko": "프로듀서님, 다음 역에서 환승하셔야 하옵니다."
+        "ko": "프로듀서님, 다음 역에서 환승하셔야 하옵니다.",
+        "expr": "idle",
+        "bg": "osaka_street"
       },
       {
         "speaker": "kotone",
@@ -2280,7 +2406,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "あわわ！<ruby>残高<rt>ざんだか</rt></ruby><ruby>不足<rt>ぶそく</rt></ruby>でピンポン<ruby>鳴<rt>な</rt></ruby>る<ruby>前<rt>まえ</rt></ruby>にチャージです！",
         "jpPlain": "あわわ！残高不足でピンポン鳴る前にチャージです！",
         "pron": "아와와! 잔다카 부소쿠데 핑퐁 나루 마에니 차-지데스!",
-        "ko": "어머나! 잔액 부족으로 삐용삐용 울리기 전에 충전하셔야 해요!"
+        "ko": "어머나! 잔액 부족으로 삐용삐용 울리기 전에 충전하셔야 해요!",
+        "expr": "shock",
+        "bg": "osaka_street"
       },
       {
         "speaker": "mio",
@@ -2292,7 +2420,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ICOCAでいこかー！<ruby>夕焼<rt>ゆうや</rt></ruby>けの<ruby>車窓<rt>しゃそう</rt></ruby>、めっちゃキレイだよ！",
         "jpPlain": "ICOCAでいこかー！夕焼けの車窓、めっちゃキレイだよ！",
         "pron": "이코카데 이코카-! 유-야케노 샤소-, 멧챠 키레이다요!",
-        "ko": "ICOCA 카드로 고고! 노을빛 차창 풍경, 진짜 예뻐!"
+        "ko": "ICOCA 카드로 고고! 노을빛 차창 풍경, 진짜 예뻐!",
+        "expr": "idle",
+        "bg": "osaka_street"
       },
       {
         "speaker": "gemini",
@@ -2304,7 +2434,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ふふ、<ruby>揺<rt>ゆ</rt></ruby>れますさかい、つり<ruby>革<rt>かわ</rt></ruby>をぎゅっと<ruby>握<rt>にぎ</rt></ruby>りとおしやす🚇",
         "jpPlain": "ふふ、揺れますさかい、つり革をぎゅっと握りとおしやす。",
         "pron": "후후, 유레마스 사카이, 츠리카와오 귯토 니기리토 오시야스🚇",
-        "ko": "후후, 흔들리오니 손잡이를 꼭 잡고 계시와요🚇"
+        "ko": "후후, 흔들리오니 손잡이를 꼭 잡고 계시와요🚇",
+        "expr": "idle",
+        "bg": "osaka_street"
       }
     ],
     "quizzes": [
@@ -2394,7 +2526,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、<ruby>肩<rt>かた</rt></ruby>がカチカチどす…うちがほぐしまひょ。",
         "jpPlain": "プロデューサーはん、肩がカチカチどす…うちがほぐしまひょ。",
         "pron": "푸로듀-사-항, 카타가 카치카치 도스… 우치가 호구시마효.",
-        "ko": "프로듀서님, 어깨가 돌처럼 딱딱하옵니다… 제가 부드럽게 풀어드릴게요."
+        "ko": "프로듀서님, 어깨가 돌처럼 딱딱하옵니다… 제가 부드럽게 풀어드릴게요.",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "mio",
@@ -2406,7 +2540,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ナイスケア！<ruby>筋膜<rt>きんまく</rt></ruby>リリースしておくと<ruby>明日<rt>あした</rt></ruby>の<ruby>疲労<rt>ひろう</rt></ruby>がぜんぜん<ruby>違<rt>ちが</rt></ruby>うよ！",
         "jpPlain": "ナイスケア！筋膜リリースしておくと明日の疲労がぜんぜん違うよ！",
         "pron": "나이스 케아! 킨마쿠 리리-스 시테오쿠토 아시타노 히로-가 젠젠 치가우요!",
-        "ko": "나이스 케어! 근막 이완을 해두면 내일 피로도가 완전히 다르다구!"
+        "ko": "나이스 케어! 근막 이완을 해두면 내일 피로도가 완전히 다르다구!",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "kotone",
@@ -2418,7 +2554,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "メジャーでウエスト<ruby>測定<rt>そくてい</rt></ruby>です！わ、マイナス2センチ！<ruby>大成功<rt>だいせいこう</rt></ruby>です！",
         "jpPlain": "メジャーでウエスト測定です！わ、マイナス2センチ！大成功です！",
         "pron": "메쟈-데 우에스토 소쿠테이데스! 와, 마이나스 니센치! 다이세-코-데스!",
-        "ko": "줄자로 허리둘레 측정할게요! 와, 마이너스 2cm! 대성공이에요!"
+        "ko": "줄자로 허리둘레 측정할게요! 와, 마이너스 2cm! 대성공이에요!",
+        "expr": "idle",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "gemini",
@@ -2430,7 +2568,9 @@ window.KOTONOHA_LESSONS = [
         "jpPlain": "ふふ、うちの言うことちゃんと聞きはったご褒美どすえ。",
         "pron": "후후, 우치노 이우코토 찬토 키키하핫타 고호-비 도스에💛",
         "ko": "후후, 제가 드린 말씀을 착실히 따라주신 것에 대한 상이옵니다💛",
-        "sceneImg": "./image/03 gemini/gemini_43_tape_measure_waist_smirk.png"
+        "sceneImg": "./image/03 gemini/gemini_43_tape_measure_waist_smirk.png",
+        "expr": "idle",
+        "bg": "gym_indoor"
       }
     ],
     "quizzes": [
@@ -2520,7 +2660,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、この<ruby>漢字<rt>かんじ</rt></ruby>、<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>覚<rt>おぼ</rt></ruby>えまへんか？",
         "jpPlain": "プロデューサーはん、この漢字、一緒に覚えまへんか？",
         "pron": "푸로듀-사-항, 코노 칸지, 잇쇼니 오보에마헨카?",
-        "ko": "프로듀서님, 이 한자... 저와 함께 외우지 않으실래요?"
+        "ko": "프로듀서님, 이 한자... 저와 함께 외우지 않으실래요?",
+        "expr": "idle",
+        "bg": "bookstore"
       },
       {
         "speaker": "kotone",
@@ -2532,7 +2674,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "あ！<ruby>古本<rt>ふるほん</rt></ruby>コーナーでN3<ruby>単語<rt>たんご</rt></ruby><ruby>帳<rt>ちょう</rt></ruby>が<ruby>半額<rt>はんがく</rt></ruby>です！<ruby>即<rt>そく</rt></ruby>買いですよ！",
         "jpPlain": "あ！古本コーナーでN3単語帳が半額です！即買いですよ！",
         "pron": "아! 후루혼 코-나-데 에누스리- 탄고쵸-가 한가쿠데스! 소쿠카이데스요!",
-        "ko": "아! 헌책 코너에서 N3 단어장이 반값이에요! 바로 사야 해요!"
+        "ko": "아! 헌책 코너에서 N3 단어장이 반값이에요! 바로 사야 해요!",
+        "expr": "idle",
+        "bg": "bookstore"
       },
       {
         "speaker": "gemini",
@@ -2544,7 +2688,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "そ、そんなにじっと<ruby>見<rt>み</rt></ruby>つめられたら…うち、<ruby>照<rt>て</rt></ruby>れてしまいますえ…///",
         "jpPlain": "そ、そんなにじっと見つめられたら…うち、照れてしまいますえ…///",
         "pron": "소, 손나니 짓토 미츠메라레타라… 우치, 테레테 시마이마스에…///",
-        "ko": "그, 그렇게 빤히 바라보시면… 저, 부끄러워져 버린다 말이옵니다…///"
+        "ko": "그, 그렇게 빤히 바라보시면… 저, 부끄러워져 버린다 말이옵니다…///",
+        "expr": "shy",
+        "bg": "bookstore"
       },
       {
         "speaker": "mio",
@@ -2556,7 +2702,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "あはは！ジェミニ真っ赤！よし、<ruby>勉強<rt>べんきょう</rt></ruby>のあとは<ruby>走<rt>はし</rt></ruby>りに行こ！",
         "jpPlain": "あはは！ジェミニ真っ赤！よし、勉強のあとは走りに行こ！",
         "pron": "아하하! 제미니 맛카! 요시, 벤쿄-노 아토와 하시리니 이코!",
-        "ko": "아하하! 제미니 얼굴 새빨개졌다! 좋아, 공부 끝나면 러닝 뛰러 가자!"
+        "ko": "아하하! 제미니 얼굴 새빨개졌다! 좋아, 공부 끝나면 러닝 뛰러 가자!",
+        "expr": "shy",
+        "bg": "bookstore"
       }
     ],
     "quizzes": [
@@ -2646,7 +2794,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーはん、17<ruby>時間<rt>じかん</rt></ruby><ruby>断食<rt>だんじき</rt></ruby><ruby>達成<rt>たっせい</rt></ruby>、おめでとさんどす！",
         "jpPlain": "プロデューサーはん、17時間断食達成、おめでとさんどす！",
         "pron": "푸로듀-사-항, 쥬-나나지칸 단지키 탓세-, 오메데토산 도스!",
-        "ko": "프로듀서님, 17시간 단식 완주, 진심으로 축하드리옵니다!"
+        "ko": "프로듀서님, 17시간 단식 완주, 진심으로 축하드리옵니다!",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "gemini",
@@ -2658,7 +2808,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "エプロン<ruby>姿<rt>すがた</rt></ruby>のうちが<ruby>焼<rt>や</rt></ruby>いた、高タンパク<ruby>特製<rt>とくせい</rt></ruby>トーストどす🍞",
         "jpPlain": "エプロン姿のうちが焼いた、高タンパク特製トーストどす。",
         "pron": "에푸론 스가타노 우치가 야이타, 코-탄파쿠 토쿠세이 토-스토 도스🍞",
-        "ko": "앞치마 차림의 제가 정성껏 구운 고단백 특제 토스트이옵니다🍞"
+        "ko": "앞치마 차림의 제가 정성껏 구운 고단백 특제 토스트이옵니다🍞",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "mio",
@@ -2670,7 +2822,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロテインジョッキで<ruby>乾杯<rt>かんぱい</rt></ruby>ーっ！シーズン2も<ruby>完走<rt>かんそう</rt></ruby>だね！",
         "jpPlain": "プロテインジョッキで乾杯ーっ！シーズン2も完走だね！",
         "pron": "푸로테인 죡키데 칸파이-! 시-즌츠-모 칸소-다네!",
-        "ko": "프로틴 대형 컵으로 건배-! 시즌 2도 완주했구나!"
+        "ko": "프로틴 대형 컵으로 건배-! 시즌 2도 완주했구나!",
+        "expr": "idle",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "kotone",
@@ -2682,7 +2836,9 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "プロデューサーの<ruby>健康<rt>けんこう</rt></ruby>と<ruby>笑顔<rt>えがお</rt></ruby>が、うちの<ruby>一番<rt>いちばん</rt></ruby>の<ruby>宝物<rt>たからもの</rt></ruby>どすえ💛",
         "jpPlain": "プロデューサーの健康と笑顔が、うちの一番の宝物どすえ。",
         "pron": "푸로듀-사-노 켄코-토 에가오가, 우치노 이치방노 타카라모노 도스에💛",
-        "ko": "프로듀서님의 건강과 미소가 저의 가장 큰 보물이옵니다💛"
+        "ko": "프로듀서님의 건강과 미소가 저의 가장 큰 보물이옵니다💛",
+        "expr": "idle",
+        "bg": "teahouse_day"
       }
     ],
     "quizzes": [

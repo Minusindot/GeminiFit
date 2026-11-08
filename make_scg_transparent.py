@@ -3,8 +3,8 @@
 """
 Gemini Fit SCG transparentizer (v4.3.11)
 
-Takes generated standing sprites shot on solid magenta (#FF00FF) backgrounds
-in  image/_scg_work/{char}/{expr}.png
+Takes generated standing sprites shot on a plain pure white background
+in  image/_scg_work/{char}/{expr}_raw.png
 and produces true transparent PNGs at
   image/scg/{char}/{char}_default_{expr}.png
 
@@ -19,8 +19,10 @@ import argparse
 import os
 import sys
 
-from PIL import Image
 import numpy as np
+from PIL import Image
+
+from _common import remove_flat_background, alpha_bbox
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 WORK_DIR = os.path.join(BASE_DIR, "image", "_scg_work")
@@ -34,15 +36,20 @@ CHARS = ["gemini", "kotone", "mio"]
 CANVAS_W, CANVAS_H = 1080, 2560
 
 
-def chroma_key_alpha(img: Image.Image) -> np.ndarray:
-    """Return alpha mask where 1 = foreground (not magenta background)."""
-    arr = np.asarray(img.convert("RGB")).astype(np.int32)
-    h, w, _ = arr.shape
-    # distance from pure magenta
-    dist = np.sqrt((arr[..., 0] - 255) ** 2 + (arr[..., 1] - 0) ** 2 + (arr[..., 2] - 255) ** 2)
-    # fuzzy edge: fully transparent < 60, fully opaque > 150, smooth in between
-    alpha = np.clip((dist - 60) / 90.0, 0.0, 1.0)
-    return alpha
+def raw_path(work: str, expr: str) -> str | None:
+    names = [f"{expr}_raw.png", f"{expr}.png", f"{expr}.jpg", f"{expr}.jpeg", f"{expr}.webp"]
+    if expr == "idle":
+        names.insert(0, "base_raw.png")
+    for name in names:
+        p = os.path.join(work, name)
+        if os.path.isfile(p):
+            return p
+    return None
+
+
+def transparentize(img: Image.Image) -> Image.Image:
+    """흰 배경 제거. 흰 옷을 살리려 threshold를 보수적으로 잡는다."""
+    return remove_flat_background(img.convert("RGB"), threshold=24, feather=0.7)
 
 
 def trim_box_from_alpha(alpha: np.ndarray, pad: int = 16):
@@ -68,22 +75,12 @@ def process_character(char: str, only_expr: str | None = None):
             # still need idle for the shared trim box
             if expr != "idle":
                 continue
-        src = os.path.join(work, f"{expr}.png")
-        if not os.path.isfile(src):
-            # also accept .jpg/.webp from the generator
-            found = None
-            for ext in (".jpg", ".jpeg", ".webp"):
-                if os.path.isfile(os.path.join(work, f"{expr}{ext}")):
-                    found = os.path.join(work, f"{expr}{ext}")
-                    break
-            if not found:
-                print(f"  [skip] {char}/{expr}: source not found")
-                continue
-            src = found
-        img = Image.open(src).convert("RGB")
-        alpha = chroma_key_alpha(img)
-        rgba = np.dstack([np.asarray(img), (alpha * 255).astype(np.uint8)])
-        rgba_by_expr[expr] = rgba
+        src = raw_path(work, expr)
+        if src is None:
+            print(f"  [skip] {char}/{expr}: source not found")
+            continue
+        img = Image.open(src)
+        rgba_by_expr[expr] = transparentize(img)
 
     if not rgba_by_expr:
         print(f"  [{char}] no sources processed")
@@ -91,13 +88,18 @@ def process_character(char: str, only_expr: str | None = None):
 
     # 2) shared trim box from idle (fallback: first available)
     ref = rgba_by_expr.get("idle") or next(iter(rgba_by_expr.values()))
-    box = trim_box_from_alpha(ref[..., 3])
+    box = alpha_bbox(ref, min_alpha=16)
     if box is None:
         print(f"  [{char}] ERROR: empty foreground in reference")
         return False
     x0, y0, x1, y1 = box
+    # padding
+    pad = 16
+    x0 = max(0, x0 - pad); y0 = max(0, y0 - pad)
+    x1 = min(ref.width, x1 + pad); y1 = min(ref.height, y1 + pad)
+    box = (x0, y0, x1, y1)
     cw, ch = x1 - x0, y1 - y0
-    print(f"  [{char}] trim box ({x0},{y0})-({x1},{y1}) size {cw}x{ch}")
+    print(f"  [{char}] trim box {box} size {cw}x{ch}")
 
     # 3) fit trimmed content onto the shared portrait canvas
     scale = min(CANVAS_W / cw, CANVAS_H / ch) if cw and ch else 1.0
@@ -105,14 +107,15 @@ def process_character(char: str, only_expr: str | None = None):
     ox, oy = (CANVAS_W - tw) // 2, (CANVAS_H - th) // 2
 
     ok = True
-    for expr, rgba in rgba_by_expr.items():
-        cropped = Image.fromarray(rgba, mode="RGBA").crop(box)
+    for expr, rgba_img in rgba_by_expr.items():
+        cropped = rgba_img.crop(box)
         resized = cropped.resize((tw, th), Image.LANCZOS)
         canvas = Image.new("RGBA", (CANVAS_W, CANVAS_H), (0, 0, 0, 0))
         canvas.paste(resized, (ox, oy), resized)
         dst = os.path.join(out, f"{char}_default_{expr}.png")
         canvas.save(dst)
-        print(f"  [ok] {dst} ({tw}x{th} on {CANVAS_W}x{CANVAS_H}, alpha={'%.1f%%' % (100 * (np.asarray(resized)[..., 3] > 10).mean())})")
+        alpha_pct = 100 * (np.asarray(resized)[..., 3] > 10).mean()
+        print(f"  [ok] {dst} ({tw}x{th} on {CANVAS_W}x{CANVAS_H}, alpha={alpha_pct:.1f}%)")
     return ok
 
 
