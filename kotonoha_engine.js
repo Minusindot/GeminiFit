@@ -646,6 +646,10 @@ function skipKotonohaTtsPreload() {
   kotonohaRuntime.ttsLoading.runId++;
   kotonohaRuntime.ttsLoading.active = false;
   const targetMode = kotonohaRuntime.ttsLoading.targetMode || 'story';
+  if (targetMode === 'season') {
+    openKotonohaHub();
+    return;
+  }
   if (targetMode === 'quiz') {
     launchKotonohaQuizImmediate();
   } else {
@@ -784,11 +788,96 @@ async function prepareAndStartKotonoha(targetMode = 'story', lessonIdx = undefin
   kotonohaRuntime.ttsLoading.active = false;
   await sleepMs(220);
 
+  if (targetMode === 'season') {
+    openKotonohaHub();
+    return;
+  }
   if (targetMode === 'quiz') {
     launchKotonohaQuizImmediate();
   } else {
     launchKotonohaStoryImmediate();
   }
+}
+
+// Season-wide bulk voice pre-download: ALL lessons' Story + Quiz voices at once
+// (deduped by cache key) so every episode in the season starts instantly.
+// Returns to hub when done (no episode launch).
+async function prepareAndStartSeasonAudio(seasonNum) {
+  initKotonohaState();
+  kotonohaRuntime.selectedSeason = seasonNum;
+  state.kotonoha.selectedSeason = seasonNum;
+  saveState(true);
+  const lessons = getAllKotonohaLessons().filter(l => (l.season || 1) === seasonNum);
+  if (!lessons.length) return;
+
+  const seen = new Set();
+  const items = [];
+  for (const lesson of lessons) {
+    for (const it of collectLessonVoiceItems(lesson)) {
+      if (seen.has(it.key)) continue;
+      seen.add(it.key);
+      items.push({ ...it, label: `S${seasonNum} ${lesson.epCode || ''} ${it.label}` });
+    }
+  }
+  if (!items.length) return;
+  const uncached = items.filter(it => !(kotonohaAudioCache[it.key] && kotonohaPreloadedAudio[it.key]));
+  const doneAlready = items.length - uncached.length;
+
+  if (uncached.length === 0) {
+    showFloatingToast(`시즌 ${seasonNum} 음성 전부 준비 완료!`, '✅');
+    openKotonohaHub();
+    return;
+  }
+
+  const targetMode = 'season';
+  const myRunId = ++kotonohaRuntime.ttsLoading.runId;
+  kotonohaRuntime.currentMode = 'loading_tts';
+  kotonohaRuntime.ttsLoading = {
+    active: true,
+    done: doneAlready,
+    total: items.length,
+    percent: Math.round((doneAlready / items.length) * 100),
+    currentSpeaker: uncached[0]?.speaker || 'gemini',
+    currentText: uncached[0]?.label || '보이스 준비 중...',
+    targetMode: targetMode,
+    runId: myRunId
+  };
+  playBeep(660, 0.06);
+  renderKotonohaView();
+
+  for (let i = 0; i < items.length; i++) {
+    if (kotonohaRuntime.ttsLoading.runId !== myRunId) return;
+    const it = items[i];
+    if (!(kotonohaAudioCache[it.key] && kotonohaPreloadedAudio[it.key])) {
+      kotonohaRuntime.ttsLoading.currentSpeaker = it.speaker;
+      kotonohaRuntime.ttsLoading.currentText = it.label;
+      updateKotonohaLoadingDom();
+      await synthesizeAndBufferVoicevox(it.rawText, it.speaker);
+    }
+    if (kotonohaRuntime.ttsLoading.runId !== myRunId) return;
+    kotonohaRuntime.ttsLoading.done = i + 1;
+    kotonohaRuntime.ttsLoading.percent = Math.min(100, Math.round(((i + 1) / items.length) * 100));
+    updateKotonohaLoadingDom();
+  }
+
+  if (kotonohaRuntime.ttsLoading.runId !== myRunId) return;
+  kotonohaRuntime.ttsLoading.active = false;
+  await sleepMs(220);
+  showFloatingToast(`시즌 ${seasonNum} 전체 음성 다운로드 완료 (${items.length}개 대사)`, '🎙️');
+  openKotonohaHub();
+}
+
+function isSeasonFullyCached(seasonNum) {
+  const lessons = getAllKotonohaLessons().filter(l => (l.season || 1) === seasonNum);
+  const seen = new Set();
+  for (const lesson of lessons) {
+    for (const it of collectLessonVoiceItems(lesson)) {
+      if (seen.has(it.key)) continue;
+      seen.add(it.key);
+      if (!(kotonohaAudioCache[it.key] && kotonohaPreloadedAudio[it.key])) return false;
+    }
+  }
+  return true;
 }
 
 function updateKotonohaLoadingDom() {
@@ -1293,9 +1382,18 @@ function renderKotonohaView() {
             <!-- Header with AI Button -->
             <div class="flex items-center justify-between">
               <span class="text-xs font-black text-[#d9c3bd]">📚 커리큘럼 선택 (세로 목록)</span>
-              <button onclick="generateAiKotonohaLesson()" class="px-2.5 py-1 rounded-xl bg-gradient-to-r from-[#d94862] to-[#9b4dca] text-white text-[11px] font-black shadow hover:opacity-95 active:scale-95 transition-all">
-                ${kotonohaRuntime.isAiGenerating ? '⏳ AI 집필 중...' : '✨ AI 새 에피소드'}
-              </button>
+              <div class="flex items-center gap-1.5">
+                ${isSeasonFullyCached(activeSeason) ? `
+                  <span class="px-2 py-1 rounded-lg bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 text-[10px] font-black flex items-center gap-1">🎙️ 시즌 ${activeSeason} 음성 준비완료</span>
+                ` : `
+                  <button onclick="prepareAndStartSeasonAudio(${activeSeason})" class="px-2.5 py-1 rounded-xl bg-[#1d2f2a] hover:bg-[#263d34] border border-[#3a5a4e] text-[#a8e6cc] text-[11px] font-black shadow transition-all active:scale-95">
+                    🎙️ 시즌 ${activeSeason} 전체 음성 다운로드
+                  </button>
+                `}
+                <button onclick="generateAiKotonohaLesson()" class="px-2.5 py-1 rounded-xl bg-gradient-to-r from-[#d94862] to-[#9b4dca] text-white text-[11px] font-black shadow hover:opacity-95 active:scale-95 transition-all">
+                  ${kotonohaRuntime.isAiGenerating ? '⏳ AI 집필 중...' : '✨ AI 새 에피소드'}
+                </button>
+              </div>
             </div>
 
             <!-- Season Switcher Tabs (Season 1 vs Season 2) -->

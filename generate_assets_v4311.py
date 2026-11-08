@@ -64,6 +64,39 @@ CHARACTERS = {
             ROOT / "image" / "03 gemini" / "avatar_gemini.png",
         ],
     },
+    "gemini_teahouse": {
+        "desc": ("a beautiful young woman with long straight black hair with blunt straight-cut bangs (hime cut), "
+                 "black cat ears with small black ribbon hairpin, violet purple eyes, elegant tall figure, "
+                 "wearing dark indigo yukata with pink cherry blossom patterns and a white apron over it "
+                 "(Kyoto tea house serving outfit), holding a small wooden tray with a matcha bowl, "
+                 "full-body standing pose head to shoes, feet and ankles visible, standing upright facing viewer, "
+                 "arms relaxed at sides, plain pure white background, no scenery, no room"),
+        "refs": [
+            ROOT / "image" / "03 gemini" / "avatar_gemini.png",
+            ROOT / "image" / "03 gemini" / "gemini_26_kyoto_teahouse.png",
+        ],
+    },
+    "kotone_dress": {
+        "desc": ("a cheerful young woman with long golden-blonde twin braids and bright amber eyes, "
+                 "pop-idol personality, wearing a pastel pink idol stage dress with white frills, big ribbon bow, "
+                 "frilled skirt, frilled socks and Mary Jane shoes, small purple hair ribbons, "
+                 "holding a tiny heart-shaped wand microphone, full-body standing pose head to shoes, "
+                 "feet and ankles visible, standing upright facing viewer, arms relaxed at sides, "
+                 "plain pure white background, no scenery, no room"),
+        "refs": [
+            ROOT / "image" / "02 kotone" / "avatar_kotone.png",
+        ],
+    },
+    "mio_runwear": {
+        "desc": ("a sporty energetic young woman with short bob hair and bright amber eyes, "
+                 "tomboyish athletic runner personality, wearing a red running tank top with white side stripes "
+                 "and navy running shorts with neon-yellow accents, white headband, black calf compression sleeves, "
+                 "bright orange running shoes, full-body standing pose head to shoes, feet and ankles visible, "
+                 "standing upright facing viewer, arms relaxed at sides, plain pure white background, no scenery, no room"),
+        "refs": [
+            ROOT / "image" / "01 mio" / "avatar_mio.png",
+        ],
+    },
     "kotone": {
         "desc": ("a cheerful young woman with long golden-blonde twin braids and bright amber eyes, "
                  "pop-idol personality, wearing a teal and white zip-up tracksuit jersey with a white inner shirt, "

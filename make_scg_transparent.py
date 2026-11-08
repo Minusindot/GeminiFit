@@ -34,10 +34,13 @@ EXPRESSIONS = ["idle", "smile", "sad", "angry", "shy", "shock", "dark", "joke",
 OUTFIT_TARGETS = {
     "gemini": ("gemini", "gemini_default_"),
     "gemini_menhera": ("gemini", "gemini_menhera_"),
+    "gemini_teahouse": ("gemini", "gemini_teahouse_"),
     "kotone": ("kotone", "kotone_default_"),
+    "kotone_dress": ("kotone", "kotone_dress_"),
     "mio": ("mio", "mio_default_"),
+    "mio_runwear": ("mio", "mio_runwear_"),
 }
-CHARS = ["gemini", "gemini_menhera", "kotone", "mio"]
+CHARS = ["gemini", "gemini_menhera", "gemini_teahouse", "kotone", "kotone_dress", "mio", "mio_runwear"]
 
 # canvas target per VN_ASSET_SPEC.md is ~1080x2560 portrait (ratio 1:2.37).
 # Engine renders object-contain; we keep a tall canvas with identical layout.

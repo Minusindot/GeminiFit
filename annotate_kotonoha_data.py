@@ -67,6 +67,22 @@ def step_expr(step: dict) -> str:
     return "idle"
 
 
+def outfit_for(speaker: str, bg: str, expr: str) -> str | None:
+    """Context-aware outfit variant (matches background where the step plays)."""
+    if speaker == "gemini":
+        if expr == "dark":
+            return "menhera"
+        if bg in ("teahouse_day", "teahouse_night"):
+            return "teahouse"
+    if speaker == "kotone":
+        if bg in ("teahouse_day", "teahouse_night", "osaka_street"):
+            return "dress"
+    if speaker == "mio":
+        if bg == "park_track":
+            return "runwear"
+    return None
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
@@ -85,11 +101,13 @@ def main():
             if expr is None:
                 continue
             annotated += 1
+            outfit = outfit_for(step.get("speaker"), bg, expr)
             ko = (step.get("ko") or "")[:34]
-            print("  %s ep%s #%s -> expr=%s bg=%s | %s" % (lesson.get("id"), lesson.get("episode"), step.get("speaker"), expr, bg, ko))
+            print("  %s ep%s #%s -> expr=%s bg=%s outfit=%s | %s" % (lesson.get("id"), lesson.get("episode"), step.get("speaker"), expr, bg, outfit or "-", ko))
             if not args.dry_run:
                 step["expr"] = expr
                 step["bg"] = bg
+                step["outfit"] = outfit if outfit else step.get("outfit", "default")
                 # Gemini DARK scenes use the menhera outfit variant (VN_ASSET_SPEC outfit param)
                 if step.get("speaker") == "gemini" and expr == "dark":
                     step["outfit"] = "menhera"
