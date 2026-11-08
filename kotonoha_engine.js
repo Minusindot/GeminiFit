@@ -1015,10 +1015,19 @@ function resolveKotonohaVisuals(step, lesson) {
     const outfit = step.outfit || 'default';
     const scgPath = step.scg || ('./image/scg/' + step.speaker + '/' + step.speaker + '_' + outfit + '_' + step.expr + '.png');
     const bgPath = step.bg ? (step.bg.startsWith('./') ? step.bg : ('./image/bg/bg_' + step.bg + '.png')) : (lesson.bgImage || './image/03 gemini/gemini_26_kyoto_teahouse.png');
+    // Per-speaker ECG fallback when the transparent SCG asset is missing (v4.3.10)
+    const ecgFallbackMap = {
+      gemini: './image/03 gemini/gemini_26_kyoto_teahouse.png',
+      kotone: './image/02 kotone/kotone_03_cafe_date.png',
+      mio: './image/01 mio/mio_01_main.png'
+    };
+    const ecgFallback = step.sceneImg || lesson.bgImage || ecgFallbackMap[step.speaker] || './image/03 gemini/gemini_26_kyoto_teahouse.png';
     return {
       isScg: true,
+      speaker: step.speaker,
       scgUrl: scgPath,
-      bgUrl: bgPath
+      bgUrl: bgPath,
+      ecgFallback: ecgFallback
     };
   }
 
@@ -1026,7 +1035,8 @@ function resolveKotonohaVisuals(step, lesson) {
   const ecgUrl = step.sceneImg || lesson.bgImage || './image/03 gemini/gemini_26_kyoto_teahouse.png';
   return {
     isScg: false,
-    ecgUrl: ecgUrl
+    ecgUrl: ecgUrl,
+    ecgFallback: './image/03 gemini/gemini_26_kyoto_teahouse.png'
   };
 }
 
@@ -1337,17 +1347,17 @@ function renderKotonohaView() {
           <div class="relative w-full h-72 sm:h-84 overflow-hidden bg-[#0c080a] flex items-center justify-center">
             ${visuals.isScg ? `
               <!-- [TRUE SCG + BG MODE] Pure Background Layer (No Characters) -->
-              <img src="${visuals.bgUrl}" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.85] contrast-[1.02] pointer-events-none transition-all duration-500">
+              <img src="${visuals.bgUrl}" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.85] contrast-[1.02] pointer-events-none transition-all duration-500">
               <div class="absolute inset-0 bg-gradient-to-t from-[#141013] via-transparent to-black/25 pointer-events-none"></div>
 
               <!-- Pure Standing Character Sprite (Alpha Transparent PNG) with Cross-fade transition -->
               <div class="relative z-10 h-full flex items-end justify-center pointer-events-none">
-                <img src="${visuals.scgUrl}" class="max-h-[96%] max-w-[85%] object-contain object-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
+                <img src="${visuals.scgUrl}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="max-h-[96%] max-w-[85%] object-contain object-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
               </div>
             ` : `
               <!-- [CLEAN FULL ECG MODE] Cinematic Ambient Blur + Center Illustration (Never Cut Off) -->
-              <img src="${sceneImage}" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-45 scale-125 pointer-events-none" style="object-position: center 25%;">
-              <img src="${sceneImage}" class="relative z-10 max-h-full max-w-full object-contain mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)] transition-all duration-300">
+              <img src="${sceneImage}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-45 scale-125 pointer-events-none" style="object-position: center 25%;">
+              <img src="${sceneImage}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="relative z-10 max-h-full max-w-full object-contain mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)] transition-all duration-300">
             `}
             <!-- Smooth Gradient Blend into Dialogue Box -->
             <div class="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-[#141013]"></div>
