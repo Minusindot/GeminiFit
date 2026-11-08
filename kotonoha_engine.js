@@ -1225,6 +1225,9 @@ function renderKotonohaView() {
             <div class="px-2.5 py-0.5 rounded-full bg-[#251c20] border border-[#3d2c33] flex items-center gap-1 text-[11px] font-extrabold">
               <span>🔥 연속 ${kState.streak || 1}일</span>
             </div>
+            <button onclick="openMangaList()" class="ml-auto px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#2d4038] to-[#1c2a26] hover:opacity-95 border border-[#4a6a5c] text-[11px] font-black text-[#d8f5e8] flex items-center gap-1 shadow transition-all active:scale-95">
+              📖 숏툰 만화
+            </button>
           </div>
         </div>
 
@@ -1279,18 +1282,6 @@ function renderKotonohaView() {
             <p class="text-xs text-[#e2cfc9] leading-relaxed">${lesson.grammarTip.content}</p>
           </div>
           ` : ''}
-
-          <!-- Short-Toon Manga Entry -->
-          <button onclick="openMangaList()" class="mt-2.5 w-full p-3 rounded-2xl bg-gradient-to-r from-[#2d4038] to-[#1c2a26] hover:opacity-95 border border-[#4a6a5c] flex items-center justify-between transition-all shadow-md group">
-            <div class="flex items-center gap-2.5 text-left min-w-0">
-              <span class="text-lg shrink-0">📖</span>
-              <div class="min-w-0">
-                <div class="text-xs font-black text-[#d8f5e8] truncate">숏툰 만화 보기</div>
-                <div class="text-[10px] text-[#9eb8ad] font-bold truncate">3인 히로인 웹툰 - 화별 만화 리더</div>
-              </div>
-            </div>
-            <span class="text-[#7ad3b8] text-sm font-black group-hover:translate-x-1 transition-transform pl-1 shrink-0">›</span>
-          </button>
 
           <!-- Season Selector Tabs + Vertical Curriculum List -->
           <div class="mt-3 space-y-2">
@@ -1738,8 +1729,8 @@ function renderKotonohaView() {
   if (kotonohaRuntime.currentMode === 'manga_read') {
     const steps = (lesson.story || []).slice(0, 12);
     container.innerHTML = `
-      <div class="rounded-3xl bg-[#181316] text-[#f5ebe6] border border-[#3a2830] shadow-2xl overflow-hidden">
-        <div class="p-3 bg-gradient-to-b from-[#241a1f] to-[#181316] border-b border-[#332228] flex items-center justify-between sticky top-0 z-30">
+      <div class="rounded-3xl bg-[#141013] text-[#f5ebe6] border border-[#3a2830] shadow-2xl overflow-hidden">
+        <div class="p-3 bg-[#1d1519] border-b border-[#332228] flex items-center justify-between sticky top-0 z-30">
           <div class="flex items-center gap-2 min-w-0">
             <button onclick="backToMangaList()" class="w-8 h-8 shrink-0 rounded-xl bg-[#2b1f25] hover:bg-[#3b2a33] text-[#e0c8c2] font-black text-sm flex items-center justify-center">‹</button>
             <div class="min-w-0">
@@ -1750,45 +1741,58 @@ function renderKotonohaView() {
           <button onclick="event.stopPropagation(); speakJapanese('${lesson.titleJp.replace(/<[^>]+>/g, '').replace(/'/g, "\\'")}', 'gemini')" class="px-2.5 py-1 rounded-xl bg-[#2e2027] hover:bg-[#3d2b34] text-[11px] font-bold text-[#f2a6b2] border border-[#543844]">🔊 제목</button>
         </div>
 
-        <div class="bg-[#0d0a0c]">
+        <div class="bg-white p-1.5 space-y-1.5">
           ${steps.map((step, i) => {
             const visuals = resolveKotonohaVisuals(step, lesson);
             const sceneImage = visuals.ecgUrl || visuals.scgUrl;
             const audioArg = (step.audio || step.jpPlain || step.jpRuby || '').replace(/'/g, "\\'");
             const speaker = step.speaker || 'gemini';
-            const speakerImg = step.avatar || (speaker === 'kotone' ? './image/02 kotone/avatar_kotone.png' : speaker === 'mio' ? './image/01 mio/avatar_mio.png' : './image/03 gemini/avatar_gemini.png');
+            const speakerName = step.nameJp || '';
+            const speakerKo = step.nameKo || '';
+            // Panel rhythm: opening tall, beats medium, every 3rd short
+            const panelH = i === 0 ? 'h-[430px] sm:h-[500px]' : (i % 3 === 2 ? 'h-[260px] sm:h-[320px]' : 'h-[340px] sm:h-[420px]');
+            const bubbleSide = i % 2 === 0 ? 'left-2.5' : 'right-2.5';
+            const facing = i % 2 === 0 ? 'items-start' : 'items-end';
+            const tailClass = i % 2 === 0 ? 'absolute -bottom-1.5 left-5 w-3 h-3 bg-white border-b border-r border-[#2b2b2b] rotate-45' : 'absolute -bottom-1.5 right-5 w-3 h-3 bg-white border-b border-l border-[#2b2b2b] rotate-45';
             return `
-              <div class="relative ${i > 0 ? 'mt-2' : ''}">
-                <div class="relative h-80 sm:h-96 overflow-hidden bg-[#0c080a] flex items-start justify-center">
+              <div class="border-[3px] border-black bg-[#0c080a] cursor-pointer active:brightness-125 transition-all" onclick="speakJapanese('${audioArg}', '${speaker}')">
+                <div class="relative ${panelH} w-full overflow-hidden flex items-start justify-center">
                   ${visuals.isScg ? `
                     <img src="${visuals.bgUrl}" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.85] pointer-events-none">
-                    <img src="${visuals.scgUrl}" onerror="this.src='${visuals.ecgFallback}'" class="relative z-10 h-[125%] w-auto max-w-none object-contain object-top drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] pointer-events-none">
+                    <img src="${visuals.scgUrl}" onerror="this.src='${visuals.ecgFallback}'" class="relative z-10 h-[130%] w-auto max-w-none object-contain object-top drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] pointer-events-none">
                   ` : `
                     <img src="${sceneImage}" onerror="this.src='${visuals.ecgFallback}'" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-40 scale-125 pointer-events-none" style="object-position: center 25%;">
                     <img src="${sceneImage}" onerror="this.src='${visuals.ecgFallback}'" class="relative z-10 max-h-full max-w-full object-contain mx-auto pointer-events-none">
                   `}
-                  <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/75 to-transparent pointer-events-none"></div>
-                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/55 text-[#ffd6de] text-[10px] font-black border border-white/20">컷 ${i + 1}</span>
+                  <!-- Cut number label -->
+                  <span class="absolute top-2 left-2 px-1.5 py-0.5 bg-black/70 text-white text-[10px] font-black rounded-sm z-20">${i + 1}</span>
                 </div>
-                <div class="p-3 bg-[#1d1519]" onclick="event.stopPropagation(); speakJapanese('${audioArg}', '${speaker}')">
-                  <div class="flex items-center gap-2 cursor-pointer">
-                    <img src="${speakerImg}" class="w-6 h-6 rounded-full object-cover ring-1 ring-[#e0465a] shrink-0">
-                    <span class="text-[11px] font-black text-[#f4869d]">${step.nameJp}</span>
-                    <span class="text-[10px] text-[#b89f99] font-bold">(${step.nameKo})</span>
-                    <span class="ml-auto text-[10px] text-[#9e847e]">🔊 터치 재생</span>
+                <!-- Speech bubble overlay (manhwa style, white balloon like reference) -->
+                <div class="relative px-2 pb-2 -mt-14 z-20 flex ${facing} pointer-events-none">
+                  <div class="relative bg-white border-2 border-[#2b2b2b] rounded-2xl px-3 py-2 max-w-[72%] shadow-md">
+                    <div class="${tailClass}"></div>
+                    <div class="text-[10px] font-bold text-[#7a5c63] mb-0.5">${speakerName}${speakerKo ? ' · ' + speakerKo : ''}</div>
+                    <div class="text-[13px] font-extrabold text-[#141013] leading-snug">${step.jpRuby}</div>
+                    ${showPron ? `<div class="text-[10px] font-semibold text-[#b03a52] mt-0.5">${step.pron}</div>` : ''}
                   </div>
-                  <div class="text-sm font-extrabold text-white leading-relaxed mt-1">${step.jpRuby}</div>
-                  ${showPron ? `<div class="text-[11px] text-[#f29aa8] mt-0.5">${step.pron}</div>` : ''}
-                  <div class="text-xs font-bold text-[#e0cfca] mt-1">${step.ko}</div>
+                </div>
+                <!-- Narration box (Korean translation, classic webtoon white caption) -->
+                <div class="px-2 pb-2">
+                  <div class="bg-white border-[1.5px] border-black px-3 py-2">
+                    <div class="text-xs font-bold text-[#141013] leading-relaxed">${step.ko}</div>
+                  </div>
                 </div>
               </div>
             `;
           }).join('')}
         </div>
 
-        <div class="p-3 bg-[#181316] border-t border-[#332228] flex items-center justify-between">
-          <button onclick="backToMangaList()" class="px-3 py-1.5 rounded-xl bg-[#261c21] border border-[#422f37] text-xs font-bold text-[#e6d0ca]">← 목록</button>
-          <button onclick="openNextMangaEp()" class="px-3 py-1.5 rounded-xl bg-[#e0465a] text-white text-xs font-black shadow">다음 화 ›</button>
+        <div class="p-3 bg-[#181316] border-t border-[#332228] text-center">
+          <div class="text-[10px] text-[#8a7a77] font-mono mb-2.5">— ${steps.length} -</div>
+          <div class="flex items-center justify-between">
+            <button onclick="backToMangaList()" class="px-3 py-1.5 rounded-xl bg-[#261c21] border border-[#422f37] text-xs font-bold text-[#e6d0ca]">← 목록</button>
+            <button onclick="openNextMangaEp()" class="px-3 py-1.5 rounded-xl bg-[#e0465a] text-white text-xs font-black shadow">다음 화 ›</button>
+          </div>
         </div>
       </div>
     `;
