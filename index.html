@@ -393,15 +393,13 @@
         </div>
       </div>
 
-      <!-- Dialogue & Training Stream Window (Clean AI Messenger) -->
-      <div class="game-card overflow-hidden">
         <!-- Clean Chat Header -->
         <div id="messengerHeader" class="px-3.5 py-2 bg-slate-50/90 dark:bg-slate-800/70 border-b border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between">
           <div class="flex items-center gap-1.5 min-w-0">
             <button id="messengerBackBtn" onclick="backToMessengerContacts()" class="hidden shrink-0 w-7 h-7 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-xs font-black text-slate-500 items-center justify-center" title="대화상대 목록">‹</button>
             <div class="flex items-center gap-1.5" id="chatHeaderTitle">
               <span class="text-xs">💬</span>
-              <span class="text-[11px] font-black text-slate-700 dark:text-slate-200">트레이너 실시간 톡</span>
+              <span class="text-[11px] font-black text-slate-700 dark:text-slate-200">메신저</span>
             </div>
           </div>
           <div class="flex items-center gap-1.5">
@@ -415,9 +413,9 @@
           </div>
         </div>
 
-        <div id="messengerRoomBody">
-          <!-- Messenger contacts list (VN messenger contact list) -->
-          <div id="messengerContactsWrap" class="hidden p-3 bg-[var(--chat-bg)]">
+        <div id="messengerView">
+          <!-- Contacts list shown first (messenger start screen) -->
+          <div id="messengerContactsWrap" class="p-3 bg-[var(--chat-bg)]">
             <div class="flex items-center gap-1.5 text-[11px] font-black text-slate-500 dark:text-slate-400 mb-2">
               <span>👥</span><span>대화상대</span>
               <span class="ml-auto text-[10px] font-bold text-slate-400">탭하여 대화방 들어가기</span>
@@ -425,70 +423,71 @@
             <div id="messengerContactsList" class="space-y-1.5"></div>
           </div>
 
-          <!-- Chat Stream (Expanded Roomy Height) -->
-          <div class="p-3.5 min-h-[340px] max-h-[460px] overflow-y-auto clean-scroll space-y-3 bg-[var(--chat-bg)]" id="chatContainer">
-            <!-- Dynamically populated -->
-          </div>
-
-          <!-- Episode cards strip (shown inside a trainer room) -->
-          <div id="episodeCardsWrap" class="hidden px-3 py-2.5 bg-slate-50/90 dark:bg-slate-800/70 border-t border-slate-200/80 dark:border-slate-700/60">
-            <div class="flex items-center gap-1.5 text-[11px] font-black text-slate-500 dark:text-slate-400 mb-1.5">
-              <span>🎬</span><span>에피소드</span>
-              <span id="episodeCardsProg" class="ml-auto text-[10px] font-bold text-slate-400"></span>
-            </div>
-            <div id="episodeCardsList" class="flex gap-2 overflow-x-auto clean-scroll pb-1"></div>
-          </div>
-
-          <!-- Topic Selection Tabs & Interactive Dialogue Choices (Instant VN Responses) -->
-          <div class="p-2.5 bg-slate-50/90 dark:bg-slate-800/70 border-t border-slate-200/80 dark:border-slate-700/60 space-y-2">
-            <!-- Topic Selector Pills -->
-            <div class="flex items-center gap-1.5 overflow-x-auto clean-scroll pb-1">
-              <button onclick="loadTopic('random')" id="topicBtn_random" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-xs whitespace-nowrap">🎲 랜덤</button>
-              <button onclick="loadTopic('dailyBriefing')" id="topicBtn_dailyBriefing" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-gradient-to-r from-indigo-500 to-pink-500 text-white shadow-xs whitespace-nowrap">✨ 내일 톡 브리핑</button>
-              <button onclick="loadTopic('diet')" id="topicBtn_diet" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🥗 식단</button>
-              <button onclick="loadTopic('workout')" id="topicBtn_workout" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🏃 러닝&재활</button>
-              <button onclick="loadTopic('gym')" id="topicBtn_gym" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🏋️ 헬스장</button>
-              <button onclick="loadTopic('tea')" id="topicBtn_tea" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🍵 홈카페</button>
-              <button onclick="loadTopic('date')" id="topicBtn_date" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">💖 인연</button>
+          <div id="messengerRoomBody" class="hidden">
+            <!-- Chat Stream (Expanded Roomy Height) -->
+            <div class="p-3.5 min-h-[340px] max-h-[460px] overflow-y-auto clean-scroll space-y-3 bg-[var(--chat-bg)]" id="chatContainer">
+              <!-- Dynamically populated -->
             </div>
 
-            <!-- Dynamic Choice Options Container -->
-            <div id="choicesContainer" class="space-y-1.5">
-              <!-- Dynamically populated choices -->
+            <!-- Episode cards strip (shown inside a trainer room) -->
+            <div id="episodeCardsWrap" class="hidden px-3 py-2.5 bg-slate-50/90 dark:bg-slate-800/70 border-t border-slate-200/80 dark:border-slate-700/60">
+              <div class="flex items-center gap-1.5 text-[11px] font-black text-slate-500 dark:text-slate-400 mb-1.5">
+                <span>🎬</span><span>에피소드</span>
+                <span id="episodeCardsProg" class="ml-auto text-[10px] font-bold text-slate-400"></span>
+              </div>
+              <div id="episodeCardsList" class="flex gap-2 overflow-x-auto clean-scroll pb-1"></div>
             </div>
-          </div>
 
-          <!-- Dialogue Evaluation & Feedback Bar (3-Tier Rating & AI Script Evolution) -->
-          <div id="dialogueFeedbackCard" class="px-3 py-2 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-sky-500/10 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-2">
-            <div class="flex items-center gap-1.5 min-w-0">
-              <span class="text-xs">💬</span>
-              <span class="text-[11px] font-black text-slate-700 dark:text-slate-200 truncate">이번 대화 흐름 평가</span>
+            <!-- Topic Selection Tabs & Interactive Dialogue Choices (Instant VN Responses) -->
+            <div class="p-2.5 bg-slate-50/90 dark:bg-slate-800/70 border-t border-slate-200/80 dark:border-slate-700/60 space-y-2">
+              <!-- Topic Selector Pills -->
+              <div class="flex items-center gap-1.5 overflow-x-auto clean-scroll pb-1">
+                <button onclick="loadTopic('random')" id="topicBtn_random" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-xs whitespace-nowrap">🎲 랜덤</button>
+                <button onclick="loadTopic('dailyBriefing')" id="topicBtn_dailyBriefing" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-gradient-to-r from-indigo-500 to-pink-500 text-white shadow-xs whitespace-nowrap">✨ 내일 톡 브리핑</button>
+                <button onclick="loadTopic('diet')" id="topicBtn_diet" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🥗 식단</button>
+                <button onclick="loadTopic('workout')" id="topicBtn_workout" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🏃 러닝&재활</button>
+                <button onclick="loadTopic('gym')" id="topicBtn_gym" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🏋️ 헬스장</button>
+                <button onclick="loadTopic('tea')" id="topicBtn_tea" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">🍵 홈카페</button>
+                <button onclick="loadTopic('date')" id="topicBtn_date" class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">💖 인연</button>
+              </div>
+
+              <!-- Dynamic Choice Options Container -->
+              <div id="choicesContainer" class="space-y-1.5">
+                <!-- Dynamically populated choices -->
+              </div>
             </div>
-            <div class="flex items-center gap-1 shrink-0" id="feedbackBtnGroup">
-              <button onclick="submitDialogueFeedback('good')" class="px-2 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10px] font-black transition-all flex items-center gap-1 active:scale-95 shadow-xs" title="대화 흐름이 자연스럽고 만족스러움">
-                <span>👍</span>
-                <span>좋음 (+10)</span>
+
+            <!-- Dialogue Evaluation & Feedback Bar (3-Tier Rating & AI Script Evolution) -->
+            <div id="dialogueFeedbackCard" class="px-3 py-2 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-sky-500/10 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-2">
+              <div class="flex items-center gap-1.5 min-w-0">
+                <span class="text-xs">💬</span>
+                <span class="text-[11px] font-black text-slate-700 dark:text-slate-200 truncate">이번 대화 흐름 평가</span>
+              </div>
+              <div class="flex items-center gap-1 shrink-0" id="feedbackBtnGroup">
+                <button onclick="submitDialogueFeedback('good')" class="px-2 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10px] font-black transition-all flex items-center gap-1 active:scale-95 shadow-xs" title="대화 흐름이 자연스럽고 만족스러움">
+                  <span>👍</span>
+                  <span>좋음 (+10)</span>
+                </button>
+                <button onclick="submitDialogueFeedback('normal')" class="px-2 py-1 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-400 border border-sky-500/30 text-[10px] font-black transition-all flex items-center gap-1 active:scale-95 shadow-xs" title="보통 수준의 대화">
+                  <span>😐</span>
+                  <span>보통</span>
+                </button>
+                <button onclick="submitDialogueFeedback('bad')" class="px-2 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 border border-rose-500/30 text-[10px] font-black transition-all flex items-center gap-1 active:scale-95 shadow-xs" title="어색하거나 보완이 필요함">
+                  <span>👎</span>
+                  <span>아쉬움</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Direct Message Input Bar -->
+            <div class="px-3 py-2 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center gap-2">
+              <input type="text" id="directChatInput" placeholder="메시지 보내기..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-sky-400" onkeydown="if(event.key==='Enter') sendDirectMessage()">
+              <button onclick="sendDirectMessage()" class="px-3.5 py-1.5 rounded-xl bg-[#4a89dc] hover:bg-sky-500 text-white text-xs font-extrabold shadow-sm shrink-0 transition-all">
+                전송
               </button>
-              <button onclick="submitDialogueFeedback('normal')" class="px-2 py-1 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-400 border border-sky-500/30 text-[10px] font-black transition-all flex items-center gap-1 active:scale-95 shadow-xs" title="보통 수준의 대화">
-                <span>😐</span>
-                <span>보통</span>
-              </button>
-              <button onclick="submitDialogueFeedback('bad')" class="px-2 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 border border-rose-500/30 text-[10px] font-black transition-all flex items-center gap-1 active:scale-95 shadow-xs" title="어색하거나 보완이 필요함">
-                <span>👎</span>
-                <span>아쉬움</span>
-              </button>
             </div>
-          </div>
-
-          <!-- Direct Message Input Bar -->
-          <div class="px-3 py-2 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center gap-2">
-            <input type="text" id="directChatInput" placeholder="메시지 보내기..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-sky-400" onkeydown="if(event.key==='Enter') sendDirectMessage()">
-            <button onclick="sendDirectMessage()" class="px-3.5 py-1.5 rounded-xl bg-[#4a89dc] hover:bg-sky-500 text-white text-xs font-extrabold shadow-sm shrink-0 transition-all">
-              전송
-            </button>
           </div>
         </div>
-      </div>
 
       <!-- Quick Scroll to Top Button below Chat -->
       <div class="flex items-center justify-center pt-1 pb-1">
@@ -1627,11 +1626,10 @@
 
   </div>
 
-  <script src="./dialogue_pool.js?v=4.3.25"></script>
-  <script src="./trainer_episodes.js?v=4.3.25"></script>
-  <script src="./minitoon_data.js?v=4.3.25"></script>
-  <script src="./kotonoha_data.js?v=4.3.25"></script>
-  <script src="./kotonoha_engine.js?v=4.3.25"></script>
+  <script src="./dialogue_pool.js?v=4.3.27"></script>
+  <script src="./trainer_episodes.js?v=4.3.27"></script>
+  <script src="./kotonoha_data.js?v=4.3.27"></script>
+  <script src="./kotonoha_engine.js?v=4.3.27"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -4893,7 +4891,7 @@
       if (tab === 'talk') {
         if (vTalk) vTalk.classList.remove('hidden');
         if (bTalk) bTalk.classList.add('active');
-        
+
         // Clear NEW badge
         const badge = document.getElementById('talkNewBadge');
         if (badge) badge.classList.add('hidden');
@@ -4901,21 +4899,11 @@
           state.talkUpdated = false;
         }
 
-        // Trigger random heroine greeting and dynamic welcome!
-        const now = Date.now();
-        const lastGreeting = state.lastGreetingTime ? parseInt(state.lastGreetingTime, 10) : 0;
-        const secSinceLast = (now - lastGreeting) / 1000;
-
-        // If newly entered or at least 12 seconds passed since last tab switch greeting:
-        if (secSinceLast >= 12 || !state.chatHistory || state.chatHistory.length === 0) {
-          state.lastGreetingTime = now;
-          greetUserOnEnterTalk();
-        } else {
-          renderChat();
-        }
-
-        state.lastTalkVisitTime = now;
+        state.lastTalkVisitTime = Date.now();
         persistLocal();
+
+        // Messenger starts at contacts list (modern messenger flow: contacts -> room -> episodes)
+        showMessengerContacts();
 
         // Smooth scroll chat to bottom
         setTimeout(() => {

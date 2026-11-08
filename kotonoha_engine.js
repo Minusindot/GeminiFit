@@ -596,18 +596,9 @@ function openKotonohaHub() {
   renderKotonohaView();
 }
 
-// Short-toon manga navigation
+// Short-toon manga navigation (legacy modes unreachable — feature abandoned for quality)
 function openMangaList() {
-  openMinitun();
-}
-
-// MiniToon: single original episode (record-based manhwa, not the JP curriculum)
-function openMinitun() {
-  kotonohaRuntime.ttsLoading.runId++;
-  kotonohaRuntime.ttsLoading.active = false;
-  kotonohaRuntime.currentMode = 'minitoon';
-  playBeep(580, 0.06);
-  renderKotonohaView();
+  openKotonohaHub();
 }
 
 function openMangaRead(idx) {
@@ -628,18 +619,14 @@ function openMangaRead(idx) {
 }
 
 function backToMangaList() {
-  kotonohaRuntime.ttsLoading.runId++;
-  kotonohaRuntime.ttsLoading.active = false;
-  kotonohaRuntime.currentMode = 'manga_list';
-  playBeep(580, 0.06);
-  renderKotonohaView();
+  openKotonohaHub();
 }
 
 function openNextMangaEp() {
   const next = kotonohaRuntime.lessonIdx + 1;
   const all = getAllKotonohaLessons();
   if (next < all.length) { openMangaRead(next); return; }
-  openMangaList();
+  openKotonohaHub();
 }
 
 function skipKotonohaTtsPreload() {
@@ -1902,58 +1889,4 @@ function renderKotonohaView() {
     return;
   }
 
-  // MODE 6: MINITOON - single original record-based episode (manhwa webtoon cuts)
-  if (kotonohaRuntime.currentMode === 'minitoon') {
-    const mt = window.MINITOON || { panels: [] };
-    container.innerHTML = `
-      <div class="rounded-3xl bg-white text-[#141013] border border-[#3a2830] shadow-2xl overflow-hidden">
-        <div class="p-3 bg-[#1d1519] text-[#f5ebe6] border-b border-[#332228] flex items-center justify-between sticky top-0 z-30">
-          <div class="flex items-center gap-2 min-w-0">
-            <button onclick="openKotonohaHub()" class="w-8 h-8 shrink-0 rounded-xl bg-[#2b1f25] hover:bg-[#3b2a33] text-[#e0c8c2] font-black text-sm flex items-center justify-center">‹</button>
-            <div class="min-w-0">
-              <div class="text-[10px] text-[#b89d97] font-bold">미니툰 · 프롤로그</div>
-              <div class="text-xs font-black text-white truncate">${mt.titleKo || ''}</div>
-            </div>
-          </div>
-          <span class="text-[10px] px-2 py-1 rounded-full bg-[#352329] text-[#f2a6b2] font-bold border border-[#52343d]">기록으로 그린 이야기</span>
-        </div>
-
-        <div class="bg-white p-1.5 space-y-1.5">
-          ${(mt.panels || []).map((p, i) => {
-            const hCls = p.size === 'tall' ? 'h-[480px] sm:h-[560px]' : 'h-[390px] sm:h-[480px]';
-            const bubbleSide = i % 2 === 0 ? 'left-2.5 items-start' : 'right-2.5 items-end';
-            const tailClass = i % 2 === 0 ? 'absolute -bottom-1.5 left-5 w-3 h-3 bg-white border-b border-r border-[#2b2b2b] rotate-45' : 'absolute -bottom-1.5 right-5 w-3 h-3 bg-white border-b border-l border-[#2b2b2b] rotate-45';
-            return `
-              <div class="border-[3px] border-black bg-white">
-                <div class="relative ${hCls} w-full overflow-hidden bg-[#0c080a]">
-                  <img src="${p.img}" onerror="this.src='./image/manga/p01.png'" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
-                  <span class="absolute top-2 left-2 px-1.5 py-0.5 bg-black/70 text-white text-[10px] font-black rounded-sm z-20">${i + 1}</span>
-                </div>
-                ${p.speech ? `
-                <div class="relative px-2 pt-2 pb-2 flex ${bubbleSide}">
-                  <div class="relative bg-white border-2 border-[#2b2b2b] rounded-2xl px-3 py-2 max-w-[78%] shadow-md">
-                    <div class="${tailClass}"></div>
-                    <div class="text-[10px] font-bold text-[#7a5c63] mb-0.5">${p.speech.name || ''}</div>
-                    <div class="text-[13px] font-extrabold text-[#141013] leading-snug">${p.speech.text || ''}</div>
-                  </div>
-                </div>` : ''}
-                ${p.caption ? `
-                <div class="px-2 pb-2">
-                  <div class="bg-white border-[1.5px] border-black px-3 py-2">
-                    <div class="text-xs font-bold text-[#141013] leading-relaxed">${p.caption}</div>
-                  </div>
-                </div>` : ''}
-              </div>
-            `;
-          }).join('')}
-        </div>
-
-        <div class="p-3 bg-[#1d1519] border-t border-[#332228] flex items-center justify-between">
-          <button onclick="openKotonohaHub()" class="px-3 py-1.5 rounded-xl bg-[#261c21] border border-[#422f37] text-xs font-bold text-[#e6d0ca]">← 다실 홈</button>
-          <span class="text-[10px] text-[#8a7a77] font-mono">— ${mt.panels.length} —</span>
-        </div>
-      </div>
-    `;
-    return;
-  }
 }
