@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T09:53:23.729Z",
+  "updatedAt": "2026-11-08T09:53:43.308Z",
   "lastActiveDate": "2026-11-08",
   "theme": "light",
   "weight": 65.6,
@@ -8,7 +8,7 @@
   "bondExp": 60,
   "activeTrainer": "mio",
   "activeMode": "dual",
-  "currentSituation": "ev3",
+  "currentSituation": "trio5",
   "absDone": false,
   "runDone": false,
   "runDist": 7,
@@ -409,11 +409,6 @@
     {
       "sender": "gemini",
       "name": "제미니",
-      "text": "프로듀서, 요즘 턱선 날렵해진 거 알아? 거울 볼 때마다 내 생각 날걸?"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
       "text": "14분 아이돌 11자 복근 루틴 시작! 크런치부터 레그레이즈까지 노그립으로 간다!"
     },
     {
@@ -550,6 +545,11 @@
       "sender": "mio",
       "name": "미오",
       "text": "플랭크 60초 버티기! 배꼽 쏙 집어넣고! 10초 남았어! 프로듀서 할 수 있어~!!"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "📢 [3인 트레이너 실시간 대기방]\n💛 코토네: \"프로듀서님 오셨다~! 헤헤 💛\"\n🌟 미오: \"오오 딱 맞춰서 잘 왔어! 하이파이브! 🖐️\"\n🐾 제미니: \"흥, 게으름 피우지 말고 얼른 들어와, 바보야! 🐾\""
     },
     {
       "sender": "dual",
