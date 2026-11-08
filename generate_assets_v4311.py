@@ -84,7 +84,7 @@ CHARACTERS = {
     },
 }
 
-# idle은 base를 복사한다(별도 생성 없음). 표정만 바꿔 7종 편집 생성.
+# idle은 base를 복사한다(별도 생성 없음). 표정만 바꿔 7종 편집 생성. (v4.3.17: 14종 확장)
 EXPRESSIONS = {
     "idle": "calm gentle expression, soft relaxed smile, eyes looking slightly downward, serene",
     "smile": "bright cheerful smile, eyes sparkling with joy, mouth open happily",
@@ -94,6 +94,12 @@ EXPRESSIONS = {
     "shock": "shocked surprised expression, wide round eyes, open mouth, flustered",
     "dark": "cool serious dark expression, shadowed eyes without highlights, emotionless cold stare",
     "joke": "playful mischievous wink, tongue sticking out slightly, cheeky grin",
+    "wink": "bright cheerful wink with one eye closed, energetic encouragement smile, pointing finger pose",
+    "pout": "cute sulking pout, puffed cheeks, lower lip pushed out, grumpy but adorable",
+    "cry": "teary sad expression, watery eyes about to cry, quivering lower lip, trembling eyebrows",
+    "smirk": "confident smug smirk, one eyebrow raised, half-lidded amused eyes, fourth-wall-breaking grin",
+    "love": "adoring loving expression, dreamy sparkling heart-shaped eyes, hands clasped together, gentle fawning smile",
+    "sleepy": "sleepy tired expression, half-closed droopy eyes, small yawn, relaxed drowsy mood",
 }
 
 BACKGROUNDS = [

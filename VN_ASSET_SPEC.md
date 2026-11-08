@@ -5,7 +5,7 @@
 
 ---
 
-## 🎨 1. 캐릭터 표정 규격 (총 8종)
+## 🎨 1. 캐릭터 표정 규격 (총 14종)
 
 동일한 베이스 바디 포즈(투명 배경 PNG)를 유지하면서, 대화 상황과 감정에 따라 표정만 부드럽게 크로스페이드 전환됩니다.
 
@@ -19,11 +19,17 @@
 | `shy` | 부끄러움 (SHY) | 뺨이 붉게 달아오른 수줍은 표정, 칭찬받았을 때, 심쿵 | `@char gemini.shy` |
 | `shock` | 충격/경악 (SHOCK) | 눈이 동그래지고 입을 벌린 멘붕 표정, 체중계 숫자, 돌발 상황 | `@char gemini.shock` |
 
-### 🔮 특별 표정 2종 (Special Expressions)
+### 🔮 특별 표정 8종 (Special Expressions, v4.3.17)
 | 코드 | 표정 명칭 | 감정 및 사용 상황 | Naninovel 매핑 |
 |:---:|:---:|:---|:---:|
 | `dark` | 어두움/정색 (DARK) | 눈에 하이라이트가 죽거나 음영이 드리운 차가운 표정, 단식 어겼을 때 | `@char gemini.dark` |
 | `joke` | 익살/장난 (JOKE) | 윙크, 혓바닥 내밀기, 능글맞은 미소, 장난칠 때 | `@char gemini.joke` |
+| `wink` | 윙크 (WINK) | 한쪽 눈을 감은 밝은 윙크, 응원·격려, 게임클리어 인사 | `@char gemini.wink` |
+| `pout` | 삐침 (POUT) | 뺨을 부풀린 삐친 표정, 츤데레 토라짐, 투정 | `@char gemini.pout` |
+| `cry` | 울음 (CRY) | 눈물이 맺힌 울먹 표정, 과격 운동 후 처짐, 감동·위로가 필요할 때 | `@char gemini.cry` |
+| `smirk` | 씨익 (SMIRK) | 한쪽 눈썹을 올린 능글맞은 자신 표정, 메타 응원, 게임 전략 | `@char gemini.smirk` |
+| `love` | 연정 (LOVE) | 하트 눈, 두 손 모은 숭배 표정, 폭풍 칭찬·응원 | `@char gemini.love` |
+| `sleepy` | 졸림 (SLEEPY) | 반쯤 감긴 졸린 눈, 하품, 늦은 밤 단식·회복 장면 | `@char gemini.sleepy` |
 
 ---
 

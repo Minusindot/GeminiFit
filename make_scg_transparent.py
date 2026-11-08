@@ -28,7 +28,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 WORK_DIR = os.path.join(BASE_DIR, "image", "_scg_work")
 OUT_DIR = os.path.join(BASE_DIR, "image", "scg")
 
-EXPRESSIONS = ["idle", "smile", "sad", "angry", "shy", "shock", "dark", "joke"]
+EXPRESSIONS = ["idle", "smile", "sad", "angry", "shy", "shock", "dark", "joke",
+               "wink", "pout", "cry", "smirk", "love", "sleepy"]
 # char folder under _scg_work -> (output subdir under image/scg, file-name parts)
 OUTFIT_TARGETS = {
     "gemini": ("gemini", "gemini_default_"),

@@ -1339,19 +1339,19 @@ function renderKotonohaView() {
           <div class="h-full bg-gradient-to-r from-[#e0465a] to-[#ff758c] transition-all duration-300" style="width: ${progressPct}%"></div>
         </div>
 
-        <!-- Full Illustration Cinematic Stage: Click anywhere to advance -->
+        <!-- Full Illustration Cinematic Stage: Click anywhere to advance (classic VN: big standing + slim overlay textbox) -->
         <div class="relative w-full flex flex-col bg-[#0e0a0c] cursor-pointer overflow-hidden" onclick="stepKotonohaStory(1)">
           
           <!-- Visual Presentation: True Transparent SCG (Commercial VN large standing) vs Clean Full ECG -->
-          <div class="relative w-full h-[420px] sm:h-[500px] overflow-hidden bg-[#0c080a] flex items-start justify-center">
+          <div class="relative w-full h-[560px] sm:h-[640px] overflow-hidden bg-[#0c080a] flex items-start justify-center">
             ${visuals.isScg ? `
               <!-- [TRUE SCG + BG MODE] Pure Background Layer (No Characters) -->
               <img src="${visuals.bgUrl}" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.85] contrast-[1.02] pointer-events-none transition-all duration-500">
               <div class="absolute inset-0 bg-gradient-to-t from-[#141013] via-transparent to-black/25 pointer-events-none"></div>
 
-              <!-- Pure Standing Character Sprite (Alpha Transparent PNG) — oversized, head near top, feet cropped (classic VN look) -->
+              <!-- Pure Standing Character Sprite — oversized, head near top, feet cropped (classic VN look) -->
               <div class="relative z-10 h-full flex items-start justify-center pointer-events-none w-full">
-                <img src="${visuals.scgUrl}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="relative h-[122%] w-auto max-w-none object-contain object-top drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
+                <img src="${visuals.scgUrl}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="relative h-[135%] w-auto max-w-none object-contain object-top drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
               </div>
             ` : `
               <!-- [CLEAN FULL ECG MODE] Cinematic Ambient Blur + Center Illustration (Never Cut Off) -->
@@ -1359,11 +1359,11 @@ function renderKotonohaView() {
               <img src="${sceneImage}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="relative z-10 max-h-full max-w-full object-contain mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)] transition-all duration-300">
             `}
             <!-- Smooth Gradient Blend into Dialogue Box -->
-            <div class="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-[#141013]"></div>
+            <div class="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/25 via-transparent to-[#141013]"></div>
           </div>
 
-          <!-- Bottom Dialogue Box: Translucent VN Card (overlays bottom of the stage, classic VN layering) -->
-          <div class="absolute left-3 right-3 bottom-3 z-30 p-4 rounded-2xl bg-[#1e161a]/95 border border-[#48303a] shadow-2xl backdrop-blur-md space-y-2.5">
+          <!-- Bottom Dialogue Box: Translucent VN Card (slim classic overlay so the standing stays visible) -->
+          <div class="absolute left-3 right-3 bottom-2.5 z-30 p-3 rounded-2xl bg-[#1e161a]/90 border border-[#48303a] shadow-2xl backdrop-blur-md space-y-1.5">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
                 <img src="${step.avatar || './image/03 gemini/avatar_gemini.png'}" class="w-7 h-7 rounded-full object-cover ring-2 ring-[#e0465a] shadow-xs">
@@ -1376,24 +1376,23 @@ function renderKotonohaView() {
             </div>
 
             <!-- Japanese Sentence with Furigana Ruby -->
-            <div class="text-lg sm:text-xl font-extrabold text-white leading-relaxed tracking-wide pt-0.5">
+            <div class="text-base sm:text-lg font-extrabold text-white leading-relaxed tracking-wide pt-0.5">
               ${step.jpRuby}
             </div>
 
             <!-- Korean Pronunciation Pill -->
             ${showPron ? `
-              <div class="text-xs font-semibold text-[#f29aa8] bg-[#2b1d23] border border-[#472d38] px-2.5 py-1 rounded-lg inline-block">
+              <div class="text-[11px] font-semibold text-[#f29aa8] bg-[#2b1d23] border border-[#472d38] px-2.5 py-0.5 rounded-lg inline-block">
                 🗣️ ${step.pron}
               </div>
             ` : ''}
 
             <!-- Korean Translation -->
-            <div class="text-sm font-bold text-[#e0cfca] leading-relaxed">
+            <div class="text-[13px] font-bold text-[#e0cfca] leading-relaxed">
               ${step.ko}
             </div>
 
-            <div class="flex items-center justify-between text-[11px] text-[#9e847e] pt-1 border-t border-[#36252d]">
-              <span class="text-[10px] text-[#a88d89]">화면을 터치하면 다음 대사</span>
+            <div class="flex items-center justify-end text-[11px] text-[#9e847e] pt-0.5">
               <span class="font-mono text-[#f2a6b2] font-bold">${curIdx + 1} / ${steps.length} ▼</span>
             </div>
           </div>
