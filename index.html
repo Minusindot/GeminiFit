@@ -416,6 +416,16 @@
         <div id="messengerView">
           <!-- Contacts list shown first (messenger start screen) -->
           <div id="messengerContactsWrap" class="p-3 bg-[var(--chat-bg)]">
+            <!-- Heroine wallpaper entry card (phone-home-screen style) -->
+            <button onclick="enterTrainerRoom('${trainerMessengerRoom || 'gemini'}')" class="relative w-full h-44 rounded-2xl overflow-hidden border border-[#3a2830] shadow-lg group mb-3 text-left">
+              <img src="./image/03 gemini/gemini_26_kyoto_teahouse.png" onerror="this.src='./image/00 common/dual_inbody.png'" class="absolute inset-0 w-full h-full object-cover object-[center_20%] group-hover:scale-105 transition-all duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30"></div>
+              <div class="absolute bottom-0 inset-x-0 p-3">
+                <div class="text-[11px] font-bold text-[#ffd6de]">오늘의 트레이너</div>
+                <div class="text-base font-black text-white leading-tight">제미니 · 코토네 · 미오와 대화하기</div>
+                <div class="text-[10px] text-[#d4b5b0] font-bold mt-0.5">탭해서 대화방 들어가기 ›</div>
+              </div>
+            </button>
             <div class="flex items-center gap-1.5 text-[11px] font-black text-slate-500 dark:text-slate-400 mb-2">
               <span>👥</span><span>대화상대</span>
               <span class="ml-auto text-[10px] font-bold text-slate-400">탭하여 대화방 들어가기</span>
@@ -468,6 +478,23 @@
          ======================================================== -->
     <div id="viewKotonoha" class="space-y-3 hidden">
       <div id="kotonohaMainContainer"></div>
+    </div>
+
+    <!-- Episode Feedback Modal -->
+    <div id="episodeFeedbackModal" class="hidden fixed inset-0 z-[70] flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+      <div class="w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl p-5 space-y-3 text-center">
+        <div class="text-sm font-black text-slate-800 dark:text-slate-100">에피소드 어땠는지 알려주세요</div>
+        <div id="episodeFeedbackTitle" class="text-[11px] font-bold text-slate-400 truncate"></div>
+        <div class="text-[10px] text-slate-400 font-bold">평가는 다음 학습 때 대사 톤에 반영돼요</div>
+        <div class="pt-1">
+          <button onclick="rateTrainerEpisode('good')" class="w-full py-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-black">👍 좋았어 (+10)</button>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="rateTrainerEpisode('normal')" class="py-2.5 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-400 border border-sky-500/30 text-xs font-black">😐 보통 (+5)</button>
+          <button onclick="rateTrainerEpisode('bad')" class="py-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 border border-rose-500/30 text-xs font-black">👎 아쉬움</button>
+        </div>
+        <button onclick="closeEpisodeFeedbackModal()" class="text-[11px] text-slate-400 hover:text-slate-600 font-bold py-1">나중에 할게요</button>
+      </div>
     </div>
 
     <!-- ========================================================
@@ -1590,10 +1617,10 @@
 
   </div>
 
-  <script src="./dialogue_pool.js?v=4.3.28"></script>
-  <script src="./trainer_episodes.js?v=4.3.28"></script>
-  <script src="./kotonoha_data.js?v=4.3.28"></script>
-  <script src="./kotonoha_engine.js?v=4.3.28"></script>
+  <script src="./dialogue_pool.js?v=4.3.29"></script>
+  <script src="./trainer_episodes.js?v=4.3.29"></script>
+  <script src="./kotonoha_data.js?v=4.3.29"></script>
+  <script src="./kotonoha_engine.js?v=4.3.29"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -1718,7 +1745,8 @@
         { sender: 'mio', name: '미오', text: '우와아~! 64.1kg 확인 완료! 지난번에 삼성헬스로 7.30km(1시간 24분 완주!) 뛴 것도 진짜 멋있었어 프로듀서! 🌟 11\'33" 페이스로 손아귀 힘 빼고 안정적으로 달린 덕분에 테니스 엘보도 안 다쳤잖아~ 오늘 노을 보면서 가볍게 5km 러닝 어때? 내가 옆에서 파이팅 넘치게 응원해줄게! 🏃‍♀️💨' },
         { sender: 'gemini', name: '제미니', text: '어머나, 어서 오시어요 프로듀서님🍵 오늘도 힘내시와요~!||64.1kg에서 목표 52kg까지 아직 -12kg 남았사옵니다 🌸 5시가 지나면 야식은 절대 안 되사와요! 팔꿈치 무리 가지 않게 2kg 덤벨 재활 3세트와 14분 복근, 그리고 상단 [🍵 일본어 다실]의 오늘 수업도 소녀와 함께 정갈하게 끝내보시지요 🐾' }
       ],
-      trainerEpisodesDone: {}
+      trainerEpisodesDone: {},
+      trainerEpisodesRatings: {}
     };
 
     // ============================================================================
@@ -4496,8 +4524,40 @@
       renderChat();
       renderEpisodeCards(room);
       scrollChatToBottom();
-      showFloatingToast(`🎬 에피소드 「${ep.title}」 완료! 인연 +15`, '🎉');
+      openEpisodeFeedbackModal(ep);
       playBeep(880, 0.15);
+    }
+
+    let lastEpisodePlayed = null;
+
+    function openEpisodeFeedbackModal(ep) {
+      lastEpisodePlayed = ep;
+      const m = document.getElementById('episodeFeedbackModal');
+      if (!m) return;
+      const titleEl = document.getElementById('episodeFeedbackTitle');
+      if (titleEl) titleEl.textContent = `🎬 ${ep.title}`;
+      m.classList.remove('hidden');
+    }
+
+    function closeEpisodeFeedbackModal() {
+      const m = document.getElementById('episodeFeedbackModal');
+      if (m) m.classList.add('hidden');
+    }
+
+    function rateTrainerEpisode(verdict) {
+      const ep = lastEpisodePlayed;
+      if (ep) {
+        if (!state.trainerEpisodesRatings) state.trainerEpisodesRatings = {};
+        state.trainerEpisodesRatings[ep.id] = verdict;
+        state.trainerEpisodesDone = state.trainerEpisodesDone || {};
+        state.trainerEpisodesDone[ep.id] = true;
+        saveState(true);
+        const label = verdict === 'good' ? '좋음 👍' : verdict === 'normal' ? '보통 😐' : '아쉬움 👎';
+        showFloatingToast(`「${ep.title}」 평가 저장 (${label}) — 다음 학습에 반영해요`, '⭐');
+        addBondExp(verdict === 'good' ? 10 : verdict === 'normal' ? 5 : 0);
+      }
+      closeEpisodeFeedbackModal();
+      playBeep(720, 0.06);
     }
 
     function cancelTrainerEpisode() {
