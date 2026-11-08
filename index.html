@@ -261,7 +261,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.08</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.09</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -759,9 +759,9 @@
           </div>
         </div>
 
-        <!-- 1) Upper 1 (20회 x 4세트) -->
-        <div class="p-2.5 rounded-xl sub-box space-y-2">
-          <div class="flex items-center justify-between">
+        <!-- 1) Upper 1 (무게 드롭다운 / 횟수 조절 / 세트수 조절) -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2 border-l-2 border-l-sky-500">
+          <div class="flex items-center justify-between gap-1.5">
             <div class="flex items-center gap-1.5 flex-1 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0"></span>
               <span class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-wide whitespace-nowrap shrink-0">상체 1</span>
@@ -769,19 +769,49 @@
               </select>
               <input type="hidden" id="gymUpper1Name" value="체스트 프레스">
             </div>
-            <input type="text" id="gymUpper1Weight" value="40kg × 20회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-20 shrink-0" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
+            <span id="upper1TargetLabel" class="text-[10px] font-mono text-sky-600 dark:text-sky-400 font-extrabold whitespace-nowrap">40kg · 20회×4세트</span>
           </div>
-          <div class="grid grid-cols-4 gap-1.5">
-            <button onclick="toggleGymSet('upper1', 0)" id="gymSet_upper1_0" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트(20회)</button>
-            <button onclick="toggleGymSet('upper1', 1)" id="gymSet_upper1_1" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">2세트(20회)</button>
-            <button onclick="toggleGymSet('upper1', 2)" id="gymSet_upper1_2" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">3세트(20회)</button>
-            <button onclick="toggleGymSet('upper1', 3)" id="gymSet_upper1_3" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">4세트(20회)</button>
+
+          <!-- Weight Dropdown, Reps Stepper, Sets Stepper Controls -->
+          <div class="flex items-center justify-between gap-1.5 pt-0.5 text-[10px] bg-slate-50 dark:bg-slate-800/40 p-1.5 rounded-lg border border-slate-200/60 dark:border-slate-700/50">
+            <!-- 무게 kg 드롭다운 -->
+            <div class="flex items-center gap-1">
+              <span class="text-slate-400 font-bold">무게:</span>
+              <select id="gymUpper1WeightSelect" onchange="onGymWeightSelectChange('upper1', this.value)" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-1.5 py-0.5 text-[10px] font-black text-slate-800 dark:text-slate-100 focus:outline-none focus:border-sky-500 cursor-pointer">
+              </select>
+              <input type="hidden" id="gymUpper1Weight" value="40kg × 20회">
+            </div>
+
+            <!-- 횟수 스테퍼 -->
+            <div class="flex items-center gap-1">
+              <span class="text-slate-400 font-bold">횟수:</span>
+              <div class="flex items-center bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 p-0.5">
+                <button onclick="adjustGymReps('upper1', -5)" class="w-4 h-4 flex items-center justify-center text-[10px] font-black text-slate-500 hover:text-sky-500" title="5회 감소">−</button>
+                <span id="upper1RepNum" class="text-[10px] font-black font-mono px-1 text-slate-800 dark:text-slate-100">20회</span>
+                <button onclick="adjustGymReps('upper1', 5)" class="w-4 h-4 flex items-center justify-center text-[10px] font-black text-slate-500 hover:text-sky-500" title="5회 추가">+</button>
+              </div>
+            </div>
+
+            <!-- 세트수 스테퍼 (크런치처럼!) -->
+            <div class="flex items-center gap-1">
+              <span class="text-slate-400 font-bold">세트:</span>
+              <div class="flex items-center bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 p-0.5">
+                <button onclick="adjustGymSets('upper1', -1)" class="w-4 h-4 flex items-center justify-center text-[10px] font-black text-slate-500 hover:text-sky-500" title="세트 감소">−</button>
+                <span id="upper1SetNum" class="text-[10px] font-black font-mono px-1 text-slate-800 dark:text-slate-100">4</span>
+                <button onclick="adjustGymSets('upper1', 1)" class="w-4 h-4 flex items-center justify-center text-[10px] font-black text-slate-500 hover:text-sky-500" title="세트 추가">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Set Buttons -->
+          <div id="gymSetContainer_upper1" class="grid grid-cols-4 gap-1.5">
+            <!-- Dynamically rendered -->
           </div>
         </div>
 
-        <!-- 2) Upper 2 (20회 x 4세트) -->
-        <div class="p-2.5 rounded-xl sub-box space-y-2">
-          <div class="flex items-center justify-between">
+        <!-- 2) Upper 2 (무게 드롭다운 / 횟수 조절 / 세트수 조절) -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2 border-l-2 border-l-sky-500">
+          <div class="flex items-center justify-between gap-1.5">
             <div class="flex items-center gap-1.5 flex-1 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0"></span>
               <span class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-wide whitespace-nowrap shrink-0">상체 2</span>
@@ -789,19 +819,49 @@
               </select>
               <input type="hidden" id="gymUpper2Name" value="시티드 케이블 로우">
             </div>
-            <input type="text" id="gymUpper2Weight" value="35kg × 20회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-20 shrink-0" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
+            <span id="upper2TargetLabel" class="text-[10px] font-mono text-sky-600 dark:text-sky-400 font-extrabold whitespace-nowrap">35kg · 20회×4세트</span>
           </div>
-          <div class="grid grid-cols-4 gap-1.5">
-            <button onclick="toggleGymSet('upper2', 0)" id="gymSet_upper2_0" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트(20회)</button>
-            <button onclick="toggleGymSet('upper2', 1)" id="gymSet_upper2_1" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">2세트(20회)</button>
-            <button onclick="toggleGymSet('upper2', 2)" id="gymSet_upper2_2" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">3세트(20회)</button>
-            <button onclick="toggleGymSet('upper2', 3)" id="gymSet_upper2_3" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">4세트(20회)</button>
+
+          <!-- Weight Dropdown, Reps Stepper, Sets Stepper -->
+          <div class="flex items-center justify-between gap-1.5 pt-0.5 text-[10px] bg-slate-50 dark:bg-slate-800/40 p-1.5 rounded-lg border border-slate-200/60 dark:border-slate-700/50">
+            <!-- 무게 kg 드롭다운 -->
+            <div class="flex items-center gap-1">
+              <span class="text-slate-400 font-bold">무게:</span>
+              <select id="gymUpper2WeightSelect" onchange="onGymWeightSelectChange('upper2', this.value)" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-1.5 py-0.5 text-[10px] font-black text-slate-800 dark:text-slate-100 focus:outline-none focus:border-sky-500 cursor-pointer">
+              </select>
+              <input type="hidden" id="gymUpper2Weight" value="35kg × 20회">
+            </div>
+
+            <!-- 횟수 스테퍼 -->
+            <div class="flex items-center gap-1">
+              <span class="text-slate-400 font-bold">횟수:</span>
+              <div class="flex items-center bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 p-0.5">
+                <button onclick="adjustGymReps('upper2', -5)" class="w-4 h-4 flex items-center justify-center text-[10px] font-black text-slate-500 hover:text-sky-500" title="5회 감소">−</button>
+                <span id="upper2RepNum" class="text-[10px] font-black font-mono px-1 text-slate-800 dark:text-slate-100">20회</span>
+                <button onclick="adjustGymReps('upper2', 5)" class="w-4 h-4 flex items-center justify-center text-[10px] font-black text-slate-500 hover:text-sky-500" title="5회 추가">+</button>
+              </div>
+            </div>
+
+            <!-- 세트수 스테퍼 (크런치처럼!) -->
+            <div class="flex items-center gap-1">
+              <span class="text-slate-400 font-bold">세트:</span>
+              <div class="flex items-center bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 p-0.5">
+                <button onclick="adjustGymSets('upper2', -1)" class="w-4 h-4 flex items-center justify-center text-[10px] font-black text-slate-500 hover:text-sky-500" title="세트 감소">−</button>
+                <span id="upper2SetNum" class="text-[10px] font-black font-mono px-1 text-slate-800 dark:text-slate-100">4</span>
+                <button onclick="adjustGymSets('upper2', 1)" class="w-4 h-4 flex items-center justify-center text-[10px] font-black text-slate-500 hover:text-sky-500" title="세트 추가">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Set Buttons -->
+          <div id="gymSetContainer_upper2" class="grid grid-cols-4 gap-1.5">
+            <!-- Dynamically rendered -->
           </div>
         </div>
 
-        <!-- 3) Lower 1 (20회 x 4세트) -->
-        <div class="p-2.5 rounded-xl sub-box space-y-2">
-          <div class="flex items-center justify-between">
+        <!-- 3) Lower 1 (무게 드롭다운 / 횟수 조절 / 세트수 조절) -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2 border-l-2 border-l-emerald-500">
+          <div class="flex items-center justify-between gap-1.5">
             <div class="flex items-center gap-1.5 flex-1 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
               <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-wide whitespace-nowrap shrink-0">하체 1</span>
@@ -809,13 +869,43 @@
               </select>
               <input type="hidden" id="gymLowerName" value="레그 프레스">
             </div>
-            <input type="text" id="gymLowerWeight" value="80kg × 20회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-20 shrink-0" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
+            <span id="lowerTargetLabel" class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-extrabold whitespace-nowrap">80kg · 20회×4세트</span>
           </div>
-          <div class="grid grid-cols-4 gap-1.5">
-            <button onclick="toggleGymSet('lower', 0)" id="gymSet_lower_0" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트(20회)</button>
-            <button onclick="toggleGymSet('lower', 1)" id="gymSet_lower_1" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">2세트(20회)</button>
-            <button onclick="toggleGymSet('lower', 2)" id="gymSet_lower_2" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">3세트(20회)</button>
-            <button onclick="toggleGymSet('lower', 3)" id="gymSet_lower_3" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">4세트(20회)</button>
+
+          <!-- Weight Dropdown, Reps Stepper, Sets Stepper -->
+          <div class="flex items-center justify-between gap-1.5 pt-0.5 text-[10px] bg-slate-50 dark:bg-slate-800/40 p-1.5 rounded-lg border border-slate-200/60 dark:border-slate-700/50">
+            <!-- 무게 kg 드롭다운 -->
+            <div class="flex items-center gap-1">
+              <span class="text-slate-400 font-bold">무게:</span>
+              <select id="gymLowerWeightSelect" onchange="onGymWeightSelectChange('lower', this.value)" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md px-1.5 py-0.5 text-[10px] font-black text-slate-800 dark:text-slate-100 focus:outline-none focus:border-emerald-500 cursor-pointer">
+              </select>
+              <input type="hidden" id="gymLowerWeight" value="80kg × 20회">
+            </div>
+
+            <!-- 횟수 스테퍼 -->
+            <div class="flex items-center gap-1">
+              <span class="text-slate-400 font-bold">횟수:</span>
+              <div class="flex items-center bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 p-0.5">
+                <button onclick="adjustGymReps('lower', -5)" class="w-4 h-4 flex items-center justify-center text-[10px] font-black text-slate-500 hover:text-emerald-500" title="5회 감소">−</button>
+                <span id="lowerRepNum" class="text-[10px] font-black font-mono px-1 text-slate-800 dark:text-slate-100">20회</span>
+                <button onclick="adjustGymReps('lower', 5)" class="w-4 h-4 flex items-center justify-center text-[10px] font-black text-slate-500 hover:text-emerald-500" title="5회 추가">+</button>
+              </div>
+            </div>
+
+            <!-- 세트수 스테퍼 (크런치처럼!) -->
+            <div class="flex items-center gap-1">
+              <span class="text-slate-400 font-bold">세트:</span>
+              <div class="flex items-center bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 p-0.5">
+                <button onclick="adjustGymSets('lower', -1)" class="w-4 h-4 flex items-center justify-center text-[10px] font-black text-slate-500 hover:text-emerald-500" title="세트 감소">−</button>
+                <span id="lowerSetNum" class="text-[10px] font-black font-mono px-1 text-slate-800 dark:text-slate-100">4</span>
+                <button onclick="adjustGymSets('lower', 1)" class="w-4 h-4 flex items-center justify-center text-[10px] font-black text-slate-500 hover:text-emerald-500" title="세트 추가">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Set Buttons -->
+          <div id="gymSetContainer_lower" class="grid grid-cols-4 gap-1.5">
+            <!-- Dynamically rendered -->
           </div>
         </div>
 
@@ -6274,6 +6364,71 @@ ${err.message}
     // ============================================================================
     // EXERCISE CATALOG & DROPDOWN MANAGEMENT (상체 / 하체 드롭다운 & 커스텀 목록)
     // ============================================================================
+    const COMMON_WEIGHT_OPTIONS = [
+      '맨몸', '2kg', '4kg', '5kg', '6kg', '8kg', '10kg', '12kg', '14kg', '15kg', '16kg', '18kg',
+      '20kg', '25kg', '30kg', '35kg', '40kg', '45kg', '50kg', '55kg', '60kg', '65kg', '70kg',
+      '75kg', '80kg', '85kg', '90kg', '95kg', '100kg', '110kg', '120kg', '130kg', '140kg', '150kg'
+    ];
+
+    function populateWeightSelect(selectEl, currentWeightOnly) {
+      if (!selectEl) return;
+      const cleanWeight = (currentWeightOnly || '').trim();
+      const weights = [...COMMON_WEIGHT_OPTIONS];
+      if (cleanWeight && !weights.includes(cleanWeight) && cleanWeight !== '__CUSTOM__') {
+        weights.unshift(cleanWeight);
+      }
+      selectEl.innerHTML = weights.map(w => `
+        <option value="${w}" ${w === cleanWeight ? 'selected' : ''}>${w}</option>
+      `).join('') + '<option value="__CUSTOM__">✏️ 직접 입력...</option>';
+    }
+
+    function onGymWeightSelectChange(exKey, value) {
+      if (value === '__CUSTOM__') {
+        const customVal = prompt('원하시는 운동 중량을 입력해주세요 (예: 22.5kg 또는 32kg):');
+        if (customVal && customVal.trim()) {
+          const valWithUnit = customVal.trim().endsWith('kg') ? customVal.trim() : customVal.trim() + 'kg';
+          applyGymWeight(exKey, valWithUnit);
+        } else {
+          renderGymUI();
+        }
+        return;
+      }
+      applyGymWeight(exKey, value);
+    }
+
+    function applyGymWeight(exKey, weightKg) {
+      initGymRoutine();
+      const ex = state.gymRoutine[exKey];
+      if (!ex) return;
+      const curReps = ex.reps || 20;
+      ex.weight = `${weightKg} × ${curReps}회`;
+      playBeep(680, 0.06);
+      saveState();
+      saveCurrentGymSession(false);
+      renderGymUI();
+      showFloatingToast(`${exKey.startsWith('upper') ? '상체' : '하체'} 무게가 [${weightKg}]로 설정되었습니다.`, '⚖️');
+    }
+
+    function adjustGymReps(exKey, delta) {
+      initGymRoutine();
+      const ex = state.gymRoutine[exKey];
+      if (!ex) return;
+      let curReps = ex.reps || 20;
+      curReps += delta;
+      if (curReps < 5) curReps = 5;
+      if (curReps > 100) curReps = 100;
+      ex.reps = curReps;
+
+      const currentWeightOnly = (ex.weight || '40kg').split('×')[0].trim() || '40kg';
+      ex.weight = `${currentWeightOnly} × ${curReps}회`;
+
+      playBeep(delta > 0 ? 800 : 450, 0.06);
+      saveState();
+      saveCurrentGymSession(false);
+      renderGymUI();
+      showFloatingToast(`목표 횟수가 [${curReps}회]로 변경되었습니다.`, '🔁');
+    }
+
     const DEFAULT_EXERCISE_LIST = {
       upper: [
         { name: '체스트 프레스', muscle: '가슴/삼두', defaultWeight: '40kg × 20회', category: 'push' },
@@ -6810,6 +6965,12 @@ ${err.message}
         };
       }
       // Ensure defaults match user's exact specification
+      if (!state.gymRoutine.upper1) state.gymRoutine.upper1 = { name: '체스트 프레스', sets: [false, false, false, false], reps: 20, weight: '40kg × 20회' };
+      if (!state.gymRoutine.upper2) state.gymRoutine.upper2 = { name: '시티드 케이블 로우', sets: [false, false, false, false], reps: 20, weight: '35kg × 20회' };
+      if (!state.gymRoutine.lower) state.gymRoutine.lower = { name: '레그 프레스', sets: [false, false, false, false], reps: 20, weight: '80kg × 20회' };
+      if (!state.gymRoutine.legRaise) state.gymRoutine.legRaise = { name: '캡틴스 체어 레그레이즈', sets: [false], reps: 50, target: '50회 × 1세트' };
+      if (!state.gymRoutine.crunch) state.gymRoutine.crunch = { name: '크런치', sets: [false, false], reps: 50, target: '50회 × 2세트' };
+
       if (!state.gymRoutine.upper1.reps) state.gymRoutine.upper1.reps = 20;
       if (!state.gymRoutine.upper2.reps) state.gymRoutine.upper2.reps = 20;
       if (!state.gymRoutine.lower.reps) state.gymRoutine.lower.reps = 20;
@@ -6965,8 +7126,14 @@ ${err.message}
       const lrDone = gr.legRaise.sets.filter(Boolean).length;
       const crDone = gr.crunch.sets.filter(Boolean).length;
 
+      const u1RepsEach = gr.upper1.reps || 20;
+      const u2RepsEach = gr.upper2.reps || 20;
+      const lRepsEach = gr.lower.reps || 20;
+      const lrRepsEach = gr.legRaise.reps || 50;
+      const crRepsEach = gr.crunch.reps || 50;
+
       const totalSets = u1Done + u2Done + lDone + lrDone + crDone;
-      const totalReps = (u1Done * 20) + (u2Done * 20) + (lDone * 20) + (lrDone * 50) + (crDone * 50);
+      const totalReps = (u1Done * u1RepsEach) + (u2Done * u2RepsEach) + (lDone * lRepsEach) + (lrDone * lrRepsEach) + (crDone * crRepsEach);
 
       // Clean out any past dummy 0-set sessions
       state.gymHistory = (state.gymHistory || []).filter(h => h && h.totalSets > 0);
@@ -7090,47 +7257,92 @@ ${err.message}
       if (l && gr.lower?.name) l.value = gr.lower.name;
       if (lw && gr.lower?.weight) lw.value = gr.lower.weight;
 
-      // 1. Upper 1
-      let u1Done = gr.upper1.sets.every(Boolean);
-      for (let i = 0; i < 4; i++) {
-        const btn = document.getElementById(`gymSet_upper1_${i}`);
-        if (btn) {
-          const isDone = Boolean(gr.upper1.sets[i]);
-          btn.className = isDone
-            ? "py-1.5 rounded-lg text-xs font-black bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400"
-            : "py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400";
-          btn.textContent = isDone ? `✓ ${i + 1}세트(20회)` : `${i + 1}세트(20회)`;
-        }
-      }
-      if (u1Done) completedExCount++;
+      // 1. Upper 1 (Dynamic Sets & Steppers)
+      const u1Reps = gr.upper1.reps || 20;
+      const u1WeightOnly = (gr.upper1.weight || '40kg').split('×')[0].trim() || '40kg';
+      const u1SetContainer = document.getElementById('gymSetContainer_upper1');
+      const u1SetNum = document.getElementById('upper1SetNum');
+      const u1RepNum = document.getElementById('upper1RepNum');
+      const u1TargetLabel = document.getElementById('upper1TargetLabel');
+      const u1WeightSelect = document.getElementById('gymUpper1WeightSelect');
 
-      // 2. Upper 2
-      let u2Done = gr.upper2.sets.every(Boolean);
-      for (let i = 0; i < 4; i++) {
-        const btn = document.getElementById(`gymSet_upper2_${i}`);
-        if (btn) {
-          const isDone = Boolean(gr.upper2.sets[i]);
-          btn.className = isDone
-            ? "py-1.5 rounded-lg text-xs font-black bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400"
-            : "py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400";
-          btn.textContent = isDone ? `✓ ${i + 1}세트(20회)` : `${i + 1}세트(20회)`;
-        }
-      }
-      if (u2Done) completedExCount++;
+      if (u1SetNum) u1SetNum.textContent = gr.upper1.sets.length;
+      if (u1RepNum) u1RepNum.textContent = `${u1Reps}회`;
+      if (u1TargetLabel) u1TargetLabel.textContent = `${u1WeightOnly} · ${u1Reps}회×${gr.upper1.sets.length}세트`;
+      if (u1WeightSelect) populateWeightSelect(u1WeightSelect, u1WeightOnly);
 
-      // 3. Lower 1
-      let lDone = gr.lower.sets.every(Boolean);
-      for (let i = 0; i < 4; i++) {
-        const btn = document.getElementById(`gymSet_lower_${i}`);
-        if (btn) {
-          const isDone = Boolean(gr.lower.sets[i]);
-          btn.className = isDone
-            ? "py-1.5 rounded-lg text-xs font-black bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400"
-            : "py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400";
-          btn.textContent = isDone ? `✓ ${i + 1}세트(20회)` : `${i + 1}세트(20회)`;
-        }
+      if (u1SetContainer) {
+        const cols = gr.upper1.sets.length <= 4 ? gr.upper1.sets.length : 3;
+        u1SetContainer.style.display = 'grid';
+        u1SetContainer.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+        u1SetContainer.style.gap = '6px';
+        u1SetContainer.innerHTML = gr.upper1.sets.map((done, i) => `
+          <button onclick="toggleGymSet('upper1', ${i})" class="${done
+            ? 'py-1.5 rounded-lg text-xs font-black bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400'
+            : 'py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400'}">
+            ${done ? `✓ ${i + 1}세트(${u1Reps}회)` : `${i + 1}세트(${u1Reps}회)`}
+          </button>
+        `).join('');
       }
-      if (lDone) completedExCount++;
+      if (gr.upper1.sets.length > 0 && gr.upper1.sets.every(Boolean)) completedExCount++;
+
+      // 2. Upper 2 (Dynamic Sets & Steppers)
+      const u2Reps = gr.upper2.reps || 20;
+      const u2WeightOnly = (gr.upper2.weight || '35kg').split('×')[0].trim() || '35kg';
+      const u2SetContainer = document.getElementById('gymSetContainer_upper2');
+      const u2SetNum = document.getElementById('upper2SetNum');
+      const u2RepNum = document.getElementById('upper2RepNum');
+      const u2TargetLabel = document.getElementById('upper2TargetLabel');
+      const u2WeightSelect = document.getElementById('gymUpper2WeightSelect');
+
+      if (u2SetNum) u2SetNum.textContent = gr.upper2.sets.length;
+      if (u2RepNum) u2RepNum.textContent = `${u2Reps}회`;
+      if (u2TargetLabel) u2TargetLabel.textContent = `${u2WeightOnly} · ${u2Reps}회×${gr.upper2.sets.length}세트`;
+      if (u2WeightSelect) populateWeightSelect(u2WeightSelect, u2WeightOnly);
+
+      if (u2SetContainer) {
+        const cols = gr.upper2.sets.length <= 4 ? gr.upper2.sets.length : 3;
+        u2SetContainer.style.display = 'grid';
+        u2SetContainer.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+        u2SetContainer.style.gap = '6px';
+        u2SetContainer.innerHTML = gr.upper2.sets.map((done, i) => `
+          <button onclick="toggleGymSet('upper2', ${i})" class="${done
+            ? 'py-1.5 rounded-lg text-xs font-black bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400'
+            : 'py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400'}">
+            ${done ? `✓ ${i + 1}세트(${u2Reps}회)` : `${i + 1}세트(${u2Reps}회)`}
+          </button>
+        `).join('');
+      }
+      if (gr.upper2.sets.length > 0 && gr.upper2.sets.every(Boolean)) completedExCount++;
+
+      // 3. Lower 1 (Dynamic Sets & Steppers)
+      const lReps = gr.lower.reps || 20;
+      const lWeightOnly = (gr.lower.weight || '80kg').split('×')[0].trim() || '80kg';
+      const lSetContainer = document.getElementById('gymSetContainer_lower');
+      const lSetNum = document.getElementById('lowerSetNum');
+      const lRepNum = document.getElementById('lowerRepNum');
+      const lTargetLabel = document.getElementById('lowerTargetLabel');
+      const lWeightSelect = document.getElementById('gymLowerWeightSelect');
+
+      if (lSetNum) lSetNum.textContent = gr.lower.sets.length;
+      if (lRepNum) lRepNum.textContent = `${lReps}회`;
+      if (lTargetLabel) lTargetLabel.textContent = `${lWeightOnly} · ${lReps}회×${gr.lower.sets.length}세트`;
+      if (lWeightSelect) populateWeightSelect(lWeightSelect, lWeightOnly);
+
+      if (lSetContainer) {
+        const cols = gr.lower.sets.length <= 4 ? gr.lower.sets.length : 3;
+        lSetContainer.style.display = 'grid';
+        lSetContainer.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+        lSetContainer.style.gap = '6px';
+        lSetContainer.innerHTML = gr.lower.sets.map((done, i) => `
+          <button onclick="toggleGymSet('lower', ${i})" class="${done
+            ? 'py-1.5 rounded-lg text-xs font-black bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400'
+            : 'py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-emerald-400'}">
+            ${done ? `✓ ${i + 1}세트(${lReps}회)` : `${i + 1}세트(${lReps}회)`}
+          </button>
+        `).join('');
+      }
+      if (gr.lower.sets.length > 0 && gr.lower.sets.every(Boolean)) completedExCount++;
 
       // 4. Leg Raise (Dynamic set buttons)
       const lrContainer = document.getElementById('gymSetContainer_legRaise');
