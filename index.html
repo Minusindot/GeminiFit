@@ -261,7 +261,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.07</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.08</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -740,12 +740,19 @@
               <span class="text-[9px] text-sky-500 font-bold block">기본 20회×4세트 · 레그레이즈 50회×1세트 · 크런치 50회×2세트</span>
             </div>
           </div>
-          <div class="flex items-center gap-1.5 shrink-0">
+          <div class="flex items-center gap-1.5 shrink-0 flex-wrap justify-end">
+            <button onclick="openWorkoutRecommendModal()" class="px-2.5 py-1 rounded-lg bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-pink-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-700 dark:text-amber-300 border border-amber-400/40 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all active:scale-[0.98] whitespace-nowrap shrink-0" title="최근 1주일 운동 분석 기반 오늘 맞춤 루틴 자동 추천">
+              <span>✨</span>
+              <span>오늘 운동 추천받기</span>
+            </button>
+            <button onclick="openExerciseManageModal()" class="px-2 py-1 rounded-lg sub-box text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all hover:border-sky-400 whitespace-nowrap shrink-0" title="운동 종목 목록 추가 및 관리">
+              <span>⚙️</span>
+              <span>종목 관리</span>
+            </button>
             <button onclick="openWorkoutGraphModal()" class="px-2 py-1 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-600 dark:text-sky-300 border border-sky-400/30 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all whitespace-nowrap shrink-0" title="운동 세트 & 횟수 비교 그래프">
               <span>📊</span>
               <span>세트 그래프</span>
             </button>
-            
             <span id="gymProgressBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 font-black border border-sky-400/30 whitespace-nowrap shrink-0">
               0 / 5 완료
             </span>
@@ -758,7 +765,9 @@
             <div class="flex items-center gap-1.5 flex-1 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0"></span>
               <span class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-wide whitespace-nowrap shrink-0">상체 1</span>
-              <input type="text" id="gymUpper1Name" value="체스트 프레스" class="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-100 border-b border-dashed border-slate-300 dark:border-slate-600 focus:outline-none focus:border-sky-500 px-1 py-0.5 flex-1 min-w-[70px] truncate" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
+              <select id="gymUpper1Select" onchange="handleGymSelectChange('upper1', this.value)" class="bg-white dark:bg-slate-900 text-xs font-black text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 flex-1 min-w-[110px] truncate focus:outline-none focus:border-sky-500 cursor-pointer shadow-2xs">
+              </select>
+              <input type="hidden" id="gymUpper1Name" value="체스트 프레스">
             </div>
             <input type="text" id="gymUpper1Weight" value="40kg × 20회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-20 shrink-0" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
           </div>
@@ -776,7 +785,9 @@
             <div class="flex items-center gap-1.5 flex-1 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0"></span>
               <span class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-wide whitespace-nowrap shrink-0">상체 2</span>
-              <input type="text" id="gymUpper2Name" value="시티드 케이블 로우" class="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-100 border-b border-dashed border-slate-300 dark:border-slate-600 focus:outline-none focus:border-sky-500 px-1 py-0.5 flex-1 min-w-[70px] truncate" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
+              <select id="gymUpper2Select" onchange="handleGymSelectChange('upper2', this.value)" class="bg-white dark:bg-slate-900 text-xs font-black text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 flex-1 min-w-[110px] truncate focus:outline-none focus:border-sky-500 cursor-pointer shadow-2xs">
+              </select>
+              <input type="hidden" id="gymUpper2Name" value="시티드 케이블 로우">
             </div>
             <input type="text" id="gymUpper2Weight" value="35kg × 20회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-20 shrink-0" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
           </div>
@@ -794,7 +805,9 @@
             <div class="flex items-center gap-1.5 flex-1 min-w-0">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
               <span class="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-wide whitespace-nowrap shrink-0">하체 1</span>
-              <input type="text" id="gymLowerName" value="레그 프레스" class="bg-transparent text-xs font-extrabold text-slate-800 dark:text-slate-100 border-b border-dashed border-slate-300 dark:border-slate-600 focus:outline-none focus:border-emerald-500 px-1 py-0.5 flex-1 min-w-[70px] truncate" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
+              <select id="gymLowerSelect" onchange="handleGymSelectChange('lower', this.value)" class="bg-white dark:bg-slate-900 text-xs font-black text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 flex-1 min-w-[110px] truncate focus:outline-none focus:border-emerald-500 cursor-pointer shadow-2xs">
+              </select>
+              <input type="hidden" id="gymLowerName" value="레그 프레스">
             </div>
             <input type="text" id="gymLowerWeight" value="80kg × 20회" class="text-right text-[10px] font-mono text-slate-500 bg-transparent border-none focus:outline-none w-20 shrink-0" oninput="saveGymRoutineConfig()" onchange="saveGymRoutineConfig(true)">
           </div>
@@ -964,6 +977,20 @@
         </button>
       </div>
 
+    <!-- Workout Progress & Set Comparison Graph Modal -->
+    <div id="workoutGraphModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
+      <div class="game-card w-full max-w-lg max-h-[90vh] overflow-y-auto p-4 space-y-3.5 border-2 border-sky-400/50 shadow-2xl">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
+          <div class="flex items-center gap-1.5">
+            <span class="text-lg">📊</span>
+            <div>
+              <h3 class="text-sm font-black text-slate-900 dark:text-white">운동 기록 & 세트 비교 그래프</h3>
+              <p class="text-[10px] text-slate-400">세트 수 변화와 일자별 운동 볼륨 추이 실시간 비교</p>
+            </div>
+          </div>
+          <button onclick="closeWorkoutGraphModal()" class="w-7 h-7 rounded-lg sub-box flex items-center justify-center text-xs font-black text-slate-500 hover:text-rose-500 transition-colors">✕</button>
+        </div>
+
       <!-- Metric Filter Tabs -->
       <div class="flex flex-wrap gap-1 p-1 bg-slate-100 dark:bg-slate-800/80 rounded-xl">
         <button onclick="renderWorkoutGraph('all')" id="wgTab_all" class="px-2.5 py-1 rounded-lg text-[10px] font-extrabold bg-[#4a89dc] text-white shadow-xs">전체 총반복</button>
@@ -993,6 +1020,102 @@
         </div>
         <div id="wgHistoryList" class="space-y-1.5 max-h-36 overflow-y-auto pr-1">
           <!-- History items rendered here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Workout Recommendation Modal (1-Week Analysis -> Upper 2 + Lower 1) -->
+  <div id="workoutRecommendModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
+    <div class="game-card w-full max-w-lg max-h-[90vh] overflow-y-auto p-4 space-y-3.5 border-2 border-amber-400/50 shadow-2xl">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">✨</span>
+          <div>
+            <h3 class="text-sm font-black text-slate-900 dark:text-white flex items-center gap-1.5">
+              <span>AI 주간 루틴 분석 맞춤 추천</span>
+              <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-extrabold border border-amber-400/30">상체2 + 하체1</span>
+            </h3>
+            <p class="text-[10px] text-slate-400">최근 7일 운동 볼륨과 부위별 피로도를 분석한 최적의 오늘 루틴</p>
+          </div>
+        </div>
+        <button onclick="closeWorkoutRecommendModal()" class="w-7 h-7 rounded-lg sub-box flex items-center justify-center text-xs font-black text-slate-500 hover:text-rose-500 transition-colors">✕</button>
+      </div>
+
+      <!-- 7-Day Analysis Card -->
+      <div id="wrAnalysisCard" class="p-3 rounded-2xl bg-amber-500/10 border border-amber-400/30 space-y-2 text-xs">
+        <!-- Dynamically populated analysis -->
+      </div>
+
+      <!-- Recommended Routine Proposal Card -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs font-black text-slate-800 dark:text-slate-100">
+          <span>🎯 오늘 추천 세팅 (상체 2종목 + 하체 1종목)</span>
+          <span class="text-[10px] font-mono text-sky-500 font-bold">20회 × 4세트 코스</span>
+        </div>
+        <div id="wrRoutineProposal" class="space-y-1.5">
+          <!-- Dynamically populated proposal cards -->
+        </div>
+      </div>
+
+      <!-- Heroine Comment Bubble -->
+      <div id="wrHeroineSpeech" class="p-3 rounded-2xl sub-box flex items-start gap-2.5">
+        <!-- Dynamically populated comment -->
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="grid grid-cols-2 gap-2 pt-1">
+        <button onclick="closeWorkoutRecommendModal()" class="py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-extrabold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+          다음에 적용
+        </button>
+        <button onclick="applyRecommendedWorkout()" class="py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black shadow-md hover:opacity-95 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5">
+          <span>🚀 이 루틴으로 즉시 세팅</span>
+          <span class="text-[10px] bg-white/20 px-1.5 py-0.2 rounded-full font-bold">+15 EXP</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exercise Management & Custom Exercises Modal -->
+  <div id="exerciseManageModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
+    <div class="game-card w-full max-w-lg max-h-[90vh] overflow-y-auto p-4 space-y-3.5 border-2 border-indigo-400/50 shadow-2xl">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">⚙️</span>
+          <div>
+            <h3 class="text-sm font-black text-slate-900 dark:text-white">운동 종목 목록 & 커스텀 관리</h3>
+            <p class="text-[10px] text-slate-400">드롭다운에 표시할 상체/하체 주요 운동을 등록하고 관리합니다</p>
+          </div>
+        </div>
+        <button onclick="closeExerciseManageModal()" class="w-7 h-7 rounded-lg sub-box flex items-center justify-center text-xs font-black text-slate-500 hover:text-rose-500 transition-colors">✕</button>
+      </div>
+
+      <!-- Part Filter Tabs -->
+      <div class="flex gap-1.5 p-1 bg-slate-100 dark:bg-slate-800/80 rounded-xl text-xs font-black">
+        <button onclick="switchExerciseManageTab('upper')" id="emTab_upper" class="flex-1 py-1.5 rounded-lg bg-sky-500 text-white shadow-xs text-center transition-all">💪 상체 운동 (<span id="emUpperCount">0</span>)</button>
+        <button onclick="switchExerciseManageTab('lower')" id="emTab_lower" class="flex-1 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 sub-box text-center transition-all">🦵 하체 운동 (<span id="emLowerCount">0</span>)</button>
+      </div>
+
+      <!-- Add New Exercise Form -->
+      <div class="p-3 rounded-2xl bg-indigo-500/10 border border-indigo-400/30 space-y-2">
+        <span class="text-[11px] font-black text-indigo-600 dark:text-indigo-300 block">➕ 새로운 운동 종목 추가</span>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <input type="text" id="newExerciseName" placeholder="운동명 (예: 인클라인 덤벨 프레스)" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 col-span-2">
+          <input type="text" id="newExerciseWeight" placeholder="기본 무게 (예: 14kg × 20회)" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500">
+        </div>
+        <div class="flex items-center justify-between gap-2 pt-0.5">
+          <input type="text" id="newExerciseMuscle" placeholder="타겟 부위 설명 (예: 윗가슴 / 전면 삼각근)" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-2.5 py-1.5 text-[11px] font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 flex-1">
+          <button onclick="submitNewExercise()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black shadow-xs transition-all shrink-0">
+            추가하기
+          </button>
+        </div>
+      </div>
+
+      <!-- Exercise List View -->
+      <div class="space-y-1.5">
+        <span class="text-xs font-black text-slate-700 dark:text-slate-300 block">📋 등록된 운동 목록</span>
+        <div id="emExerciseList" class="space-y-1.5 max-h-56 overflow-y-auto pr-1">
+          <!-- Dynamically populated list -->
         </div>
       </div>
     </div>
@@ -6148,6 +6271,533 @@ ${err.message}
     // ============================================================================
     // GYM FULL COURSE ROUTINE & PERSISTENT HISTORY (20회x4세트 / 레그레이즈 50회 1세트 / 크런치 50회 2세트)
     // ============================================================================
+    // ============================================================================
+    // EXERCISE CATALOG & DROPDOWN MANAGEMENT (상체 / 하체 드롭다운 & 커스텀 목록)
+    // ============================================================================
+    const DEFAULT_EXERCISE_LIST = {
+      upper: [
+        { name: '체스트 프레스', muscle: '가슴/삼두', defaultWeight: '40kg × 20회', category: 'push' },
+        { name: '시티드 케이블 로우', muscle: '등/광배', defaultWeight: '35kg × 20회', category: 'pull' },
+        { name: '랫 풀 다운', muscle: '등/이두', defaultWeight: '35kg × 20회', category: 'pull' },
+        { name: '인클라인 덤벨 프레스', muscle: '윗가슴', defaultWeight: '14kg × 20회', category: 'push' },
+        { name: '벤치 프레스', muscle: '가슴 전반', defaultWeight: '40kg × 20회', category: 'push' },
+        { name: '덤벨 숄더 프레스', muscle: '어깨/전면', defaultWeight: '10kg × 20회', category: 'push' },
+        { name: '사이드 레터럴 레이즈', muscle: '어깨/측면', defaultWeight: '5kg × 20회', category: 'push' },
+        { name: '케이블 트라이셉스 푸시다운', muscle: '삼두', defaultWeight: '25kg × 20회', category: 'push' },
+        { name: '바이셉스 덤벨 컬', muscle: '이두', defaultWeight: '8kg × 20회', category: 'pull' },
+        { name: '펙 덱 플라이', muscle: '가슴 고립', defaultWeight: '30kg × 20회', category: 'push' },
+        { name: '어시스트 풀업', muscle: '등/광배', defaultWeight: '-30kg × 15회', category: 'pull' },
+        { name: '푸시업', muscle: '가슴/코어', defaultWeight: '맨몸 × 20회', category: 'push' },
+        { name: '딥스', muscle: '아랫가슴/삼두', defaultWeight: '맨몸 × 15회', category: 'push' }
+      ],
+      lower: [
+        { name: '레그 프레스', muscle: '대퇴사두/둔근', defaultWeight: '80kg × 20회', category: 'quad' },
+        { name: '바벨 스쿼트', muscle: '하체 전반', defaultWeight: '50kg × 20회', category: 'quad' },
+        { name: '덤벨 고블릿 스쿼트', muscle: '대퇴/둔근', defaultWeight: '16kg × 20회', category: 'quad' },
+        { name: '레그 익스텐션', muscle: '대퇴사두 고립', defaultWeight: '35kg × 20회', category: 'quad' },
+        { name: '라잉 레그 컬', muscle: '햄스트링', defaultWeight: '30kg × 20회', category: 'hamstring' },
+        { name: '워킹 런지', muscle: '둔근/햄스트링', defaultWeight: '덤벨 6kg × 20보', category: 'glute' },
+        { name: '힙 어브덕션', muscle: '둔근/내전근', defaultWeight: '40kg × 20회', category: 'glute' },
+        { name: '루마니안 데드리프트', muscle: '햄스트링/기립근', defaultWeight: '40kg × 15회', category: 'hamstring' },
+        { name: '카프 레이즈', muscle: '종아리', defaultWeight: '맨몸/35kg × 25회', category: 'calf' }
+      ]
+    };
+
+    function initExerciseList() {
+      if (!state.exerciseList) {
+        state.exerciseList = {
+          upper: JSON.parse(JSON.stringify(DEFAULT_EXERCISE_LIST.upper)),
+          lower: JSON.parse(JSON.stringify(DEFAULT_EXERCISE_LIST.lower))
+        };
+      }
+      if (!state.exerciseList.upper) state.exerciseList.upper = JSON.parse(JSON.stringify(DEFAULT_EXERCISE_LIST.upper));
+      if (!state.exerciseList.lower) state.exerciseList.lower = JSON.parse(JSON.stringify(DEFAULT_EXERCISE_LIST.lower));
+    }
+
+    function findExerciseInfo(name, part = null) {
+      initExerciseList();
+      const parts = part ? [part] : ['upper', 'lower'];
+      for (const p of parts) {
+        const item = (state.exerciseList[p] || []).find(e => e.name === name);
+        if (item) return item;
+      }
+      return null;
+    }
+
+    function renderExerciseDropdowns() {
+      initExerciseList();
+      const gr = state.gymRoutine;
+      if (!gr) return;
+
+      const upperItems = state.exerciseList.upper || [];
+      const lowerItems = state.exerciseList.lower || [];
+
+      // Helper to build options
+      const buildOptions = (items, selectedName, partLabel) => {
+        let hasSelected = items.some(e => e.name === selectedName);
+        let html = '';
+        if (selectedName && !hasSelected) {
+          html += `<option value="${selectedName}">★ ${selectedName} (현재 선택)</option>`;
+        }
+        html += `<optgroup label="📋 ${partLabel} 주요 운동">`;
+        items.forEach(e => {
+          const isSel = (e.name === selectedName) ? 'selected' : '';
+          html += `<option value="${e.name}" ${isSel}>${e.name} (${e.muscle || ''})</option>`;
+        });
+        html += `</optgroup>`;
+        html += `<optgroup label="⚙️ 관리">
+          <option value="__ADD_NEW__">➕ 새 운동 추가하기...</option>
+          <option value="__MANAGE__">⚙️ 운동 목록 관리...</option>
+        </optgroup>`;
+        return html;
+      };
+
+      const u1Select = document.getElementById('gymUpper1Select');
+      const u2Select = document.getElementById('gymUpper2Select');
+      const lSelect = document.getElementById('gymLowerSelect');
+
+      if (u1Select) {
+        u1Select.innerHTML = buildOptions(upperItems, gr.upper1?.name || '체스트 프레스', '상체');
+        if (gr.upper1?.name) u1Select.value = gr.upper1.name;
+      }
+      if (u2Select) {
+        u2Select.innerHTML = buildOptions(upperItems, gr.upper2?.name || '시티드 케이블 로우', '상체');
+        if (gr.upper2?.name) u2Select.value = gr.upper2.name;
+      }
+      if (lSelect) {
+        lSelect.innerHTML = buildOptions(lowerItems, gr.lower?.name || '레그 프레스', '하체');
+        if (gr.lower?.name) lSelect.value = gr.lower.name;
+      }
+    }
+
+    function handleGymSelectChange(exKey, value) {
+      if (value === '__ADD_NEW__') {
+        openExerciseManageModal(exKey.startsWith('upper') ? 'upper' : 'lower');
+        renderExerciseDropdowns();
+        return;
+      }
+      if (value === '__MANAGE__') {
+        openExerciseManageModal(exKey.startsWith('upper') ? 'upper' : 'lower');
+        renderExerciseDropdowns();
+        return;
+      }
+
+      initGymRoutine();
+      state.gymRoutine[exKey].name = value;
+
+      // Update hidden input if present
+      const hiddenInput = document.getElementById(exKey === 'upper1' ? 'gymUpper1Name' : exKey === 'upper2' ? 'gymUpper2Name' : 'gymLowerName');
+      if (hiddenInput) hiddenInput.value = value;
+
+      // If weight field has a default suggestion, optionally update
+      const info = findExerciseInfo(value, exKey.startsWith('upper') ? 'upper' : 'lower');
+      const weightEl = document.getElementById(exKey === 'upper1' ? 'gymUpper1Weight' : exKey === 'upper2' ? 'gymUpper2Weight' : 'gymLowerWeight');
+      if (info && info.defaultWeight && weightEl) {
+        weightEl.value = info.defaultWeight;
+        state.gymRoutine[exKey].weight = info.defaultWeight;
+      }
+
+      saveState();
+      saveCurrentGymSession(false);
+      renderGymUI();
+      playBeep(640, 0.05);
+      showFloatingToast(`${exKey.startsWith('upper') ? '상체' : '하체'} 운동이 [${value}]로 설정되었습니다.`, '🏋️');
+    }
+
+    // ============================================================================
+    // EXERCISE MANAGEMENT MODAL FUNCTIONS
+    // ============================================================================
+    let currentManagePart = 'upper';
+
+    function openExerciseManageModal(part = 'upper') {
+      initExerciseList();
+      currentManagePart = part;
+      document.getElementById('exerciseManageModal').classList.remove('hidden');
+      switchExerciseManageTab(part);
+      playBeep(720, 0.06);
+    }
+
+    function closeExerciseManageModal() {
+      document.getElementById('exerciseManageModal').classList.add('hidden');
+      renderExerciseDropdowns();
+    }
+
+    function switchExerciseManageTab(part) {
+      currentManagePart = part;
+      const tabUpper = document.getElementById('emTab_upper');
+      const tabLower = document.getElementById('emTab_lower');
+      if (part === 'upper') {
+        tabUpper.className = "flex-1 py-1.5 rounded-lg bg-sky-500 text-white shadow-xs text-center transition-all font-black";
+        tabLower.className = "flex-1 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 sub-box text-center transition-all font-bold";
+      } else {
+        tabLower.className = "flex-1 py-1.5 rounded-lg bg-emerald-500 text-white shadow-xs text-center transition-all font-black";
+        tabUpper.className = "flex-1 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 sub-box text-center transition-all font-bold";
+      }
+      renderExerciseManageList();
+    }
+
+    function renderExerciseManageList() {
+      initExerciseList();
+      const listEl = document.getElementById('emExerciseList');
+      const uCount = document.getElementById('emUpperCount');
+      const lCount = document.getElementById('emLowerCount');
+      if (uCount) uCount.textContent = (state.exerciseList.upper || []).length;
+      if (lCount) lCount.textContent = (state.exerciseList.lower || []).length;
+
+      const items = state.exerciseList[currentManagePart] || [];
+      if (!listEl) return;
+
+      listEl.innerHTML = items.map((item, idx) => `
+        <div class="p-2 rounded-xl sub-box flex items-center justify-between text-xs hover:border-slate-400/40 transition-all">
+          <div class="min-w-0 flex-1 pr-2">
+            <div class="flex items-center gap-1.5">
+              <span class="font-extrabold text-slate-800 dark:text-slate-100 truncate">${item.name}</span>
+              ${item.custom ? '<span class="text-[9px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-extrabold">커스텀</span>' : ''}
+              <span class="text-[9px] px-1.5 py-0.2 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-mono">${item.muscle || '전반'}</span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-mono block mt-0.5">기본: ${item.defaultWeight || '20회 × 4세트'}</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <button onclick="selectExerciseDirectly('${currentManagePart}', '${item.name}')" class="px-2 py-1 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-300 font-black text-[10px] whitespace-nowrap">
+              선택
+            </button>
+            <button onclick="deleteExercise('${currentManagePart}', ${idx})" class="px-1.5 py-1 rounded-lg text-slate-400 hover:text-rose-500 font-black text-xs" title="삭제">
+              ✕
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function submitNewExercise() {
+      initExerciseList();
+      const nameInput = document.getElementById('newExerciseName');
+      const weightInput = document.getElementById('newExerciseWeight');
+      const muscleInput = document.getElementById('newExerciseMuscle');
+
+      const name = nameInput.value.trim();
+      if (!name) {
+        showFloatingToast('운동 종목 이름을 입력해주세요!', '⚠️');
+        nameInput.focus();
+        return;
+      }
+
+      // Check duplicates
+      const exists = (state.exerciseList[currentManagePart] || []).some(e => e.name === name);
+      if (exists) {
+        showFloatingToast('이미 등록되어 있는 운동 종목입니다!', '⚠️');
+        return;
+      }
+
+      const defaultWeight = weightInput.value.trim() || '20회 × 4세트';
+      const muscle = muscleInput.value.trim() || (currentManagePart === 'upper' ? '상체 전반' : '하체 전반');
+
+      state.exerciseList[currentManagePart].push({
+        name,
+        muscle,
+        defaultWeight,
+        category: currentManagePart === 'upper' ? 'push' : 'quad',
+        custom: true
+      });
+
+      nameInput.value = '';
+      weightInput.value = '';
+      muscleInput.value = '';
+
+      saveState();
+      renderExerciseManageList();
+      renderExerciseDropdowns();
+      playBeep(880, 0.1);
+      showFloatingToast(`'${name}' 운동이 목록에 추가되었습니다! ✨`, '💪');
+    }
+
+    function deleteExercise(part, index) {
+      initExerciseList();
+      const item = state.exerciseList[part][index];
+      if (!item) return;
+
+      if (!confirm(`'${item.name}' 종목을 목록에서 삭제하시겠습니까?`)) return;
+
+      state.exerciseList[part].splice(index, 1);
+      saveState();
+      renderExerciseManageList();
+      renderExerciseDropdowns();
+      showFloatingToast(`'${item.name}' 삭제 완료`, '🗑️');
+    }
+
+    function selectExerciseDirectly(part, name) {
+      initGymRoutine();
+      if (part === 'upper') {
+        state.gymRoutine.upper1.name = name;
+      } else {
+        state.gymRoutine.lower.name = name;
+      }
+      saveState();
+      renderGymUI();
+      closeExerciseManageModal();
+      showFloatingToast(`[${name}] 운동으로 세팅되었습니다!`, '✅');
+    }
+
+    // ============================================================================
+    // AI 1-WEEK WORKOUT ANALYSIS & RECOMMENDATION (오늘 운동 추천: 상체2 + 하체1)
+    // ============================================================================
+    let pendingRecommendation = null;
+
+    function openWorkoutRecommendModal() {
+      initGymRoutine();
+      initExerciseList();
+      analyzeAndRecommendWorkout();
+      document.getElementById('workoutRecommendModal').classList.remove('hidden');
+      playBeep(780, 0.1);
+    }
+
+    function closeWorkoutRecommendModal() {
+      document.getElementById('workoutRecommendModal').classList.add('hidden');
+    }
+
+    function analyzeAndRecommendWorkout() {
+      initExerciseList();
+      const now = new Date();
+      const todayStr = getLocalDateString(now);
+      const sevenDaysAgoTime = Date.now() - 7 * 86400000;
+
+      // 1. Gather recent 7-day gym sessions
+      const recentSessions = (state.gymHistory || []).filter(h => {
+        if (!h.fullDate) return false;
+        const d = new Date(h.fullDate).getTime();
+        return !isNaN(d) && d >= sevenDaysAgoTime;
+      });
+
+      // 2. Count workout frequencies and days since last done
+      const upperDoneMap = {};
+      const lowerDoneMap = {};
+      let totalUpperSets = 0;
+      let totalLowerSets = 0;
+
+      recentSessions.forEach(s => {
+        const u1 = s.upper1Name || '체스트 프레스';
+        const u2 = s.upper2Name || '시티드 케이블 로우';
+        const l = s.lowerName || '레그 프레스';
+
+        upperDoneMap[u1] = (upperDoneMap[u1] || 0) + (s.upper1Done || 4);
+        upperDoneMap[u2] = (upperDoneMap[u2] || 0) + (s.upper2Done || 4);
+        lowerDoneMap[l] = (lowerDoneMap[l] || 0) + (s.lowerDone || 4);
+
+        totalUpperSets += (s.upper1Done || 0) + (s.upper2Done || 0);
+        totalLowerSets += (s.lowerDone || 0);
+      });
+
+      // 3. Check recent running
+      const latestRun = state.latestRun || null;
+      let ranRecently = false;
+      let runKm = 0;
+      if (latestRun && latestRun.date) {
+        const runDaysAgo = Math.floor((Date.now() - new Date(latestRun.date).getTime()) / 86400000);
+        if (runDaysAgo <= 2 && latestRun.distance >= 4) {
+          ranRecently = true;
+          runKm = latestRun.distance;
+        }
+      }
+
+      // 4. Exercise catalog separation into Push vs Pull for Upper
+      const upperList = state.exerciseList.upper || DEFAULT_EXERCISE_LIST.upper;
+      const lowerList = state.exerciseList.lower || DEFAULT_EXERCISE_LIST.lower;
+
+      const pushExercises = upperList.filter(e => e.category === 'push' || /가슴|어깨|삼두/.test(e.muscle));
+      const pullExercises = upperList.filter(e => e.category === 'pull' || /등|이두|광배/.test(e.muscle));
+
+      // Scoring: lower done count in past 7 days = higher priority
+      const getBestExercise = (candidates, doneMap) => {
+        if (candidates.length === 0) return null;
+        const sorted = [...candidates].sort((a, b) => {
+          const countA = doneMap[a.name] || 0;
+          const countB = doneMap[b.name] || 0;
+          return countA - countB;
+        });
+        return sorted[0];
+      };
+
+      // Upper 1: Best push
+      const bestPush = getBestExercise(pushExercises, upperDoneMap) || pushExercises[0] || { name: '체스트 프레스', muscle: '가슴/삼두', defaultWeight: '40kg × 20회' };
+      // Upper 2: Best pull (ensures perfect Push & Pull balance!)
+      const bestPull = getBestExercise(pullExercises, upperDoneMap) || pullExercises[0] || { name: '시티드 케이블 로우', muscle: '등/광배', defaultWeight: '35kg × 20회' };
+
+      // Lower 1: If ran recently, favor machine quad/isolation or glute over heavy squats
+      let lowerCandidates = lowerList;
+      if (ranRecently) {
+        lowerCandidates = lowerList.filter(e => /익스텐션|컬|어브덕션|프레스/.test(e.name));
+        if (lowerCandidates.length === 0) lowerCandidates = lowerList;
+      }
+      const bestLower = getBestExercise(lowerCandidates, lowerDoneMap) || lowerList[0] || { name: '레그 프레스', muscle: '대퇴사두', defaultWeight: '80kg × 20회' };
+
+      pendingRecommendation = {
+        upper1: bestPush,
+        upper2: bestPull,
+        lower: bestLower,
+        recentSessionsCount: recentSessions.length,
+        totalUpperSets,
+        totalLowerSets,
+        ranRecently,
+        runKm
+      };
+
+      // 5. Render Analysis Card
+      const analysisEl = document.getElementById('wrAnalysisCard');
+      if (analysisEl) {
+        analysisEl.innerHTML = `
+          <div class="flex items-center justify-between pb-1.5 border-b border-amber-300/40">
+            <span class="font-black text-amber-800 dark:text-amber-200">📊 최근 7일 운동 데이터 분석</span>
+            <span class="font-mono text-[10px] text-amber-600 dark:text-amber-400 font-extrabold">${recentSessions.length}회 헬스 세션 기록</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-[11px] pt-1">
+            <div class="p-2 rounded-xl sub-box">
+              <span class="text-slate-400 block text-[10px]">상체 누적 볼륨</span>
+              <span class="font-black text-slate-800 dark:text-slate-100">${totalUpperSets}세트 완료</span>
+              <span class="text-[9px] text-emerald-500 font-bold block mt-0.5">밀기·당기기 황금 밸런스</span>
+            </div>
+            <div class="p-2 rounded-xl sub-box">
+              <span class="text-slate-400 block text-[10px]">하체 & 유산소 연동</span>
+              <span class="font-black text-slate-800 dark:text-slate-100">${totalLowerSets}세트 ${ranRecently ? `· 러닝 ${runKm}km` : ''}</span>
+              <span class="text-[9px] text-sky-500 font-bold block mt-0.5">${ranRecently ? '관절 보호 머신 위주' : '대퇴·둔근 집중'}</span>
+            </div>
+          </div>
+          <p class="text-[10px] text-amber-800/90 dark:text-amber-200/90 leading-relaxed pt-1">
+            💡 <strong>AI 분석 근거:</strong> 지난 7일간 덜 자극되었거나 회복이 완료된 <strong>[${bestPush.muscle}]</strong>과 <strong>[${bestPull.muscle}]</strong>을 상체 1·2로 배치하고, 하체는 <strong>[${bestLower.name}]</strong>으로 조화롭게 선별했습니다.
+          </p>
+        `;
+      }
+
+      // 6. Render Proposal Cards
+      const propEl = document.getElementById('wrRoutineProposal');
+      if (propEl) {
+        propEl.innerHTML = `
+          <!-- Upper 1 -->
+          <div class="p-2.5 rounded-xl sub-box flex items-center justify-between border-l-4 border-l-sky-500">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[9px] font-black uppercase text-sky-500">상체 1</span>
+                  <span class="text-xs font-black text-slate-800 dark:text-slate-100">${bestPush.name}</span>
+                  <span class="text-[9px] px-1 rounded bg-sky-500/10 text-sky-600 dark:text-sky-300 font-bold">${bestPush.muscle}</span>
+                </div>
+                <span class="text-[10px] text-slate-400 font-mono">추천: ${bestPush.defaultWeight || '40kg × 20회'} (4세트)</span>
+              </div>
+            </div>
+            <span class="text-[10px] font-black text-emerald-500">회복률 95%</span>
+          </div>
+
+          <!-- Upper 2 -->
+          <div class="p-2.5 rounded-xl sub-box flex items-center justify-between border-l-4 border-l-sky-500">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[9px] font-black uppercase text-sky-500">상체 2</span>
+                  <span class="text-xs font-black text-slate-800 dark:text-slate-100">${bestPull.name}</span>
+                  <span class="text-[9px] px-1 rounded bg-sky-500/10 text-sky-600 dark:text-sky-300 font-bold">${bestPull.muscle}</span>
+                </div>
+                <span class="text-[10px] text-slate-400 font-mono">추천: ${bestPull.defaultWeight || '35kg × 20회'} (4세트)</span>
+              </div>
+            </div>
+            <span class="text-[10px] font-black text-emerald-500">회복률 90%</span>
+          </div>
+
+          <!-- Lower 1 -->
+          <div class="p-2.5 rounded-xl sub-box flex items-center justify-between border-l-4 border-l-emerald-500">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[9px] font-black uppercase text-emerald-500">하체 1</span>
+                  <span class="text-xs font-black text-slate-800 dark:text-slate-100">${bestLower.name}</span>
+                  <span class="text-[9px] px-1 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 font-bold">${bestLower.muscle}</span>
+                </div>
+                <span class="text-[10px] text-slate-400 font-mono">추천: ${bestLower.defaultWeight || '80kg × 20회'} (4세트)</span>
+              </div>
+            </div>
+            <span class="text-[10px] font-black text-emerald-500">최적 볼륨</span>
+          </div>
+        `;
+      }
+
+      // 7. Render Heroine Speech Bubble
+      const speechEl = document.getElementById('wrHeroineSpeech');
+      if (speechEl) {
+        const trainer = state.activeTrainer || 'kotone';
+        let img = './image/02 kotone/kotone_15_gym_locker_smile.png';
+        let name = '코토네';
+        let quote = `프로듀서님! 일주일 운동 기록을 꼼꼼히 살펴봤어요~ 오늘은 상체 밀기[${bestPush.name}]와 당기기[${bestPull.name}], 그리고 하체[${bestLower.name}]의 완벽한 3분할 콤보예요! 힘내서 멋지게 당겨봐요! 💛`;
+
+        if (trainer === 'gemini') {
+          img = './image/03 gemini/gemini_01_standing_cheer.png';
+          name = '제미니';
+          quote = `어머나 프로듀서님, 지난 7일간의 노고를 돌아보니 근육 회복 주기상 오늘은 [${bestPush.name}]과 [${bestPull.name}]의 궁합이 참으로 빼어나옵니다 🌸 하체는 무리 없이 [${bestLower.name}]로 단련해 보시지요 🐾`;
+        } else if (trainer === 'mio') {
+          img = './image/01 mio/mio_01_sports_standing.png';
+          name = '미오';
+          quote = `좋았어 프로듀서! 최근 러닝이랑 상체 세트 데이터를 보니 오늘 상체 2종목이랑 하체 1종목 밸런스가 딱이야! 20회씩 4세트, 나와 함께 불태워보자구! 🔥`;
+        }
+
+        speechEl.innerHTML = `
+          <img src="${img}" class="w-11 h-11 rounded-full object-cover shrink-0 border border-slate-300 dark:border-slate-600">
+          <div class="space-y-0.5">
+            <span class="text-[10px] font-black text-slate-500 dark:text-slate-400">${name}의 트레이닝 조언</span>
+            <p class="text-[11px] text-slate-800 dark:text-slate-100 font-medium leading-snug">${quote}</p>
+          </div>
+        `;
+      }
+    }
+
+    function applyRecommendedWorkout() {
+      if (!pendingRecommendation) return;
+
+      initGymRoutine();
+      const gr = state.gymRoutine;
+      const rec = pendingRecommendation;
+
+      // Set upper1, upper2, lower
+      gr.upper1.name = rec.upper1.name;
+      gr.upper1.weight = rec.upper1.defaultWeight || '40kg × 20회';
+      gr.upper1.sets = [false, false, false, false];
+
+      gr.upper2.name = rec.upper2.name;
+      gr.upper2.weight = rec.upper2.defaultWeight || '35kg × 20회';
+      gr.upper2.sets = [false, false, false, false];
+
+      gr.lower.name = rec.lower.name;
+      gr.lower.weight = rec.lower.defaultWeight || '80kg × 20회';
+      gr.lower.sets = [false, false, false, false];
+
+      gr.allDone = false;
+
+      // Add EXP reward for using smart recommendation
+      addBondExp(15);
+      saveState();
+      saveCurrentGymSession(false);
+      renderGymUI();
+
+      // Post chat notification
+      const curTime = getKakaoTimeStr();
+      state.chatHistory.push({
+        room: 'all',
+        sender: state.activeTrainer || 'kotone',
+        name: (state.activeTrainer === 'gemini') ? '제미니' : (state.activeTrainer === 'mio') ? '미오' : '코토네',
+        text: `🎯 [AI 주간 맞춤 루틴 세팅 완료!]
+• 상체 1: ${rec.upper1.name} (${rec.upper1.defaultWeight})
+• 상체 2: ${rec.upper2.name} (${rec.upper2.defaultWeight})
+• 하체 1: ${rec.lower.name} (${rec.lower.defaultWeight})
+
+오늘도 5종목 올클리어 화이팅이에요 프로듀서님! 💪✨`,
+        time: curTime
+      });
+      renderChat();
+
+      closeWorkoutRecommendModal();
+      playBeep(980, 0.2);
+      showFloatingToast('오늘의 맞춤 상체2 + 하체1 루틴이 완벽히 세팅되었습니다! (+15 EXP)', '🎯');
+    }
+
     function initGymRoutine() {
       if (!state.gymRoutine) {
         state.gymRoutine = {
@@ -6269,18 +6919,32 @@ ${err.message}
 
     function saveGymRoutineConfig() {
       initGymRoutine();
-      const u1 = document.getElementById('gymUpper1Name');
+      const u1 = document.getElementById('gymUpper1Select') || document.getElementById('gymUpper1Name');
       const u1w = document.getElementById('gymUpper1Weight');
-      const u2 = document.getElementById('gymUpper2Name');
+      const u2 = document.getElementById('gymUpper2Select') || document.getElementById('gymUpper2Name');
       const u2w = document.getElementById('gymUpper2Weight');
-      const l = document.getElementById('gymLowerName');
+      const l = document.getElementById('gymLowerSelect') || document.getElementById('gymLowerName');
       const lw = document.getElementById('gymLowerWeight');
 
-      if (u1) state.gymRoutine.upper1.name = u1.value;
+      if (u1 && u1.value && !u1.value.startsWith('__')) {
+        state.gymRoutine.upper1.name = u1.value;
+        const hiddenU1 = document.getElementById('gymUpper1Name');
+        if (hiddenU1) hiddenU1.value = u1.value;
+      }
       if (u1w) state.gymRoutine.upper1.weight = u1w.value;
-      if (u2) state.gymRoutine.upper2.name = u2.value;
+
+      if (u2 && u2.value && !u2.value.startsWith('__')) {
+        state.gymRoutine.upper2.name = u2.value;
+        const hiddenU2 = document.getElementById('gymUpper2Name');
+        if (hiddenU2) hiddenU2.value = u2.value;
+      }
       if (u2w) state.gymRoutine.upper2.weight = u2w.value;
-      if (l) state.gymRoutine.lower.name = l.value;
+
+      if (l && l.value && !l.value.startsWith('__')) {
+        state.gymRoutine.lower.name = l.value;
+        const hiddenL = document.getElementById('gymLowerName');
+        if (hiddenL) hiddenL.value = l.value;
+      }
       if (lw) state.gymRoutine.lower.weight = lw.value;
 
       saveState();
@@ -6323,9 +6987,9 @@ ${err.message}
         date: dateLabel,
         fullDate,
         time: timeStr,
-        upper1Done: u1Done, upper1Reps: u1Done * 20,
-        upper2Done: u2Done, upper2Reps: u2Done * 20,
-        lowerDone: lDone, lowerReps: lDone * 20,
+        upper1Done: u1Done, upper1Reps: u1Done * 20, upper1Name: gr.upper1.name,
+        upper2Done: u2Done, upper2Reps: u2Done * 20, upper2Name: gr.upper2.name,
+        lowerDone: lDone, lowerReps: lDone * 20, lowerName: gr.lower.name,
         legRaiseDone: lrDone, legRaiseReps: lrDone * 50, legRaiseTarget: gr.legRaise.sets.length,
         crunchDone: crDone, crunchReps: crDone * 50, crunchTarget: gr.crunch.sets.length,
         totalSets,
@@ -6407,6 +7071,8 @@ ${err.message}
 
     function renderGymUI() {
       initGymRoutine();
+      initExerciseList();
+      renderExerciseDropdowns();
       const gr = state.gymRoutine;
       let completedExCount = 0;
 
