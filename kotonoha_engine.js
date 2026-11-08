@@ -1158,16 +1158,20 @@ async function generateAiKotonohaLesson() {
 // VISUAL NOVEL HYBRID VISUAL RESOLVER (Seamless SCG + BG & Full ECG Fallback)
 // ============================================================================
 function resolveKotonohaVisuals(step, lesson, stepIdx = -1, prevSceneImg = '') {
-  // 1. Adaptive mixing: ECG for impactful beats (emotion peaks / cinematic scenes),
-  //    SCG for calm beats. Deterministic so the mix is stable across sessions.
+  // 1. Visual mix policy: SCG + BG is the DEFAULT. ECG full-illustration only for
+  //    strong emotional beats, clearly cinematic scenes, or an occasional stable beat.
   if (step.sceneImg) {
     const sceneLower = (step.sceneImg || '').toLowerCase();
-    const prevLower = (prevSceneImg || '').toLowerCase();
-    const cinematic = /(night|rooftop|sunset|splash|pool|secret|ikezu|blush|extreme|massive|fireworks|beach|winter|osaka|takoyaki|yukata|ryokan|onsen|lantern)/.test(sceneLower);
-    const emotionalExpr = ['shock', 'dark', 'cry', 'love', 'sleepy', 'smirk', 'angry'].includes(step.expr || '');
-    const sceneChange = prevLower && prevLower !== sceneLower;
-    const every3rd = stepIdx >= 0 && (stepIdx % 3 === 0);
-    if (emotionalExpr || cinematic || sceneChange || every3rd) {
+    const cinematic = /(night|secret|rooftop|sunset|splash|pool|fireworks|extreme|ikezu|blush|massive|winter|ryokan|onsen)/.test(sceneLower);
+    const strongExpr = ['shock', 'dark', 'cry', 'love'].includes(step.expr || '');
+    const h = (() => {
+      const s = String(lesson.id || '') + ':' + stepIdx + ':' + sceneLower;
+      let x = 0;
+      for (let i = 0; i < s.length; i++) x = (x * 31 + s.charCodeAt(i)) >>> 0;
+      return x;
+    })();
+    const useEcg = (strongExpr && (h % 4) <= 2) || (strongExpr && cinematic) || (cinematic && (h % 4) === 0) || (h % 5) === 2;
+    if (useEcg) {
       return {
         isScg: false,
         ecgUrl: step.sceneImg,
