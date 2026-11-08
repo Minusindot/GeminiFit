@@ -1340,18 +1340,18 @@ function renderKotonohaView() {
         </div>
 
         <!-- Full Illustration Cinematic Stage: Click anywhere to advance -->
-        <div class="relative w-full min-h-[500px] sm:min-h-[560px] flex flex-col justify-between bg-[#0e0a0c] cursor-pointer overflow-hidden" onclick="stepKotonohaStory(1)">
+        <div class="relative w-full flex flex-col bg-[#0e0a0c] cursor-pointer overflow-hidden" onclick="stepKotonohaStory(1)">
           
           <!-- Visual Presentation: True Transparent SCG (Commercial VN large standing) vs Clean Full ECG -->
-          <div class="relative w-full h-[340px] sm:h-[400px] overflow-hidden bg-[#0c080a] flex items-end justify-center">
+          <div class="relative w-full h-[420px] sm:h-[500px] overflow-hidden bg-[#0c080a] flex items-start justify-center">
             ${visuals.isScg ? `
               <!-- [TRUE SCG + BG MODE] Pure Background Layer (No Characters) -->
               <img src="${visuals.bgUrl}" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.85] contrast-[1.02] pointer-events-none transition-all duration-500">
               <div class="absolute inset-0 bg-gradient-to-t from-[#141013] via-transparent to-black/25 pointer-events-none"></div>
 
-              <!-- Pure Standing Character Sprite (Alpha Transparent PNG) — commercial VN full-height placement -->
-              <div class="relative z-10 h-full flex items-end justify-center pointer-events-none w-full">
-                <img src="${visuals.scgUrl}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="relative h-[100%] w-auto max-w-none object-contain object-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
+              <!-- Pure Standing Character Sprite (Alpha Transparent PNG) — oversized, head near top, feet cropped (classic VN look) -->
+              <div class="relative z-10 h-full flex items-start justify-center pointer-events-none w-full">
+                <img src="${visuals.scgUrl}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="relative h-[122%] w-auto max-w-none object-contain object-top drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
               </div>
             ` : `
               <!-- [CLEAN FULL ECG MODE] Cinematic Ambient Blur + Center Illustration (Never Cut Off) -->
@@ -1362,8 +1362,8 @@ function renderKotonohaView() {
             <div class="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-[#141013]"></div>
           </div>
 
-          <!-- Bottom Dialogue Box: Translucent VN Card -->
-          <div class="relative z-30 mx-3 mb-3 p-4 rounded-2xl bg-[#1e161a]/95 border border-[#48303a] shadow-2xl backdrop-blur-md space-y-2.5">
+          <!-- Bottom Dialogue Box: Translucent VN Card (overlays bottom of the stage, classic VN layering) -->
+          <div class="absolute left-3 right-3 bottom-3 z-30 p-4 rounded-2xl bg-[#1e161a]/95 border border-[#48303a] shadow-2xl backdrop-blur-md space-y-2.5">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
                 <img src="${step.avatar || './image/03 gemini/avatar_gemini.png'}" class="w-7 h-7 rounded-full object-cover ring-2 ring-[#e0465a] shadow-xs">
