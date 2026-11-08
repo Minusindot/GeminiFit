@@ -29,7 +29,14 @@ WORK_DIR = os.path.join(BASE_DIR, "image", "_scg_work")
 OUT_DIR = os.path.join(BASE_DIR, "image", "scg")
 
 EXPRESSIONS = ["idle", "smile", "sad", "angry", "shy", "shock", "dark", "joke"]
-CHARS = ["gemini", "kotone", "mio"]
+# char folder under _scg_work -> (output subdir under image/scg, file-name parts)
+OUTFIT_TARGETS = {
+    "gemini": ("gemini", "gemini_default_"),
+    "gemini_menhera": ("gemini", "gemini_menhera_"),
+    "kotone": ("kotone", "kotone_default_"),
+    "mio": ("mio", "mio_default_"),
+}
+CHARS = ["gemini", "gemini_menhera", "kotone", "mio"]
 
 # canvas target per VN_ASSET_SPEC.md is ~1080x2560 portrait (ratio 1:2.37).
 # Engine renders object-contain; we keep a tall canvas with identical layout.
@@ -63,7 +70,8 @@ def trim_box_from_alpha(alpha: np.ndarray, pad: int = 16):
 
 def process_character(char: str, only_expr: str | None = None):
     work = os.path.join(WORK_DIR, char)
-    out = os.path.join(OUT_DIR, char)
+    out_subdir, prefix = OUTFIT_TARGETS.get(char, (char, f"{char}_default_"))
+    out = os.path.join(OUT_DIR, out_subdir)
     os.makedirs(out, exist_ok=True)
 
     # 1) chroma key every available expression, keep in memory
@@ -112,7 +120,7 @@ def process_character(char: str, only_expr: str | None = None):
         resized = cropped.resize((tw, th), Image.LANCZOS)
         canvas = Image.new("RGBA", (CANVAS_W, CANVAS_H), (0, 0, 0, 0))
         canvas.paste(resized, (ox, oy), resized)
-        dst = os.path.join(out, f"{char}_default_{expr}.png")
+        dst = os.path.join(out, f"{prefix}{expr}.png")
         canvas.save(dst)
         alpha_pct = 100 * (np.asarray(resized)[..., 3] > 10).mean()
         print(f"  [ok] {dst} ({tw}x{th} on {CANVAS_W}x{CANVAS_H}, alpha={alpha_pct:.1f}%)")

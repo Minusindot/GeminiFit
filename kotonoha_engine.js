@@ -1343,16 +1343,16 @@ function renderKotonohaView() {
         <!-- Full Illustration Cinematic Stage: Click anywhere to advance -->
         <div class="relative w-full min-h-[500px] sm:min-h-[560px] flex flex-col justify-between bg-[#0e0a0c] cursor-pointer overflow-hidden" onclick="stepKotonohaStory(1)">
           
-          <!-- Visual Presentation: True Transparent SCG + BG vs Clean Full ECG -->
-          <div class="relative w-full h-72 sm:h-84 overflow-hidden bg-[#0c080a] flex items-center justify-center">
+          <!-- Visual Presentation: True Transparent SCG (Commercial VN large standing) vs Clean Full ECG -->
+          <div class="relative w-full h-[340px] sm:h-[400px] overflow-hidden bg-[#0c080a] flex items-end justify-center">
             ${visuals.isScg ? `
               <!-- [TRUE SCG + BG MODE] Pure Background Layer (No Characters) -->
               <img src="${visuals.bgUrl}" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.85] contrast-[1.02] pointer-events-none transition-all duration-500">
               <div class="absolute inset-0 bg-gradient-to-t from-[#141013] via-transparent to-black/25 pointer-events-none"></div>
 
-              <!-- Pure Standing Character Sprite (Alpha Transparent PNG) with Cross-fade transition -->
-              <div class="relative z-10 h-full flex items-end justify-center pointer-events-none">
-                <img src="${visuals.scgUrl}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="max-h-[96%] max-w-[85%] object-contain object-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
+              <!-- Pure Standing Character Sprite (Alpha Transparent PNG) — scaled to ~135% for commercial VN presence -->
+              <div class="relative z-10 h-full flex items-end justify-center pointer-events-none w-full">
+                <img src="${visuals.scgUrl}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="relative h-[135%] w-auto max-w-none object-contain object-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
               </div>
             ` : `
               <!-- [CLEAN FULL ECG MODE] Cinematic Ambient Blur + Center Illustration (Never Cut Off) -->

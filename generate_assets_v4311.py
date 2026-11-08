@@ -43,12 +43,25 @@ STYLE = ("anime visual novel gal-game art style, soft painterly shading, "
 
 CHARACTERS = {
     "gemini": {
-        "desc": ("a beautiful young woman with long black hair and cute cat ears, "
-                 "calm dignified Kyoto tea-house master personality, wearing an elegant "
-                 "white and navy sports jacket with pink accents, shorts and athletic shoes"),
+        "desc": ("a beautiful young woman with long straight black hair with blunt straight-cut bangs (hime cut), "
+                 "black cat ears with small black ribbon hairpin, violet purple eyes, elegant tall figure, "
+                 "wearing black sports bra training top with lavender-purple accents and high-waist black leggings "
+                 "with lavender side stripes, full-body standing pose head to shoes, feet and ankles visible, "
+                 "standing upright facing viewer, arms relaxed at sides, plain pure white background, no scenery, no room"),
         "refs": [
             ROOT / "image" / "03 gemini" / "avatar_gemini.png",
             ROOT / "image" / "03 gemini" / "gemini_01_main.png",
+        ],
+    },
+    "gemini_menhera": {
+        "desc": ("a beautiful young woman with long straight black hair with blunt straight-cut bangs (hime cut), "
+                 "black cat ears with small black ribbon hairpin, violet purple eyes with restless tired gaze, "
+                 "wearing menhera fashion: oversized black hoodie dress with hanging straps and silver cross chains, "
+                 "layered black lace and torn stockings, bandage on one knee, black platform boots, small bandage "
+                 "on cheek, full-body standing pose head to shoes, feet and ankles visible, standing upright facing "
+                 "viewer, arms relaxed at sides, plain dark gray background, no scenery, no room"),
+        "refs": [
+            ROOT / "image" / "03 gemini" / "avatar_gemini.png",
         ],
     },
     "kotone": {
@@ -230,6 +243,18 @@ def gen_one(driver, prompt: str, out_path: Path, refs: list[Path], timeout: int,
             return False
 
 
+ECGS = [
+    ("gemini_46_menhera_night", "03 gemini",
+     "same anime girl with long straight black hair with blunt straight-cut bangs and black cat ears, "
+     "menhera fashion: oversized black hoodie dress with straps and cross chains, bandaged knee, "
+     "in a dark messy bedroom at night lit only by phone screen glow, dark cinematic event CG, vertical portrait"),
+    ("gemini_47_menhera_rooftop", "03 gemini",
+     "same anime girl with long straight black hair with blunt straight-cut bangs and black cat ears, "
+     "menhera fashion: oversized black hoodie dress with straps and cross chains, bandaged knee, "
+     "standing on city rooftop at midnight under neon signs and cloudy sky, dark cinematic event CG, vertical portrait"),
+]
+
+
 def build_jobs(phase: str):
     jobs = []  # (label, prompt, out_path, refs, kind)
     if phase in ("bg", "all"):
@@ -253,12 +278,17 @@ def build_jobs(phase: str):
                           f"{info['desc']}, {STYLE}")
                 jobs.append((f"{char}/{expr}", prompt, WORK / char / f"{expr}_raw.png",
                              [WORK / char / "base_raw.png"], "9:16 portrait"))
+    if phase in ("ecg",):
+        for name, folder, desc in ECGS:
+            prompt = (f"{STYLE}, anime visual novel event CG illustration, {desc}, detailed background")
+            jobs.append((name, prompt, ROOT / "image" / folder / f"{name}.png",
+                         [ROOT / "image" / "03 gemini" / "avatar_gemini.png"], "9:16 portrait"))
     return jobs
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--phase", choices=["bg", "base", "expr", "all"], default="all")
+    ap.add_argument("--phase", choices=["bg", "base", "expr", "ecg", "all"], default="all")
     ap.add_argument("--timeout", type=int, default=180)
     args = ap.parse_args()
 

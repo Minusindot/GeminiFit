@@ -84,6 +84,9 @@ def main():
             if not args.dry_run:
                 step["expr"] = expr
                 step["bg"] = bg
+                # Gemini DARK scenes use the menhera outfit variant (VN_ASSET_SPEC outfit param)
+                if step.get("speaker") == "gemini" and expr == "dark":
+                    step["outfit"] = "menhera"
 
     print(f"annotated steps: {annotated}")
     if args.dry_run:
