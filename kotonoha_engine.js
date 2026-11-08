@@ -11,6 +11,7 @@ let kotonohaRuntime = {
   quizAnswered: false,
   showPronunciation: true, // Aa button toggle: show Korean pronunciation + furigana
   isAiGenerating: false,
+  selectedSeason: 1,
   ttsLoading: {
     active: false,
     done: 0,
@@ -33,11 +34,13 @@ function initKotonohaState() {
       completedLessons: [],
       customAiLessons: [],
       activeLessonIdx: 0,
+      selectedSeason: 1,
       showPron: true
     };
   }
   kotonohaRuntime.showPronunciation = state.kotonoha.showPron !== false;
   kotonohaRuntime.lessonIdx = state.kotonoha.activeLessonIdx || 0;
+  kotonohaRuntime.selectedSeason = state.kotonoha.selectedSeason || 1;
 }
 
 function getAllKotonohaLessons() {
@@ -101,6 +104,91 @@ const KOTONOHA_PRESET_AUDIO = {
   "あ、ほんとだ！ここは土足厳禁でしたね！": "./audio/kotonoha/day1_step6.mp3",
   "あら、ほんまどすなぁ。ふふ、ほな皆でお抹茶を飲みましょか。": "./audio/kotonoha/day1_step7.mp3"
 };
+
+// ============================================================================
+// PERSISTENT INDEXEDDB VOICEVOX AUDIO CACHE (Survives Reloads & App Restarts)
+// ============================================================================
+const KOTONOHA_DB_NAME = 'KotonohaAudioDB_v1';
+const KOTONOHA_STORE_NAME = 'voicevox_audio_blobs';
+let kotonohaDbPromise = null;
+
+function getKotonohaDb() {
+  if (!kotonohaDbPromise) {
+    kotonohaDbPromise = new Promise((resolve) => {
+      if (typeof window === 'undefined' || !('indexedDB' in window)) return resolve(null);
+      try {
+        const req = indexedDB.open(KOTONOHA_DB_NAME, 1);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(KOTONOHA_STORE_NAME)) {
+            db.createObjectStore(KOTONOHA_STORE_NAME);
+          }
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => resolve(null);
+      } catch (_) {
+        resolve(null);
+      }
+    });
+  }
+  return kotonohaDbPromise;
+}
+
+async function getCachedAudioBlobFromIdb(key) {
+  try {
+    const db = await getKotonohaDb();
+    if (!db) return null;
+    return new Promise((resolve) => {
+      const tx = db.transaction(KOTONOHA_STORE_NAME, 'readonly');
+      const store = tx.objectStore(KOTONOHA_STORE_NAME);
+      const req = store.get(key);
+      req.onsuccess = () => resolve(req.result || null);
+      req.onerror = () => resolve(null);
+    });
+  } catch (_) {
+    return null;
+  }
+}
+
+async function saveAudioBlobToIdb(key, blob) {
+  try {
+    const db = await getKotonohaDb();
+    if (!db || !blob) return;
+    const tx = db.transaction(KOTONOHA_STORE_NAME, 'readwrite');
+    const store = tx.objectStore(KOTONOHA_STORE_NAME);
+    store.put(blob, key);
+  } catch (_) {}
+}
+
+// Warm up in-memory cache from IndexedDB on startup
+async function initKotonohaPersistentAudioCache() {
+  try {
+    const db = await getKotonohaDb();
+    if (!db) return;
+    const tx = db.transaction(KOTONOHA_STORE_NAME, 'readonly');
+    const store = tx.objectStore(KOTONOHA_STORE_NAME);
+    const req = store.openCursor();
+    req.onsuccess = (e) => {
+      const cursor = e.target.result;
+      if (cursor) {
+        const key = cursor.key;
+        const blob = cursor.value;
+        if (blob && !kotonohaAudioCache[key]) {
+          const blobUrl = URL.createObjectURL(blob);
+          kotonohaAudioCache[key] = blobUrl;
+          bufferAudioElement(blobUrl, 3000).then((aud) => {
+            if (aud) kotonohaPreloadedAudio[key] = aud;
+          });
+        }
+        cursor.continue();
+      }
+    };
+  } catch (_) {}
+}
+
+if (typeof window !== 'undefined') {
+  setTimeout(initKotonohaPersistentAudioCache, 600);
+}
 
 // VOICEVOX Subculture Anime Character Voice Mapping
 const VOICEVOX_SPEAKERS = {
@@ -201,10 +289,24 @@ async function synthesizeAndBufferVoicevox(text, speaker = 'gemini') {
 
   if (!clean) return null;
 
-  // 2. Already synthesized & buffered in this session
+  // 2. Already in memory cache
   if (kotonohaAudioCache[cacheKey] && kotonohaPreloadedAudio[cacheKey]) {
     return kotonohaAudioCache[cacheKey];
   }
+
+  // 2.5. Check persistent IndexedDB cache (Survives app restarts & reloads)
+  try {
+    const savedBlob = await getCachedAudioBlobFromIdb(cacheKey);
+    if (savedBlob) {
+      const blobUrl = URL.createObjectURL(savedBlob);
+      kotonohaAudioCache[cacheKey] = blobUrl;
+      const buffered = await bufferAudioElement(blobUrl, 3500);
+      if (buffered) {
+        kotonohaPreloadedAudio[cacheKey] = buffered;
+        return blobUrl;
+      }
+    }
+  } catch (_) {}
 
   const spkId = VOICEVOX_SPEAKERS[speaker] || 2;
   const apiUrl = `https://api.tts.quest/v3/voicevox/synthesis?text=${encodeURIComponent(clean)}&speaker=${spkId}`;
@@ -242,6 +344,11 @@ async function synthesizeAndBufferVoicevox(text, speaker = 'gemini') {
       if (buffered) {
         kotonohaAudioCache[cacheKey] = audioUrl;
         kotonohaPreloadedAudio[cacheKey] = buffered;
+        // Persist to IndexedDB in background so user NEVER has to download it again
+        fetch(audioUrl)
+          .then(r => r.blob())
+          .then(b => saveAudioBlobToIdb(cacheKey, b))
+          .catch(() => {});
         return audioUrl;
       }
     } catch (_) {
@@ -440,8 +547,31 @@ function selectKotonohaLesson(idx) {
   if (idx < 0 || idx >= all.length) return;
   kotonohaRuntime.lessonIdx = idx;
   state.kotonoha.activeLessonIdx = idx;
+  const selLesson = all[idx];
+  if (selLesson && selLesson.season) {
+    kotonohaRuntime.selectedSeason = selLesson.season;
+    state.kotonoha.selectedSeason = selLesson.season;
+  }
   saveState(true);
   playBeep(620, 0.06);
+  renderKotonohaView();
+}
+
+function switchKotonohaSeason(seasonNum) {
+  initKotonohaState();
+  kotonohaRuntime.selectedSeason = seasonNum;
+  state.kotonoha.selectedSeason = seasonNum;
+  const all = getAllKotonohaLessons();
+  const curLesson = getCurrentKotonohaLesson();
+  if (!curLesson || (curLesson.season || 1) !== seasonNum) {
+    const targetIdx = all.findIndex(l => (l.season || 1) === seasonNum);
+    if (targetIdx !== -1) {
+      kotonohaRuntime.lessonIdx = targetIdx;
+      state.kotonoha.activeLessonIdx = targetIdx;
+    }
+  }
+  saveState(true);
+  playBeep(640, 0.05);
   renderKotonohaView();
 }
 
@@ -476,6 +606,52 @@ function launchKotonohaStoryImmediate() {
   }
 }
 
+
+// ============================================================================
+// QUIZ HINT & PRONUNCIATION TOGGLE HELPERS
+// ============================================================================
+function parseKotonohaOptionText(opt) {
+  if (typeof opt !== 'string') return { main: opt, pron: '', hasPron: false };
+  const match = opt.match(/^([^(（]+)[\s]*[(（]([^)）]+)[)）]$/);
+  if (match) {
+    return {
+      main: match[1].trim(),
+      pron: match[2].trim(),
+      hasPron: true
+    };
+  }
+  return {
+    main: opt,
+    pron: '',
+    hasPron: false
+  };
+}
+
+function toggleKotonohaQuizHint(qIdx) {
+  if (!kotonohaRuntime.revealedHints) kotonohaRuntime.revealedHints = {};
+  kotonohaRuntime.revealedHints[qIdx] = !kotonohaRuntime.revealedHints[qIdx];
+  playBeep(650, 0.05);
+  renderKotonohaView();
+}
+
+function toggleKotonohaOptionPron() {
+  kotonohaRuntime.showOptionPron = !kotonohaRuntime.showOptionPron;
+  playBeep(680, 0.05);
+  renderKotonohaView();
+}
+
+function toggleSingleOptionPron(idx, event) {
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+  if (!kotonohaRuntime.revealedOptionPron) kotonohaRuntime.revealedOptionPron = {};
+  const key = `${kotonohaRuntime.quizIdx}_${idx}`;
+  kotonohaRuntime.revealedOptionPron[key] = !kotonohaRuntime.revealedOptionPron[key];
+  playBeep(720, 0.04);
+  renderKotonohaView();
+}
+
 function launchKotonohaQuizImmediate() {
   const lesson = getCurrentKotonohaLesson();
   if (!lesson || !lesson.quizzes || lesson.quizzes.length === 0) return;
@@ -483,6 +659,8 @@ function launchKotonohaQuizImmediate() {
   kotonohaRuntime.quizIdx = 0;
   kotonohaRuntime.quizAnswered = false;
   kotonohaRuntime.quizChatMessages = [];
+  kotonohaRuntime.revealedHints = {};
+  kotonohaRuntime.revealedOptionPron = {};
 
   pushQuizQuestionToChat(0);
   playBeep(760, 0.08);
@@ -897,31 +1075,37 @@ function renderKotonohaView() {
     return;
   }
 
-  // MODE 1: TEAROOM HUB (Screenshot 1 & 2 vibe: Dark Kyoto Chaya Village + Stats + Episode Selector)
+  // MODE 1: TEAROOM HUB (Optimized: Full Character Visibility + Vertical Curriculum List + Season 1/2)
   if (kotonohaRuntime.currentMode === 'hub') {
     const unreadCount = Math.max(1, lessons.length - (kState.completedLessons?.length || 0));
     const isCurrentCached = isLessonVoiceFullyCached(lesson);
+    const activeSeason = kotonohaRuntime.selectedSeason || lesson.season || 1;
+    
+    // Filter lessons by active season (custom AI lessons default to season 2 or active season)
+    const seasonLessons = lessons.map((item, idx) => ({ ...item, globalIdx: idx }))
+      .filter(item => (item.season || 1) === activeSeason);
+
     container.innerHTML = `
       <div class="rounded-3xl bg-[#181316] text-[#f5ebe6] border border-[#3a2830] shadow-2xl overflow-hidden">
-        <!-- Top Header Bar (Screenshot 2 style) -->
-        <div class="p-4 pb-3 bg-gradient-to-b from-[#241a1f] to-[#181316] border-b border-[#332228]">
+        <!-- Top Header Bar: Profile, Title, Streak & Currencies -->
+        <div class="p-3.5 sm:p-4 pb-2.5 bg-gradient-to-b from-[#241a1f] to-[#181316] border-b border-[#332228]">
           <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2.5 sm:gap-3">
               <div class="relative shrink-0 cursor-pointer" onclick="startKotonohaStory()">
-                <img src="./image/03 gemini/avatar_gemini.png" class="w-12 h-12 rounded-2xl object-cover ring-2 ring-[#d9536f] shadow-md">
-                <span class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#e0465a] text-white text-[10px] font-black flex items-center justify-center shadow">${unreadCount}</span>
+                <img src="./image/03 gemini/avatar_gemini.png" class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl object-cover ring-2 ring-[#d9536f] shadow-md">
+                <span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#e0465a] text-white text-[10px] font-black flex items-center justify-center shadow">${unreadCount}</span>
               </div>
               <div>
                 <div class="flex items-center gap-1.5">
-                  <h2 class="text-base font-black text-[#e86b7e] tracking-tight">言の葉茶屋</h2>
-                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-[#352329] text-[#f2a6b2] font-bold border border-[#52343d]">코토노하 다실</span>
+                  <h2 class="text-sm sm:text-base font-black text-[#e86b7e] tracking-tight">言の葉茶屋</h2>
+                  <span class="text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full bg-[#352329] text-[#f2a6b2] font-bold border border-[#52343d]">코토노하 다실</span>
                 </div>
-                <p class="text-xs text-[#b59e99] font-bold mt-0.5">${rank.title}</p>
+                <p class="text-[11px] sm:text-xs text-[#b59e99] font-bold mt-0.5">${rank.title}</p>
               </div>
             </div>
 
             <div class="flex items-center gap-1.5">
-              <span class="px-2.5 py-1 rounded-full bg-[#2a1f24] border border-[#453139] text-xs font-bold text-[#e6d5cf]">제미니 사범</span>
+              <span class="px-2 sm:px-2.5 py-1 rounded-full bg-[#2a1f24] border border-[#453139] text-[11px] sm:text-xs font-bold text-[#e6d5cf]">제미니 사범</span>
               <button onclick="toggleKotonohaPronunciation()" class="px-2.5 py-1 rounded-full border text-xs font-black transition-all ${showPron ? 'bg-[#e0465a] text-white border-[#ff7588]' : 'bg-[#2a1f24] text-[#9c847f] border-[#453139]'}" title="발음/후리가나 표시 전환">
                 Aa
               </button>
@@ -929,55 +1113,65 @@ function renderKotonohaView() {
           </div>
 
           <!-- Currency & Streak Pills -->
-          <div class="flex flex-wrap items-center gap-2 mt-3">
-            <div class="px-3 py-1 rounded-full bg-[#251c20] border border-[#3d2c33] flex items-center gap-1.5 text-xs font-extrabold">
+          <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-2.5">
+            <div class="px-2.5 py-0.5 rounded-full bg-[#251c20] border border-[#3d2c33] flex items-center gap-1 text-[11px] font-extrabold">
               <span class="text-amber-400">🪙</span>
               <span>${kState.coins || 655}</span>
             </div>
-            <div class="px-3 py-1 rounded-full bg-[#251c20] border border-[#3d2c33] flex items-center gap-1.5 text-xs font-extrabold">
+            <div class="px-2.5 py-0.5 rounded-full bg-[#251c20] border border-[#3d2c33] flex items-center gap-1 text-[11px] font-extrabold">
               <span class="text-[#f28b9b]">言霊</span>
               <span>${kState.kotodama || 65}</span>
             </div>
-            <div class="px-3 py-1 rounded-full bg-[#251c20] border border-[#3d2c33] flex items-center gap-1.5 text-xs font-extrabold">
+            <div class="px-2.5 py-0.5 rounded-full bg-[#251c20] border border-[#3d2c33] flex items-center gap-1 text-[11px] font-extrabold">
               <span>🔥 연속 ${kState.streak || 1}일</span>
             </div>
           </div>
         </div>
 
-        <!-- Isometric / Visual Kyoto Chaya Stage Banner -->
-        <div class="relative p-4 bg-gradient-to-b from-[#181316] via-[#22171c] to-[#181316]">
+        <!-- Main Banner: Optimized for 100% Character Visibility (No Obtrusive Overlays on Face/Body) -->
+        <div class="relative p-3 sm:p-4 bg-gradient-to-b from-[#181316] via-[#22171c] to-[#181316]">
           <div class="relative rounded-2xl overflow-hidden border border-[#422c35] shadow-lg group cursor-pointer" onclick="startKotonohaStory()">
-            <img src="${lesson.bgImage || './image/03 gemini/gemini_02_matcha.png'}" class="w-full h-56 sm:h-64 object-cover object-top brightness-90 group-hover:scale-102 transition-all duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#120d10] via-[#120d10]/35 to-transparent"></div>
+            <!-- Clean Image with focus on upper body/face -->
+            <img src="${lesson.bgImage || './image/03 gemini/gemini_02_matcha.png'}" class="w-full h-52 sm:h-60 object-cover object-[center_12%] brightness-95 group-hover:scale-102 transition-all duration-500">
+            <!-- Subtle edge vignetting without blocking the character -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[#181316] via-transparent to-black/25"></div>
 
-            <!-- Floating Village Character Badges -->
-            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
-              <span class="px-2.5 py-1 rounded-full bg-[#e0465a] text-white text-[11px] font-black shadow-md animate-bounce">
-                새 톡 ${unreadCount} · ${lesson.levelBadge}
+            <!-- Top Left Floating Badges -->
+            <div class="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5 z-10">
+              <span class="px-2.5 py-1 rounded-full bg-[#e0465a] text-white text-[10px] sm:text-[11px] font-black shadow-md animate-bounce">
+                새 톡 ${unreadCount} · ${lesson.levelBadge.split('+')[0]}
               </span>
-              <button onclick="event.stopPropagation(); speakJapanese('プロデューサーはん、おいでやす。今日もおきばりやす！', 'gemini')" class="px-2.5 py-1 rounded-full bg-black/65 hover:bg-black/80 text-[#ffd6de] border border-white/20 text-[11px] font-bold backdrop-blur-xs">
-                🔊 제미니 인사 듣기
+              <button onclick="event.stopPropagation(); speakJapanese('プロデューサーはん、おいでやす。今日もおきばりやす！', 'gemini')" class="px-2.5 py-1 rounded-full bg-black/65 hover:bg-black/85 text-[#ffd6de] border border-white/20 text-[10px] sm:text-[11px] font-bold backdrop-blur-xs">
+                🔊 제미니 인사
               </button>
             </div>
 
-            <!-- Trio Manga / Textbook Sub-cast Badges -->
-            <div class="absolute top-3 right-3 flex items-center -space-x-2">
-              <img src="./image/03 gemini/avatar_gemini.png" class="w-8 h-8 rounded-full ring-2 ring-[#e0465a] object-cover" title="제미니 (교토·오사카벤 사범)">
-              <img src="./image/02 kotone/avatar_kotone.png" class="w-8 h-8 rounded-full ring-2 ring-amber-400 object-cover" title="코토네 (자본주의 감초 조교)">
-              <img src="./image/01 mio/avatar_mio.png" class="w-8 h-8 rounded-full ring-2 ring-sky-400 object-cover" title="미오 (텐션 만점 동급생)">
+            <!-- Top Right Heroine Cast Avatars -->
+            <div class="absolute top-2.5 right-2.5 flex items-center -space-x-2 z-10">
+              <img src="./image/03 gemini/avatar_gemini.png" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full ring-2 ring-[#e0465a] object-cover" title="제미니 (교토·오사카벤 사범)">
+              <img src="./image/02 kotone/avatar_kotone.png" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full ring-2 ring-amber-400 object-cover" title="코토네 (자본주의 조교)">
+              <img src="./image/01 mio/avatar_mio.png" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full ring-2 ring-sky-400 object-cover" title="미오 (에너제틱 동급생)">
             </div>
 
-            <!-- Current Lesson Preview Overlay -->
-            <div class="absolute bottom-3 inset-x-3 p-3 rounded-2xl bg-[#1f161a]/90 border border-[#4d333e] backdrop-blur-md">
-              <div class="text-[10px] font-bold text-[#f28b9b] mb-0.5">${lesson.dateLabel} · 3인 일본어 극장</div>
-              <div class="text-base font-black text-white leading-snug">${lesson.titleJp}</div>
-              ${showPron ? `<div class="text-[11px] text-[#d4b5b0] font-semibold mt-0.5">${lesson.titlePron} · <span class="text-[#f5ebe6]">${lesson.titleKo}</span></div>` : `<div class="text-xs text-[#d4b5b0] mt-0.5">${lesson.titleKo}</div>`}
+            <!-- Bottom Sub-Strip (Clean Title Preview attached underneath image bottom) -->
+            <div class="absolute bottom-0 inset-x-0 p-2.5 bg-gradient-to-t from-[#140e11] via-[#1a1216]/90 to-transparent flex items-center justify-between">
+              <div class="min-w-0 pr-2">
+                <div class="text-[9px] sm:text-[10px] font-bold text-[#f28b9b] flex items-center gap-1.5">
+                  <span>시즌 ${lesson.season || 1} · 제${lesson.epCode || (lesson.dayNum ? '1-' + lesson.dayNum : '1-1')}화</span>
+                  <span class="text-[#ffd6de] opacity-80">· 3인 극장</span>
+                </div>
+                <div class="text-xs sm:text-sm font-black text-white truncate">${lesson.titleJp}</div>
+                ${showPron ? `<div class="text-[10px] sm:text-[11px] text-[#d4b5b0] truncate mt-0.5">${lesson.titlePron} · <span class="text-[#ffd0d9] font-bold">${lesson.titleKo}</span></div>` : `<div class="text-[11px] text-[#d4b5b0] truncate mt-0.5">${lesson.titleKo}</div>`}
+              </div>
+              <span class="shrink-0 px-2.5 py-1 rounded-xl bg-[#e0465a]/90 text-white text-[11px] font-black shadow group-hover:scale-105 transition-transform flex items-center gap-1">
+                <span>감상</span><span>▶</span>
+              </span>
             </div>
           </div>
 
-          <!-- Grammar / Kansai Dialect Note Box (Textbook style) -->
+          <!-- Grammar / Kansai Dialect Note Box (Compact Textbook style) -->
           ${lesson.grammarTip ? `
-          <div class="mt-3 p-3.5 rounded-2xl bg-[#24191e] border border-[#47303a] space-y-1">
+          <div class="mt-2.5 p-3 rounded-2xl bg-[#24191e] border border-[#47303a] space-y-1">
             <div class="text-xs font-black text-[#f4869d] flex items-center justify-between">
               <span>${lesson.grammarTip.title}</span>
               <span class="text-[10px] text-[#a88d89]">교재 요약</span>
@@ -986,53 +1180,84 @@ function renderKotonohaView() {
           </div>
           ` : ''}
 
-          <!-- Episode Selector Pills + AI Infinite Generator -->
+          <!-- Season Selector Tabs + Vertical Curriculum List -->
           <div class="mt-3 space-y-2">
+            <!-- Header with AI Button -->
             <div class="flex items-center justify-between">
-              <span class="text-xs font-black text-[#d9c3bd]">📚 커리큘럼 선택 (이야기 + 데일리 퀴즈)</span>
+              <span class="text-xs font-black text-[#d9c3bd]">📚 커리큘럼 선택 (세로 목록)</span>
               <button onclick="generateAiKotonohaLesson()" class="px-2.5 py-1 rounded-xl bg-gradient-to-r from-[#d94862] to-[#9b4dca] text-white text-[11px] font-black shadow hover:opacity-95 active:scale-95 transition-all">
-                ${kotonohaRuntime.isAiGenerating ? '⏳ AI 집필 중...' : '✨ AI 새 에피소드 생성'}
+                ${kotonohaRuntime.isAiGenerating ? '⏳ AI 집필 중...' : '✨ AI 새 에피소드'}
               </button>
             </div>
-            <div class="flex gap-1.5 overflow-x-auto clean-scroll pb-1">
-              ${lessons.map((item, idx) => {
+
+            <!-- Season Switcher Tabs (Season 1 vs Season 2) -->
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="switchKotonohaSeason(1)" class="p-2 rounded-xl border text-center transition-all ${activeSeason === 1 ? 'bg-[#3e242f] border-[#e0465a] text-white shadow-md font-black ring-1 ring-[#e0465a]/60' : 'bg-[#21181c] border-[#38282f] text-[#a8908b] hover:text-white'}">
+                <div class="text-[11px] font-black flex items-center justify-center gap-1">
+                  <span>🍵 시즌 1</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded-full bg-[#2e1d23] text-[#f28b9b]">1-1 ~ 1-12</span>
+                </div>
+                <div class="text-[10px] opacity-80 mt-0.5">교토 다실 & 기초 생활</div>
+              </button>
+
+              <button onclick="switchKotonohaSeason(2)" class="p-2 rounded-xl border text-center transition-all ${activeSeason === 2 ? 'bg-[#3e242f] border-[#e0465a] text-white shadow-md font-black ring-1 ring-[#e0465a]/60' : 'bg-[#21181c] border-[#38282f] text-[#a8908b] hover:text-white'}">
+                <div class="text-[11px] font-black flex items-center justify-center gap-1">
+                  <span>🌸 시즌 2</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded-full bg-[#401f29] text-[#ff758c]">2-1 ~ 2-6 신설</span>
+                </div>
+                <div class="text-[10px] opacity-80 mt-0.5">칸사이 만유 & 피트니스</div>
+              </button>
+            </div>
+
+            <!-- Vertical Scrollable Episode List (Clear, readable and fits comfortably in phone viewport) -->
+            <div class="flex flex-col gap-1.5 max-h-44 sm:max-h-52 overflow-y-auto clean-scroll pr-1">
+              ${seasonLessons.map(item => {
                 const isDone = (kState.completedLessons || []).includes(item.id);
-                const isActive = idx === kotonohaRuntime.lessonIdx;
+                const isActive = item.globalIdx === kotonohaRuntime.lessonIdx;
+                const epBadge = item.epCode || (item.season ? item.season + '-' + (item.episode || (item.dayNum || 1)) : '1-' + item.dayNum);
                 return `
-                  <button onclick="selectKotonohaLesson(${idx})" class="px-3 py-2 rounded-xl border text-left shrink-0 transition-all ${isActive ? 'bg-[#38222a] border-[#e0465a] text-white shadow-sm' : 'bg-[#21181c] border-[#38282f] text-[#b09792] hover:border-[#6e4855]'}">
-                    <div class="flex items-center gap-1.5 text-[10px] font-black">
-                      <span>${isDone ? '✅' : '🍵'} 제${idx + 1}화</span>
-                      <span class="text-[#f28b9b]">${item.levelBadge.split('+')[0]}</span>
+                  <button onclick="selectKotonohaLesson(${item.globalIdx})" class="w-full p-2 sm:p-2.5 rounded-xl border text-left transition-all flex items-center justify-between group ${isActive ? 'bg-[#3b232c] border-[#e0465a] text-white shadow-md ring-1 ring-[#e0465a]/50' : 'bg-[#20181c] border-[#34262c] text-[#ab948f] hover:border-[#5e3846] hover:bg-[#281c22]'}">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                      <span class="px-2 py-0.5 rounded-lg text-[10px] font-black shrink-0 ${isActive ? 'bg-[#e0465a] text-white shadow' : 'bg-[#2b1c22] text-[#f28b9b] border border-[#482e37]'}">
+                        ${isDone ? '✅ ' : '🍵 '}${epBadge}
+                      </span>
+                      <div class="min-w-0">
+                        <div class="text-xs font-bold ${isActive ? 'text-white' : 'text-[#e6d6d2]'} truncate">${item.titleKo}</div>
+                        <div class="text-[10px] text-[#9c847f] truncate mt-0.5">${item.titleJp.replace(/<[^>]+>/g, '')}</div>
+                      </div>
                     </div>
-                    <div class="text-xs font-bold mt-0.5 max-w-[130px] truncate">${item.titleKo}</div>
+                    <div class="flex items-center gap-2 shrink-0 pl-2">
+                      <span class="text-[9px] px-1.5 py-0.5 rounded bg-[#2b1d22] text-[#d4b0a8] border border-[#452e37]">${item.levelBadge.split('+')[0]}</span>
+                      <span class="text-xs font-black ${isActive ? 'text-[#ff6b81]' : 'text-[#6a5450] group-hover:text-[#ab948f]'}">›</span>
+                    </div>
                   </button>
                 `;
               }).join('')}
             </div>
           </div>
 
-          <!-- Bottom Call-To-Action Banner (Screenshot 2 exact match!) -->
-          <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <button onclick="startKotonohaStory()" class="w-full p-3 rounded-2xl bg-[#291d22] hover:bg-[#34242b] border border-[#523540] flex items-center justify-between transition-all shadow-md group">
-              <div class="flex items-center gap-3 text-left">
-                <img src="./image/03 gemini/avatar_gemini.png" class="w-10 h-10 rounded-full object-cover ring-2 ring-[#e0465a]">
-                <div>
-                  <div class="text-[10px] font-bold text-[#c7aca5]">ジェミニ (제미니) · ${isCurrentCached ? '⚡ 보이스 준비완료' : '🎙️ 풀보이스 자동합성'}</div>
-                  <div class="text-xs font-black text-white">오늘 수업 준비됐어! 이야기 보기</div>
+          <!-- Bottom Action Buttons: Full Voice Story & Instant Daily Quiz -->
+          <div class="mt-3.5 grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button onclick="startKotonohaStory()" class="w-full p-2.5 sm:p-3 rounded-2xl bg-[#291d22] hover:bg-[#34242b] border border-[#523540] flex items-center justify-between transition-all shadow-md group">
+              <div class="flex items-center gap-2.5 sm:gap-3 text-left min-w-0">
+                <img src="./image/03 gemini/avatar_gemini.png" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover ring-2 ring-[#e0465a] shrink-0">
+                <div class="min-w-0">
+                  <div class="text-[10px] font-bold text-[#c7aca5] truncate">ジェミニ (제미니) · ${isCurrentCached ? '⚡ 보이스 준비완료' : '🎙️ 풀보이스 자동합성'}</div>
+                  <div class="text-xs font-black text-white truncate">오늘 수업 준비됐어! 이야기 보기</div>
                 </div>
               </div>
-              <span class="text-[#e0465a] text-base font-black group-hover:translate-x-1 transition-transform">▶</span>
+              <span class="text-[#e0465a] text-sm font-black group-hover:translate-x-1 transition-transform pl-1 shrink-0">▶</span>
             </button>
 
-            <button onclick="startKotonohaQuiz()" class="w-full p-3 rounded-2xl bg-gradient-to-r from-[#632230] to-[#451a24] hover:opacity-95 border border-[#8f3548] flex items-center justify-between transition-all shadow-md group">
-              <div class="flex items-center gap-2.5 text-left">
-                <span class="w-9 h-9 rounded-full bg-[#e0465a]/25 border border-[#e0465a] flex items-center justify-center text-sm">🎯</span>
-                <div>
-                  <div class="text-[10px] font-bold text-[#f7b2be]">채팅형 4지선다 테스트</div>
-                  <div class="text-xs font-black text-white">데일리 퀴즈 바로 풀기 (${lesson.quizzes.length}문항)</div>
+            <button onclick="startKotonohaQuiz()" class="w-full p-2.5 sm:p-3 rounded-2xl bg-gradient-to-r from-[#632230] to-[#451a24] hover:opacity-95 border border-[#8f3548] flex items-center justify-between transition-all shadow-md group">
+              <div class="flex items-center gap-2.5 text-left min-w-0">
+                <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#e0465a]/25 border border-[#e0465a] flex items-center justify-center text-sm shrink-0">🎯</span>
+                <div class="min-w-0">
+                  <div class="text-[10px] font-bold text-[#f7b2be] truncate">채팅형 4지선다 테스트</div>
+                  <div class="text-xs font-black text-white truncate">데일리 퀴즈 바로 풀기 (${lesson.quizzes.length}문항)</div>
                 </div>
               </div>
-              <span class="text-[#ff8da1] text-base font-black group-hover:translate-x-1 transition-transform">▶</span>
+              <span class="text-[#ff8da1] text-sm font-black group-hover:translate-x-1 transition-transform pl-1 shrink-0">▶</span>
             </button>
           </div>
         </div>
@@ -1041,31 +1266,40 @@ function renderKotonohaView() {
     return;
   }
 
-  // MODE 2: VISUAL NOVEL STORY READER (Screenshot 3 exact match!)
+  // MODE 2: VISUAL NOVEL STORY READER (Hybrid VN Engine: BG + SCG default + Climax ECG)
   if (kotonohaRuntime.currentMode === 'story') {
     const steps = lesson.story || [];
     const curIdx = Math.min(kotonohaRuntime.storyStepIdx, steps.length - 1);
     const step = steps[curIdx] || steps[0];
     const progressPct = Math.round(((curIdx + 1) / steps.length) * 100);
 
+    // Determine whether this step is an Event CG (ECG) or Standing Character + Stage Background (SCG)
+    // Default: Final step or explicitly tagged steps are ECG; dialogue banter steps are SCG over stage BG
+    const isEcg = step.renderType === 'ecg' || (step.renderType !== 'scg' && (curIdx === steps.length - 1 || curIdx === 0 && steps.length <= 4));
+    const stageBg = step.bg || lesson.bgImage || './image/03 gemini/gemini_26_kyoto_teahouse.png';
+    const characterImg = step.scg || step.sceneImg || lesson.bgImage;
+
     container.innerHTML = `
-      <div class="rounded-3xl bg-[#141013] text-[#f5ebe6] border border-[#3d2932] shadow-2xl overflow-hidden select-none">
+      <div class="rounded-3xl bg-[#141013] text-[#f5ebe6] border border-[#3d2932] shadow-2xl overflow-hidden select-none flex flex-col">
         <!-- Story Top Bar -->
-        <div class="p-3.5 bg-[#1d1519] flex items-center justify-between">
+        <div class="p-3.5 bg-[#1d1519] border-b border-[#302228] flex items-center justify-between">
           <div class="flex items-center gap-2.5">
-            <button onclick="openKotonohaHub()" class="w-8 h-8 rounded-xl bg-[#2b1f25] hover:bg-[#3b2a33] text-[#e0c8c2] font-black text-sm flex items-center justify-center">
+            <button onclick="openKotonohaHub()" class="w-8 h-8 rounded-xl bg-[#2b1f25] hover:bg-[#3b2a33] text-[#e0c8c2] font-black text-sm flex items-center justify-center transition-all">
               ‹
             </button>
             <div>
-              <div class="text-[10px] text-[#b39892] font-bold">${lesson.dateLabel} · ${lesson.levelBadge}</div>
+              <div class="text-[10px] text-[#b39892] font-bold flex items-center gap-1.5">
+                <span>${lesson.dateLabel}</span>
+                <span class="text-[#f28b9b]">· ${lesson.levelBadge.split('+')[0]}</span>
+              </div>
               <div class="text-sm font-black text-white leading-tight mt-0.5">${lesson.titleJp}</div>
             </div>
           </div>
           <div class="flex items-center gap-1.5">
-            <button onclick="toggleKotonohaPronunciation()" class="px-2.5 py-1.5 rounded-xl border text-xs font-black ${showPron ? 'bg-[#e0465a] text-white border-[#ff7588]' : 'bg-[#2a1f24] text-[#9c847f] border-[#453139]'}">
+            <button onclick="toggleKotonohaPronunciation()" class="px-2.5 py-1.5 rounded-xl border text-xs font-black transition-all ${showPron ? 'bg-[#e0465a] text-white border-[#ff7588]' : 'bg-[#2a1f24] text-[#9c847f] border-[#453139]'}">
               Aa
             </button>
-            <button onclick="launchKotonohaQuizImmediate()" class="px-3 py-1.5 rounded-xl bg-[#2b1f25] hover:bg-[#3d2b34] border border-[#523843] text-xs font-bold text-[#e6d0ca]">
+            <button onclick="launchKotonohaQuizImmediate()" class="px-3 py-1.5 rounded-xl bg-[#2b1f25] hover:bg-[#3d2b34] border border-[#523843] text-xs font-bold text-[#e6d0ca] transition-all">
               건너뛰기
             </button>
           </div>
@@ -1073,63 +1307,92 @@ function renderKotonohaView() {
 
         <!-- Red Progress Line -->
         <div class="w-full h-1 bg-[#2e1f26]">
-          <div class="h-full bg-[#e0465a] transition-all duration-300" style="width: ${progressPct}%"></div>
+          <div class="h-full bg-gradient-to-r from-[#e0465a] to-[#ff758c] transition-all duration-300" style="width: ${progressPct}%"></div>
         </div>
 
-        <!-- Character Scene Artwork + Dialogue Box Overlay (Screenshot 3 layout) -->
-        <div class="relative w-full min-h-[500px] sm:min-h-[550px] flex flex-col justify-between bg-[#0e0a0c] cursor-pointer" onclick="stepKotonohaStory(1)">
-          <!-- Top Half: Scene Image with Ambient Blur + Full Character Contain (Never cuts off face/body) -->
-          <div class="relative w-full h-72 sm:h-84 overflow-hidden bg-[#0c080a] flex items-center justify-center">
-            <!-- Ambient blurred background filling all aspect ratios -->
-            <img src="${step.sceneImg || lesson.bgImage}" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-45 scale-125 pointer-events-none" style="object-position: center 25%;">
-            <!-- Full character / scene illustration (never cut off) -->
-            <img src="${step.sceneImg || lesson.bgImage}" class="relative z-10 max-h-full max-w-full object-contain mx-auto drop-shadow-[0_8px_20px_rgba(0,0,0,0.85)] transition-all duration-300">
-            <!-- Smooth gradient blend into dialogue box -->
-            <div class="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-[#141013]"></div>
+        <!-- Hybrid VN Stage Area: Click anywhere to advance -->
+        <div class="relative w-full min-h-[500px] sm:min-h-[560px] flex flex-col justify-between bg-[#0e0a0c] cursor-pointer overflow-hidden" onclick="stepKotonohaStory(1)">
+          
+          <!-- Mode Indicator Badge (ECG vs SCG Dialogue) -->
+          <div class="absolute top-3 left-3 z-30 flex items-center gap-1.5 pointer-events-none">
+            ${isEcg ? `
+              <span class="px-2.5 py-1 rounded-full bg-gradient-to-r from-[#e0465a] to-[#9b4dca] text-white text-[10px] font-black shadow-lg flex items-center gap-1 animate-pulse">
+                <span>✨</span><span>EVENT CG</span>
+              </span>
+            ` : `
+              <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[#ffd6de] text-[10px] font-bold flex items-center gap-1">
+                <span>🍵</span><span>다실 일상 회화</span>
+              </span>
+            `}
           </div>
-          <!-- Bottom Half: Dark Translucent VN Card -->
-          <div class="relative z-10 mx-3 mb-3 p-4 rounded-2xl bg-[#1e161a]/95 border border-[#452e38] shadow-xl space-y-2.5">
+
+          <!-- Stage Visual Area -->
+          <div class="relative w-full h-72 sm:h-84 overflow-hidden bg-[#0c080a] flex items-center justify-center">
+            ${isEcg ? `
+              <!-- [MODE A: EVENT CG] Fullscreen Cinematic Illustration -->
+              <img src="${characterImg}" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-40 scale-125 pointer-events-none" style="object-position: center 25%;">
+              <img src="${characterImg}" class="relative z-10 max-h-full max-w-full object-contain mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)] transition-all duration-300">
+            ` : `
+              <!-- [MODE B: BG + SCG STANDING] Classic Visual Novel Stage -->
+              <!-- Layer 1: Background Location (Teahouse, Street, Ryokan, etc.) -->
+              <img src="${stageBg}" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.72] contrast-[1.05] pointer-events-none transition-all duration-500" style="object-position: center 30%;">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0e0a0c] via-transparent to-black/30 pointer-events-none"></div>
+
+              <!-- Layer 2: Standing Character (SCG) with ambient drop shadow -->
+              <div class="relative z-10 h-full flex items-end justify-center pointer-events-none">
+                <img src="${characterImg}" class="max-h-[92%] max-w-[90%] object-contain object-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.9)] transition-all duration-300 transform group-hover:scale-102">
+              </div>
+            `}
+            <!-- Smooth Gradient Blend into Dialogue Box -->
+            <div class="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-[#0e0a0c]"></div>
+          </div>
+
+          <!-- Bottom Dialogue Box: Translucent VN Glass Card -->
+          <div class="relative z-30 mx-3 mb-3 p-4 rounded-2xl bg-[#1e161a]/95 border border-[#48303a] shadow-2xl backdrop-blur-md space-y-2.5">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
-                <img src="${step.avatar || './image/03 gemini/avatar_gemini.png'}" class="w-7 h-7 rounded-full object-cover ring-1 ring-[#e0465a]">
+                <img src="${step.avatar || './image/03 gemini/avatar_gemini.png'}" class="w-7 h-7 rounded-full object-cover ring-2 ring-[#e0465a] shadow-xs">
                 <span class="text-xs font-black text-[#f4869d]">${step.nameJp}</span>
-                <span class="text-[11px] text-[#a88e88] font-bold">(${step.nameKo})</span>
+                <span class="text-[11px] text-[#b89f99] font-bold">(${step.nameKo})</span>
               </div>
-              <button onclick="event.stopPropagation(); speakJapanese('${(step.audio || step.jpPlain || '').replace(/'/g, "\\'")}', '${step.speaker || 'gemini'}')" class="px-2.5 py-1 rounded-lg bg-[#2e2027] hover:bg-[#3d2a33] text-[11px] font-bold text-[#f2a6b2] border border-[#543844]">
-                🔊 음성 듣기
+              <button onclick="event.stopPropagation(); speakJapanese('${(step.audio || step.jpPlain || '').replace(/'/g, "\\'")}', '${step.speaker || 'gemini'}')" class="px-2.5 py-1 rounded-xl bg-[#2e2027] hover:bg-[#3d2a33] text-[11px] font-bold text-[#f2a6b2] border border-[#543844] shadow-xs flex items-center gap-1 transition-all">
+                <span>🔊</span><span>음성 듣기</span>
               </button>
             </div>
 
             <!-- Japanese Sentence with Furigana Ruby -->
-            <div class="text-lg sm:text-xl font-extrabold text-white leading-relaxed tracking-wide pt-1">
+            <div class="text-lg sm:text-xl font-extrabold text-white leading-relaxed tracking-wide pt-0.5">
               ${step.jpRuby}
             </div>
 
-            <!-- Korean Pronunciation & Translation -->
+            <!-- Korean Pronunciation Pill -->
             ${showPron ? `
-              <div class="text-xs font-semibold text-[#f29aa8] bg-[#2b1d23] px-2.5 py-1 rounded-lg inline-block">
+              <div class="text-xs font-semibold text-[#f29aa8] bg-[#2b1d23] border border-[#472d38] px-2.5 py-1 rounded-lg inline-block">
                 🗣️ ${step.pron}
               </div>
             ` : ''}
-            <div class="text-sm font-bold text-[#d9c5bf] leading-relaxed">
+
+            <!-- Korean Translation -->
+            <div class="text-sm font-bold text-[#e0cfca] leading-relaxed">
               ${step.ko}
             </div>
 
-            <div class="flex items-center justify-end text-[11px] text-[#9e847e] font-mono pt-1">
-              <span>${curIdx + 1} / ${steps.length} ▼</span>
+            <div class="flex items-center justify-between text-[11px] text-[#9e847e] pt-1 border-t border-[#36252d]">
+              <span class="text-[10px] text-[#a88d89]">화면을 터치하면 다음 대사</span>
+              <span class="font-mono text-[#f2a6b2] font-bold">${curIdx + 1} / ${steps.length} ▼</span>
             </div>
           </div>
         </div>
 
         <!-- Bottom Navigation Footer -->
         <div class="px-4 py-3 bg-[#1a1316] border-t border-[#332229] flex items-center justify-between">
-          <button onclick="stepKotonohaStory(-1)" ${curIdx === 0 ? 'disabled' : ''} class="px-3.5 py-1.5 rounded-xl bg-[#261c21] border border-[#422f37] text-xs font-bold ${curIdx === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-[#36272e] text-[#e6d0ca]'}">
+          <button onclick="stepKotonohaStory(-1)" ${curIdx === 0 ? 'disabled' : ''} class="px-3.5 py-1.5 rounded-xl bg-[#261c21] border border-[#422f37] text-xs font-bold ${curIdx === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-[#36272e] text-[#e6d0ca]'} transition-all">
             ← 이전
           </button>
-          <span class="text-xs text-[#9e847e] font-bold">
+          <span class="text-xs text-[#b09690] font-bold">
             ${curIdx + 1 < steps.length ? '화면을 누르면 다음 대사' : '누르면 오늘의 퀴즈 시작! 🎯'}
           </span>
-          <button onclick="stepKotonohaStory(1)" class="px-3.5 py-1.5 rounded-xl bg-[#e0465a] hover:bg-[#eb576b] text-white text-xs font-black shadow">
+          <button onclick="stepKotonohaStory(1)" class="px-3.5 py-1.5 rounded-xl bg-[#e0465a] hover:bg-[#eb576b] text-white text-xs font-black shadow transition-all">
             ${curIdx + 1 < steps.length ? '다음 →' : '퀴즈 풀기 🎯'}
           </button>
         </div>
@@ -1199,7 +1462,24 @@ function renderKotonohaView() {
                       <div class="text-center py-2">
                         <span class="text-2xl sm:text-3xl font-black text-white border-b-2 border-[#e0465a] pb-1 px-2">${msg.targetWord}</span>
                       </div>
-                      <div class="text-xs text-[#b89d97] text-center mt-2">${msg.targetSub || ''}</div>
+                      ${msg.targetSub ? `
+                        <div class="text-center mt-2.5">
+                          ${kotonohaRuntime.revealedHints && kotonohaRuntime.revealedHints[msg.qIdx] ? `
+                            <div class="p-2 sm:p-2.5 rounded-xl bg-[#1b1417] border border-[#543340] text-xs text-[#ffdbe2] leading-relaxed text-left animate-fadeIn">
+                              <div class="flex items-center justify-between text-[10px] font-black text-[#f28b9b] mb-1">
+                                <span>💡 문제 힌트</span>
+                                <button onclick="event.stopPropagation(); toggleKotonohaQuizHint(${msg.qIdx})" class="text-[#ab908a] hover:text-[#ffd6de] text-[10px]">숨기기 ▴</button>
+                              </div>
+                              ${msg.targetSub}
+                            </div>
+                          ` : `
+                            <button onclick="event.stopPropagation(); toggleKotonohaQuizHint(${msg.qIdx})" class="px-3 py-1 rounded-full bg-[#2c1d23] hover:bg-[#3d2630] border border-[#52333f] hover:border-[#e0465a] text-[11px] font-black text-[#f2a6b2] hover:text-white transition-all shadow-xs inline-flex items-center gap-1.5 active:scale-95">
+                              <span>💡 힌트 보기</span>
+                              <span class="text-[9px] text-[#ab8a83]">(터치하여 확인)</span>
+                            </button>
+                          `}
+                        </div>
+                      ` : ''}
                     </div>
                   </div>
                 </div>
@@ -1262,17 +1542,46 @@ function renderKotonohaView() {
           }).join('')}
         </div>
 
-        <!-- Bottom 1~4 Multiple Choice Buttons (Screenshot 4 Dark Maroon Cards) -->
+        <!-- Bottom 1~4 Multiple Choice Buttons (Clean Japanese First + Pronunciation Toggle) -->
         ${(!isAllDone && currentQ) ? `
-          <div class="p-3.5 bg-[#1d1518] border-t border-[#332229] space-y-2">
-            ${currentQ.options.map((opt, idx) => `
-              <button onclick="submitKotonohaQuizAnswer(${idx})" ${kotonohaRuntime.quizAnswered ? 'disabled' : ''} class="w-full p-3 rounded-2xl bg-[#381c23] hover:bg-[#4a242e] active:scale-[0.99] border border-[#592d38] flex items-center gap-3 text-left transition-all shadow-sm ${kotonohaRuntime.quizAnswered ? 'opacity-60 cursor-not-allowed' : ''}">
-                <span class="w-6 h-6 rounded-full bg-[#e0465a] text-white text-xs font-black flex items-center justify-center shrink-0">
-                  ${idx + 1}
-                </span>
-                <span class="text-sm font-bold text-[#f7e8e4]">${opt}</span>
+          <div class="p-3 sm:p-3.5 bg-[#1d1518] border-t border-[#332229] space-y-2">
+            <div class="flex items-center justify-between px-1 text-xs text-[#b89d97]">
+              <span class="font-bold text-[11px] text-[#d6beba]">정답을 선택하세요</span>
+              <button onclick="toggleKotonohaOptionPron()" class="px-2.5 py-0.5 rounded-full border text-[11px] font-bold transition-all flex items-center gap-1 ${kotonohaRuntime.showOptionPron ? 'bg-[#e0465a] text-white border-[#ff7287] shadow-xs' : 'bg-[#291b21] text-[#d4b0a8] border-[#472d37] hover:border-[#6a3f50]'}">
+                <span>🗣️</span>
+                <span>${kotonohaRuntime.showOptionPron ? '한글 발음 숨기기' : '전체 발음 보기'}</span>
               </button>
-            `).join('')}
+            </div>
+            ${currentQ.options.map((opt, idx) => {
+              const parsed = parseKotonohaOptionText(opt);
+              const singleKey = `${qIdx}_${idx}`;
+              const isPronVisible = kotonohaRuntime.showOptionPron || Boolean(kotonohaRuntime.revealedOptionPron && kotonohaRuntime.revealedOptionPron[singleKey]);
+              return `
+                <button onclick="submitKotonohaQuizAnswer(${idx})" ${kotonohaRuntime.quizAnswered ? 'disabled' : ''} class="w-full p-2.5 sm:p-3 rounded-2xl bg-[#381c23] hover:bg-[#4a242e] active:scale-[0.99] border border-[#592d38] flex items-center justify-between text-left transition-all shadow-sm group ${kotonohaRuntime.quizAnswered ? 'opacity-60 cursor-not-allowed' : ''}">
+                  <div class="flex items-center gap-2.5 min-w-0 pr-2">
+                    <span class="w-6 h-6 rounded-full bg-[#e0465a] text-white text-xs font-black flex items-center justify-center shrink-0 shadow-xs">
+                      ${idx + 1}
+                    </span>
+                    <span class="text-sm font-black text-[#fdf2f0] tracking-wide truncate group-hover:text-white">
+                      ${parsed.main}
+                    </span>
+                  </div>
+                  ${parsed.hasPron ? `
+                    <div class="shrink-0 pl-1">
+                      ${isPronVisible ? `
+                        <span class="px-2 py-0.5 rounded-lg bg-[#27151a] text-[#ffd6de] border border-[#5a2a37] text-xs font-bold animate-fadeIn">
+                          ${parsed.pron}
+                        </span>
+                      ` : `
+                        <span onclick="toggleSingleOptionPron(${idx}, event)" class="px-2 py-0.5 rounded-lg bg-[#2a1b22] hover:bg-[#3d2530] text-[#c9a7a0] hover:text-[#ffd6de] border border-[#482d38] text-[10px] font-bold transition-all shadow-xs cursor-pointer" title="이 선택지 발음 보기">
+                          발음 보기
+                        </span>
+                      `}
+                    </div>
+                  ` : ''}
+                </button>
+              `;
+            }).join('')}
           </div>
         ` : ''}
       </div>
