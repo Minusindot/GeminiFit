@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-08T11:15:23.525Z",
+  "updatedAt": "2026-11-08T11:16:07.981Z",
   "lastActiveDate": "2026-11-08",
   "theme": "light",
   "weight": 65.6,
   "fat": 32.2,
   "bondRank": 22,
   "bondExp": 0,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
-  "currentSituation": "ev5",
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev35",
   "absDone": false,
   "runDone": false,
   "runDist": 7,
@@ -409,11 +409,6 @@
     {
       "sender": "kotone",
       "name": "코토네",
-      "text": "식단 관리 = 식비 절약 = 프로듀서님 지갑 두둑! 이게 바로 1석 3조 재테크 다이어트예요! 💸"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
       "text": "카페에서 매일 5천 원씩 쓰면 한 달에 15만 원인데, 홈카페로 엄청 절약하셨어요! 💸"
     },
     {
@@ -549,6 +544,11 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "어머나, 17시간 단식은 칼같이 지키셔야 하옵니다🍵||2kg 덤벨 재활과 14분 복근으로 코어를 잡으시면 지방은 곱게 타오른다지요, 프로듀서님 🌸🐾"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "예에이! 프로듀서와 합체 완료! 🌟||오늘 운동이랑 식단 작전 회의 시작해 볼까?"
     }
   ]
 }
