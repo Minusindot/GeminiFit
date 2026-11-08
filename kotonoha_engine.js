@@ -1006,6 +1006,30 @@ async function generateAiKotonohaLesson() {
   }
 }
 
+// ============================================================================
+// VISUAL NOVEL HYBRID VISUAL RESOLVER (Seamless SCG + BG & Full ECG Fallback)
+// ============================================================================
+function resolveKotonohaVisuals(step, lesson) {
+  // 1. If step explicitly specifies SCG expression (e.g. expr: 'shy', 'smile', 'angry')
+  if (step.expr && step.speaker) {
+    const outfit = step.outfit || 'default';
+    const scgPath = step.scg || ('./image/scg/' + step.speaker + '/' + step.speaker + '_' + outfit + '_' + step.expr + '.png');
+    const bgPath = step.bg ? (step.bg.startsWith('./') ? step.bg : ('./image/bg/bg_' + step.bg + '.png')) : (lesson.bgImage || './image/03 gemini/gemini_26_kyoto_teahouse.png');
+    return {
+      isScg: true,
+      scgUrl: scgPath,
+      bgUrl: bgPath
+    };
+  }
+
+  // 2. Default Clean Full-Illustration ECG Presentation
+  const ecgUrl = step.sceneImg || lesson.bgImage || './image/03 gemini/gemini_26_kyoto_teahouse.png';
+  return {
+    isScg: false,
+    ecgUrl: ecgUrl
+  };
+}
+
 function renderKotonohaView() {
   initKotonohaState();
   const container = document.getElementById('kotonohaMainContainer');
@@ -1272,7 +1296,8 @@ function renderKotonohaView() {
     const curIdx = Math.min(kotonohaRuntime.storyStepIdx, steps.length - 1);
     const step = steps[curIdx] || steps[0];
     const progressPct = Math.round(((curIdx + 1) / steps.length) * 100);
-    const sceneImage = step.sceneImg || lesson.bgImage || './image/03 gemini/gemini_26_kyoto_teahouse.png';
+    const visuals = resolveKotonohaVisuals(step, lesson);
+    const sceneImage = visuals.ecgUrl || visuals.scgUrl;
 
     container.innerHTML = `
       <div class="rounded-3xl bg-[#141013] text-[#f5ebe6] border border-[#3d2932] shadow-2xl overflow-hidden select-none flex flex-col">
@@ -1308,12 +1333,22 @@ function renderKotonohaView() {
         <!-- Full Illustration Cinematic Stage: Click anywhere to advance -->
         <div class="relative w-full min-h-[500px] sm:min-h-[560px] flex flex-col justify-between bg-[#0e0a0c] cursor-pointer overflow-hidden" onclick="stepKotonohaStory(1)">
           
-          <!-- Cinematic Image Presentation: Ambient Blur Backdrop + Crisp Center Illustration (Never Cut Off) -->
+          <!-- Visual Presentation: True Transparent SCG + BG vs Clean Full ECG -->
           <div class="relative w-full h-72 sm:h-84 overflow-hidden bg-[#0c080a] flex items-center justify-center">
-            <!-- Ambient blurred background filling all screen aspect ratios -->
-            <img src="${sceneImage}" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-45 scale-125 pointer-events-none" style="object-position: center 25%;">
-            <!-- Crisp center illustration with soft shadow -->
-            <img src="${sceneImage}" class="relative z-10 max-h-full max-w-full object-contain mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)] transition-all duration-300">
+            ${visuals.isScg ? `
+              <!-- [TRUE SCG + BG MODE] Pure Background Layer (No Characters) -->
+              <img src="${visuals.bgUrl}" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.85] contrast-[1.02] pointer-events-none transition-all duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#141013] via-transparent to-black/25 pointer-events-none"></div>
+
+              <!-- Pure Standing Character Sprite (Alpha Transparent PNG) with Cross-fade transition -->
+              <div class="relative z-10 h-full flex items-end justify-center pointer-events-none">
+                <img src="${visuals.scgUrl}" class="max-h-[96%] max-w-[85%] object-contain object-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
+              </div>
+            ` : `
+              <!-- [CLEAN FULL ECG MODE] Cinematic Ambient Blur + Center Illustration (Never Cut Off) -->
+              <img src="${sceneImage}" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-45 scale-125 pointer-events-none" style="object-position: center 25%;">
+              <img src="${sceneImage}" class="relative z-10 max-h-full max-w-full object-contain mx-auto drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)] transition-all duration-300">
+            `}
             <!-- Smooth Gradient Blend into Dialogue Box -->
             <div class="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-[#141013]"></div>
           </div>
