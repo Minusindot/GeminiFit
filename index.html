@@ -275,7 +275,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.33</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.34</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -416,7 +416,7 @@
         <div id="messengerView" class="relative">
 
           <!-- 1) LOCK SCREEN (random heroine wallpaper + tap to unlock) -->
-          <div id="messengerLockScreen" class="relative w-full rounded-3xl overflow-hidden shadow-2xl select-none bg-slate-900" style="height: clamp(430px, 64vh, 560px);">
+          <div id="messengerLockScreen" onclick="unlockMessenger()" role="button" tabindex="0" aria-label="탭하여 잠금해제" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();unlockMessenger();}" class="relative w-full rounded-3xl overflow-hidden shadow-2xl select-none bg-slate-900 cursor-pointer" style="height: clamp(430px, 64vh, 560px);">
             <img id="lockWallpaper" src="./image/03 gemini/gemini_26_kyoto_teahouse.png" alt="" class="absolute inset-0 w-full h-full object-cover object-[center_16%] scale-105">
             <div class="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/10 to-slate-950/90"></div>
 
@@ -429,27 +429,21 @@
             <!-- clock + heroine label -->
             <div class="relative z-10 flex flex-col items-center mt-5">
               <div id="lockClock" class="text-[52px] leading-none font-black text-white tracking-tight tabular-nums drop-shadow-xl">07:00</div>
-              <button id="lockCharButton" onclick="openLockedRoom()" class="mt-2.5 px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/25 backdrop-blur-md text-[10px] font-black text-white transition-all active:scale-95">
+              <span id="lockCharButton" class="mt-2.5 px-3.5 py-1.5 rounded-full bg-white/15 border border-white/25 backdrop-blur-md text-[10px] font-black text-white">
                 <span id="lockCharLabel">🌸 제미니가 기다리고 있어요</span>
-              </button>
+              </span>
             </div>
 
-            <!-- bottom: message preview + swipe unlock -->
-            <div class="absolute inset-x-0 bottom-0 z-10 px-4 pb-5 space-y-3">
-              <button onclick="openLockedRoom()" class="w-full flex items-center gap-2.5 rounded-2xl bg-black/40 backdrop-blur-md border border-white/15 p-2.5 text-left active:scale-[0.99] transition-all">
+            <!-- bottom: message preview (tap anywhere on the lock screen to unlock) -->
+            <div class="absolute inset-x-0 bottom-0 z-10 px-4 pb-5">
+              <div class="w-full flex items-center gap-2.5 rounded-2xl bg-black/40 backdrop-blur-md border border-white/15 p-2.5 text-left">
                 <img id="lockAvatar" src="./image/03 gemini/avatar_gemini.png" alt="" class="w-9 h-9 rounded-full object-cover ring-2 ring-white/40 shrink-0" onerror="this.src='./image/00 common/dual_inbody.png'">
                 <span class="min-w-0 flex-1">
                   <span id="lockMsgName" class="block text-[10px] font-black text-white">제미니</span>
                   <span id="lockMsgText" class="block text-[10px] font-bold text-white/70 truncate">오늘도 힘내시와요, 프로듀서님 🍵</span>
                 </span>
                 <span class="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center text-[10px] shrink-0">💬</span>
-              </button>
-
-              <button id="lockUnlockBtn" type="button" onclick="unlockMessenger()" aria-label="탭하여 잠금해제" title="탭하여 잠금해제"
-                class="group relative w-full h-[54px] rounded-full bg-white/15 hover:bg-white/25 border border-white/30 backdrop-blur-md flex items-center justify-center active:scale-[0.98] transition-all shadow-lg overflow-hidden">
-                <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></span>
-                <span class="relative w-[44px] h-[44px] rounded-full bg-white flex items-center justify-center text-lg text-slate-800 shadow-xl group-active:scale-95 transition-transform">🔓</span>
-              </button>
+              </div>
             </div>
           </div>
 
@@ -1669,11 +1663,11 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.3.33"></script>
-  <script src="./dialogue_pool.js?v=4.3.33"></script>
-  <script src="./trainer_episodes.js?v=4.3.33"></script>
-  <script src="./kotonoha_data.js?v=4.3.33"></script>
-  <script src="./kotonoha_engine.js?v=4.3.33"></script>
+  <script src="./weekly_reports.js?v=4.3.34"></script>
+  <script src="./dialogue_pool.js?v=4.3.34"></script>
+  <script src="./trainer_episodes.js?v=4.3.34"></script>
+  <script src="./kotonoha_data.js?v=4.3.34"></script>
+  <script src="./kotonoha_engine.js?v=4.3.34"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -4398,7 +4392,6 @@
     // ---------- Messenger UI state ----------
     let messengerUnlocked = false;
     let expandedThreadRoom = null;
-    let lockWallpaperRoom = 'gemini';
 
     const MESSENGER_WALLPAPERS = {
       gemini: [
@@ -4435,7 +4428,6 @@
     function initLockScreen() {
       const rooms = ['gemini', 'kotone', 'mio'];
       const room = rooms[Math.floor(Math.random() * rooms.length)];
-      lockWallpaperRoom = room;
       const contact = TRAINER_CONTACTS.find(x => x.room === room) || TRAINER_CONTACTS[0];
       const pool = MESSENGER_WALLPAPERS[room] || [];
       const wallpaper = pool[Math.floor(Math.random() * pool.length)] || './image/03 gemini/gemini_26_kyoto_teahouse.png';
@@ -4492,30 +4484,8 @@
       setTimeout(finish, 260);
     }
 
-    // Tapping the wallpaper chip opens that heroine's room directly
-    function openLockedRoom() {
-      const room = lockWallpaperRoom || 'gemini';
-      const lock = document.getElementById('messengerLockScreen');
-      messengerUnlocked = true;
-      if (lock) {
-        lock.style.transition = 'opacity .26s ease, transform .26s ease';
-        lock.style.opacity = '0';
-        lock.style.transform = 'translateY(-16px) scale(1.03)';
-      }
-      playBeep(880, 0.08);
-      setTimeout(() => {
-        if (lock) {
-          lock.classList.add('hidden');
-          lock.style.transition = '';
-          lock.style.opacity = '';
-          lock.style.transform = '';
-        }
-        enterTrainerRoom(room);
-      }, 240);
-    }
-
     // ---------- Tap-to-unlock ----------
-    // The lock screen uses a single large tap target (see #lockUnlockBtn) that calls unlockMessenger().
+    // The whole lock screen is the tap target: clicking anywhere calls unlockMessenger().
 
     // ---------- Message list: character -> episode accordion ----------
     function showMessengerEntry() {
@@ -9340,7 +9310,7 @@ ${err.message}
 
       <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
         <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-          <span>현재 앱 버전: v4.3.33 (言の葉茶屋)</span>
+          <span>현재 앱 버전: v4.3.34 (言の葉茶屋)</span>
           <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
         </div>
         <div class="text-[10px] text-[#9e847e]">아래 버튼을 눌러 요청문을 복사한 뒤, 에이전트에 바로 붙여넣기 하시면 즉시 업데이트가 진행됩니다.</div>
