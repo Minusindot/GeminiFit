@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-10T16:13:55.977Z",
+  "updatedAt": "2026-11-10T16:39:32.295Z",
   "lastActiveDate": "2026-11-11",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
   "bondRank": 5,
   "bondExp": 70,
-  "activeTrainer": "gemini",
-  "activeMode": "gemini",
+  "activeTrainer": "kotone",
+  "activeMode": "kotone",
   "currentSituation": "ev5",
   "absDone": false,
   "runDone": false,
@@ -127,46 +127,6 @@
       "totalReps": 390
     },
     {
-      "id": "gym-3",
-      "date": "10/20",
-      "fullDate": "2026-10-20",
-      "time": "21:10",
-      "upper1Done": 4,
-      "upper1Reps": 80,
-      "upper2Done": 4,
-      "upper2Reps": 80,
-      "lowerDone": 4,
-      "lowerReps": 80,
-      "legRaiseDone": 1,
-      "legRaiseReps": 50,
-      "legRaiseTarget": 1,
-      "crunchDone": 2,
-      "crunchReps": 100,
-      "crunchTarget": 2,
-      "totalSets": 15,
-      "totalReps": 390
-    },
-    {
-      "id": "gym-1792576207664",
-      "date": "10/21",
-      "fullDate": "2026-10-21",
-      "time": "오후 06:50",
-      "upper1Done": 0,
-      "upper1Reps": 0,
-      "upper2Done": 0,
-      "upper2Reps": 0,
-      "lowerDone": 0,
-      "lowerReps": 0,
-      "legRaiseDone": 0,
-      "legRaiseReps": 0,
-      "legRaiseTarget": 4,
-      "crunchDone": 0,
-      "crunchReps": 0,
-      "crunchTarget": 4,
-      "totalSets": 0,
-      "totalReps": 0
-    },
-    {
       "id": "gym-1792756992061",
       "date": "10/23",
       "fullDate": "2026-10-23",
@@ -207,6 +167,26 @@
       "totalReps": 20
     },
     {
+      "id": "gym-3",
+      "date": "10/20",
+      "fullDate": "2026-10-20",
+      "time": "21:10",
+      "upper1Done": 4,
+      "upper1Reps": 80,
+      "upper2Done": 4,
+      "upper2Reps": 80,
+      "lowerDone": 4,
+      "lowerReps": 80,
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
+      "legRaiseTarget": 1,
+      "crunchDone": 2,
+      "crunchReps": 100,
+      "crunchTarget": 2,
+      "totalSets": 15,
+      "totalReps": 390
+    },
+    {
       "id": "gym-1794049575180",
       "date": "11/7",
       "fullDate": "2026-11-07",
@@ -225,6 +205,26 @@
       "crunchTarget": 2,
       "totalSets": 4,
       "totalReps": 140
+    },
+    {
+      "id": "gym-1792576207664",
+      "date": "10/21",
+      "fullDate": "2026-10-21",
+      "time": "오후 06:50",
+      "upper1Done": 0,
+      "upper1Reps": 0,
+      "upper2Done": 0,
+      "upper2Reps": 0,
+      "lowerDone": 0,
+      "lowerReps": 0,
+      "legRaiseDone": 0,
+      "legRaiseReps": 0,
+      "legRaiseTarget": 4,
+      "crunchDone": 0,
+      "crunchReps": 0,
+      "crunchTarget": 4,
+      "totalSets": 0,
+      "totalReps": 0
     }
   ],
   "latestRun": {
@@ -239,18 +239,6 @@
     "date": "2026-10-20"
   },
   "runningLogs": [
-    {
-      "id": "run-1",
-      "date": "2026-10-20",
-      "distance": 7.3,
-      "duration": "1:24:31",
-      "pace": "11'33\"",
-      "calories": 538,
-      "heartRate": 130,
-      "cadence": 108,
-      "steps": 9206,
-      "source": "삼성헬스"
-    },
     {
       "id": "run-1792922922872",
       "date": "2026-10-25",
@@ -305,6 +293,18 @@
       "heartRate": 144,
       "steps": 131,
       "source": "삼성헬스"
+    },
+    {
+      "id": "run-1",
+      "date": "2026-10-20",
+      "distance": 7.3,
+      "duration": "1:24:31",
+      "pace": "11'33\"",
+      "calories": 538,
+      "heartRate": 130,
+      "cadence": 108,
+      "steps": 9206,
+      "source": "삼성헬스"
     }
   ],
   "absVideoUrl": "https://www.youtube.com/watch?v=EnToE4ezGsQ",
@@ -314,16 +314,10 @@
       "weight": 64.1,
       "fat": 21.5,
       "mealsDone": 1,
-      "mealPhotosCount": 0,
-      "runDone": false,
+      "mealPhotosCount": 1,
+      "runDone": true,
       "absDone": false,
-      "rehabDone": 0,
       "gymDone": false,
-      "teaLog": {
-        "matcha": 0,
-        "espresso": 1,
-        "tea": 0
-      },
       "autoArchived": true
     },
     "2026-10-22": {
@@ -472,19 +466,152 @@
   },
   "chatHistory": [
     {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "프로듀서님~! 오늘 삼성헬스로 잰 체중 64.1kg 찍힌 거 코토네가 확인했어요! 💛 수요일 인바디 측정 데이라 보너스 경험치도 2배인 거 아시죠? 목표인 52kg 슬림핏까지 코토네가 특급 인센티브 애교로 꽉 붙어서 서포트해 드릴게요! 💸✨"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "우와아~! 64.1kg 확인 완료! 지난번에 삼성헬스로 7.30km(1시간 24분 완주!) 뛴 것도 진짜 멋있었어 프로듀서! 🌟 11'33\" 페이스로 손아귀 힘 빼고 안정적으로 달린 덕분에 테니스 엘보도 안 다쳤잖아~ 오늘 노을 보면서 가볍게 5km 러닝 어때? 내가 옆에서 파이팅 넘치게 응원해줄게! 🏃‍♀️💨"
+      "sender": "user",
+      "text": "크런치 20개로 상복부까지 쥐어짜기 끝! 🧘"
     },
     {
       "sender": "gemini",
       "name": "제미니",
-      "text": "흥, 바보 프로듀서! 64.1kg에서 52kg까지 아직 -12kg 남았다고 벌써부터 들뜨면 안 돼! 메~롱! 🐾 17시 넘었으니까 지금부터는 물이랑 내가 타준 따뜻한 말차 🍵 외엔 음식물 절대 금지야! 그리고 팔꿈치 안 아프게 2kg 덤벨 손목 편심성 컬 3세트랑 14분 복근 꼭 챙겨, 알았지? 덤벨 자세는 내가 이따 밀착 체크해 줄 테니까 딴생각 마!"
+      "text": "호흡을 내쉬며 배꼽을 바라보는 자세가 참으로 완벽하셨사와요 🌸||체지방 20% 언더가 이제 눈앞이옵니다, 프로듀서님 🐾"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "예에이! 프로듀서와 합체 완료! 🌟||오늘 운동이랑 식단 작전 회의 시작해 볼까?"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "오늘도 참으로 수고 많으셨사옵니다 🌸||야식 같은 걸 드시면 절대 안 되사와요! 🐾||얼른 2kg 덤벨을 들고 이리로 오시지요, 프로듀서님~"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "📢 [3인 트레이너 실시간 대기방]\n💛 코토네: \"프로듀서님 오셨다~! 헤헤 💛\"\n🌟 미오: \"오오 딱 맞춰서 잘 왔어! 하이파이브! 🖐️\"\n🐾 제미니: \"흥, 게으름 피우지 말고 얼른 들어와, 바보야! 🐾\""
+    },
+    {
+      "sender": "user",
+      "text": "크런치 20개로 상복부까지 쥐어짜기 끝! 🧘"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "호흡을 내쉬며 배꼽을 바라보는 자세가 참으로 완벽하셨사와요 🌸||체지방 20% 언더가 이제 눈앞이옵니다, 프로듀서님 🐾"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 🐾 17시 셔틀 셔다운"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "프로듀서항, 잠깐만 멈추시지요 ⏰"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "지금 시계 몇 시인지 아시지요? 17시 셔틀, 단식 셔다운 30분 전이라지요."
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "소녀가 눈 깜빡할 새에 배민 켜는 걸 다 봤어요. 치킨이 먹고 싶은 건 알겠어요... 하지만 17시 셔틀이 출발하면 절대 안 된다고요!"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "특히 오늘은 슬림핏 골든타임 구간. 지금 참으면 내일 아침 체중계에서 웃을 수 있어요."
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "차 한 잔 하면서 버틸래요 🍵"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "훗, 그 답변이 제일 현명하네요. 소녀가 정성껏 우리지요."
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "따뜻한 무카페인 차 한 잔이면 위장이 달래져요. 내일도 17시 셔틀, 잘 잡아보시지요 🍵"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "어느 쪽을 골라도, 소녀는 프로듀서항 편이예요. 셔틀만 놓치지 않으면 됩니다 🐾"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "제미니: 앗, 고양이 귀 건드리지 마! | 코토네: 헤헤, 쓰담쓰담은 언제나 환영이에요~! | 미오: 간지러워 프로듀서~ 🌟"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "제미니: 앗, 고양이 귀 건드리지 마! | 코토네: 헤헤, 쓰담쓰담은 언제나 환영이에요~! | 미오: 간지러워 프로듀서~ 🌟"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 🎀 아이돌 오디션 PT 신청"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "프로듀서님! 코토네가 드디어 아이돌 오디션 최종 라운드 진출!!! 🎉"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "프로듀서님도 같이 PT 받아요? 아이돌은 몸이 악기라니까요. 무대 서기만 봐도 자세가 단단해야 빛나죠!"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "코토네가 인증 샷 서는 자세부터 레슨해드릴게요~ 근육은 아이돌의 전 재산! 💛"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "처음엔 코토네가 직접 코치해줘요 🙏"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "당연하죠~! 코토네가 1대1 전담 코치예요! 포즈부터 미소까지 완璧하게 다듬어 드릴게요!"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "레슨 끝나면 쿠폰 적립! 프로듀서님 전용 응원 댄스까지 포함이에요~ 💃"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "프로듀서님 1등 자랑이 되는 게 코토네 꿈이라구요! 오늘도 화이팅요~! 🌟"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 💸 프로듀서 카페 알바 의혹"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "프로듀서님! 카페 투어 직접 시작부터 보고드림니다! 헤헤~ 💛"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "코토네 계산해봤나요? 매일 5천 원 카페 라떼면 한 달 15만 원인데, 이 돈을 다이어트 성공일에 저랑 딸기 파르페 먹기로 했잖아요!"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "홈카페로 바꾸면 그 돈이 전부 저축+탕진펀드… 아니 코토네 특급 응원 댄스가 되어 돌아와요! 💃"
     }
   ]
 }
