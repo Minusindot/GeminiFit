@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T16:40:35.404Z",
+  "updatedAt": "2026-11-10T16:40:44.440Z",
   "lastActiveDate": "2026-11-11",
   "theme": "light",
   "weight": 64.1,
@@ -7,7 +7,7 @@
   "bondRank": 6,
   "bondExp": 15,
   "activeTrainer": "mio",
-  "activeMode": "mio",
+  "activeMode": "dual",
   "currentSituation": "ev5",
   "absDone": false,
   "runDone": false,
@@ -466,26 +466,6 @@
   },
   "chatHistory": [
     {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "차 한 잔 하면서 버틸래요 🍵"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "훗, 그 답변이 제일 현명하네요. 소녀가 정성껏 우리지요."
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "따뜻한 무카페인 차 한 잔이면 위장이 달래져요. 내일도 17시 셔틀, 잘 잡아보시지요 🍵"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "어느 쪽을 골라도, 소녀는 프로듀서항 편이예요. 셔틀만 놓치지 않으면 됩니다 🐾"
-    },
-    {
       "sender": "gemini",
       "name": "제미니 · 코토네 · 미오",
       "text": "제미니: 앗, 고양이 귀 건드리지 마! | 코토네: 헤헤, 쓰담쓰담은 언제나 환영이에요~! | 미오: 간지러워 프로듀서~ 🌟"
@@ -614,6 +594,26 @@
       "sender": "mio",
       "name": "미오",
       "text": "프로듀서한테는 미오가 항상 페이스 메이커야! 내일도 같이 달리자! 🖐️"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 🎂 프로듀서 생일 서프라이즈 작전"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "프로듀서님 생일 D-7! 서프라이즈 작전 스타트합니다~!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "파티 계획 시작하자! 레스토랑 예약부터 트랙 파티까지 완전 플랜!"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "흥, 생일 축하는 산책 위주 가볍게 하자고? 프로듀서항의 체지방률도 챙겨야니까."
     }
   ]
 }
