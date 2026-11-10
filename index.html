@@ -213,6 +213,15 @@
     #mainTrainerImg, #dualStageImg {
       transition: object-position 0.35s ease, transform 0.35s ease, opacity 0.25s ease;
     }
+
+    /* ===== Trainer messenger (lock screen / message list / chat room) ===== */
+    #choicesContainer:empty { display: none; }
+    .messenger-view-enter { animation: messengerViewIn 0.28s ease both; }
+    @keyframes messengerViewIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .messenger-thread-open { animation: messengerViewIn 0.2s ease both; }
   </style>
 </head>
 <body class="min-h-screen selection:bg-sky-400 selection:text-white">
@@ -266,7 +275,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.30</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.31</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -317,9 +326,15 @@
          ======================================================== -->
     <div id="viewTalk" class="space-y-2.5 hidden">
 
-      <!-- Trainer Showcase Card -->
-      <div id="trainerCardContainer" class="game-card overflow-hidden">
+      <!-- Trainer Showcase Card (opened via the 🎨 스테이지 button; messenger is the default Talk view) -->
+      <div id="trainerCardContainer" class="game-card overflow-hidden hidden">
         
+        <!-- Stage header: back to messenger -->
+        <div class="flex items-center justify-between px-2.5 py-1.5 bg-slate-100/80 dark:bg-slate-900/50 border-b border-slate-200/70 dark:border-slate-700/60">
+          <span class="text-[10px] font-black text-slate-500 dark:text-slate-400">🎨 스탠딩 스테이지</span>
+          <button onclick="showMessengerHome()" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[10px] font-black text-sky-600 dark:text-sky-300 hover:border-sky-400 transition-all">💬 메신저로</button>
+        </div>
+
         <!-- Top Control Bar (Clean 2-tier design: Heroines Grid + Action Controls) -->
         <div class="p-2 space-y-1.5 border-b border-slate-200/80 dark:border-slate-700/60 bg-slate-50/60 dark:bg-slate-800/40">
           
@@ -393,82 +408,104 @@
         </div>
       </div>
 
-        <!-- Clean Chat Header -->
-        <div id="messengerHeader" class="px-3.5 py-2 bg-slate-50/90 dark:bg-slate-800/70 border-b border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between">
-          <div class="flex items-center gap-1.5 min-w-0">
-            <button id="messengerBackBtn" onclick="backToMessengerContacts()" class="hidden shrink-0 w-7 h-7 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-xs font-black text-slate-500 items-center justify-center" title="대화상대 목록">‹</button>
-            <div class="flex items-center gap-1.5" id="chatHeaderTitle">
-              <span class="text-xs">💬</span>
-              <span class="text-[11px] font-black text-slate-700 dark:text-slate-200">메신저</span>
-            </div>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <!-- Messenger contacts (VN messenger style) -->
-            <button onclick="showMessengerContacts()" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[11px] font-bold text-slate-600 dark:text-slate-300 hover:border-sky-400 hover:text-sky-500 transition-all flex items-center gap-1" title="대화상대 목록으로 가기">
-              <span>👥</span><span>대화상대</span>
-            </button>
-            <button onclick="clearChatLog()" class="text-[10px] text-slate-400 hover:text-rose-400 font-bold px-1.5 py-0.5 rounded hover:bg-slate-200/60 dark:hover:bg-slate-700 transition-all" title="대화 기록 정리">
-              대화 지우기
-            </button>
-          </div>
-        </div>
+      <!-- ========================================================
+           TRAINER MESSENGER: lock screen -> message list -> chat room
+           ======================================================== -->
+      <div id="messengerHomeWrap" class="space-y-2.5">
 
-        <div id="messengerView">
-          <!-- Contacts list shown first (messenger start screen) -->
-          <div id="messengerContactsWrap" class="p-3 bg-[var(--chat-bg)]">
-            <!-- Heroine wallpaper entry card (phone-home-screen style) -->
-            <button onclick="enterTrainerRoom('${trainerMessengerRoom || 'gemini'}')" class="relative w-full h-44 rounded-2xl overflow-hidden border border-[#3a2830] shadow-lg group mb-3 text-left">
-              <img src="./image/03 gemini/gemini_26_kyoto_teahouse.png" onerror="this.src='./image/00 common/dual_inbody.png'" class="absolute inset-0 w-full h-full object-cover object-[center_20%] group-hover:scale-105 transition-all duration-500">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30"></div>
-              <div class="absolute bottom-0 inset-x-0 p-3">
-                <div class="text-[11px] font-bold text-[#ffd6de]">오늘의 트레이너</div>
-                <div class="text-base font-black text-white leading-tight">제미니 · 코토네 · 미오와 대화하기</div>
-                <div class="text-[10px] text-[#d4b5b0] font-bold mt-0.5">탭해서 대화방 들어가기 ›</div>
-              </div>
-            </button>
-            <div class="flex items-center gap-1.5 text-[11px] font-black text-slate-500 dark:text-slate-400 mb-2">
-              <span>👥</span><span>대화상대</span>
-              <span class="ml-auto text-[10px] font-bold text-slate-400">탭하여 대화방 들어가기</span>
-            </div>
-            <div id="messengerContactsList" class="space-y-1.5"></div>
-          </div>
+        <div id="messengerView" class="relative">
 
-          <div id="messengerRoomBody" class="hidden">
-            <!-- Episode cards strip (inside a trainer room, messenger style: episodes sit at top of the conversation) -->
-            <div id="episodeCardsWrap" class="hidden px-3 py-2.5 bg-slate-50/90 dark:bg-slate-800/70 border-t border-slate-200/80 dark:border-slate-700/60">
-              <div class="flex items-center gap-1.5 text-[11px] font-black text-slate-500 dark:text-slate-400 mb-1.5">
-                <span>🎬</span><span>에피소드</span>
-                <span id="episodeCardsProg" class="ml-auto text-[10px] font-bold text-slate-400"></span>
-              </div>
-              <div id="episodeCardsList" class="flex gap-2 overflow-x-auto clean-scroll pb-1"></div>
+          <!-- 1) LOCK SCREEN (random heroine wallpaper + swipe to unlock) -->
+          <div id="messengerLockScreen" class="relative w-full rounded-3xl overflow-hidden shadow-2xl select-none bg-slate-900" style="height: clamp(430px, 64vh, 560px);">
+            <img id="lockWallpaper" src="./image/03 gemini/gemini_26_kyoto_teahouse.png" alt="" class="absolute inset-0 w-full h-full object-cover object-[center_16%] scale-105">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/10 to-slate-950/90"></div>
+
+            <!-- status row -->
+            <div class="relative z-10 flex items-center justify-between px-5 pt-4 text-[10px] font-bold text-white/80">
+              <span id="lockDate">11월 11일 수요일</span>
+              <span class="flex items-center gap-2"><span>📶</span><span>🔋</span></span>
             </div>
 
-            <!-- Chat Stream (Expanded Roomy Height) -->
-            <div class="p-3.5 min-h-[340px] max-h-[460px] overflow-y-auto clean-scroll space-y-3 bg-[var(--chat-bg)]" id="chatContainer">
-              <!-- Dynamically populated -->
-            </div>
-
-            <!-- Dynamic Choice Options Container (episode choices) -->
-            <div id="choicesContainer" class="px-3 py-2 bg-slate-50/90 dark:bg-slate-800/70 border-t border-slate-200/80 dark:border-slate-700/60 space-y-1.5">
-              <!-- Dynamically populated choices -->
-            </div>
-
-            <!-- Direct Message Input Bar -->
-            <div class="px-3 py-2 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200/80 dark:border-slate-700/60 flex items-center gap-2">
-              <input type="text" id="directChatInput" placeholder="메시지 보내기..." class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-sky-400" onkeydown="if(event.key==='Enter') sendDirectMessage()">
-              <button onclick="sendDirectMessage()" class="px-3.5 py-1.5 rounded-xl bg-[#4a89dc] hover:bg-sky-500 text-white text-xs font-extrabold shadow-sm shrink-0 transition-all">
-                전송
+            <!-- clock + heroine label -->
+            <div class="relative z-10 flex flex-col items-center mt-5">
+              <div id="lockClock" class="text-[52px] leading-none font-black text-white tracking-tight tabular-nums drop-shadow-xl">07:00</div>
+              <button id="lockCharButton" onclick="openLockedRoom()" class="mt-2.5 px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/25 backdrop-blur-md text-[10px] font-black text-white transition-all active:scale-95">
+                <span id="lockCharLabel">🌸 제미니가 기다리고 있어요</span>
               </button>
             </div>
+
+            <!-- bottom: message preview + swipe unlock -->
+            <div class="absolute inset-x-0 bottom-0 z-10 px-4 pb-5 space-y-3">
+              <button onclick="openLockedRoom()" class="w-full flex items-center gap-2.5 rounded-2xl bg-black/40 backdrop-blur-md border border-white/15 p-2.5 text-left active:scale-[0.99] transition-all">
+                <img id="lockAvatar" src="./image/03 gemini/avatar_gemini.png" alt="" class="w-9 h-9 rounded-full object-cover ring-2 ring-white/40 shrink-0" onerror="this.src='./image/00 common/dual_inbody.png'">
+                <span class="min-w-0 flex-1">
+                  <span id="lockMsgName" class="block text-[10px] font-black text-white">제미니</span>
+                  <span id="lockMsgText" class="block text-[10px] font-bold text-white/70 truncate">오늘도 힘내시와요, 프로듀서님 🍵</span>
+                </span>
+                <span class="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center text-[10px] shrink-0">💬</span>
+              </button>
+
+              <div id="lockSwipeTrack" class="relative h-[52px] rounded-full bg-white/15 border border-white/25 backdrop-blur-md overflow-hidden">
+                <div id="lockSwipeFill" class="absolute inset-y-0 left-0 w-0 bg-white/25"></div>
+                <span id="lockSwipeLabel" class="absolute inset-0 flex items-center justify-center pl-8 text-[11px] font-black tracking-[0.14em] text-white/85">밀어서 잠금해제</span>
+                <div id="lockSwipeThumb" onpointerdown="beginLockSwipe(event)" class="absolute top-[5px] left-[5px] w-[42px] h-[42px] rounded-full bg-white flex items-center justify-center text-sm text-slate-800 cursor-grab active:cursor-grabbing touch-none shadow-xl" style="will-change: transform;">🔓</div>
+              </div>
+              <div class="text-center text-[9px] font-bold text-white/50">스와이프로 잠금해제 · 캐릭터를 탭하면 바로 톡이 열려요</div>
+            </div>
           </div>
+
+          <!-- 2) MESSAGE LIST (character -> episode accordion) -->
+          <div id="messengerListWrap" class="hidden rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-lg">
+            <div class="flex items-center justify-between px-3.5 py-2.5 bg-slate-50/95 dark:bg-slate-800/95 border-b border-slate-200/80 dark:border-slate-700/60">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm">💬</span>
+                <span class="text-xs font-black text-slate-800 dark:text-slate-100">메시지 리스트</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button onclick="showTrainerStage()" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[10px] font-black text-slate-500 dark:text-slate-300 hover:border-sky-400 transition-all" title="스탠딩 스테이지 열기">🎨 스테이지</button>
+                <button onclick="lockMessenger()" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[10px] font-black text-slate-500 dark:text-slate-300 hover:border-rose-400 transition-all" title="잠금화면으로">🔒</button>
+              </div>
+            </div>
+            <div id="messengerThreadList" class="p-2.5 space-y-1.5 bg-[var(--chat-bg)]"></div>
+            <div class="px-3 py-2 text-center text-[9px] font-bold text-slate-400 dark:text-slate-500 bg-[var(--chat-bg)]">캐릭터를 탭하면 에피소드 목록이 펼쳐져요</div>
+          </div>
+
+          <!-- 3) CHAT ROOM -->
+          <div id="messengerRoomBody" class="hidden rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-lg">
+            <div class="flex items-center gap-2.5 px-3 py-2.5 bg-slate-50/95 dark:bg-slate-800/95 border-b border-slate-200/80 dark:border-slate-700/60">
+              <button onclick="backToMessengerList()" class="shrink-0 w-7 h-7 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-xs font-black text-slate-500 dark:text-slate-300 flex items-center justify-center active:scale-95 transition-all" title="메시지 리스트">‹</button>
+              <span id="roomAvatarWrap" class="w-9 h-9 rounded-full overflow-hidden ring-2 ring-pink-400/60 shrink-0 bg-slate-100 dark:bg-slate-900">
+                <img id="roomAvatar" src="./image/03 gemini/avatar_gemini.png" alt="" class="w-full h-full object-cover" onerror="this.src='./image/00 common/dual_inbody.png'">
+              </span>
+              <div class="min-w-0 flex-1">
+                <div id="roomName" class="text-xs font-black text-slate-800 dark:text-slate-100 truncate">제미니</div>
+                <div id="roomStatus" class="text-[9px] font-bold text-emerald-500">● 온라인</div>
+              </div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <span id="roomEpisodeProg" class="px-1.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-[9px] font-black text-slate-500 dark:text-slate-300">0/0</span>
+                <button onclick="clearChatLog()" class="w-6 h-6 rounded-lg text-slate-300 dark:text-slate-600 hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-[11px] transition-all" title="이 대화 기록 정리">🗑</button>
+              </div>
+            </div>
+
+            <div class="p-3.5 min-h-[420px] max-h-[58vh] overflow-y-auto clean-scroll space-y-3 bg-[var(--chat-bg)]" id="chatContainer"></div>
+
+            <div id="choicesContainer" class="p-3 space-y-1.5 bg-slate-50/95 dark:bg-slate-800/80 border-t border-slate-200/80 dark:border-slate-700/60"></div>
+
+            <div class="flex items-center justify-center py-2.5 bg-[var(--chat-bg)] border-t border-slate-200/70 dark:border-slate-700/60">
+              <span class="px-6 py-1 rounded-full border border-slate-200 dark:border-slate-700 text-[9px] font-black tracking-[0.35em] text-slate-400 dark:text-slate-500">END</span>
+            </div>
+          </div>
+
         </div>
 
-      <!-- Quick Scroll to Top Button below Chat -->
-      <div class="flex items-center justify-center pt-1 pb-1">
-        <button onclick="scrollToTop()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 shadow-xs hover:border-sky-400 hover:text-sky-500 active:scale-95 transition-all" title="화면 맨 위(캐릭터 스테이지)로 이동">
-          <span>⬆️</span>
-          <span>맨 위 보기</span>
-        </button>
+        <!-- Quick scroll to top -->
+        <div class="flex items-center justify-center pt-0.5 pb-0.5">
+          <button onclick="scrollToTop()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 shadow-xs hover:border-sky-400 hover:text-sky-500 active:scale-95 transition-all" title="화면 맨 위로 이동">
+            <span>⬆️</span>
+            <span>맨 위로</span>
+          </button>
+        </div>
+
       </div>
 
     </div>
@@ -1617,10 +1654,10 @@
 
   </div>
 
-  <script src="./dialogue_pool.js?v=4.3.30"></script>
-  <script src="./trainer_episodes.js?v=4.3.30"></script>
-  <script src="./kotonoha_data.js?v=4.3.30"></script>
-  <script src="./kotonoha_engine.js?v=4.3.30"></script>
+  <script src="./dialogue_pool.js?v=4.3.31"></script>
+  <script src="./trainer_episodes.js?v=4.3.31"></script>
+  <script src="./kotonoha_data.js?v=4.3.31"></script>
+  <script src="./kotonoha_engine.js?v=4.3.31"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -4331,90 +4368,342 @@
       return null;
     }
 
-    function showMessengerContacts() {
-      const wrap = document.getElementById('messengerContactsWrap');
-      if (!wrap) return;
-      cancelTrainerEpisode();
-      const list = document.getElementById('messengerContactsList');
-      const eps = trainerEpisodes();
-      const rooms = TRAINER_CONTACTS;
-      list.innerHTML = rooms.map(c => {
-        const last = roomLastMessage(c.room);
-        const preview = last ? last.text.slice(0, 44) : '탭하여 대화를 시작하세요';
-        const epCount = (eps[c.room] || []).length;
-        const doneCount = (eps[c.room] || []).filter(e => getTrainerEpisodeDone(e.id)).length;
-        return `
-          <button onclick="enterTrainerRoom('${c.room}')" class="w-full flex items-center gap-2.5 p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400 transition-all text-left active:scale-[0.99]">
-            <span class="w-11 h-11 rounded-full overflow-hidden ring-2 ${c.ring} shrink-0">
-              <img src="${c.avatar}" alt="${c.name}" class="w-full h-full object-cover" onerror="this.src='./image/00 common/dual_inbody.png'">
-            </span>
-            <span class="min-w-0 flex-1">
-              <span class="block text-xs font-black ${c.titleClass}">${c.name}</span>
-              <span class="block text-[10px] text-slate-400 dark:text-slate-500 font-bold truncate mt-0.5">${preview.replace(/<[^>]+>/g, '')}</span>
-            </span>
-            <span class="shrink-0 flex flex-col items-end gap-1">
-              <span class="px-1.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-[9px] font-black text-slate-500 dark:text-slate-300">🎬 ${doneCount}/${epCount}</span>
-              <span class="text-slate-300 dark:text-slate-600 text-xs">›</span>
-            </span>
-          </button>
-        `;
-      }).join('');
-      // Header: messenger list mode (no back button)
-      const backBtn = document.getElementById('messengerBackBtn');
-      if (backBtn) { backBtn.classList.add('hidden'); backBtn.classList.remove('flex'); }
-      const titleEl = document.getElementById('chatHeaderTitle');
-      if (titleEl) titleEl.innerHTML = '<span class="text-xs">💬</span><span class="text-[11px] font-black text-slate-700 dark:text-slate-200">메신저</span>';
-      // View switch: contacts list replaces the room body entirely
-      const body = document.getElementById('messengerRoomBody');
-      if (body) body.classList.add('hidden');
-      wrap.classList.remove('hidden');
-      playBeep(560, 0.05);
+    // ---------- Messenger UI state ----------
+    let messengerUnlocked = false;
+    let expandedThreadRoom = null;
+    let lockWallpaperRoom = 'gemini';
+    let lockSwipe = null;
+
+    const MESSENGER_WALLPAPERS = {
+      gemini: [
+        './image/03 gemini/gemini_26_kyoto_teahouse.png',
+        './image/03 gemini/gemini_29_wagashi_sweet_smile.png',
+        './image/03 gemini/gemini_23_night_rooftop_hoodie.png'
+      ],
+      kotone: [
+        './image/02 kotone/kotone_03_cafe_date.png',
+        './image/02 kotone/kotone_15_backstage_cheer.png',
+        './image/02 kotone/kotone_25_night_convenience_chat.png'
+      ],
+      mio: [
+        './image/01 mio/mio_01_main.png',
+        './image/01 mio/mio_20_sunset_highfive.png',
+        './image/01 mio/mio_25_night_stargazing.png'
+      ]
+    };
+
+    const LOCK_GREETINGS = {
+      gemini: { label: '🌸 제미니가 기다리고 있어요', msg: '오늘도 힘내시와요, 프로듀서님 🍵' },
+      kotone: { label: '💛 코토네가 기다리고 있어요', msg: '오늘 단백질 챙기셨어요? 헤헤 💸' },
+      mio:    { label: '🌟 미오가 기다리고 있어요', msg: '가자 프로듀서! 오늘도 5km 달려보자~ 🏃' }
+    };
+
+    function animateMessengerView(el) {
+      if (!el) return;
+      el.classList.remove('messenger-view-enter');
+      void el.offsetWidth;
+      el.classList.add('messenger-view-enter');
     }
 
-    function enterTrainerRoom(room) {
+    // Random heroine wallpaper + live clock on the lock screen
+    function initLockScreen() {
+      const rooms = ['gemini', 'kotone', 'mio'];
+      const room = rooms[Math.floor(Math.random() * rooms.length)];
+      lockWallpaperRoom = room;
+      const contact = TRAINER_CONTACTS.find(x => x.room === room) || TRAINER_CONTACTS[0];
+      const pool = MESSENGER_WALLPAPERS[room] || [];
+      const wallpaper = pool[Math.floor(Math.random() * pool.length)] || './image/03 gemini/gemini_26_kyoto_teahouse.png';
+      const greet = LOCK_GREETINGS[room] || LOCK_GREETINGS.gemini;
+      const now = new Date();
+      const days = ['일', '월', '화', '수', '목', '금', '토'];
+
+      const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      const setSrc = (id, val) => { const el = document.getElementById(id); if (el) el.src = val; };
+      setSrc('lockWallpaper', wallpaper);
+      setSrc('lockAvatar', contact.avatar);
+      setText('lockMsgName', contact.name);
+      setText('lockMsgText', greet.msg);
+      setText('lockCharLabel', greet.label);
+      setText('lockDate', `${now.getMonth() + 1}월 ${now.getDate()}일 ${days[now.getDay()]}요일`);
+      setText('lockClock', `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`);
+
+      const thumb = document.getElementById('lockSwipeThumb');
+      const fill = document.getElementById('lockSwipeFill');
+      const label = document.getElementById('lockSwipeLabel');
+      if (thumb) { thumb.style.transition = 'none'; thumb.style.transform = 'translateX(0)'; }
+      if (fill) { fill.style.transition = 'none'; fill.style.width = '0'; }
+      if (label) label.style.opacity = '1';
+    }
+
+    function showMessengerLock() {
+      messengerUnlocked = false;
+      expandedThreadRoom = null;
+      cancelTrainerEpisode();
+      const lock = document.getElementById('messengerLockScreen');
+      const list = document.getElementById('messengerListWrap');
+      const room = document.getElementById('messengerRoomBody');
+      if (list) list.classList.add('hidden');
+      if (room) room.classList.add('hidden');
+      initLockScreen();
+      if (lock) { lock.classList.remove('hidden'); animateMessengerView(lock); }
+    }
+
+    function lockMessenger() {
+      playBeep(420, 0.05);
+      showMessengerLock();
+    }
+
+    function unlockMessenger() {
+      const lock = document.getElementById('messengerLockScreen');
+      messengerUnlocked = true;
+      const finish = () => {
+        if (lock) {
+          lock.classList.add('hidden');
+          lock.style.transition = '';
+          lock.style.opacity = '';
+          lock.style.transform = '';
+        }
+        showMessengerList(true);
+      };
+      if (!lock) { finish(); return; }
+      lock.style.transition = 'opacity .28s ease, transform .28s ease';
+      lock.style.opacity = '0';
+      lock.style.transform = 'translateY(-16px) scale(1.03)';
+      playBeep(880, 0.08);
+      setTimeout(finish, 260);
+    }
+
+    // Tapping the wallpaper chip opens that heroine's room directly
+    function openLockedRoom() {
+      const room = lockWallpaperRoom || 'gemini';
+      const lock = document.getElementById('messengerLockScreen');
+      messengerUnlocked = true;
+      if (lock) {
+        lock.style.transition = 'opacity .26s ease, transform .26s ease';
+        lock.style.opacity = '0';
+        lock.style.transform = 'translateY(-16px) scale(1.03)';
+      }
+      playBeep(880, 0.08);
+      setTimeout(() => {
+        if (lock) {
+          lock.classList.add('hidden');
+          lock.style.transition = '';
+          lock.style.opacity = '';
+          lock.style.transform = '';
+        }
+        enterTrainerRoom(room);
+      }, 240);
+    }
+
+    // ---------- Swipe-to-unlock (pointer drag + tap fallback) ----------
+    function beginLockSwipe(e) {
+      const track = document.getElementById('lockSwipeTrack');
+      const thumb = document.getElementById('lockSwipeThumb');
+      if (!track || !thumb) return;
+      if (e && e.preventDefault) e.preventDefault();
+      const max = Math.max(1, track.clientWidth - thumb.offsetWidth - 10);
+      lockSwipe = { startX: (e && e.clientX) || 0, max, dx: 0 };
+      thumb.style.transition = 'none';
+      const fill = document.getElementById('lockSwipeFill');
+      if (fill) fill.style.transition = 'none';
+      window.addEventListener('pointermove', moveLockSwipe);
+      window.addEventListener('pointerup', endLockSwipe);
+      window.addEventListener('pointercancel', endLockSwipe);
+    }
+
+    function moveLockSwipe(e) {
+      if (!lockSwipe) return;
+      const thumb = document.getElementById('lockSwipeThumb');
+      const fill = document.getElementById('lockSwipeFill');
+      const label = document.getElementById('lockSwipeLabel');
+      const dx = Math.max(0, Math.min(lockSwipe.max, e.clientX - lockSwipe.startX));
+      lockSwipe.dx = dx;
+      if (thumb) thumb.style.transform = `translateX(${dx}px)`;
+      if (fill) fill.style.width = `${dx + 42}px`;
+      if (label) label.style.opacity = String(Math.max(0, 1 - dx / (lockSwipe.max * 0.75)));
+    }
+
+    function endLockSwipe() {
+      window.removeEventListener('pointermove', moveLockSwipe);
+      window.removeEventListener('pointerup', endLockSwipe);
+      window.removeEventListener('pointercancel', endLockSwipe);
+      if (!lockSwipe) return;
+      const thumb = document.getElementById('lockSwipeThumb');
+      const fill = document.getElementById('lockSwipeFill');
+      const label = document.getElementById('lockSwipeLabel');
+      const { max, dx } = lockSwipe;
+      lockSwipe = null;
+      // A short tap on the thumb also unlocks (desktop/ad-assist friendly)
+      const complete = dx > max * 0.6 || dx < 5;
+      if (thumb) { thumb.style.transition = 'transform .22s ease'; thumb.style.transform = `translateX(${complete ? max : 0}px)`; }
+      if (fill) { fill.style.transition = 'width .22s ease'; fill.style.width = complete ? '100%' : '0'; }
+      if (label) { label.style.transition = 'opacity .22s ease'; label.style.opacity = complete ? '0' : '1'; }
+      if (complete) setTimeout(unlockMessenger, 200);
+    }
+
+    // ---------- Message list: character -> episode accordion ----------
+    function showMessengerEntry() {
+      // Talk tab always lands on the messenger (stage is opt-in via the 🎨 button)
+      const stage = document.getElementById('trainerCardContainer');
+      const home = document.getElementById('messengerHomeWrap');
+      if (stage) stage.classList.add('hidden');
+      if (home) home.classList.remove('hidden');
+      if (!messengerUnlocked) showMessengerLock();
+      else showMessengerList(true);
+    }
+
+    function showMessengerList(silent) {
+      messengerUnlocked = true;
+      cancelTrainerEpisode();
+      const lock = document.getElementById('messengerLockScreen');
+      const list = document.getElementById('messengerListWrap');
+      const body = document.getElementById('messengerRoomBody');
+      if (lock) lock.classList.add('hidden');
+      if (body) body.classList.add('hidden');
+      if (list) { list.classList.remove('hidden'); animateMessengerView(list); }
+      renderThreadList();
+      if (!silent) playBeep(560, 0.05);
+    }
+
+    // Backwards-compatible alias (old call sites)
+    function showMessengerContacts() {
+      showMessengerList();
+    }
+
+    function toggleThread(room) {
+      expandedThreadRoom = expandedThreadRoom === room ? null : room;
+      renderThreadList();
+      playBeep(expandedThreadRoom ? 700 : 520, 0.04);
+    }
+
+    function openEpisodeFromList(room, epId, ev) {
+      if (ev && ev.stopPropagation) ev.stopPropagation();
+      enterTrainerRoom(room, true);
+      setTimeout(() => startTrainerEpisode(room, epId), 240);
+    }
+
+    function renderThreadList() {
+      const list = document.getElementById('messengerThreadList');
+      if (!list) return;
+      const allEps = trainerEpisodes();
+      list.innerHTML = TRAINER_CONTACTS.map(c => {
+        const eps = allEps[c.room] || [];
+        const doneCount = eps.filter(e => getTrainerEpisodeDone(e.id)).length;
+        const expanded = expandedThreadRoom === c.room;
+        const last = roomLastMessage(c.room);
+        const rawPreview = last ? String(last.text || '') : '';
+        const preview = rawPreview
+          ? rawPreview.replace(/\|\|/g, ' ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 46)
+          : '아직 나눈 대화가 없어요';
+
+        const episodeRows = eps.map(e => {
+          const done = getTrainerEpisodeDone(e.id);
+          return `
+            <button onclick="openEpisodeFromList('${c.room}', '${e.id}', event)" class="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-xl border text-left transition-all active:scale-[0.99] ${done ? 'bg-emerald-500/5 border-emerald-400/30 hover:border-emerald-400' : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:border-sky-400'}">
+              <span class="w-5 h-5 rounded-full flex items-center justify-center text-[9px] shrink-0 ${done ? 'bg-emerald-500 text-white' : 'bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-400'}">${done ? '✓' : '▶'}</span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-[11px] font-black text-slate-800 dark:text-slate-100 truncate">${e.icon || '🎬'} ${e.title}</span>
+                <span class="block text-[9px] font-bold text-slate-400 dark:text-slate-500 truncate">${e.sub || ''}</span>
+              </span>
+              ${done ? '<span class="text-[8px] font-black text-emerald-500 shrink-0">완료</span>' : '<span class="text-[8px] font-black text-pink-500 shrink-0">NEW</span>'}
+            </button>
+          `;
+        }).join('');
+
+        return `
+          <div class="rounded-2xl border overflow-hidden transition-all ${expanded ? 'border-sky-400/70 shadow-md' : 'border-slate-200 dark:border-slate-700'} bg-white dark:bg-slate-800">
+            <button onclick="toggleThread('${c.room}')" class="w-full flex items-center gap-2.5 p-2.5 text-left active:bg-slate-50 dark:active:bg-slate-700/40 transition-all">
+              <span class="w-11 h-11 rounded-full overflow-hidden ring-2 ${c.ring} shrink-0 bg-slate-100 dark:bg-slate-900">
+                <img src="${c.avatar}" alt="${c.name}" class="w-full h-full object-cover" onerror="this.src='./image/00 common/dual_inbody.png'">
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="flex items-center gap-1.5">
+                  <span class="text-xs font-black ${c.titleClass}">${c.name}</span>
+                  <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 truncate">${c.tag}</span>
+                </span>
+                <span class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 truncate mt-0.5">${preview}</span>
+              </span>
+              <span class="shrink-0 flex flex-col items-center gap-1">
+                <span class="px-1.5 py-0.5 rounded-full ${expanded ? 'bg-sky-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300'} text-[9px] font-black">🎬 ${doneCount}/${eps.length}</span>
+                <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black ${expanded ? 'bg-sky-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300'}">${expanded ? '▴' : '▶'}</span>
+              </span>
+            </button>
+            <div class="${expanded ? 'messenger-thread-open' : 'hidden'} px-2 pb-2 pt-1.5 space-y-1.5 border-t border-slate-100 dark:border-slate-700/60">
+              ${episodeRows || '<div class="text-center text-[10px] font-bold text-slate-400 py-2">아직 준비된 에피소드가 없어요</div>'}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function enterTrainerRoom(room, silent) {
       cancelTrainerEpisode();
       trainerMessengerRoom = room;
       setTrainerMode(room, null, false);
-      const backBtn = document.getElementById('messengerBackBtn');
-      if (backBtn) { backBtn.classList.remove('hidden'); backBtn.classList.add('flex'); }
-      document.getElementById('messengerContactsWrap').classList.add('hidden');
+      const lock = document.getElementById('messengerLockScreen');
+      const list = document.getElementById('messengerListWrap');
       const body = document.getElementById('messengerRoomBody');
-      if (body) body.classList.remove('hidden');
-      document.getElementById('chatContainer').classList.remove('hidden');
+      if (lock) lock.classList.add('hidden');
+      if (list) list.classList.add('hidden');
+      if (body) { body.classList.remove('hidden'); animateMessengerView(body); }
+      updateRoomHead(room);
       renderChat();
       renderEpisodeCards(room);
       saveState(true);
-      playBeep(620, 0.05);
+      if (!silent) playBeep(620, 0.05);
       scrollChatToBottom();
     }
 
-    function backToMessengerContacts() {
-      showMessengerContacts();
+    function updateRoomHead(room) {
+      const contact = TRAINER_CONTACTS.find(x => x.room === room) || TRAINER_CONTACTS[0];
+      const eps = trainerEpisodes()[room] || [];
+      const doneCount = eps.filter(e => getTrainerEpisodeDone(e.id)).length;
+      const avatar = document.getElementById('roomAvatar');
+      if (avatar) avatar.src = contact.avatar;
+      const name = document.getElementById('roomName');
+      if (name) name.textContent = contact.name;
+      const status = document.getElementById('roomStatus');
+      if (status) status.textContent = '● 온라인';
+      const prog = document.getElementById('roomEpisodeProg');
+      if (prog) prog.textContent = `🎬 ${doneCount}/${eps.length}`;
+      const wrap = document.getElementById('roomAvatarWrap');
+      if (wrap) wrap.className = `w-9 h-9 rounded-full overflow-hidden ring-2 ${contact.ring} shrink-0 bg-slate-100 dark:bg-slate-900`;
     }
 
+    function backToMessengerList() {
+      expandedThreadRoom = trainerMessengerRoom;
+      showMessengerList();
+    }
+
+    // ---------- Show / hide the standing stage ----------
+    function showTrainerStage() {
+      const stage = document.getElementById('trainerCardContainer');
+      const home = document.getElementById('messengerHomeWrap');
+      if (stage) stage.classList.remove('hidden');
+      if (home) home.classList.add('hidden');
+      playBeep(680, 0.06);
+      scrollToTop();
+    }
+
+    function showMessengerHome() {
+      const stage = document.getElementById('trainerCardContainer');
+      const home = document.getElementById('messengerHomeWrap');
+      if (stage) stage.classList.add('hidden');
+      if (home) home.classList.remove('hidden');
+      showMessengerEntry();
+      playBeep(620, 0.05);
+    }
+
+    // Episode selection now lives in the message list; this only refreshes progress badges.
     function renderEpisodeCards(room) {
-      const wrap = document.getElementById('episodeCardsWrap');
-      const list = document.getElementById('episodeCardsList');
-      const prog = document.getElementById('episodeCardsProg');
       const eps = (trainerEpisodes()[room] || []);
-      if (!wrap || !list) return;
-      if (!eps.length) { wrap.classList.add('hidden'); return; }
-      wrap.classList.remove('hidden');
       const doneCount = eps.filter(e => getTrainerEpisodeDone(e.id)).length;
-      if (prog) prog.textContent = `${doneCount}/${eps.length} 완료`;
-      list.innerHTML = eps.map((e) => {
-        const done = getTrainerEpisodeDone(e.id);
-        return `
-          <button onclick="startTrainerEpisode('${room}', '${e.id}')" class="shrink-0 w-[168px] p-2.5 rounded-xl border text-left transition-all active:scale-[0.98] ${done ? 'bg-emerald-500/10 border-emerald-400/40 hover:border-emerald-400' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-sky-400'}">
-            <div class="flex items-center justify-between">
-              <span class="text-base">${e.icon || '🎬'}</span>
-              <span class="text-[9px] font-black px-1.5 py-0.5 rounded-full ${done ? 'bg-emerald-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-500'}">${done ? '✅ 완료' : '▶ 재생'}</span>
-            </div>
-            <div class="text-[11px] font-black text-slate-800 dark:text-slate-100 truncate mt-1">${e.title}</div>
-            <div class="text-[9px] text-slate-400 dark:text-slate-500 font-bold truncate">${e.sub}</div>
-          </button>
-        `;
-      }).join('');
+      const prog = document.getElementById('roomEpisodeProg');
+      if (prog) prog.textContent = `🎬 ${doneCount}/${eps.length}`;
+      const listEl = document.getElementById('messengerThreadList');
+      if (listEl && !document.getElementById('messengerListWrap')?.classList.contains('hidden')) {
+        renderThreadList();
+      }
     }
 
     function epSpeakerEntry(room, line, epId) {
@@ -4555,6 +4844,8 @@
         const label = verdict === 'good' ? '좋음 👍' : verdict === 'normal' ? '보통 😐' : '아쉬움 👎';
         showFloatingToast(`「${ep.title}」 평가 저장 (${label}) — 다음 학습에 반영해요`, '⭐');
         addBondExp(verdict === 'good' ? 10 : verdict === 'normal' ? 5 : 0);
+        if (trainerMessengerRoom) updateRoomHead(trainerMessengerRoom);
+        renderThreadList();
       }
       closeEpisodeFeedbackModal();
       playBeep(720, 0.06);
@@ -4926,8 +5217,8 @@
         state.lastTalkVisitTime = Date.now();
         persistLocal();
 
-        // Messenger starts at contacts list (modern messenger flow: contacts -> room -> episodes)
-        showMessengerContacts();
+        // Messenger entry: lock screen first, then the message list (sticky per session)
+        showMessengerEntry();
 
         // Smooth scroll chat to bottom
         setTimeout(() => {
@@ -5060,15 +5351,9 @@ function greetUserOnEnterTalk() {
         list = TOPIC_CHOICES[topicKey] || TOPIC_CHOICES.dailyBriefing || TOPIC_CHOICES.diet;
       }
 
-      const container = document.getElementById('choicesContainer');
-      if (container && list) {
-        container.innerHTML = list.map((item, idx) => `
-          <button onclick="selectTopicOption('${topicKey}', ${idx})" class="momo-choice-btn flex items-center justify-between">
-            <span class="truncate text-xs font-bold">${idx + 1}. ${item.text}</span>
-            <span class="text-xs text-[#4a89dc] font-black shrink-0 ml-2">➔</span>
-          </button>
-        `).join('');
-      }
+      // Free-chat topic pills were retired with the episode-only messenger; keep the
+      // generated list in memory without injecting it into the episode choice area.
+      window._currentTopicChoices = list || [];
 
       const topicKeys = ['random', 'dailyBriefing', 'diet', 'workout', 'gym', 'tea', 'date'];
       topicKeys.forEach(k => {
@@ -5359,6 +5644,7 @@ ${err.message}
 
     async function sendDirectMessage() {
       const input = document.getElementById('directChatInput');
+      if (!input) return; // free-chat input retired in the episode messenger
       const text = (input.value || '').trim();
       if (!text) return;
       input.value = '';
@@ -5524,6 +5810,9 @@ ${err.message}
       });
       saveState();
       renderChat();
+      if (trainerMessengerRoom) updateRoomHead(trainerMessengerRoom);
+      renderThreadList();
+      showFloatingToast('이 대화방 기록을 정리했어요', '🧹');
     }
 
     function renderChat() {
@@ -8622,7 +8911,7 @@ ${err.message}
 
       <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
         <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-          <span>현재 앱 버전: v4.3.30 (言の葉茶屋)</span>
+          <span>현재 앱 버전: v4.3.31 (言の葉茶屋)</span>
           <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
         </div>
         <div class="text-[10px] text-[#9e847e]">아래 버튼을 눌러 요청문을 복사한 뒤, 안티그라에 바로 붙여넣기 하시면 즉시 업데이트가 진행됩니다.</div>
