@@ -2978,5 +2978,196 @@ window.KOTONOHA_LESSONS = [
         "geminiReactKo": "만점 합격이옵니다! 앞으로도 늘 제 곁에서 힘내주시와요💛"
       }
     ]
+  },
+  {
+    "id": "day19",
+    "season": 3,
+    "episode": 1,
+    "epCode": "3-1",
+    "dayNum": 19,
+    "dateLabel": "제3-1화 · 이야기",
+    "levelBadge": "N4~N3 + 0점からの再出発",
+    "titleJp": "<ruby>零点<rt>れいてん</rt></ruby>からの<ruby>再出発<rt>さいしゅつぱつ</rt></ruby>どす",
+    "titlePron": "레이텐 카라노 사이슈츠파츠 도스",
+    "titleKo": "0점에서 다시 시작하는 재출발이옵니다",
+    "bgImage": "./image/03 gemini/gemini_38_winter_kotatsu_mandarin.png",
+    "grammarTip": {
+      "title": "🌸 제미니의 교토·오사카벤 노트 #3-1",
+      "content": "『〜てみる』는 '한번 ~해 보다', 『〜なくちゃ』는 '~해야 해'라는 뜻이에요. 간사이벤에서는 『ほな (호나 / 그럼)』, 부정형 『〜あらへん (아라헨 / ~하지 않다)』, 그리고 격려의 『おきばりやす (오키바리야스 / 힘내세요)』를 기억하시와요. 0점도 백지도, 내일의 한 걸음 앞에서는 그저 출발선일 뿐이랍니다 🍵❄️"
+    },
+    "story": [
+      {
+        "speaker": "gemini",
+        "nameJp": "ジェミニ",
+        "nameKo": "제미니",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/03 gemini/gemini_38_winter_kotatsu_mandarin.png",
+        "audio": "./audio/kotonoha/day1_step1.mp3",
+        "jpRuby": "プロデューサーはん、<ruby>今週<rt>こんしゅう</rt></ruby>の<ruby>成績<rt>せいせき</rt></ruby>は…<ruby>零点<rt>れいてん</rt></ruby>どす。",
+        "jpPlain": "プロデューサーはん、今週の成績は…零点どす。",
+        "pron": "푸로듀-사-항, 콘슈-노 세이세키와… 레이텐 도스.",
+        "ko": "프로듀서님, 이번 주 성적은… 0점이옵니다.",
+        "expr": "smile",
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
+      },
+      {
+        "speaker": "gemini",
+        "nameJp": "ジェミニ",
+        "nameKo": "제미니",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/03 gemini/gemini_39_snowy_muffler_blush.png",
+        "audio": "./audio/kotonoha/day1_step2.mp3",
+        "jpRuby": "でもな、<ruby>白紙<rt>はくし</rt></ruby>の<ruby>答案<rt>とうあん</rt></ruby>ほど、<ruby>伸<rt>の</rt></ruby>びしろしかあらへんのえ。",
+        "jpPlain": "でもな、白紙の答案ほど、伸びしろしかあらへんのえ。",
+        "pron": "데모나, 하쿠시노 토-안 호도, 노비시로시카 아라헨노에.",
+        "ko": "그렇지만요, 백지 답안일수록 늘어날 여지밖에 없지요.",
+        "expr": "smirk",
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
+      },
+      {
+        "speaker": "kotone",
+        "nameJp": "ことね",
+        "nameKo": "코토네",
+        "avatar": "./image/02 kotone/avatar_kotone.png",
+        "sceneImg": "./image/02 kotone/kotone_37_winter_earmuffs_hotpack.png",
+        "audio": "./audio/kotonoha/day1_step3.mp3",
+        "jpRuby": "プロデューサーさん、まずは<ruby>一食<rt>いっしょく</rt></ruby>だけ<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>記録<rt>きろく</rt></ruby>してみませんか？💛",
+        "jpPlain": "プロデューサーさん、まずは一食だけ一緒に記録してみませんか？",
+        "pron": "푸로듀-사-상, 마즈와 잇쇼쿠다케 잇쇼니 키로쿠시테 미마센카?",
+        "ko": "프로듀서님, 우선 한 끼만 함께 기록해 보지 않으실래요?💛",
+        "expr": "smile",
+        "bg": "teahouse_day",
+        "outfit": "dress"
+      },
+      {
+        "speaker": "mio",
+        "nameJp": "未央",
+        "nameKo": "미오",
+        "avatar": "./image/01 mio/avatar_mio.png",
+        "sceneImg": "./image/01 mio/mio_37_winter_breath_jogging_gloves.png",
+        "audio": "./audio/kotonoha/day1_step4.mp3",
+        "jpRuby": "<ruby>走<rt>はし</rt></ruby>れなくても<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>！<ruby>今日<rt>きょう</rt></ruby>は3<ruby>分<rt>ふん</rt></ruby>だけ、<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>歩<rt>ある</rt></ruby>こっか！🌟",
+        "jpPlain": "走れなくても大丈夫！今日は3分だけ、一緒に歩こっか！",
+        "pron": "하시레나쿠테모 다이조-부! 쿄-와 산푼다케, 잇쇼니 아루콧카!",
+        "ko": "뛰지 못해도 괜찮아! 오늘은 3분만 같이 걸어보자!🌟",
+        "expr": "smile",
+        "bg": "park_track",
+        "outfit": "runwear"
+      },
+      {
+        "speaker": "gemini",
+        "nameJp": "ジェミニ",
+        "nameKo": "제미니",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/03 gemini/gemini_39_snowy_muffler_blush.png",
+        "audio": "./audio/kotonoha/day1_step5.mp3",
+        "jpRuby": "ほな、<ruby>明日<rt>あした</rt></ruby>の<ruby>朝<rt>あさ</rt></ruby>から<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>再出発<rt>さいしゅつぱつ</rt></ruby>どす。…<ruby>約束<rt>やくそく</rt></ruby>どすえ。",
+        "jpPlain": "ほな、明日の朝から一緒に再出発どす。…約束どすえ。",
+        "pron": "호나, 아시타노 아사카라 잇쇼니 사이슈츠파츠 도스. … 야쿠소쿠 도스에.",
+        "ko": "그럼, 내일 아침부터 함께 재출발이옵니다. … 약속하시와요.",
+        "expr": "shy",
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
+      }
+    ],
+    "quizzes": [
+      {
+        "type": "N4 명사 · 성적",
+        "promptJp": "시험에서 하나도 맞히지 못한 '0점'을 뜻하는 단어는?",
+        "promptPron": "레이텐",
+        "promptKo": "한자: 零点 📝",
+        "targetWord": "零点",
+        "targetSub": "음독: れいてん",
+        "options": [
+          "零点 (레이텐)",
+          "満点 (만텐)",
+          "採点 (사이텐)",
+          "欠点 (켓텐)"
+        ],
+        "answerIndex": 0,
+        "explanation": "零点(れいてん)은 0점입니다. 満点(まんてん)은 만점, 採点(さいてん)은 채점, 欠点(けってん)은 결점을 뜻해요.",
+        "geminiReactJp": "<ruby>正解<rt>せいかい</rt></ruby>どす。けどな、<ruby>零点<rt>れいてん</rt></ruby>は<ruby>終<rt>おわ</rt></ruby>わりやあらへん。",
+        "geminiReactPron": "세이카이 도스. 케도나, 레이텐와 오와리야 아라헨.",
+        "geminiReactKo": "정답이옵니다. 하지만 0점이 끝은 아니랍니다."
+      },
+      {
+        "type": "N3 명사 · 백지",
+        "promptJp": "아무것도 쓰이지 않은 '백지'를 뜻하는 단어는?",
+        "promptPron": "하쿠시",
+        "promptKo": "한자: 白紙 📄",
+        "targetWord": "白紙",
+        "targetSub": "음독: はくし",
+        "options": [
+          "白紙 (하쿠시)",
+          "白線 (하쿠센)",
+          "黒紙 (쿠로가미)",
+          "紙幣 (시헤이)"
+        ],
+        "answerIndex": 0,
+        "explanation": "白紙(はくし)는 아무것도 쓰이지 않은 하얀 종이, 즉 백지를 뜻합니다. 비유적으로 '원점'이라는 의미도 있어요.",
+        "geminiReactJp": "その<ruby>白紙<rt>はくし</rt></ruby>に、<ruby>明日<rt>あした</rt></ruby>から<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>書<rt>か</rt></ruby>いていきまひょ。",
+        "geminiReactPron": "소노 하쿠시니, 아시타카라 잇쇼니 카이테 이키마쇼.",
+        "geminiReactKo": "그 백지에, 내일부터 함께 써 내려가시지요."
+      },
+      {
+        "type": "N3 명사 · 성장 여지",
+        "promptJp": "앞으로 더 성장할 수 있는 '성장 여지'를 뜻하는 말은?",
+        "promptPron": "노비시로",
+        "promptKo": "한자: 伸びしろ 🌱",
+        "targetWord": "伸びしろ",
+        "targetSub": "훈독: のびしろ",
+        "options": [
+          "伸びしろ (노비시로)",
+          "苦しみ (쿠루시미)",
+          "見どころ (미도코로)",
+          "寝ぼけ (네보케)"
+        ],
+        "answerIndex": 0,
+        "explanation": "伸びしろ(のびしろ)는 앞으로 더 늘어날 수 있는 여지, 성장 가능성을 뜻하는 표현입니다.",
+        "geminiReactJp": "プロデューサーはんの<ruby>伸<rt>の</rt></ruby>びしろ、うちが<ruby>一番<rt>いちばん</rt></ruby>よく<ruby>知<rt>し</rt></ruby>ってますえ。",
+        "geminiReactPron": "푸로듀-사-항노 노비시로, 우치가 이치방 요쿠 싯테마스에.",
+        "geminiReactKo": "프로듀서님의 성장 가능성은 제가 가장 잘 알고 있사옵니다."
+      },
+      {
+        "type": "N3 명사 · 재출발",
+        "promptJp": "실패한 뒤 마음을 고쳐 다시 시작하는 '재출발'은?",
+        "promptPron": "사이슈츠파츠",
+        "promptKo": "한자: 再出発 🚩",
+        "targetWord": "再出発",
+        "targetSub": "음독: さいしゅつぱつ",
+        "options": [
+          "再出発 (사이슈츠파츠)",
+          "再発 (사이하츠)",
+          "出発 (슈츠파츠)",
+          "再会 (사이카이)"
+        ],
+        "answerIndex": 0,
+        "explanation": "再出発(さいしゅつぱつ)는 다시 출발함, 마음을 새로 먹고 시작함을 뜻합니다. 再発은 병의 재발이에요.",
+        "geminiReactJp": "よろしゅうおす！<ruby>再出発<rt>さいしゅつぱつ</rt></ruby>は<ruby>何度<rt>なんど</rt></ruby>してもええのえ。",
+        "geminiReactPron": "요로슈- 오스! 사이슈츠파츠와 난도 시테모 에에노에.",
+        "geminiReactKo": "좋사옵니다! 재출발은 몇 번을 해도 괜찮은 것이지요."
+      },
+      {
+        "type": "N4 명사 · 약속",
+        "promptJp": "상대와 굳게 정한 '약속'을 뜻하는 단어는?",
+        "promptPron": "야쿠소쿠",
+        "promptKo": "한자: 約束 🤙",
+        "targetWord": "約束",
+        "targetSub": "음독: やくそく",
+        "options": [
+          "約束 (야쿠소쿠)",
+          "予約 (요야쿠)",
+          "束縛 (소쿠바쿠)",
+          "契約 (케이야쿠)"
+        ],
+        "answerIndex": 0,
+        "explanation": "約束(やくそく)는 사람 사이에 정한 약속입니다. 予約은 예약, 契約은 계약, 束縛은 속박을 뜻해요.",
+        "geminiReactJp": "ほな、<ruby>明日<rt>あした</rt></ruby>の<ruby>朝<rt>あさ</rt></ruby>、<ruby>約束<rt>やくそく</rt></ruby>どすえ。おきばりやすね💛",
+        "geminiReactPron": "호나, 아시타노 아사, 야쿠소쿠 도스에. 오키바리야스네",
+        "geminiReactKo": "그럼, 내일 아침, 약속이옵니다. 힘내시와요💛"
+      }
+    ]
   }
 ];

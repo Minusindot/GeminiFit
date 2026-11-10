@@ -275,7 +275,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.31</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.32</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -365,7 +365,7 @@
                 <span>🔄</span>
                 <span>체인지</span>
               </button>
-              <button onclick="openGalleryModal()" id="btnToggleCrop" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[11px] font-bold text-slate-700 dark:text-slate-200 hover:border-sky-400 transition-all shadow-xs whitespace-nowrap shrink-0 flex items-center gap-1" title="90종 도감 전체보기">
+              <button onclick="openGalleryModal()" id="btnToggleCrop" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[11px] font-bold text-slate-700 dark:text-slate-200 hover:border-sky-400 transition-all shadow-xs whitespace-nowrap shrink-0 flex items-center gap-1" title="157종 도감 전체보기">
                 <span>📖</span>
                 <span>도감</span>
               </button>
@@ -1278,7 +1278,7 @@
           <div>
             <h3 class="text-sm font-black flex items-center gap-1.5">
               <span>🖼️ 미연시 이벤트 CG 도감</span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-pink-500 text-white font-extrabold">총 156종 (풀CG 131 + SD치비 19 + 3인단톡 6)</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-pink-500 text-white font-extrabold">총 157종 (풀CG 132 + SD치비 19 + 3인단톡 6)</span>
             </h3>
             <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">카드를 터치하면 메인 스테이지에 해당 이벤트와 의상이 즉시 적용됩니다</p>
           </div>
@@ -1286,8 +1286,8 @@
         </div>
 
         <div class="px-4 py-2 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex flex-wrap gap-1.5">
-          <button onclick="renderGalleryGrid('all')" id="galTabAll" class="px-2 py-1 rounded-lg text-[11px] font-extrabold bg-[#4a89dc] text-white">전체 (156)</button>
-          <button onclick="renderGalleryGrid('gemini')" id="galTabGemini" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box">🐾 제미니 (52)</button>
+          <button onclick="renderGalleryGrid('all')" id="galTabAll" class="px-2 py-1 rounded-lg text-[11px] font-extrabold bg-[#4a89dc] text-white">전체 (157)</button>
+          <button onclick="renderGalleryGrid('gemini')" id="galTabGemini" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box">🐾 제미니 (53)</button>
           <button onclick="renderGalleryGrid('kotone')" id="galTabKotone" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box">💛 코토네 (49)</button>
           <button onclick="renderGalleryGrid('mio')" id="galTabMio" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box">🌟 미오 (49)</button>
           <button onclick="renderGalleryGrid('dual')" id="galTabDual" class="px-2 py-1 rounded-lg text-[11px] font-bold sub-box text-purple-600 dark:text-purple-300 border border-purple-400/40">💬 단톡 (6)</button>
@@ -1441,12 +1441,12 @@
         </div>
 
         <!-- 2. Discord Webhook Setting -->
-        <!-- Weekly Antigravity Update Schedule Setting -->
+        <!-- Weekly AI Agent Update Schedule Setting -->
         <div class="p-3 rounded-2xl sub-box space-y-1.5 border border-purple-400/30 bg-purple-50/40 dark:bg-purple-950/20">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1.5">
               <span class="text-base">📅</span>
-              <span class="text-xs font-black text-slate-800 dark:text-slate-100">안티그라 정기 업데이트 알림 주기</span>
+              <span class="text-xs font-black text-slate-800 dark:text-slate-100">AI 에이전트 정기 업데이트 알림 주기</span>
             </div>
             <button type="button" onclick="openUpdateReminderModal(true)" class="text-[10px] text-purple-600 dark:text-purple-400 font-bold hover:underline">
               알림 미리보기 ↗
@@ -1654,10 +1654,10 @@
 
   </div>
 
-  <script src="./dialogue_pool.js?v=4.3.31"></script>
-  <script src="./trainer_episodes.js?v=4.3.31"></script>
-  <script src="./kotonoha_data.js?v=4.3.31"></script>
-  <script src="./kotonoha_engine.js?v=4.3.31"></script>
+  <script src="./dialogue_pool.js?v=4.3.32"></script>
+  <script src="./trainer_episodes.js?v=4.3.32"></script>
+  <script src="./kotonoha_data.js?v=4.3.32"></script>
+  <script src="./kotonoha_engine.js?v=4.3.32"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -2261,6 +2261,15 @@
           pos: 'center 15%',
           text: '우후후… 좁은 상자 안이 이상하게 마음이 놓이네요… 고양이 본능이 아니옵니다, 그저 아늑할 뿐이라지요 📦🍵🐾',
           story: '🐣 [제미니 SD EP.7 · 상자 속 식빵 냥이] "새로 배달 온 프로틴 상자 안에 쏙 들어가 식빵 자세로 말차를 홀짝이는 2등신 콩눈 제미니! 귀가 쫑긋거리는 모습에 심장이 녹아내립니다!"'
+        },
+        {
+          key: 'ev46',
+          tag: '❄️ 0점からの再出発 · 주간 리셋',
+          locOutfit: '📍 설경 다실 · 백지 노트 & 말차, 눈 내리는 창가',
+          img: './image/03 gemini/gemini_48_zero_point_restart.png',
+          pos: 'center 15%',
+          text: '백지 답안이라니… 흥, 고칠 곳이 없어서 오히려 좋사옵니다. 내일 아침 한 줄부터 함께 쓰시와요 ❄️🍵',
+          story: '💖 [제미니 EP.46 · 0점からの再出発] "이번 주는 운동도 식단도 일본어도 0점. 하지만 제미니는 화내면서도 조용히 붓을 건넵니다. \'백지는 아무것도 못 쓴 게 아니라, 아직 무엇이든 쓸 수 있다는 뜻이옵니다.\' 눈 내리는 다실에서 시작되는 조용한 재출발."'
         }
       ],
       kotone: [
@@ -2819,7 +2828,7 @@
           key: 'ev13',
           tag: '🙃 벤치 거꾸로 매달려 복근 코어 단련',
           locOutfit: '📍 웨이트존 경사 벤치 · 거꾸로 매달려 짓궂게 올려다보는 미소',
-          img: './image/01 mio/mio_13_bench_workout.png',
+          img: './image/01 mio/mio_18_squat_rack.png',
           pos: 'center 14%',
           text: '프로듀서가 거꾸로 보이니까 더 멋있어 보이네? 크큭, 인버티드 싯업 마지막 5개 카운트 똑바로 세어줘! 🙃💪',
           story: '💖 [미오 EP.13 · 인버티드 벤치 코어] "거꾸로 매달려서 프로듀서와 눈이 딱 마주쳤을 때... 숨이 턱 막혔던 건 복근 운동 때문만은 아니었단 거, 비밀이야!"'
@@ -8627,7 +8636,7 @@ ${err.message}
 
 
     // ============================================================================
-    // CACHE PURGE & WEEKLY ANTIGRAVITY UPDATE REMINDER ENGINE
+    // CACHE PURGE & WEEKLY AI AGENT UPDATE REMINDER ENGINE
     // ============================================================================
     async function forcePurgeCacheAndReload() {
       playBeep(720, 0.1);
@@ -8704,7 +8713,7 @@ ${err.message}
       showFloatingToast('이번 주 정기 업데이트 확인 완료! 🌸', '✅');
     }
 
-    function copyAntigravityUpdatePrompt() {
+    function copyAgentUpdatePrompt() {
       const todayStr = getLocalDateString();
       const curW = state.weight || 65.6;
       const targetW = state.targetWeight || 52.0;
@@ -8737,7 +8746,7 @@ ${err.message}
         .map(m => m.text)
         .join(' / ') || '특이사항 없음';
 
-      const promptText = `안티그라야! 오늘 정기 업데이트 날이야. 내 최근 운동, 체중, 식단, 일본어 학습 진행도와 반응 데이터를 종합 분석해서 다음 주차 맞춤형 코칭과 커리큘럼을 짜줘!
+      const promptText = `에이전트야! 오늘 정기 업데이트 날이야. 내 최근 운동, 체중, 식단, 일본어 학습 진행도와 반응 데이터를 종합 분석해서 다음 주차 맞춤형 코칭과 커리큘럼을 짜줘!
 
 📊 [현재 신체 및 체중 현황]
 - 기준일자: ${todayStr}
@@ -8770,13 +8779,16 @@ ${err.message}
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(promptText).then(() => {
-          showFloatingToast('종합 분석 요청서가 복사되었습니다! 안티그라 채팅에 붙여넣어 주세요 📋', '✨');
+          showFloatingToast('종합 분석 요청서가 복사되었습니다! 에이전트 채팅에 붙여넣어 주세요 📋', '✨');
           playBeep(880, 0.1);
         });
       } else {
-        alert("📋 아래 종합 분석 요청서를 복사해 안티그라 채팅에 보내주세요:\n\n" + promptText);
+        alert("📋 아래 종합 분석 요청서를 복사해 에이전트 채팅에 보내주세요:\n\n" + promptText);
       }
     }
+
+    // Backward-compatible alias (old cached markup / bookmarks may still call the old name)
+    window.copyAntigravityUpdatePrompt = copyAgentUpdatePrompt;
 
     function openWebhookModal() {
       document.getElementById('webhookInput').value = state.webhookUrl || '';
@@ -8881,7 +8893,7 @@ ${err.message}
     window.addEventListener('DOMContentLoaded', loadState);
   </script>
   <!-- ========================================================
-       MODAL: Antigravity Weekly Content Update Reminder Modal
+       MODAL: AI Agent Weekly Content Update Reminder Modal
        ======================================================== -->
   <div id="updateReminderModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
     <div class="game-card max-w-sm w-full p-5 space-y-3.5 border-[#e0465a]/60 shadow-2xl bg-[#1b1417] text-[#f5ebe6]">
@@ -8889,7 +8901,7 @@ ${err.message}
         <div class="flex items-center gap-2">
           <span class="text-xl">🌸</span>
           <div>
-            <h3 class="text-sm font-black text-[#f4869d]">안티그라 정기 업데이트 알림</h3>
+            <h3 class="text-sm font-black text-[#f4869d]">AI 에이전트 정기 업데이트 알림</h3>
             <p class="text-[10px] text-[#b89d97] font-bold">주간 신규 에피소드 & 다이얼로그 갱신일</p>
           </div>
         </div>
@@ -8906,20 +8918,20 @@ ${err.message}
       </div>
 
       <p class="text-xs text-[#d9c5bf] leading-relaxed">
-        오늘은 설정하신 <strong>정기 콘텐츠 업데이트 주기</strong>입니다! 신규 교토·오사카벤 회화, 퀴즈, 이벤트 CG, 그리고 다이얼로그 확장을 위해 안티그라에게 업데이트를 요청할 시간이에요.
+        오늘은 설정하신 <strong>정기 콘텐츠 업데이트 주기</strong>입니다! 신규 교토·오사카벤 회화, 퀴즈, 이벤트 CG, 그리고 다이얼로그 확장을 위해 에이전트에게 업데이트를 요청할 시간이에요.
       </p>
 
       <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
         <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-          <span>현재 앱 버전: v4.3.31 (言の葉茶屋)</span>
+          <span>현재 앱 버전: v4.3.32 (言の葉茶屋)</span>
           <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
         </div>
-        <div class="text-[10px] text-[#9e847e]">아래 버튼을 눌러 요청문을 복사한 뒤, 안티그라에 바로 붙여넣기 하시면 즉시 업데이트가 진행됩니다.</div>
+        <div class="text-[10px] text-[#9e847e]">아래 버튼을 눌러 요청문을 복사한 뒤, 에이전트에 바로 붙여넣기 하시면 즉시 업데이트가 진행됩니다.</div>
       </div>
 
       <div class="space-y-2 pt-1">
-        <button onclick="copyAntigravityUpdatePrompt()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#e0465a] to-[#9b4dca] text-white text-xs font-black shadow hover:opacity-95 active:scale-98 transition-all flex items-center justify-center gap-1.5">
-          <span>📋 안티그라 업데이트 요청문 복사</span>
+        <button onclick="copyAgentUpdatePrompt()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#e0465a] to-[#9b4dca] text-white text-xs font-black shadow hover:opacity-95 active:scale-98 transition-all flex items-center justify-center gap-1.5">
+          <span>📋 에이전트 업데이트 요청문 복사</span>
         </button>
 
         <div class="flex gap-2">

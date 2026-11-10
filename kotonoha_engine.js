@@ -1404,22 +1404,30 @@ function renderKotonohaView() {
               </div>
             </div>
 
-            <!-- Season Switcher Tabs (Season 1 vs Season 2) -->
-            <div class="grid grid-cols-2 gap-2">
+            <!-- Season Switcher Tabs (Season 1 / 2 / 3) -->
+            <div class="grid grid-cols-3 gap-1.5">
               <button onclick="switchKotonohaSeason(1)" class="p-2 rounded-xl border text-center transition-all ${activeSeason === 1 ? 'bg-[#3e242f] border-[#e0465a] text-white shadow-md font-black ring-1 ring-[#e0465a]/60' : 'bg-[#21181c] border-[#38282f] text-[#a8908b] hover:text-white'}">
                 <div class="text-[11px] font-black flex items-center justify-center gap-1">
                   <span>🍵 시즌 1</span>
-                  <span class="text-[9px] px-1.5 py-0.2 rounded-full bg-[#2e1d23] text-[#f28b9b]">1-1 ~ 1-12</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded-full bg-[#2e1d23] text-[#f28b9b]">1-1 ~ 12</span>
                 </div>
-                <div class="text-[10px] opacity-80 mt-0.5">교토 다실 & 기초 생활</div>
+                <div class="text-[10px] opacity-80 mt-0.5">교토 다실 & 기초</div>
               </button>
 
               <button onclick="switchKotonohaSeason(2)" class="p-2 rounded-xl border text-center transition-all ${activeSeason === 2 ? 'bg-[#3e242f] border-[#e0465a] text-white shadow-md font-black ring-1 ring-[#e0465a]/60' : 'bg-[#21181c] border-[#38282f] text-[#a8908b] hover:text-white'}">
                 <div class="text-[11px] font-black flex items-center justify-center gap-1">
                   <span>🌸 시즌 2</span>
-                  <span class="text-[9px] px-1.5 py-0.2 rounded-full bg-[#401f29] text-[#ff758c]">2-1 ~ 2-6 신설</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded-full bg-[#401f29] text-[#ff758c]">2-1 ~ 6</span>
                 </div>
-                <div class="text-[10px] opacity-80 mt-0.5">칸사이 만유 & 피트니스</div>
+                <div class="text-[10px] opacity-80 mt-0.5">칸사이 & 피트니스</div>
+              </button>
+
+              <button onclick="switchKotonohaSeason(3)" class="p-2 rounded-xl border text-center transition-all ${activeSeason === 3 ? 'bg-[#3e242f] border-[#e0465a] text-white shadow-md font-black ring-1 ring-[#e0465a]/60' : 'bg-[#21181c] border-[#38282f] text-[#a8908b] hover:text-white'}">
+                <div class="text-[11px] font-black flex items-center justify-center gap-1">
+                  <span>🍁 시즌 3</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded-full bg-[#2b2438] text-[#c8b6ff]">3-1 신설</span>
+                </div>
+                <div class="text-[10px] opacity-80 mt-0.5">재출발 & 리셋</div>
               </button>
             </div>
 
@@ -1802,9 +1810,10 @@ function renderKotonohaView() {
           <span class="text-[10px] px-2 py-1 rounded-full bg-[#352329] text-[#f2a6b2] font-bold border border-[#52343d]">시즌 ${activeSeason}</span>
         </div>
 
-        <div class="grid grid-cols-2 gap-2 p-3">
+        <div class="grid grid-cols-3 gap-1.5 p-3">
           <button onclick="switchKotonohaSeason(1)" class="p-2 rounded-xl border text-center ${activeSeason === 1 ? 'bg-[#3e242f] border-[#e0465a] text-white font-black' : 'bg-[#21181c] border-[#38282f] text-[#a8908b]'}">🍵 시즌 1</button>
           <button onclick="switchKotonohaSeason(2)" class="p-2 rounded-xl border text-center ${activeSeason === 2 ? 'bg-[#3e242f] border-[#e0465a] text-white font-black' : 'bg-[#21181c] border-[#38282f] text-[#a8908b]'}">🌸 시즌 2</button>
+          <button onclick="switchKotonohaSeason(3)" class="p-2 rounded-xl border text-center ${activeSeason === 3 ? 'bg-[#3e242f] border-[#e0465a] text-white font-black' : 'bg-[#21181c] border-[#38282f] text-[#a8908b]'}">🍁 시즌 3</button>
         </div>
 
         <div class="p-3 pt-0 space-y-3 max-h-[560px] overflow-y-auto clean-scroll">
