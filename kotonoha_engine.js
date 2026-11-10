@@ -1214,6 +1214,11 @@ function renderKotonohaView() {
   const container = document.getElementById('kotonohaMainContainer');
   if (!container) return;
 
+  // Remember the quiz timeline position. Re-rendering innerHTML resets scrollTop to 0,
+  // which made the 힌트 보기 / 발음 toggle jump to the top of the chat.
+  const prevQuizScrollEl = document.getElementById('kotonohaQuizScroll');
+  const prevQuizScrollTop = prevQuizScrollEl ? prevQuizScrollEl.scrollTop : null;
+
   const kState = state.kotonoha;
   const lessons = getAllKotonohaLessons();
   const lesson = getCurrentKotonohaLesson() || lessons[0];
@@ -1790,6 +1795,12 @@ function renderKotonohaView() {
         ` : ''}
       </div>
     `;
+
+    // Restore the exact scroll offset so toggling a hint stays where the user was looking.
+    if (prevQuizScrollTop !== null) {
+      const nextQuizScroll = document.getElementById('kotonohaQuizScroll');
+      if (nextQuizScroll) nextQuizScroll.scrollTop = prevQuizScrollTop;
+    }
   }
 
   // MODE 4: SHORT-TOON MANGA - Episode List

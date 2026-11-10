@@ -275,7 +275,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.32</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.33</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -415,7 +415,7 @@
 
         <div id="messengerView" class="relative">
 
-          <!-- 1) LOCK SCREEN (random heroine wallpaper + swipe to unlock) -->
+          <!-- 1) LOCK SCREEN (random heroine wallpaper + tap to unlock) -->
           <div id="messengerLockScreen" class="relative w-full rounded-3xl overflow-hidden shadow-2xl select-none bg-slate-900" style="height: clamp(430px, 64vh, 560px);">
             <img id="lockWallpaper" src="./image/03 gemini/gemini_26_kyoto_teahouse.png" alt="" class="absolute inset-0 w-full h-full object-cover object-[center_16%] scale-105">
             <div class="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/10 to-slate-950/90"></div>
@@ -445,12 +445,11 @@
                 <span class="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center text-[10px] shrink-0">💬</span>
               </button>
 
-              <div id="lockSwipeTrack" class="relative h-[52px] rounded-full bg-white/15 border border-white/25 backdrop-blur-md overflow-hidden">
-                <div id="lockSwipeFill" class="absolute inset-y-0 left-0 w-0 bg-white/25"></div>
-                <span id="lockSwipeLabel" class="absolute inset-0 flex items-center justify-center pl-8 text-[11px] font-black tracking-[0.14em] text-white/85">밀어서 잠금해제</span>
-                <div id="lockSwipeThumb" onpointerdown="beginLockSwipe(event)" class="absolute top-[5px] left-[5px] w-[42px] h-[42px] rounded-full bg-white flex items-center justify-center text-sm text-slate-800 cursor-grab active:cursor-grabbing touch-none shadow-xl" style="will-change: transform;">🔓</div>
-              </div>
-              <div class="text-center text-[9px] font-bold text-white/50">스와이프로 잠금해제 · 캐릭터를 탭하면 바로 톡이 열려요</div>
+              <button id="lockUnlockBtn" type="button" onclick="unlockMessenger()" aria-label="탭하여 잠금해제" title="탭하여 잠금해제"
+                class="group relative w-full h-[54px] rounded-full bg-white/15 hover:bg-white/25 border border-white/30 backdrop-blur-md flex items-center justify-center active:scale-[0.98] transition-all shadow-lg overflow-hidden">
+                <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></span>
+                <span class="relative w-[44px] h-[44px] rounded-full bg-white flex items-center justify-center text-lg text-slate-800 shadow-xl group-active:scale-95 transition-transform">🔓</span>
+              </button>
             </div>
           </div>
 
@@ -538,6 +537,22 @@
          VIEW B: Health, Fasting, Tea Log & Routine Management
          ======================================================== -->
     <div id="viewHealth" class="space-y-3">
+
+      <!-- 0. 📊 Weekly Evaluation Report (제미니 주간 총평) -->
+      <button type="button" onclick="openWeeklyReportModal()" class="game-card w-full p-0 overflow-hidden text-left border-l-4 border-l-[#e0465a] group hover:border-[#e0465a] transition-all">
+        <div class="flex items-center gap-3 p-3">
+          <img id="weeklyReportCardHero" src="./image/03 gemini/gemini_48_zero_point_restart.png" alt="" class="w-14 h-14 rounded-2xl object-cover object-[center_22%] ring-2 ring-[#e0465a]/30 shrink-0 group-hover:scale-105 transition-transform">
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] font-black text-[#e0465a]">📊 제미니 주간 총평</span>
+              <span id="weeklyReportCardBadge" class="hidden text-[8px] bg-rose-500 text-white px-1.5 py-0.2 rounded-full font-black animate-pulse">NEW</span>
+            </div>
+            <div id="weeklyReportCardTitle" class="text-sm font-black text-slate-800 dark:text-slate-100 truncate mt-0.5">백지 답안 주간 총평</div>
+            <div id="weeklyReportCardMeta" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 mt-0.5">11월 2주차 · 0 / 100점 · 매주 수요일 갱신</div>
+          </div>
+          <span class="text-slate-400 group-hover:text-[#e0465a] text-lg font-black shrink-0 transition-colors">›</span>
+        </div>
+      </button>
 
       <!-- 1. 🍵 Tea & Coffee 홈카페 / 말차 로그 카드 -->
       <div class="game-card p-3.5 border-l-4 border-l-emerald-400">
@@ -1654,10 +1669,11 @@
 
   </div>
 
-  <script src="./dialogue_pool.js?v=4.3.32"></script>
-  <script src="./trainer_episodes.js?v=4.3.32"></script>
-  <script src="./kotonoha_data.js?v=4.3.32"></script>
-  <script src="./kotonoha_engine.js?v=4.3.32"></script>
+  <script src="./weekly_reports.js?v=4.3.33"></script>
+  <script src="./dialogue_pool.js?v=4.3.33"></script>
+  <script src="./trainer_episodes.js?v=4.3.33"></script>
+  <script src="./kotonoha_data.js?v=4.3.33"></script>
+  <script src="./kotonoha_engine.js?v=4.3.33"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -3628,6 +3644,8 @@
       applyTheme();
       checkWednesdayBanner();
       checkWeeklyUpdateReminder();
+      maybeGenerateWeeklyReport();
+      refreshWeeklyReportBadge();
       syncUI();
       loadTopic('random');
       renderChat();
@@ -4381,7 +4399,6 @@
     let messengerUnlocked = false;
     let expandedThreadRoom = null;
     let lockWallpaperRoom = 'gemini';
-    let lockSwipe = null;
 
     const MESSENGER_WALLPAPERS = {
       gemini: [
@@ -4435,13 +4452,6 @@
       setText('lockCharLabel', greet.label);
       setText('lockDate', `${now.getMonth() + 1}월 ${now.getDate()}일 ${days[now.getDay()]}요일`);
       setText('lockClock', `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`);
-
-      const thumb = document.getElementById('lockSwipeThumb');
-      const fill = document.getElementById('lockSwipeFill');
-      const label = document.getElementById('lockSwipeLabel');
-      if (thumb) { thumb.style.transition = 'none'; thumb.style.transform = 'translateX(0)'; }
-      if (fill) { fill.style.transition = 'none'; fill.style.width = '0'; }
-      if (label) label.style.opacity = '1';
     }
 
     function showMessengerLock() {
@@ -4504,51 +4514,8 @@
       }, 240);
     }
 
-    // ---------- Swipe-to-unlock (pointer drag + tap fallback) ----------
-    function beginLockSwipe(e) {
-      const track = document.getElementById('lockSwipeTrack');
-      const thumb = document.getElementById('lockSwipeThumb');
-      if (!track || !thumb) return;
-      if (e && e.preventDefault) e.preventDefault();
-      const max = Math.max(1, track.clientWidth - thumb.offsetWidth - 10);
-      lockSwipe = { startX: (e && e.clientX) || 0, max, dx: 0 };
-      thumb.style.transition = 'none';
-      const fill = document.getElementById('lockSwipeFill');
-      if (fill) fill.style.transition = 'none';
-      window.addEventListener('pointermove', moveLockSwipe);
-      window.addEventListener('pointerup', endLockSwipe);
-      window.addEventListener('pointercancel', endLockSwipe);
-    }
-
-    function moveLockSwipe(e) {
-      if (!lockSwipe) return;
-      const thumb = document.getElementById('lockSwipeThumb');
-      const fill = document.getElementById('lockSwipeFill');
-      const label = document.getElementById('lockSwipeLabel');
-      const dx = Math.max(0, Math.min(lockSwipe.max, e.clientX - lockSwipe.startX));
-      lockSwipe.dx = dx;
-      if (thumb) thumb.style.transform = `translateX(${dx}px)`;
-      if (fill) fill.style.width = `${dx + 42}px`;
-      if (label) label.style.opacity = String(Math.max(0, 1 - dx / (lockSwipe.max * 0.75)));
-    }
-
-    function endLockSwipe() {
-      window.removeEventListener('pointermove', moveLockSwipe);
-      window.removeEventListener('pointerup', endLockSwipe);
-      window.removeEventListener('pointercancel', endLockSwipe);
-      if (!lockSwipe) return;
-      const thumb = document.getElementById('lockSwipeThumb');
-      const fill = document.getElementById('lockSwipeFill');
-      const label = document.getElementById('lockSwipeLabel');
-      const { max, dx } = lockSwipe;
-      lockSwipe = null;
-      // A short tap on the thumb also unlocks (desktop/ad-assist friendly)
-      const complete = dx > max * 0.6 || dx < 5;
-      if (thumb) { thumb.style.transition = 'transform .22s ease'; thumb.style.transform = `translateX(${complete ? max : 0}px)`; }
-      if (fill) { fill.style.transition = 'width .22s ease'; fill.style.width = complete ? '100%' : '0'; }
-      if (label) { label.style.transition = 'opacity .22s ease'; label.style.opacity = complete ? '0' : '1'; }
-      if (complete) setTimeout(unlockMessenger, 200);
-    }
+    // ---------- Tap-to-unlock ----------
+    // The lock screen uses a single large tap target (see #lockUnlockBtn) that calls unlockMessenger().
 
     // ---------- Message list: character -> episode accordion ----------
     function showMessengerEntry() {
@@ -8890,6 +8857,456 @@ ${err.message}
       }
     }
 
+    // ==========================================================================
+    // WEEKLY EVALUATION REPORT (제미니 주간 총평)
+    // ==========================================================================
+    let weeklyReportViewIdx = 0;
+
+    function getWeeklyReportUpdateDay() {
+      const raw = state && state.updateSchedule ? Number(state.updateSchedule.dayOfWeek) : WEEKLY_REPORT_UPDATE_DAY;
+      return Number.isInteger(raw) && raw >= 0 && raw <= 6 ? raw : WEEKLY_REPORT_UPDATE_DAY;
+    }
+
+    function getWeeklyReportUpdateDayName() {
+      return ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][getWeeklyReportUpdateDay()] || '수요일';
+    }
+
+    function loadWeeklyReports() {
+      let stored = [];
+      try {
+        const raw = JSON.parse(localStorage.getItem(WEEKLY_REPORT_STORAGE_KEY) || '[]');
+        if (Array.isArray(raw)) stored = raw;
+      } catch (e) {}
+      const byId = {};
+      (WEEKLY_REPORT_SEEDS || []).forEach(r => { if (r && r.id) byId[r.id] = r; });
+      stored.forEach(r => { if (r && r.id) byId[r.id] = r; });
+      return Object.keys(byId)
+        .map(k => byId[k])
+        .sort((a, b) => String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')));
+    }
+
+    function saveWeeklyReports(reports) {
+      try { localStorage.setItem(WEEKLY_REPORT_STORAGE_KEY, JSON.stringify(reports)); } catch (e) {}
+    }
+
+    function getWeeklyReportBaseline() {
+      try { return JSON.parse(localStorage.getItem(WEEKLY_REPORT_BASELINE_KEY) || 'null'); } catch (e) { return null; }
+    }
+
+    function setWeeklyReportBaseline(stats) {
+      try { localStorage.setItem(WEEKLY_REPORT_BASELINE_KEY, JSON.stringify(stats || {})); } catch (e) {}
+    }
+
+    function getKotonohaWeeklyStats() {
+      const k = (state && state.kotonoha) || {};
+      return {
+        completedLessons: (k.completedLessons || []).length,
+        quizTotal: Number(k.quizStats && k.quizStats.total) || 0
+      };
+    }
+
+    function startOfLocalDay(value) {
+      const d = value instanceof Date ? value : new Date(value);
+      return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    }
+
+    function mostRecentWeekday(day) {
+      const d = startOfLocalDay(new Date());
+      const diff = (d.getDay() - day + 7) % 7;
+      d.setDate(d.getDate() - diff);
+      return d;
+    }
+
+    function weeklyMonthWeekLabel(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00');
+      const week = Math.ceil(d.getDate() / 7);
+      return `${d.getMonth() + 1}월 ${week}주차`;
+    }
+
+    function collectWeeklyMetrics(startStr, endStr) {
+      const map = {};
+      const put = (date, patch) => {
+        if (!date || date < startStr || date > endStr) return;
+        map[date] = Object.assign({ date }, map[date] || {}, patch || {});
+      };
+
+      Object.keys(state.dailyLogs || {}).forEach(date => {
+        const log = state.dailyLogs[date];
+        if (!log) return;
+        put(date, {
+          weight: log.weight,
+          fat: log.fat,
+          mealsDone: log.mealsDone,
+          runDone: log.runDone,
+          absDone: log.absDone,
+          rehabDone: log.rehabDone,
+          gymDone: log.gymDone,
+          teaLog: log.teaLog
+        });
+      });
+
+      const todayStr = getLocalDateString();
+      if (todayStr >= startStr && todayStr <= endStr) {
+        put(todayStr, {
+          weight: state.weight,
+          fat: state.fat,
+          mealsDone: (state.meals || []).filter(Boolean).length,
+          runDone: Boolean(state.runDone),
+          absDone: Boolean(state.absDone),
+          rehabDone: (state.rehab || []).filter(Boolean).length,
+          gymDone: isGymRoutineDone(state.gymRoutine),
+          teaLog: state.teaLog
+        });
+      }
+
+      (state.runningLogs || []).forEach(r => {
+        if (r && r.date) put(r.date, { runDone: true });
+      });
+      (state.gymHistory || []).forEach(g => {
+        if (g && g.fullDate && (Number(g.totalSets) || 0) > 0) put(g.fullDate, { gymDone: true });
+      });
+
+      const logs = Object.keys(map).map(k => map[k]);
+      const hasTea = (l) => {
+        const t = l.teaLog || {};
+        return (Number(t.matcha) || 0) + (Number(t.espresso) || 0) + (Number(t.tea) || 0) > 0;
+      };
+
+      const runDays = logs.filter(l => l.runDone).length;
+      const gymDays = logs.filter(l => l.gymDone).length;
+      const absDays = logs.filter(l => l.absDone).length;
+      const rehabDays = logs.filter(l => (Number(l.rehabDone) || 0) > 0).length;
+      const mealTotal = logs.reduce((sum, l) => sum + Math.min(3, Number(l.mealsDone) || 0), 0);
+      const teaDays = logs.filter(hasTea).length;
+
+      let streak = 0;
+      const cursor = new Date(endStr + 'T00:00:00');
+      for (let i = 0; i < 14; i++) {
+        const key = getLocalDateString(cursor);
+        const log = map[key];
+        const active = log && (log.runDone || log.gymDone || log.absDone ||
+          (Number(log.rehabDone) || 0) > 0 || (Number(log.mealsDone) || 0) > 0 || hasTea(log));
+        if (!active) break;
+        streak++;
+        cursor.setDate(cursor.getDate() - 1);
+      }
+
+      return {
+        startStr, endStr, runDays, gymDays, absDays, rehabDays,
+        mealTotal, teaDays, streak,
+        weight: state.weight, fat: state.fat
+      };
+    }
+
+    function weeklyScore(value, max) {
+      return Math.max(0, Math.min(max, Math.round(value)));
+    }
+
+    function weeklyAreaComment(pct, zero, low, mid, high) {
+      if (pct <= 0) return zero;
+      if (pct < 0.5) return low;
+      if (pct < 0.85) return mid;
+      return high;
+    }
+
+    function buildWeeklyReport(periodEnd) {
+      const end = startOfLocalDay(periodEnd);
+      const start = new Date(end);
+      start.setDate(start.getDate() - 6);
+      const startStr = getLocalDateString(start);
+      const endStr = getLocalDateString(end);
+
+      const m = collectWeeklyMetrics(startStr, endStr);
+      const currentStats = getKotonohaWeeklyStats();
+      const base = getWeeklyReportBaseline() || currentStats;
+      const lessonDelta = Math.max(0, currentStats.completedLessons - (Number(base.completedLessons) || 0));
+      const quizDelta = Math.max(0, currentStats.quizTotal - (Number(base.quizTotal) || 0));
+
+      const runScore = weeklyScore((m.runDays / 3) * 12, 12);
+      const gymScore = weeklyScore((m.gymDays / 3) * 10, 10);
+      const absScore = weeklyScore((m.absDays / 3) * 8, 8);
+      const rehabScore = weeklyScore((m.rehabDays / 4) * 25, 25);
+      const mealScore = weeklyScore((m.mealTotal / 18) * 18, 18);
+      const teaScore = weeklyScore((m.teaDays / 5) * 7, 7);
+      const lessonScore = weeklyScore((lessonDelta / 3) * 12, 12);
+      const quizScore = weeklyScore((quizDelta / 10) * 8, 8);
+
+      const workoutScore = runScore + gymScore + absScore;
+      const dietScore = mealScore + teaScore;
+      const jpScore = lessonScore + quizScore;
+      const total = workoutScore + rehabScore + dietScore + jpScore;
+
+      const workoutPct = workoutScore / 30;
+      const rehabPct = rehabScore / 25;
+      const dietPct = dietScore / 25;
+      const jpPct = jpScore / 20;
+
+      const workoutComment = weeklyAreaComment(workoutPct,
+        '이번 주 운동 기록은 백지이옵니다. 러닝 0회, 근력 0회, 복근 0회. 지난 7km의 잔상만 남아있사옵니다.',
+        `러닝 ${m.runDays}회 · 근력 ${m.gymDays}회 · 복근 ${m.absDays}회. 불씨는 보이지만 아직 장작이 부족하옵니다.`,
+        `러닝 ${m.runDays}회 · 근력 ${m.gymDays}회 · 복근 ${m.absDays}회. 몸이 기억하기 시작했사옵니다.`,
+        `러닝 ${m.runDays}회 · 근력 ${m.gymDays}회 · 복근 ${m.absDays}회. 이 정도면 소녀도 박수를 보내겠사옵니다.`);
+
+      const rehabComment = weeklyAreaComment(rehabPct,
+        '재활 0 / 4회. 테니스 엘보를 지켜줄 케어가 통째로 비어있사옵니다.',
+        `재활 ${m.rehabDays} / 4회. 아프기 전에 챙기는 것이 소녀의 방식이옵니다.`,
+        `재활 ${m.rehabDays} / 4회. 손목이 조금씩 안심하고 있사옵니다.`,
+        `재활 ${m.rehabDays} / 4회. 케어까지 챙기시다니, 제법이옵니다.`);
+
+      const dietComment = weeklyAreaComment(dietPct,
+        '3끼 0 / 21 · 차 0일. 17:7 단식의 마지막 문장이 아직 쓰이지 않았사옵니다.',
+        `3끼 ${m.mealTotal} / 21 · 차 ${m.teaDays}일. 기록하지 않은 식사는 소녀도 채점할 수 없사옵니다.`,
+        `3끼 ${m.mealTotal} / 21 · 차 ${m.teaDays}일. 접시 위의 기록이 쌓이고 있사옵니다.`,
+        `3끼 ${m.mealTotal} / 21 · 차 ${m.teaDays}일. 식단까지 완벽에 가깝사옵니다.`);
+
+      const jpComment = weeklyAreaComment(jpPct,
+        '다실 0화 · 퀴즈 0문제. 그래도 65개의 言霊는 사라지지 않고 기다리고 있사옵니다.',
+        `다실 ${lessonDelta}화 · 퀴즈 ${quizDelta}문제. 말의 불씨를 다시 피워보시지요.`,
+        `다실 ${lessonDelta}화 · 퀴즈 ${quizDelta}문제. 言霊가 하나둘 늘고 있사옵니다.`,
+        `다실 ${lessonDelta}화 · 퀴즈 ${quizDelta}문제. 오늘의 공부는 오늘의 것이옵니다.`);
+
+      let grade, title, quote, hero, heroPos, intro, closing;
+      if (total === 0) {
+        grade = '백지';
+        title = '백지 답안 주간 총평';
+        quote = '0점이 아니라, 백지 답안이옵니다.';
+        hero = './image/03 gemini/gemini_48_zero_point_restart.png';
+        heroPos = 'center 22%';
+        intro = '흥, 바보 프로듀서. 이번 주 답안지는 아무것도 쓰이지 않은 백지이옵니다. 하지만 백지는 실패가 아니라 아직 쓰이지 않은 여백이옵니다. 소녀가 다음 주 첫 획을 잡아드리겠사옵니다. 🍵';
+        closing = `다음 ${getWeeklyReportUpdateDayName()}, 같은 자리에서 기다리겠사옵니다. 이번에는 백지가 아니라, 프로듀서님의 필체로 채워진 답안지를 보여주시와요. 🌸`;
+      } else if (total < 40) {
+        grade = '재시동';
+        title = '불꽃 재시동 주간';
+        quote = '한 획이면 충분하옵니다. 다시 쓰시면 되옵니다.';
+        hero = './image/03 gemini/gemini_16_sprint.png';
+        heroPos = 'center 18%';
+        intro = `이번 주 답안지는 ${total}점이옵니다. 완벽하지 않아도 좋사옵니다. 움직인 기록은 이미 백지 위에 남았사옵니다. 소녀가 옆에서 다음 획을 잡아드리겠사옵니다. 🍵`;
+        closing = '작은 불씨 하나가 다음 주의 장작이 되옵니다. 소녀는 그 불씨를 함부로 끄지 않겠사옵니다. 🌸';
+      } else if (total < 70) {
+        grade = '꾸준함';
+        title = '꾸준함의 주간';
+        quote = '쌓인 기록은 배신하지 않사옵니다.';
+        hero = './image/03 gemini/gemini_39_snowy_muffler_blush.png';
+        heroPos = 'center 20%';
+        intro = `이번 주 답안지는 ${total}점이옵니다. 화려하진 않아도 한 줄 한 줄 채워지고 있사옵니다. 이런 주가 쌓여 인바디 종이를 바꾸는 것이옵니다. 🍵`;
+        closing = '다음 주는 조금 더 욕심을 내보시지요. 소녀가 기대하고 있겠사옵니다. 🌸';
+      } else {
+        grade = '불꽃';
+        title = '불꽃 완성 주간';
+        quote = '이 정도면, 소녀도 웃어드릴 수 있사옵니다.';
+        hero = './image/03 gemini/gemini_20_sunset.png';
+        heroPos = 'center 18%';
+        intro = `이번 주 답안지는 ${total}점이옵니다. 흥, 자랑하듯 말하긴 싫지만… 제법 멋있었사옵니다. 이 기세를 다음 주에도 이어가시지요. 🍵`;
+        closing = '이 정도 기록이면 소녀가 다음 주에도 옆자리를 비워두겠사옵니다. 기대해도 되겠지요? 🌸';
+      }
+
+      const highlights = [];
+      if (m.runDays > 0) highlights.push({ icon: '🏃', title: `러닝 ${m.runDays}회`, text: '발을 내디딘 기록은 사라지지 않사옵니다.' });
+      if (m.gymDays > 0) highlights.push({ icon: '🏋️', title: `근력 ${m.gymDays}회`, text: '근육은 정직하옵니다. 이번 주의 세트를 기억하겠지요.' });
+      if (m.rehabDays > 0) highlights.push({ icon: '🩹', title: `재활 ${m.rehabDays}회`, text: '몸을 아끼는 것도 훈련이옵니다. 훌륭하사옵니다.' });
+      if (m.mealTotal > 0) highlights.push({ icon: '🍱', title: `3끼 기록 ${m.mealTotal}회`, text: '접시 위의 기록이 다음 인바디를 바꾸옵니다.' });
+      if (m.teaDays > 0) highlights.push({ icon: '🍵', title: `말차·차 ${m.teaDays}일`, text: '수분과 휴식도 운동의 일부이옵니다.' });
+      if (m.streak >= 2) highlights.push({ icon: '🔥', title: `스트릭 ${m.streak}일`, text: '끊기지 않았다는 사실이 가장 중요하옵니다.' });
+      highlights.push({
+        icon: '📏', title: `${m.weight || state.weight || 64.1}kg · ${m.fat || state.fat || 21.5}%`,
+        text: '측정 자체를 미루지 않으셨사옵니다. 숫자를 마주하는 것이 첫 번째 운동이옵니다.'
+      });
+      if (highlights.length < 3) {
+        highlights.push({ icon: '🪶', title: '言霊 자산', text: `${(state.kotonoha && state.kotonoha.kotodama) || 65}개의 言霊가 다음 주를 기다리고 있사옵니다.` });
+      }
+
+      const missions = [];
+      if (m.runDays < 3) missions.push({ icon: '🏃', text: '러닝 3회 × 5km — 첫 회는 3km로 가볍게 시동' });
+      if (m.gymDays < 3) missions.push({ icon: '🏋️', text: '근력 3회 — 체스트 프레스 · 케이블 로우 · 레그 프레스' });
+      if (m.absDays < 3) missions.push({ icon: '🧘', text: '14분 복근 3회 — 플랭크는 30초부터' });
+      if (m.rehabDays < 4) missions.push({ icon: '🩹', text: '재활 4회 — 2kg 덤벨 손목 편심성 컬 3세트' });
+      if (m.mealTotal < 18) missions.push({ icon: '🍱', text: '3끼 사진 21장 · 17시 이후엔 물과 말차만' });
+      if (lessonDelta < 3) missions.push({ icon: '🍵', text: '다실 3화 — 짧게라도 매일 한 문장' });
+      if (quizDelta < 10) missions.push({ icon: '🎯', text: '퀴즈 10문제 — 틀린 단어는 복습 노트에' });
+      missions.push({ icon: '🌅', text: `다음 ${getWeeklyReportUpdateDayName()}, 백지 위에 첫 획을 긋기` });
+
+      return {
+        id: endStr,
+        publishedAt: endStr,
+        periodStart: startStr,
+        periodEnd: endStr,
+        weekLabel: weeklyMonthWeekLabel(endStr),
+        title, score: total, grade, hero, heroPos, quote, intro, closing,
+        areas: [
+          { icon: '🏃', name: '운동 수행', score: workoutScore, max: 30, tag: `러닝 ${m.runDays} · 근력 ${m.gymDays} · 복근 ${m.absDays}`, comment: workoutComment },
+          { icon: '🩹', name: '재활 · 케어', score: rehabScore, max: 25, tag: `재활 ${m.rehabDays} / 4회`, comment: rehabComment },
+          { icon: '🍱', name: '식단 · 수분', score: dietScore, max: 25, tag: `3끼 ${m.mealTotal} / 21 · 차 ${m.teaDays}일`, comment: dietComment },
+          { icon: '🍵', name: '일본어 다실', score: jpScore, max: 20, tag: `다실 ${lessonDelta}화 · 퀴즈 ${quizDelta}`, comment: jpComment }
+        ],
+        highlights: highlights.slice(0, 4),
+        missions,
+        metrics: { ...currentStats, ...m }
+      };
+    }
+
+    function maybeGenerateWeeklyReport(force = false) {
+      const reports = loadWeeklyReports();
+      const scheduled = force ? startOfLocalDay(new Date()) : mostRecentWeekday(getWeeklyReportUpdateDay());
+      const scheduledStr = getLocalDateString(scheduled);
+      const latest = reports[0];
+
+      if (!force && latest && String(latest.publishedAt || '') >= scheduledStr) return null;
+
+      const report = buildWeeklyReport(scheduled);
+      const merged = [report, ...reports.filter(r => r.id !== report.id)]
+        .sort((a, b) => String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')));
+      saveWeeklyReports(merged);
+      setWeeklyReportBaseline(getKotonohaWeeklyStats());
+      refreshWeeklyReportBadge();
+      return report;
+    }
+
+    function refreshWeeklyReportBadge() {
+      const reports = loadWeeklyReports();
+      const latest = reports[0];
+      if (!latest) return;
+
+      // Capture a baseline once so future reports measure the week, not lifetime totals.
+      if (!getWeeklyReportBaseline()) setWeeklyReportBaseline(getKotonohaWeeklyStats());
+
+      let seen = '';
+      try { seen = localStorage.getItem(WEEKLY_REPORT_SEEN_KEY) || ''; } catch (e) {}
+      const isNew = latest.id !== seen;
+
+      const hero = document.getElementById('weeklyReportCardHero');
+      const title = document.getElementById('weeklyReportCardTitle');
+      const meta = document.getElementById('weeklyReportCardMeta');
+      const badge = document.getElementById('weeklyReportCardBadge');
+      const note = document.getElementById('weeklyReportScheduleNote');
+
+      if (hero && latest.hero) hero.src = latest.hero;
+      if (hero && latest.heroPos) hero.style.objectPosition = latest.heroPos;
+      if (title) title.textContent = latest.title || '주간 총평';
+      if (meta) meta.textContent = `${latest.weekLabel || ''} · ${latest.score || 0} / 100점 · 매주 ${getWeeklyReportUpdateDayName()} 갱신`;
+      if (badge) badge.classList.toggle('hidden', !isNew);
+      if (note) note.textContent = `매주 ${getWeeklyReportUpdateDayName()} 자동 갱신 · 지난 기록은 이 기기에 보관됩니다`;
+    }
+
+    function openWeeklyReportModal(reportId) {
+      const reports = loadWeeklyReports();
+      if (!reports.length) return;
+      let idx = 0;
+      if (reportId) {
+        const found = reports.findIndex(r => r.id === reportId);
+        if (found >= 0) idx = found;
+      }
+      renderWeeklyReport(reports[idx]);
+      const modal = document.getElementById('weeklyReportModal');
+      if (modal) modal.classList.remove('hidden');
+      try { localStorage.setItem(WEEKLY_REPORT_SEEN_KEY, reports[0].id); } catch (e) {}
+      refreshWeeklyReportBadge();
+      playBeep(840, 0.1);
+    }
+
+    function closeWeeklyReportModal() {
+      const modal = document.getElementById('weeklyReportModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function renderWeeklyReport(report) {
+      if (!report) return;
+      const reports = loadWeeklyReports();
+      const idx = Math.max(0, reports.findIndex(r => r.id === report.id));
+      weeklyReportViewIdx = idx;
+
+      const setText = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      };
+      const setHTML = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = value;
+      };
+
+      const hero = document.getElementById('weeklyReportHero');
+      if (hero) {
+        hero.src = report.hero || './image/03 gemini/gemini_48_zero_point_restart.png';
+        hero.style.objectPosition = report.heroPos || 'center 22%';
+      }
+      setText('weeklyReportWeekBadge', report.weekLabel || '');
+      setText('weeklyReportPeriod', `${String(report.periodStart || '').replace(/-/g, '.')} ~ ${String(report.periodEnd || '').replace(/-/g, '.')}`);
+      setText('weeklyReportTitle', report.title || '주간 총평');
+      setText('weeklyReportScore', String(report.score || 0));
+      setText('weeklyReportGrade', report.grade || '총평');
+      setText('weeklyReportQuote', report.quote || '');
+      setText('weeklyReportIntro', report.intro || '');
+      setText('weeklyReportClosing', report.closing || '');
+      setText('weeklyReportAreaTotal', `총 ${report.score || 0} / 100`);
+
+      const ring = document.getElementById('weeklyReportScoreRing');
+      if (ring) ring.style.background = `conic-gradient(#e0465a ${Math.max(0, Math.min(100, Number(report.score) || 0))}%, #3a2a30 0%)`;
+
+      setHTML('weeklyReportAreas', (report.areas || []).map(area => {
+        const pct = area.max ? Math.max(0, Math.min(100, Math.round((area.score / area.max) * 100))) : 0;
+        return `
+          <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f]">
+            <div class="flex items-center justify-between text-[11px] font-black">
+              <span class="text-[#f5ebe6]">${area.icon || ''} ${area.name || ''}</span>
+              <span class="text-[#f4869d] font-mono">${area.score || 0}/${area.max || 0}</span>
+            </div>
+            <div class="mt-1.5 h-1.5 rounded-full bg-[#140f12] overflow-hidden">
+              <div class="h-full rounded-full bg-gradient-to-r from-[#e0465a] to-[#ff8fa0]" style="width:${pct}%"></div>
+            </div>
+            <div class="flex items-center gap-1.5 mt-1.5 text-[9px] font-bold text-[#9e847e]">
+              <span class="px-1.5 py-0.5 rounded bg-[#2b1f25] border border-[#453139]">${area.tag || ''}</span>
+            </div>
+            <p class="text-[10px] text-[#c9b1aa] mt-1 leading-relaxed">${area.comment || ''}</p>
+          </div>
+        `;
+      }).join(''));
+
+      setHTML('weeklyReportHighlights', (report.highlights || []).map(item => `
+        <div class="flex items-start gap-2 p-2 rounded-xl bg-[#241a1f] border border-[#3b272f]">
+          <span class="text-sm shrink-0">${item.icon || '✨'}</span>
+          <div class="min-w-0">
+            <div class="text-[11px] font-black text-[#ffd6de]">${item.title || ''}</div>
+            <div class="text-[10px] text-[#b89d97] leading-relaxed mt-0.5">${item.text || ''}</div>
+          </div>
+        </div>
+      `).join(''));
+
+      setHTML('weeklyReportMissions', (report.missions || []).map(item => `
+        <div class="flex items-center gap-2 p-2 rounded-xl bg-[#20171c] border border-[#392630]">
+          <span class="w-5 h-5 rounded-md bg-[#e0465a]/15 text-[#f4869d] text-[11px] flex items-center justify-center shrink-0">${item.icon || '•'}</span>
+          <span class="text-[10px] font-bold text-[#e0cfca] leading-relaxed">${item.text || ''}</span>
+        </div>
+      `).join(''));
+
+      setText('weeklyReportHistoryCount', `(${reports.length})`);
+      setHTML('weeklyReportHistoryChips', reports.map((r, i) => `
+        <button onclick="showWeeklyReportAt(${i})" class="shrink-0 px-2 py-1 rounded-lg text-[10px] font-black border transition-all ${i === idx ? 'bg-[#e0465a] text-white border-[#ff7588] shadow' : 'bg-[#2b1f25] text-[#b89d97] border-[#453139] hover:text-white'}">
+          ${r.weekLabel || r.id}<span class="opacity-70 font-mono ml-1">${r.score || 0}</span>
+        </button>
+      `).join(''));
+    }
+
+    function showWeeklyReportAt(idx) {
+      const reports = loadWeeklyReports();
+      if (!reports.length) return;
+      const clamped = Math.max(0, Math.min(reports.length - 1, idx));
+      renderWeeklyReport(reports[clamped]);
+      playBeep(720, 0.04);
+    }
+
+    function stepWeeklyReport(delta) {
+      showWeeklyReportAt(weeklyReportViewIdx + delta);
+    }
+
+    function regenerateWeeklyReport() {
+      if (!confirm('이번 주 데이터로 주간 리포트를 새로 분석할까요?\n같은 날짜의 리포트는 새 내용으로 교체됩니다.')) return;
+      const report = maybeGenerateWeeklyReport(true);
+      if (!report) return;
+      renderWeeklyReport(report);
+      try { localStorage.setItem(WEEKLY_REPORT_SEEN_KEY, report.id); } catch (e) {}
+      refreshWeeklyReportBadge();
+      showFloatingToast('📊 이번 주 데이터로 주간 총평을 새로 작성했사옵니다!', '🍵');
+    }
+
     window.addEventListener('DOMContentLoaded', loadState);
   </script>
   <!-- ========================================================
@@ -8923,7 +9340,7 @@ ${err.message}
 
       <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
         <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-          <span>현재 앱 버전: v4.3.32 (言の葉茶屋)</span>
+          <span>현재 앱 버전: v4.3.33 (言の葉茶屋)</span>
           <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
         </div>
         <div class="text-[10px] text-[#9e847e]">아래 버튼을 눌러 요청문을 복사한 뒤, 에이전트에 바로 붙여넣기 하시면 즉시 업데이트가 진행됩니다.</div>
@@ -8934,6 +9351,10 @@ ${err.message}
           <span>📋 에이전트 업데이트 요청문 복사</span>
         </button>
 
+        <button onclick="closeUpdateReminderModal(); openWeeklyReportModal();" class="w-full py-2.5 rounded-xl bg-[#2a1d24] border border-[#5a3440] text-[#ffd6de] text-xs font-black hover:bg-[#35242d] active:scale-98 transition-all flex items-center justify-center gap-1.5">
+          <span>📊 이번 주 제미니 총평 보기</span>
+        </button>
+
         <div class="flex gap-2">
           <button onclick="dismissWeeklyUpdateReminder()" class="flex-1 py-2 rounded-xl bg-[#261c21] border border-[#422f37] text-xs font-bold text-[#b89d97] hover:text-white">
             이번 주 알림 완료
@@ -8941,6 +9362,93 @@ ${err.message}
           <button onclick="closeUpdateReminderModal()" class="flex-1 py-2 rounded-xl bg-[#2d1e25] border border-[#523843] text-xs font-bold text-[#e6d0ca]">
             닫기
           </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL: Weekly Evaluation Report (제미니 주간 총평)
+       ======================================================== -->
+  <div id="weeklyReportModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[60] flex items-end sm:items-center justify-center p-2 sm:p-4 hidden" onclick="if(event.target === this) closeWeeklyReportModal()">
+    <div class="game-card max-w-md w-full max-h-[94vh] overflow-y-auto clean-scroll p-0 border-[#e0465a]/60 shadow-2xl bg-[#1b1417] text-[#f5ebe6] rounded-3xl">
+
+      <!-- Hero -->
+      <div class="relative h-48 sm:h-56 overflow-hidden rounded-t-3xl bg-[#24181d]">
+        <img id="weeklyReportHero" src="./image/03 gemini/gemini_48_zero_point_restart.png" alt="주간 총평 일러스트" class="w-full h-full object-cover" style="object-position: center 22%;">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#1b1417] via-[#1b1417]/30 to-transparent"></div>
+        <button onclick="closeWeeklyReportModal()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/45 hover:bg-black/65 backdrop-blur-md text-white text-sm font-black flex items-center justify-center transition-all active:scale-95" aria-label="닫기">✕</button>
+        <div class="absolute top-3 left-3 flex items-center gap-1.5">
+          <span class="px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-[10px] font-black text-[#ffd6de]">📊 주간 총평</span>
+          <span id="weeklyReportWeekBadge" class="px-2.5 py-1 rounded-full bg-[#e0465a]/85 backdrop-blur-md text-[10px] font-black text-white shadow">11월 2주차</span>
+        </div>
+        <div class="absolute bottom-3 left-4 right-4">
+          <div id="weeklyReportPeriod" class="text-[10px] font-bold text-[#d9c5bf]/80 drop-shadow">2026.11.05 ~ 2026.11.11</div>
+          <h2 id="weeklyReportTitle" class="text-lg font-black text-white drop-shadow-lg leading-tight">백지 답안 주간 총평</h2>
+        </div>
+      </div>
+
+      <div class="p-4 space-y-3.5">
+
+        <!-- Score + quote -->
+        <div class="flex items-center gap-3.5">
+          <div id="weeklyReportScoreRing" class="relative w-[92px] h-[92px] rounded-full shrink-0 flex items-center justify-center shadow-lg" style="background: conic-gradient(#e0465a 0%, #3a2a30 0%);">
+            <div class="absolute inset-[7px] rounded-full bg-[#1b1417] flex flex-col items-center justify-center border border-[#3b272f]">
+              <span id="weeklyReportScore" class="text-3xl font-black text-[#ff8fa0] leading-none font-mono">0</span>
+              <span class="text-[9px] font-bold text-[#b89d97] mt-0.5">/ 100</span>
+            </div>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span id="weeklyReportGrade" class="px-2 py-0.5 rounded-lg bg-[#3a232b] border border-[#5a3440] text-[10px] font-black text-[#ffb3c0]">백지</span>
+              <span class="text-[10px] font-bold text-[#9e847e]">제미니 총평</span>
+            </div>
+            <p id="weeklyReportQuote" class="text-sm font-black text-[#ffe3e8] leading-snug mt-1.5">0점이 아니라, 백지 답안이옵니다.</p>
+          </div>
+        </div>
+
+        <p id="weeklyReportIntro" class="text-[11px] text-[#d9c5bf] leading-relaxed"></p>
+
+        <!-- 4 areas -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <h4 class="text-xs font-black text-[#f4869d]">📋 영역별 채점</h4>
+            <span id="weeklyReportAreaTotal" class="text-[10px] font-bold text-[#9e847e]">총 0 / 100</span>
+          </div>
+          <div id="weeklyReportAreas" class="space-y-2"></div>
+        </div>
+
+        <!-- Highlights -->
+        <div>
+          <h4 class="text-xs font-black text-[#f4869d] mb-1.5">✨ 이번 주의 빛</h4>
+          <div id="weeklyReportHighlights" class="space-y-1.5"></div>
+        </div>
+
+        <!-- Missions -->
+        <div>
+          <h4 class="text-xs font-black text-[#f4869d] mb-1.5">🎯 다음 주 미션</h4>
+          <div id="weeklyReportMissions" class="space-y-1.5"></div>
+        </div>
+
+        <p id="weeklyReportClosing" class="text-[11px] text-[#f2c2cb] leading-relaxed p-3 rounded-2xl bg-[#2a1c22] border border-[#4a303a]"></p>
+
+        <!-- History -->
+        <div class="p-3 rounded-2xl bg-[#22181d] border border-[#3b272f] space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-black text-[#e0cfca]">🗂️ 지난 리포트 <span id="weeklyReportHistoryCount" class="text-[#9e847e] font-bold">(2)</span></span>
+            <div class="flex items-center gap-1">
+              <button onclick="stepWeeklyReport(1)" class="w-6 h-6 rounded-lg bg-[#2d2026] hover:bg-[#3d2b33] border border-[#453139] text-[#e0c8c2] text-xs font-black flex items-center justify-center active:scale-95" title="이전 리포트">‹</button>
+              <button onclick="stepWeeklyReport(-1)" class="w-6 h-6 rounded-lg bg-[#2d2026] hover:bg-[#3d2b33] border border-[#453139] text-[#e0c8c2] text-xs font-black flex items-center justify-center active:scale-95" title="다음 리포트">›</button>
+            </div>
+          </div>
+          <div id="weeklyReportHistoryChips" class="flex gap-1.5 overflow-x-auto clean-scroll pb-1"></div>
+          <div id="weeklyReportScheduleNote" class="text-[10px] text-[#9e847e] font-bold">매주 수요일 자동 갱신 · 지난 기록은 이 기기에 보관됩니다</div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-2 pt-0.5">
+          <button onclick="regenerateWeeklyReport()" class="flex-1 py-2.5 rounded-xl bg-[#261c21] border border-[#422f37] text-[11px] font-bold text-[#c9b1aa] hover:text-white hover:border-[#634551] transition-all active:scale-[0.99]">🔄 이번 주 데이터로 새로 분석</button>
+          <button onclick="closeWeeklyReportModal()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#e0465a] to-[#9b4dca] text-white text-xs font-black shadow hover:opacity-95 active:scale-[0.99] transition-all">닫기</button>
         </div>
       </div>
     </div>
