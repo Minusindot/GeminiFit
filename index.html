@@ -222,6 +222,219 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .messenger-thread-open { animation: messengerViewIn 0.2s ease both; }
+
+    /* ===== Resonance HUD accents (Wuthering Waves-inspired, no IP assets) =====
+       Thin cyan framing, cut corners and slow light sweeps turn the existing
+       cards into "character inspect" panels without changing any behavior. */
+    :root {
+      --hud-line: rgba(56, 189, 248, 0.6);
+      --hud-glow: rgba(56, 189, 248, 0.35);
+      --hud-hot: rgba(244, 134, 157, 0.75);
+    }
+    html.dark {
+      --hud-line: rgba(125, 211, 252, 0.62);
+      --hud-glow: rgba(56, 189, 248, 0.4);
+      --hud-hot: rgba(244, 134, 157, 0.85);
+    }
+
+    /* four L-shaped corner brackets, drawn with one element */
+    .hud-brackets {
+      position: absolute;
+      inset: 9px;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 5px var(--hud-glow));
+      background:
+        linear-gradient(var(--hud-line), var(--hud-line)) left top / 20px 1.5px no-repeat,
+        linear-gradient(var(--hud-line), var(--hud-line)) left top / 1.5px 20px no-repeat,
+        linear-gradient(var(--hud-line), var(--hud-line)) right top / 20px 1.5px no-repeat,
+        linear-gradient(var(--hud-line), var(--hud-line)) right top / 1.5px 20px no-repeat,
+        linear-gradient(var(--hud-line), var(--hud-line)) left bottom / 20px 1.5px no-repeat,
+        linear-gradient(var(--hud-line), var(--hud-line)) left bottom / 1.5px 20px no-repeat,
+        linear-gradient(var(--hud-line), var(--hud-line)) right bottom / 20px 1.5px no-repeat,
+        linear-gradient(var(--hud-line), var(--hud-line)) right bottom / 1.5px 20px no-repeat;
+    }
+
+    .hud-clip {
+      clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+    }
+
+    /* cinematic edge falloff so thin HUD lines stay readable over bright art */
+    .hud-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.4), transparent 20%, transparent 76%, rgba(15, 23, 42, 0.48)),
+        radial-gradient(120% 80% at 50% 45%, transparent 55%, rgba(15, 23, 42, 0.2));
+    }
+
+    /* slow diagonal light sweep across a panel */
+    .hud-sweep {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+    .hud-sweep::before {
+      content: '';
+      position: absolute;
+      top: -25%;
+      bottom: -25%;
+      left: 0;
+      width: 45%;
+      background: linear-gradient(105deg,
+        transparent,
+        rgba(186, 230, 253, 0.14) 42%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(244, 134, 157, 0.1) 58%,
+        transparent);
+      transform: translateX(-150%) skewX(-8deg);
+      animation: hudSweep 6.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    @keyframes hudSweep {
+      0%, 62% { transform: translateX(-150%) skewX(-8deg); }
+      88%, 100% { transform: translateX(330%) skewX(-8deg); }
+    }
+
+    /* lock screen: a soft horizontal scan line drifting down */
+    .lock-scan {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+    .lock-scan::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 22%;
+      top: -25%;
+      background: linear-gradient(to bottom, transparent, rgba(125, 211, 252, 0.16) 55%, transparent);
+      animation: lockScan 5.6s ease-in-out infinite;
+    }
+    @keyframes lockScan {
+      0%, 58% { top: -25%; opacity: 0; }
+      68% { opacity: 1; }
+      92%, 100% { top: 105%; opacity: 0; }
+    }
+
+    /* affinity / bond bar flow */
+    .bond-bar {
+      position: relative;
+      overflow: hidden;
+    }
+    .bond-bar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(100deg, transparent 25%, rgba(255, 255, 255, 0.85) 50%, transparent 75%);
+      transform: translateX(-100%);
+      animation: bondFlow 3s linear infinite;
+    }
+    @keyframes bondFlow {
+      to { transform: translateX(100%); }
+    }
+
+    /* nav: cut bottom-right corner + inner highlight, instead of a plain pill */
+    .nav-tab:focus-visible {
+      outline: 2px solid #38bdf8;
+      outline-offset: 2px;
+    }
+    .nav-tab.active {
+      position: relative;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%);
+      box-shadow: 0 4px 14px rgba(74, 137, 220, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+    .nav-tab.active::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      right: 14px;
+      bottom: 0;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+    }
+
+    /* thin spectrum hairline for section/room headers */
+    .hud-header {
+      position: relative;
+    }
+    .hud-header::after {
+      content: '';
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      top: 0;
+      height: 1px;
+      pointer-events: none;
+      opacity: 0.75;
+      background: linear-gradient(90deg, transparent, var(--hud-line) 35%, var(--hud-hot) 100%);
+    }
+
+    /* weekly report entry card: quiet data-glow wash behind the content */
+    .report-card {
+      position: relative;
+      isolation: isolate;
+    }
+    .report-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(224, 70, 90, 0.12), transparent 45%),
+        radial-gradient(circle at 94% 0%, rgba(56, 189, 248, 0.16), transparent 58%);
+    }
+
+    /* report modal hero scanline + ring pulse + area bar shimmer */
+    .report-hero-hud::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.45;
+      mix-blend-mode: overlay;
+      background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 3px);
+    }
+    .report-ring {
+      animation: reportRingPulse 3.4s ease-in-out infinite;
+    }
+    @keyframes reportRingPulse {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(224, 70, 90, 0.28), 0 0 16px rgba(224, 70, 90, 0.18); }
+      50% { box-shadow: 0 0 0 1px rgba(224, 70, 90, 0.55), 0 0 30px rgba(224, 70, 90, 0.4); }
+    }
+    .report-area-bar {
+      position: relative;
+      overflow: hidden;
+    }
+    .report-area-bar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+      transform: translateX(-100%);
+      animation: bondFlow 3.8s linear infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hud-sweep::before,
+      .lock-scan::before,
+      .bond-bar::after,
+      .report-ring,
+      .report-area-bar::after {
+        animation: none !important;
+      }
+      .hud-sweep, .lock-scan { display: none; }
+    }
   </style>
 </head>
 <body class="min-h-screen selection:bg-sky-400 selection:text-white">
@@ -270,12 +483,12 @@
     </div>
 
     <!-- 1. Top Clean Header: Gemini Fit (v2.8) -->
-    <header class="game-card px-2.5 sm:px-3 py-2 flex items-center justify-between border-t-4 border-t-[#f4869d] shadow-xs gap-1.5 w-full">
+    <header class="hud-header game-card px-2.5 sm:px-3 py-2 flex items-center justify-between border-t-4 border-t-[#f4869d] shadow-xs gap-1.5 w-full">
       <div class="flex items-center gap-1.5 min-w-0">
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.34</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.35</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -330,7 +543,7 @@
       <div id="trainerCardContainer" class="game-card overflow-hidden hidden">
         
         <!-- Stage header: back to messenger -->
-        <div class="flex items-center justify-between px-2.5 py-1.5 bg-slate-100/80 dark:bg-slate-900/50 border-b border-slate-200/70 dark:border-slate-700/60">
+        <div class="hud-header flex items-center justify-between px-2.5 py-1.5 bg-slate-100/80 dark:bg-slate-900/50 border-b border-slate-200/70 dark:border-slate-700/60">
           <span class="text-[10px] font-black text-slate-500 dark:text-slate-400">🎨 스탠딩 스테이지</span>
           <button onclick="showMessengerHome()" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[10px] font-black text-sky-600 dark:text-sky-300 hover:border-sky-400 transition-all">💬 메신저로</button>
         </div>
@@ -378,15 +591,17 @@
             <div class="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-pink-50 dark:bg-pink-950/30 border border-pink-200/60 dark:border-pink-800/40 whitespace-nowrap shrink-0">
               <span id="bondRankBadge" class="text-[11px] font-black text-pink-600 dark:text-pink-300">인연 Lv.1 ❤️</span>
               <div class="w-8 sm:w-12 h-1.5 bg-pink-200/60 dark:bg-slate-700 rounded-full overflow-hidden">
-                <div id="bondExpBar" class="h-full bg-gradient-to-r from-pink-500 to-rose-500 rounded-full transition-all duration-300" style="width: 75%"></div>
+                <div id="bondExpBar" class="bond-bar h-full bg-gradient-to-r from-pink-500 to-rose-500 rounded-full transition-all duration-300" style="width: 75%"></div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Grand Character Stage -->
-        <div id="stageWrapper" class="relative w-full aspect-square bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300 rounded-2xl shadow-sm" onclick="pokeCurrentTrainer()">
-          
+        <div id="stageWrapper" class="hud-clip relative w-full aspect-square bg-gradient-to-b from-sky-50 via-white to-pink-50/40 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 overflow-hidden cursor-pointer group transition-all duration-300 rounded-2xl shadow-sm" onclick="pokeCurrentTrainer()">
+          <div class="hud-sweep"></div>
+          <div class="hud-vignette"></div>
+
           <!-- Single Trainer View (Clean, unobstructed character artwork) -->
           <div id="singleStageView" class="w-full h-full relative">
             <img id="mainTrainerImg" src="./image/03 gemini/gemini_01_main.png" alt="Trainer" class="w-full h-full object-cover" style="object-position: center 12%;" onerror="this.src='./image/90 repository/trainer_gemini.png'">
@@ -405,6 +620,9 @@
             <span id="outfitLocationTag"></span>
             <p id="trainerDialogue"></p>
           </div>
+
+          <!-- HUD corner brackets (decorative) -->
+          <div class="hud-brackets" style="--hud-line: rgba(226,246,255,.85); filter: drop-shadow(0 0 5px rgba(56,189,248,.9)) drop-shadow(0 1px 2px rgba(2,6,23,.65));" aria-hidden="true"></div>
         </div>
       </div>
 
@@ -419,6 +637,8 @@
           <div id="messengerLockScreen" onclick="unlockMessenger()" role="button" tabindex="0" aria-label="탭하여 잠금해제" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();unlockMessenger();}" class="relative w-full rounded-3xl overflow-hidden shadow-2xl select-none bg-slate-900 cursor-pointer" style="height: clamp(430px, 64vh, 560px);">
             <img id="lockWallpaper" src="./image/03 gemini/gemini_26_kyoto_teahouse.png" alt="" class="absolute inset-0 w-full h-full object-cover object-[center_16%] scale-105">
             <div class="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/10 to-slate-950/90"></div>
+            <div class="hud-brackets" style="inset:12px" aria-hidden="true"></div>
+            <div class="lock-scan" aria-hidden="true"></div>
 
             <!-- status row -->
             <div class="relative z-10 flex items-center justify-between px-5 pt-4 text-[10px] font-bold text-white/80">
@@ -449,7 +669,7 @@
 
           <!-- 2) MESSAGE LIST (character -> episode accordion) -->
           <div id="messengerListWrap" class="hidden rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-lg">
-            <div class="flex items-center justify-between px-3.5 py-2.5 bg-slate-50/95 dark:bg-slate-800/95 border-b border-slate-200/80 dark:border-slate-700/60">
+            <div class="hud-header flex items-center justify-between px-3.5 py-2.5 bg-slate-50/95 dark:bg-slate-800/95 border-b border-slate-200/80 dark:border-slate-700/60">
               <div class="flex items-center gap-1.5">
                 <span class="text-sm">💬</span>
                 <span class="text-xs font-black text-slate-800 dark:text-slate-100">메시지 리스트</span>
@@ -465,7 +685,7 @@
 
           <!-- 3) CHAT ROOM -->
           <div id="messengerRoomBody" class="hidden rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-lg">
-            <div class="flex items-center gap-2.5 px-3 py-2.5 bg-slate-50/95 dark:bg-slate-800/95 border-b border-slate-200/80 dark:border-slate-700/60">
+            <div class="hud-header flex items-center gap-2.5 px-3 py-2.5 bg-slate-50/95 dark:bg-slate-800/95 border-b border-slate-200/80 dark:border-slate-700/60">
               <button onclick="backToMessengerList()" class="shrink-0 w-7 h-7 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-xs font-black text-slate-500 dark:text-slate-300 flex items-center justify-center active:scale-95 transition-all" title="메시지 리스트">‹</button>
               <span id="roomAvatarWrap" class="w-9 h-9 rounded-full overflow-hidden ring-2 ring-pink-400/60 shrink-0 bg-slate-100 dark:bg-slate-900">
                 <img id="roomAvatar" src="./image/03 gemini/avatar_gemini.png" alt="" class="w-full h-full object-cover" onerror="this.src='./image/00 common/dual_inbody.png'">
@@ -533,7 +753,7 @@
     <div id="viewHealth" class="space-y-3">
 
       <!-- 0. 📊 Weekly Evaluation Report (제미니 주간 총평) -->
-      <button type="button" onclick="openWeeklyReportModal()" class="game-card w-full p-0 overflow-hidden text-left border-l-4 border-l-[#e0465a] group hover:border-[#e0465a] transition-all">
+      <button type="button" onclick="openWeeklyReportModal()" class="report-card game-card w-full p-0 overflow-hidden text-left border-l-4 border-l-[#e0465a] group hover:border-[#e0465a] transition-all">
         <div class="flex items-center gap-3 p-3">
           <img id="weeklyReportCardHero" src="./image/03 gemini/gemini_48_zero_point_restart.png" alt="" class="w-14 h-14 rounded-2xl object-cover object-[center_22%] ring-2 ring-[#e0465a]/30 shrink-0 group-hover:scale-105 transition-transform">
           <div class="min-w-0 flex-1">
@@ -1663,11 +1883,11 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.3.34"></script>
-  <script src="./dialogue_pool.js?v=4.3.34"></script>
-  <script src="./trainer_episodes.js?v=4.3.34"></script>
-  <script src="./kotonoha_data.js?v=4.3.34"></script>
-  <script src="./kotonoha_engine.js?v=4.3.34"></script>
+  <script src="./weekly_reports.js?v=4.3.35"></script>
+  <script src="./dialogue_pool.js?v=4.3.35"></script>
+  <script src="./trainer_episodes.js?v=4.3.35"></script>
+  <script src="./kotonoha_data.js?v=4.3.35"></script>
+  <script src="./kotonoha_engine.js?v=4.3.35"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -9220,7 +9440,7 @@ ${err.message}
               <span class="text-[#f4869d] font-mono">${area.score || 0}/${area.max || 0}</span>
             </div>
             <div class="mt-1.5 h-1.5 rounded-full bg-[#140f12] overflow-hidden">
-              <div class="h-full rounded-full bg-gradient-to-r from-[#e0465a] to-[#ff8fa0]" style="width:${pct}%"></div>
+              <div class="report-area-bar h-full rounded-full bg-gradient-to-r from-[#e0465a] to-[#ff8fa0]" style="width:${pct}%"></div>
             </div>
             <div class="flex items-center gap-1.5 mt-1.5 text-[9px] font-bold text-[#9e847e]">
               <span class="px-1.5 py-0.5 rounded bg-[#2b1f25] border border-[#453139]">${area.tag || ''}</span>
@@ -9310,7 +9530,7 @@ ${err.message}
 
       <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
         <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-          <span>현재 앱 버전: v4.3.34 (言の葉茶屋)</span>
+          <span>현재 앱 버전: v4.3.35 (言の葉茶屋)</span>
           <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
         </div>
         <div class="text-[10px] text-[#9e847e]">아래 버튼을 눌러 요청문을 복사한 뒤, 에이전트에 바로 붙여넣기 하시면 즉시 업데이트가 진행됩니다.</div>
@@ -9344,7 +9564,7 @@ ${err.message}
     <div class="game-card max-w-md w-full max-h-[94vh] overflow-y-auto clean-scroll p-0 border-[#e0465a]/60 shadow-2xl bg-[#1b1417] text-[#f5ebe6] rounded-3xl">
 
       <!-- Hero -->
-      <div class="relative h-48 sm:h-56 overflow-hidden rounded-t-3xl bg-[#24181d]">
+      <div class="report-hero-hud relative h-48 sm:h-56 overflow-hidden rounded-t-3xl bg-[#24181d]">
         <img id="weeklyReportHero" src="./image/03 gemini/gemini_48_zero_point_restart.png" alt="주간 총평 일러스트" class="w-full h-full object-cover" style="object-position: center 22%;">
         <div class="absolute inset-0 bg-gradient-to-t from-[#1b1417] via-[#1b1417]/30 to-transparent"></div>
         <button onclick="closeWeeklyReportModal()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/45 hover:bg-black/65 backdrop-blur-md text-white text-sm font-black flex items-center justify-center transition-all active:scale-95" aria-label="닫기">✕</button>
@@ -9362,7 +9582,7 @@ ${err.message}
 
         <!-- Score + quote -->
         <div class="flex items-center gap-3.5">
-          <div id="weeklyReportScoreRing" class="relative w-[92px] h-[92px] rounded-full shrink-0 flex items-center justify-center shadow-lg" style="background: conic-gradient(#e0465a 0%, #3a2a30 0%);">
+          <div id="weeklyReportScoreRing" class="report-ring relative w-[92px] h-[92px] rounded-full shrink-0 flex items-center justify-center shadow-lg" style="background: conic-gradient(#e0465a 0%, #3a2a30 0%);">
             <div class="absolute inset-[7px] rounded-full bg-[#1b1417] flex flex-col items-center justify-center border border-[#3b272f]">
               <span id="weeklyReportScore" class="text-3xl font-black text-[#ff8fa0] leading-none font-mono">0</span>
               <span class="text-[9px] font-bold text-[#b89d97] mt-0.5">/ 100</span>
