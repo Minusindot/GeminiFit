@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-10T16:40:15.806Z",
+  "updatedAt": "2026-11-10T16:40:35.404Z",
   "lastActiveDate": "2026-11-11",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
-  "bondRank": 5,
-  "bondExp": 90,
+  "bondRank": 6,
+  "bondExp": 15,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev5",
@@ -466,26 +466,6 @@
   },
   "chatHistory": [
     {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "프로듀서항, 잠깐만 멈추시지요 ⏰"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "지금 시계 몇 시인지 아시지요? 17시 셔틀, 단식 셔다운 30분 전이라지요."
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "소녀가 눈 깜빡할 새에 배민 켜는 걸 다 봤어요. 치킨이 먹고 싶은 건 알겠어요... 하지만 17시 셔틀이 출발하면 절대 안 된다고요!"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "특히 오늘은 슬림핏 골든타임 구간. 지금 참으면 내일 아침 체중계에서 웃을 수 있어요."
-    },
-    {
       "sender": "user",
       "name": "프로듀서",
       "text": "차 한 잔 하면서 버틸래요 🍵"
@@ -614,6 +594,26 @@
       "sender": "mio",
       "name": "미오",
       "text": "미오가 템포 메트로놈이 되어줄게. 템포 180bpm 맞춰서 같이 미친 듯이 달려보자! 🖐️"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "7시쯤으로 미뤄줘요 🕖"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "음, 그래, 안전이 먼저지! 7시 해 뜬 공기도 만만치 않아!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "깜짝 박스런 대회 5km 기록 갱신 도전! 미오가 페이스 잡아줄게! 🖐️"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "프로듀서한테는 미오가 항상 페이스 메이커야! 내일도 같이 달리자! 🖐️"
     }
   ]
 }
