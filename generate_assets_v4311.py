@@ -138,7 +138,7 @@ EXPRESSIONS = {
     "shy": "shy blushing expression, flushed red cheeks, embarrassed awkward smile, eyes averted",
     "shock": "shocked surprised expression, wide round eyes, open mouth, flustered",
     "dark": "cool serious dark expression, shadowed eyes without highlights, emotionless cold stare",
-    "joke": "playful mischievous wink, tongue sticking out slightly, cheeky grin",
+    "joke": "playful happy giggle, both eyes closed in cheerful upward-curving arcs, bright open-mouth laugh showing upper teeth, warm friendly cheeky grin, tongue NOT visible, facial expression only",
     "wink": "bright cheerful wink with one eye closed, energetic encouragement smile, pointing finger pose",
     "pout": "cute sulking pout, puffed cheeks, lower lip pushed out, grumpy but adorable",
     "cry": "teary sad expression, watery eyes about to cry, quivering lower lip, trembling eyebrows",
@@ -346,9 +346,12 @@ def build_jobs(phase: str):
             for expr, edesc in EXPRESSIONS.items():
                 if expr == "idle":
                     continue
-                prompt = (f"Keep the EXACT same character in the reference image, same body, same outfit, "
-                          f"same pose, same plain pure white background and same full-body framing. "
+                prompt = (f"Keep the EXACT same character in the reference image: identical body, "
+                          f"identical outfit, identical standing pose with both arms hanging relaxed at her sides "
+                          f"and both feet flat on the ground, identical plain pure white background, "
+                          f"identical full-body framing and camera angle. "
                           f"Only change her facial expression to: {edesc}. "
+                          f"Do NOT move her arms, hands, legs or feet, do NOT add props. "
                           f"{info['desc']}, {STYLE}")
                 jobs.append((f"{char}/{expr}", prompt, WORK / char / f"{expr}_raw.png",
                              [WORK / char / "base_raw.png"], "9:16 portrait"))
