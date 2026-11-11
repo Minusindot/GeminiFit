@@ -554,6 +554,75 @@ function getChayaRankInfo(kotodama) {
   return { lv: 5, title: "Lv.5 프로듀서항과 제미니의 황금 다실 (黄金の茶室)" };
 }
 
+// Keep the selected episode row in view inside the hub's scrollable list.
+// prevScroll === null means a fresh render (hub reopened or season switched),
+// so we centre the active row instead of snapping back to the first episode.
+// The list's max-height comes from Tailwind's runtime CSS, which is injected a
+// tick after innerHTML is set — applying scroll once would be clamped away, so
+// we re-apply while the list settles (bounded ResizeObserver).
+let kotonohaEpScrollObserver = null;
+
+function restoreKotonohaEpisodeScroll(prevScroll) {
+  const list = document.getElementById('kotonohaEpisodeList');
+  if (!list) return;
+
+  if (kotonohaEpScrollObserver) {
+    kotonohaEpScrollObserver.disconnect();
+    kotonohaEpScrollObserver = null;
+  }
+
+  const apply = () => {
+    const l = document.getElementById('kotonohaEpisodeList');
+    if (!l || !document.body.contains(l)) return;
+    if (typeof prevScroll === 'number') {
+      l.scrollTop = prevScroll;
+      nudgeKotonohaActiveEpisode(l);
+    } else {
+      centerKotonohaActiveEpisode(l);
+    }
+  };
+
+  apply();
+  requestAnimationFrame(apply);
+
+  if (typeof ResizeObserver === 'function') {
+    let ticks = 0;
+    kotonohaEpScrollObserver = new ResizeObserver(() => {
+      apply();
+      if (++ticks > 6) {
+        kotonohaEpScrollObserver.disconnect();
+        kotonohaEpScrollObserver = null;
+      }
+    });
+    kotonohaEpScrollObserver.observe(list);
+  }
+}
+
+function centerKotonohaActiveEpisode(list) {
+  if (!list || !list.clientHeight) return;
+  const active = list.querySelector('[data-ep-active="1"]');
+  if (!active) { list.scrollTop = 0; return; }
+  const lr = list.getBoundingClientRect();
+  const ar = active.getBoundingClientRect();
+  const target = list.scrollTop + (ar.top - lr.top)
+    - Math.max(0, (list.clientHeight - ar.height) / 2);
+  list.scrollTop = Math.max(0, target);
+}
+
+function nudgeKotonohaActiveEpisode(list) {
+  if (!list || !list.clientHeight) return;
+  const active = list.querySelector('[data-ep-active="1"]');
+  if (!active) return;
+  const lr = list.getBoundingClientRect();
+  const ar = active.getBoundingClientRect();
+  const pad = 6;
+  if (ar.top < lr.top + pad) {
+    list.scrollTop += (ar.top - lr.top) - pad;
+  } else if (ar.bottom > lr.bottom - pad) {
+    list.scrollTop += (ar.bottom - lr.bottom) + pad;
+  }
+}
+
 function selectKotonohaLesson(idx) {
   initKotonohaState();
   const all = getAllKotonohaLessons();
@@ -1293,6 +1362,14 @@ function renderKotonohaView() {
     const seasonLessons = lessons.map((item, idx) => ({ ...item, globalIdx: idx }))
       .filter(item => (item.season || 1) === activeSeason);
 
+    // Preserve the episode-list scroll position across re-renders. Before this,
+    // picking an episode re-rendered the hub and snapped the list back to the top,
+    // so the row you just tapped (e.g. 1-5) vanished and 1-1 filled the view.
+    const prevEpList = document.getElementById('kotonohaEpisodeList');
+    const prevEpScroll = (prevEpList && prevEpList.dataset.season === String(activeSeason))
+      ? prevEpList.scrollTop
+      : null;
+
     container.innerHTML = `
       <div class="rounded-3xl bg-[#181316] text-[#f5ebe6] border border-[#3a2830] shadow-2xl overflow-hidden">
         <!-- Top Header Bar: Profile, Title, Streak & Currencies -->
@@ -1434,13 +1511,13 @@ function renderKotonohaView() {
             </div>
 
             <!-- Vertical Scrollable Episode List (Clear, readable and fits comfortably in phone viewport) -->
-            <div class="flex flex-col gap-1.5 max-h-44 sm:max-h-52 overflow-y-auto clean-scroll pr-1">
+            <div id="kotonohaEpisodeList" data-season="${activeSeason}" class="flex flex-col gap-1.5 max-h-44 sm:max-h-52 overflow-y-auto clean-scroll pr-1">
               ${seasonLessons.map(item => {
                 const isDone = (kState.completedLessons || []).includes(item.id);
                 const isActive = item.globalIdx === kotonohaRuntime.lessonIdx;
                 const epBadge = item.epCode || (item.season ? item.season + '-' + (item.episode || (item.dayNum || 1)) : '1-' + item.dayNum);
                 return `
-                  <button onclick="selectKotonohaLesson(${item.globalIdx})" class="w-full p-2 sm:p-2.5 rounded-xl border text-left transition-all flex items-center justify-between group ${isActive ? 'bg-[#3b232c] border-[#e0465a] text-white shadow-md ring-1 ring-[#e0465a]/50' : 'bg-[#20181c] border-[#34262c] text-[#ab948f] hover:border-[#5e3846] hover:bg-[#281c22]'}">
+                  <button onclick="selectKotonohaLesson(${item.globalIdx})" data-ep-active="${isActive ? '1' : '0'}" class="w-full p-2 sm:p-2.5 rounded-xl border text-left transition-all flex items-center justify-between group ${isActive ? 'bg-[#3b232c] border-[#e0465a] text-white shadow-md ring-1 ring-[#e0465a]/50' : 'bg-[#20181c] border-[#34262c] text-[#ab948f] hover:border-[#5e3846] hover:bg-[#281c22]'}">
                     <div class="flex items-center gap-2.5 min-w-0">
                       <span class="px-2 py-0.5 rounded-lg text-[10px] font-black shrink-0 ${isActive ? 'bg-[#e0465a] text-white shadow' : 'bg-[#2b1c22] text-[#f28b9b] border border-[#482e37]'}">
                         ${isDone ? '✅ ' : '🍵 '}${epBadge}
@@ -1487,6 +1564,7 @@ function renderKotonohaView() {
         </div>
       </div>
     `;
+    restoreKotonohaEpisodeScroll(prevEpScroll);
     return;
   }
 
