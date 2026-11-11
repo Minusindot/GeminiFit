@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.36</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.37</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -1171,10 +1171,11 @@
               <input type="hidden" id="gymUpper1Name" value="체스트 프레스">
             </div>
             <span id="upper1TargetLabel" class="text-[10px] font-mono text-sky-600 dark:text-sky-400 font-extrabold whitespace-nowrap">40kg · 20회×4세트</span>
+            <button id="gymEditBtn_upper1" onclick="toggleGymEdit('upper1')" class="shrink-0 w-6 h-6 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[10px] flex items-center justify-center active:scale-95 transition-all" title="무게·횟수·세트 편집">✏️</button>
           </div>
 
           <!-- Weight Dropdown, Reps Stepper, Sets Stepper Controls -->
-          <div class="flex items-center justify-between gap-1.5 pt-0.5 text-[10px] bg-slate-50 dark:bg-slate-800/40 p-1.5 rounded-lg border border-slate-200/60 dark:border-slate-700/50">
+          <div id="gymConfig_upper1" class="hidden flex items-center justify-between gap-1.5 pt-0.5 text-[10px] bg-slate-50 dark:bg-slate-800/40 p-1.5 rounded-lg border border-slate-200/60 dark:border-slate-700/50">
             <!-- 무게 kg 드롭다운 -->
             <div class="flex items-center gap-1">
               <span class="text-slate-400 font-bold">무게:</span>
@@ -1221,10 +1222,11 @@
               <input type="hidden" id="gymUpper2Name" value="시티드 케이블 로우">
             </div>
             <span id="upper2TargetLabel" class="text-[10px] font-mono text-sky-600 dark:text-sky-400 font-extrabold whitespace-nowrap">35kg · 20회×4세트</span>
+            <button id="gymEditBtn_upper2" onclick="toggleGymEdit('upper2')" class="shrink-0 w-6 h-6 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[10px] flex items-center justify-center active:scale-95 transition-all" title="무게·횟수·세트 편집">✏️</button>
           </div>
 
           <!-- Weight Dropdown, Reps Stepper, Sets Stepper -->
-          <div class="flex items-center justify-between gap-1.5 pt-0.5 text-[10px] bg-slate-50 dark:bg-slate-800/40 p-1.5 rounded-lg border border-slate-200/60 dark:border-slate-700/50">
+          <div id="gymConfig_upper2" class="hidden flex items-center justify-between gap-1.5 pt-0.5 text-[10px] bg-slate-50 dark:bg-slate-800/40 p-1.5 rounded-lg border border-slate-200/60 dark:border-slate-700/50">
             <!-- 무게 kg 드롭다운 -->
             <div class="flex items-center gap-1">
               <span class="text-slate-400 font-bold">무게:</span>
@@ -1271,10 +1273,11 @@
               <input type="hidden" id="gymLowerName" value="레그 프레스">
             </div>
             <span id="lowerTargetLabel" class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-extrabold whitespace-nowrap">80kg · 20회×4세트</span>
+            <button id="gymEditBtn_lower" onclick="toggleGymEdit('lower')" class="shrink-0 w-6 h-6 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[10px] flex items-center justify-center active:scale-95 transition-all" title="무게·횟수·세트 편집">✏️</button>
           </div>
 
           <!-- Weight Dropdown, Reps Stepper, Sets Stepper -->
-          <div class="flex items-center justify-between gap-1.5 pt-0.5 text-[10px] bg-slate-50 dark:bg-slate-800/40 p-1.5 rounded-lg border border-slate-200/60 dark:border-slate-700/50">
+          <div id="gymConfig_lower" class="hidden flex items-center justify-between gap-1.5 pt-0.5 text-[10px] bg-slate-50 dark:bg-slate-800/40 p-1.5 rounded-lg border border-slate-200/60 dark:border-slate-700/50">
             <!-- 무게 kg 드롭다운 -->
             <div class="flex items-center gap-1">
               <span class="text-slate-400 font-bold">무게:</span>
@@ -1319,7 +1322,8 @@
             </div>
             <div class="flex items-center gap-1.5">
               <span id="legRaiseTargetLabel" class="text-[10px] font-mono text-pink-600 dark:text-pink-400 font-extrabold">50회 × 1세트</span>
-              <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 p-0.5">
+              <button id="gymEditBtn_legRaise" onclick="toggleGymEdit('legRaise')" class="shrink-0 w-6 h-6 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[10px] flex items-center justify-center active:scale-95 transition-all" title="세트 수 편집">✏️</button>
+              <div id="gymConfig_legRaise" class="hidden flex items-center bg-slate-100 dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 p-0.5">
                 <button onclick="adjustGymSets('legRaise', -1)" class="w-5 h-4 flex items-center justify-center text-[11px] font-black text-slate-500 hover:text-pink-500" title="세트 감소">−</button>
                 <span id="legRaiseSetNum" class="text-[10px] font-black font-mono px-1 text-slate-800 dark:text-slate-100">1</span>
                 <button onclick="adjustGymSets('legRaise', 1)" class="w-5 h-4 flex items-center justify-center text-[11px] font-black text-slate-500 hover:text-pink-500" title="세트 추가">+</button>
@@ -1340,7 +1344,8 @@
             </div>
             <div class="flex items-center gap-1.5">
               <span id="crunchTargetLabel" class="text-[10px] font-mono text-amber-600 dark:text-amber-400 font-extrabold">50회 × 2세트</span>
-              <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 p-0.5">
+              <button id="gymEditBtn_crunch" onclick="toggleGymEdit('crunch')" class="shrink-0 w-6 h-6 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[10px] flex items-center justify-center active:scale-95 transition-all" title="세트 수 편집">✏️</button>
+              <div id="gymConfig_crunch" class="hidden flex items-center bg-slate-100 dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 p-0.5">
                 <button onclick="adjustGymSets('crunch', -1)" class="w-5 h-4 flex items-center justify-center text-[11px] font-black text-slate-500 hover:text-amber-500" title="세트 감소">−</button>
                 <span id="crunchSetNum" class="text-[10px] font-black font-mono px-1 text-slate-800 dark:text-slate-100">2</span>
                 <button onclick="adjustGymSets('crunch', 1)" class="w-5 h-4 flex items-center justify-center text-[11px] font-black text-slate-500 hover:text-amber-500" title="세트 추가">+</button>
@@ -1359,9 +1364,16 @@
               <span class="text-xs font-bold text-emerald-700 dark:text-emerald-300">2kg 덤벨 손목 편심성 컬 (테니스 엘보 재활)</span>
               <span class="text-[9px] text-slate-400 block">내릴 때 3~4초 천천히 버티기 필수</span>
             </div>
-            <span class="text-[10px] text-slate-400 font-mono">10회 × 3세트</span>
+            <div class="flex items-center gap-1.5">
+              <span id="rehabTargetLabel" class="text-[10px] text-slate-400 font-mono">10회 × 3세트</span>
+              <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 p-0.5">
+                <button onclick="adjustRehabSets(-1)" class="w-5 h-4 flex items-center justify-center text-[11px] font-black text-slate-500 hover:text-emerald-500" title="세트 감소">−</button>
+                <span id="rehabSetNum" class="text-[10px] font-black font-mono px-1 text-slate-800 dark:text-slate-100">3</span>
+                <button onclick="adjustRehabSets(1)" class="w-5 h-4 flex items-center justify-center text-[11px] font-black text-slate-500 hover:text-emerald-500" title="세트 추가">+</button>
+              </div>
+            </div>
           </div>
-          <div class="grid grid-cols-3 gap-1.5">
+          <div id="rehabSetContainer" class="grid grid-cols-3 gap-1.5">
             <button onclick="toggleRehab(1)" id="rehabBtn1" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">1세트</button>
             <button onclick="toggleRehab(2)" id="rehabBtn2" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">2세트</button>
             <button onclick="toggleRehab(3)" id="rehabBtn3" class="py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">3세트</button>
@@ -1994,11 +2006,11 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.3.36"></script>
-  <script src="./dialogue_pool.js?v=4.3.36"></script>
-  <script src="./trainer_episodes.js?v=4.3.36"></script>
-  <script src="./kotonoha_data.js?v=4.3.36"></script>
-  <script src="./kotonoha_engine.js?v=4.3.36"></script>
+  <script src="./weekly_reports.js?v=4.3.37"></script>
+  <script src="./dialogue_pool.js?v=4.3.37"></script>
+  <script src="./trainer_episodes.js?v=4.3.37"></script>
+  <script src="./kotonoha_data.js?v=4.3.37"></script>
+  <script src="./kotonoha_engine.js?v=4.3.37"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -2014,6 +2026,44 @@
         osc.start();
         osc.stop(audioCtx.currentTime + duration);
       } catch (e) {}
+    }
+
+    function playToneSequence(notes, type = 'sine', volume = 0.12) {
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const base = audioCtx.currentTime;
+        notes.forEach(({ f, d, at }) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(f, base + at);
+          gain.gain.setValueAtTime(0.0001, base + at);
+          gain.gain.exponentialRampToValueAtTime(volume, base + at + 0.015);
+          gain.gain.exponentialRampToValueAtTime(0.001, base + at + d);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(base + at);
+          osc.stop(base + at + d + 0.02);
+        });
+      } catch (e) {}
+    }
+
+    // Bright ascending triad for a correct answer.
+    function playKotonohaCorrectSound() {
+      playToneSequence([
+        { f: 659.25, d: 0.12, at: 0 },
+        { f: 880.0, d: 0.12, at: 0.1 },
+        { f: 1318.51, d: 0.26, at: 0.2 }
+      ], 'triangle', 0.16);
+    }
+
+    // Low descending buzz for a wrong answer.
+    function playKotonohaWrongSound() {
+      playToneSequence([
+        { f: 246.94, d: 0.18, at: 0 },
+        { f: 196.0, d: 0.18, at: 0.15 },
+        { f: 155.56, d: 0.3, at: 0.3 }
+      ], 'sawtooth', 0.09);
     }
 
     function getLocalDateString(d = new Date()) {
@@ -3880,14 +3930,23 @@
         state.mealPhotos = ['', '', ''];
         state.runDone = false;
         state.absDone = false;
-        state.rehab = [false, false, false];
+        const rehabLen = Math.min(6, Math.max(1, parseInt(state.rehabSets, 10) || 3));
+        state.rehab = Array(rehabLen).fill(false);
         state.teaLog = { matcha: 0, espresso: 0, tea: 0 };
 
         if (state.gymRoutine) {
           ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'].forEach(k => {
-            if (state.gymRoutine[k] && state.gymRoutine[k].sets) {
-              state.gymRoutine[k].sets = state.gymRoutine[k].sets.map(() => false);
+            const ex = state.gymRoutine[k];
+            if (!ex) return;
+            let len = parseInt(ex.targetSets, 10);
+            if (!Number.isFinite(len) || len < 1) {
+              len = (k === 'legRaise' || k === 'crunch')
+                ? (GYM_DEFAULT_SET_COUNT[k] || 1)
+                : ((ex.sets && ex.sets.length) || GYM_DEFAULT_SET_COUNT[k] || 4);
             }
+            len = Math.min(GYM_MAX_SETS, Math.max(1, len));
+            ex.targetSets = len;
+            ex.sets = Array(len).fill(false);
           });
           state.gymRoutine.allDone = false;
         }
@@ -4729,6 +4788,7 @@
     // ---------- Messenger UI state ----------
     let messengerUnlocked = false;
     let expandedThreadRoom = null;
+    let pendingEpisodeReturn = null;
 
     const MESSENGER_WALLPAPERS = {
       gemini: [
@@ -4786,6 +4846,7 @@
     function showMessengerLock() {
       messengerUnlocked = false;
       expandedThreadRoom = null;
+      pendingEpisodeReturn = null;
       cancelTrainerEpisode();
       const lock = document.getElementById('messengerLockScreen');
       const list = document.getElementById('messengerListWrap');
@@ -4846,6 +4907,14 @@
       if (list) { list.classList.remove('hidden'); animateMessengerView(list); }
       renderThreadList();
       if (!silent) playBeep(560, 0.05);
+      if (pendingEpisodeReturn) {
+        const target = pendingEpisodeReturn;
+        pendingEpisodeReturn = null;
+        setTimeout(() => {
+          const el = document.querySelector(`[data-ep-id="${target.epId}"]`);
+          if (el) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }, 80);
+      }
     }
 
     // Backwards-compatible alias (old call sites)
@@ -4861,6 +4930,7 @@
 
     function openEpisodeFromList(room, epId, ev) {
       if (ev && ev.stopPropagation) ev.stopPropagation();
+      pendingEpisodeReturn = { room, epId };
       enterTrainerRoom(room, true);
       setTimeout(() => startTrainerEpisode(room, epId), 240);
     }
@@ -4885,7 +4955,7 @@
             ? `<span class="w-9 h-9 rounded-lg overflow-hidden shrink-0 bg-slate-800 ring-1 ring-white/15"><img src="./image/bg/bg_${e.scene.bg}.png" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'"></span>`
             : `<span class="w-5 h-5 rounded-full flex items-center justify-center text-[9px] shrink-0 ${done ? 'bg-emerald-500 text-white' : 'bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-400'}">${done ? '✓' : '▶'}</span>`;
           return `
-            <button onclick="openEpisodeFromList('${c.room}', '${e.id}', event)" class="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-xl border text-left transition-all active:scale-[0.99] ${done ? 'bg-emerald-500/5 border-emerald-400/30 hover:border-emerald-400' : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:border-sky-400'}">
+            <button onclick="openEpisodeFromList('${c.room}', '${e.id}', event)" data-ep-id="${e.id}" data-thread-room="${c.room}" class="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-xl border text-left transition-all active:scale-[0.99] ${done ? 'bg-emerald-500/5 border-emerald-400/30 hover:border-emerald-400' : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:border-sky-400'}">
               ${sceneThumb}
               <span class="min-w-0 flex-1">
                 <span class="block text-[11px] font-black text-slate-800 dark:text-slate-100 truncate">${e.icon || '🎬'} ${e.title}</span>
@@ -5460,8 +5530,8 @@
       setTxt('espressoCount', `${state.teaLog.espresso || 0}회`);
       setTxt('teaCount', `${state.teaLog.tea || 0}회`);
 
+      renderRehabUI();
       for (let i = 1; i <= 3; i++) {
-        updateRehabBtnUI(i, state.rehab ? state.rehab[i - 1] : false);
         const prevBox = document.getElementById(`prevBox${i}`);
         const prevImg = document.getElementById(`prevImg${i}`);
         if (state.mealPhotos && state.mealPhotos[i - 1]) {
@@ -7957,6 +8027,8 @@ ${err.message}
             <span class="text-[10px] text-slate-400 font-mono block mt-0.5">기본: ${item.defaultWeight || '20회 × 4세트'}</span>
           </div>
           <div class="flex items-center gap-1">
+            <button onclick="moveExercise('${currentManagePart}', ${idx}, -1)" ${idx === 0 ? 'disabled' : ''} class="w-6 py-1 rounded-lg ${idx === 0 ? 'opacity-30 cursor-not-allowed' : 'bg-slate-200/70 dark:bg-slate-700 hover:bg-sky-500/20 text-slate-500 dark:text-slate-300'} font-black text-[10px]" title="위로 이동">▲</button>
+            <button onclick="moveExercise('${currentManagePart}', ${idx}, 1)" ${idx === items.length - 1 ? 'disabled' : ''} class="w-6 py-1 rounded-lg ${idx === items.length - 1 ? 'opacity-30 cursor-not-allowed' : 'bg-slate-200/70 dark:bg-slate-700 hover:bg-sky-500/20 text-slate-500 dark:text-slate-300'} font-black text-[10px]" title="아래로 이동">▼</button>
             <button onclick="selectExerciseDirectly('${currentManagePart}', '${item.name}')" class="px-2 py-1 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-300 font-black text-[10px] whitespace-nowrap">
               선택
             </button>
@@ -8022,6 +8094,20 @@ ${err.message}
       renderExerciseManageList();
       renderExerciseDropdowns();
       showFloatingToast(`'${item.name}' 삭제 완료`, '🗑️');
+    }
+
+    function moveExercise(part, index, dir) {
+      initExerciseList();
+      const list = state.exerciseList[part] || [];
+      const target = index + dir;
+      if (target < 0 || target >= list.length) return;
+      const [item] = list.splice(index, 1);
+      list.splice(target, 0, item);
+      saveState();
+      renderExerciseManageList();
+      renderExerciseDropdowns();
+      playBeep(dir < 0 ? 760 : 560, 0.05);
+      showFloatingToast(`'${item.name}' 순서를 ${dir < 0 ? '위로' : '아래로'} 옮겼어요`, '↕️');
     }
 
     function selectExerciseDirectly(part, name) {
@@ -8259,14 +8345,17 @@ ${err.message}
       gr.upper1.name = rec.upper1.name;
       gr.upper1.weight = rec.upper1.defaultWeight || '40kg × 20회';
       gr.upper1.sets = [false, false, false, false];
+      gr.upper1.targetSets = 4;
 
       gr.upper2.name = rec.upper2.name;
       gr.upper2.weight = rec.upper2.defaultWeight || '35kg × 20회';
       gr.upper2.sets = [false, false, false, false];
+      gr.upper2.targetSets = 4;
 
       gr.lower.name = rec.lower.name;
       gr.lower.weight = rec.lower.defaultWeight || '80kg × 20회';
       gr.lower.sets = [false, false, false, false];
+      gr.lower.targetSets = 4;
 
       gr.allDone = false;
 
@@ -8297,23 +8386,73 @@ ${err.message}
       showFloatingToast('오늘의 맞춤 상체2 + 하체1 루틴이 완벽히 세팅되었습니다! (+15 EXP)', '🎯');
     }
 
+    const GYM_EX_KEYS = ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'];
+    const GYM_DEFAULT_SET_COUNT = { upper1: 4, upper2: 4, lower: 4, legRaise: 1, crunch: 2 };
+    const GYM_MAX_SETS = 6;
+    let gymEditModes = {};
+
+    // Weight / reps / sets are locked by default. ✏️ unlocks only that exercise's config row.
+    function toggleGymEdit(exKey) {
+      gymEditModes[exKey] = !gymEditModes[exKey];
+      playBeep(gymEditModes[exKey] ? 820 : 480, 0.06);
+      applyGymEditLocks();
+    }
+
+    function applyGymEditLocks() {
+      GYM_EX_KEYS.forEach(k => {
+        const unlocked = !!gymEditModes[k];
+        const box = document.getElementById(`gymConfig_${k}`);
+        const btn = document.getElementById(`gymEditBtn_${k}`);
+        if (box) box.classList.toggle('hidden', !unlocked);
+        if (btn) {
+          btn.className = unlocked
+            ? 'shrink-0 w-6 h-6 rounded-lg bg-amber-400 text-white border border-amber-500 text-[10px] flex items-center justify-center active:scale-95 transition-all shadow-sm'
+            : 'shrink-0 w-6 h-6 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[10px] flex items-center justify-center active:scale-95 transition-all';
+          btn.textContent = unlocked ? '✓' : '✏️';
+          btn.title = unlocked ? '편집 완료 (잠금)' : '무게·횟수·세트 편집';
+        }
+      });
+    }
+
+    // Persist an explicit target set count so a daily reset only unchecks sets
+    // instead of restoring a polluted legacy array length (e.g. crunch 4 sets).
+    function normalizeGymTargetSets(exKey, ex) {
+      if (!ex) return;
+      if (!Array.isArray(ex.sets)) ex.sets = [];
+      let target = parseInt(ex.targetSets, 10);
+      if (!Number.isFinite(target) || target < 1) {
+        target = (exKey === 'legRaise' || exKey === 'crunch')
+          ? (GYM_DEFAULT_SET_COUNT[exKey] || 1)
+          : (ex.sets.length || GYM_DEFAULT_SET_COUNT[exKey] || 4);
+      }
+      target = Math.min(GYM_MAX_SETS, Math.max(1, target));
+      ex.targetSets = target;
+      if (ex.sets.length !== target) {
+        const next = ex.sets.slice(0, target);
+        while (next.length < target) next.push(false);
+        ex.sets = next;
+      }
+    }
+
     function initGymRoutine() {
       if (!state.gymRoutine) {
         state.gymRoutine = {
-          upper1: { name: '체스트 프레스', sets: [false, false, false, false], reps: 20, weight: '40kg × 20회' },
-          upper2: { name: '시티드 케이블 로우', sets: [false, false, false, false], reps: 20, weight: '35kg × 20회' },
-          lower: { name: '레그 프레스', sets: [false, false, false, false], reps: 20, weight: '80kg × 20회' },
-          legRaise: { name: '캡틴스 체어 레그레이즈', sets: [false], reps: 50, target: '50회 × 1세트' },
-          crunch: { name: '크런치', sets: [false, false], reps: 50, target: '50회 × 2세트' },
+          upper1: { name: '체스트 프레스', sets: [false, false, false, false], targetSets: 4, reps: 20, weight: '40kg × 20회' },
+          upper2: { name: '시티드 케이블 로우', sets: [false, false, false, false], targetSets: 4, reps: 20, weight: '35kg × 20회' },
+          lower: { name: '레그 프레스', sets: [false, false, false, false], targetSets: 4, reps: 20, weight: '80kg × 20회' },
+          legRaise: { name: '캡틴스 체어 레그레이즈', sets: [false], targetSets: 1, reps: 50, target: '50회 × 1세트' },
+          crunch: { name: '크런치', sets: [false, false], targetSets: 2, reps: 50, target: '50회 × 2세트' },
           allDone: false
         };
       }
       // Ensure defaults match user's exact specification
-      if (!state.gymRoutine.upper1) state.gymRoutine.upper1 = { name: '체스트 프레스', sets: [false, false, false, false], reps: 20, weight: '40kg × 20회' };
-      if (!state.gymRoutine.upper2) state.gymRoutine.upper2 = { name: '시티드 케이블 로우', sets: [false, false, false, false], reps: 20, weight: '35kg × 20회' };
-      if (!state.gymRoutine.lower) state.gymRoutine.lower = { name: '레그 프레스', sets: [false, false, false, false], reps: 20, weight: '80kg × 20회' };
-      if (!state.gymRoutine.legRaise) state.gymRoutine.legRaise = { name: '캡틴스 체어 레그레이즈', sets: [false], reps: 50, target: '50회 × 1세트' };
-      if (!state.gymRoutine.crunch) state.gymRoutine.crunch = { name: '크런치', sets: [false, false], reps: 50, target: '50회 × 2세트' };
+      if (!state.gymRoutine.upper1) state.gymRoutine.upper1 = { name: '체스트 프레스', sets: [false, false, false, false], targetSets: 4, reps: 20, weight: '40kg × 20회' };
+      if (!state.gymRoutine.upper2) state.gymRoutine.upper2 = { name: '시티드 케이블 로우', sets: [false, false, false, false], targetSets: 4, reps: 20, weight: '35kg × 20회' };
+      if (!state.gymRoutine.lower) state.gymRoutine.lower = { name: '레그 프레스', sets: [false, false, false, false], targetSets: 4, reps: 20, weight: '80kg × 20회' };
+      if (!state.gymRoutine.legRaise) state.gymRoutine.legRaise = { name: '캡틴스 체어 레그레이즈', sets: [false], targetSets: 1, reps: 50, target: '50회 × 1세트' };
+      if (!state.gymRoutine.crunch) state.gymRoutine.crunch = { name: '크런치', sets: [false, false], targetSets: 2, reps: 50, target: '50회 × 2세트' };
+
+      GYM_EX_KEYS.forEach(k => normalizeGymTargetSets(k, state.gymRoutine[k]));
 
       if (!state.gymRoutine.upper1.reps) state.gymRoutine.upper1.reps = 20;
       if (!state.gymRoutine.upper2.reps) state.gymRoutine.upper2.reps = 20;
@@ -8371,12 +8510,13 @@ ${err.message}
       initGymRoutine();
       const ex = state.gymRoutine[exKey];
       if (!ex) return;
-      const currentLen = ex.sets.length;
+      const currentLen = (ex.sets && ex.sets.length) || ex.targetSets || 1;
       let newLen = currentLen + delta;
       if (newLen < 1) newLen = 1;
-      if (newLen > 6) newLen = 6;
+      if (newLen > GYM_MAX_SETS) newLen = GYM_MAX_SETS;
       if (newLen === currentLen) return;
 
+      ex.targetSets = newLen;
       if (newLen > currentLen) {
         for (let i = currentLen; i < newLen; i++) ex.sets.push(false);
       } else {
@@ -8498,11 +8638,11 @@ ${err.message}
         date: dateLabel,
         fullDate,
         time: timeStr,
-        upper1Done: u1Done, upper1Reps: u1Done * 20, upper1Name: gr.upper1.name,
-        upper2Done: u2Done, upper2Reps: u2Done * 20, upper2Name: gr.upper2.name,
-        lowerDone: lDone, lowerReps: lDone * 20, lowerName: gr.lower.name,
-        legRaiseDone: lrDone, legRaiseReps: lrDone * 50, legRaiseTarget: gr.legRaise.sets.length,
-        crunchDone: crDone, crunchReps: crDone * 50, crunchTarget: gr.crunch.sets.length,
+        upper1Done: u1Done, upper1Reps: u1Done * u1RepsEach, upper1Name: gr.upper1.name,
+        upper2Done: u2Done, upper2Reps: u2Done * u2RepsEach, upper2Name: gr.upper2.name,
+        lowerDone: lDone, lowerReps: lDone * lRepsEach, lowerName: gr.lower.name,
+        legRaiseDone: lrDone, legRaiseReps: lrDone * lrRepsEach, legRaiseTarget: gr.legRaise.targetSets || gr.legRaise.sets.length,
+        crunchDone: crDone, crunchReps: crDone * crRepsEach, crunchTarget: gr.crunch.targetSets || gr.crunch.sets.length,
         totalSets,
         totalReps
       };
@@ -8748,6 +8888,8 @@ ${err.message}
       if (gr.upper2 && document.getElementById('gymUpper2Weight')) document.getElementById('gymUpper2Weight').value = gr.upper2.weight;
       if (gr.lower && document.getElementById('gymLowerName')) document.getElementById('gymLowerName').value = gr.lower.name;
       if (gr.lower && document.getElementById('gymLowerWeight')) document.getElementById('gymLowerWeight').value = gr.lower.weight;
+
+      applyGymEditLocks();
     }
 
     // ============================================================================
@@ -9141,16 +9283,65 @@ ${err.message}
       saveState();
     }
 
+    function initRehabSets() {
+      let n = parseInt(state.rehabSets, 10);
+      if (!Number.isFinite(n)) n = 3;
+      n = Math.min(6, Math.max(1, n));
+      state.rehabSets = n;
+      if (!Array.isArray(state.rehab)) state.rehab = [];
+      if (state.rehab.length !== n) {
+        const next = state.rehab.slice(0, n);
+        while (next.length < n) next.push(false);
+        state.rehab = next;
+      }
+      return n;
+    }
+
+    function renderRehabUI() {
+      const n = initRehabSets();
+      const label = document.getElementById('rehabTargetLabel');
+      const numEl = document.getElementById('rehabSetNum');
+      if (label) label.textContent = `10회 × ${n}세트`;
+      if (numEl) numEl.textContent = n;
+      const container = document.getElementById('rehabSetContainer');
+      if (!container) return;
+      const cols = Math.min(3, n);
+      container.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+      container.innerHTML = state.rehab.map((done, i) => `
+        <button onclick="toggleRehab(${i + 1})" id="rehabBtn${i + 1}" class="py-1.5 rounded-lg text-xs ${done ? 'font-extrabold bg-emerald-500 text-white shadow-sm' : 'font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700'}">
+          ${done ? `✓ ${i + 1}세트` : `${i + 1}세트`}
+        </button>
+      `).join('');
+    }
+
+    function adjustRehabSets(delta) {
+      initRehabSets();
+      const next = state.rehabSets + delta;
+      if (next < 1 || next > 6 || next === state.rehabSets) return;
+      state.rehabSets = next;
+      if (next > state.rehab.length) {
+        while (state.rehab.length < next) state.rehab.push(false);
+      } else {
+        state.rehab = state.rehab.slice(0, next);
+      }
+      playBeep(delta > 0 ? 820 : 440, 0.07);
+      saveState();
+      renderRehabUI();
+      showFloatingToast(`재활 목표가 ${next}세트로 변경되었습니다.`, '🩹');
+    }
+
     function toggleRehab(num) {
       checkAndResetDayChange();
+      initRehabSets();
       const idx = num - 1;
+      if (idx < 0 || idx >= state.rehab.length) return;
       state.rehab[idx] = !state.rehab[idx];
       updateRehabBtnUI(num, state.rehab[idx]);
       if (state.rehab[idx]) {
         setTrainerMode('gemini', 'ev3');
-        if (state.rehab.filter(Boolean).length === 3) {
+        if (state.rehab.filter(Boolean).length === state.rehabSets) {
           const curTime = getKakaoTimeStr();
-          state.chatHistory.push({ room: 'all', sender: 'gemini', name: '제미니', text: '2kg 덤벨 편심성 재활 3세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾', time: curTime });
+          state.chatHistory.push({ room: 'all', sender: 'gemini', name: '제미니', text: `2kg 덤벨 편심성 재활 ${state.rehabSets}세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾`, time: curTime });
           addBondExp(15);
           renderChat();
         }
@@ -9297,7 +9488,7 @@ ${err.message}
 
 🏃‍♂️ [운동 및 재활 루틴 이행률]
 - 러닝 완주: ${runDone} (최근 기록: ${latestRunDist}km)
-- 덤벨 2kg 재활 루틴: 4세트 중 ${dumbbellSets}세트 완료
+- 덤벨 2kg 재활 루틴: ${state.rehabSets || 3}세트 중 ${dumbbellSets}세트 완료
 - 복근 운동: ${state.absDone ? '완료' : '미완료'}
 
 🥗 [식단 및 17:7 단식]
@@ -9405,7 +9596,7 @@ ${err.message}
             { name: "⚖️ 체중 / 체지방", value: `• 체중: **${state.weight} kg**\n• 체지방률: **${state.fat} %**`, inline: true },
             { name: "⏱️ 17:7 단식", value: `• 아침: ${state.meals[0] ? '✅' : '❌'}\n• 점심: ${state.meals[1] ? '✅' : '❌'}\n• 저녁: ${state.meals[2] ? '✅' : '❌'}\n(사진 인증: **${photoCnt}끼** 첨부)`, inline: true },
             { name: "🍵 홈카페 티 로그", value: `• 말차: **${state.teaLog.matcha || 0}회**\n• 에스프레소: **${state.teaLog.espresso || 0}회**\n• 허브티: **${state.teaLog.tea || 0}회**`, inline: true },
-            { name: "🩹 엘보 재활", value: `• 2kg 덤벨 편심성 컬: **${rehabCnt} / 3 세트**`, inline: false },
+            { name: "🩹 엘보 재활", value: `• 2kg 덤벨 편심성 컬: **${rehabCnt} / ${state.rehabSets || 3} 세트**`, inline: false },
             { name: "🔥 루틴", value: `• 14분 복근: ${state.absDone ? '✅' : '❌'}\n• 야외 러닝 (${state.runDist}km): ${state.runDone ? '✅' : '❌'}`, inline: false }
           ],
           footer: {
@@ -9694,7 +9885,7 @@ ${err.message}
       if (m.runDays < 3) missions.push({ icon: '🏃', text: '러닝 3회 × 5km — 첫 회는 3km로 가볍게 시동' });
       if (m.gymDays < 3) missions.push({ icon: '🏋️', text: '근력 3회 — 체스트 프레스 · 케이블 로우 · 레그 프레스' });
       if (m.absDays < 3) missions.push({ icon: '🧘', text: '14분 복근 3회 — 플랭크는 30초부터' });
-      if (m.rehabDays < 4) missions.push({ icon: '🩹', text: '재활 4회 — 2kg 덤벨 손목 편심성 컬 3세트' });
+      if (m.rehabDays < 4) missions.push({ icon: '🩹', text: `재활 4회 — 2kg 덤벨 손목 편심성 컬 ${state.rehabSets || 3}세트` });
       if (m.mealTotal < 18) missions.push({ icon: '🍱', text: '3끼 사진 21장 · 17시 이후엔 물과 말차만' });
       if (lessonDelta < 3) missions.push({ icon: '🍵', text: '다실 3화 — 짧게라도 매일 한 문장' });
       if (quizDelta < 10) missions.push({ icon: '🎯', text: '퀴즈 10문제 — 틀린 단어는 복습 노트에' });
@@ -9914,15 +10105,15 @@ ${err.message}
       </p>
 
       <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
-        <div class="font-black text-[#ffd6de]">🎆 이번 업데이트 — 에피소드가 연출을 얻었사와요</div>
+        <div class="font-black text-[#ffd6de]">🩹 운동 기록이 더 편해졌사와요</div>
         <div class="text-[#c9b1aa] leading-relaxed">
-          배경 · 스탠딩 · 이벤트 CG가 겹쳐지는 <strong>VN 연출</strong>, 타자 연출, <strong>자동/스킵/로그</strong>가 트레이너 에피소드에 추가됐어요. 신규 에피소드 <strong>2편</strong>(여름 축제 · 비 오는 다실)도 열렸사옵니다.
+          무게·횟수·세트는 <strong>✏️ 버튼을 눌렀을 때만</strong> 수정되고, 종목 순서를 위아래로 바꿀 수 있어요. 전날 설정한 세트 수는 그대로 이어지고, 2kg 재활 세트 수도 직접 조절할 수 있사옵니다.
         </div>
       </div>
 
       <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
         <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-          <span>현재 앱 버전: v4.3.36 (言の葉茶屋)</span>
+          <span>현재 앱 버전: v4.3.37 (言の葉茶屋)</span>
           <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
         </div>
         <div class="text-[10px] text-[#9e847e]">아래 버튼을 눌러 요청문을 복사한 뒤, 에이전트에 바로 붙여넣기 하시면 즉시 업데이트가 진행됩니다.</div>

@@ -960,12 +960,12 @@ function submitKotonohaQuizAnswer(optionIdx) {
 
   if (isCorrect) {
     state.kotonoha.quizStats.correct = (state.kotonoha.quizStats.correct || 0) + 1;
-    playBeep(880, 0.1);
+    playKotonohaCorrectSound();
     state.kotonoha.coins = (state.kotonoha.coins || 655) + 15;
     state.kotonoha.kotodama = (state.kotonoha.kotodama || 65) + 10;
     addBondExp(10);
   } else {
-    playBeep(360, 0.14);
+    playKotonohaWrongSound();
     state.kotonoha.coins = (state.kotonoha.coins || 655) + 5;
     state.kotonoha.kotodama = (state.kotonoha.kotodama || 65) + 2;
     if (q.targetWord) {
@@ -1332,9 +1332,6 @@ function renderKotonohaView() {
             <div class="px-2.5 py-0.5 rounded-full bg-[#251c20] border border-[#3d2c33] flex items-center gap-1 text-[11px] font-extrabold">
               <span>🔥 연속 ${kState.streak || 1}일</span>
             </div>
-            <button onclick="openMangaList()" class="ml-auto px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#2d4038] to-[#1c2a26] hover:opacity-95 border border-[#4a6a5c] text-[11px] font-black text-[#d8f5e8] flex items-center gap-1 shadow transition-all active:scale-95">
-              📖 미니툰
-            </button>
           </div>
         </div>
 
@@ -1616,6 +1613,10 @@ function renderKotonohaView() {
     const qIdx = kotonohaRuntime.quizIdx;
     const currentQ = quizzes[qIdx];
     const isAllDone = kotonohaRuntime.quizChatMessages.some(m => m.role === 'lesson_complete');
+    const optionMeta = (currentQ && Array.isArray(currentQ.options)) ? currentQ.options.map(parseKotonohaOptionText) : [];
+    // Only show pronunciation helpers when EVERY option has a reading.
+    // Otherwise the toggle/버튼 appears only on some rows and leaks the answer.
+    const pronUniform = optionMeta.length > 0 && optionMeta.every(o => o.hasPron);
 
     container.innerHTML = `
       <div class="rounded-3xl bg-[#171214] text-[#f5ebe6] border border-[#3d2932] shadow-2xl overflow-hidden flex flex-col">
@@ -1756,13 +1757,15 @@ function renderKotonohaView() {
           <div class="p-3 sm:p-3.5 bg-[#1d1518] border-t border-[#332229] space-y-2">
             <div class="flex items-center justify-between px-1 text-xs text-[#b89d97]">
               <span class="font-bold text-[11px] text-[#d6beba]">정답을 선택하세요</span>
-              <button onclick="toggleKotonohaOptionPron()" class="px-2.5 py-0.5 rounded-full border text-[11px] font-bold transition-all flex items-center gap-1 ${kotonohaRuntime.showOptionPron ? 'bg-[#e0465a] text-white border-[#ff7287] shadow-xs' : 'bg-[#291b21] text-[#d4b0a8] border-[#472d37] hover:border-[#6a3f50]'}">
-                <span>🗣️</span>
-                <span>${kotonohaRuntime.showOptionPron ? '한글 발음 숨기기' : '전체 발음 보기'}</span>
-              </button>
+              ${pronUniform ? `
+                <button onclick="toggleKotonohaOptionPron()" class="px-2.5 py-0.5 rounded-full border text-[11px] font-bold transition-all flex items-center gap-1 ${kotonohaRuntime.showOptionPron ? 'bg-[#e0465a] text-white border-[#ff7287] shadow-xs' : 'bg-[#291b21] text-[#d4b0a8] border-[#472d37] hover:border-[#6a3f50]'}">
+                  <span>🗣️</span>
+                  <span>${kotonohaRuntime.showOptionPron ? '한글 발음 숨기기' : '전체 발음 보기'}</span>
+                </button>
+              ` : ''}
             </div>
             ${currentQ.options.map((opt, idx) => {
-              const parsed = parseKotonohaOptionText(opt);
+              const parsed = optionMeta[idx];
               const singleKey = `${qIdx}_${idx}`;
               const isPronVisible = kotonohaRuntime.showOptionPron || Boolean(kotonohaRuntime.revealedOptionPron && kotonohaRuntime.revealedOptionPron[singleKey]);
               return `
@@ -1775,7 +1778,7 @@ function renderKotonohaView() {
                       ${parsed.main}
                     </span>
                   </div>
-                  ${parsed.hasPron ? `
+                  ${pronUniform ? `
                     <div class="shrink-0 pl-1">
                       ${isPronVisible ? `
                         <span class="px-2 py-0.5 rounded-lg bg-[#27151a] text-[#ffd6de] border border-[#5a2a37] text-xs font-bold animate-fadeIn">
