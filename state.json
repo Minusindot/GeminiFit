@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-11T07:48:35.341Z",
-  "lastActiveDate": "2026-11-11",
+  "updatedAt": "2026-11-11T18:37:47.997Z",
+  "lastActiveDate": "2026-11-12",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
@@ -8,9 +8,9 @@
   "bondExp": 80,
   "activeTrainer": "mio",
   "activeMode": "mio",
-  "currentSituation": "ev1",
+  "currentSituation": "ev5",
   "absDone": false,
-  "runDone": true,
+  "runDone": false,
   "runDist": 6.45,
   "rehab": [
     false,
@@ -37,7 +37,8 @@
         false
       ],
       "weight": "40kg",
-      "reps": 20
+      "reps": 20,
+      "targetSets": 4
     },
     "upper2": {
       "name": "시티드 케이블 로우",
@@ -48,7 +49,8 @@
         false
       ],
       "weight": "35kg",
-      "reps": 20
+      "reps": 20,
+      "targetSets": 4
     },
     "lower": {
       "name": "레그 프레스",
@@ -59,29 +61,27 @@
         false
       ],
       "weight": "80kg",
-      "reps": 20
+      "reps": 20,
+      "targetSets": 4
     },
     "legRaise": {
       "name": "캡틴스 체어 레그레이즈",
       "sets": [
-        false,
-        false,
-        false,
         false
       ],
       "target": "15회",
-      "reps": 50
+      "reps": 50,
+      "targetSets": 1
     },
     "crunch": {
       "name": "크런치",
       "sets": [
         false,
-        false,
-        false,
         false
       ],
       "target": "20회",
-      "reps": 50
+      "reps": 50,
+      "targetSets": 2
     },
     "allDone": false
   },
@@ -473,9 +473,41 @@
         "tea": 0
       },
       "autoArchived": true
+    },
+    "2026-11-11": {
+      "date": "2026-11-11",
+      "weight": 64.1,
+      "fat": 21.5,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "runDone": true,
+      "absDone": false,
+      "rehabDone": 0,
+      "gymDone": false,
+      "teaLog": {
+        "matcha": 0,
+        "espresso": 0,
+        "tea": 0
+      },
+      "autoArchived": true
     }
   },
   "chatHistory": [
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "코토네가 인증 샷 서는 자세부터 레슨해드릴게요~ 근육은 아이돌의 전 재산! 💛"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "처음엔 코토네가 직접 코치해줘요 🙏"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "당연하죠~! 코토네가 1대1 전담 코치예요! 포즈부터 미소까지 완璧하게 다듬어 드릴게요!"
+    },
     {
       "sender": "kotone",
       "name": "코토네",
@@ -610,21 +642,6 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "생일 준비 완료! 프로듀서님 최고의 하루가 되도록 챙길게요!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "와아아아 대박!! 6.45km 완주 나이스!! 1:02:24 동안 393kcal나 불태웠잖아! 손목 힘 빼고 달린 폼 진짜 최고였어 프로듀서!! 🌟🏃‍♀️"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "어머나, 6.45km 완주라니 참으로 훌륭하옵니다! 🌸 이 정도 유산소라면 공복 체지방 연소 효과가 으뜸이라지요. 다리와 팔꿈치 스트레칭도 꼭 챙기시와요, 프로듀서님 🐾"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "헉! 393kcal 소모에 7,920걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛"
     }
   ]
 }
