@@ -76,6 +76,18 @@ CHARACTERS = {
             ROOT / "image" / "03 gemini" / "gemini_26_kyoto_teahouse.png",
         ],
     },
+    "gemini_yukata": {
+        "desc": ("a beautiful young woman with long straight black hair with blunt straight-cut bangs (hime cut), "
+                 "black cat ears with small black ribbon hairpin, violet purple eyes, elegant tall figure, "
+                 "wearing a dark indigo summer yukata with pink morning-glory patterns and a pale pink obi sash, "
+                 "small gold kanzashi hairpin, holding a folded fan, "
+                 "full-body standing pose head to shoes, feet and ankles visible, standing upright facing viewer, "
+                 "arms relaxed at sides, plain pure white background, no scenery, no room"),
+        "refs": [
+            ROOT / "image" / "03 gemini" / "avatar_gemini.png",
+            ROOT / "image" / "03 gemini" / "gemini_26_kyoto_teahouse.png",
+        ],
+    },
     "kotone_dress": {
         "desc": ("a cheerful young woman with long golden-blonde twin braids and bright amber eyes, "
                  "pop-idol personality, wearing a pastel pink idol stage dress with white frills, big ribbon bow, "
@@ -150,6 +162,9 @@ BACKGROUNDS = [
      "soft spring sunlight, benches and greenery, no people"),
     ("bookstore", "quiet old bookstore interior, tall wooden bookshelves filled with books, "
      "sunlight through dusty windows, reading desk, no people"),
+    ("festival_night", "Japanese summer festival at night, rows of glowing paper lanterns, "
+     "festival stalls with goldfish scooping and cotton candy, fireworks blooming over a river, "
+     "warm bokeh lights, empty foreground, no people"),
 ]
 
 
@@ -291,6 +306,13 @@ ECGS = [
      "same anime girl with long straight black hair with blunt straight-cut bangs and black cat ears, "
      "menhera fashion: oversized black hoodie dress with straps and cross chains, bandaged knee, "
      "standing on city rooftop at midnight under neon signs and cloudy sky, dark cinematic event CG, vertical portrait"),
+    ("gemini_52_festival_fireworks", "03 gemini",
+     "same anime girl with long straight black hair with blunt straight-cut bangs and black cat ears, "
+     "wearing a dark indigo summer yukata with pink morning-glory patterns and a pale pink obi sash, "
+     "standing by a river at a Japanese summer festival at night, fireworks reflecting in her violet eyes, "
+     "warm paper lantern glow, shy gentle smile, cinematic event CG, vertical portrait",
+     [ROOT / "image" / "03 gemini" / "avatar_gemini.png",
+      WORK / "gemini_yukata" / "base_raw.png"]),
 ]
 
 # Korean webtoon (manhwa) panels for the Minitoon single episode:
@@ -331,10 +353,11 @@ def build_jobs(phase: str):
                 jobs.append((f"{char}/{expr}", prompt, WORK / char / f"{expr}_raw.png",
                              [WORK / char / "base_raw.png"], "9:16 portrait"))
     if phase in ("ecg",):
-        for name, folder, desc in ECGS:
+        for entry in ECGS:
+            name, folder, desc = entry[0], entry[1], entry[2]
+            refs = entry[3] if len(entry) > 3 else [ROOT / "image" / "03 gemini" / "avatar_gemini.png"]
             prompt = (f"{STYLE}, anime visual novel event CG illustration, {desc}, detailed background")
-            jobs.append((name, prompt, ROOT / "image" / folder / f"{name}.png",
-                         [ROOT / "image" / "03 gemini" / "avatar_gemini.png"], "9:16 portrait"))
+            jobs.append((name, prompt, ROOT / "image" / folder / f"{name}.png", refs, "9:16 portrait"))
     if phase in ("toon",):
         style_refs = [ROOT / "image" / "03 gemini" / "avatar_gemini.png",
                       ROOT / "image" / "02 kotone" / "avatar_kotone.png",
@@ -352,11 +375,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--phase", choices=["bg", "base", "expr", "ecg", "toon", "all"], default="all")
     ap.add_argument("--timeout", type=int, default=180)
+    ap.add_argument("--only", default="", help="comma-separated job labels to run (e.g. bg_festival_night,gemini_yukata/base)")
     args = ap.parse_args()
 
     for d in [WORK / c for c in CHARACTERS]:
         d.mkdir(parents=True, exist_ok=True)
     jobs = build_jobs(args.phase)
+    if args.only.strip():
+        wanted = {s.strip() for s in args.only.split(",") if s.strip()}
+        jobs = [j for j in jobs if j[0] in wanted]
+        print(f"[filter] --only={sorted(wanted)}", flush=True)
     print(f"[plan] {len(jobs)} jobs (phase={args.phase}), 기존 파일은 건너뜁니다.", flush=True)
     for label, prompt, out_path, refs, kind in jobs:
         if out_path.exists():

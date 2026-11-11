@@ -425,12 +425,75 @@
       animation: bondFlow 3.8s linear infinite;
     }
 
+    /* ===== Episode VN scene stage (BG + SCG + ECG, tap-to-advance) ===== */
+    .vn-stage {
+      touch-action: manipulation;
+      height: clamp(248px, 40vh, 330px);
+      transition: height 0.3s ease;
+    }
+    /* Scene episodes play as a clean VN stage: chat bubbles stay in the backlog
+       and come back as a full transcript when the episode ends. */
+    #messengerRoomBody.vn-mode #chatContainer {
+      display: none;
+    }
+    #messengerRoomBody.vn-mode #trainerSceneStage {
+      height: clamp(300px, 54vh, 440px);
+    }
+    #messengerRoomBody.vn-mode #choicesContainer {
+      border-top: 0;
+    }
+    #messengerRoomBody.vn-mode.vn-choices #trainerSceneStage {
+      height: clamp(238px, 42vh, 300px);
+    }
+    .vn-bg {
+      animation: vnKenBurns 22s ease-in-out infinite alternate;
+      transform-origin: 50% 55%;
+      will-change: transform;
+    }
+    @keyframes vnKenBurns {
+      from { transform: scale(1.03); }
+      to { transform: scale(1.13) translate(-1%, -1.5%); }
+    }
+    .vn-scg {
+      opacity: 0;
+      transform: translateY(14px) scale(0.985);
+      transition: opacity 0.32s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+      filter: drop-shadow(0 10px 24px rgba(2, 6, 23, 0.55));
+    }
+    .vn-scg.vn-in {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    #trainerSceneCg {
+      object-position: center 16%;
+    }
+    .vn-caption {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.62), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 0.9rem;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 -8px 24px rgba(2, 6, 23, 0.25);
+    }
+    .vn-cta {
+      animation: vnCtaBlink 1.5s ease-in-out infinite;
+    }
+    @keyframes vnCtaBlink {
+      0%, 100% { opacity: 0.35; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(2px); }
+    }
+    .vn-auto-off {
+      opacity: 0.65;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .hud-sweep::before,
       .lock-scan::before,
       .bond-bar::after,
       .report-ring,
-      .report-area-bar::after {
+      .report-area-bar::after,
+      .vn-bg,
+      .vn-cta {
         animation: none !important;
       }
       .hud-sweep, .lock-scan { display: none; }
@@ -488,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.35</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.36</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -700,6 +763,43 @@
               </div>
             </div>
 
+            <!-- VN scene stage: only visible for episodes that declare scene data -->
+            <div id="trainerSceneStage" class="vn-stage hidden relative mx-2 mt-2 rounded-2xl overflow-hidden bg-slate-900 select-none shadow-lg" onclick="advanceVnScene(event)">
+              <img id="trainerSceneBg" class="vn-bg absolute inset-0 w-full h-full object-cover" alt="">
+              <img id="trainerSceneCg" class="hidden absolute inset-0 w-full h-full object-cover" alt="">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/10 to-slate-950/45 pointer-events-none"></div>
+              <img id="trainerSceneScg" class="vn-scg absolute right-[2%] bottom-0 max-w-[62%] object-contain object-bottom pointer-events-none" style="height: 100%;" alt="">
+
+              <div class="absolute top-2 left-2 z-10 flex items-center gap-1.5 pointer-events-none">
+                <span id="vnEpisodeChip" class="max-w-[190px] truncate px-2 py-0.5 rounded-full bg-black/45 border border-white/20 backdrop-blur-md text-[9px] font-black text-white/90">EPISODE</span>
+                <span id="vnSceneMood" class="px-2 py-0.5 rounded-full bg-[#e0465a]/25 border border-[#ff8fa0]/40 backdrop-blur-md text-[9px] font-black text-[#ffd6de]">SCENE</span>
+              </div>
+
+              <div class="absolute top-2 right-2 z-10 flex items-center gap-1" onclick="event.stopPropagation()">
+                <button id="vnAutoBtn" onclick="toggleVnAuto(event)" class="px-2 py-1 rounded-lg bg-black/40 border border-white/20 backdrop-blur-md text-[9px] font-black text-white/85 active:scale-95 transition-all">자동 ON</button>
+                <button onclick="openVnBacklog(event)" class="px-2 py-1 rounded-lg bg-black/40 border border-white/20 backdrop-blur-md text-[9px] font-black text-white/85 active:scale-95 transition-all">로그</button>
+                <button onclick="skipTrainerEpisode(event)" class="px-2 py-1 rounded-lg bg-black/40 border border-white/20 backdrop-blur-md text-[9px] font-black text-white/85 active:scale-95 transition-all">스킵</button>
+              </div>
+
+              <div class="absolute inset-x-0 bottom-0 z-10 p-2">
+                <div class="vn-caption px-3 py-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <span id="vnSpeaker" class="text-[10px] font-black text-[#ffb3c0]">제미니</span>
+                    <span id="vnProgress" class="text-[9px] font-bold text-white/50 tabular-nums">1 / 4</span>
+                  </div>
+                  <p id="vnLine" class="mt-1 text-[11.5px] font-bold text-white leading-relaxed min-h-[2.7em]">...</p>
+                  <div class="flex items-center justify-between mt-0.5">
+                    <span id="vnHint" class="text-[9px] font-bold text-white/45">탭하여 계속</span>
+                    <span id="vnCta" class="vn-cta text-[10px] text-[#7dd3fc]">▼</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="absolute top-0 left-0 right-0 h-[3px] bg-white/10 z-10 pointer-events-none">
+                <div id="vnProgressBar" class="h-full w-0 bg-gradient-to-r from-[#38bdf8] to-[#f4869d] transition-all duration-300"></div>
+              </div>
+            </div>
+
             <div class="p-3.5 min-h-[420px] max-h-[58vh] overflow-y-auto clean-scroll space-y-3 bg-[var(--chat-bg)]" id="chatContainer"></div>
 
             <div id="choicesContainer" class="p-3 space-y-1.5 bg-slate-50/95 dark:bg-slate-800/80 border-t border-slate-200/80 dark:border-slate-700/60"></div>
@@ -744,6 +844,17 @@
           <button onclick="rateTrainerEpisode('bad')" class="py-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 border border-rose-500/30 text-xs font-black">👎 아쉬움</button>
         </div>
         <button onclick="closeEpisodeFeedbackModal()" class="text-[11px] text-slate-400 hover:text-slate-600 font-bold py-1">나중에 할게요</button>
+      </div>
+    </div>
+
+    <!-- Episode VN backlog -->
+    <div id="vnBacklogModal" class="hidden fixed inset-0 z-[75] flex items-end sm:items-center justify-center bg-slate-950/80 backdrop-blur-md p-3" onclick="if(event.target === this) closeVnBacklog()">
+      <div class="w-full max-w-md max-h-[80vh] flex flex-col rounded-3xl bg-[#181316] border border-[#452e38] shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-[#3b272f] shrink-0">
+          <span class="text-xs font-black text-[#ffd6de]">🗂️ 에피소드 로그</span>
+          <button onclick="closeVnBacklog()" class="w-7 h-7 rounded-full bg-black/40 hover:bg-black/60 text-white text-xs font-black flex items-center justify-center active:scale-95" aria-label="닫기">✕</button>
+        </div>
+        <div id="vnBacklogList" class="p-3 space-y-2 overflow-y-auto clean-scroll text-[11px] leading-relaxed text-[#e0cfca]"></div>
       </div>
     </div>
 
@@ -1883,11 +1994,11 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.3.35"></script>
-  <script src="./dialogue_pool.js?v=4.3.35"></script>
-  <script src="./trainer_episodes.js?v=4.3.35"></script>
-  <script src="./kotonoha_data.js?v=4.3.35"></script>
-  <script src="./kotonoha_engine.js?v=4.3.35"></script>
+  <script src="./weekly_reports.js?v=4.3.36"></script>
+  <script src="./dialogue_pool.js?v=4.3.36"></script>
+  <script src="./trainer_episodes.js?v=4.3.36"></script>
+  <script src="./kotonoha_data.js?v=4.3.36"></script>
+  <script src="./kotonoha_engine.js?v=4.3.36"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -4580,6 +4691,12 @@
     // ============================================================================
     let trainerMessengerRoom = null; // active room: gemini/kotone/mio/dual
     let epRuntime = null;           // { room, epId, gen, playing }
+    let epScene = null;             // { bg, cg, char, outfit } while a scene episode plays
+    let vnAutoAdvance = true;
+    let vnWaitResolve = null;
+    let vnTypingTimer = null;
+    let vnTypingFull = '';
+    let vnSkipMode = false;
 
     const TRAINER_CONTACTS = [
       { room: 'gemini', name: '제미니', tag: '교토벤 사범 🐾', avatar: './image/03 gemini/avatar_gemini.png', ring: 'ring-pink-400/60', titleClass: 'text-pink-600 dark:text-pink-300' },
@@ -4764,9 +4881,12 @@
 
         const episodeRows = eps.map(e => {
           const done = getTrainerEpisodeDone(e.id);
+          const sceneThumb = e.scene && e.scene.bg
+            ? `<span class="w-9 h-9 rounded-lg overflow-hidden shrink-0 bg-slate-800 ring-1 ring-white/15"><img src="./image/bg/bg_${e.scene.bg}.png" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'"></span>`
+            : `<span class="w-5 h-5 rounded-full flex items-center justify-center text-[9px] shrink-0 ${done ? 'bg-emerald-500 text-white' : 'bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-400'}">${done ? '✓' : '▶'}</span>`;
           return `
             <button onclick="openEpisodeFromList('${c.room}', '${e.id}', event)" class="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-xl border text-left transition-all active:scale-[0.99] ${done ? 'bg-emerald-500/5 border-emerald-400/30 hover:border-emerald-400' : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:border-sky-400'}">
-              <span class="w-5 h-5 rounded-full flex items-center justify-center text-[9px] shrink-0 ${done ? 'bg-emerald-500 text-white' : 'bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-400'}">${done ? '✓' : '▶'}</span>
+              ${sceneThumb}
               <span class="min-w-0 flex-1">
                 <span class="block text-[11px] font-black text-slate-800 dark:text-slate-100 truncate">${e.icon || '🎬'} ${e.title}</span>
                 <span class="block text-[9px] font-bold text-slate-400 dark:text-slate-500 truncate">${e.sub || ''}</span>
@@ -4895,6 +5015,17 @@
       state.chatHistory = (state.chatHistory || []).filter(m => m.ep !== epId);
       epRuntime = { room, ep, gen: (epRuntime && epRuntime.gen ? epRuntime.gen : 0) + 1, awaiting: false };
       const gen = epRuntime.gen;
+      if (ep.scene) {
+        epScene = {
+          bg: ep.scene.bg || '',
+          cg: ep.scene.cg || '',
+          char: ep.scene.scg || (room === 'dual' ? 'gemini' : room),
+          outfit: ep.scene.outfit || 'default'
+        };
+        showTrainerScene(ep, room);
+      } else {
+        hideTrainerScene();
+      }
       const ch = document.getElementById('choicesContainer');
       if (ch) ch.innerHTML = '';
       const introCard = { room, sender: 'system', name: '에피소드', text: `🎬 ${ep.icon || ''} ${ep.title}`, time: getKakaoTimeStr(), ep: epId };
@@ -4905,32 +5036,272 @@
       playTrainerEpisodeLines(ep.intro, () => startTrainerEpisodeChoice(ep), gen);
     }
 
-    function playTrainerEpisodeLines(lines, done, gen) {
+    // ---------- VN scene helpers ----------
+    const VN_SPEAKER_NAMES = { gemini: '제미니', kotone: '코토네', mio: '미오', dual: '제미니 · 코토네 · 미오', user: '프로듀서' };
+
+    function vnSleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function normalizeEpisodeLine(line) {
+      if (typeof line === 'string') return { text: line, expr: '', cg: false, speaker: '', bg: '' };
+      return {
+        text: String(line.text || ''),
+        expr: line.expr || '',
+        cg: line.cg || false,
+        speaker: line.speaker || '',
+        bg: line.bg || ''
+      };
+    }
+
+    function vnScgUrl(char, outfit, expr) {
+      return `./image/scg/${char}/${char}_${outfit}_${expr}.png`;
+    }
+
+    function setVnBg(name) {
+      const img = document.getElementById('trainerSceneBg');
+      if (!img) return;
+      const src = !name ? './image/03 gemini/gemini_26_kyoto_teahouse.png'
+        : (name.startsWith('./') ? name : `./image/bg/bg_${name}.png`);
+      if (img.getAttribute('src') === src) return;
+      img.onerror = () => { img.onerror = null; img.src = './image/03 gemini/gemini_26_kyoto_teahouse.png'; };
+      img.src = src;
+    }
+
+    function setVnScg(char, outfit, expr) {
+      const img = document.getElementById('trainerSceneScg');
+      if (!img) return;
+      const chain = [
+        vnScgUrl(char, outfit, expr),
+        vnScgUrl(char, 'default', expr),
+        vnScgUrl(char, outfit, 'idle'),
+        vnScgUrl(char, 'default', 'idle')
+      ].filter((v, i, a) => a.indexOf(v) === i);
+      let i = 0;
+      img.classList.remove('vn-in');
+      img.onload = () => img.classList.add('vn-in');
+      img.onerror = () => {
+        i += 1;
+        if (i < chain.length) img.src = chain[i];
+        else { img.onerror = null; img.classList.remove('vn-in'); }
+      };
+      img.src = chain[0];
+      if (img.complete && img.naturalWidth > 0) img.classList.add('vn-in');
+    }
+
+    function showTrainerScene(ep) {
+      const stage = document.getElementById('trainerSceneStage');
+      const body = document.getElementById('messengerRoomBody');
+      if (!stage) return;
+      stage.classList.remove('hidden');
+      if (body) body.classList.add('vn-mode');
+      const chip = document.getElementById('vnEpisodeChip');
+      if (chip) chip.textContent = `${ep.icon || '🎬'} ${ep.title}`;
+      const mood = document.getElementById('vnSceneMood');
+      if (mood) mood.textContent = (ep.scene && ep.scene.label) || 'SCENE';
+      setVnBg(ep.scene && ep.scene.bg);
+      const scg = document.getElementById('trainerSceneScg');
+      if (scg) scg.classList.remove('hidden');
+      const cg = document.getElementById('trainerSceneCg');
+      if (cg) { cg.classList.add('hidden'); cg.removeAttribute('src'); }
+      vnSkipMode = false;
+      updateVnAutoBtn();
+    }
+
+    function hideTrainerScene() {
+      const stage = document.getElementById('trainerSceneStage');
+      if (stage) stage.classList.add('hidden');
+      const body = document.getElementById('messengerRoomBody');
+      if (body) body.classList.remove('vn-mode', 'vn-choices');
+      finishVnTyping();
+      if (vnWaitResolve) { const r = vnWaitResolve; vnWaitResolve = null; r(); }
+      epScene = null;
+    }
+
+    function updateVnAutoBtn() {
+      const btn = document.getElementById('vnAutoBtn');
+      if (!btn) return;
+      btn.textContent = vnAutoAdvance ? '자동 ON' : '자동 OFF';
+      btn.classList.toggle('vn-auto-off', !vnAutoAdvance);
+    }
+
+    function setVnSceneVisual(line, idx, total) {
+      if (!epScene) return;
+      const char = epScene.char;
+      const speaker = line.speaker || char;
+      const nameEl = document.getElementById('vnSpeaker');
+      if (nameEl) nameEl.textContent = VN_SPEAKER_NAMES[speaker] || '제미니';
+      const prog = document.getElementById('vnProgress');
+      if (prog) prog.textContent = `${Math.min(idx + 1, total)} / ${total}`;
+      const bar = document.getElementById('vnProgressBar');
+      if (bar) bar.style.width = `${Math.round(((idx + 1) / total) * 100)}%`;
+
+      if (line.bg) setVnBg(line.bg);
+
+      const cgImg = document.getElementById('trainerSceneCg');
+      const scgImg = document.getElementById('trainerSceneScg');
+      const cgSrc = line.cg ? (line.cg === true ? epScene.cg : line.cg) : '';
+      if (cgSrc && cgImg) {
+        cgImg.classList.remove('hidden');
+        cgImg.onerror = () => { cgImg.onerror = null; cgImg.src = './image/03 gemini/gemini_26_kyoto_teahouse.png'; };
+        if (cgImg.getAttribute('src') !== cgSrc) cgImg.src = cgSrc;
+        if (scgImg) scgImg.classList.add('hidden');
+      } else {
+        if (cgImg) cgImg.classList.add('hidden');
+        if (scgImg) {
+          scgImg.classList.remove('hidden');
+          setVnScg(char, epScene.outfit, line.expr || 'idle');
+        }
+      }
+    }
+
+    function typeVnLine(text, gen) {
+      const el = document.getElementById('vnLine');
+      if (!el) return;
+      vnTypingFull = text;
+      if (vnTypingTimer) { clearInterval(vnTypingTimer); vnTypingTimer = null; }
+      if (vnSkipMode || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        el.textContent = text;
+        return;
+      }
+      let i = 0;
+      el.textContent = '';
+      vnTypingTimer = setInterval(() => {
+        if (!epRuntime || epRuntime.gen !== gen) {
+          clearInterval(vnTypingTimer);
+          vnTypingTimer = null;
+          return;
+        }
+        i += 1;
+        el.textContent = text.slice(0, i);
+        if (i >= text.length) {
+          clearInterval(vnTypingTimer);
+          vnTypingTimer = null;
+        }
+      }, 18);
+    }
+
+    function finishVnTyping() {
+      if (vnTypingTimer) { clearInterval(vnTypingTimer); vnTypingTimer = null; }
+      const el = document.getElementById('vnLine');
+      if (el && vnTypingFull) el.textContent = vnTypingFull;
+    }
+
+    function waitVnAdvance(gen, len) {
+      return new Promise(resolve => {
+        let done = false;
+        let timer = null;
+        const finish = () => {
+          if (done) return;
+          done = true;
+          if (timer) clearTimeout(timer);
+          if (vnWaitResolve === finish) vnWaitResolve = null;
+          resolve();
+        };
+        vnWaitResolve = finish;
+        if (vnSkipMode) {
+          timer = setTimeout(finish, 60);
+          return;
+        }
+        if (vnAutoAdvance) {
+          timer = setTimeout(finish, Math.max(2300, 1500 + len * 18));
+        }
+        // auto OFF waits for a tap (advanceVnScene / skip / cancel)
+      });
+    }
+
+    function advanceVnScene(ev) {
+      if (ev && ev.target && ev.target.closest && ev.target.closest('button')) return;
+      if (!epScene) return;
+      finishVnTyping();
+      if (vnWaitResolve) { const r = vnWaitResolve; vnWaitResolve = null; r(); }
+    }
+
+    function toggleVnAuto(ev) {
+      if (ev) ev.stopPropagation();
+      vnAutoAdvance = !vnAutoAdvance;
+      updateVnAutoBtn();
+      showFloatingToast(vnAutoAdvance ? '자동 진행 ON — 탭하면 더 빨라요' : '자동 진행 OFF — 탭하여 계속', '⏩');
+      if (vnAutoAdvance && vnWaitResolve) {
+        const r = vnWaitResolve;
+        vnWaitResolve = null;
+        setTimeout(r, 500);
+      }
+    }
+
+    function skipTrainerEpisode(ev) {
+      if (ev) ev.stopPropagation();
+      if (!epRuntime) return;
+      vnSkipMode = true;
+      finishVnTyping();
+      if (vnWaitResolve) { const r = vnWaitResolve; vnWaitResolve = null; r(); }
+      showFloatingToast('이번 에피소드 스킵 — 대사는 로그에 남아요', '⏭️');
+    }
+
+    function openVnBacklog(ev) {
+      if (ev) ev.stopPropagation();
+      if (!epRuntime) return;
+      const list = document.getElementById('vnBacklogList');
+      const modal = document.getElementById('vnBacklogModal');
+      if (!list || !modal) return;
+      const epId = epRuntime.ep.id;
+      const room = epRuntime.room;
+      const msgs = (state.chatHistory || []).filter(m => m.ep === epId && (m.room === room || m.room === 'all'));
+      list.innerHTML = msgs.length ? msgs.map(m => {
+        if (m.sender === 'system') return `<div class="text-center text-[9px] font-black text-[#b89d97] py-1">${m.text}</div>`;
+        const isUser = m.sender === 'user';
+        return `<div class="flex ${isUser ? 'justify-end' : 'justify-start'}">
+          <div class="max-w-[85%] px-2.5 py-1.5 rounded-xl ${isUser ? 'bg-[#4a89dc] text-white' : 'bg-[#2b1f25] border border-[#453139] text-[#f5ebe6]'}">
+            ${isUser ? '' : `<div class="text-[9px] font-black text-[#f4869d] mb-0.5">${m.name || ''}</div>`}
+            <div>${m.text || ''}</div>
+          </div>
+        </div>`;
+      }).join('') : '<div class="text-center text-[10px] font-bold text-[#9e847e] py-6">아직 기록이 없어요</div>';
+      modal.classList.remove('hidden');
+      list.scrollTop = list.scrollHeight;
+    }
+
+    function closeVnBacklog() {
+      const modal = document.getElementById('vnBacklogModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    async function playTrainerEpisodeLines(lines, done, gen) {
       if (!lines || !lines.length) { if (done) done(); return; }
-      const room = (epRuntime && epRuntime.room) || null;
-      const epId = (epRuntime && epRuntime.ep && epRuntime.ep.id) || null;
-      let idx = 0;
-      const step = () => {
-        if (!epRuntime || epRuntime.gen !== gen) return;
-        if (epRuntime.room !== room) return; // room switched mid-play: stop pushing into other rooms
-        if (idx >= lines.length) { if (done) done(); return; }
-        const line = lines[idx++];
+      const runtime = epRuntime;
+      if (!runtime) return;
+      const room = runtime.room;
+      const epId = runtime.ep.id;
+      const total = lines.length;
+
+      for (let idx = 0; idx < total; idx++) {
+        if (!epRuntime || epRuntime.gen !== gen || epRuntime.room !== room) return;
+        const line = normalizeEpisodeLine(lines[idx]);
+
         // Typing indicator (room-scoped), then message
-        activeTypingIndicator = { sender: room === 'dual' ? 'dual' : room, name: room === 'dual' ? '제미니 · 코토네 · 미오' : (room === 'kotone' ? '코토네' : room === 'mio' ? '미오' : '제미니') };
+        activeTypingIndicator = {
+          sender: room === 'dual' ? 'dual' : room,
+          name: room === 'dual' ? '제미니 · 코토네 · 미오' : (room === 'kotone' ? '코토네' : room === 'mio' ? '미오' : '제미니')
+        };
         renderChat();
         scrollChatToBottom();
-        setTimeout(() => {
-          if (!epRuntime || epRuntime.gen !== gen) return;
-          if (epRuntime.room !== room) return;
-          activeTypingIndicator = null;
-          state.chatHistory.push(epSpeakerEntry(room, line, epId));
-          renderChat();
-          scrollChatToBottom();
-          playBeep(560 + Math.floor(Math.random() * 120), 0.04);
-          setTimeout(step, 520 + Math.random() * 480);
-        }, 620);
-      };
-      step();
+        await vnSleep(vnSkipMode ? 40 : 560);
+        if (!epRuntime || epRuntime.gen !== gen || epRuntime.room !== room) return;
+        activeTypingIndicator = null;
+        state.chatHistory.push(epSpeakerEntry(room, line.text, epId));
+        renderChat();
+        scrollChatToBottom();
+        playBeep(560 + Math.floor(Math.random() * 120), 0.04);
+
+        if (epScene) {
+          setVnSceneVisual(line, idx, total);
+          typeVnLine(line.text, gen);
+          await waitVnAdvance(gen, line.text.length);
+        } else {
+          await vnSleep(vnSkipMode ? 40 : 520 + Math.random() * 480);
+        }
+      }
+      if (epRuntime && epRuntime.gen === gen && done) done();
     }
 
     function startTrainerEpisodeChoice(ep) {
@@ -4947,6 +5318,15 @@
           <button onclick="cancelTrainerEpisode()" class="w-full text-center px-3 py-1.5 rounded-xl text-[10px] font-bold text-slate-400 hover:text-rose-400 transition-all">에피소드 종료</button>
         </div>`;
       }
+      // Make room for the choices: shrink the stage and bring the choice card into view
+      if (ep.scene) {
+        const body = document.getElementById('messengerRoomBody');
+        if (body) body.classList.add('vn-choices');
+        setTimeout(() => {
+          const c = document.getElementById('choicesContainer');
+          if (c && c.innerText.trim() && epRuntime && epRuntime.gen === gen) c.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 120);
+      }
       playBeep(760, 0.05);
     }
 
@@ -4960,6 +5340,8 @@
       const gen = epRuntime.gen;
       const ch = document.getElementById('choicesContainer');
       if (ch) ch.innerHTML = '';
+      const body = document.getElementById('messengerRoomBody');
+      if (body) body.classList.remove('vn-choices');
       state.chatHistory.push({ room, sender: 'user', name: '프로듀서', text: opt.t, time: getKakaoTimeStr(), ep: ep.id });
       renderChat();
       scrollChatToBottom();
@@ -4976,6 +5358,7 @@
       addBondExp(15);
       saveState(true);
       epRuntime = null;
+      hideTrainerScene();
       renderChat();
       renderEpisodeCards(room);
       scrollChatToBottom();
@@ -5026,6 +5409,8 @@
         if (ch) ch.innerHTML = '';
         renderChat();
       }
+      hideTrainerScene();
+      vnSkipMode = false;
     }
 
     function renderInbodyCardUI() {
@@ -9528,9 +9913,16 @@ ${err.message}
         오늘은 설정하신 <strong>정기 콘텐츠 업데이트 주기</strong>입니다! 신규 교토·오사카벤 회화, 퀴즈, 이벤트 CG, 그리고 다이얼로그 확장을 위해 에이전트에게 업데이트를 요청할 시간이에요.
       </p>
 
+      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+        <div class="font-black text-[#ffd6de]">🎆 이번 업데이트 — 에피소드가 연출을 얻었사와요</div>
+        <div class="text-[#c9b1aa] leading-relaxed">
+          배경 · 스탠딩 · 이벤트 CG가 겹쳐지는 <strong>VN 연출</strong>, 타자 연출, <strong>자동/스킵/로그</strong>가 트레이너 에피소드에 추가됐어요. 신규 에피소드 <strong>2편</strong>(여름 축제 · 비 오는 다실)도 열렸사옵니다.
+        </div>
+      </div>
+
       <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
         <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-          <span>현재 앱 버전: v4.3.35 (言の葉茶屋)</span>
+          <span>현재 앱 버전: v4.3.36 (言の葉茶屋)</span>
           <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
         </div>
         <div class="text-[10px] text-[#9e847e]">아래 버튼을 눌러 요청문을 복사한 뒤, 에이전트에 바로 붙여넣기 하시면 즉시 업데이트가 진행됩니다.</div>
