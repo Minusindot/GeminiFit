@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.39</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.40</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -2006,11 +2006,11 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.3.39"></script>
-  <script src="./dialogue_pool.js?v=4.3.39"></script>
-  <script src="./trainer_episodes.js?v=4.3.39"></script>
-  <script src="./kotonoha_data.js?v=4.3.39"></script>
-  <script src="./kotonoha_engine.js?v=4.3.39"></script>
+  <script src="./weekly_reports.js?v=4.3.40"></script>
+  <script src="./dialogue_pool.js?v=4.3.40"></script>
+  <script src="./trainer_episodes.js?v=4.3.40"></script>
+  <script src="./kotonoha_data.js?v=4.3.40"></script>
+  <script src="./kotonoha_engine.js?v=4.3.40"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -5432,11 +5432,45 @@
       renderChat();
       renderEpisodeCards(room);
       scrollChatToBottom();
-      openEpisodeFeedbackModal(ep);
+      showEpisodeFeedbackPrompt(ep);
+      // The prompt card is added below the chat, which takes away some of the
+      // chat's height. Re-anchor the scroll so the closing line stays readable.
+      requestAnimationFrame(scrollChatToBottom);
       playBeep(880, 0.15);
     }
 
     let lastEpisodePlayed = null;
+
+    // Episodes used to end with the rating modal covering the last line before
+    // the player could read it. Now we offer a compact, non-blocking prompt below
+    // the chat; the full modal only opens when the player taps into it.
+    function showEpisodeFeedbackPrompt(ep) {
+      lastEpisodePlayed = ep;
+      const ch = document.getElementById('choicesContainer');
+      if (!ch) return;
+      ch.innerHTML = `
+        <div class="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2.5 space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <div class="min-w-0">
+              <div class="text-[11px] font-black text-slate-700 dark:text-slate-200">⭐ 이번 화 어땠어요?</div>
+              <div class="text-[10px] font-bold text-slate-400 truncate">${ep.title}</div>
+            </div>
+            <button onclick="dismissEpisodeFeedbackPrompt()" class="shrink-0 px-2 py-1 rounded-lg text-[10px] font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">나중에</button>
+          </div>
+          <div class="grid grid-cols-3 gap-1.5">
+            <button onclick="rateTrainerEpisode('good')" class="py-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[11px] font-black active:scale-95 transition-all">👍 좋았어</button>
+            <button onclick="rateTrainerEpisode('normal')" class="py-2 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-400 border border-sky-500/30 text-[11px] font-black active:scale-95 transition-all">😐 보통</button>
+            <button onclick="rateTrainerEpisode('bad')" class="py-2 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 border border-rose-500/30 text-[11px] font-black active:scale-95 transition-all">👎 아쉬움</button>
+          </div>
+        </div>`;
+    }
+
+    function dismissEpisodeFeedbackPrompt() {
+      const ch = document.getElementById('choicesContainer');
+      if (ch) ch.innerHTML = '';
+      playBeep(420, 0.05);
+      showFloatingToast('평가를 건너뛰었어요 — 다음 화에서 또 만나요', '⭐');
+    }
 
     function openEpisodeFeedbackModal(ep) {
       lastEpisodePlayed = ep;
@@ -5466,6 +5500,8 @@
         if (trainerMessengerRoom) updateRoomHead(trainerMessengerRoom);
         renderThreadList();
       }
+      const ch = document.getElementById('choicesContainer');
+      if (ch) ch.innerHTML = '';
       closeEpisodeFeedbackModal();
       playBeep(720, 0.06);
     }
@@ -10105,6 +10141,13 @@ ${err.message}
       </p>
 
       <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+        <div class="font-black text-[#ffd6de]">💬 평가를 물어보는 창이 방해하지 않아요</div>
+        <div class="text-[#c9b1aa] leading-relaxed">
+          트레이닝 톡에서 마지막 대사가 끝나자마자 화면을 덮던 평가 팝업을 없앴어요. 이제 대화 아래에 작은 카드로 <strong>좋았어 · 보통 · 아쉬움</strong>만 조용히 물어보고, 그대로 두면 마지막 대사를 편하게 읽을 수 있사옵니다. <strong>나중에</strong>를 누르면 평가를 건너뛰어요.
+        </div>
+      </div>
+
+      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
         <div class="font-black text-[#ffd6de]">🍵 에피소드 목록이 제자리를 지켜요</div>
         <div class="text-[#c9b1aa] leading-relaxed">
           다실에서 회차를 고르면 목록이 맨 위로 튀어 오르던 문제를 고쳤어요. 마지막으로 본 <strong>시즌·회차가 선택된 채로</strong> 목록에 그대로 보이고, 이야기를 마치고 돌아와도 그 회차가 <strong>가운데에</strong> 다시 보입니다.
@@ -10127,7 +10170,7 @@ ${err.message}
 
       <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
         <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-          <span>현재 앱 버전: v4.3.39 (言の葉茶屋)</span>
+          <span>현재 앱 버전: v4.3.40 (言の葉茶屋)</span>
           <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
         </div>
         <div class="text-[10px] text-[#9e847e]">아래 버튼을 눌러 요청문을 복사한 뒤, 에이전트에 바로 붙여넣기 하시면 즉시 업데이트가 진행됩니다.</div>
