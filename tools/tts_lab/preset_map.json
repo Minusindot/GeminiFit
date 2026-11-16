@@ -261,7 +261,15 @@
     "プロデューサーはんの伸びしろ、うちが一番よく知ってますえ。": "./audio/kotonoha/auto/gemini_32c0f960c9.mp3",
     "よろしゅうおす！再出発は何度してもええのえ。": "./audio/kotonoha/auto/gemini_7ba7079ccc.mp3",
     "ほな、明日の朝、約束どすえ。おきばりやすね": "./audio/kotonoha/auto/gemini_da94ef0f48.mp3",
-    "おしい！もう一度確認しましょね": "./audio/kotonoha/auto/gemini_2866db9bf7.mp3"
+    "おしい！もう一度確認しましょね": "./audio/kotonoha/auto/gemini_2866db9bf7.mp3",
+    "駅をお探しですか。…ふふ、迷うのも旅のうち、ではありますけれど。": "./audio/kotonoha/auto/makima_1b189fb417.mp3",
+    "この道をまっすぐ。…また迷ったら、私を呼んでください。必ず、迎えに来ますから。": "./audio/kotonoha/auto/makima_062bd93046.mp3",
+    "はぁい！みんなー、今ランニング配信中！この公園、風が気持ちいいよー！": "./audio/kotonoha/auto/miko_0a6b8a9adf.mp3",
+    "あ、プロデューサーさんだ！よかったら一緒に走らない？映ってもいいよー！": "./audio/kotonoha/auto/miko_c1f61883b7.mp3",
+    "わっ、この電車、競技場に行くんだよね？わたしも今日ライブなのー！": "./audio/kotonoha/auto/miko_6b16cf4e0a.mp3",
+    "切符を買うの、最初はドキドキするよね。わたしも昔よく間違えたよー！": "./audio/kotonoha/auto/miko_f697601240.mp3",
+    "17時間の断食、お見事でした。…ふふ、意志の強い方は好きですよ。": "./audio/kotonoha/auto/makima_44dece2d73.mp3",
+    "このまま続ければ、あなたはもっと強くなります。…楽しみですね。": "./audio/kotonoha/auto/makima_ced45b46f6.mp3"
   },
   "remap": {},
   "voices": {
