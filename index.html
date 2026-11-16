@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.40</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.41</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -1460,7 +1460,7 @@
         </div>
 
         <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-          식단 사진을 올리거나 운동을 마칠 때마다 버튼을 눌러주세요! <strong>기록이 안전하게 동기화되고 3인 트레이너가 최신 진행 상황에 맞춰 톡을 실시간 갱신</strong>합니다.
+          식단 사진을 올리거나 운동을 마칠 때마다 버튼을 눌러주세요! <strong>기록이 안전하게 동기화되고, 오늘 흐름에 가장 잘 맞는 트레이너가 새 톡으로 바로 찾아옵니다.</strong> (이전 대화는 채팅창 위 <strong>이전 대화 보기</strong>로 다시 꺼내볼 수 있어요.)
         </p>
 
         <div class="grid grid-cols-2 gap-2 text-center text-[10px]">
@@ -2006,11 +2006,11 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.3.40"></script>
-  <script src="./dialogue_pool.js?v=4.3.40"></script>
-  <script src="./trainer_episodes.js?v=4.3.40"></script>
-  <script src="./kotonoha_data.js?v=4.3.40"></script>
-  <script src="./kotonoha_engine.js?v=4.3.40"></script>
+  <script src="./weekly_reports.js?v=4.3.41"></script>
+  <script src="./dialogue_pool.js?v=4.3.41"></script>
+  <script src="./trainer_episodes.js?v=4.3.41"></script>
+  <script src="./kotonoha_data.js?v=4.3.41"></script>
+  <script src="./kotonoha_engine.js?v=4.3.41"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -2129,6 +2129,7 @@
       currentSituation: 'ev1',
       absDone: false,
       runDone: false,
+      lastWorkoutFocus: null,
       runDist: 7.30,
       latestRun: {
         distance: 7.30,
@@ -4756,6 +4757,9 @@
     let vnTypingTimer = null;
     let vnTypingFull = '';
     let vnSkipMode = false;
+    // Per-room "이전 대화 보기" toggle. Archived messages stay in chatHistory but
+    // are hidden in rooms that were reset by a record sync.
+    let archivedTalkOpen = {};
 
     const TRAINER_CONTACTS = [
       { room: 'gemini', name: '제미니', tag: '교토벤 사범 🐾', avatar: './image/03 gemini/avatar_gemini.png', ring: 'ring-pink-400/60', titleClass: 'text-pink-600 dark:text-pink-300' },
@@ -5763,9 +5767,138 @@
       syncUI();
       renderChat();
 
-      // 7. Visual toast for "누르는 맛"
-      showFloatingToast(`오늘 기록 동기화 완료 (${curTime}) · 트레이닝 톡 반영!`, '⚡');
+      // 7. Open a brand-new talk with the trainer whose field fits today's flow
+      const syncPick = pickSyncTalkRoom();
+      openSyncTalkConversation(syncPick.room, syncPick.key);
+      const syncName = SYNC_TRAINER_NAMES[syncPick.room] || '제미니';
+      showFloatingToast(`오늘 기록 동기화 완료 (${curTime}) · ${syncName}와의 새 톡!`, '⚡');
+    }
+
+    // ---------- Record sync -> recommended fresh conversation ----------
+    const SYNC_TRAINER_NAMES = { gemini: '제미니', kotone: '코토네', mio: '미오' };
+
+    // Pick the trainer who owns what the player actually finished today.
+    // The most recent workout wins; if none was ticked, diet goes to Kotone and
+    // everything else falls back to Gemini (the main coach).
+    function pickSyncTalkRoom() {
+      const today = getLocalDateString();
+      const focus = state.lastWorkoutFocus;
+      const mealsDone = (state.meals || []).filter(Boolean).length;
+      let key = null;
+
+      if (focus && focus.date === today && focus.key) {
+        key = focus.key;
+      } else if (state.runDone) {
+        key = 'run';
+      } else if (isGymRoutineDone(state.gymRoutine)) {
+        key = 'gym';
+      } else if (state.absDone) {
+        key = 'abs';
+      } else if (mealsDone > 0) {
+        key = 'meal';
+      }
+
+      if (key === 'run') return { room: 'mio', key };
+      if (key === 'meal') return { room: 'kotone', key };
+      return { room: 'gemini', key: key || 'general' };
+    }
+
+    function markWorkoutFocus(key) {
+      state.lastWorkoutFocus = { key, date: getLocalDateString() };
+    }
+
+    // Hide (but never delete) the room's older messages so the synced talk reads
+    // like a brand-new chat window.
+    function startFreshSyncConversation(room) {
+      (state.chatHistory || []).forEach(msg => {
+        const msgRoom = msg.room || (msg.sender === 'user' ? 'legacy' : msg.sender);
+        if (msgRoom === room) msg.archived = true;
+      });
+      archivedTalkOpen[room] = false;
+    }
+
+    function buildSyncTalkOpener(room, key) {
+      const today = getLocalDateString();
+      const latestRun = state.latestRun;
+      const dist = (latestRun && latestRun.date === today && latestRun.distance)
+        ? latestRun.distance
+        : (state.runDist || 0);
+      const mealsDone = (state.meals || []).filter(Boolean).length;
+      const photoCount = (state.mealPhotos || []).filter(Boolean).length;
+      const mealCount = Math.max(mealsDone, photoCount);
+      const gymDone = isGymRoutineDone(state.gymRoutine);
+      const absDone = Boolean(state.absDone);
+      const runDone = Boolean(state.runDone);
+
+      if (room === 'mio') {
+        if (runDone) {
+          return [
+            `${dist}km 러닝 완주 기록, 방금 확인했어! 🌟`,
+            '오늘 페이스 진짜 좋았어. 다리 쿨다운 스트레칭부터 천천히 풀어주자!',
+            '내일은 인터벌 한 세트만 더 얹어볼까? 내가 180bpm 맞춰줄게 🖐️'
+          ];
+        }
+        return [
+          '어? 오늘은 아직 러닝 기록이 없네! 🌟',
+          '가볍게 3km만 나가볼까? 내가 페이스 맞춰줄게!'
+        ];
+      }
+
+      if (room === 'kotone') {
+        return [
+          `프로듀서님, 오늘 식단 ${mealCount}/3 인증 확인했어요~! 💛`,
+          '이 흐름이면 16:30 마감도 거뜬하답니다! 다음 끼니도 코토네가 같이 챙겨드릴게요.',
+          '단백질은 꼭 넣어주시고, 17시 이후엔 물이나 차만 마셔요~ ☕'
+        ];
+      }
+
+      if (key === 'gym' || gymDone) {
+        return [
+          '어머나, 오늘 근력 루틴 풀코스 완주하셨사와요 🌸',
+          '세트마다 무게를 정확히 쌓아 올리신 거, 소녀가 다 보고 있었사옵니다 🐾',
+          '고생하셨사오니 어깨부터 정성껏 풀어드리겠사와요. 남은 재활 2kg 세트도 함께 하시지요 🍵'
+        ];
+      }
+      if (key === 'abs' || absDone) {
+        return [
+          '14분 복근 루틴까지 클리어하셨사와요 🔥',
+          '지금 코어에 긴장이 남아 있으니, 소녀와 함께 천천히 스트레칭하시와요 🌸',
+          '오늘 기록은 정갈하게 동기화해 두었사옵니다 🍵'
+        ];
+      }
+      return [
+        '오늘 기록 동기화를 확인했사옵니다 🍵',
+        `현재 ${state.weight || 64.1}kg, 목표 52kg까지 소녀가 곁에서 함께 덜어드리겠사와요 🌸`,
+        '물 한 잔 드시고, 오늘 남은 루틴도 무리 없이 정리해 보시지요 🐾'
+      ];
+    }
+
+    function openSyncTalkConversation(room, key) {
+      startFreshSyncConversation(room);
+      // We land in the room straight from the health tab, so mark the messenger
+      // as unlocked to avoid showing the tap-to-unlock screen on the way back.
+      messengerUnlocked = true;
       switchMainTab('talk');
+      enterTrainerRoom(room, true);
+
+      const curTime = getKakaoTimeStr();
+      const name = SYNC_TRAINER_NAMES[room] || '제미니';
+      state.chatHistory.push({
+        room, sender: 'system', name: '새 대화',
+        text: `🔄 ${curTime} 기록 동기화 · 새 대화 시작`,
+        time: curTime
+      });
+      buildSyncTalkOpener(room, key).forEach(text => {
+        state.chatHistory.push({ room, sender: room, name, text, time: curTime });
+      });
+
+      saveState(true);
+      renderChat();
+      scrollChatToBottom();
+      updateRoomHead(room);
+      renderThreadList();
+      playBeep(880, 0.08);
+      return room;
     }
 
     
@@ -6504,8 +6637,16 @@ ${err.message}
         return msg.sender === currentRoom;
       });
 
+      // A record sync opens a brand-new conversation for the trainer that fits
+      // today's flow. Older messages are kept in state.chatHistory but marked
+      // archived, so the room starts clean and they can be reopened on demand.
+      const archivedRoomMessages = roomMessages.filter(msg => msg.archived);
+      if (!archivedTalkOpen[currentRoom]) {
+        roomMessages = roomMessages.filter(msg => !msg.archived);
+      }
+
       // Default room welcome greeting if room is empty (dynamically adapted to current weight & date)
-      if (roomMessages.length === 0) {
+      if (roomMessages.length === 0 && archivedRoomMessages.length === 0) {
         const curW = (typeof state.weight === 'number' && state.weight > 0) ? state.weight.toFixed(1) : '64.1';
         const remKg = Math.max(0, (parseFloat(curW) - 52.0)).toFixed(1);
         const nowD = new Date();
@@ -6656,8 +6797,24 @@ ${err.message}
         `;
       }
 
+      if (archivedRoomMessages.length) {
+        chatHtml = `
+          <div class="flex justify-center pb-1">
+            <button onclick="toggleArchivedTalk()" class="px-3 py-1 rounded-full bg-slate-200/70 dark:bg-slate-700/60 text-[10px] font-bold text-slate-500 dark:text-slate-400 border border-slate-300/50 dark:border-slate-600/40 active:scale-95 transition-all">
+              ${archivedTalkOpen[currentRoom] ? '이전 대화 접기' : `이전 대화 ${archivedRoomMessages.length}개 보기`}
+            </button>
+          </div>` + chatHtml;
+      }
+
       container.innerHTML = chatHtml;
       container.scrollTop = container.scrollHeight;
+    }
+
+    function toggleArchivedTalk() {
+      const room = state.activeMode === 'dual' ? 'dual' : (state.activeTrainer || 'gemini');
+      archivedTalkOpen[room] = !archivedTalkOpen[room];
+      renderChat();
+      playBeep(620, 0.05);
     }
 
     // Touching the character stage triggers poke reaction + randomly switches situation!
@@ -8564,6 +8721,7 @@ ${err.message}
       const isDone = isGymRoutineDone(gr);
       if (isDone && !gr.allDone) {
         gr.allDone = true;
+        markWorkoutFocus('gym');
         addBondExp(40);
         showFloatingToast('헬스장 5종목 모든 세트 올 클리어! (+40 EXP)', '🏆');
         playBeep(980, 0.25);
@@ -8586,6 +8744,7 @@ ${err.message}
       const isDone = isGymRoutineDone(gr);
       if (isDone && !gr.allDone) {
         gr.allDone = true;
+        markWorkoutFocus('gym');
         addBondExp(40);
         showFloatingToast('헬스장 5종목 모든 세트 올 클리어! (+40 EXP)', '🏆');
         playBeep(980, 0.25);
@@ -8707,6 +8866,7 @@ ${err.message}
       gr.legRaise.sets = (gr.legRaise.sets || [false, false, false]).map(() => true);
       gr.crunch.sets = (gr.crunch.sets || [false, false, false]).map(() => true);
       gr.allDone = true;
+      markWorkoutFocus('gym');
 
       addBondExp(40);
       saveState();
@@ -9306,11 +9466,13 @@ ${err.message}
 
       if (!prevRun && state.runDone) {
         setTrainerMode('mio', 'ev2');
+        markWorkoutFocus('run');
         state.chatHistory.push({ room: 'all', sender: 'mio', name: '미오', text: `나이키런 ${state.runDist}km 완주 대박! 벚꽃 산책로 페이스 완전 좋았어 프로듀서~ 최고야! 🏃‍♀️🌸`, time: curTime });
         addBondExp(20);
         renderChat();
       } else if (!prevAbs && state.absDone) {
         setTrainerMode('gemini', 'ev1');
+        markWorkoutFocus('abs');
         state.chatHistory.push({ room: 'all', sender: 'gemini', name: '제미니', text: '우후후, 14분 복근 루틴 완료, 참으로 훌륭하옵니다! 🔥 내일도 소녀와 함께 뜨겁게 불태워 보시와요, 프로듀서항 🌸🐾', time: curTime });
         addBondExp(20);
         renderChat();
@@ -10141,6 +10303,13 @@ ${err.message}
       </p>
 
       <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+        <div class="font-black text-[#ffd6de]">⚡ 기록 동기화가 오늘에 맞는 톡을 열어줘요</div>
+        <div class="text-[#c9b1aa] leading-relaxed">
+          루틴·식단 탭에서 <strong>지금 기록 동기화</strong>를 누르면, 오늘 마친 운동에 맞는 트레이너(<strong>러닝 → 미오, 근력·복근 → 제미니, 식단 → 코토네</strong>)와의 <strong>새 톡</strong>이 바로 열립니다. 이전 대화는 지워지지 않고, 채팅 위 <strong>이전 대화 보기</strong>로 다시 꺼내볼 수 있어요.
+        </div>
+      </div>
+
+      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
         <div class="font-black text-[#ffd6de]">💬 평가를 물어보는 창이 방해하지 않아요</div>
         <div class="text-[#c9b1aa] leading-relaxed">
           트레이닝 톡에서 마지막 대사가 끝나자마자 화면을 덮던 평가 팝업을 없앴어요. 이제 대화 아래에 작은 카드로 <strong>좋았어 · 보통 · 아쉬움</strong>만 조용히 물어보고, 그대로 두면 마지막 대사를 편하게 읽을 수 있사옵니다. <strong>나중에</strong>를 누르면 평가를 건너뛰어요.
@@ -10170,7 +10339,7 @@ ${err.message}
 
       <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
         <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-          <span>현재 앱 버전: v4.3.40 (言の葉茶屋)</span>
+          <span>현재 앱 버전: v4.3.41 (言の葉茶屋)</span>
           <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
         </div>
         <div class="text-[10px] text-[#9e847e]">아래 버튼을 눌러 요청문을 복사한 뒤, 에이전트에 바로 붙여넣기 하시면 즉시 업데이트가 진행됩니다.</div>
