@@ -10,3 +10,5 @@ node_modules/
 image/90 repository/
 image/_scg_work/
 state_backup_*.json
+# audition artifacts (only final picks get committed to audio/kotonoha/)
+tools/tts_lab/clips/

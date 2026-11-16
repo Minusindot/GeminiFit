@@ -1,0 +1,9 @@
+{
+  "_comment": "audition.html 의 '선택 결과 복사'를 그대로 붙여넣으면 됩니다. 아래는 형식 예시.",
+  "generatedAt": "2026-11-17T00:00:00.000Z",
+  "roles": {
+    "gemini": { "id": "voicevox_8", "name": "VOICEVOX:春日部つむぎ（ノーマル）", "provider": "voicevox", "voiceId": "8", "stars": 5 },
+    "kotone": { "id": "voicevox_2", "name": "VOICEVOX:四国めたん（ノーマル）", "provider": "voicevox", "voiceId": "2", "stars": 4 },
+    "mio": { "id": "voicevox_3", "name": "VOICEVOX:ずんだもん（あまあま）", "provider": "voicevox", "voiceId": "3", "stars": 4 }
+  }
+}

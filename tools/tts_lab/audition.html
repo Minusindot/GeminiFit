@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gemini Fit · 목소리 오디션</title>
+<style>
+  :root {
+    --bg: #101218;
+    --card: #191c24;
+    --card-2: #21252f;
+    --line: #2c313d;
+    --text: #e8ebf2;
+    --muted: #8b93a7;
+    --pink: #ff7aa2;
+    --indigo: #8b8bff;
+    --mint: #6ee7b7;
+    --gold: #ffcf5c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 20px 16px 120px;
+    background: var(--bg); color: var(--text);
+    font-family: "Pretendard", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 14px; line-height: 1.5;
+  }
+  header { max-width: 900px; margin: 0 auto 18px; }
+  h1 { font-size: 19px; margin: 0 0 4px; letter-spacing: -.3px; }
+  h1 span { color: var(--pink); }
+  .sub { color: var(--muted); font-size: 12px; }
+  .script {
+    margin: 12px 0 0; padding: 10px 12px; border-radius: 12px;
+    background: var(--card); border: 1px solid var(--line);
+    color: #b9c0d4; font-size: 12px; line-height: 1.7;
+  }
+  .script b { color: var(--muted); font-weight: 600; display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: .4px; }
+
+  .toolbar {
+    position: sticky; top: 0; z-index: 10;
+    max-width: 900px; margin: 0 auto 10px;
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    padding: 10px 0; background: linear-gradient(var(--bg) 70%, transparent);
+  }
+  .seg { display: flex; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .seg button {
+    background: none; border: 0; color: var(--muted); padding: 7px 11px;
+    font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  .seg button.on { background: var(--card-2); color: var(--text); }
+  input[type=search] {
+    flex: 1; min-width: 140px; padding: 8px 11px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text);
+    font-family: inherit; font-size: 12px; outline: none;
+  }
+  input[type=search]:focus { border-color: var(--indigo); }
+  .count { color: var(--muted); font-size: 11px; margin-left: auto; }
+
+  .roles { max-width: 900px; margin: 0 auto 14px; display: grid; gap: 8px; grid-template-columns: repeat(3, 1fr); }
+  .role {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 9px 11px; cursor: pointer; transition: border-color .15s, background .15s;
+  }
+  .role.active { border-color: var(--pink); background: rgba(255,122,162,.08); }
+  .role .rname { font-weight: 800; font-size: 12px; }
+  .role .rpick { color: var(--muted); font-size: 11px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .role.filled .rpick { color: var(--mint); }
+
+  .list { max-width: 900px; margin: 0 auto; display: grid; gap: 7px; }
+  .row {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 9px 11px;
+  }
+  .row.playing { border-color: var(--indigo); background: rgba(139,139,255,.08); }
+  .row.assigned { box-shadow: inset 3px 0 0 var(--mint); }
+  .play {
+    flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid var(--line); background: var(--card-2); color: var(--text);
+    font-size: 13px; cursor: pointer; display: grid; place-items: center;
+  }
+  .play:hover { border-color: var(--indigo); }
+  .meta { min-width: 0; flex: 1; }
+  .name { font-weight: 700; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .name .style {
+    font-weight: 600; font-size: 10.5px; color: var(--pink);
+    background: rgba(255,122,162,.12); border-radius: 6px;
+    padding: 1px 5px; margin-left: 6px; vertical-align: 1px;
+  }
+  .tags { color: var(--muted); font-size: 10.5px; margin-top: 1px; }
+  .stars { display: flex; gap: 1px; flex: 0 0 auto; }
+  .stars button {
+    background: none; border: 0; padding: 1px 2px; cursor: pointer;
+    color: #3a4050; font-size: 14px; line-height: 1;
+  }
+  .stars button.on { color: var(--gold); }
+  .pick {
+    flex: 0 0 auto; padding: 6px 9px; border-radius: 8px; font-size: 11px; font-weight: 800;
+    border: 1px solid var(--line); background: var(--card-2); color: var(--muted); cursor: pointer;
+    font-family: inherit; white-space: nowrap;
+  }
+  .pick:hover { color: var(--text); border-color: var(--pink); }
+  .pick.on { color: #0d1a14; background: var(--mint); border-color: var(--mint); }
+
+  .empty { max-width: 900px; margin: 30px auto; color: var(--muted); text-align: center; font-size: 12.5px; line-height: 1.9; }
+  .empty code { background: var(--card); padding: 2px 6px; border-radius: 6px; color: var(--text); font-size: 11.5px; }
+
+  .footer {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+    background: rgba(16,18,24,.94); border-top: 1px solid var(--line);
+    backdrop-filter: blur(8px); padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  }
+  .footer-inner { max-width: 900px; margin: 0 auto; display: flex; gap: 8px; align-items: center; }
+  .btn {
+    padding: 9px 13px; border-radius: 10px; font-size: 12px; font-weight: 800;
+    border: 1px solid var(--line); background: var(--card-2); color: var(--text);
+    cursor: pointer; font-family: inherit;
+  }
+  .btn.primary { background: var(--pink); border-color: var(--pink); color: #1a0b11; }
+  .btn:disabled { opacity: .4; cursor: default; }
+  .hint { color: var(--muted); font-size: 11px; margin-left: auto; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Gemini Fit · <span>목소리 오디션</span></h1>
+  <div class="sub">후보를 듣고 별점을 매긴 뒤, 제미니 · 코토네 · 미오에 배정하세요. 선택 결과는 JSON으로 복사됩니다.</div>
+  <div class="script" id="scriptBox"><b>오디션 대본</b><span id="scriptText">manifest.json 불러오는 중…</span></div>
+</header>
+
+<div class="toolbar">
+  <div class="seg" id="providerSeg">
+    <button data-p="" class="on">전체</button>
+    <button data-p="voicevox">VOICEVOX</button>
+    <button data-p="fish">Fish</button>
+    <button data-p="gemini">Gemini</button>
+  </div>
+  <input type="search" id="q" placeholder="이름 검색 (예: つむぎ, めたん)">
+  <button class="btn" id="starredOnly">★ 3+</button>
+  <span class="count" id="count"></span>
+</div>
+
+<div class="roles" id="roles"></div>
+
+<div class="list" id="list"></div>
+<div class="empty" id="empty" hidden>
+  아직 클립이 없습니다. 프로젝트 루트에서 아래를 실행하세요.<br>
+  <code>python tools/tts_lab/tts_lab.py voicevox --ids 0-59</code>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <button class="btn primary" id="copyBtn">선택 결과 복사</button>
+    <button class="btn" id="downloadBtn">JSON 저장</button>
+    <button class="btn" id="resetBtn">초기화</button>
+    <span class="hint" id="hint">Space: 재생/정지 · ↑↓: 이동</span>
+  </div>
+</div>
+
+<script>
+const ROLE_KEYS = [
+  { key: 'gemini', label: '🐾 제미니' },
+  { key: 'kotone', label: '💛 코토네' },
+  { key: 'mio',    label: '🌟 미오' }
+];
+const STORE_KEY = 'geminifit_tts_audition_v1';
+
+let manifest = { clips: [] };
+let ratings = {};      // clipId -> 1..5
+let assignment = {};   // roleKey -> clipId
+let activeRole = 'gemini';
+let providerFilter = '';
+let query = '';
+let starredOnly = false;
+let cursor = 0;
+let playingId = null;
+
+const audio = new Audio();
+audio.preload = 'auto';
+
+const $ = (id) => document.getElementById(id);
+
+/* ---------------- persistence ---------------- */
+function loadStore() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+    ratings = raw.ratings || {};
+    assignment = raw.assignment || {};
+  } catch (_) { /* ignore corrupt store */ }
+}
+function saveStore() {
+  localStorage.setItem(STORE_KEY, JSON.stringify({ ratings, assignment }));
+}
+
+/* ---------------- data ---------------- */
+async function boot() {
+  loadStore();
+  try {
+    const res = await fetch('./manifest.json', { cache: 'no-store' });
+    manifest = await res.json();
+  } catch (_) {
+    manifest = { clips: [] };
+  }
+  if (Array.isArray(manifest.script) && manifest.script.length) {
+    $('scriptText').textContent = manifest.script.join('  /  ');
+  } else {
+    $('scriptBox').hidden = true;
+  }
+  renderRoles();
+  render();
+}
+
+function visibleClips() {
+  const q = query.trim().toLowerCase();
+  return manifest.clips.filter(c => {
+    if (providerFilter && c.provider !== providerFilter) return false;
+    if (starredOnly && (ratings[c.id] || 0) < 3) return false;
+    if (q && !(c.name || '').toLowerCase().includes(q) && !String(c.voiceId).includes(q)) return false;
+    return true;
+  });
+}
+
+/* ---------------- render ---------------- */
+function labelOf(clip) {
+  const p = prettyName(clip.name);
+  return p.style ? `${p.base} ${p.style}` : p.base;
+}
+
+function renderRoles() {
+  $('roles').innerHTML = ROLE_KEYS.map(r => {
+    const clip = manifest.clips.find(c => c.id === assignment[r.key]);
+    return `
+      <div class="role ${activeRole === r.key ? 'active' : ''} ${clip ? 'filled' : ''}" data-role="${r.key}">
+        <div class="rname">${r.label}</div>
+        <div class="rpick">${clip ? escapeHtml(labelOf(clip)) : '미지정'}</div>
+      </div>`;
+  }).join('');
+  $('roles').querySelectorAll('.role').forEach(el => {
+    el.onclick = () => { activeRole = el.dataset.role; renderRoles(); render(); };
+  });
+}
+
+function render() {
+  const clips = visibleClips();
+  $('count').textContent = `${clips.length} / ${manifest.clips.length}개`;
+  $('empty').hidden = clips.length > 0;
+
+  $('list').innerHTML = clips.map((c, i) => {
+    const star = ratings[c.id] || 0;
+    const isAssigned = Object.values(assignment).includes(c.id);
+    const pretty = prettyName(c.name);
+    return `
+      <div class="row ${playingId === c.id ? 'playing' : ''} ${isAssigned ? 'assigned' : ''}" data-id="${c.id}" data-i="${i}">
+        <button class="play" data-act="play" title="재생 / 정지">${playingId === c.id ? '❚❚' : '▶'}</button>
+        <div class="meta">
+          <div class="name">${escapeHtml(pretty.base)}${pretty.style ? `<span class="style">${escapeHtml(pretty.style)}</span>` : ''}</div>
+          <div class="tags">${c.provider} · id ${escapeHtml(String(c.voiceId))} · ${Math.round((c.bytes || 0) / 1024)}KB</div>
+        </div>
+        <div class="stars" data-act="stars">
+          ${[1,2,3,4,5].map(n => `<button data-star="${n}" class="${star >= n ? 'on' : ''}">★</button>`).join('')}
+        </div>
+        <button class="pick ${isAssigned ? 'on' : ''}" data-act="assign">${isAssigned ? '배정됨' : '배정'}</button>
+      </div>`;
+  }).join('');
+
+  // delegated handlers
+  $('list').querySelectorAll('.row').forEach(row => {
+    const id = row.dataset.id;
+    row.onclick = (ev) => {
+      const starBtn = ev.target.closest('[data-star]');
+      if (starBtn) {
+        const n = Number(starBtn.dataset.star);
+        ratings[id] = ratings[id] === n ? 0 : n;
+        saveStore();
+        render();
+        return;
+      }
+      const act = ev.target.closest('[data-act]');
+      if (act && act.dataset.act === 'play') { toggle(id); return; }
+      if (act && act.dataset.act === 'assign') {
+        if (assignment[activeRole] === id) delete assignment[activeRole];
+        else assignment[activeRole] = id;
+        saveStore(); renderRoles(); render();
+        return;
+      }
+      cursor = Number(row.dataset.i);
+    };
+  });
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+}
+
+// "VOICEVOX:四国めたん（あまあま）" -> { base: "四国めたん", style: "あまあま" }
+function prettyName(raw) {
+  const name = String(raw || '').replace(/^VOICEVOX:/, '');
+  const m = name.match(/^(.*?)[（(]([^）)]*)[）)]\s*$/);
+  if (!m) return { base: name, style: '' };
+  return { base: m[1].trim(), style: m[2].trim() };
+}
+
+/* ---------------- playback ---------------- */
+function toggle(id) {
+  const clip = manifest.clips.find(c => c.id === id);
+  if (!clip) return;
+  if (playingId === id) { audio.pause(); playingId = null; render(); return; }
+  playingId = id;
+  audio.src = './' + clip.file;
+  audio.currentTime = 0;
+  audio.play().catch(() => { playingId = null; render(); });
+  render();
+  // keep the playing row in view
+  const el = document.querySelector(`.row[data-id="${id}"]`);
+  if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
+audio.addEventListener('ended', () => {
+  const clips = visibleClips();
+  const i = clips.findIndex(c => c.id === playingId);
+  if (i >= 0 && i + 1 < clips.length) { cursor = i + 1; toggle(clips[i + 1].id); }
+  else { playingId = null; render(); }
+});
+audio.addEventListener('play', () => render());
+audio.addEventListener('pause', () => render());
+
+/* ---------------- toolbar ---------------- */
+$('providerSeg').querySelectorAll('button').forEach(b => {
+  b.onclick = () => {
+    providerFilter = b.dataset.p;
+    $('providerSeg').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    render();
+  };
+});
+$('q').oninput = (e) => { query = e.target.value; render(); };
+$('starredOnly').onclick = () => {
+  starredOnly = !starredOnly;
+  $('starredOnly').style.color = starredOnly ? 'var(--gold)' : '';
+  $('starredOnly').style.borderColor = starredOnly ? 'var(--gold)' : '';
+  render();
+};
+
+/* ---------------- exports ---------------- */
+function buildSelection() {
+  const out = { generatedAt: new Date().toISOString(), roles: {} };
+  ROLE_KEYS.forEach(r => {
+    const clip = manifest.clips.find(c => c.id === assignment[r.key]);
+    out.roles[r.key] = clip
+      ? { id: clip.id, name: clip.name, provider: clip.provider, voiceId: clip.voiceId, stars: ratings[clip.id] || 0 }
+      : null;
+  });
+  return out;
+}
+
+$('copyBtn').onclick = async () => {
+  const text = JSON.stringify(buildSelection(), null, 2);
+  try {
+    await navigator.clipboard.writeText(text);
+    $('hint').textContent = '복사됨 ✓';
+  } catch (_) {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); ta.remove();
+    $('hint').textContent = '복사됨 ✓';
+  }
+  setTimeout(() => { $('hint').textContent = 'Space: 재생/정지 · ↑↓: 이동'; }, 1600);
+};
+
+$('downloadBtn').onclick = () => {
+  const blob = new Blob([JSON.stringify(buildSelection(), null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'tts_selection.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+};
+
+$('resetBtn').onclick = () => {
+  if (!confirm('별점과 배정을 모두 초기화할까요?')) return;
+  ratings = {}; assignment = {}; saveStore(); renderRoles(); render();
+};
+
+/* ---------------- keyboard ---------------- */
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT') return;
+  const clips = visibleClips();
+  if (!clips.length) return;
+  if (e.code === 'Space') {
+    e.preventDefault();
+    const id = playingId || clips[Math.min(cursor, clips.length - 1)].id;
+    toggle(id);
+  } else if (e.code === 'ArrowDown') {
+    e.preventDefault();
+    cursor = Math.min(cursor + 1, clips.length - 1);
+    document.querySelector(`.row[data-i="${cursor}"]`)?.scrollIntoView({ block: 'nearest' });
+  } else if (e.code === 'ArrowUp') {
+    e.preventDefault();
+    cursor = Math.max(cursor - 1, 0);
+    document.querySelector(`.row[data-i="${cursor}"]`)?.scrollIntoView({ block: 'nearest' });
+  } else if (/^Digit[1-5]$/.test(e.code)) {
+    const id = playingId || clips[Math.min(cursor, clips.length - 1)].id;
+    ratings[id] = Number(e.code.slice(-1));
+    saveStore(); render();
+  }
+});
+
+boot();
+</script>
+</body>
+</html>

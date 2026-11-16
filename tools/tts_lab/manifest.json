@@ -1,0 +1,981 @@
+{
+  "generatedAt": "2026-11-16T17:45:23+00:00",
+  "script": [
+    "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。",
+    "おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+  ],
+  "clips": [
+    {
+      "id": "fish_83e2fc6d6fe14c94989e634258ffdb3f",
+      "provider": "fish",
+      "voiceId": "83e2fc6d6fe14c94989e634258ffdb3f",
+      "name": "Anime",
+      "file": "clips/fish_83e2fc6d6fe14c94989e634258ffdb3f.mp3",
+      "bytes": 191424,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_af5846c4409241f3be2d51525a295d34",
+      "provider": "fish",
+      "voiceId": "af5846c4409241f3be2d51525a295d34",
+      "name": "Anime",
+      "file": "clips/fish_af5846c4409241f3be2d51525a295d34.mp3",
+      "bytes": 179303,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_bc2f5fbb6fae4777b60e3bb260a847b9",
+      "provider": "fish",
+      "voiceId": "bc2f5fbb6fae4777b60e3bb260a847b9",
+      "name": "Anime",
+      "file": "clips/fish_bc2f5fbb6fae4777b60e3bb260a847b9.mp3",
+      "bytes": 177213,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_11413f183cf24e04859607efd14c832d",
+      "provider": "fish",
+      "voiceId": "11413f183cf24e04859607efd14c832d",
+      "name": "Anime girl",
+      "file": "clips/fish_11413f183cf24e04859607efd14c832d.mp3",
+      "bytes": 203127,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_0dfcb12204c54dd6beb2d7f89822e76e",
+      "provider": "fish",
+      "voiceId": "0dfcb12204c54dd6beb2d7f89822e76e",
+      "name": "Anime girl",
+      "file": "clips/fish_0dfcb12204c54dd6beb2d7f89822e76e.mp3",
+      "bytes": 185154,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_69eb6788dfae49cbad7ab498f459fb80",
+      "provider": "fish",
+      "voiceId": "69eb6788dfae49cbad7ab498f459fb80",
+      "name": "Anime girl",
+      "file": "clips/fish_69eb6788dfae49cbad7ab498f459fb80.mp3",
+      "bytes": 207724,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_a2f202794a3c4908afe01ba06d4157d7",
+      "provider": "fish",
+      "voiceId": "a2f202794a3c4908afe01ba06d4157d7",
+      "name": "Anime girl",
+      "file": "clips/fish_a2f202794a3c4908afe01ba06d4157d7.mp3",
+      "bytes": 178049,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_de2879fba3144cb3b56bb2b42d2a1816",
+      "provider": "fish",
+      "voiceId": "de2879fba3144cb3b56bb2b42d2a1816",
+      "name": "Anime girl",
+      "file": "clips/fish_de2879fba3144cb3b56bb2b42d2a1816.mp3",
+      "bytes": 183065,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_4a56e31b2ec54484972040592c8ba7e2",
+      "provider": "fish",
+      "voiceId": "4a56e31b2ec54484972040592c8ba7e2",
+      "name": "Anime voice",
+      "file": "clips/fish_4a56e31b2ec54484972040592c8ba7e2.mp3",
+      "bytes": 194768,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_b6cd9e91552f49d9b062e6b82890aef2",
+      "provider": "fish",
+      "voiceId": "b6cd9e91552f49d9b062e6b82890aef2",
+      "name": "Bright Anime Girl",
+      "file": "clips/fish_b6cd9e91552f49d9b062e6b82890aef2.mp3",
+      "bytes": 184737,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_6984702486324617a0980431e1694f9a",
+      "provider": "fish",
+      "voiceId": "6984702486324617a0980431e1694f9a",
+      "name": "Cute",
+      "file": "clips/fish_6984702486324617a0980431e1694f9a.mp3",
+      "bytes": 201455,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_0c54c26032024142bf6339dc4d4aca1b",
+      "provider": "fish",
+      "voiceId": "0c54c26032024142bf6339dc4d4aca1b",
+      "name": "Cute!!",
+      "file": "clips/fish_0c54c26032024142bf6339dc4d4aca1b.mp3",
+      "bytes": 147538,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_49513a6156934125a49837a423c86621",
+      "provider": "fish",
+      "voiceId": "49513a6156934125a49837a423c86621",
+      "name": "Lively Anime Girl",
+      "file": "clips/fish_49513a6156934125a49837a423c86621.mp3",
+      "bytes": 156315,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_5eb7824863224d09ae9bf9db23150e57",
+      "provider": "fish",
+      "voiceId": "5eb7824863224d09ae9bf9db23150e57",
+      "name": "anime girl",
+      "file": "clips/fish_5eb7824863224d09ae9bf9db23150e57.mp3",
+      "bytes": 221517,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_df5c6c19dca944918dcbd6f1368fd02f",
+      "provider": "fish",
+      "voiceId": "df5c6c19dca944918dcbd6f1368fd02f",
+      "name": "cute japanese girl",
+      "file": "clips/fish_df5c6c19dca944918dcbd6f1368fd02f.mp3",
+      "bytes": 235728,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_b2d9d8db057042688a5e318b8f405bc2",
+      "provider": "fish",
+      "voiceId": "b2d9d8db057042688a5e318b8f405bc2",
+      "name": "きょうこ Kyoko",
+      "file": "clips/fish_b2d9d8db057042688a5e318b8f405bc2.mp3",
+      "bytes": 165092,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_6bc85a767cf04a138c5621770e2821b0",
+      "provider": "fish",
+      "voiceId": "6bc85a767cf04a138c5621770e2821b0",
+      "name": "地声かるび",
+      "file": "clips/fish_6bc85a767cf04a138c5621770e2821b0.mp3",
+      "bytes": 174288,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_44fa7e5a53134f43876cea46d7af5532",
+      "provider": "fish",
+      "voiceId": "44fa7e5a53134f43876cea46d7af5532",
+      "name": "酒吞童子",
+      "file": "clips/fish_44fa7e5a53134f43876cea46d7af5532.mp3",
+      "bytes": 221099,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_0",
+      "provider": "voicevox",
+      "voiceId": "0",
+      "name": "VOICEVOX:四国めたん（あまあま）",
+      "file": "clips/voicevox_0.mp3",
+      "bytes": 202125,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_1",
+      "provider": "voicevox",
+      "voiceId": "1",
+      "name": "VOICEVOX:ずんだもん（あまあま）",
+      "file": "clips/voicevox_1.mp3",
+      "bytes": 246765,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_2",
+      "provider": "voicevox",
+      "voiceId": "2",
+      "name": "VOICEVOX:四国めたん（ノーマル）",
+      "file": "clips/voicevox_2.mp3",
+      "bytes": 193965,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_3",
+      "provider": "voicevox",
+      "voiceId": "3",
+      "name": "VOICEVOX:ずんだもん（ノーマル）",
+      "file": "clips/voicevox_3.mp3",
+      "bytes": 223725,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_4",
+      "provider": "voicevox",
+      "voiceId": "4",
+      "name": "VOICEVOX:四国めたん（セクシー）",
+      "file": "clips/voicevox_4.mp3",
+      "bytes": 220845,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_5",
+      "provider": "voicevox",
+      "voiceId": "5",
+      "name": "VOICEVOX:ずんだもん（セクシー）",
+      "file": "clips/voicevox_5.mp3",
+      "bytes": 238605,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_6",
+      "provider": "voicevox",
+      "voiceId": "6",
+      "name": "VOICEVOX:四国めたん（ツンツン）",
+      "file": "clips/voicevox_6.mp3",
+      "bytes": 194925,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_7",
+      "provider": "voicevox",
+      "voiceId": "7",
+      "name": "VOICEVOX:ずんだもん（ツンツン）",
+      "file": "clips/voicevox_7.mp3",
+      "bytes": 215085,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_8",
+      "provider": "voicevox",
+      "voiceId": "8",
+      "name": "VOICEVOX:春日部つむぎ（ノーマル）",
+      "file": "clips/voicevox_8.mp3",
+      "bytes": 190125,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_9",
+      "provider": "voicevox",
+      "voiceId": "9",
+      "name": "VOICEVOX:波音リツ（ノーマル）",
+      "file": "clips/voicevox_9.mp3",
+      "bytes": 189165,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_10",
+      "provider": "voicevox",
+      "voiceId": "10",
+      "name": "VOICEVOX:雨晴はう（ノーマル）",
+      "file": "clips/voicevox_10.mp3",
+      "bytes": 204045,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_11",
+      "provider": "voicevox",
+      "voiceId": "11",
+      "name": "VOICEVOX:玄野武宏（ノーマル）",
+      "file": "clips/voicevox_11.mp3",
+      "bytes": 176685,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_12",
+      "provider": "voicevox",
+      "voiceId": "12",
+      "name": "VOICEVOX:白上虎太郎（ふつう）",
+      "file": "clips/voicevox_12.mp3",
+      "bytes": 198285,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_13",
+      "provider": "voicevox",
+      "voiceId": "13",
+      "name": "VOICEVOX:青山龍星（ノーマル）",
+      "file": "clips/voicevox_13.mp3",
+      "bytes": 189645,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_14",
+      "provider": "voicevox",
+      "voiceId": "14",
+      "name": "VOICEVOX:冥鳴ひまり（ノーマル）",
+      "file": "clips/voicevox_14.mp3",
+      "bytes": 189645,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_15",
+      "provider": "voicevox",
+      "voiceId": "15",
+      "name": "VOICEVOX:九州そら（あまあま）",
+      "file": "clips/voicevox_15.mp3",
+      "bytes": 285165,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_16",
+      "provider": "voicevox",
+      "voiceId": "16",
+      "name": "VOICEVOX:九州そら（ノーマル）",
+      "file": "clips/voicevox_16.mp3",
+      "bytes": 246285,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_17",
+      "provider": "voicevox",
+      "voiceId": "17",
+      "name": "VOICEVOX:九州そら（セクシー）",
+      "file": "clips/voicevox_17.mp3",
+      "bytes": 250125,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_18",
+      "provider": "voicevox",
+      "voiceId": "18",
+      "name": "VOICEVOX:九州そら（ツンツン）",
+      "file": "clips/voicevox_18.mp3",
+      "bytes": 279405,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_19",
+      "provider": "voicevox",
+      "voiceId": "19",
+      "name": "VOICEVOX:九州そら（ささやき）",
+      "file": "clips/voicevox_19.mp3",
+      "bytes": 282285,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_20",
+      "provider": "voicevox",
+      "voiceId": "20",
+      "name": "VOICEVOX:もち子(cv 明日葉よもぎ)（ノーマル）",
+      "file": "clips/voicevox_20.mp3",
+      "bytes": 196845,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_21",
+      "provider": "voicevox",
+      "voiceId": "21",
+      "name": "VOICEVOX:剣崎雌雄（ノーマル）",
+      "file": "clips/voicevox_21.mp3",
+      "bytes": 188685,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_22",
+      "provider": "voicevox",
+      "voiceId": "22",
+      "name": "VOICEVOX:ずんだもん（ささやき）",
+      "file": "clips/voicevox_22.mp3",
+      "bytes": 200685,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_23",
+      "provider": "voicevox",
+      "voiceId": "23",
+      "name": "VOICEVOX:WhiteCUL（ノーマル）",
+      "file": "clips/voicevox_23.mp3",
+      "bytes": 205005,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_24",
+      "provider": "voicevox",
+      "voiceId": "24",
+      "name": "VOICEVOX:WhiteCUL（たのしい）",
+      "file": "clips/voicevox_24.mp3",
+      "bytes": 190605,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_25",
+      "provider": "voicevox",
+      "voiceId": "25",
+      "name": "VOICEVOX:WhiteCUL（かなしい）",
+      "file": "clips/voicevox_25.mp3",
+      "bytes": 204525,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_26",
+      "provider": "voicevox",
+      "voiceId": "26",
+      "name": "VOICEVOX:WhiteCUL（びえーん）",
+      "file": "clips/voicevox_26.mp3",
+      "bytes": 203085,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_27",
+      "provider": "voicevox",
+      "voiceId": "27",
+      "name": "VOICEVOX:後鬼（人間ver.）",
+      "file": "clips/voicevox_27.mp3",
+      "bytes": 229005,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_28",
+      "provider": "voicevox",
+      "voiceId": "28",
+      "name": "VOICEVOX:後鬼（ぬいぐるみver.）",
+      "file": "clips/voicevox_28.mp3",
+      "bytes": 279405,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_29",
+      "provider": "voicevox",
+      "voiceId": "29",
+      "name": "VOICEVOX:No.7（ノーマル）",
+      "file": "clips/voicevox_29.mp3",
+      "bytes": 182925,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_30",
+      "provider": "voicevox",
+      "voiceId": "30",
+      "name": "VOICEVOX:No.7（アナウンス）",
+      "file": "clips/voicevox_30.mp3",
+      "bytes": 184365,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_31",
+      "provider": "voicevox",
+      "voiceId": "31",
+      "name": "VOICEVOX:No.7（読み聞かせ）",
+      "file": "clips/voicevox_31.mp3",
+      "bytes": 246285,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_32",
+      "provider": "voicevox",
+      "voiceId": "32",
+      "name": "VOICEVOX:白上虎太郎（わーい）",
+      "file": "clips/voicevox_32.mp3",
+      "bytes": 208845,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_33",
+      "provider": "voicevox",
+      "voiceId": "33",
+      "name": "VOICEVOX:白上虎太郎（びくびく）",
+      "file": "clips/voicevox_33.mp3",
+      "bytes": 221805,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_34",
+      "provider": "voicevox",
+      "voiceId": "34",
+      "name": "VOICEVOX:白上虎太郎（おこ）",
+      "file": "clips/voicevox_34.mp3",
+      "bytes": 207405,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_35",
+      "provider": "voicevox",
+      "voiceId": "35",
+      "name": "VOICEVOX:白上虎太郎（びえーん）",
+      "file": "clips/voicevox_35.mp3",
+      "bytes": 284685,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_36",
+      "provider": "voicevox",
+      "voiceId": "36",
+      "name": "VOICEVOX:四国めたん（ささやき）",
+      "file": "clips/voicevox_36.mp3",
+      "bytes": 192525,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_37",
+      "provider": "voicevox",
+      "voiceId": "37",
+      "name": "VOICEVOX:四国めたん（ヒソヒソ）",
+      "file": "clips/voicevox_37.mp3",
+      "bytes": 191085,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_38",
+      "provider": "voicevox",
+      "voiceId": "38",
+      "name": "VOICEVOX:ずんだもん（ヒソヒソ）",
+      "file": "clips/voicevox_38.mp3",
+      "bytes": 204045,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_39",
+      "provider": "voicevox",
+      "voiceId": "39",
+      "name": "VOICEVOX:玄野武宏（喜び）",
+      "file": "clips/voicevox_39.mp3",
+      "bytes": 166125,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_40",
+      "provider": "voicevox",
+      "voiceId": "40",
+      "name": "VOICEVOX:玄野武宏（ツンギレ）",
+      "file": "clips/voicevox_40.mp3",
+      "bytes": 166125,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_41",
+      "provider": "voicevox",
+      "voiceId": "41",
+      "name": "VOICEVOX:玄野武宏（悲しみ）",
+      "file": "clips/voicevox_41.mp3",
+      "bytes": 192525,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_42",
+      "provider": "voicevox",
+      "voiceId": "42",
+      "name": "VOICEVOX:ちび式じい（ノーマル）",
+      "file": "clips/voicevox_42.mp3",
+      "bytes": 244365,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_43",
+      "provider": "voicevox",
+      "voiceId": "43",
+      "name": "VOICEVOX:櫻歌ミコ（ノーマル）",
+      "file": "clips/voicevox_43.mp3",
+      "bytes": 216525,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_44",
+      "provider": "voicevox",
+      "voiceId": "44",
+      "name": "VOICEVOX:櫻歌ミコ（第二形態）",
+      "file": "clips/voicevox_44.mp3",
+      "bytes": 224205,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_45",
+      "provider": "voicevox",
+      "voiceId": "45",
+      "name": "VOICEVOX:櫻歌ミコ（ロリ）",
+      "file": "clips/voicevox_45.mp3",
+      "bytes": 289965,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_46",
+      "provider": "voicevox",
+      "voiceId": "46",
+      "name": "VOICEVOX:小夜/SAYO（ノーマル）",
+      "file": "clips/voicevox_46.mp3",
+      "bytes": 214605,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_47",
+      "provider": "voicevox",
+      "voiceId": "47",
+      "name": "VOICEVOX:ナースロボ＿タイプＴ（ノーマル）",
+      "file": "clips/voicevox_47.mp3",
+      "bytes": 210285,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_48",
+      "provider": "voicevox",
+      "voiceId": "48",
+      "name": "VOICEVOX:ナースロボ＿タイプＴ（楽々）",
+      "file": "clips/voicevox_48.mp3",
+      "bytes": 203565,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_49",
+      "provider": "voicevox",
+      "voiceId": "49",
+      "name": "VOICEVOX:ナースロボ＿タイプＴ（恐怖）",
+      "file": "clips/voicevox_49.mp3",
+      "bytes": 248205,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_50",
+      "provider": "voicevox",
+      "voiceId": "50",
+      "name": "VOICEVOX:ナースロボ＿タイプＴ（内緒話）",
+      "file": "clips/voicevox_50.mp3",
+      "bytes": 221325,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_51",
+      "provider": "voicevox",
+      "voiceId": "51",
+      "name": "VOICEVOX:†聖騎士 紅桜†（ノーマル）",
+      "file": "clips/voicevox_51.mp3",
+      "bytes": 175245,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_52",
+      "provider": "voicevox",
+      "voiceId": "52",
+      "name": "VOICEVOX:雀松朱司（ノーマル）",
+      "file": "clips/voicevox_52.mp3",
+      "bytes": 193005,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_53",
+      "provider": "voicevox",
+      "voiceId": "53",
+      "name": "VOICEVOX:麒ヶ島宗麟（ノーマル）",
+      "file": "clips/voicevox_53.mp3",
+      "bytes": 185805,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_54",
+      "provider": "voicevox",
+      "voiceId": "54",
+      "name": "VOICEVOX:春歌ナナ（ノーマル）",
+      "file": "clips/voicevox_54.mp3",
+      "bytes": 210285,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_55",
+      "provider": "voicevox",
+      "voiceId": "55",
+      "name": "VOICEVOX:猫使アル（ノーマル）",
+      "file": "clips/voicevox_55.mp3",
+      "bytes": 189645,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_56",
+      "provider": "voicevox",
+      "voiceId": "56",
+      "name": "VOICEVOX:猫使アル（おちつき）",
+      "file": "clips/voicevox_56.mp3",
+      "bytes": 190125,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_57",
+      "provider": "voicevox",
+      "voiceId": "57",
+      "name": "VOICEVOX:猫使アル（うきうき）",
+      "file": "clips/voicevox_57.mp3",
+      "bytes": 188205,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_58",
+      "provider": "voicevox",
+      "voiceId": "58",
+      "name": "VOICEVOX:猫使ビィ（ノーマル）",
+      "file": "clips/voicevox_58.mp3",
+      "bytes": 217005,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_59",
+      "provider": "voicevox",
+      "voiceId": "59",
+      "name": "VOICEVOX:猫使ビィ（おちつき）",
+      "file": "clips/voicevox_59.mp3",
+      "bytes": 212685,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_60",
+      "provider": "voicevox",
+      "voiceId": "60",
+      "name": "VOICEVOX:猫使ビィ（人見知り）",
+      "file": "clips/voicevox_60.mp3",
+      "bytes": 217005,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_61",
+      "provider": "voicevox",
+      "voiceId": "61",
+      "name": "VOICEVOX:中国うさぎ（ノーマル）",
+      "file": "clips/voicevox_61.mp3",
+      "bytes": 228525,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_62",
+      "provider": "voicevox",
+      "voiceId": "62",
+      "name": "VOICEVOX:中国うさぎ（おどろき）",
+      "file": "clips/voicevox_62.mp3",
+      "bytes": 205005,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_63",
+      "provider": "voicevox",
+      "voiceId": "63",
+      "name": "VOICEVOX:中国うさぎ（こわがり）",
+      "file": "clips/voicevox_63.mp3",
+      "bytes": 214605,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_64",
+      "provider": "voicevox",
+      "voiceId": "64",
+      "name": "VOICEVOX:中国うさぎ（へろへろ）",
+      "file": "clips/voicevox_64.mp3",
+      "bytes": 218925,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_65",
+      "provider": "voicevox",
+      "voiceId": "65",
+      "name": "VOICEVOX:波音リツ（クイーン）",
+      "file": "clips/voicevox_65.mp3",
+      "bytes": 213645,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_66",
+      "provider": "voicevox",
+      "voiceId": "66",
+      "name": "VOICEVOX:もち子(cv 明日葉よもぎ)（セクシー／あん子）",
+      "file": "clips/voicevox_66.mp3",
+      "bytes": 214125,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_67",
+      "provider": "voicevox",
+      "voiceId": "67",
+      "name": "VOICEVOX:栗田まろん（ノーマル）",
+      "file": "clips/voicevox_67.mp3",
+      "bytes": 192045,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_68",
+      "provider": "voicevox",
+      "voiceId": "68",
+      "name": "VOICEVOX:あいえるたん（ノーマル）",
+      "file": "clips/voicevox_68.mp3",
+      "bytes": 200685,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_69",
+      "provider": "voicevox",
+      "voiceId": "69",
+      "name": "VOICEVOX:満別花丸（ノーマル）",
+      "file": "clips/voicevox_69.mp3",
+      "bytes": 179565,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_70",
+      "provider": "voicevox",
+      "voiceId": "70",
+      "name": "VOICEVOX:満別花丸（元気）",
+      "file": "clips/voicevox_70.mp3",
+      "bytes": 183405,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_71",
+      "provider": "voicevox",
+      "voiceId": "71",
+      "name": "VOICEVOX:満別花丸（ささやき）",
+      "file": "clips/voicevox_71.mp3",
+      "bytes": 177165,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_72",
+      "provider": "voicevox",
+      "voiceId": "72",
+      "name": "VOICEVOX:満別花丸（ぶりっ子）",
+      "file": "clips/voicevox_72.mp3",
+      "bytes": 181005,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_73",
+      "provider": "voicevox",
+      "voiceId": "73",
+      "name": "VOICEVOX:満別花丸（ボーイ）",
+      "file": "clips/voicevox_73.mp3",
+      "bytes": 177165,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_74",
+      "provider": "voicevox",
+      "voiceId": "74",
+      "name": "VOICEVOX:琴詠ニア（ノーマル）",
+      "file": "clips/voicevox_74.mp3",
+      "bytes": 199725,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_75",
+      "provider": "voicevox",
+      "voiceId": "75",
+      "name": "VOICEVOX:ずんだもん（ヘロヘロ）",
+      "file": "clips/voicevox_75.mp3",
+      "bytes": 278445,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_76",
+      "provider": "voicevox",
+      "voiceId": "76",
+      "name": "VOICEVOX:ずんだもん（なみだめ）",
+      "file": "clips/voicevox_76.mp3",
+      "bytes": 264525,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_77",
+      "provider": "voicevox",
+      "voiceId": "77",
+      "name": "VOICEVOX:もち子(cv 明日葉よもぎ)（泣き）",
+      "file": "clips/voicevox_77.mp3",
+      "bytes": 225645,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_78",
+      "provider": "voicevox",
+      "voiceId": "78",
+      "name": "VOICEVOX:もち子(cv 明日葉よもぎ)（怒り）",
+      "file": "clips/voicevox_78.mp3",
+      "bytes": 226125,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_79",
+      "provider": "voicevox",
+      "voiceId": "79",
+      "name": "VOICEVOX:もち子(cv 明日葉よもぎ)（喜び）",
+      "file": "clips/voicevox_79.mp3",
+      "bytes": 254445,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_80",
+      "provider": "voicevox",
+      "voiceId": "80",
+      "name": "VOICEVOX:もち子(cv 明日葉よもぎ)（のんびり）",
+      "file": "clips/voicevox_80.mp3",
+      "bytes": 307725,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_81",
+      "provider": "voicevox",
+      "voiceId": "81",
+      "name": "VOICEVOX:青山龍星（熱血）",
+      "file": "clips/voicevox_81.mp3",
+      "bytes": 193005,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_82",
+      "provider": "voicevox",
+      "voiceId": "82",
+      "name": "VOICEVOX:青山龍星（不機嫌）",
+      "file": "clips/voicevox_82.mp3",
+      "bytes": 202125,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_83",
+      "provider": "voicevox",
+      "voiceId": "83",
+      "name": "VOICEVOX:青山龍星（喜び）",
+      "file": "clips/voicevox_83.mp3",
+      "bytes": 187725,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_84",
+      "provider": "voicevox",
+      "voiceId": "84",
+      "name": "VOICEVOX:青山龍星（しっとり）",
+      "file": "clips/voicevox_84.mp3",
+      "bytes": 190605,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_85",
+      "provider": "voicevox",
+      "voiceId": "85",
+      "name": "VOICEVOX:青山龍星（かなしみ）",
+      "file": "clips/voicevox_85.mp3",
+      "bytes": 190605,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_86",
+      "provider": "voicevox",
+      "voiceId": "86",
+      "name": "VOICEVOX:青山龍星（囁き）",
+      "file": "clips/voicevox_86.mp3",
+      "bytes": 193005,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_87",
+      "provider": "voicevox",
+      "voiceId": "87",
+      "name": "VOICEVOX:後鬼（人間（怒り）ver.）",
+      "file": "clips/voicevox_87.mp3",
+      "bytes": 212205,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_88",
+      "provider": "voicevox",
+      "voiceId": "88",
+      "name": "VOICEVOX:後鬼（鬼ver.）",
+      "file": "clips/voicevox_88.mp3",
+      "bytes": 190605,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "voicevox_89",
+      "provider": "voicevox",
+      "voiceId": "89",
+      "name": "VOICEVOX:Voidoll(CV:丹下桜)（ノーマル）",
+      "file": "clips/voicevox_89.mp3",
+      "bytes": 206925,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    }
+  ]
+}
