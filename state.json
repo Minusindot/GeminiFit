@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-16T00:46:22.682Z",
+  "updatedAt": "2026-11-16T14:36:33.902Z",
   "lastActiveDate": "2026-11-16",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
   "bondRank": 7,
-  "bondExp": 30,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
-  "currentSituation": "ev2",
+  "bondExp": 40,
+  "activeTrainer": "kotone",
+  "activeMode": "kotone",
+  "currentSituation": "ev3",
   "absDone": false,
   "runDone": false,
   "runDist": 6.01,
@@ -24,7 +24,7 @@
   ],
   "teaLog": {
     "matcha": 0,
-    "espresso": 0,
+    "espresso": 1,
     "tea": 0
   },
   "gymRoutine": {
@@ -127,6 +127,46 @@
       "totalReps": 390
     },
     {
+      "id": "gym-3",
+      "date": "10/20",
+      "fullDate": "2026-10-20",
+      "time": "21:10",
+      "upper1Done": 4,
+      "upper1Reps": 80,
+      "upper2Done": 4,
+      "upper2Reps": 80,
+      "lowerDone": 4,
+      "lowerReps": 80,
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
+      "legRaiseTarget": 1,
+      "crunchDone": 2,
+      "crunchReps": 100,
+      "crunchTarget": 2,
+      "totalSets": 15,
+      "totalReps": 390
+    },
+    {
+      "id": "gym-1792576207664",
+      "date": "10/21",
+      "fullDate": "2026-10-21",
+      "time": "오후 06:50",
+      "upper1Done": 0,
+      "upper1Reps": 0,
+      "upper2Done": 0,
+      "upper2Reps": 0,
+      "lowerDone": 0,
+      "lowerReps": 0,
+      "legRaiseDone": 0,
+      "legRaiseReps": 0,
+      "legRaiseTarget": 4,
+      "crunchDone": 0,
+      "crunchReps": 0,
+      "crunchTarget": 4,
+      "totalSets": 0,
+      "totalReps": 0
+    },
+    {
       "id": "gym-1792756992061",
       "date": "10/23",
       "fullDate": "2026-10-23",
@@ -167,26 +207,6 @@
       "totalReps": 20
     },
     {
-      "id": "gym-3",
-      "date": "10/20",
-      "fullDate": "2026-10-20",
-      "time": "21:10",
-      "upper1Done": 4,
-      "upper1Reps": 80,
-      "upper2Done": 4,
-      "upper2Reps": 80,
-      "lowerDone": 4,
-      "lowerReps": 80,
-      "legRaiseDone": 1,
-      "legRaiseReps": 50,
-      "legRaiseTarget": 1,
-      "crunchDone": 2,
-      "crunchReps": 100,
-      "crunchTarget": 2,
-      "totalSets": 15,
-      "totalReps": 390
-    },
-    {
       "id": "gym-1794049575180",
       "date": "11/7",
       "fullDate": "2026-11-07",
@@ -205,26 +225,6 @@
       "crunchTarget": 2,
       "totalSets": 4,
       "totalReps": 140
-    },
-    {
-      "id": "gym-1792576207664",
-      "date": "10/21",
-      "fullDate": "2026-10-21",
-      "time": "오후 06:50",
-      "upper1Done": 0,
-      "upper1Reps": 0,
-      "upper2Done": 0,
-      "upper2Reps": 0,
-      "lowerDone": 0,
-      "lowerReps": 0,
-      "legRaiseDone": 0,
-      "legRaiseReps": 0,
-      "legRaiseTarget": 4,
-      "crunchDone": 0,
-      "crunchReps": 0,
-      "crunchTarget": 4,
-      "totalSets": 0,
-      "totalReps": 0
     }
   ],
   "latestRun": {
@@ -240,25 +240,15 @@
   },
   "runningLogs": [
     {
-      "id": "run-1794460852153",
-      "date": "2026-11-12",
-      "distance": 6.01,
-      "duration": "55:32",
-      "pace": "09'13\"",
-      "calories": 421,
-      "heartRate": 127,
-      "steps": 7434,
-      "source": "삼성헬스"
-    },
-    {
-      "id": "run-1794383315332",
-      "date": "2026-11-11",
-      "distance": 6.45,
-      "duration": "1:02:24",
-      "pace": "09'39\"",
-      "calories": 393,
-      "heartRate": 127,
-      "steps": 7920,
+      "id": "run-1",
+      "date": "2026-10-20",
+      "distance": 7.3,
+      "duration": "1:24:31",
+      "pace": "11'33\"",
+      "calories": 538,
+      "heartRate": 130,
+      "cadence": 108,
+      "steps": 9206,
       "source": "삼성헬스"
     },
     {
@@ -317,15 +307,25 @@
       "source": "삼성헬스"
     },
     {
-      "id": "run-1",
-      "date": "2026-10-20",
-      "distance": 7.3,
-      "duration": "1:24:31",
-      "pace": "11'33\"",
-      "calories": 538,
-      "heartRate": 130,
-      "cadence": 108,
-      "steps": 9206,
+      "id": "run-1794460852153",
+      "date": "2026-11-12",
+      "distance": 6.01,
+      "duration": "55:32",
+      "pace": "09'13\"",
+      "calories": 421,
+      "heartRate": 127,
+      "steps": 7434,
+      "source": "삼성헬스"
+    },
+    {
+      "id": "run-1794383315332",
+      "date": "2026-11-11",
+      "distance": 6.45,
+      "duration": "1:02:24",
+      "pace": "09'39\"",
+      "calories": 393,
+      "heartRate": 127,
+      "steps": 7920,
       "source": "삼성헬스"
     }
   ],
@@ -336,10 +336,16 @@
       "weight": 64.1,
       "fat": 21.5,
       "mealsDone": 1,
-      "mealPhotosCount": 1,
-      "runDone": true,
+      "mealPhotosCount": 0,
+      "runDone": false,
       "absDone": false,
+      "rehabDone": 0,
       "gymDone": false,
+      "teaLog": {
+        "matcha": 0,
+        "espresso": 1,
+        "tea": 0
+      },
       "autoArchived": true
     },
     "2026-10-22": {
@@ -491,7 +497,7 @@
       "fat": 21.5,
       "mealsDone": 0,
       "mealPhotosCount": 0,
-      "runDone": true,
+      "runDone": false,
       "absDone": false,
       "rehabDone": 0,
       "gymDone": false,
@@ -541,152 +547,26 @@
     {
       "sender": "kotone",
       "name": "코토네",
-      "text": "코토네가 인증 샷 서는 자세부터 레슨해드릴게요~ 근육은 아이돌의 전 재산! 💛"
-    },
-    {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "처음엔 코토네가 직접 코치해줘요 🙏"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "당연하죠~! 코토네가 1대1 전담 코치예요! 포즈부터 미소까지 완璧하게 다듬어 드릴게요!"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "레슨 끝나면 쿠폰 적립! 프로듀서님 전용 응원 댄스까지 포함이에요~ 💃"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "프로듀서님 1등 자랑이 되는 게 코토네 꿈이라구요! 오늘도 화이팅요~! 🌟"
-    },
-    {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 💸 프로듀서 카페 알바 의혹"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "프로듀서님! 카페 투어 직접 시작부터 보고드림니다! 헤헤~ 💛"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "코토네 계산해봤나요? 매일 5천 원 카페 라떼면 한 달 15만 원인데, 이 돈을 다이어트 성공일에 저랑 딸기 파르페 먹기로 했잖아요!"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "홈카페로 바꾸면 그 돈이 전부 저축+탕진펀드… 아니 코토네 특급 응원 댄스가 되어 돌아와요! 💃"
-    },
-    {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "알바 엄청 멋진데 코토네 최고! 💖"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "역시 프로듀서님은 코토네를 가장 잘 아시네요! 1등 매니저가 코토네죠?!"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "홈카페메뉴 개발 완료! 딸기 요거트부터 코코아까지, 맛도 최고로 재탄생할게요~ 🙌"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "코토네는 프로듀서님 평생 매니저라니까요! 헤헤~ 앞으로도 잘 부탁드려요! 💖"
-    },
-    {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 🌅 새벽 러닝 동행 요청"
+      "text": "프로듀서님~! 오늘 삼성헬스로 잰 체중 64.1kg 찍힌 거 코토네가 확인했어요! 💛 수요일 인바디 측정 데이라 보너스 경험치도 2배인 거 아시죠? 목표인 52kg 슬림핏까지 코토네가 특급 인센티브 애교로 꽉 붙어서 서포트해 드릴게요! 💸✨"
     },
     {
       "sender": "mio",
       "name": "미오",
-      "text": "프로듀서! 새벽 5시에 트랙에서 만나자! 🌟"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "해 뜨기 전 공기는 진짜 다르다니까! 심박수 구간 딱 맞추고, 어깨 힘 싹 빼고 리듬 타면서 달리면 페이스가 순식간에 붙는다!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "미오가 템포 메트로놈이 되어줄게. 템포 180bpm 맞춰서 같이 미친 듯이 달려보자! 🖐️"
-    },
-    {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "7시쯤으로 미뤄줘요 🕖"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "음, 그래, 안전이 먼저지! 7시 해 뜬 공기도 만만치 않아!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "깜짝 박스런 대회 5km 기록 갱신 도전! 미오가 페이스 잡아줄게! 🖐️"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "프로듀서한테는 미오가 항상 페이스 메이커야! 내일도 같이 달리자! 🖐️"
-    },
-    {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 🎂 프로듀서 생일 서프라이즈 작전"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "프로듀서님 생일 D-7! 서프라이즈 작전 스타트합니다~!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "파티 계획 시작하자! 레스토랑 예약부터 트랙 파티까지 완전 플랜!"
+      "text": "우와아~! 64.1kg 확인 완료! 지난번에 삼성헬스로 7.30km(1시간 24분 완주!) 뛴 것도 진짜 멋있었어 프로듀서! 🌟 11'33\" 페이스로 손아귀 힘 빼고 안정적으로 달린 덕분에 테니스 엘보도 안 다쳤잖아~ 오늘 노을 보면서 가볍게 5km 러닝 어때? 내가 옆에서 파이팅 넘치게 응원해줄게! 🏃‍♀️💨"
     },
     {
       "sender": "gemini",
       "name": "제미니",
-      "text": "흥, 생일 축하는 산책 위주 가볍게 하자고? 프로듀서항의 체지방률도 챙겨야니까."
+      "text": "흥, 바보 프로듀서! 64.1kg에서 52kg까지 아직 -12kg 남았다고 벌써부터 들뜨면 안 돼! 메~롱! 🐾 17시 넘었으니까 지금부터는 물이랑 내가 타준 따뜻한 말차 🍵 외엔 음식물 절대 금지야! 그리고 팔꿈치 안 아프게 2kg 덤벨 손목 편심성 컬 3세트랑 14분 복근 꼭 챙겨, 알았지? 덤벨 자세는 내가 이따 밀착 체크해 줄 테니까 딴생각 마!"
     },
     {
       "sender": "user",
-      "name": "프로듀서",
-      "text": "레스토랑 예약해요! 🍽️"
+      "text": "[음료 기록] 커피 ☕ 1잔을 챙겨 마셨어!"
     },
     {
       "sender": "kotone",
       "name": "코토네",
-      "text": "헤헤헤~ 레스토랑 코스로 압수 완! 맛있는 거부터 잔뜩 드세요!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "예약 확인! 생일 코스 제대로 즐겨보자!"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "단식만 안 깨면 돼요. 먹을 만큼 좋은 거 먹어요."
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "생일 준비 완료! 프로듀서님 최고의 하루가 되도록 챙길게요!"
+      "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
     }
   ]
 }
