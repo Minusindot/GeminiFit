@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-11-16T18:02:11.777Z",
+  "roles": {
+    "gemini": {
+      "id": "fish_69eb6788dfae49cbad7ab498f459fb80",
+      "name": "Anime girl",
+      "provider": "fish",
+      "voiceId": "69eb6788dfae49cbad7ab498f459fb80",
+      "stars": 5
+    },
+    "kotone": {
+      "id": "fish_11413f183cf24e04859607efd14c832d",
+      "name": "Anime girl",
+      "provider": "fish",
+      "voiceId": "11413f183cf24e04859607efd14c832d",
+      "stars": 5
+    },
+    "mio": {
+      "id": "fish_bc2f5fbb6fae4777b60e3bb260a847b9",
+      "name": "Anime",
+      "provider": "fish",
+      "voiceId": "bc2f5fbb6fae4777b60e3bb260a847b9",
+      "stars": 5
+    }
+  }
+}

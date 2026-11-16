@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-16T17:45:23+00:00",
+  "generatedAt": "2026-11-16T18:05:16+00:00",
   "script": [
     "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。",
     "おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
@@ -56,7 +56,7 @@
       "voiceId": "69eb6788dfae49cbad7ab498f459fb80",
       "name": "Anime girl",
       "file": "clips/fish_69eb6788dfae49cbad7ab498f459fb80.mp3",
-      "bytes": 207724,
+      "bytes": 193514,
       "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
     },
     {
@@ -114,12 +114,48 @@
       "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
     },
     {
+      "id": "fish_2c05c7f51b224c39bbd545c9d56672f5",
+      "provider": "fish",
+      "voiceId": "2c05c7f51b224c39bbd545c9d56672f5",
+      "name": "Kanao",
+      "file": "clips/fish_2c05c7f51b224c39bbd545c9d56672f5.mp3",
+      "bytes": 177213,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
       "id": "fish_49513a6156934125a49837a423c86621",
       "provider": "fish",
       "voiceId": "49513a6156934125a49837a423c86621",
       "name": "Lively Anime Girl",
       "file": "clips/fish_49513a6156934125a49837a423c86621.mp3",
       "bytes": 156315,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_18fac64df8184cbfb03842cff4ddd3d5",
+      "provider": "fish",
+      "voiceId": "18fac64df8184cbfb03842cff4ddd3d5",
+      "name": "Makima Japanese",
+      "file": "clips/fish_18fac64df8184cbfb03842cff4ddd3d5.mp3",
+      "bytes": 189752,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_b647868b818341998af459c2ce91d8dc",
+      "provider": "fish",
+      "voiceId": "b647868b818341998af459c2ce91d8dc",
+      "name": "Usada Pekora",
+      "file": "clips/fish_b647868b818341998af459c2ce91d8dc.mp3",
+      "bytes": 157987,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_287a71791f354e88b1739765de18053f",
+      "provider": "fish",
+      "voiceId": "287a71791f354e88b1739765de18053f",
+      "name": "Yuki Tsukumo Japanese",
+      "file": "clips/fish_287a71791f354e88b1739765de18053f.mp3",
+      "bytes": 190588,
       "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
     },
     {
@@ -150,12 +186,120 @@
       "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
     },
     {
+      "id": "fish_9767b8872dc946beab4431861653dd94",
+      "provider": "fish",
+      "voiceId": "9767b8872dc946beab4431861653dd94",
+      "name": "みこちVTuber",
+      "file": "clips/fish_9767b8872dc946beab4431861653dd94.mp3",
+      "bytes": 177213,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_73647cd4ff7c477cb787d5fd8068f3e8",
+      "provider": "fish",
+      "voiceId": "73647cd4ff7c477cb787d5fd8068f3e8",
+      "name": "アニメ声の少女",
+      "file": "clips/fish_73647cd4ff7c477cb787d5fd8068f3e8.mp3",
+      "bytes": 177213,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_5161d41404314212af1254556477c17d",
+      "provider": "fish",
+      "voiceId": "5161d41404314212af1254556477c17d",
+      "name": "元気な女性",
+      "file": "clips/fish_5161d41404314212af1254556477c17d.mp3",
+      "bytes": 166764,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_a1bc0dd7625243b4b402db009e293d91",
+      "provider": "fish",
+      "voiceId": "a1bc0dd7625243b4b402db009e293d91",
+      "name": "元気な少女",
+      "file": "clips/fish_a1bc0dd7625243b4b402db009e293d91.mp3",
+      "bytes": 158405,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
       "id": "fish_6bc85a767cf04a138c5621770e2821b0",
       "provider": "fish",
       "voiceId": "6bc85a767cf04a138c5621770e2821b0",
       "name": "地声かるび",
       "file": "clips/fish_6bc85a767cf04a138c5621770e2821b0.mp3",
       "bytes": 174288,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_5a538b0a5eb94b52ab77622e65ba14f0",
+      "provider": "fish",
+      "voiceId": "5a538b0a5eb94b52ab77622e65ba14f0",
+      "name": "女性",
+      "file": "clips/fish_5a538b0a5eb94b52ab77622e65ba14f0.mp3",
+      "bytes": 124550,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_8980ada77e26479bab58f0c29b38cdc2",
+      "provider": "fish",
+      "voiceId": "8980ada77e26479bab58f0c29b38cdc2",
+      "name": "女性",
+      "file": "clips/fish_8980ada77e26479bab58f0c29b38cdc2.mp3",
+      "bytes": 166764,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_a4922fa2c5f141a0a13054062caec2bf",
+      "provider": "fish",
+      "voiceId": "a4922fa2c5f141a0a13054062caec2bf",
+      "name": "女性",
+      "file": "clips/fish_a4922fa2c5f141a0a13054062caec2bf.mp3",
+      "bytes": 118281,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_5f36a5c0c33f42ecbc068021c6c3c588",
+      "provider": "fish",
+      "voiceId": "5f36a5c0c33f42ecbc068021c6c3c588",
+      "name": "女性",
+      "file": "clips/fish_5f36a5c0c33f42ecbc068021c6c3c588.mp3",
+      "bytes": 150464,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_749686d0ab9d447184cb0ae47dd052eb",
+      "provider": "fish",
+      "voiceId": "749686d0ab9d447184cb0ae47dd052eb",
+      "name": "女性",
+      "file": "clips/fish_749686d0ab9d447184cb0ae47dd052eb.mp3",
+      "bytes": 149628,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_5bfbecf3827044ae8e397059b8d2dfb5",
+      "provider": "fish",
+      "voiceId": "5bfbecf3827044ae8e397059b8d2dfb5",
+      "name": "日本女",
+      "file": "clips/fish_5bfbecf3827044ae8e397059b8d2dfb5.mp3",
+      "bytes": 112430,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_ff67a353de6f43ba84aebed9d190bbf8",
+      "provider": "fish",
+      "voiceId": "ff67a353de6f43ba84aebed9d190bbf8",
+      "name": "糖度少女",
+      "file": "clips/fish_ff67a353de6f43ba84aebed9d190bbf8.mp3",
+      "bytes": 243251,
+      "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
+    },
+    {
+      "id": "fish_0089dce5fefb4c6ba9b9f2f0debe1ddc",
+      "provider": "fish",
+      "voiceId": "0089dce5fefb4c6ba9b9f2f0debe1ddc",
+      "name": "落ち着いた女性",
+      "file": "clips/fish_0089dce5fefb4c6ba9b9f2f0debe1ddc.mp3",
+      "bytes": 188080,
       "text": "プロデューサーさん、おはようございます！今日も一緒にがんばりましょうね。 おいでやす。今日もおきばりやす。……無理はあかんで、お茶でも飲んでいき。"
     },
     {

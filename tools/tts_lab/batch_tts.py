@@ -217,9 +217,12 @@ def main(argv=None) -> int:
             raise SystemExit("FISH_AUDIO_API_KEY is not set (needed by a fish pick)")
 
     preset = {}
+    remap = {}
     if MAP_FILE.exists():
         try:
-            preset = json.loads(MAP_FILE.read_text(encoding="utf-8")).get("map", {})
+            saved = json.loads(MAP_FILE.read_text(encoding="utf-8"))
+            preset = saved.get("map", {})
+            remap = saved.get("remap", {})
         except Exception:
             preset = {}
 
@@ -257,6 +260,11 @@ def main(argv=None) -> int:
         preset[rec["clean"]] = rel
         made += 1
 
+        # Remember which hand-made MP3 this line used to point at, so the data
+        # file can be repointed at the freshly baked clip (keeps one voice).
+        if rec.get("audio"):
+            remap[rec["audio"]] = rel
+
         if fish_key:
             from tts_lab import fish_credit
             now = fish_credit(fish_key, session)
@@ -269,13 +277,13 @@ def main(argv=None) -> int:
 
         if made % 10 == 0 or i == len(unique):
             MAP_FILE.write_text(
-                json.dumps({"map": preset, "voices": selection}, ensure_ascii=False, indent=2),
+                json.dumps({"map": preset, "remap": remap, "voices": selection}, ensure_ascii=False, indent=2),
                 encoding="utf-8",
             )
             print(f"  [{i}/{len(unique)}] ok · made {made} skipped {skipped} failed {failed}")
 
     MAP_FILE.write_text(
-        json.dumps({"map": preset, "voices": selection}, ensure_ascii=False, indent=2),
+        json.dumps({"map": preset, "remap": remap, "voices": selection}, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
     print(f"done · made {made} skipped {skipped} failed {failed} · {MAP_FILE}")
