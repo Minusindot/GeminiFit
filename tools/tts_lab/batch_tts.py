@@ -47,7 +47,16 @@ from tts_lab import (  # noqa: E402
 import requests  # noqa: E402
 
 # Speakers that have their own voice, plus the narrator which rides on Gemini.
-ROLE_FOR_SPEAKER = {"gemini": "gemini", "kotone": "kotone", "mio": "mio", "narrator": "gemini"}
+ROLE_FOR_SPEAKER = {
+    "gemini": "gemini",
+    "kotone": "kotone",
+    "mio": "mio",
+    "narrator": "gemini",
+    # Guest cameos: voiced, but they only appear as a dialogue bubble.
+    "makima": "makima",
+    "miko": "miko",
+}
+CORE_ROLES = ("gemini", "kotone", "mio")
 
 
 # ---------------------------------------------------------------------------
@@ -78,7 +87,15 @@ lessons.forEach(l => {
   if (typeof l.titleJp === 'string' && l.titleJp.trim()) {
     out.push({ kind: 'title', speaker: 'gemini', raw: l.titleJp, audio: null });
   }
+  (l.quizzes || []).forEach(q => {
+    if (typeof q.geminiReactJp === 'string' && q.geminiReactJp.trim()) {
+      out.push({ kind: 'react', speaker: 'gemini', raw: q.geminiReactJp, audio: null });
+    }
+  });
 });
+// The shared "wrong answer" encouragement line the engine speaks verbatim.
+out.push({ kind: 'wrong', speaker: 'gemini',
+  raw: 'おしい！もう<ruby>一度<rt>いちど</rt></ruby>確認しましょね🌸', audio: null });
 process.stdout.write(JSON.stringify(out));
 """
 
@@ -137,11 +154,16 @@ def load_selection(path: Path) -> dict:
     data = json.loads(path.read_text(encoding="utf-8"))
     roles = data.get("roles", data)
     out = {}
-    for role in ("gemini", "kotone", "mio"):
+    for role in CORE_ROLES:
         pick = roles.get(role)
         if not pick:
             raise SystemExit(f"selection is missing a voice for '{role}'")
         out[role] = pick
+    # Optional guest voices (makima / miko). Only included when assigned, so the
+    # three main characters never fall back to somebody else's voice.
+    for role, pick in roles.items():
+        if role not in out and pick:
+            out[role] = pick
     return out
 
 
@@ -234,7 +256,8 @@ def main(argv=None) -> int:
         print(f"fish credit before: {credit_start} (model=s2.1-pro-free)")
     for i, rec in enumerate(unique, 1):
         role = ROLE_FOR_SPEAKER.get(rec["speaker"], "gemini")
-        pick = selection[role]
+        pick = selection.get(role) or selection["gemini"]
+        role = role if role in selection else "gemini"
         name = slug(rec["clean"], role)
         rel = f"./audio/kotonoha/auto/{name}.mp3"
         path = OUT_DIR / f"{name}.mp3"

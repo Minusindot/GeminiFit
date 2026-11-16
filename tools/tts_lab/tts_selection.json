@@ -1,25 +1,39 @@
 {
-  "generatedAt": "2026-11-16T18:02:11.777Z",
+  "generatedAt": "2026-11-17T00:00:00.000Z",
   "roles": {
     "gemini": {
-      "id": "fish_69eb6788dfae49cbad7ab498f459fb80",
-      "name": "Anime girl",
+      "id": "fish_73647cd4ff7c477cb787d5fd8068f3e8",
+      "name": "アニメ声の少女",
       "provider": "fish",
-      "voiceId": "69eb6788dfae49cbad7ab498f459fb80",
+      "voiceId": "73647cd4ff7c477cb787d5fd8068f3e8",
       "stars": 5
     },
     "kotone": {
-      "id": "fish_11413f183cf24e04859607efd14c832d",
+      "id": "fish_0dfcb12204c54dd6beb2d7f89822e76e",
       "name": "Anime girl",
       "provider": "fish",
-      "voiceId": "11413f183cf24e04859607efd14c832d",
+      "voiceId": "0dfcb12204c54dd6beb2d7f89822e76e",
       "stars": 5
     },
     "mio": {
-      "id": "fish_bc2f5fbb6fae4777b60e3bb260a847b9",
-      "name": "Anime",
+      "id": "fish_a1bc0dd7625243b4b402db009e293d91",
+      "name": "元気な少女",
       "provider": "fish",
-      "voiceId": "bc2f5fbb6fae4777b60e3bb260a847b9",
+      "voiceId": "a1bc0dd7625243b4b402db009e293d91",
+      "stars": 5
+    },
+    "makima": {
+      "id": "fish_18fac64df8184cbfb03842cff4ddd3d5",
+      "name": "Makima Japanese",
+      "provider": "fish",
+      "voiceId": "18fac64df8184cbfb03842cff4ddd3d5",
+      "stars": 5
+    },
+    "miko": {
+      "id": "fish_9767b8872dc946beab4431861653dd94",
+      "name": "みこちVTuber",
+      "provider": "fish",
+      "voiceId": "9767b8872dc946beab4431861653dd94",
       "stars": 5
     }
   }
