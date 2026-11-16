@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-16T14:37:01.506Z",
+  "updatedAt": "2026-11-16T14:37:38.667Z",
   "lastActiveDate": "2026-11-16",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
   "bondRank": 7,
-  "bondExp": 60,
+  "bondExp": 80,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
   "currentSituation": "ev3",
@@ -568,7 +568,7 @@
         "espresso": 1,
         "tea": 0
       },
-      "lastUpdated": "2026-11-16T14:37:01.506Z"
+      "lastUpdated": "2026-11-16T14:37:38.667Z"
     }
   },
   "chatHistory": [
@@ -595,6 +595,11 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 11:37 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.01km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"기록 갱신을 확인했사옵니다 🍵 목표 52kg까지 소녀와 함께 정갈하게 달려보시와요, 프로듀서님 🐾\""
     },
     {
       "sender": "dual",
