@@ -1,21 +1,19 @@
 {
-  "updatedAt": "2026-11-16T14:36:33.902Z",
+  "updatedAt": "2026-11-16T14:37:01.506Z",
   "lastActiveDate": "2026-11-16",
   "theme": "light",
   "weight": 64.1,
   "fat": 21.5,
   "bondRank": 7,
-  "bondExp": 40,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
+  "bondExp": 60,
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
   "currentSituation": "ev3",
   "absDone": false,
   "runDone": false,
   "runDist": 6.01,
   "rehab": [
-    false,
-    false,
-    false
+    true
   ],
   "meals": [
     false,
@@ -29,14 +27,14 @@
   },
   "gymRoutine": {
     "upper1": {
-      "name": "체스트 프레스",
+      "name": "사이드 레터럴 레이즈",
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ],
-      "weight": "40kg",
+      "weight": "5kg × 20회",
       "reps": 20,
       "targetSets": 4
     },
@@ -67,7 +65,7 @@
     "legRaise": {
       "name": "캡틴스 체어 레그레이즈",
       "sets": [
-        false
+        true
       ],
       "target": "15회",
       "reps": 50,
@@ -76,8 +74,8 @@
     "crunch": {
       "name": "크런치",
       "sets": [
-        false,
-        false
+        true,
+        true
       ],
       "target": "20회",
       "reps": 50,
@@ -147,26 +145,6 @@
       "totalReps": 390
     },
     {
-      "id": "gym-1792576207664",
-      "date": "10/21",
-      "fullDate": "2026-10-21",
-      "time": "오후 06:50",
-      "upper1Done": 0,
-      "upper1Reps": 0,
-      "upper2Done": 0,
-      "upper2Reps": 0,
-      "lowerDone": 0,
-      "lowerReps": 0,
-      "legRaiseDone": 0,
-      "legRaiseReps": 0,
-      "legRaiseTarget": 4,
-      "crunchDone": 0,
-      "crunchReps": 0,
-      "crunchTarget": 4,
-      "totalSets": 0,
-      "totalReps": 0
-    },
-    {
       "id": "gym-1792756992061",
       "date": "10/23",
       "fullDate": "2026-10-23",
@@ -225,6 +203,29 @@
       "crunchTarget": 2,
       "totalSets": 4,
       "totalReps": 140
+    },
+    {
+      "id": "gym-1794839806560",
+      "date": "11/16",
+      "fullDate": "2026-11-16",
+      "time": "오후 11:36",
+      "upper1Done": 4,
+      "upper1Reps": 80,
+      "upper1Name": "사이드 레터럴 레이즈",
+      "upper2Done": 0,
+      "upper2Reps": 0,
+      "upper2Name": "시티드 케이블 로우",
+      "lowerDone": 0,
+      "lowerReps": 0,
+      "lowerName": "레그 프레스",
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
+      "legRaiseTarget": 1,
+      "crunchDone": 2,
+      "crunchReps": 100,
+      "crunchTarget": 2,
+      "totalSets": 7,
+      "totalReps": 230
     }
   ],
   "latestRun": {
@@ -541,6 +542,33 @@
         "tea": 0
       },
       "autoArchived": true
+    },
+    "2026-11-16": {
+      "date": "2026-11-16",
+      "weight": 64.1,
+      "fat": 21.5,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "runDone": false,
+      "absDone": false,
+      "gymDone": false,
+      "latestRun": {
+        "id": "run-1794460852153",
+        "date": "2026-11-12",
+        "distance": 6.01,
+        "duration": "55:32",
+        "pace": "09'13\"",
+        "calories": 421,
+        "heartRate": 127,
+        "steps": 7434,
+        "source": "삼성헬스"
+      },
+      "teaLog": {
+        "matcha": 0,
+        "espresso": 1,
+        "tea": 0
+      },
+      "lastUpdated": "2026-11-16T14:37:01.506Z"
     }
   },
   "chatHistory": [
@@ -567,6 +595,11 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 11:37 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.01km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"기록 갱신을 확인했사옵니다 🍵 목표 52kg까지 소녀와 함께 정갈하게 달려보시와요, 프로듀서님 🐾\""
     }
   ]
 }
