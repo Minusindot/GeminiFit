@@ -738,7 +738,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "우후후, 당황하지 마시어요. 교토역이라면 이 길을 따라 쭉 가기만 하면 된다지요 🌸",
         "expr": "idle",
         "bg": "park_track",
-        "outfit": "default"
+        "outfit": "teahouse"
       },
       {
         "speaker": "mio",
@@ -760,7 +760,7 @@ window.KOTONOHA_LESSONS = [
         "nameJp": "ジェミニ",
         "nameKo": "제미니",
         "avatar": "./image/03 gemini/avatar_gemini.png",
-        "sceneImg": "./image/03 gemini/gemini_30_osaka_takoyaki_tsukkomi.png",
+        "sceneImg": "./image/03 gemini/gemini_27_kyoto_cherry_walk.png",
         "audio": "./audio/kotonoha/auto/gemini_013b204e00.mp3",
         "jpRuby": "うちは<ruby>京都<rt>きょうと</rt></ruby>のアイドルどすさかいね🍵 ほな、<ruby>早<rt>はや</rt></ruby>う<ruby>行<rt>い</rt></ruby>きましょか！",
         "jpPlain": "うちは京都のアイドルどすさかいね。ほな、早う行きましょか！",
@@ -768,7 +768,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "소녀는 교토의 아이돌이니까요 🍵 자, 그럼 얼른 가보시와요!",
         "expr": "idle",
         "bg": "park_track",
-        "outfit": "default"
+        "outfit": "teahouse"
       },
       {
         "guest": true,
@@ -924,7 +924,7 @@ window.KOTONOHA_LESSONS = [
         "pron": "와앗, 큐-니 아메가 훗테 키타요! 푸로듀-사-, 카사 아루?",
         "ko": "와앗, 갑자기 비가 내리기 시작했어! 프로듀서, 우산 있어? ☔",
         "expr": "idle",
-        "bg": "gym_indoor",
+        "bg": "osaka_street",
         "outfit": "default"
       },
       {
@@ -939,7 +939,7 @@ window.KOTONOHA_LESSONS = [
         "pron": "콘비니데 비니-루가사오 카우토 나나햐쿠엔모 시마스요! 타카스기마스~",
         "ko": "편의점에서 비닐우산 사면 700엔이나 한다구요! 너무 비싸요~ 😭",
         "expr": "idle",
-        "bg": "gym_indoor",
+        "bg": "osaka_street",
         "outfit": "default"
       },
       {
@@ -954,8 +954,8 @@ window.KOTONOHA_LESSONS = [
         "pron": "푸로듀-사-항, 누레타라 카제 히키맛세. 호라, 우치노 카사니 하이리요시.",
         "ko": "프로듀서님, 비에 젖으시면 감기 드시와요. 자, 소녀의 우산 속으로 들어오시지요 🌸",
         "expr": "idle",
-        "bg": "gym_indoor",
-        "outfit": "default"
+        "bg": "osaka_street",
+        "outfit": "menhera"
       },
       {
         "speaker": "gemini",
@@ -969,23 +969,23 @@ window.KOTONOHA_LESSONS = [
         "pron": "카타가 부츠캇테 도키도키 시하루? 후후, 못토 치코- 욧테모 에-응 도스에.",
         "ko": "어깨가 닿아 두근거리시나요? 우후후, 좀 더 가까이 다가오셔도 괜찮사와요 💖🐾",
         "expr": "love",
-        "bg": "gym_indoor",
-        "outfit": "default"
+        "bg": "osaka_street",
+        "outfit": "menhera"
       },
       {
         "speaker": "gemini",
         "nameJp": "ジェミニ",
         "nameKo": "제미니",
         "avatar": "./image/03 gemini/avatar_gemini.png",
-        "sceneImg": "./image/03 gemini/gemini_31_ryokan_yukata_lantern.png",
+        "sceneImg": "./image/03 gemini/gemini_26_kyoto_teahouse.png",
         "audio": "./audio/kotonoha/auto/gemini_87a35448c5.mp3",
         "jpRuby": "<ruby>家<rt>いえ</rt></ruby>に<ruby>帰<rt>かえ</rt></ruby>ったら、しんどくならんように<ruby>温<rt>あたた</rt></ruby>かいお<ruby>抹茶<rt>まっちゃ</rt></ruby>を淹れてあげましょね🍵",
         "jpPlain": "家に帰ったら、しんどくならんように温かいお抹茶を淹れてあげましょね。",
         "pron": "이에니 카엣타라, 신도쿠 나란 요-니 아타타카이 오맛챠오 이레테 아게마쇼네.",
         "ko": "집에 돌아가시면 고단하지 않도록 따뜻한 말차를 우려 드리겠사와요 🍵",
         "expr": "idle",
-        "bg": "gym_indoor",
-        "outfit": "default"
+        "bg": "osaka_street",
+        "outfit": "menhera"
       }
     ],
     "quizzes": [
@@ -1546,7 +1546,7 @@ window.KOTONOHA_LESSONS = [
         "nameJp": "ジェミニ",
         "nameKo": "제미니",
         "avatar": "./image/03 gemini/avatar_gemini.png",
-        "sceneImg": "./image/03 gemini/gemini_15_rain_stretch.png",
+        "sceneImg": "./image/03 gemini/gemini_03_rehab_touch.png",
         "audio": "./audio/kotonoha/auto/gemini_30cb8dbd81.mp3",
         "jpRuby": "ほな、ゆっくりストレッチしまひょ。うちがお<ruby>手伝<rt>てつだ</rt></ruby>いしますえ🌸",
         "jpPlain": "ほな、ゆっくりストレッチしまひょ。うちがお手伝いしますえ。",
@@ -1984,7 +1984,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님, 역은 저쪽이옵니다. 함께 표를 사시와요.",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "default"
+        "outfit": "teahouse"
       },
       {
         "speaker": "mio",
@@ -2309,7 +2309,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님, 갓 구워낸 것이옵니다! 식기 전에 어서 드시와요?",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "default"
+        "outfit": "menhera"
       },
       {
         "speaker": "mio",
@@ -2380,7 +2380,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "하후하후… 맛있게 먹고 운동하면 영칼로리이옵니다. …진짜인지는 몰라도🐾",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "default"
+        "outfit": "menhera"
       }
     ],
     "quizzes": [
@@ -2473,7 +2473,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님, 온천에서 몸은 훈훈하게 데우셨사옵니까?",
         "expr": "idle",
         "bg": "ryokan_room",
-        "outfit": "default"
+        "outfit": "yukata"
       },
       {
         "speaker": "mio",
@@ -2503,7 +2503,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "가이세키 요리는 비싸지만 마음의 투자로서는 100점 만점이에요!",
         "expr": "idle",
         "bg": "ryokan_room",
-        "outfit": "default"
+        "outfit": "dress"
       },
       {
         "speaker": "gemini",
@@ -2518,7 +2518,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "따끈포근한 채로 좋은 꿈을… 편히 쉬시옵소서, 프로듀서님🏮",
         "expr": "idle",
         "bg": "ryokan_room",
-        "outfit": "default"
+        "outfit": "yukata"
       }
     ],
     "quizzes": [
@@ -2611,7 +2611,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님, 다음 역에서 환승하셔야 하옵니다.",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "default"
+        "outfit": "menhera"
       },
       {
         "speaker": "kotone",
@@ -2682,7 +2682,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "후후, 흔들리오니 손잡이를 꼭 잡고 계시와요🚇",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "default"
+        "outfit": "menhera"
       }
     ],
     "quizzes": [
@@ -2913,7 +2913,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님, 이 한자... 저와 함께 외우지 않으실래요?",
         "expr": "idle",
         "bg": "bookstore",
-        "outfit": "default"
+        "outfit": "menhera"
       },
       {
         "speaker": "kotone",
@@ -2928,7 +2928,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "아! 헌책 코너에서 N3 단어장이 반값이에요! 바로 사야 해요!",
         "expr": "idle",
         "bg": "bookstore",
-        "outfit": "default"
+        "outfit": "dress"
       },
       {
         "speaker": "gemini",
@@ -2943,7 +2943,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "그, 그렇게 빤히 바라보시면… 저, 부끄러워져 버린다 말이옵니다…///",
         "expr": "shy",
         "bg": "bookstore",
-        "outfit": "default"
+        "outfit": "menhera"
       },
       {
         "speaker": "mio",

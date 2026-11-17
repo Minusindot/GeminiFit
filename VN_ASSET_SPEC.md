@@ -55,6 +55,33 @@
 * `image/scg/mio/mio_runwear_smile.png` — 러닝웨어 (전 표정 14종)
 * 그 외 표정: `{idle, smile, sad, angry, shy, shock, dark, joke, wink, pout, cry, smirk, love, sleepy}`
 
+#### 제미니 유카타 (부분 세트, 5표정)
+* `image/scg/gemini/gemini_yukata_{idle,smile,shy,pout,love}.png`
+* 위 5표정 외의 `expr`을 쓰면 엔진이 자동으로 `gemini_yukata_idle.png`로 내려간다(v4.3.45 `KOTONOHA_SCG_LIMITED_EXPR`).
+
+### 👗 의상 자동 배치 규칙 (v4.3.45)
+
+헬스장 복장이 상황과 무관하게 계속 나오던 문제를 고치기 위해, 엔진이 **장소 → 의상**을 먼저 판단한다.
+`resolveKotonohaOutfit(step, lesson)` 우선순위:
+
+1. `step.outfit`이 `default`가 아닌 명시값 → 그대로 사용 (연출 의도 우선)
+2. `step.bg` 키 매핑 (`KOTONOHA_BG_OUTFIT`)
+
+| bg 키 | gemini | kotone | mio |
+| - | - | - | - |
+| `gym_indoor`, `park_track` | default (스포츠) | default (트랙탑) | runwear |
+| `teahouse_day/night` | teahouse (기모노+앞치마) | dress | default |
+| `ryokan_room`, `festival_night` | **yukata** | dress | default |
+| `osaka_street`, `bookstore` | menhera (캐주얼 후디) | dress | default |
+
+3. `sceneImg` 파일명 키워드 (`KOTONOHA_SCENE_OUTFIT_RULES`) — AI가 즉석 생성한 화는 `bg` 없이 `bgImage`만 있으므로 이 규칙으로 추론한다.
+4. 그래도 없으면 `default`.
+
+즉 **`outfit`을 일부러 `default`로 적어두면 장소가 헬스장일 때만 트레이닝복이 나온다.** 나머지 장소에서는 2·3번 규칙이 이긴다(그래서 예전 데이터의 `default` 잔재가 자동 교정됨).
+
+SCG 파일이 없을 때의 하강 순서: `{outfit}_{expr}` → `{outfit}_idle` → `{char}_default_idle` → ECG 일러스트(`ecgFallback`).
+`kotonohaScgError()`가 `data-scg-chain`을 따라 내려가므로, 새 의상을 일부 표정만 그려도 깨지지 않는다.
+
 ---
 
 ### 2) 순수 장소 배경 (BG): `image/bg/`

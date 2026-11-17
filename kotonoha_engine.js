@@ -1499,6 +1499,88 @@ async function generateAiKotonohaLesson() {
 }
 
 // ============================================================================
+// SCG WARDROBE (着替え) — clothes must match the place, not just the character
+// ============================================================================
+// image/scg/{char}/{char}_{outfit}_{expr}.png
+const KOTONOHA_SCG_OUTFITS = {
+  gemini: ['default', 'teahouse', 'menhera', 'yukata'],
+  kotone: ['default', 'dress'],
+  mio: ['default', 'runwear']
+};
+
+// Partial outfits only have a few expressions drawn. Anything missing falls back
+// to the same outfit's idle frame before we ever show a full ECG illustration.
+const KOTONOHA_SCG_LIMITED_EXPR = {
+  yukata: ['idle', 'smile', 'shy', 'pout', 'love']
+};
+
+// bg key -> outfit per character. The gym clothes stay in the gym.
+const KOTONOHA_BG_OUTFIT = {
+  gym_indoor: { gemini: 'default', kotone: 'default', mio: 'runwear' },
+  park_track: { gemini: 'default', kotone: 'default', mio: 'runwear' },
+  teahouse_day: { gemini: 'teahouse', kotone: 'dress', mio: 'default' },
+  teahouse_night: { gemini: 'teahouse', kotone: 'dress', mio: 'default' },
+  ryokan_room: { gemini: 'yukata', kotone: 'dress', mio: 'default' },
+  festival_night: { gemini: 'yukata', kotone: 'dress', mio: 'default' },
+  osaka_street: { gemini: 'menhera', kotone: 'dress', mio: 'default' },
+  bookstore: { gemini: 'menhera', kotone: 'dress', mio: 'default' }
+};
+
+// Keyword fallback for AI-written lessons that only carry a sceneImg filename.
+const KOTONOHA_SCENE_OUTFIT_RULES = [
+  [/(gym|track|run|workout|dumbbell|squat|rehab|stretch|massage|towel|protein|jersey)/i, { gemini: 'default', kotone: 'default', mio: 'runwear' }],
+  [/(ryokan|onsen|yukata|festival|fireworks|kotatsu|lantern)/i, { gemini: 'yukata', kotone: 'dress', mio: 'default' }],
+  [/(teahouse|chaya|matcha|wagashi|apron|kitchen|cafe|sweets|book)/i, { gemini: 'teahouse', kotone: 'dress', mio: 'default' }],
+  [/(street|station|subway|rain|night|rooftop|osaka|kyoto|walk|bus|shop|locker)/i, { gemini: 'menhera', kotone: 'dress', mio: 'default' }]
+];
+
+function resolveKotonohaOutfit(step, lesson) {
+  const who = step.speaker || 'gemini';
+  const outfits = KOTONOHA_SCG_OUTFITS[who];
+  if (!outfits) return 'default';
+
+  // An explicit non-default outfit always wins (author intent).
+  if (step.outfit && step.outfit !== 'default' && outfits.includes(step.outfit)) return step.outfit;
+
+  const bgKey = (step.bg && !step.bg.startsWith('./')) ? step.bg : '';
+  if (bgKey && KOTONOHA_BG_OUTFIT[bgKey] && KOTONOHA_BG_OUTFIT[bgKey][who]) {
+    return KOTONOHA_BG_OUTFIT[bgKey][who];
+  }
+
+  const scene = ((step.bg || '') + ' ' + ((lesson && lesson.bgImage) || '')).toLowerCase();
+  for (const [re, map] of KOTONOHA_SCENE_OUTFIT_RULES) {
+    if (re.test(scene) && map[who]) return map[who];
+  }
+  return (step.outfit && outfits.includes(step.outfit)) ? step.outfit : 'default';
+}
+
+// Ordered list of SCG files to try for one step: {outfit}_{expr} -> {outfit}_idle
+// -> {char}_default_idle -> full ECG illustration.
+function kotonohaScgChain(speaker, outfit, expr) {
+  const dir = './image/scg/' + speaker + '/' + speaker + '_';
+  const chain = [];
+  const limited = KOTONOHA_SCG_LIMITED_EXPR[outfit];
+  if (!limited || limited.includes(expr)) chain.push(dir + outfit + '_' + expr + '.png');
+  chain.push(dir + outfit + '_idle.png');
+  chain.push(dir + 'default_idle.png');
+  return chain.filter((v, i, a) => a.indexOf(v) === i);
+}
+
+function kotonohaScgError(img) {
+  let chain = [];
+  try { chain = JSON.parse(img.getAttribute('data-scg-chain') || '[]'); } catch (_) {}
+  const next = Array.isArray(chain) ? chain.shift() : null;
+  if (next) {
+    img.setAttribute('data-scg-chain', JSON.stringify(chain));
+    img.src = next;
+    return;
+  }
+  const ecg = img.getAttribute('data-scg-ecg');
+  img.onerror = null;
+  if (ecg) img.src = ecg;
+}
+
+// ============================================================================
 // VISUAL NOVEL HYBRID VISUAL RESOLVER (Seamless SCG + BG & Full ECG Fallback)
 // ============================================================================
 function resolveKotonohaVisuals(step, lesson, stepIdx = -1, prevSceneImg = '') {
@@ -1540,8 +1622,9 @@ function resolveKotonohaVisuals(step, lesson, stepIdx = -1, prevSceneImg = '') {
   }
   // 2. If step explicitly specifies SCG expression (e.g. expr: 'shy', 'smile', 'angry')
   if (step.expr && step.speaker) {
-    const outfit = step.outfit || 'default';
-    const scgPath = step.scg || ('./image/scg/' + step.speaker + '/' + step.speaker + '_' + outfit + '_' + step.expr + '.png');
+    const outfit = resolveKotonohaOutfit(step, lesson);
+    const chain = step.scg ? [step.scg] : kotonohaScgChain(step.speaker, outfit, step.expr);
+    const scgPath = chain[0];
     const bgPath = step.bg ? (step.bg.startsWith('./') ? step.bg : ('./image/bg/bg_' + step.bg + '.png')) : (lesson.bgImage || './image/03 gemini/gemini_26_kyoto_teahouse.png');
     // Per-speaker ECG fallback when the transparent SCG asset is missing (v4.3.10)
     const ecgFallbackMap = {
@@ -1553,7 +1636,9 @@ function resolveKotonohaVisuals(step, lesson, stepIdx = -1, prevSceneImg = '') {
     return {
       isScg: true,
       speaker: step.speaker,
+      outfit: outfit,
       scgUrl: scgPath,
+      scgChain: chain.slice(1),
       bgUrl: bgPath,
       ecgFallback: ecgFallback
     };
@@ -1915,7 +2000,7 @@ function renderKotonohaView() {
 
               <!-- Pure Standing Character Sprite — oversized, head near top, feet cropped (classic VN look) -->
               <div class="relative z-10 h-full flex items-start justify-center pointer-events-none w-full">
-                <img src="${visuals.scgUrl}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="relative h-[135%] w-auto max-w-none object-contain object-top drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
+                <img src="${visuals.scgUrl}" data-scg-chain='${JSON.stringify(visuals.scgChain || [])}' data-scg-ecg="${visuals.ecgFallback}" onerror="kotonohaScgError(this)" class="relative h-[135%] w-auto max-w-none object-contain object-top drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] transition-all duration-200">
               </div>
             ` : `
               <!-- [CLEAN FULL ECG MODE] Cinematic Ambient Blur + Center Illustration (Never Cut Off) -->
@@ -2270,7 +2355,7 @@ function renderKotonohaView() {
                     <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/25 pointer-events-none"></div>
                   ` : visuals.isScg ? `
                     <img src="${visuals.bgUrl}" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.85] pointer-events-none">
-                    <img src="${visuals.scgUrl}" onerror="this.src='${visuals.ecgFallback}'" class="relative z-10 h-[130%] w-auto max-w-none object-contain object-top drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] pointer-events-none">
+                    <img src="${visuals.scgUrl}" data-scg-chain='${JSON.stringify(visuals.scgChain || [])}' data-scg-ecg="${visuals.ecgFallback}" onerror="kotonohaScgError(this)" class="relative z-10 h-[130%] w-auto max-w-none object-contain object-top drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] pointer-events-none">
                   ` : `
                     <img src="${sceneImage}" onerror="this.src='${visuals.ecgFallback}'" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-40 scale-125 pointer-events-none" style="object-position: center 25%;">
                     <img src="${sceneImage}" onerror="this.src='${visuals.ecgFallback}'" class="relative z-10 max-h-full max-w-full object-contain mx-auto pointer-events-none">
