@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-18T12:39:34.066Z",
+  "updatedAt": "2026-11-18T12:40:01.174Z",
   "lastActiveDate": "2026-11-18",
   "theme": "light",
   "weight": 66.4,
@@ -29,26 +29,26 @@
   },
   "gymRoutine": {
     "upper1": {
-      "name": "체스트 프레스",
+      "name": "랫 풀 다운",
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ],
-      "weight": "40kg",
+      "weight": "25kg × 20회",
       "reps": 20,
       "targetSets": 4
     },
     "upper2": {
-      "name": "시티드 케이블 로우",
+      "name": "EZ바",
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ],
-      "weight": "35kg",
+      "weight": "10kg",
       "reps": 20,
       "targetSets": 4
     },
@@ -207,26 +207,6 @@
       "totalReps": 140
     },
     {
-      "id": "gym-1792576207664",
-      "date": "10/21",
-      "fullDate": "2026-10-21",
-      "time": "오후 06:50",
-      "upper1Done": 0,
-      "upper1Reps": 0,
-      "upper2Done": 0,
-      "upper2Reps": 0,
-      "lowerDone": 0,
-      "lowerReps": 0,
-      "legRaiseDone": 0,
-      "legRaiseReps": 0,
-      "legRaiseTarget": 4,
-      "crunchDone": 0,
-      "crunchReps": 0,
-      "crunchTarget": 4,
-      "totalSets": 0,
-      "totalReps": 0
-    },
-    {
       "id": "gym-1794839806560",
       "date": "11/16",
       "fullDate": "2026-11-16",
@@ -248,6 +228,29 @@
       "crunchTarget": 2,
       "totalSets": 7,
       "totalReps": 230
+    },
+    {
+      "id": "gym-1795005584944",
+      "date": "11/18",
+      "fullDate": "2026-11-18",
+      "time": "오후 09:40",
+      "upper1Done": 4,
+      "upper1Reps": 80,
+      "upper1Name": "랫 풀 다운",
+      "upper2Done": 4,
+      "upper2Reps": 80,
+      "upper2Name": "EZ바",
+      "lowerDone": 0,
+      "lowerReps": 0,
+      "lowerName": "레그 프레스",
+      "legRaiseDone": 0,
+      "legRaiseReps": 0,
+      "legRaiseTarget": 1,
+      "crunchDone": 0,
+      "crunchReps": 0,
+      "crunchTarget": 2,
+      "totalSets": 8,
+      "totalReps": 160
     }
   ],
   "latestRun": {
