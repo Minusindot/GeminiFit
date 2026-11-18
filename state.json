@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-18T12:41:30.667Z",
+  "updatedAt": "2026-11-18T12:41:51.521Z",
   "lastActiveDate": "2026-11-18",
   "theme": "light",
   "weight": 66.4,
@@ -53,14 +53,14 @@
       "targetSets": 4
     },
     "lower": {
-      "name": "레그 프레스",
+      "name": "V 스쿼트",
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ],
-      "weight": "80kg",
+      "weight": "맨몸 × 20회",
       "reps": 20,
       "targetSets": 4
     },
@@ -233,24 +233,24 @@
       "id": "gym-1795005584944",
       "date": "11/18",
       "fullDate": "2026-11-18",
-      "time": "오후 09:40",
+      "time": "오후 09:41",
       "upper1Done": 4,
       "upper1Reps": 80,
       "upper1Name": "랫 풀 다운",
       "upper2Done": 4,
       "upper2Reps": 80,
       "upper2Name": "EZ바",
-      "lowerDone": 0,
-      "lowerReps": 0,
-      "lowerName": "레그 프레스",
+      "lowerDone": 4,
+      "lowerReps": 80,
+      "lowerName": "V 스쿼트",
       "legRaiseDone": 0,
       "legRaiseReps": 0,
       "legRaiseTarget": 1,
       "crunchDone": 0,
       "crunchReps": 0,
       "crunchTarget": 2,
-      "totalSets": 8,
-      "totalReps": 160
+      "totalSets": 12,
+      "totalReps": 240
     }
   ],
   "latestRun": {
