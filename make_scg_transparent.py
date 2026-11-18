@@ -38,10 +38,15 @@ OUTFIT_TARGETS = {
     "gemini_yukata": ("gemini", "gemini_yukata_"),
     "kotone": ("kotone", "kotone_default_"),
     "kotone_dress": ("kotone", "kotone_dress_"),
+    "kotone_casual": ("kotone", "kotone_casual_"),
+    "kotone_gakumas": ("kotone", "kotone_gakumas_"),
     "mio": ("mio", "mio_default_"),
     "mio_runwear": ("mio", "mio_runwear_"),
+    "mio_casual": ("mio", "mio_casual_"),
 }
-CHARS = ["gemini", "gemini_menhera", "gemini_teahouse", "gemini_yukata", "kotone", "kotone_dress", "mio", "mio_runwear"]
+CHARS = ["gemini", "gemini_menhera", "gemini_teahouse", "gemini_yukata", "kotone", "kotone_dress", "kotone_casual",
+         "kotone_gakumas",
+         "mio", "mio_runwear", "mio_casual"]
 
 # canvas target per VN_ASSET_SPEC.md is ~1080x2560 portrait (ratio 1:2.37).
 # Engine renders object-contain; we keep a tall canvas with identical layout.

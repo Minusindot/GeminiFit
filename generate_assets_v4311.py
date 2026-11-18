@@ -127,6 +127,48 @@ CHARACTERS = {
             ROOT / "image" / "01 mio" / "mio_01_main.png",
         ],
     },
+    "kotone_casual": {
+        "exprs": ["smile", "shy", "shock", "joke", "love", "pout"],
+        "desc": ("a cheerful young woman with long golden-blonde twin braids and bright amber eyes, "
+                 "pop-idol personality, wearing everyday off-duty clothes: a cream ribbed off-shoulder knit "
+                 "sweater over a white camisole, a soft pastel-pink pleated midi skirt, white ankle socks and "
+                 "brown leather loafers, small beige shoulder bag, thin gold hair ribbons on the braids, "
+                 "full-body standing pose head to shoes, feet and ankles visible, standing upright facing viewer, "
+                 "arms relaxed at sides, plain pure white background, no scenery, no room"),
+        "refs": [
+            ROOT / "image" / "02 kotone" / "avatar_kotone.png",
+            ROOT / "image" / "02 kotone" / "kotone_03_cafe_date.png",
+        ],
+    },
+    "mio_casual": {
+        "exprs": ["smile", "shy", "shock", "joke", "love", "pout"],
+        "desc": ("a sporty energetic young woman with short light-brown bob hair and bright amber eyes, "
+                 "tomboyish athletic runner personality, wearing everyday off-duty clothes: a pale-yellow "
+                 "oversized knit cardigan over a white ribbed camisole, high-waist light blue denim skirt, "
+                 "white low-top sneakers, small canvas crossbody bag, thin silver necklace, "
+                 "full-body standing pose head to shoes, feet and ankles visible, standing upright facing viewer, "
+                 "arms relaxed at sides, plain pure white background, no scenery, no room"),
+        "refs": [
+            ROOT / "image" / "01 mio" / "avatar_mio.png",
+            ROOT / "image" / "01 mio" / "mio_01_main.png",
+        ],
+    },
+    # Gakumas-faithful stage costume (replaces the too-generic pink frill dress).
+    "kotone_gakumas": {
+        "desc": ("a cheerful young woman with long golden-blonde hair in twin braids tied with pale blue and "
+                 "lemon-yellow ribbons, bright amber eyes, wearing an anime idol stage costume: white cropped "
+                 "blouse with puffy short puff sleeves and sheer white frill cuffs, light-blue corset-style bodice "
+                 "with silver buckles and metal trim, tiered light-blue and white ruffled idol skirt with lemon "
+                 "yellow ribbon bows at the waist, white thigh-high socks with light-blue and yellow stripes, white "
+                 "and light-blue ankle boots, small silver star hairpin, "
+                 "full-body standing pose head to shoes, feet and ankles visible, standing upright facing viewer, "
+                 "arms relaxed at sides, plain pure white background, no scenery, no room"),
+        "exprs": ["smile", "shy", "shock", "joke", "love", "pout"],
+        "refs": [
+            ROOT / "image" / "02 kotone" / "avatar_kotone.png",
+            ROOT / "image" / "90 repository" / "gakumas_style" / "style_01_gakumas_closeup.png",
+        ],
+    },
 }
 
 # idle은 base를 복사한다(별도 생성 없음). 표정만 바꿔 7종 편집 생성. (v4.3.17: 14종 확장)
@@ -343,8 +385,9 @@ def build_jobs(phase: str):
             jobs.append((f"{char}/base", prompt, WORK / char / "base_raw.png", info["refs"], "9:16 portrait"))
     if phase in ("expr", "all"):
         for char, info in CHARACTERS.items():
+            allowed = info.get("exprs") or list(EXPRESSIONS.keys())
             for expr, edesc in EXPRESSIONS.items():
-                if expr == "idle":
+                if expr == "idle" or expr not in allowed:
                     continue
                 prompt = (f"Keep the EXACT same character in the reference image: identical body, "
                           f"identical outfit, identical standing pose with both arms hanging relaxed at her sides "

@@ -1504,34 +1504,36 @@ async function generateAiKotonohaLesson() {
 // image/scg/{char}/{char}_{outfit}_{expr}.png
 const KOTONOHA_SCG_OUTFITS = {
   gemini: ['default', 'teahouse', 'menhera', 'yukata'],
-  kotone: ['default', 'dress'],
-  mio: ['default', 'runwear']
+  kotone: ['default', 'dress', 'casual', 'gakumas'],
+  mio: ['default', 'runwear', 'casual']
 };
 
 // Partial outfits only have a few expressions drawn. Anything missing falls back
 // to the same outfit's idle frame before we ever show a full ECG illustration.
 const KOTONOHA_SCG_LIMITED_EXPR = {
-  yukata: ['idle', 'smile', 'shy', 'pout', 'love']
+  yukata: ['idle', 'smile', 'shy', 'pout', 'love'],
+  casual: ['idle', 'smile', 'shy', 'shock', 'joke', 'love', 'pout'],
+  gakumas: ['idle', 'smile', 'shy', 'shock', 'joke', 'love', 'pout']
 };
 
 // bg key -> outfit per character. The gym clothes stay in the gym.
 const KOTONOHA_BG_OUTFIT = {
   gym_indoor: { gemini: 'default', kotone: 'default', mio: 'runwear' },
   park_track: { gemini: 'default', kotone: 'default', mio: 'runwear' },
-  teahouse_day: { gemini: 'teahouse', kotone: 'dress', mio: 'default' },
-  teahouse_night: { gemini: 'teahouse', kotone: 'dress', mio: 'default' },
-  ryokan_room: { gemini: 'yukata', kotone: 'dress', mio: 'default' },
-  festival_night: { gemini: 'yukata', kotone: 'dress', mio: 'default' },
-  osaka_street: { gemini: 'menhera', kotone: 'dress', mio: 'default' },
-  bookstore: { gemini: 'menhera', kotone: 'dress', mio: 'default' }
+  teahouse_day: { gemini: 'teahouse', kotone: 'casual', mio: 'casual' },
+  teahouse_night: { gemini: 'teahouse', kotone: 'casual', mio: 'casual' },
+  ryokan_room: { gemini: 'yukata', kotone: 'casual', mio: 'casual' },
+  festival_night: { gemini: 'yukata', kotone: 'casual', mio: 'casual' },
+  osaka_street: { gemini: 'menhera', kotone: 'casual', mio: 'casual' },
+  bookstore: { gemini: 'menhera', kotone: 'casual', mio: 'casual' }
 };
 
 // Keyword fallback for AI-written lessons that only carry a sceneImg filename.
 const KOTONOHA_SCENE_OUTFIT_RULES = [
   [/(gym|track|run|workout|dumbbell|squat|rehab|stretch|massage|towel|protein|jersey)/i, { gemini: 'default', kotone: 'default', mio: 'runwear' }],
-  [/(ryokan|onsen|yukata|festival|fireworks|kotatsu|lantern)/i, { gemini: 'yukata', kotone: 'dress', mio: 'default' }],
-  [/(teahouse|chaya|matcha|wagashi|apron|kitchen|cafe|sweets|book)/i, { gemini: 'teahouse', kotone: 'dress', mio: 'default' }],
-  [/(street|station|subway|rain|night|rooftop|osaka|kyoto|walk|bus|shop|locker)/i, { gemini: 'menhera', kotone: 'dress', mio: 'default' }]
+  [/(ryokan|onsen|yukata|festival|fireworks|kotatsu|lantern)/i, { gemini: 'yukata', kotone: 'casual', mio: 'casual' }],
+  [/(teahouse|chaya|matcha|wagashi|apron|kitchen|cafe|sweets|book)/i, { gemini: 'teahouse', kotone: 'casual', mio: 'casual' }],
+  [/(street|station|subway|rain|night|rooftop|osaka|kyoto|walk|bus|shop|locker)/i, { gemini: 'menhera', kotone: 'casual', mio: 'casual' }]
 ];
 
 function resolveKotonohaOutfit(step, lesson) {

@@ -63,7 +63,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "야호! 새로운 하얀 신발(운동화)을 샀어! 🌟",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "speaker": "kotone",
@@ -78,7 +78,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "와아, 비싸 보이는 신발이네요! 얼마(몇 엔)인가요?! 💸",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "dress"
+        "outfit": "casual"
       },
       {
         "speaker": "gemini",
@@ -108,7 +108,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "에헤헤, 이건 신발이 아니야! 두툼한 양말이라구~! 🌟",
         "expr": "joke",
         "bg": "teahouse_day",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "speaker": "gemini",
@@ -273,7 +273,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님! 오늘 점심밥은 닭가슴살 샐러드예요! 🥗",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "dress"
+        "outfit": "casual"
       },
       {
         "speaker": "mio",
@@ -288,7 +288,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "우와아, 엄청 맛있겠다! 물도 한 잔 줘! 🌟",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "speaker": "gemini",
@@ -318,7 +318,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "에헤헤, 마감 세일로 사서 300엔이에요! 저렴하죠?! 💸",
         "expr": "joke",
         "bg": "teahouse_day",
-        "outfit": "dress"
+        "outfit": "casual"
       },
       {
         "speaker": "gemini",
@@ -925,7 +925,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "와앗, 갑자기 비가 내리기 시작했어! 프로듀서, 우산 있어? ☔",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "speaker": "kotone",
@@ -940,7 +940,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "편의점에서 비닐우산 사면 700엔이나 한다구요! 너무 비싸요~ 😭",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "speaker": "gemini",
@@ -1131,7 +1131,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "와아, 좋은 향기! 아, 하지만 이 화과자, 엄청 달콤하네요!",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "dress"
+        "outfit": "casual"
       },
       {
         "speaker": "gemini",
@@ -1161,7 +1161,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "헤헷, 운동 후에는 물을 듬뿍 마셔야지! 저기요, 물 좀 주세요!",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "speaker": "gemini",
@@ -1685,7 +1685,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님, 지금 몇 시인가요?!",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "dress"
+        "outfit": "casual"
       },
       {
         "speaker": "mio",
@@ -1700,7 +1700,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "지금은 딱 저녁 5시! 헬스장 시작할 시간이야!",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "speaker": "gemini",
@@ -1999,7 +1999,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "오옷! 전철 타고 큰 경기장까지 가자!",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "speaker": "kotone",
@@ -2014,7 +2014,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "아, 교통카드(IC카드) 충전도 잊지 말고 해야 해요!",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "dress"
+        "outfit": "casual"
       },
       {
         "guest": true,
@@ -2167,7 +2167,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서, 진짜 열심히 힘냈어! 하이파이브! 🌟",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "speaker": "kotone",
@@ -2182,7 +2182,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "목표 달성 축하드려요! 프로틴으로 건배해요 💛",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "dress"
+        "outfit": "gakumas"
       },
       {
         "speaker": "gemini",
@@ -2324,7 +2324,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "앗뜨거! 진짜 뜨거운데 완전 맛있다! 5시 단식까지 딱 10분 남았으니 세이프 맞지?!",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "guest": true,
@@ -2365,7 +2365,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "후후, 6알보다 8알 세트가 한 알당 15엔이나 더 이득이에요, 프로듀서님!",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "dress"
+        "outfit": "casual"
       },
       {
         "speaker": "gemini",
@@ -2488,7 +2488,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "크하-! 목욕 끝나고 마시는 유리병 우유, 최고야!",
         "expr": "smile",
         "bg": "ryokan_room",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "speaker": "kotone",
@@ -2503,7 +2503,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "가이세키 요리는 비싸지만 마음의 투자로서는 100점 만점이에요!",
         "expr": "idle",
         "bg": "ryokan_room",
-        "outfit": "dress"
+        "outfit": "casual"
       },
       {
         "speaker": "gemini",
@@ -2626,7 +2626,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "어머나! 잔액 부족으로 삐용삐용 울리기 전에 충전하셔야 해요!",
         "expr": "shock",
         "bg": "osaka_street",
-        "outfit": "dress"
+        "outfit": "casual"
       },
       {
         "guest": true,
@@ -2667,7 +2667,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "ICOCA 카드로 고고! 노을빛 차창 풍경, 진짜 예뻐!",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "speaker": "gemini",
@@ -2928,7 +2928,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "아! 헌책 코너에서 N3 단어장이 반값이에요! 바로 사야 해요!",
         "expr": "idle",
         "bg": "bookstore",
-        "outfit": "dress"
+        "outfit": "casual"
       },
       {
         "speaker": "gemini",
@@ -2958,7 +2958,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "아하하! 제미니 얼굴 새빨개졌다! 좋아, 공부 끝나면 러닝 뛰러 가자!",
         "expr": "shy",
         "bg": "bookstore",
-        "outfit": "default"
+        "outfit": "casual"
       }
     ],
     "quizzes": [
@@ -3081,7 +3081,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로틴 대형 컵으로 건배-! 시즌 2도 완주했구나!",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "default"
+        "outfit": "casual"
       },
       {
         "guest": true,
@@ -3122,7 +3122,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님의 건강과 미소가 저의 가장 큰 보물이옵니다💛",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "dress"
+        "outfit": "gakumas"
       }
     ],
     "quizzes": [
@@ -3245,7 +3245,7 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님, 우선 한 끼만 함께 기록해 보지 않으실래요?💛",
         "expr": "smile",
         "bg": "teahouse_day",
-        "outfit": "dress"
+        "outfit": "casual"
       },
       {
         "speaker": "mio",
