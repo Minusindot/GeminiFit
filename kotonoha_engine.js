@@ -2296,7 +2296,7 @@ function renderKotonohaView() {
             return `
               <div class="rounded-2xl overflow-hidden border border-[#422c35] bg-[#1d1519] cursor-pointer group" onclick="openMangaRead(${item.globalIdx})">
                 <div class="relative h-32 overflow-hidden">
-                  <img src="${item.bgImage || './image/03 gemini/gemini_02_matcha.png'}" onerror="this.src='./image/03 gemini/gemini_26_kyoto_teahouse.png'" class="w-full h-full object-cover object-[center_15%] group-hover:scale-105 transition-all duration-500">
+                  <img src="${item.bgImage || './image/03 gemini/gemini_02_matcha.png'}" onerror="this.onerror=null;this.src='./image/03 gemini/gemini_26_kyoto_teahouse.png'" class="w-full h-full object-cover object-[center_15%] group-hover:scale-105 transition-all duration-500">
                   <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/10"></div>
                   <div class="absolute top-2 left-2 flex gap-1.5">
                     <span class="px-2 py-0.5 rounded-full bg-[#e0465a] text-white text-[10px] font-black shadow">${isDone ? '✅ ' : ''}${epBadge}</span>
@@ -2359,8 +2359,8 @@ function renderKotonohaView() {
                     <img src="${visuals.bgUrl}" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover filter brightness-[0.85] pointer-events-none">
                     <img src="${visuals.scgUrl}" data-scg-chain='${JSON.stringify(visuals.scgChain || [])}' data-scg-ecg="${visuals.ecgFallback}" onerror="kotonohaScgError(this)" class="relative z-10 h-[130%] w-auto max-w-none object-contain object-top drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] pointer-events-none">
                   ` : `
-                    <img src="${sceneImage}" onerror="this.src='${visuals.ecgFallback}'" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-40 scale-125 pointer-events-none" style="object-position: center 25%;">
-                    <img src="${sceneImage}" onerror="this.src='${visuals.ecgFallback}'" class="relative z-10 max-h-full max-w-full object-contain mx-auto pointer-events-none">
+                    <img src="${sceneImage}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-40 scale-125 pointer-events-none" style="object-position: center 25%;">
+                    <img src="${sceneImage}" onerror="this.onerror=null;this.src='${visuals.ecgFallback}'" class="relative z-10 max-h-full max-w-full object-contain mx-auto pointer-events-none">
                   `}
                   <!-- Cut number label -->
                   <span class="absolute top-2 left-2 px-1.5 py-0.5 bg-black/70 text-white text-[10px] font-black rounded-sm z-20">${i + 1}</span>
