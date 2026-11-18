@@ -1,21 +1,19 @@
 {
-  "updatedAt": "2026-11-18T12:42:00.333Z",
+  "updatedAt": "2026-11-18T12:42:33.203Z",
   "lastActiveDate": "2026-11-18",
   "theme": "light",
   "weight": 66.4,
   "fat": 31.8,
   "bondRank": 8,
-  "bondExp": 10,
+  "bondExp": 70,
   "activeTrainer": "gemini",
-  "activeMode": "dual",
-  "currentSituation": "ev14",
+  "activeMode": "gemini",
+  "currentSituation": "ev3",
   "absDone": false,
   "runDone": false,
   "runDist": 6.01,
   "rehab": [
-    false,
-    false,
-    false
+    true
   ],
   "meals": [
     false,
@@ -67,7 +65,7 @@
     "legRaise": {
       "name": "캡틴스 체어 레그레이즈",
       "sets": [
-        false
+        true
       ],
       "target": "15회",
       "reps": 50,
@@ -76,14 +74,14 @@
     "crunch": {
       "name": "크런치",
       "sets": [
-        false,
-        false
+        true,
+        true
       ],
       "target": "20회",
       "reps": 50,
       "targetSets": 2
     },
-    "allDone": false
+    "allDone": true
   },
   "gymHistory": [
     {
@@ -233,7 +231,7 @@
       "id": "gym-1795005584944",
       "date": "11/18",
       "fullDate": "2026-11-18",
-      "time": "오후 09:41",
+      "time": "오후 09:42",
       "upper1Done": 4,
       "upper1Reps": 80,
       "upper1Name": "랫 풀 다운",
@@ -243,14 +241,14 @@
       "lowerDone": 4,
       "lowerReps": 80,
       "lowerName": "V 스쿼트",
-      "legRaiseDone": 0,
-      "legRaiseReps": 0,
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
       "legRaiseTarget": 1,
-      "crunchDone": 0,
-      "crunchReps": 0,
+      "crunchDone": 2,
+      "crunchReps": 100,
       "crunchTarget": 2,
-      "totalSets": 12,
-      "totalReps": 240
+      "totalSets": 15,
+      "totalReps": 390
     }
   ],
   "latestRun": {
@@ -595,34 +593,36 @@
         "tea": 0
       },
       "autoArchived": true
+    },
+    "2026-11-18": {
+      "date": "2026-11-18",
+      "weight": 66.4,
+      "fat": 31.8,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "runDone": false,
+      "absDone": false,
+      "gymDone": true,
+      "latestRun": {
+        "id": "run-1794460852153",
+        "date": "2026-11-12",
+        "distance": 6.01,
+        "duration": "55:32",
+        "pace": "09'13\"",
+        "calories": 421,
+        "heartRate": 127,
+        "steps": 7434,
+        "source": "삼성헬스"
+      },
+      "teaLog": {
+        "matcha": 1,
+        "espresso": 2,
+        "tea": 1
+      },
+      "lastUpdated": "2026-11-18T12:42:33.121Z"
     }
   },
   "chatHistory": [
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "홈카페메뉴 개발 완료! 딸기 요거트부터 코코아까지, 맛도 최고로 재탄생할게요~ 🙌"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "코토네는 프로듀서님 평생 매니저라니까요! 헤헤~ 앞으로도 잘 부탁드려요! 💖"
-    },
-    {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 🌅 새벽 러닝 동행 요청"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "프로듀서! 새벽 5시에 트랙에서 만나자! 🌟"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "해 뜨기 전 공기는 진짜 다르다니까! 심박수 구간 딱 맞추고, 어깨 힘 싹 빼고 리듬 타면서 달리면 페이스가 순식간에 붙는다!"
-    },
     {
       "sender": "mio",
       "name": "미오",
@@ -743,6 +743,31 @@
       "sender": "mio",
       "name": "미오",
       "text": "앗차차... +2.3kg 늘었잖아?! 캡틴, 어제 무슨 맛있는 거 먹고 온 거야?! 솔직하게 자수해 봐~! ㅋㅋㅋ 괜찮아, 오늘 인터벌 러닝으로 싹 다 태워버리자! 운동화 끈 묶어! 👟🔥"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 09:42 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.01km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 완주라니 참으로 훌륭하옵니다! 🌸 근성 하나는 정말 멋지시와요, 프로듀서님 🐾\""
+    },
+    {
+      "sender": "system",
+      "name": "새 대화",
+      "text": "🔄 오후 09:42 기록 동기화 · 새 대화 시작"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "어머나, 오늘 근력 루틴 풀코스 완주하셨사와요 🌸"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "세트마다 무게를 정확히 쌓아 올리신 거, 소녀가 다 보고 있었사옵니다 🐾"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "고생하셨사오니 어깨부터 정성껏 풀어드리겠사와요. 남은 재활 2kg 세트도 함께 하시지요 🍵"
     }
   ]
 }
