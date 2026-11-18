@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.47</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.48</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -2006,11 +2006,11 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.3.47"></script>
-  <script src="./dialogue_pool.js?v=4.3.47"></script>
-  <script src="./trainer_episodes.js?v=4.3.47"></script>
-  <script src="./kotonoha_data.js?v=4.3.47"></script>
-  <script src="./kotonoha_engine.js?v=4.3.47"></script>
+  <script src="./weekly_reports.js?v=4.3.48"></script>
+  <script src="./dialogue_pool.js?v=4.3.48"></script>
+  <script src="./trainer_episodes.js?v=4.3.48"></script>
+  <script src="./kotonoha_data.js?v=4.3.48"></script>
+  <script src="./kotonoha_engine.js?v=4.3.48"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -10276,9 +10276,11 @@ ${err.message}
   <!-- ========================================================
        MODAL: AI Agent Weekly Content Update Reminder Modal
        ======================================================== -->
-  <div id="updateReminderModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-    <div class="game-card max-w-sm w-full p-5 space-y-3.5 border-[#e0465a]/60 shadow-2xl bg-[#1b1417] text-[#f5ebe6]">
-      <div class="flex items-center justify-between pb-2 border-b border-[#3b272f]">
+  <div id="updateReminderModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" onclick="if(event.target === this) closeUpdateReminderModal()">
+    <div class="game-card max-w-sm w-full border-[#e0465a]/60 shadow-2xl bg-[#1b1417] text-[#f5ebe6] flex flex-col overflow-hidden max-h-[88dvh] rounded-3xl">
+
+      <!-- 고정 헤더 -->
+      <div class="flex items-center justify-between px-4 py-3 border-b border-[#3b272f] shrink-0">
         <div class="flex items-center gap-2">
           <span class="text-xl">🌸</span>
           <div>
@@ -10286,117 +10288,134 @@ ${err.message}
             <p class="text-[10px] text-[#b89d97] font-bold">주간 신규 에피소드 & 다이얼로그 갱신일</p>
           </div>
         </div>
-        <button onclick="closeUpdateReminderModal()" class="text-[#b89d97] hover:text-white p-1 text-base">✕</button>
+        <button onclick="closeUpdateReminderModal()" class="text-[#b89d97] hover:text-white p-1 text-base shrink-0" aria-label="닫기">✕</button>
       </div>
 
-      <div class="flex items-center gap-3 p-3 rounded-2xl bg-[#261b20] border border-[#4a323b]">
-        <img src="./image/03 gemini/avatar_gemini.png" class="w-12 h-12 rounded-full object-cover ring-2 ring-[#e0465a] shrink-0">
-        <div class="text-xs leading-relaxed">
-          <span class="font-black text-[#f4869d]">제미니:</span><br>
-          우후후, 프로듀서항, 정기 업데이트 날이라지요 🍵<br>
-          <span class="text-[11px] text-[#c9b1aa]">(오늘도 소녀와 함께 정진하시와요 🌸)</span>
+      <!-- 스크롤 본문 -->
+      <div class="flex-1 min-h-0 overflow-y-auto clean-scroll overscroll-contain px-4 py-3 space-y-2.5">
+
+        <div class="flex items-center gap-3 p-2.5 rounded-2xl bg-[#261b20] border border-[#4a323b]">
+          <img src="./image/03 gemini/avatar_gemini.png" class="w-10 h-10 rounded-full object-cover ring-2 ring-[#e0465a] shrink-0" onerror="this.style.display='none'">
+          <div class="text-[11px] leading-relaxed">
+            <span class="font-black text-[#f4869d]">제미니:</span>
+            우후후, 프로듀서항, 정기 업데이트 날이라지요 🍵<br>
+            <span class="text-[10px] text-[#c9b1aa]">(오늘도 소녀와 함께 정진하시와요 🌸)</span>
+          </div>
         </div>
-      </div>
 
-      <p class="text-xs text-[#d9c5bf] leading-relaxed">
-        오늘은 설정하신 <strong>정기 콘텐츠 업데이트 주기</strong>입니다! 신규 교토·오사카벤 회화, 퀴즈, 이벤트 CG, 그리고 다이얼로그 확장을 위해 에이전트에게 업데이트를 요청할 시간이에요.
-      </p>
+        <p class="text-[11px] text-[#d9c5bf] leading-relaxed">
+          신규 교토·오사카벤 회화, 퀴즈, 이벤트 CG, 다이얼로그 확장을 위해 에이전트에게 업데이트를 요청할 시간이에요.
+        </p>
 
-      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
-        <div class="font-black text-[#ffd6de]">🩹 그림이 잠깐 안 뜰 때 화면이 멈추지 않아요</div>
-        <div class="text-[#c9b1aa] leading-relaxed">
-          일부 초상화의 대체 이미지가 <strong>끝없이 다시 요청</strong>되던 것을 막았사옵니다. 이제 한 번만 대체하고 조용히 넘어가서, 회선이 느리거나 이미지가 잠시 막혀도 화면이 버벅이지 않아요.
+        <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+          <div class="font-black text-[#ffd6de]">🩹 그림이 잠깐 안 뜰 때 화면이 멈추지 않아요</div>
+          <div class="text-[#c9b1aa] leading-relaxed">
+            일부 초상화의 대체 이미지가 <strong>끝없이 다시 요청</strong>되던 것을 막았사옵니다. 이제 한 번만 대체하고 조용히 넘어가서, 회선이 느리거나 이미지가 잠시 막혀도 화면이 버벅이지 않아요.
+          </div>
         </div>
-      </div>
 
-      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
-        <div class="font-black text-[#ffd6de]">👚 코토네 · 미오에게 사복이 생겼사와요</div>
-        <div class="text-[#c9b1aa] leading-relaxed">
-          다실에서도 료칸에서도 <strong>트랙탑</strong> 차림이던 두 사람에게 <strong>일상 사복</strong>을 지어 입혔사옵니다. <strong>코토네</strong>는 크림 니트에 핑크 플리츠 스커트, <strong>미오</strong>는 옐로 가디건에 데님 스커트 차림이옵니다. 그리고 코토네에게는 <strong>학원마스 원작 그대로의 무대 의상</strong>(흰 퍼프 블라우스 · 하늘색 코르셋 · 러플 스커트)도 한 벌 더 지어, <strong>제2-4화 목표 달성 건배</strong>와 <strong>제3-6화 감사 인사</strong>에서 그 옷을 입고 나온다지요 🎀
+        <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+          <div class="font-black text-[#ffd6de]">👚 코토네 · 미오에게 사복이 생겼사와요</div>
+          <div class="text-[#c9b1aa] leading-relaxed">
+            다실에서도 료칸에서도 <strong>트랙탑</strong> 차림이던 두 사람에게 <strong>일상 사복</strong>을 지어 입혔사옵니다. <strong>코토네</strong>는 크림 니트에 핑크 플리츠 스커트, <strong>미오</strong>는 옐로 가디건에 데님 스커트 차림이옵니다. 코토네에게는 <strong>학원마스 원작 그대로의 무대 의상</strong>도 한 벌 더 지어, <strong>제2-4화 목표 달성 건배</strong>와 <strong>제3-6화 감사 인사</strong>에서 그 옷을 입고 나온다지요 🎀
+          </div>
         </div>
-      </div>
 
-      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
-        <div class="font-black text-[#ffd6de]">👗 제미니가 장소에 맞게 옷을 갈아입사와요</div>
-        <div class="text-[#c9b1aa] leading-relaxed">
-          헬스장에서만 입어야 할 <strong>트레이닝복</strong>이 거리·료칸에서도 계속 나오던 것을 고쳤사옵니다. 이제 <strong>헬스장·공원</strong>은 운동복, <strong>다실</strong>은 기모노+앞치마, <strong>오사카 거리·서점·전철</strong>은 후디 차림, <strong>료칸·온천</strong>은 유카타로 자동으로 바뀝니다. <strong>제1-5화 비 오는 날</strong> 배경도 헬스장에서 거리로 바로잡았고, <strong>제2-2화</strong>는 유카타 차림이 되었사와요.
+        <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+          <div class="font-black text-[#ffd6de]">👗 제미니가 장소에 맞게 옷을 갈아입사와요</div>
+          <div class="text-[#c9b1aa] leading-relaxed">
+            <strong>트레이닝복</strong>이 거리·료칸에서도 계속 나오던 것을 고쳤사옵니다. 이제 <strong>헬스장·공원</strong>은 운동복, <strong>다실</strong>은 기모노+앞치마, <strong>오사카 거리·서점·전철</strong>은 후디 차림, <strong>료칸·온천</strong>은 유카타로 자동으로 바뀝니다. <strong>제1-5화</strong> 배경도 헬스장에서 거리로 바로잡았사와요.
+          </div>
         </div>
-      </div>
 
-      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
-        <div class="font-black text-[#ffd6de]">🎧 세 사람의 목소리를 새로 녹음했사와요</div>
-        <div class="text-[#c9b1aa] leading-relaxed">
-          요즘 <strong>제미니 · 코토네 · 미오</strong>의 목소리가 서로 너무 비슷했지요. 이번에 세 사람의 <strong>전용 목소리</strong>로 강의 대사 · 퀴즈 단어 · <strong>정답 리액션</strong>까지 전부 다시 녹음했사옵니다. 이제 인터넷이 느려도 <strong>바로 재생</strong>되고, 오프라인에서도 들려요.
+        <details class="group rounded-2xl bg-[#22181d] border border-[#3b272f]">
+          <summary class="cursor-pointer list-none px-3 py-2.5 text-[11px] font-black text-[#c9b1aa] flex items-center justify-between">
+            <span>📜 지난 업데이트 7건 더 보기</span>
+            <span class="text-[10px] text-[#8d7570] group-open:hidden">펼치기 ▾</span>
+            <span class="text-[10px] text-[#8d7570] hidden group-open:inline">접기 ▴</span>
+          </summary>
+          <div class="px-2 pb-2 space-y-2">
+
+            <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+              <div class="font-black text-[#ffd6de]">🎧 세 사람의 목소리를 새로 녹음했사와요</div>
+              <div class="text-[#c9b1aa] leading-relaxed">
+                세 사람의 <strong>전용 목소리</strong>로 강의 대사 · 퀴즈 단어 · <strong>정답 리액션</strong>까지 전부 다시 녹음했사옵니다. 이제 인터넷이 느려도 <strong>바로 재생</strong>되고, 오프라인에서도 들려요.
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+              <div class="font-black text-[#ffd6de]">👥 정체불명의 엑스트라가 자주 나타나와요</div>
+              <div class="text-[#c9b1aa] leading-relaxed">
+                <strong>제1-4 · 1-7 · 1-11 · 2-1 · 2-3 · 2-6화</strong>에 <strong>???</strong> 로만 적힌 낯선 사람들이 들러 대사를 건넵니다. 삽화가 없는 카메오라 <strong>배경만</strong> 보이고, 목소리는 성우가 따로 녹음했사와요.
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+              <div class="font-black text-[#ffd6de]">⚡ 기록 동기화가 오늘에 맞는 톡을 열어줘요</div>
+              <div class="text-[#c9b1aa] leading-relaxed">
+                루틴·식단 탭에서 <strong>지금 기록 동기화</strong>를 누르면, 오늘 마친 운동에 맞는 트레이너(<strong>러닝 → 미오, 근력·복근 → 제미니, 식단 → 코토네</strong>)와의 <strong>새 톡</strong>이 바로 열립니다. 이전 대화는 <strong>이전 대화 보기</strong>로 다시 꺼내볼 수 있어요.
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+              <div class="font-black text-[#ffd6de]">💬 평가를 물어보는 창이 방해하지 않아요</div>
+              <div class="text-[#c9b1aa] leading-relaxed">
+                마지막 대사가 끝나자마자 화면을 덮던 평가 팝업을 없앴어요. 이제 대화 아래에 작은 카드로 <strong>좋았어 · 보통 · 아쉬움</strong>만 조용히 물어보고, 그대로 두면 마지막 대사를 편하게 읽을 수 있사옵니다.
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+              <div class="font-black text-[#ffd6de]">🍵 에피소드 목록이 제자리를 지켜요</div>
+              <div class="text-[#c9b1aa] leading-relaxed">
+                다실에서 회차를 고르면 목록이 맨 위로 튀어 오르던 문제를 고쳤어요. 마지막으로 본 <strong>시즌·회차가 선택된 채로</strong> 보이고, 이야기를 마치고 돌아와도 그 회차가 <strong>가운데에</strong> 다시 보입니다.
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+              <div class="font-black text-[#ffd6de]">🌟 표정이 더 다정해졌사와요</div>
+              <div class="text-[#c9b1aa] leading-relaxed">
+                미오와 코토네의 <strong>장난/웃음 표정</strong>을 새로 그렸어요. 혀를 내민 낯선 표정 대신, 두 눈을 감고 환하게 웃는 <strong>"에헤헤"</strong> 표정으로 교체했사옵니다.
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+              <div class="font-black text-[#ffd6de]">🩹 운동 기록이 더 편해졌사와요</div>
+              <div class="text-[#c9b1aa] leading-relaxed">
+                무게·횟수·세트는 <strong>✏️ 버튼을 눌렀을 때만</strong> 수정되고, 종목 순서를 위아래로 바꿀 수 있어요. 전날 설정한 세트 수는 그대로 이어지고, 2kg 재활 세트 수도 직접 조절할 수 있사옵니다.
+              </div>
+            </div>
+
+          </div>
+        </details>
+
+        <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
+          <div class="flex items-center justify-between font-bold text-[#f29aa8]">
+            <span>현재 앱 버전: v4.3.48 (言の葉茶屋)</span>
+            <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
+          </div>
+          <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
         </div>
+
       </div>
 
-      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
-        <div class="font-black text-[#ffd6de]">👥 정체불명의 엑스트라가 자주 나타나와요</div>
-        <div class="text-[#c9b1aa] leading-relaxed">
-          <strong>제1-4 · 1-7 · 1-11 · 2-1 · 2-3 · 2-6화</strong>에 <strong>???</strong> 라고만 적힌 낯선 사람들이 들러 대사를 건넵니다. 삽화가 없는 카메오라 <strong>배경만</strong> 보이고, 목소리는 성우가 따로 녹음했사와요. (누군지 알아채셨다면 그건 비밀이라지요 🍵)
-        </div>
-      </div>
-
-      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
-        <div class="font-black text-[#ffd6de]">⚡ 기록 동기화가 오늘에 맞는 톡을 열어줘요</div>
-        <div class="text-[#c9b1aa] leading-relaxed">
-          루틴·식단 탭에서 <strong>지금 기록 동기화</strong>를 누르면, 오늘 마친 운동에 맞는 트레이너(<strong>러닝 → 미오, 근력·복근 → 제미니, 식단 → 코토네</strong>)와의 <strong>새 톡</strong>이 바로 열립니다. 이전 대화는 지워지지 않고, 채팅 위 <strong>이전 대화 보기</strong>로 다시 꺼내볼 수 있어요.
-        </div>
-      </div>
-
-      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
-        <div class="font-black text-[#ffd6de]">💬 평가를 물어보는 창이 방해하지 않아요</div>
-        <div class="text-[#c9b1aa] leading-relaxed">
-          트레이닝 톡에서 마지막 대사가 끝나자마자 화면을 덮던 평가 팝업을 없앴어요. 이제 대화 아래에 작은 카드로 <strong>좋았어 · 보통 · 아쉬움</strong>만 조용히 물어보고, 그대로 두면 마지막 대사를 편하게 읽을 수 있사옵니다. <strong>나중에</strong>를 누르면 평가를 건너뛰어요.
-        </div>
-      </div>
-
-      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
-        <div class="font-black text-[#ffd6de]">🍵 에피소드 목록이 제자리를 지켜요</div>
-        <div class="text-[#c9b1aa] leading-relaxed">
-          다실에서 회차를 고르면 목록이 맨 위로 튀어 오르던 문제를 고쳤어요. 마지막으로 본 <strong>시즌·회차가 선택된 채로</strong> 목록에 그대로 보이고, 이야기를 마치고 돌아와도 그 회차가 <strong>가운데에</strong> 다시 보입니다.
-        </div>
-      </div>
-
-      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
-        <div class="font-black text-[#ffd6de]">🌟 표정이 더 다정해졌사와요</div>
-        <div class="text-[#c9b1aa] leading-relaxed">
-          미오와 코토네의 <strong>장난/웃음 표정</strong>을 새로 그렸어요. 혀를 내민 낯선 표정 대신, 두 눈을 감고 환하게 웃는 <strong>"에헤헤"</strong> 표정으로 교체했사옵니다.
-        </div>
-      </div>
-
-      <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
-        <div class="font-black text-[#ffd6de]">🩹 운동 기록이 더 편해졌사와요</div>
-        <div class="text-[#c9b1aa] leading-relaxed">
-          무게·횟수·세트는 <strong>✏️ 버튼을 눌렀을 때만</strong> 수정되고, 종목 순서를 위아래로 바꿀 수 있어요. 전날 설정한 세트 수는 그대로 이어지고, 2kg 재활 세트 수도 직접 조절할 수 있사옵니다.
-        </div>
-      </div>
-
-      <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
-        <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-          <span>현재 앱 버전: v4.3.47 (言の葉茶屋)</span>
-          <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
-        </div>
-        <div class="text-[10px] text-[#9e847e]">아래 버튼을 눌러 요청문을 복사한 뒤, 에이전트에 바로 붙여넣기 하시면 즉시 업데이트가 진행됩니다.</div>
-      </div>
-
-      <div class="space-y-2 pt-1">
+      <!-- 고정 푸터 -->
+      <div class="shrink-0 px-4 pt-3 pb-4 border-t border-[#3b272f] bg-[#1b1417] space-y-2">
         <button onclick="copyAgentUpdatePrompt()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#e0465a] to-[#9b4dca] text-white text-xs font-black shadow hover:opacity-95 active:scale-98 transition-all flex items-center justify-center gap-1.5">
           <span>📋 에이전트 업데이트 요청문 복사</span>
         </button>
 
-        <button onclick="closeUpdateReminderModal(); openWeeklyReportModal();" class="w-full py-2.5 rounded-xl bg-[#2a1d24] border border-[#5a3440] text-[#ffd6de] text-xs font-black hover:bg-[#35242d] active:scale-98 transition-all flex items-center justify-center gap-1.5">
-          <span>📊 이번 주 제미니 총평 보기</span>
-        </button>
-
         <div class="flex gap-2">
-          <button onclick="dismissWeeklyUpdateReminder()" class="flex-1 py-2 rounded-xl bg-[#261c21] border border-[#422f37] text-xs font-bold text-[#b89d97] hover:text-white">
+          <button onclick="dismissWeeklyUpdateReminder()" class="flex-1 py-2 rounded-xl bg-[#261c21] border border-[#422f37] text-[11px] font-bold text-[#b89d97] hover:text-white">
             이번 주 알림 완료
           </button>
-          <button onclick="closeUpdateReminderModal()" class="flex-1 py-2 rounded-xl bg-[#2d1e25] border border-[#523843] text-xs font-bold text-[#e6d0ca]">
+          <button onclick="closeUpdateReminderModal()" class="flex-1 py-2 rounded-xl bg-[#2d1e25] border border-[#523843] text-[11px] font-bold text-[#e6d0ca]">
             닫기
           </button>
         </div>
+
+        <button onclick="closeUpdateReminderModal(); openWeeklyReportModal();" class="w-full py-1.5 rounded-lg text-[10px] font-bold text-[#c9b1aa] hover:text-[#ffd6de] transition-all">
+          📊 이번 주 제미니 총평 보기 →
+        </button>
       </div>
     </div>
   </div>
