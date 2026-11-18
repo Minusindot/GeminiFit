@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-18T12:58:28.912Z",
+  "updatedAt": "2026-11-18T12:58:44.520Z",
   "lastActiveDate": "2026-11-18",
   "theme": "light",
   "weight": 66.4,
   "fat": 31.8,
   "bondRank": 9,
-  "bondExp": 0,
+  "bondExp": 10,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
   "currentSituation": "ev3",
