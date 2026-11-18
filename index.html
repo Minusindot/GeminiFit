@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.48</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.3.49</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -1365,10 +1365,10 @@
               <span class="text-[9px] text-slate-400 block">내릴 때 3~4초 천천히 버티기 필수</span>
             </div>
             <div class="flex items-center gap-1.5">
-              <span id="rehabTargetLabel" class="text-[10px] text-slate-400 font-mono">10회 × 3세트</span>
+              <span id="rehabTargetLabel" class="text-[10px] text-slate-400 font-mono">10회 × 1세트</span>
               <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 p-0.5">
                 <button onclick="adjustRehabSets(-1)" class="w-5 h-4 flex items-center justify-center text-[11px] font-black text-slate-500 hover:text-emerald-500" title="세트 감소">−</button>
-                <span id="rehabSetNum" class="text-[10px] font-black font-mono px-1 text-slate-800 dark:text-slate-100">3</span>
+                <span id="rehabSetNum" class="text-[10px] font-black font-mono px-1 text-slate-800 dark:text-slate-100">1</span>
                 <button onclick="adjustRehabSets(1)" class="w-5 h-4 flex items-center justify-center text-[11px] font-black text-slate-500 hover:text-emerald-500" title="세트 추가">+</button>
               </div>
             </div>
@@ -1587,7 +1587,7 @@
           <span class="text-xl">⚙️</span>
           <div>
             <h3 class="text-sm font-black text-slate-900 dark:text-white">운동 종목 목록 & 커스텀 관리</h3>
-            <p class="text-[10px] text-slate-400">드롭다운에 표시할 상체/하체 주요 운동을 등록하고 관리합니다</p>
+            <p class="text-[10px] text-slate-400">등록된 종목은 ✏️ 로 이름·무게·부위를 고치고, ▲▼ 로 순서를 바꿀 수 있어요</p>
           </div>
         </div>
         <button onclick="closeExerciseManageModal()" class="w-7 h-7 rounded-lg sub-box flex items-center justify-center text-xs font-black text-slate-500 hover:text-rose-500 transition-colors">✕</button>
@@ -2006,11 +2006,11 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.3.48"></script>
-  <script src="./dialogue_pool.js?v=4.3.48"></script>
-  <script src="./trainer_episodes.js?v=4.3.48"></script>
-  <script src="./kotonoha_data.js?v=4.3.48"></script>
-  <script src="./kotonoha_engine.js?v=4.3.48"></script>
+  <script src="./weekly_reports.js?v=4.3.49"></script>
+  <script src="./dialogue_pool.js?v=4.3.49"></script>
+  <script src="./trainer_episodes.js?v=4.3.49"></script>
+  <script src="./kotonoha_data.js?v=4.3.49"></script>
+  <script src="./kotonoha_engine.js?v=4.3.49"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -2164,7 +2164,8 @@
         crunch: { name: '크런치', sets: [false, false], reps: 50, target: '50회 × 2세트' },
         allDone: false
       },
-      rehab: [false, false, false],
+      rehab: [false],
+      rehabSets: 1,
       meals: [false, false, false],
       mealPhotos: ['', '', ''],
       teaLog: { matcha: 0, espresso: 0, tea: 0 },
@@ -3931,7 +3932,7 @@
         state.mealPhotos = ['', '', ''];
         state.runDone = false;
         state.absDone = false;
-        const rehabLen = Math.min(6, Math.max(1, parseInt(state.rehabSets, 10) || 3));
+        const rehabLen = initRehabSets();
         state.rehab = Array(rehabLen).fill(false);
         state.teaLog = { matcha: 0, espresso: 0, tea: 0 };
 
@@ -4008,6 +4009,17 @@
           if (!['gemini', 'kotone', 'mio'].includes(state.activeTrainer)) state.activeTrainer = 'gemini';
         }
       } catch (e) {}
+
+      // One-time wrist-rehab target migration (v4.3.49).
+      // The 2kg dumbbell eccentric curl is a 1-set routine now. Before this, `rehabSets` was never
+      // part of the cloud payload, so a device that restored from state.json fell back to 3 sets and
+      // the user's edit kept reverting. The marker runs this exactly once; later edits stick.
+      if (state.rehabSetsVersion !== 2) {
+        state.rehabSetsVersion = 2;
+        state.rehabSets = 1;
+        state.rehab = [false];
+        persistLocal();
+      }
 
       // Automatic Day-Change Detection & Clean Reset
       checkAndResetDayChange();
@@ -4261,6 +4273,9 @@
           ...mergedHistory,
           // Local-only data that the cloud copy does not carry (photos, full chat with images, secrets).
           chatHistory: (local.chatHistory && local.chatHistory.length > 0) ? local.chatHistory : (remote.chatHistory || []),
+          // Set count is a user preference. Remote wins only when it actually carries the field;
+          // older payloads omitted it, and keeping it missing is what used to reset the wrist routine to 3.
+          rehabSets: Number.isFinite(parseInt(remote.rehabSets, 10)) ? parseInt(remote.rehabSets, 10) : local.rehabSets,
           mealPhotos: (remoteDate === local.lastActiveDate) ? (local.mealPhotos || ['', '', '']) : ['', '', ''],
           webhookUrl: local.webhookUrl || remote.webhookUrl || '',
           updatedAt: remote.updatedAt || local.updatedAt
@@ -4389,6 +4404,7 @@
           runDone: state.runDone,
           runDist: state.runDist,
           rehab: state.rehab,
+          rehabSets: state.rehabSets,
           meals: state.meals,
           teaLog: state.teaLog,
           gymRoutine: state.gymRoutine,
@@ -8170,22 +8186,26 @@ ${err.message}
     // EXERCISE MANAGEMENT MODAL FUNCTIONS
     // ============================================================================
     let currentManagePart = 'upper';
+    let editingExercise = null; // { part, index } while an exercise list row is being edited
 
     function openExerciseManageModal(part = 'upper') {
       initExerciseList();
       currentManagePart = part;
+      editingExercise = null;
       document.getElementById('exerciseManageModal').classList.remove('hidden');
       switchExerciseManageTab(part);
       playBeep(720, 0.06);
     }
 
     function closeExerciseManageModal() {
+      editingExercise = null;
       document.getElementById('exerciseManageModal').classList.add('hidden');
       renderExerciseDropdowns();
     }
 
     function switchExerciseManageTab(part) {
       currentManagePart = part;
+      editingExercise = null;
       const tabUpper = document.getElementById('emTab_upper');
       const tabLower = document.getElementById('emTab_lower');
       if (part === 'upper') {
@@ -8196,6 +8216,24 @@ ${err.message}
         tabUpper.className = "flex-1 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 sub-box text-center transition-all font-bold";
       }
       renderExerciseManageList();
+    }
+
+    function escapeExerciseHtml(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function escapeExerciseJsAttr(value) {
+      return String(value == null ? '' : value)
+        .replace(/\\/g, '\\\\')
+        .replace(/'/g, "\\'")
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
     }
 
     function renderExerciseManageList() {
@@ -8209,20 +8247,48 @@ ${err.message}
       const items = state.exerciseList[currentManagePart] || [];
       if (!listEl) return;
 
-      listEl.innerHTML = items.map((item, idx) => `
+      listEl.innerHTML = items.map((item, idx) => {
+        const isEditing = editingExercise
+          && editingExercise.part === currentManagePart
+          && editingExercise.index === idx;
+
+        if (isEditing) {
+          return `
+        <div class="p-2 rounded-xl bg-white dark:bg-slate-900 border-2 border-indigo-400/60 space-y-1.5">
+          <div class="grid grid-cols-3 gap-1.5">
+            <input id="exEditName" type="text" value="${escapeExerciseHtml(item.name)}" placeholder="운동명" class="col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500">
+            <select id="exEditPart" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-1 py-1 text-[11px] font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500">
+              <option value="upper" ${currentManagePart === 'upper' ? 'selected' : ''}>💪 상체</option>
+              <option value="lower" ${currentManagePart === 'lower' ? 'selected' : ''}>🦵 하체</option>
+            </select>
+          </div>
+          <div class="grid grid-cols-2 gap-1.5">
+            <input id="exEditWeight" type="text" value="${escapeExerciseHtml(item.defaultWeight || '')}" placeholder="기본 무게 (예: 14kg × 20회)" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-[11px] font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500">
+            <input id="exEditMuscle" type="text" value="${escapeExerciseHtml(item.muscle || '')}" placeholder="타겟 부위 (예: 윗가슴)" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-[11px] font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500">
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="saveExerciseEdit()" class="flex-1 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-black">저장</button>
+            <button onclick="cancelExerciseEdit()" class="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[11px] font-black">취소</button>
+          </div>
+          <p class="text-[10px] text-slate-400 leading-relaxed">이름·기본 무게·타겟 부위·상/하체 분류를 고칠 수 있어요. 이름을 바꾸면 오늘 루틴에 올라간 같은 종목도 함께 바뀝니다.</p>
+        </div>`;
+        }
+
+        return `
         <div class="p-2 rounded-xl sub-box flex items-center justify-between text-xs hover:border-slate-400/40 transition-all">
           <div class="min-w-0 flex-1 pr-2">
             <div class="flex items-center gap-1.5">
-              <span class="font-extrabold text-slate-800 dark:text-slate-100 truncate">${item.name}</span>
+              <span class="font-extrabold text-slate-800 dark:text-slate-100 truncate">${escapeExerciseHtml(item.name)}</span>
               ${item.custom ? '<span class="text-[9px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-extrabold">커스텀</span>' : ''}
-              <span class="text-[9px] px-1.5 py-0.2 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-mono">${item.muscle || '전반'}</span>
+              <span class="text-[9px] px-1.5 py-0.2 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-mono">${escapeExerciseHtml(item.muscle || '전반')}</span>
             </div>
-            <span class="text-[10px] text-slate-400 font-mono block mt-0.5">기본: ${item.defaultWeight || '20회 × 4세트'}</span>
+            <span class="text-[10px] text-slate-400 font-mono block mt-0.5">기본: ${escapeExerciseHtml(item.defaultWeight || '20회 × 4세트')}</span>
           </div>
           <div class="flex items-center gap-1">
             <button onclick="moveExercise('${currentManagePart}', ${idx}, -1)" ${idx === 0 ? 'disabled' : ''} class="w-6 py-1 rounded-lg ${idx === 0 ? 'opacity-30 cursor-not-allowed' : 'bg-slate-200/70 dark:bg-slate-700 hover:bg-sky-500/20 text-slate-500 dark:text-slate-300'} font-black text-[10px]" title="위로 이동">▲</button>
             <button onclick="moveExercise('${currentManagePart}', ${idx}, 1)" ${idx === items.length - 1 ? 'disabled' : ''} class="w-6 py-1 rounded-lg ${idx === items.length - 1 ? 'opacity-30 cursor-not-allowed' : 'bg-slate-200/70 dark:bg-slate-700 hover:bg-sky-500/20 text-slate-500 dark:text-slate-300'} font-black text-[10px]" title="아래로 이동">▼</button>
-            <button onclick="selectExerciseDirectly('${currentManagePart}', '${item.name}')" class="px-2 py-1 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-300 font-black text-[10px] whitespace-nowrap">
+            <button onclick="startExerciseEdit('${currentManagePart}', ${idx})" class="px-1.5 py-1 rounded-lg bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-600 dark:text-indigo-300 font-black text-[11px]" title="수정">✏️</button>
+            <button onclick="selectExerciseDirectly('${currentManagePart}', '${escapeExerciseJsAttr(item.name)}')" class="px-2 py-1 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-300 font-black text-[10px] whitespace-nowrap">
               선택
             </button>
             <button onclick="deleteExercise('${currentManagePart}', ${idx})" class="px-1.5 py-1 rounded-lg text-slate-400 hover:text-rose-500 font-black text-xs" title="삭제">
@@ -8230,7 +8296,8 @@ ${err.message}
             </button>
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     function submitNewExercise() {
@@ -8282,6 +8349,7 @@ ${err.message}
 
       if (!confirm(`'${item.name}' 종목을 목록에서 삭제하시겠습니까?`)) return;
 
+      editingExercise = null;
       state.exerciseList[part].splice(index, 1);
       saveState();
       renderExerciseManageList();
@@ -8296,11 +8364,86 @@ ${err.message}
       if (target < 0 || target >= list.length) return;
       const [item] = list.splice(index, 1);
       list.splice(target, 0, item);
+      editingExercise = null;
       saveState();
       renderExerciseManageList();
       renderExerciseDropdowns();
       playBeep(dir < 0 ? 760 : 560, 0.05);
       showFloatingToast(`'${item.name}' 순서를 ${dir < 0 ? '위로' : '아래로'} 옮겼어요`, '↕️');
+    }
+
+    function startExerciseEdit(part, index) {
+      initExerciseList();
+      const item = (state.exerciseList[part] || [])[index];
+      if (!item) return;
+      editingExercise = { part, index };
+      renderExerciseManageList();
+      playBeep(680, 0.05);
+      const nameEl = document.getElementById('exEditName');
+      if (nameEl) { try { nameEl.focus(); nameEl.select(); } catch (e) {} }
+    }
+
+    function cancelExerciseEdit() {
+      editingExercise = null;
+      renderExerciseManageList();
+    }
+
+    function saveExerciseEdit() {
+      if (!editingExercise) return;
+      initExerciseList();
+      const { part, index } = editingExercise;
+      const item = (state.exerciseList[part] || [])[index];
+      if (!item) { cancelExerciseEdit(); return; }
+
+      const nameEl = document.getElementById('exEditName');
+      const partEl = document.getElementById('exEditPart');
+      const weightEl = document.getElementById('exEditWeight');
+      const muscleEl = document.getElementById('exEditMuscle');
+
+      const name = (nameEl ? nameEl.value : '').trim();
+      const nextPart = (partEl && partEl.value === 'lower') ? 'lower' : (partEl ? 'upper' : part);
+      const defaultWeight = (weightEl ? weightEl.value : '').trim();
+      const muscle = (muscleEl ? muscleEl.value : '').trim();
+
+      if (!name) {
+        showFloatingToast('운동 종목 이름을 입력해주세요!', '⚠️');
+        if (nameEl) nameEl.focus();
+        return;
+      }
+
+      const duplicated = (state.exerciseList[nextPart] || []).some((e, i) =>
+        e.name === name && !(nextPart === part && i === index));
+      if (duplicated) {
+        showFloatingToast('이미 등록되어 있는 운동 종목입니다!', '⚠️');
+        return;
+      }
+
+      const oldName = item.name;
+      item.name = name;
+      item.defaultWeight = defaultWeight || item.defaultWeight;
+      item.muscle = muscle || item.muscle;
+
+      // Move between upper/lower when the user changes the classification.
+      if (nextPart !== part) {
+        state.exerciseList[part].splice(index, 1);
+        state.exerciseList[nextPart].push(item);
+      }
+
+      // Keep today's routine in sync when the exercise it points at is renamed.
+      if (oldName !== name) {
+        initGymRoutine();
+        ['upper1', 'upper2', 'lower'].forEach(k => {
+          if (state.gymRoutine[k] && state.gymRoutine[k].name === oldName) state.gymRoutine[k].name = name;
+        });
+      }
+
+      editingExercise = null;
+      saveState();
+      renderExerciseManageList();
+      renderExerciseDropdowns();
+      try { renderGymUI(); } catch (e) {}
+      playBeep(880, 0.1);
+      showFloatingToast(`'${name}' 종목을 수정했습니다! ✨`, '✏️');
     }
 
     function selectExerciseDirectly(part, name) {
@@ -9483,7 +9626,11 @@ ${err.message}
 
     function initRehabSets() {
       let n = parseInt(state.rehabSets, 10);
-      if (!Number.isFinite(n)) n = 3;
+      const arrLen = Array.isArray(state.rehab) ? state.rehab.length : 0;
+      // `rehabSets` is the source of truth; if it is missing (older cloud payloads only carried the
+      // rehab array), recover the target from the number of sets already tracked instead of forcing 3.
+      if (!Number.isFinite(n)) n = (arrLen >= 1 && arrLen <= 6) ? arrLen : 1;
+      if (!Number.isFinite(n) || n < 1) n = 1;
       n = Math.min(6, Math.max(1, n));
       state.rehabSets = n;
       if (!Array.isArray(state.rehab)) state.rehab = [];
@@ -9686,7 +9833,7 @@ ${err.message}
 
 🏃‍♂️ [운동 및 재활 루틴 이행률]
 - 러닝 완주: ${runDone} (최근 기록: ${latestRunDist}km)
-- 덤벨 2kg 재활 루틴: ${state.rehabSets || 3}세트 중 ${dumbbellSets}세트 완료
+- 덤벨 2kg 재활 루틴: ${state.rehabSets || 1}세트 중 ${dumbbellSets}세트 완료
 - 복근 운동: ${state.absDone ? '완료' : '미완료'}
 
 🥗 [식단 및 17:7 단식]
@@ -9708,14 +9855,90 @@ ${err.message}
 3. 퀴즈 오답/취약 어휘와 내 반응을 반영한 다음 주차 일본어 다실 신규 맞춤형 레슨 & 퀴즈 제작
 4. 새로운 성취를 기념하는 신규 이벤트 CG 및 대화 추가 진행해줘!`;
 
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(promptText).then(() => {
+      window.__lastAgentPrompt = promptText;
+
+      // Copy is best-effort: HTTPS pages get the async Clipboard API, but it can still be blocked
+      // (permissions, focus, in-app browsers). When it fails we still show the sheet so the user can
+      // select the text manually instead of the button silently doing nothing.
+      openAgentPromptModal(promptText);
+    }
+
+    function legacyCopyText(text) {
+      let ta = null;
+      try {
+        ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', 'readonly');
+        ta.style.position = 'fixed';
+        ta.style.top = '-9999px';
+        ta.style.left = '-9999px';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        ta.setSelectionRange(0, text.length);
+        return document.execCommand('copy');
+      } catch (e) {
+        console.warn('execCommand copy failed:', e);
+        return false;
+      } finally {
+        if (ta && ta.parentNode) ta.parentNode.removeChild(ta);
+      }
+    }
+
+    async function copyTextToClipboard(text) {
+      if (!text) return false;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch (e) {
+        console.warn('Clipboard API copy failed, retrying with fallback:', e);
+      }
+      return legacyCopyText(text);
+    }
+
+    function openAgentPromptModal(text) {
+      const modal = document.getElementById('agentPromptModal');
+      const area = document.getElementById('agentPromptText');
+      const status = document.getElementById('agentPromptStatus');
+      if (!modal || !area) return;
+      area.value = text;
+      modal.classList.remove('hidden');
+      if (status) status.textContent = '자동 복사를 시도하고 있어요…';
+      copyTextToClipboard(text).then(ok => {
+        if (ok) {
+          if (status) status.textContent = '✅ 클립보드에 복사되었습니다. 에이전트 채팅에 그대로 붙여넣으세요.';
           showFloatingToast('종합 분석 요청서가 복사되었습니다! 에이전트 채팅에 붙여넣어 주세요 📋', '✨');
           playBeep(880, 0.1);
-        });
-      } else {
-        alert("📋 아래 종합 분석 요청서를 복사해 에이전트 채팅에 보내주세요:\n\n" + promptText);
-      }
+        } else {
+          if (status) status.textContent = '⚠️ 자동 복사가 차단되었습니다. 아래 내용을 길게 눌러 전체 선택한 뒤 복사해주세요.';
+          try { area.focus(); area.select(); } catch (e) {}
+        }
+      });
+    }
+
+    function closeAgentPromptModal() {
+      const modal = document.getElementById('agentPromptModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function copyAgentPromptText() {
+      const area = document.getElementById('agentPromptText');
+      const status = document.getElementById('agentPromptStatus');
+      const text = area ? area.value : '';
+      copyTextToClipboard(text).then(ok => {
+        if (status) status.textContent = ok
+          ? '✅ 다시 복사했습니다. 에이전트 채팅에 붙여넣으세요.'
+          : '⚠️ 복사가 차단되었습니다. 내용을 직접 선택해 복사해주세요.';
+        if (ok) {
+          showFloatingToast('요청문을 복사했습니다 📋', '✨');
+          playBeep(760, 0.08);
+        } else if (area) {
+          try { area.focus(); area.select(); } catch (e) {}
+        }
+      });
     }
 
     // Backward-compatible alias (old cached markup / bookmarks may still call the old name)
@@ -9794,7 +10017,7 @@ ${err.message}
             { name: "⚖️ 체중 / 체지방", value: `• 체중: **${state.weight} kg**\n• 체지방률: **${state.fat} %**`, inline: true },
             { name: "⏱️ 17:7 단식", value: `• 아침: ${state.meals[0] ? '✅' : '❌'}\n• 점심: ${state.meals[1] ? '✅' : '❌'}\n• 저녁: ${state.meals[2] ? '✅' : '❌'}\n(사진 인증: **${photoCnt}끼** 첨부)`, inline: true },
             { name: "🍵 홈카페 티 로그", value: `• 말차: **${state.teaLog.matcha || 0}회**\n• 에스프레소: **${state.teaLog.espresso || 0}회**\n• 허브티: **${state.teaLog.tea || 0}회**`, inline: true },
-            { name: "🩹 엘보 재활", value: `• 2kg 덤벨 편심성 컬: **${rehabCnt} / ${state.rehabSets || 3} 세트**`, inline: false },
+            { name: "🩹 엘보 재활", value: `• 2kg 덤벨 편심성 컬: **${rehabCnt} / ${state.rehabSets || 1} 세트**`, inline: false },
             { name: "🔥 루틴", value: `• 14분 복근: ${state.absDone ? '✅' : '❌'}\n• 야외 러닝 (${state.runDist}km): ${state.runDone ? '✅' : '❌'}`, inline: false }
           ],
           footer: {
@@ -10083,7 +10306,7 @@ ${err.message}
       if (m.runDays < 3) missions.push({ icon: '🏃', text: '러닝 3회 × 5km — 첫 회는 3km로 가볍게 시동' });
       if (m.gymDays < 3) missions.push({ icon: '🏋️', text: '근력 3회 — 체스트 프레스 · 케이블 로우 · 레그 프레스' });
       if (m.absDays < 3) missions.push({ icon: '🧘', text: '14분 복근 3회 — 플랭크는 30초부터' });
-      if (m.rehabDays < 4) missions.push({ icon: '🩹', text: `재활 4회 — 2kg 덤벨 손목 편심성 컬 ${state.rehabSets || 3}세트` });
+      if (m.rehabDays < 4) missions.push({ icon: '🩹', text: `재활 4회 — 2kg 덤벨 손목 편심성 컬 ${state.rehabSets || 1}세트` });
       if (m.mealTotal < 18) missions.push({ icon: '🍱', text: '3끼 사진 21장 · 17시 이후엔 물과 말차만' });
       if (lessonDelta < 3) missions.push({ icon: '🍵', text: '다실 3화 — 짧게라도 매일 한 문장' });
       if (quizDelta < 10) missions.push({ icon: '🎯', text: '퀴즈 10문제 — 틀린 단어는 복습 노트에' });
@@ -10308,6 +10531,34 @@ ${err.message}
         </p>
 
         <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+          <div class="font-black text-[#ffd6de]">📋 요청문 복사가 이제 화면에 보여요</div>
+          <div class="text-[#c9b1aa] leading-relaxed">
+            예전에는 브라우저가 클립보드를 막으면 <strong>아무 반응이 없었사옵니다</strong>. 이제 버튼을 누르면 <strong>요청문 창</strong>이 열리고 자동으로 복사되지요. 자동 복사가 막힌 환경에서도 창 안의 글을 <strong>직접 선택해 복사</strong>할 수 있어요.
+          </div>
+        </div>
+
+        <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+          <div class="font-black text-[#ffd6de]">✏️ 등록한 운동을 직접 고칠 수 있사와요</div>
+          <div class="text-[#c9b1aa] leading-relaxed">
+            <strong>운동 목록</strong>의 각 종목에 <strong>✏️ 수정</strong> 버튼을 붙였사옵니다. 이름·기본 무게·타겟 부위를 고치고 <strong>상체↔하체</strong>로 옮길 수도 있어요. 이름을 바꾸면 오늘 루틴에 올라간 같은 종목도 함께 바뀝니다.
+          </div>
+        </div>
+
+        <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
+          <div class="font-black text-[#ffd6de]">🩹 2kg 덤벨 재활 1세트, 이제 안 돌아가요</div>
+          <div class="text-[#c9b1aa] leading-relaxed">
+            세트 수가 <strong>클라우드 state.json에 저장되지 않아</strong>, 다른 기기에서 열거나 하루가 지나면 <strong>3세트로 되돌아가던</strong> 문제를 고쳤사옵니다. 이제 1세트로 맞춰 두면 그대로 유지되고, +/- 로 언제든 바꿀 수 있어요.
+          </div>
+        </div>
+
+        <details class="group rounded-2xl bg-[#22181d] border border-[#3b272f]">
+          <summary class="cursor-pointer list-none px-3 py-2.5 text-[11px] font-black text-[#c9b1aa] flex items-center justify-between">
+            <span>📜 지난 업데이트 10건 더 보기</span>
+            <span class="text-[10px] text-[#8d7570] group-open:hidden">펼치기 ▾</span>
+            <span class="text-[10px] text-[#8d7570] hidden group-open:inline">접기 ▴</span>
+          </summary>
+          <div class="px-2 pb-2 space-y-2">
+        <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
           <div class="font-black text-[#ffd6de]">🩹 그림이 잠깐 안 뜰 때 화면이 멈추지 않아요</div>
           <div class="text-[#c9b1aa] leading-relaxed">
             일부 초상화의 대체 이미지가 <strong>끝없이 다시 요청</strong>되던 것을 막았사옵니다. 이제 한 번만 대체하고 조용히 넘어가서, 회선이 느리거나 이미지가 잠시 막혀도 화면이 버벅이지 않아요.
@@ -10328,13 +10579,6 @@ ${err.message}
           </div>
         </div>
 
-        <details class="group rounded-2xl bg-[#22181d] border border-[#3b272f]">
-          <summary class="cursor-pointer list-none px-3 py-2.5 text-[11px] font-black text-[#c9b1aa] flex items-center justify-between">
-            <span>📜 지난 업데이트 7건 더 보기</span>
-            <span class="text-[10px] text-[#8d7570] group-open:hidden">펼치기 ▾</span>
-            <span class="text-[10px] text-[#8d7570] hidden group-open:inline">접기 ▴</span>
-          </summary>
-          <div class="px-2 pb-2 space-y-2">
 
             <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
               <div class="font-black text-[#ffd6de]">🎧 세 사람의 목소리를 새로 녹음했사와요</div>
@@ -10390,7 +10634,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.3.48 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.3.49 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
@@ -10416,6 +10660,32 @@ ${err.message}
         <button onclick="closeUpdateReminderModal(); openWeeklyReportModal();" class="w-full py-1.5 rounded-lg text-[10px] font-bold text-[#c9b1aa] hover:text-[#ffd6de] transition-all">
           📊 이번 주 제미니 총평 보기 →
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL: Agent Update Prompt Copy Sheet
+       ======================================================== -->
+  <div id="agentPromptModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[70] flex items-center justify-center p-3 hidden" onclick="if(event.target === this) closeAgentPromptModal()">
+    <div class="game-card max-w-md w-full max-h-[90dvh] flex flex-col overflow-hidden border-[#9b4dca]/60 shadow-2xl bg-[#1b1417] text-[#f5ebe6] rounded-3xl">
+      <div class="flex items-center justify-between px-4 py-3 border-b border-[#3b272f] shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">📋</span>
+          <div>
+            <h3 class="text-sm font-black text-[#f4869d]">에이전트 업데이트 요청문</h3>
+            <p class="text-[10px] text-[#b89d97] font-bold">아래 내용을 복사해 에이전트 채팅에 붙여넣으세요</p>
+          </div>
+        </div>
+        <button onclick="closeAgentPromptModal()" class="text-[#b89d97] hover:text-white p-1 text-base shrink-0" aria-label="닫기">✕</button>
+      </div>
+      <div class="flex-1 min-h-0 overflow-y-auto px-4 py-3 space-y-2">
+        <p id="agentPromptStatus" class="text-[11px] font-bold text-[#ffd6de] leading-relaxed">자동 복사를 준비하고 있어요…</p>
+        <textarea id="agentPromptText" readonly spellcheck="false" class="w-full h-64 resize-none rounded-xl bg-[#261b20] border border-[#4a323b] p-3 text-[11px] leading-relaxed font-mono text-[#f0dfd9] focus:outline-none focus:border-[#e0465a] clean-scroll"></textarea>
+      </div>
+      <div class="shrink-0 px-4 pt-3 pb-4 border-t border-[#3b272f] bg-[#1b1417] flex gap-2">
+        <button onclick="copyAgentPromptText()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#e0465a] to-[#9b4dca] text-white text-xs font-black shadow hover:opacity-95 active:scale-98 transition-all">📋 다시 복사</button>
+        <button onclick="closeAgentPromptModal()" class="px-4 py-2.5 rounded-xl bg-[#2d1e25] border border-[#523843] text-xs font-bold text-[#e6d0ca]">닫기</button>
       </div>
     </div>
   </div>

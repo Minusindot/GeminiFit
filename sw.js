@@ -1,5 +1,5 @@
-// Gemini Fit Progressive Web App (PWA) Service Worker v4.3.48
-const CACHE_NAME = 'geminifit-pwa-v4.3.48';
+// Gemini Fit Progressive Web App (PWA) Service Worker v4.3.49
+const CACHE_NAME = 'geminifit-pwa-v4.3.49';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
