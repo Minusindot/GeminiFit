@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-19T04:21:46.374Z",
+  "updatedAt": "2026-11-19T08:40:46.097Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
-  "bondRank": 9,
-  "bondExp": 95,
+  "bondRank": 10,
+  "bondExp": 10,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
   "currentSituation": "ev3",
@@ -19,7 +19,7 @@
   "meals": [
     false,
     true,
-    false
+    true
   ],
   "teaLog": {
     "matcha": 0,
@@ -648,16 +648,6 @@
   },
   "chatHistory": [
     {
-      "sender": "mio",
-      "name": "미오",
-      "text": "파티 계획 시작하자! 레스토랑 예약부터 트랙 파티까지 완전 플랜!"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "흥, 생일 축하는 산책 위주 가볍게 하자고? 프로듀서항의 체지방률도 챙겨야니까."
-    },
-    {
       "sender": "user",
       "name": "프로듀서",
       "text": "레스토랑 예약해요! 🍽️"
@@ -790,6 +780,15 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
+    },
+    {
+      "sender": "user",
+      "text": "📸 [16:30 마감 식사 인증 사진]"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "식단 인증 확인 완료! 정성껏 챙겨 드시는 모습 너무 보기 좋아요 프로듀서님~! 💛"
     }
   ]
 }
