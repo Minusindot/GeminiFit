@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.11</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.12</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -892,7 +892,10 @@
             <button onclick="switchQuestTab('daily')" id="questTabDaily" class="px-2 py-1 rounded-lg text-[10px] font-black bg-amber-500 text-white shadow-2xs transition-all">⚡ 일일 <span id="questDailyProg" class="font-mono opacity-90">0/4</span></button>
             <button onclick="switchQuestTab('weekly')" id="questTabWeekly" class="px-2 py-1 rounded-lg text-[10px] font-bold text-slate-500 dark:text-slate-400 transition-all">🎯 주간 <span id="questWeeklyProg" class="font-mono opacity-80">0/5</span></button>
           </div>
-          <span id="questDeadlineBadge" class="text-[9px] font-black px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-400/30 whitespace-nowrap">수요일 마감 D-6</span>
+          <div class="flex items-center gap-1 shrink-0">
+            <span id="questDeadlineBadge" class="text-[9px] font-black px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-400/30 whitespace-nowrap">수요일 마감 D-6</span>
+            <button type="button" id="questCollapseBtn" onclick="toggleQuestCollapse()" class="hidden px-1.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[9px] font-black text-slate-500 dark:text-slate-300 hover:border-emerald-400 active:scale-95 transition-all whitespace-nowrap">▾ 펼치기</button>
+          </div>
         </div>
         <div id="questGridContainer" class="flex flex-col gap-1"></div>
       </div>
@@ -1459,7 +1462,7 @@
           <button onclick="quickAddMeal('일반식 밥 반공기', 450, 20, '조절')" class="shrink-0 px-2 py-1 rounded-full bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-400/30 text-[10px] font-black active:scale-95 transition-all">🍚 일반식 반공기</button>
         </div>
 
-        <!-- Today's Meal Add Toggle Button (Collapsible Composer, v4.6.11) -->
+        <!-- Today's Meal Add Toggle Button (Collapsible Composer, v4.6.12) -->
         <button type="button" id="btnToggleMealComposer" onclick="toggleMealComposer()" class="w-full py-2 rounded-xl border border-dashed border-pink-400/60 bg-pink-500/5 hover:bg-pink-500/10 text-pink-600 dark:text-pink-300 text-xs font-black flex items-center justify-center gap-1.5 active:scale-[0.99] transition-all">
           <span id="mealComposerToggleIcon" class="w-4 h-4 rounded-full bg-pink-500 text-white text-[11px] flex items-center justify-center leading-none">+</span>
           <span id="mealComposerToggleText">식단 직접 추가 / 사진 인증</span>
@@ -6538,7 +6541,7 @@
       const ctx = buildTalkContext();
       const recEp = pickRecommendedEpisode(room, key);
 
-      // Single streamlined flow (v4.6.11):
+      // Single streamlined flow (v4.6.12):
       // Sync pill -> immediately launch the best-matching unwatched Training Talk episode
       // (which already embeds live weight/workout/protein/meal variables + photos),
       // so there's no awkward double-conversation!
@@ -7798,10 +7801,19 @@ ${err.message}
     // Synced with Wednesday weekly report cycle & live user progress!
     // ============================================================================
     let activeQuestTab = 'daily';
+    let questExpandOverride = { daily: null, weekly: null };
 
     function switchQuestTab(tab) {
       activeQuestTab = tab === 'daily' ? 'daily' : 'weekly';
       playBeep(660, 0.04);
+      renderQuestHudUI();
+    }
+
+    function toggleQuestCollapse() {
+      const grid = document.getElementById('questGridContainer');
+      const isHidden = grid ? grid.classList.contains('hidden') : false;
+      questExpandOverride[activeQuestTab] = isHidden; // true = force open, false = force collapsed
+      playBeep(isHidden ? 700 : 500, 0.04);
       renderQuestHudUI();
     }
 
@@ -7968,6 +7980,21 @@ ${err.message}
       }
 
       const items = activeQuestTab === 'weekly' ? wItems : dItems;
+      const allCleared = items.length > 0 && items.every(q => q.cur >= q.target);
+      const allClaimed = allCleared && items.every(q => !!claims[q.key]);
+      const override = questExpandOverride[activeQuestTab];
+      const shouldCollapse = allClaimed ? (override !== true) : (override === false);
+
+      const cBtn = document.getElementById('questCollapseBtn');
+      if (cBtn) {
+        cBtn.classList.toggle('hidden', !allClaimed && override === null);
+        cBtn.textContent = shouldCollapse ? '▾ 펼치기' : '▴ 접기';
+      }
+
+      if (shouldCollapse) {
+        grid.className = 'hidden';
+        return;
+      }
       grid.className = 'flex flex-col gap-1';
 
       grid.innerHTML = items.map(q => {
@@ -8013,7 +8040,7 @@ ${err.message}
       }).join('');
     }
 
-    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.6.11) ----------
+    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.6.12) ----------
     const CARDIO_LABELS = { treadmill: '🏃‍♂️ 러닝머신', stair: '🪜 천국의 계단', outdoor: '🏃 야외 러닝' };
 
     function selectCardioMode(mode) {
@@ -12555,7 +12582,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.6.11 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.6.12 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
