@@ -355,6 +355,15 @@ ECGS = [
      "warm paper lantern glow, shy gentle smile, cinematic event CG, vertical portrait",
      [ROOT / "image" / "03 gemini" / "avatar_gemini.png",
       WORK / "gemini_yukata" / "base_raw.png"]),
+    ("gemini_49_first_line_morning", "03 gemini",
+     "same anime girl with long straight black hair with blunt straight-cut bangs and black cat ears, "
+     "wearing a dark indigo kimono with pink cherry blossom patterns and a white apron, "
+     "kneeling at a low wooden table in a snowy Kyoto tea house in the early morning, "
+     "holding a calligraphy brush and writing the first line in a blank notebook, a warm cup of matcha beside her, "
+     "morning sunlight streaming through shoji paper windows, gentle hopeful smile, soft winter atmosphere, "
+     "cinematic event CG, vertical portrait",
+     [ROOT / "image" / "03 gemini" / "avatar_gemini.png",
+      ROOT / "image" / "03 gemini" / "gemini_48_zero_point_restart.png"]),
 ]
 
 # Korean webtoon (manhwa) panels for the Minitoon single episode:

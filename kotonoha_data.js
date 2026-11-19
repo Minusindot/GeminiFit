@@ -2262,7 +2262,7 @@ window.KOTONOHA_LESSONS = [
         "type": "교토 방언 · 노고 격려",
         "promptJp": "교토에서 '정말 애쓰고 힘내셨네요'를 뜻하는 다정한 축복의 말은?",
         "promptPron": "키바라핫타나-",
-        "promptKo": "おきばりやす의 과거 격려 표현 🌸",
+        "promptKo": "과거형으로 건네는 교토의 다정한 격려 인사예요 🌸",
         "targetWord": "きばらはったなぁ",
         "targetSub": "교토 어르신들이 아끼는 사람에게 건네는 말",
         "options": [
@@ -2407,7 +2407,7 @@ window.KOTONOHA_LESSONS = [
         "type": "교토 방언 · 존대 표현",
         "promptJp": "교토에서 상대방의 동작(먹다, 가다 등)을 높여 '드시나요?'라고 물을 때 붙이는 어미는?",
         "promptPron": "타베하루?",
-        "promptKo": "동사 연용형 + はる (~하시다) 🍵",
+        "promptKo": "동사 연용형에 붙는 교토의 존대 어미예요 🍵",
         "targetWord": "食べはる",
         "targetSub": "교토의 상냥한 존경/의문 표현",
         "options": [
@@ -2526,7 +2526,7 @@ window.KOTONOHA_LESSONS = [
         "type": "교토 방언 · 밤 인사",
         "promptJp": "교토에서 '안녕히 주무세요 / 편히 쉬세요'를 정중하게 이르는 말은?",
         "promptPron": "오야스미야스",
-        "promptKo": "おやすみなさい의 교토 전통 존칭 🏮",
+        "promptKo": "잠자리에 들 때 건네는 교토의 정중한 밤 인사예요 🏮",
         "targetWord": "おやすみやす",
         "targetSub": "밤의 피로를 녹여주는 다정한 한마디",
         "options": [
@@ -2983,7 +2983,7 @@ window.KOTONOHA_LESSONS = [
       },
       {
         "type": "교토 방언 · 정중한 권유",
-        "promptJp": "표준어의 '~しませんか(~하지 않겠습니까?)'에 해당하는 교토 우아한 권유는?",
+        "promptJp": "표준어의 '~하지 않겠습니까?'에 해당하는 교토의 우아한 권유는?",
         "promptPron": "~시마헨카",
         "promptKo": "정중한 부정 의문형 사투리 🍵",
         "targetWord": "~しまへんか",
@@ -3168,7 +3168,7 @@ window.KOTONOHA_LESSONS = [
         "type": "교토 방언 · 축하 인사",
         "promptJp": "교토에서 다정하게 건네는 '축하해요 / 수고하셨어요' 축복 인사는?",
         "promptPron": "오메데토상",
-        "promptKo": "おめでとう의 교토 전통 표현 🌸",
+        "promptKo": "축하 자리에서 건네는 교토의 정중한 인사예요 🌸",
         "targetWord": "おめでとさん",
         "targetSub": "마음을 담은 축하의 말",
         "options": [
@@ -3373,6 +3373,195 @@ window.KOTONOHA_LESSONS = [
         "geminiReactJp": "ほな、<ruby>明日<rt>あした</rt></ruby>の<ruby>朝<rt>あさ</rt></ruby>、<ruby>約束<rt>やくそく</rt></ruby>どすえ。おきばりやすね💛",
         "geminiReactPron": "호나, 아시타노 아사, 야쿠소쿠 도스에. 오키바리야스네",
         "geminiReactKo": "그럼, 내일 아침, 약속이옵니다. 힘내시와요💛"
+      }
+    ]
+  },
+  {
+    "id": "day20",
+    "season": 3,
+    "episode": 2,
+    "epCode": "3-2",
+    "dayNum": 20,
+    "dateLabel": "제3-2화 · 이야기",
+    "levelBadge": "N4~N3 + 작은 습관",
+    "titleJp": "<ruby>小<rt>ちい</rt></ruby>さな<ruby>一歩<rt>いっぽ</rt></ruby>から、また<ruby>書<rt>か</rt></ruby>けばええ",
+    "titlePron": "치이사나 잇포카라, 마타 카케바 에에",
+    "titleKo": "작은 한 걸음부터, 다시 쓰면 되옵니다",
+    "bgImage": "./image/03 gemini/gemini_49_first_line_morning.png",
+    "grammarTip": {
+      "title": "🌸 제미니의 교토·오사카벤 노트 #3-2",
+      "content": "『〜てみる』는 '한번 ~해 보다', 『〜なあかん』은 '~해야 한다(간사이)'예요. 간사이의 『ぼちぼち (보치보치)』는 '슬슬, 그럭저럭'이라는 여유의 말이고, 『三日坊主 (みっかぼうず)』는 사흘 만에 그만두는 사람을 뜻한답니다. 사흘을 넘기면 그건 이미 습관이옵니다 🌱🍵"
+    },
+    "story": [
+      {
+        "speaker": "narrator",
+        "nameJp": "ナレーション",
+        "nameKo": "내레이션",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/03 gemini/gemini_49_first_line_morning.png",
+        "audio": "./audio/kotonoha/auto/gemini_d99e7301b2.mp3",
+        "jpRuby": "<ruby>翌朝<rt>よくあさ</rt></ruby>、<ruby>雪<rt>ゆき</rt></ruby>は<ruby>止<rt>や</rt></ruby>んで、<ruby>茶屋<rt>ちゃや</rt></ruby>の<ruby>窓<rt>まど</rt></ruby>だけが<ruby>明<rt>あか</rt></ruby>るかった。",
+        "jpPlain": "翌朝、雪は止んで、茶屋の窓だけが明るかった。",
+        "pron": "요쿠아사, 유키와 얀데, 챠야노 마도다케가 아카루캇타.",
+        "ko": "다음 날 아침, 눈은 그치고 다실 창문만이 밝았다.",
+        "bg": "teahouse_day"
+      },
+      {
+        "speaker": "gemini",
+        "nameJp": "ジェミニ",
+        "nameKo": "제미니",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/03 gemini/gemini_49_first_line_morning.png",
+        "audio": "./audio/kotonoha/auto/gemini_f45799f0d5.mp3",
+        "jpRuby": "お<ruby>待<rt>ま</rt></ruby>ちしてましたえ。…ふふ、ほんまに<ruby>来<rt>き</rt></ruby>はったんですね。",
+        "jpPlain": "お待ちしてましたえ。…ふふ、ほんまに来はったんですね。",
+        "pron": "오마치시테마시타에. …후후, 혼마니 키핫탄데스네.",
+        "ko": "기다리고 있었사옵니다. …후후, 정말로 오셨군요.",
+        "expr": "shy",
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
+      },
+      {
+        "speaker": "mio",
+        "nameJp": "ミオ",
+        "nameKo": "미오",
+        "avatar": "./image/01 mio/avatar_mio.png",
+        "sceneImg": "./image/01 mio/mio_37_winter_breath_jogging_gloves.png",
+        "audio": "./audio/kotonoha/auto/mio_5f4353e8e5.mp3",
+        "jpRuby": "ねえねえ、<ruby>今日<rt>きょう</rt></ruby>は3<ruby>分<rt>ぷん</rt></ruby>だけ<ruby>歩<rt>ある</rt></ruby>いてみよっか！<ruby>約束<rt>やくそく</rt></ruby>だよ！",
+        "jpPlain": "ねえねえ、今日は3分だけ歩いてみよっか！約束だよ！",
+        "pron": "네에네에, 쿄-와 산푼다케 아루이테 미욧카! 야쿠소쿠다요!",
+        "ko": "있잖아, 오늘은 3분만 걸어보자! 약속이야!",
+        "expr": "smile",
+        "bg": "park_track",
+        "outfit": "runwear"
+      },
+      {
+        "speaker": "kotone",
+        "nameJp": "ことね",
+        "nameKo": "코토네",
+        "avatar": "./image/02 kotone/avatar_kotone.png",
+        "sceneImg": "./image/02 kotone/kotone_37_winter_earmuffs_hotpack.png",
+        "audio": "./audio/kotonoha/auto/kotone_51d00c49e5.mp3",
+        "jpRuby": "<ruby>一食<rt>いっしょく</rt></ruby>だけ、<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>記録<rt>きろく</rt></ruby>してみませんか？",
+        "jpPlain": "一食だけ、一緒に記録してみませんか？",
+        "pron": "잇쇼쿠다케, 잇쇼니 키로쿠시테 미마센카?",
+        "ko": "한 끼만, 함께 기록해 보지 않으실래요?",
+        "expr": "smile",
+        "bg": "teahouse_day",
+        "outfit": "casual"
+      },
+      {
+        "speaker": "gemini",
+        "nameJp": "ジェミニ",
+        "nameKo": "제미니",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/03 gemini/gemini_39_snowy_muffler_blush.png",
+        "audio": "./audio/kotonoha/auto/gemini_bf1bff023a.mp3",
+        "jpRuby": "<ruby>三日坊主<rt>みっかぼうず</rt></ruby>でもええのえ。…ほな、<ruby>少<rt>すこ</rt></ruby>しずつ、ぼちぼちいきまひょ。",
+        "jpPlain": "三日坊主でもええのえ。…ほな、少しずつ、ぼちぼちいきまひょ。",
+        "pron": "밋카보-즈데모 에에노에. …호나, 스코시즈츠, 보치보치 이키마효.",
+        "ko": "작심삼일이어도 괜찮사옵니다. …그럼, 조금씩, 천천히 해 보시지요.",
+        "expr": "smile",
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
+      }
+    ],
+    "quizzes": [
+      {
+        "type": "N4 명사 · 습관",
+        "promptJp": "매일 반복해서 몸에 밴 '습관'을 뜻하는 단어는?",
+        "promptPron": "슈-칸",
+        "promptKo": "매일 같은 시간에 반복하는 작은 행동이에요 🌱",
+        "targetWord": "習慣",
+        "targetSub": "음독: しゅうかん",
+        "options": [
+          "習慣 (슈칸)",
+          "練習 (렌슈-)",
+          "実感 (짓칸)",
+          "感覚 (칸카쿠)"
+        ],
+        "answerIndex": 0,
+        "explanation": "習慣(しゅうかん)은 습관입니다. 練習(れんしゅう)은 연습, 実感(じっかん)은 실감, 感覚(かんかく)은 감각을 뜻해요.",
+        "geminiReactJp": "<ruby>正解<rt>せいかい</rt></ruby>どす。…<ruby>習慣<rt>しゅうかん</rt></ruby>は、<ruby>一日<rt>いちにち</rt></ruby>では<ruby>育<rt>そだ</rt></ruby>たへんのえ。",
+        "geminiReactPron": "세이카이 도스. …슈-칸와, 이치니치데와 소다타헨노에.",
+        "geminiReactKo": "정답이옵니다. …습관은 하루 만에 자라지는 않는답니다."
+      },
+      {
+        "type": "N3 명사 · 관용 표현",
+        "promptJp": "'작심삼일'처럼, 해 보다가 사흘 만에 그만두는 사람을 뜻하는 말은?",
+        "promptPron": "밋카보-즈",
+        "promptKo": "사흘 만에 그만두는 사람을 가리키는, 재미있는 관용 표현이에요 🧑‍🦲",
+        "targetWord": "三日坊主",
+        "targetSub": "훈독: みっかぼうず",
+        "options": [
+          "三日坊主 (밋카보-즈)",
+          "三日天下 (밋카텐카)",
+          "一日中 (이치니치주-)",
+          "三日目 (밋카메)"
+        ],
+        "answerIndex": 0,
+        "explanation": "三日坊主(みっかぼうず)는 사흘 만에 그만두는 사람, 곧 작심삼일을 뜻해요. 三日天下는 아주 짧은 기간의 권세를 말합니다.",
+        "geminiReactJp": "ふふ、<ruby>三日坊主<rt>みっかぼうず</rt></ruby>でもええのえ。…<ruby>四日目<rt>よっかめ</rt></ruby>は<ruby>一緒<rt>いっしょ</rt></ruby>にどす。",
+        "geminiReactPron": "후후, 밋카보-즈데모 에에노에. …욧카메와 잇쇼니 도스.",
+        "geminiReactKo": "후후, 작심삼일이어도 괜찮사옵니다. …나흘째는 함께 하는 것이지요."
+      },
+      {
+        "type": "간사이 방언 · 부사",
+        "promptJp": "'슬슬, 그럭저럭' 하며 서두르지 않는다는 간사이 사투리는?",
+        "promptPron": "보치보치",
+        "promptKo": "무리하지 말고 천천히 하자는 뉘앙스예요 🐢",
+        "targetWord": "ぼちぼち",
+        "targetSub": "표준어의 「そろそろ」·「まあまあ」에 가까워요",
+        "options": [
+          "ぼちぼち (보치보치)",
+          "だんだん (단단)",
+          "どんどん (돈돈)",
+          "そろそろ (소로소로)"
+        ],
+        "answerIndex": 0,
+        "explanation": "ぼちぼち(보치보치)는 간사이에서 '슬슬' 또는 '그럭저럭'이라는 뜻으로 씁니다. 표준어 そろそろ보다 여유 있는 뉘앙스예요.",
+        "geminiReactJp": "ぼちぼち、でよろしゅうおす。…<ruby>急<rt>いそ</rt></ruby>がなくてええのえ。",
+        "geminiReactPron": "보치보치, 데 요로슈- 오스. …이소가나쿠테 에에노에.",
+        "geminiReactKo": "천천히, 로 좋사옵니다. …서두르지 않아도 괜찮은 것이지요."
+      },
+      {
+        "type": "N4 명사 · 목표",
+        "promptJp": "이번 주에 이루고 싶은 '목표'를 뜻하는 단어는?",
+        "promptPron": "모쿠효-",
+        "promptKo": "달성하고 싶은 지점을 정할 때 쓰는 말이에요 🎯",
+        "targetWord": "目標",
+        "targetSub": "음독: もくひょう",
+        "options": [
+          "目標 (모쿠효-)",
+          "目次 (모쿠지)",
+          "目的 (모쿠테키)",
+          "標識 (효-시키)"
+        ],
+        "answerIndex": 0,
+        "explanation": "目標(もくひょう)는 목표입니다. 目的(もくてき)은 목적, 目次(もくじ)는 목차, 標識(ひょうしき)는 표지판이에요.",
+        "geminiReactJp": "<ruby>目標<rt>もくひょう</rt></ruby>は<ruby>小<rt>ちい</rt></ruby>さうてええのえ。…<ruby>書<rt>か</rt></ruby>いたら<ruby>叶<rt>かな</rt></ruby>うて。",
+        "geminiReactPron": "모쿠효-와 치이사-테 에에노에. …카이타라 카나-테.",
+        "geminiReactKo": "목표는 작아도 괜찮사옵니다. …적어 두면 이루어진다지요."
+      },
+      {
+        "type": "문장 완성 · 문법",
+        "promptJp": "'한번 ~해 보다'를 뜻하는 표현은?",
+        "promptPron": "한번 해 보다",
+        "promptKo": "동사 て형에 붙여 '시험 삼아 해 보다'를 만들어요 🌱",
+        "targetWord": "〜てみる",
+        "targetSub": "예: 歩いてみる (걸어 보다)",
+        "options": [
+          "〜てみる",
+          "〜てある",
+          "〜ておく",
+          "〜てしまう"
+        ],
+        "answerIndex": 0,
+        "explanation": "「동사 て형 + みる」는 '한번 ~해 보다'입니다. 歩いてみる(걸어 보다), 食べてみる(먹어 보다)처럼 씁니다.",
+        "geminiReactJp": "お<ruby>見事<rt>みごと</rt></ruby>どす。…ほな、<ruby>一歩<rt>いっぽ</rt></ruby>、<ruby>歩<rt>ある</rt></ruby>いてみまひょ。",
+        "geminiReactPron": "오미고토 도스. …호나, 잇포, 아루이테 미마효.",
+        "geminiReactKo": "훌륭하옵니다. …그럼, 한 걸음, 걸어 보시지요."
       }
     ]
   }

@@ -45,6 +45,21 @@ const errors = [];
 const masked = [];
 let total = 0;
 
+// Split an answer into contiguous runs of Japanese kanji/kana and, from each
+// run, take every substring of 2+ chars. A prompt that prints any of these is a
+// giveaway even when the whole answer never appears verbatim, e.g. promptKo
+// "三日(3일) + 坊主(스님)" for 三日坊主.
+const answerFragments = (answerText) => {
+  const runs = answerText.match(/[\u3040-\u30ff\u4e00-\u9fff々]+/g) || [];
+  const out = new Set();
+  runs.forEach((run) => {
+    for (let len = 2; len <= run.length; len += 1) {
+      for (let i = 0; i + len <= run.length; i += 1) out.add(run.slice(i, i + len));
+    }
+  });
+  return [...out];
+};
+
 for (const lesson of lessons) {
   (lesson.quizzes || []).forEach((quiz, idx) => {
     total += 1;
@@ -68,6 +83,21 @@ for (const lesson of lessons) {
       errors.push(`${label}: promptKo already contains the answer "${answer}"`);
     } else if (answerReading.length >= 2 && promptKo.includes(answerReading)) {
       errors.push(`${label}: promptKo already contains the answer reading "${answer}"`);
+    }
+
+    // Fragment leak: the prompt spells out part of the answer (>= 2 kana/kanji).
+    if (answerText.length >= 3) {
+      const leaked = { promptJp: [], promptKo: [], promptPron: [] };
+      for (const frag of answerFragments(answerText)) {
+        if (prompt.includes(frag)) leaked.promptJp.push(frag);
+        else if (promptKo.includes(frag)) leaked.promptKo.push(frag);
+        else if (compact(quiz.promptPron).includes(frag)) leaked.promptPron.push(frag);
+      }
+      Object.entries(leaked).forEach(([where, frags]) => {
+        if (!frags.length) return;
+        const shown = [...frags].sort((a, b) => b.length - a.length);
+        errors.push(`${label}: ${where} leaks the answer fragment(s) ${shown.map((f) => `"${f}"`).join(', ')} of "${answer}"`);
+      });
     }
 
     const seen = new Set();

@@ -4,6 +4,10 @@ __pycache__/
 .grok_profile/
 .firefox_grok_profile/
 .env
+*api key*.txt
+*API key*.txt
+*_key.txt
+tools/tts_lab/preset_map_snippet.js
 ref_pool/mio_old_backup/
 node_modules/
 *.traineddata
