@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T12:32:16.138Z",
+  "updatedAt": "2026-11-19T12:32:45.800Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 65.4,
@@ -52,14 +52,14 @@
       "targetSets": 4
     },
     "lower": {
-      "name": "V 스쿼트",
+      "name": "라잉 레그 컬",
       "sets": [
         false,
         false,
         false,
         false
       ],
-      "weight": "맨몸 × 20회",
+      "weight": "30kg × 20회",
       "reps": 20,
       "targetSets": 4
     },
@@ -264,7 +264,7 @@
       "upper2Name": "로우 머신",
       "lowerDone": 0,
       "lowerReps": 0,
-      "lowerName": "V 스쿼트",
+      "lowerName": "라잉 레그 컬",
       "legRaiseDone": 0,
       "legRaiseReps": 0,
       "legRaiseTarget": 1,
