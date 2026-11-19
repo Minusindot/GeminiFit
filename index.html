@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.7.02</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.7.03</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -1126,14 +1126,24 @@
             </div>
             <span class="text-[10px] font-mono text-orange-500 font-extrabold shrink-0">+50 EXP</span>
           </label>
-          <div class="flex items-center gap-1 flex-wrap pt-1 border-t border-slate-200/60 dark:border-slate-700/50">
-            <button type="button" onclick="selectCardioMode('treadmill')" id="cardioBtn_treadmill" class="px-2 py-1 rounded-lg text-[10px] font-black border transition-all">🏃‍♂️ 러닝머신</button>
-            <button type="button" onclick="selectCardioMode('stair')" id="cardioBtn_stair" class="px-2 py-1 rounded-lg text-[10px] font-black border transition-all">🪜 천국의 계단</button>
-            <button type="button" onclick="selectCardioMode('outdoor')" id="cardioBtn_outdoor" class="px-2 py-1 rounded-lg text-[10px] font-black border transition-all">🏃 야외 러닝</button>
-            <div class="ml-auto flex items-center gap-1">
-              <button type="button" onclick="quickLogIndoorCardio(20)" class="px-1.5 py-0.5 rounded-md bg-orange-500/15 hover:bg-orange-500/25 text-orange-600 dark:text-orange-300 text-[9px] font-black active:scale-95">20분</button>
-              <button type="button" onclick="quickLogIndoorCardio(30)" class="px-1.5 py-0.5 rounded-md bg-orange-500/15 hover:bg-orange-500/25 text-orange-600 dark:text-orange-300 text-[9px] font-black active:scale-95">30분</button>
-              <button type="button" onclick="quickLogIndoorCardio(45)" class="px-1.5 py-0.5 rounded-md bg-orange-500/15 hover:bg-orange-500/25 text-orange-600 dark:text-orange-300 text-[9px] font-black active:scale-95">45분</button>
+          <div class="space-y-1.5 pt-1.5 border-t border-slate-200/60 dark:border-slate-700/50">
+            <div class="grid grid-cols-3 gap-1">
+              <button type="button" onclick="selectCardioMode('treadmill')" id="cardioBtn_treadmill" class="py-1 rounded-lg text-[10px] font-black border text-center transition-all">🏃‍♂️ 러닝머신</button>
+              <button type="button" onclick="selectCardioMode('stair')" id="cardioBtn_stair" class="py-1 rounded-lg text-[10px] font-black border text-center transition-all">🪜 천국의 계단</button>
+              <button type="button" onclick="selectCardioMode('outdoor')" id="cardioBtn_outdoor" class="py-1 rounded-lg text-[10px] font-black border text-center transition-all">🏃 야외 러닝</button>
+            </div>
+            <div class="flex items-center justify-between gap-1.5 pt-0.5">
+              <div class="flex items-baseline gap-1.5 min-w-0">
+                <span class="text-[10px] font-bold text-slate-400">오늘 시간</span>
+                <span id="cardioTodayMinsLabel" class="text-sm font-black font-mono text-orange-600 dark:text-orange-400">0분</span>
+                <span id="cardioTodayKcalLabel" class="text-[9px] font-mono text-slate-400"></span>
+              </div>
+              <div class="flex items-center gap-1 shrink-0">
+                <button type="button" onclick="adjustTodayCardioMinutes(-60)" class="px-1.5 py-1 rounded-lg bg-slate-200/80 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-black active:scale-95">−1시간</button>
+                <button type="button" onclick="adjustTodayCardioMinutes(-10)" class="px-1.5 py-1 rounded-lg bg-slate-200/80 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-black active:scale-95">−10분</button>
+                <button type="button" onclick="adjustTodayCardioMinutes(10)" class="px-2 py-1 rounded-lg bg-orange-500/15 hover:bg-orange-500/25 text-orange-600 dark:text-orange-300 border border-orange-400/30 text-[10px] font-black active:scale-95">+10분</button>
+                <button type="button" onclick="adjustTodayCardioMinutes(60)" class="px-2 py-1 rounded-lg bg-orange-500 text-white text-[10px] font-black shadow-2xs active:scale-95">+1시간</button>
+              </div>
             </div>
           </div>
         </div>
@@ -1463,7 +1473,7 @@
           <button onclick="quickAddMeal('일반식 밥 반공기', 450, 20, '조절')" class="shrink-0 px-2 py-1 rounded-full bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-400/30 text-[10px] font-black active:scale-95 transition-all">🍚 일반식 반공기</button>
         </div>
 
-        <!-- Today's Meal Add Toggle Button (Collapsible Composer, v4.7.02) -->
+        <!-- Today's Meal Add Toggle Button (Collapsible Composer, v4.7.03) -->
         <button type="button" id="btnToggleMealComposer" onclick="toggleMealComposer()" class="w-full py-2 rounded-xl border border-dashed border-pink-400/60 bg-pink-500/5 hover:bg-pink-500/10 text-pink-600 dark:text-pink-300 text-xs font-black flex items-center justify-center gap-1.5 active:scale-[0.99] transition-all">
           <span id="mealComposerToggleIcon" class="w-4 h-4 rounded-full bg-pink-500 text-white text-[11px] flex items-center justify-center leading-none">+</span>
           <span id="mealComposerToggleText">식단 직접 추가 / 사진 인증</span>
@@ -4039,6 +4049,7 @@
         state.meals = [false, false, false];
         state.mealPhotos = ['', '', ''];
         state.mealLogs = [];
+        state.todayCardioMins = 0;
         state.runDone = false;
         state.absDone = false;
         const rehabLen = initRehabSets();
@@ -5540,7 +5551,7 @@
       return { room, sender: room, name: nameMap[room] || '제미니', text: lineText, time: getKakaoTimeStr(), ep: epId, ...imgFields };
     }
 
-    // Preload & decode all BG / CG / SCG / photo assets for an episode so first-view playback has zero stutter (v4.7.02)
+    // Preload & decode all BG / CG / SCG / photo assets for an episode so first-view playback has zero stutter (v4.7.03)
     const __epPreloadedUrls = new Set();
     const __epPreloadHold = [];
     function preloadImageUrl(url) {
@@ -6591,7 +6602,7 @@
       const ctx = buildTalkContext();
       const recEp = pickRecommendedEpisode(room, key);
 
-      // Single streamlined flow (v4.7.02):
+      // Single streamlined flow (v4.7.03):
       // Sync pill -> immediately launch the best-matching unwatched Training Talk episode
       // (which already embeds live weight/workout/protein/meal variables + photos),
       // so there's no awkward double-conversation!
@@ -8104,14 +8115,26 @@ ${err.message}
       }).join('');
     }
 
-    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.7.02) ----------
+    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.7.03) ----------
     const CARDIO_LABELS = { treadmill: '🏃‍♂️ 러닝머신', stair: '🪜 천국의 계단', outdoor: '🏃 야외 러닝' };
+
+    function formatCardioDurationKo(mins) {
+      const m = Math.max(0, Math.round(Number(mins) || 0));
+      if (m < 60) return `${m}분`;
+      const h = Math.floor(m / 60);
+      const r = m % 60;
+      return r > 0 ? `${h}시간 ${r}분` : `${h}시간`;
+    }
 
     function selectCardioMode(mode) {
       state.cardioMode = CARDIO_LABELS[mode] ? mode : 'treadmill';
       playBeep(640, 0.04);
+      if ((state.todayCardioMins || 0) > 0) {
+        upsertTodayCardioEntry(state.todayCardioMins, false);
+      }
       saveState(true);
       renderCardioModeUI();
+      renderRunningUI();
     }
 
     function renderCardioModeUI() {
@@ -8120,41 +8143,77 @@ ${err.message}
         const b = document.getElementById('cardioBtn_' + k);
         if (!b) return;
         b.className = (k === mode)
-          ? 'px-2 py-1 rounded-lg text-[10px] font-black bg-orange-500 text-white border border-orange-500 shadow-2xs transition-all'
-          : 'px-2 py-1 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-all';
+          ? 'py-1 rounded-lg text-[10px] font-black bg-orange-500 text-white border border-orange-500 text-center shadow-2xs transition-all'
+          : 'py-1 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-center transition-all';
       });
       const titleEl = document.getElementById('cardioCheckTitle');
       if (titleEl) titleEl.textContent = `오늘 유산소 완주 체크 (${CARDIO_LABELS[mode] || '유산소'})`;
+
+      const mins = Math.max(0, Number(state.todayCardioMins) || 0);
+      const minEl = document.getElementById('cardioTodayMinsLabel');
+      const kcalEl = document.getElementById('cardioTodayKcalLabel');
+      if (minEl) minEl.textContent = formatCardioDurationKo(mins);
+      if (kcalEl) {
+        const estKcal = Math.round(mins * (mode === 'stair' ? 9.5 : 8.0));
+        kcalEl.textContent = mins > 0 ? `(약 ${estKcal}kcal)` : '';
+      }
     }
 
-    function quickLogIndoorCardio(minutes) {
+    function upsertTodayCardioEntry(minutes, awardExp) {
       const mode = state.cardioMode || 'treadmill';
       const label = mode === 'stair' ? '천국의 계단' : mode === 'treadmill' ? '러닝머신' : '야외 러닝';
       const todayStr = getLocalDateString();
+      const entryId = 'cardio-' + todayStr;
+      if (!Array.isArray(state.runningLogs)) state.runningLogs = [];
+
+      if (minutes <= 0) {
+        state.runningLogs = state.runningLogs.filter(r => r && r.id !== entryId);
+        state.runDone = false;
+        if (state.latestRun && state.latestRun.id === entryId) {
+          state.latestRun = state.runningLogs[0] || null;
+        }
+        return;
+      }
+
+      const h = Math.floor(minutes / 60);
+      const m = minutes % 60;
+      const durStr = h > 0 ? `${h}:${String(m).padStart(2, '0')}:00` : `${String(m).padStart(2, '0')}:00`;
       const estKcal = Math.round(minutes * (mode === 'stair' ? 9.5 : 8.0));
       const estDist = mode === 'stair' ? Number((minutes * 0.06).toFixed(2)) : Number((minutes * 0.11).toFixed(2));
       const entry = {
-        id: 'run-' + Date.now(),
+        id: entryId,
         date: todayStr,
         distance: estDist,
-        duration: `${minutes}:00`,
+        duration: durStr,
         pace: mode === 'stair' ? '스텝밀' : "09'00\"",
         calories: estKcal,
         heartRate: 132,
         steps: Math.round(minutes * (mode === 'stair' ? 65 : 135)),
         source: label
       };
-      if (!Array.isArray(state.runningLogs)) state.runningLogs = [];
-      state.runningLogs.unshift(entry);
+      const idx = state.runningLogs.findIndex(r => r && r.id === entryId);
+      if (idx >= 0) state.runningLogs[idx] = entry;
+      else state.runningLogs.unshift(entry);
       state.latestRun = entry;
       state.runDone = true;
       state.runDist = estDist;
       markWorkoutFocus('run');
-      addBondExp(50);
-      playBeep(820, 0.08);
+      if (awardExp) addBondExp(50);
+    }
+
+    function adjustTodayCardioMinutes(delta) {
+      const prev = Math.max(0, Number(state.todayCardioMins) || 0);
+      const next = Math.max(0, Math.min(300, prev + delta));
+      state.todayCardioMins = next;
+      upsertTodayCardioEntry(next, prev === 0 && next > 0);
+      playBeep(delta > 0 ? 780 : 460, 0.06);
       saveState(true);
       syncUI();
-      showFloatingToast(`${CARDIO_LABELS[mode]} ${minutes}분 완주 기록! (약 ${estKcal}kcal · +50 EXP)`, '🔥');
+      if (next > 0) {
+        showFloatingToast(`${CARDIO_LABELS[state.cardioMode || 'treadmill']} ${formatCardioDurationKo(next)} 기록됨!`, '🔥');
+      } else {
+        showFloatingToast('오늘 유산소 시간을 0분으로 초기화했어요', '↩️');
+      }
     }
 
     function openChatImageLightbox(src, caption) {
@@ -12646,7 +12705,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.7.02 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.7.03 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
