@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-19T14:49:31.150Z",
+  "updatedAt": "2026-11-19T14:50:24.431Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 14,
   "bondExp": 0,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
   "currentSituation": "ev3",
   "absDone": false,
   "runDone": true,
@@ -793,30 +793,6 @@
   },
   "chatHistory": [
     {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 🥛 식단 & 단백질 긴급 검문 톡!",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "프로듀서님! 코토네 긴급 식단 검문 들어갑니다~ 삐뽀삐뽀! 🚨💛",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "오늘 체중 65.4kg 확인했고, 식단 기록은 2/3끼네요! 그리고… 오늘은 아직 단백질 음료 기록이 비어 있네요! 근손실 방지를 위해 한 잔 꼭 챙겨요 🥛",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "운동 열심히 했는데 단백질 안 채우면 근육이 울어요 ㅠㅠ 꼬박꼬박 챙기기로 코토네랑 새끼손가락 약속해요!",
-      "room": "kotone"
-    },
-    {
       "sender": "user",
       "name": "프로듀서",
       "text": "약속! 오늘 단백질 음료 꼭 챙겨 마실게 🥛",
@@ -966,6 +942,30 @@
       "name": "미오",
       "text": "프로듀서의 발걸음이 쌓여서 결국 목표를 뚫는 거야! 다음 러닝도 같이 가자! 🌟",
       "room": "mio"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 📈 근육은 오르고 지방은 빠지는 정석",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "프로듀서항, 잠깐 차 한 잔 드시면서 소녀 얘기 좀 들어보시와요 🍵",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "현재 65.4kg / 체지방률 31.8%! 이전 기록(66.4kg)보다 1.0kg 감량한 거 진심으로 축하해요! 🎉",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "무작정 굶어서 체중만 빼면 근육이 같이 빠져서 금방 요요가 오지만, 지금처럼 근력이랑 단백질을 챙기면서 체지방률만 깎아내는 게 진짜 고수의 방식이옵니다.",
+      "room": "gemini"
     }
   ]
 }
