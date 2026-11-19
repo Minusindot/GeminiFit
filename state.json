@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-19T14:48:40.377Z",
+  "updatedAt": "2026-11-19T14:48:58.327Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 13,
-  "bondExp": 65,
+  "bondExp": 75,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev3",
@@ -792,19 +792,6 @@
   },
   "chatHistory": [
     {
-      "sender": "user",
-      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "수분 보충 나이스!! 오늘 벌써 물 1잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
-    },
-    {
       "sender": "mio",
       "name": "미오",
       "text": "수분 보충 나이스!! 오늘 벌써 물 2잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
@@ -956,6 +943,24 @@
       "room": "mio",
       "image": "./image/01 mio/mio_40_post_run_grass_lie_down.png",
       "caption": "📷 미오 · 러닝 후 잔디밭 쿨다운"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "오늘 꽤 힘들었는데 끝까지 해냈어! 😮‍💨",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "그 마지막 한 걸음이 진짜 실력 되는 거 알지?! 오늘 1.2km 완전 리스펙이야! 🌟",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "지금은 다리 힘 쭉 빼고 물 한 잔 마시면서 천천히 쉬어~ 💧",
+      "room": "mio"
     }
   ]
 }
