@@ -885,64 +885,25 @@
         </div>
       </button>
 
-      <!-- 1. 🍵 Tea & Coffee 홈카페 / 말차 로그 카드 -->
-      <div class="game-card p-3.5 border-l-4 border-l-emerald-400">
-        <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
-          <div class="flex items-center gap-1.5">
-            <span class="text-base">🍵</span>
-            <span class="text-xs font-extrabold text-emerald-700 dark:text-emerald-300">홈카페 & 말차 다도 로그</span>
-          </div>
-          <span class="text-[10px] text-emerald-600 dark:text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 font-bold">
-            17시 이후 단식 중 허용
-          </span>
-        </div>
-
-        <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
-          말차 🍵, 커피 ☕, 단백질 음료 🥛는 활력 유지와 단백질 보충, 체지방 연소에 최고의 파트너입니다!
-        </p>
-
-        <div class="grid grid-cols-3 gap-2 mt-2.5">
-          <div class="p-2 rounded-xl sub-box hover:border-emerald-400 text-center transition-all flex flex-col justify-between">
-            <button onclick="logTea('matcha', 1)" class="w-full text-center hover:opacity-85 active:scale-95 transition-all">
-              <div class="text-lg leading-tight">🍵</div>
-              <div class="text-[11px] font-extrabold text-emerald-700 dark:text-emerald-300 mt-0.5">말차</div>
-            </button>
-            <div class="flex items-center justify-center gap-1.5 mt-1 pt-1 border-t border-slate-200/60 dark:border-slate-700/60">
-              <button onclick="logTea('matcha', -1)" class="w-5 h-5 rounded-md bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-[11px] font-black flex items-center justify-center text-slate-700 dark:text-slate-200 active:scale-90" title="1회 취소">-</button>
-              <span id="matchaCount" class="text-[11px] font-black font-mono">0회</span>
-              <button onclick="logTea('matcha', 1)" class="w-5 h-5 rounded-md bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/30 text-[11px] font-black flex items-center justify-center active:scale-90" title="1회 추가">+</button>
+      <!-- 1. 🍵 홈카페 · 음료 슬림 1줄 바 (v4.5.0 컴팩트 리디자인) -->
+      <div class="game-card px-3 py-2 border-l-4 border-l-emerald-400">
+        <div class="flex items-center justify-between gap-1.5 flex-wrap">
+          <div class="flex items-center gap-1.5 flex-1 min-w-0 flex-wrap">
+            <div class="flex items-center gap-1 px-2 py-1 rounded-xl sub-box border-emerald-400/30">
+              <button onclick="logTea('matcha', 1)" class="text-[11px] font-black text-emerald-700 dark:text-emerald-300 active:scale-95 transition-all" title="말차 +1">🍵 <span id="matchaCount" class="font-mono">0회</span></button>
+              <button onclick="logTea('matcha', -1)" class="w-4 h-4 rounded bg-slate-200/80 dark:bg-slate-700 text-[10px] font-black text-slate-500 dark:text-slate-300 flex items-center justify-center active:scale-90" title="말차 -1">−</button>
+            </div>
+            <div class="flex items-center gap-1 px-2 py-1 rounded-xl sub-box border-amber-400/30">
+              <button onclick="logTea('espresso', 1)" class="text-[11px] font-black text-amber-700 dark:text-amber-300 active:scale-95 transition-all" title="커피 +1">☕ <span id="espressoCount" class="font-mono">0회</span></button>
+              <button onclick="logTea('espresso', -1)" class="w-4 h-4 rounded bg-slate-200/80 dark:bg-slate-700 text-[10px] font-black text-slate-500 dark:text-slate-300 flex items-center justify-center active:scale-90" title="커피 -1">−</button>
+            </div>
+            <div class="flex items-center gap-1 px-2 py-1 rounded-xl sub-box border-sky-400/30">
+              <button onclick="logTea('tea', 1)" class="text-[11px] font-black text-sky-700 dark:text-sky-300 active:scale-95 transition-all" title="단백질 음료 +1">🥛 <span id="teaCount" class="font-mono">0회</span></button>
+              <button onclick="logTea('tea', -1)" class="w-4 h-4 rounded bg-slate-200/80 dark:bg-slate-700 text-[10px] font-black text-slate-500 dark:text-slate-300 flex items-center justify-center active:scale-90" title="단백질 -1">−</button>
             </div>
           </div>
-
-          <div class="p-2 rounded-xl sub-box hover:border-amber-400 text-center transition-all flex flex-col justify-between">
-            <button onclick="logTea('espresso', 1)" class="w-full text-center hover:opacity-85 active:scale-95 transition-all">
-              <div class="text-lg leading-tight">☕</div>
-              <div class="text-[11px] font-extrabold text-amber-700 dark:text-amber-300 mt-0.5">커피</div>
-            </button>
-            <div class="flex items-center justify-center gap-1.5 mt-1 pt-1 border-t border-slate-200/60 dark:border-slate-700/60">
-              <button onclick="logTea('espresso', -1)" class="w-5 h-5 rounded-md bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-[11px] font-black flex items-center justify-center text-slate-700 dark:text-slate-200 active:scale-90" title="1회 취소">-</button>
-              <span id="espressoCount" class="text-[11px] font-black font-mono">0회</span>
-              <button onclick="logTea('espresso', 1)" class="w-5 h-5 rounded-md bg-amber-500/20 text-amber-700 dark:text-amber-300 hover:bg-amber-500/30 text-[11px] font-black flex items-center justify-center active:scale-90" title="1회 추가">+</button>
-            </div>
-          </div>
-
-          <div class="p-2 rounded-xl sub-box hover:border-sky-400 text-center transition-all flex flex-col justify-between">
-            <button onclick="logTea('tea', 1)" class="w-full text-center hover:opacity-85 active:scale-95 transition-all">
-              <div class="text-lg leading-tight">🥛</div>
-              <div class="text-[11px] font-extrabold text-sky-700 dark:text-sky-300 mt-0.5">단백질 음료</div>
-            </button>
-            <div class="flex items-center justify-center gap-1.5 mt-1 pt-1 border-t border-slate-200/60 dark:border-slate-700/60">
-              <button onclick="logTea('tea', -1)" class="w-5 h-5 rounded-md bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-[11px] font-black flex items-center justify-center text-slate-700 dark:text-slate-200 active:scale-90" title="1회 취소">-</button>
-              <span id="teaCount" class="text-[11px] font-black font-mono">0회</span>
-              <button onclick="logTea('tea', 1)" class="w-5 h-5 rounded-md bg-sky-500/20 text-sky-700 dark:text-sky-300 hover:bg-sky-500/30 text-[11px] font-black flex items-center justify-center active:scale-90" title="1회 추가">+</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-2.5 pt-2 border-t border-slate-200/70 dark:border-slate-700/60 flex items-center justify-between">
-          <span class="text-[11px] text-slate-500">오늘 마신 말차 / 커피 / 단백질 인증 사진</span>
-          <label for="teaPhotoInput" class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 text-[11px] font-extrabold cursor-pointer hover:bg-emerald-500/25">
-            📸 찻잔 사진 첨부
+          <label for="teaPhotoInput" class="shrink-0 px-2 py-1 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 text-[10px] font-black cursor-pointer hover:bg-emerald-500/25 active:scale-95 transition-all" title="음료 인증 사진 첨부">
+            📸
           </label>
           <input type="file" id="teaPhotoInput" accept="image/*" class="hidden" onchange="handleTeaPhoto(event)">
         </div>
@@ -1397,65 +1358,86 @@
 
       </div>
 
-      <!-- 5. Meal Photo Camera & Gallery Log -->
-      <div class="game-card p-3.5 space-y-2.5 border-l-4 border-l-pink-400">
-        <div class="flex items-center justify-between pb-1.5 border-b border-slate-200/80 dark:border-slate-700/60">
+      <!-- 5. 🍱 자유 식단 타임라인 & 칼로리·단백질 게이지 (v4.5.0) -->
+      <div class="game-card p-3.5 space-y-3 border-l-4 border-l-pink-400">
+        <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
+          <div class="flex items-center gap-1.5 min-w-0">
+            <span class="text-base">🍱</span>
+            <div class="min-w-0">
+              <span class="text-xs font-black text-slate-800 dark:text-slate-100 block">자유 식단 타임라인 & 영양 게이지</span>
+              <span class="text-[9px] text-pink-500 font-bold block">매일 달라지는 메뉴 기록 · 사진 AI 추정 · Gemini 상담 복사</span>
+            </div>
+          </div>
+          <button onclick="copyDietConsultPrompt()" class="shrink-0 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-[10px] font-black shadow-xs hover:opacity-95 active:scale-95 transition-all" title="오늘 식단·운동·체중을 Gemini 식단 상담용 텍스트로 복사">
+            📋 Gemini 상담 복사
+          </button>
+        </div>
+
+        <!-- Calorie & Protein Progress Bars -->
+        <div class="grid grid-cols-2 gap-2">
+          <div class="p-2 rounded-xl sub-box space-y-1">
+            <div class="flex items-center justify-between text-[10px] font-black">
+              <span class="text-amber-600 dark:text-amber-400">🔥 칼로리</span>
+              <span id="mealKcalSummary" class="font-mono text-slate-700 dark:text-slate-200">0 / 1,600</span>
+            </div>
+            <div class="h-1.5 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+              <div id="mealKcalBar" class="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-500 transition-all duration-300" style="width:0%"></div>
+            </div>
+          </div>
+          <div class="p-2 rounded-xl sub-box space-y-1">
+            <div class="flex items-center justify-between text-[10px] font-black">
+              <span class="text-sky-600 dark:text-sky-400">🥩 단백질</span>
+              <span id="mealProteinSummary" class="font-mono text-slate-700 dark:text-slate-200">0 / 110g</span>
+            </div>
+            <div class="h-1.5 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+              <div id="mealProteinBar" class="h-full rounded-full bg-gradient-to-r from-sky-400 to-emerald-500 transition-all duration-300" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-Second Quick-Add Chips -->
+        <div class="flex items-center gap-1 overflow-x-auto clean-scroll pb-0.5">
+          <button onclick="quickAddMeal('단백질 쉐이크', 150, 22, '단백질')" class="shrink-0 px-2 py-1 rounded-full bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-300 border border-sky-400/30 text-[10px] font-black active:scale-95 transition-all">🥛 프로틴 +22g</button>
+          <button onclick="quickAddMeal('삶은 계란 2개', 140, 12, '단백질')" class="shrink-0 px-2 py-1 rounded-full bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-400/30 text-[10px] font-black active:scale-95 transition-all">🥚 계란2 +12g</button>
+          <button onclick="quickAddMeal('닭가슴살 1팩', 165, 30, '클린')" class="shrink-0 px-2 py-1 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-400/30 text-[10px] font-black active:scale-95 transition-all">🍗 닭가슴살 +30g</button>
+          <button onclick="quickAddMeal('샐러드 볼', 240, 15, '클린')" class="shrink-0 px-2 py-1 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-400/30 text-[10px] font-black active:scale-95 transition-all">🥗 샐러드</button>
+          <button onclick="quickAddMeal('일반식 밥 반공기', 450, 20, '조절')" class="shrink-0 px-2 py-1 rounded-full bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-400/30 text-[10px] font-black active:scale-95 transition-all">🍚 일반식 반공기</button>
+        </div>
+
+        <!-- Flexible Meal Composer -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2">
           <div class="flex items-center gap-1.5">
-            <span class="text-sm">📸</span>
-            <span class="text-xs font-extrabold">식단 인증 사진 & 체크리스트</span>
-          </div>
-          <span class="text-[10px] text-slate-400">카메라 촬영 & 갤러리 선택 지원</span>
-        </div>
-
-        <!-- Meal 1 -->
-        <div class="p-2.5 rounded-xl sub-box space-y-2">
-          <div class="flex items-center justify-between">
-            <label class="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" id="chkMeal1" class="w-4 h-4 rounded accent-emerald-500" onchange="handleMeal(1)">
-              <span class="text-xs font-bold">10:00 첫 식사 (단백질 + 클린 탄수)</span>
+            <input type="text" id="mealInputName" placeholder="먹은 메뉴 입력 (예: 제육 조금 + 쌈채소)" class="flex-1 min-w-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-pink-400" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomMealLog();}">
+            <label for="mealFlexPhotoInput" class="shrink-0 px-2.5 py-1.5 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-400/30 text-[11px] font-black cursor-pointer hover:bg-sky-500/25 active:scale-95 transition-all" title="사진으로 메뉴/영양 자동 추정 및 첨부">
+              📷
             </label>
-            <label for="photoMeal1" class="px-2.5 py-1 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30 text-[10px] font-extrabold cursor-pointer hover:bg-sky-500/25">
-              📷 사진 첨부
-            </label>
-            <input type="file" id="photoMeal1" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 1)">
+            <input type="file" id="mealFlexPhotoInput" accept="image/*" class="hidden" onchange="handleFlexibleMealPhoto(event)">
           </div>
-          <div id="prevBox1" class="hidden">
-            <img id="prevImg1" src="" class="w-full h-28 object-cover rounded-lg border border-slate-200 dark:border-slate-700">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <input type="number" id="mealInputKcal" placeholder="kcal" class="w-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-amber-400">
+            <input type="number" id="mealInputProtein" placeholder="단백질g" class="w-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-sky-400">
+            <select id="mealInputTag" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-[10px] font-black text-slate-700 dark:text-slate-200 focus:outline-none">
+              <option value="클린">🥗 클린</option>
+              <option value="단백질">🍗 고단백</option>
+              <option value="조절">🍚 일반식 조절</option>
+              <option value="치팅">🍜 치팅</option>
+            </select>
+            <button onclick="addCustomMealLog()" class="ml-auto px-3 py-1 rounded-lg bg-pink-500 hover:bg-pink-600 text-white text-[11px] font-black shadow-xs active:scale-95 transition-all">+ 기록</button>
           </div>
-        </div>
-
-        <!-- Meal 2 -->
-        <div class="p-2.5 rounded-xl sub-box space-y-2">
-          <div class="flex items-center justify-between">
-            <label class="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" id="chkMeal2" class="w-4 h-4 rounded accent-emerald-500" onchange="handleMeal(2)">
-              <span class="text-xs font-bold">14:00 단백질 간식 / 쉐이크</span>
-            </label>
-            <label for="photoMeal2" class="px-2.5 py-1 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30 text-[10px] font-extrabold cursor-pointer hover:bg-sky-500/25">
-              📷 사진 첨부
-            </label>
-            <input type="file" id="photoMeal2" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 2)">
-          </div>
-          <div id="prevBox2" class="hidden">
-            <img id="prevImg2" src="" class="w-full h-28 object-cover rounded-lg border border-slate-200 dark:border-slate-700">
+          <div id="mealDraftPhotoPreview" class="hidden flex items-center gap-2 pt-1">
+            <img id="mealDraftPhotoImg" src="" class="w-12 h-12 rounded-lg object-cover border border-slate-300 dark:border-slate-600">
+            <span id="mealDraftPhotoStatus" class="text-[10px] font-bold text-sky-600 dark:text-sky-300 flex-1">사진 첨부됨</span>
+            <button onclick="clearDraftMealPhoto()" class="text-[10px] font-black text-rose-500 px-1.5">취소</button>
           </div>
         </div>
 
-        <!-- Meal 3 -->
-        <div class="p-2.5 rounded-xl sub-box space-y-2">
-          <div class="flex items-center justify-between">
-            <label class="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" id="chkMeal3" class="w-4 h-4 rounded accent-emerald-500" onchange="handleMeal(3)">
-              <span class="text-xs font-bold">16:30 마감 식사 (17:00 칼같이 종료!)</span>
-            </label>
-            <label for="photoMeal3" class="px-2.5 py-1 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30 text-[10px] font-extrabold cursor-pointer hover:bg-sky-500/25">
-              📷 사진 첨부
-            </label>
-            <input type="file" id="photoMeal3" accept="image/*" class="hidden" onchange="uploadMealPhoto(event, 3)">
-          </div>
-          <div id="prevBox3" class="hidden">
-            <img id="prevImg3" src="" class="w-full h-28 object-cover rounded-lg border border-slate-200 dark:border-slate-700">
-          </div>
+        <!-- Today's Flexible Meal Timeline List -->
+        <div id="mealTimelineList" class="space-y-1.5"></div>
+
+        <!-- Hidden legacy checkboxes for full backwards compatibility -->
+        <div class="hidden" aria-hidden="true">
+          <input type="checkbox" id="chkMeal1"><input type="checkbox" id="chkMeal2"><input type="checkbox" id="chkMeal3">
+          <div id="prevBox1"><img id="prevImg1"></div><div id="prevBox2"><img id="prevImg2"></div><div id="prevBox3"><img id="prevImg3"></div>
         </div>
       </div>
 
@@ -2029,12 +2011,12 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.4.1"></script>
-  <script src="./dialogue_pool.js?v=4.4.1"></script>
-  <script src="./trainer_episodes.js?v=4.4.1"></script>
-  <script src="./kotonoha_data.js?v=4.4.1"></script>
-  <script src="./kotonoha_engine.js?v=4.4.1"></script>
-  <script src="./ocr_pipeline.js?v=4.4.1"></script>
+  <script src="./weekly_reports.js?v=4.5.0"></script>
+  <script src="./dialogue_pool.js?v=4.5.0"></script>
+  <script src="./trainer_episodes.js?v=4.5.0"></script>
+  <script src="./kotonoha_data.js?v=4.5.0"></script>
+  <script src="./kotonoha_engine.js?v=4.5.0"></script>
+  <script src="./ocr_pipeline.js?v=4.5.0"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -3963,6 +3945,7 @@
         // Clean Daily Reset
         state.meals = [false, false, false];
         state.mealPhotos = ['', '', ''];
+        state.mealLogs = [];
         state.runDone = false;
         state.absDone = false;
         const rehabLen = initRehabSets();
@@ -4532,6 +4515,7 @@
           rehab: state.rehab,
           rehabSets: state.rehabSets,
           meals: state.meals,
+          mealLogs: (state.mealLogs || []).map(m => ({ id: m.id, time: m.time, name: m.name, kcal: m.kcal, protein: m.protein, tag: m.tag })),
           teaLog: state.teaLog,
           gymRoutine: state.gymRoutine,
           gymHistory: state.gymHistory,
@@ -6030,6 +6014,7 @@
       renderRunningUI();
       renderInbodyCardUI();
       renderGymUI();
+      if (typeof renderMealTimelineUI === 'function') renderMealTimelineUI();
       updateBondUI();
       setTrainerMode(state.activeMode || state.activeTrainer || 'gemini', state.currentSituation || 'ev1', false);
 
@@ -7075,6 +7060,238 @@ ${err.message}
       if (trainerMessengerRoom) updateRoomHead(trainerMessengerRoom);
       renderThreadList();
       showFloatingToast('이 대화방 기록을 정리했어요', '🧹');
+    }
+
+    // ============================================================================
+    // FLEXIBLE MEAL TIMELINE ENGINE + GEMINI CONSULT COPY (v4.5.0)
+    // ============================================================================
+    let draftMealPhotoDataUrl = '';
+    const DAILY_KCAL_GOAL = 1600;
+    const DAILY_PROTEIN_GOAL = 110;
+
+    function getMealLogs() {
+      if (!Array.isArray(state.mealLogs)) state.mealLogs = [];
+      return state.mealLogs;
+    }
+
+    function syncMealsArrayFromLogs() {
+      const n = getMealLogs().length;
+      state.meals = [n >= 1, n >= 2, n >= 3];
+    }
+
+    function quickAddMeal(name, kcal, protein, tag) {
+      const logs = getMealLogs();
+      logs.push({
+        id: 'meal-' + Date.now() + '-' + Math.floor(Math.random() * 100),
+        time: getKakaoTimeStr(),
+        name,
+        kcal: Number(kcal) || 0,
+        protein: Number(protein) || 0,
+        tag: tag || '클린',
+        photo: ''
+      });
+      syncMealsArrayFromLogs();
+      if (name.includes('단백질')) {
+        if (!state.teaLog) state.teaLog = { matcha: 0, espresso: 0, tea: 0 };
+        state.teaLog.tea = (state.teaLog.tea || 0) + 1;
+      }
+      markWorkoutFocus('meal');
+      addBondExp(10);
+      playBeep(780, 0.08);
+      saveState(true);
+      syncUI();
+      showFloatingToast(`🍱 ${name} 기록 완료! (+${protein}g 단백질)`, '✨');
+    }
+
+    function clearDraftMealPhoto() {
+      draftMealPhotoDataUrl = '';
+      const box = document.getElementById('mealDraftPhotoPreview');
+      if (box) box.classList.add('hidden');
+      const inp = document.getElementById('mealFlexPhotoInput');
+      if (inp) inp.value = '';
+    }
+
+    async function handleFlexibleMealPhoto(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const box = document.getElementById('mealDraftPhotoPreview');
+      const img = document.getElementById('mealDraftPhotoImg');
+      const stEl = document.getElementById('mealDraftPhotoStatus');
+
+      const dataUrl = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const im = new Image();
+          im.onload = () => {
+            const canvas = document.createElement('canvas');
+            const MAX = 480;
+            const scale = Math.min(1, MAX / Math.max(im.width, im.height));
+            canvas.width = Math.round(im.width * scale);
+            canvas.height = Math.round(im.height * scale);
+            canvas.getContext('2d').drawImage(im, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', 0.72));
+          };
+          im.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      draftMealPhotoDataUrl = dataUrl;
+      if (img) img.src = dataUrl;
+      if (box) box.classList.remove('hidden');
+      if (stEl) stEl.textContent = '사진 첨부 완료! (+ 기록 버튼을 눌러주세요)';
+
+      // If Gemini API key is configured, auto-estimate menu, kcal, and protein!
+      const apiKey = (localStorage.getItem('GEMINI_API_KEY') || '').trim();
+      if (apiKey) {
+        if (stEl) stEl.textContent = '🤖 AI가 음식 메뉴·칼로리·단백질 분석 중...';
+        try {
+          const base64 = dataUrl.split(',')[1];
+          const res = await fetchGeminiWithFallback(apiKey, {
+            contents: [{
+              role: 'user',
+              parts: [
+                { text: '이 음식 사진을 보고 JSON으로만 답하세요. 코드펜스 금지. 형식: {"name":"짧은 한국어 메뉴명","kcal":정수,"protein":정수,"tag":"클린"|"단백질"|"조절"|"치팅"}' },
+                { inline_data: { mime_type: 'image/jpeg', data: base64 } }
+              ]
+            }],
+            generationConfig: { temperature: 0.1, maxOutputTokens: 150, responseMimeType: 'application/json' }
+          });
+          const txt = (res.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim();
+          const j = JSON.parse(extractJsonObject(txt));
+          const nameEl = document.getElementById('mealInputName');
+          const kcalEl = document.getElementById('mealInputKcal');
+          const proEl = document.getElementById('mealInputProtein');
+          const tagEl = document.getElementById('mealInputTag');
+          if (nameEl && j.name) nameEl.value = j.name;
+          if (kcalEl && Number.isFinite(j.kcal)) kcalEl.value = Math.round(j.kcal);
+          if (proEl && Number.isFinite(j.protein)) proEl.value = Math.round(j.protein);
+          if (tagEl && ['클린','단백질','조절','치팅'].includes(j.tag)) tagEl.value = j.tag;
+          if (stEl) stEl.textContent = `✨ AI 분석 완료: ${j.name || '메뉴'} (${j.kcal || 0}kcal · P${j.protein || 0}g)`;
+          playBeep(860, 0.08);
+        } catch (err) {
+          if (stEl) stEl.textContent = '사진 첨부됨 (메뉴명을 직접 적어주세요)';
+        }
+      }
+    }
+
+    function addCustomMealLog() {
+      const nameEl = document.getElementById('mealInputName');
+      const kcalEl = document.getElementById('mealInputKcal');
+      const proEl = document.getElementById('mealInputProtein');
+      const tagEl = document.getElementById('mealInputTag');
+      const name = (nameEl && nameEl.value || '').trim() || (draftMealPhotoDataUrl ? '사진 식단 인증' : '');
+      if (!name) {
+        showFloatingToast('먹은 메뉴를 한 줄 입력하거나 퀵칩을 눌러주세요!', '🍱');
+        return;
+      }
+      const kcal = parseInt(kcalEl && kcalEl.value, 10) || 0;
+      const protein = parseInt(proEl && proEl.value, 10) || 0;
+      const tag = (tagEl && tagEl.value) || '클린';
+
+      const logs = getMealLogs();
+      logs.push({
+        id: 'meal-' + Date.now(),
+        time: getKakaoTimeStr(),
+        name,
+        kcal,
+        protein,
+        tag,
+        photo: draftMealPhotoDataUrl || ''
+      });
+      syncMealsArrayFromLogs();
+      markWorkoutFocus('meal');
+      addBondExp(15);
+
+      if (nameEl) nameEl.value = '';
+      if (kcalEl) kcalEl.value = '';
+      if (proEl) proEl.value = '';
+      clearDraftMealPhoto();
+
+      playBeep(820, 0.08);
+      saveState(true);
+      syncUI();
+      showFloatingToast(`🍱 "${name}" 기록 완료! (+15 EXP)`, '✨');
+    }
+
+    function deleteMealLog(id) {
+      state.mealLogs = getMealLogs().filter(m => m.id !== id);
+      syncMealsArrayFromLogs();
+      playBeep(420, 0.05);
+      saveState(true);
+      syncUI();
+    }
+
+    function renderMealTimelineUI() {
+      const listEl = document.getElementById('mealTimelineList');
+      if (!listEl) return;
+      const logs = getMealLogs();
+      const totalKcal = logs.reduce((s, m) => s + (Number(m.kcal) || 0), 0);
+      const totalPro = logs.reduce((s, m) => s + (Number(m.protein) || 0), 0);
+
+      const kSum = document.getElementById('mealKcalSummary');
+      const pSum = document.getElementById('mealProteinSummary');
+      const kBar = document.getElementById('mealKcalBar');
+      const pBar = document.getElementById('mealProteinBar');
+      if (kSum) kSum.textContent = `${totalKcal.toLocaleString()} / ${DAILY_KCAL_GOAL.toLocaleString()}`;
+      if (pSum) pSum.textContent = `${totalPro} / ${DAILY_PROTEIN_GOAL}g`;
+      if (kBar) kBar.style.width = `${Math.min(100, Math.round((totalKcal / DAILY_KCAL_GOAL) * 100))}%`;
+      if (pBar) pBar.style.width = `${Math.min(100, Math.round((totalPro / DAILY_PROTEIN_GOAL) * 100))}%`;
+
+      const tagColors = {
+        '클린': 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-300',
+        '단백질': 'bg-sky-500/15 text-sky-600 dark:text-sky-300',
+        '조절': 'bg-purple-500/15 text-purple-600 dark:text-purple-300',
+        '치팅': 'bg-rose-500/15 text-rose-500 dark:text-rose-300'
+      };
+
+      if (!logs.length) {
+        listEl.innerHTML = '<div class="text-center py-2.5 text-[10px] font-bold text-slate-400">아직 오늘 먹은 기록이 없어요 — 위 퀵칩이나 한 줄 입력으로 3초 만에 남겨보세요!</div>';
+        return;
+      }
+
+      listEl.innerHTML = logs.map(m => `
+        <div class="flex items-center gap-2 p-2 rounded-xl sub-box">
+          ${m.photo ? `<img src="${m.photo}" onclick="openChatImageLightbox('${m.photo}', '${(m.name || '').replace(/'/g, '')}')" class="w-10 h-10 rounded-lg object-cover shrink-0 cursor-pointer border border-slate-200 dark:border-slate-700">` : `<span class="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-sm shrink-0">🍽️</span>`}
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[11px] font-black text-slate-800 dark:text-slate-100 truncate">${m.name}</span>
+              <span class="text-[8px] font-black px-1.5 py-0.5 rounded-full shrink-0 ${tagColors[m.tag] || tagColors['클린']}">${m.tag || '클린'}</span>
+            </div>
+            <div class="text-[9px] font-mono text-slate-400 mt-0.5">
+              ${m.time || ''}${m.kcal ? ` · ${m.kcal}kcal` : ''}${m.protein ? ` · 단백질 ${m.protein}g` : ''}
+            </div>
+          </div>
+          <button onclick="deleteMealLog('${m.id}')" class="w-6 h-6 rounded-lg text-slate-400 hover:text-rose-500 text-xs font-black shrink-0" title="삭제">×</button>
+        </div>
+      `).join('');
+    }
+
+    function copyDietConsultPrompt() {
+      const ctx = buildTalkContext();
+      const logs = getMealLogs();
+      const totalKcal = logs.reduce((s, m) => s + (Number(m.kcal) || 0), 0);
+      const totalPro = logs.reduce((s, m) => s + (Number(m.protein) || 0), 0);
+      const remainKcal = Math.max(0, DAILY_KCAL_GOAL - totalKcal);
+      const remainPro = Math.max(0, DAILY_PROTEIN_GOAL - totalPro);
+      const mealList = logs.length
+        ? logs.map(m => `- ${m.time} ${m.name} [${m.tag}]${m.kcal ? ` (${m.kcal}kcal, P${m.protein || 0}g)` : ''}`).join('\n')
+        : '- 아직 기록된 식사 없음';
+      const prompt = [
+        `[오늘 피트니스 & 식단 현황 · ${getLocalDateString()}]`,
+        `• 체중/체지방: ${ctx.weight} / ${ctx.fat} (목표까지 ${ctx.targetLeft})`,
+        `• 운동 현황: 헬스 ${ctx.gymExercises} (${ctx.gymTotalSets}세트), 최근 러닝 ${ctx.runDist}`,
+        `• 오늘 식단 (${logs.length}건 · 총 ${totalKcal}kcal / 단백질 ${totalPro}g):`,
+        mealList,
+        `• 남은 목표: 약 ${remainKcal}kcal / 단백질 ${remainPro}g (17:00 단식 마감 기준)`,
+        '',
+        '위 현황 기준으로 다음 끼니 메뉴와 양을 딱 맞게 추천해줘!'
+      ].join('\n');
+
+      copyTextToClipboard(prompt).then(ok => {
+        playBeep(880, 0.08);
+        showFloatingToast(ok ? '📋 Gemini 식단 상담용 현황을 복사했어요! 바로 붙여넣기 하세요' : '복사 실패 — 브라우저 권한을 확인해주세요', ok ? '📋' : '⚠️');
+      });
     }
 
     function openChatImageLightbox(src, caption) {
@@ -10851,7 +11068,7 @@ ${err.message}
         put(todayStr, {
           weight: state.weight,
           fat: state.fat,
-          mealsDone: (state.meals || []).filter(Boolean).length,
+          mealsDone: Math.max((state.meals || []).filter(Boolean).length, (state.mealLogs || []).length),
           runDone: Boolean(state.runDone),
           absDone: Boolean(state.absDone),
           rehabDone: (state.rehab || []).filter(Boolean).length,
@@ -11009,7 +11226,7 @@ ${err.message}
       if (m.teaDays > 0) highlights.push({ icon: '🍵', title: `말차·차 ${m.teaDays}일`, text: '수분과 휴식도 운동의 일부이옵니다.' });
       if (m.streak >= 2) highlights.push({ icon: '🔥', title: `스트릭 ${m.streak}일`, text: '끊기지 않았다는 사실이 가장 중요하옵니다.' });
       highlights.push({
-        icon: '📏', title: `${m.weight || state.weight || 64.1}kg · ${m.fat || state.fat || 21.5}%`,
+        icon: '📏', title: `${m.weight || state.weight || 66.4}kg · ${m.fat || state.fat || 31.8}%`,
         text: '측정 자체를 미루지 않으셨사옵니다. 숫자를 마주하는 것이 첫 번째 운동이옵니다.'
       });
       if (highlights.length < 3) {
@@ -11144,6 +11361,109 @@ ${err.message}
 
       const ring = document.getElementById('weeklyReportScoreRing');
       if (ring) ring.style.background = `conic-gradient(#e0465a ${Math.max(0, Math.min(100, Number(report.score) || 0))}%, #3a2a30 0%)`;
+
+      // Render Previous-Week Comparison & Multi-Week Trend Graph (v4.5.0)
+      const cmpSec = document.getElementById('weeklyReportCompareSection');
+      if (cmpSec) {
+        const prevReport = reports[idx + 1] || null;
+        const chrono = [...reports].reverse().slice(-6);
+        const curScore = Number(report.score) || 0;
+        const prevScore = prevReport ? (Number(prevReport.score) || 0) : null;
+        const scoreDiff = prevScore !== null ? (curScore - prevScore) : null;
+
+        // Multi-week total score SVG line chart
+        let trendSvg = '';
+        if (chrono.length >= 2) {
+          const W = 280, H = 56, padX = 16, padY = 12;
+          const toX = (i) => padX + (i / (chrono.length - 1)) * (W - padX * 2);
+          const toY = (v) => H - padY - (Math.max(0, Math.min(100, v)) / 100) * (H - padY * 2);
+          const pathD = chrono.map((r, i) => `${i === 0 ? 'M' : 'L'}${toX(i).toFixed(1)},${toY(Number(r.score) || 0).toFixed(1)}`).join(' ');
+          trendSvg = `
+            <div class="pt-1">
+              <div class="text-[9px] font-bold text-[#9e847e] mb-1">📈 주간 총점 추이 (최근 ${chrono.length}주)</div>
+              <svg viewBox="0 0 ${W} ${H}" class="w-full h-14 overflow-visible">
+                <line x1="${padX}" y1="${toY(50)}" x2="${W - padX}" y2="${toY(50)}" stroke="#3b272f" stroke-dasharray="3 3" stroke-width="1"/>
+                <path d="${pathD}" fill="none" stroke="#f4869d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                ${chrono.map((r, i) => {
+                  const active = r.id === report.id;
+                  const cx = toX(i).toFixed(1), cy = toY(Number(r.score) || 0).toFixed(1);
+                  return `<circle cx="${cx}" cy="${cy}" r="${active ? 4.2 : 2.6}" fill="${active ? '#ff7588' : '#9e847e'}" stroke="#1b1417" stroke-width="1.5"/>
+                    <text x="${cx}" y="${Number(cy) - 6}" text-anchor="middle" fill="${active ? '#ffd6de' : '#9e847e'}" font-size="8" font-weight="bold">${r.score || 0}</text>`;
+                }).join('')}
+              </svg>
+              <div class="flex justify-between text-[8px] font-mono text-[#9e847e] px-1">
+                ${chrono.map(r => `<span class="${r.id === report.id ? 'text-[#ffd6de] font-black' : ''}">${(r.weekLabel || r.id).replace('주차','주')}</span>`).join('')}
+              </div>
+            </div>`;
+        }
+
+        // 4-Area Previous vs Current Bar Comparison
+        let areaBarsHtml = '';
+        if (prevReport && Array.isArray(prevReport.areas)) {
+          areaBarsHtml = `
+            <div class="space-y-1.5 pt-1 border-t border-[#3b272f]">
+              <div class="flex items-center justify-between text-[9px] font-bold text-[#9e847e]">
+                <span>⚔️ 영역별 전주(${prevReport.weekLabel || prevReport.id}) 대비</span>
+                <span><span class="inline-block w-2 h-1.5 rounded bg-[#5c454e] mr-1"></span>전주 <span class="inline-block w-2 h-1.5 rounded bg-[#f4869d] ml-1.5 mr-1"></span>이번 주</span>
+              </div>
+              ${(report.areas || []).map((a, i) => {
+                const pa = prevReport.areas[i] || { score: 0, max: a.max };
+                const max = a.max || 30;
+                const curPct = Math.min(100, Math.round(((a.score || 0) / max) * 100));
+                const prevPct = Math.min(100, Math.round(((pa.score || 0) / max) * 100));
+                const d = (a.score || 0) - (pa.score || 0);
+                const dBadge = d > 0 ? `<span class="text-emerald-400">+${d}▲</span>` : d < 0 ? `<span class="text-rose-400">${d}▼</span>` : '<span class="text-[#9e847e]">—</span>';
+                return `
+                  <div class="space-y-0.5">
+                    <div class="flex items-center justify-between text-[10px] font-bold">
+                      <span class="text-[#e0cfca]">${a.icon || ''} ${a.name || ''}</span>
+                      <span class="font-mono text-[9px]">${pa.score || 0}→<b class="text-[#ffd6de]">${a.score || 0}</b> ${dBadge}</span>
+                    </div>
+                    <div class="space-y-0.5">
+                      <div class="h-1 rounded-full bg-[#140f12] overflow-hidden"><div class="h-full rounded-full bg-[#5c454e]" style="width:${prevPct}%"></div></div>
+                      <div class="h-1.5 rounded-full bg-[#140f12] overflow-hidden"><div class="h-full rounded-full bg-gradient-to-r from-[#e0465a] to-[#ff8fa0]" style="width:${curPct}%"></div></div>
+                    </div>
+                  </div>`;
+              }).join('')}
+            </div>`;
+        }
+
+        // Body weight comparison from report metrics or inbodyHistory
+        let bodyDeltaChip = '';
+        const hist = Array.isArray(state.inbodyHistory) ? state.inbodyHistory : [];
+        if (hist.length >= 2) {
+          const last = hist[hist.length - 1], prev = hist[hist.length - 2];
+          const curW = (typeof state.weight === 'number' && state.weight > 0) ? state.weight : last.weight;
+          const wd = Math.round((curW - prev.weight) * 10) / 10;
+          const fd = Math.round((last.fat - prev.fat) * 10) / 10;
+          bodyDeltaChip = `
+            <div class="flex items-center justify-between gap-2 pt-1.5 border-t border-[#3b272f] text-[9px] font-bold">
+              <span class="text-[#9e847e]">⚖️ 최근 인바디 비교</span>
+              <span class="font-mono text-[#ffd6de]">체중 ${prev.weight}→${curW}kg (${wd > 0 ? '+' : ''}${wd}) · 체지방 ${prev.fat}→${last.fat}% (${fd > 0 ? '+' : ''}${fd}%p)</span>
+            </div>`;
+        }
+
+        if (prevReport || chrono.length >= 2) {
+          const diffPill = scoreDiff !== null
+            ? (scoreDiff > 0
+                ? `<span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-black">전주 대비 +${scoreDiff}점 ▲</span>`
+                : scoreDiff < 0
+                  ? `<span class="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 text-[10px] font-black">전주 대비 ${scoreDiff}점 ▼</span>`
+                  : '<span class="px-2 py-0.5 rounded-full bg-white/10 text-[#c9b1aa] text-[10px] font-black">전주와 동일</span>')
+            : '';
+          cmpSec.classList.remove('hidden');
+          cmpSec.innerHTML = `
+            <div class="flex items-center justify-between gap-2">
+              <h4 class="text-xs font-black text-[#f4869d]">📊 전주 비교 & 성장 그래프</h4>
+              ${diffPill}
+            </div>
+            ${trendSvg}
+            ${areaBarsHtml}
+            ${bodyDeltaChip}`;
+        } else {
+          cmpSec.classList.add('hidden');
+        }
+      }
 
       setHTML('weeklyReportAreas', (report.areas || []).map(area => {
         const pct = area.max ? Math.max(0, Math.min(100, Math.round((area.score / area.max) * 100))) : 0;
@@ -11483,6 +11803,9 @@ ${err.message}
         </div>
 
         <p id="weeklyReportIntro" class="text-[11px] text-[#d9c5bf] leading-relaxed"></p>
+
+        <!-- Previous Week Comparison & Multi-Week Trend Graph (v4.5.0) -->
+        <div id="weeklyReportCompareSection" class="hidden p-3 rounded-2xl bg-[#22181d] border border-[#453139] space-y-2.5"></div>
 
         <!-- 4 areas -->
         <div>
