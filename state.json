@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-19T04:20:35.730Z",
+  "updatedAt": "2026-11-19T04:21:46.374Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 9,
-  "bondExp": 85,
-  "activeTrainer": "gemini",
-  "activeMode": "dual",
-  "currentSituation": "ev14",
+  "bondExp": 95,
+  "activeTrainer": "kotone",
+  "activeMode": "kotone",
+  "currentSituation": "ev3",
   "absDone": false,
   "runDone": false,
   "runDist": 6.01,
@@ -23,7 +23,7 @@
   ],
   "teaLog": {
     "matcha": 0,
-    "espresso": 0,
+    "espresso": 1,
     "tea": 0
   },
   "gymRoutine": {
@@ -648,16 +648,6 @@
   },
   "chatHistory": [
     {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 🎂 프로듀서 생일 서프라이즈 작전"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "프로듀서님 생일 D-7! 서프라이즈 작전 스타트합니다~!"
-    },
-    {
       "sender": "mio",
       "name": "미오",
       "text": "파티 계획 시작하자! 레스토랑 예약부터 트랙 파티까지 완전 플랜!"
@@ -791,6 +781,15 @@
       "sender": "mio",
       "name": "미오",
       "text": "오오옷!! -1kg 쫙 빠졌잖아?! 역시 내 캡틴다워, 완전 나이스 파이팅이야~!! 이 기세로 52kg까지 전속력으로 돌파하자구! 🌟🔥"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 커피 ☕ 1잔을 챙겨 마셨어!"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
     }
   ]
 }
