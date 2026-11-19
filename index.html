@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.09</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.10</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -1459,7 +1459,7 @@
           <button onclick="quickAddMeal('일반식 밥 반공기', 450, 20, '조절')" class="shrink-0 px-2 py-1 rounded-full bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-400/30 text-[10px] font-black active:scale-95 transition-all">🍚 일반식 반공기</button>
         </div>
 
-        <!-- Today's Meal Add Toggle Button (Collapsible Composer, v4.6.09) -->
+        <!-- Today's Meal Add Toggle Button (Collapsible Composer, v4.6.10) -->
         <button type="button" id="btnToggleMealComposer" onclick="toggleMealComposer()" class="w-full py-2 rounded-xl border border-dashed border-pink-400/60 bg-pink-500/5 hover:bg-pink-500/10 text-pink-600 dark:text-pink-300 text-xs font-black flex items-center justify-center gap-1.5 active:scale-[0.99] transition-all">
           <span id="mealComposerToggleIcon" class="w-4 h-4 rounded-full bg-pink-500 text-white text-[11px] flex items-center justify-center leading-none">+</span>
           <span id="mealComposerToggleText">식단 직접 추가 / 사진 인증</span>
@@ -6528,62 +6528,57 @@
       switchMainTab('talk');
       enterTrainerRoom(room, true);
 
-      const ch = document.getElementById('choicesContainer');
-      if (ch) ch.innerHTML = '';
-
       const curTime = getKakaoTimeStr();
-      const name = SYNC_TRAINER_NAMES[room] || '제미니';
+      const ctx = buildTalkContext();
+      const recEp = pickRecommendedEpisode(room, key);
+
+      // Single streamlined flow (v4.6.10):
+      // Sync pill -> immediately launch the best-matching unwatched Training Talk episode
+      // (which already embeds live weight/workout/protein/meal variables + photos),
+      // so there's no awkward double-conversation!
       state.chatHistory.push({
-        room, sender: 'system', name: '새 대화',
-        text: `🔄 ${curTime} 기록 동기화 · 새 대화 시작`,
+        room, sender: 'system', name: '기록 동기화',
+        text: `🔄 ${curTime} 동기화 완료 · ${ctx.weight} · ${key === 'run' ? '유산소 ' + ctx.runDist : key === 'meal' ? '식단 ' + ctx.mealsDone : ctx.gymExercises}`,
         time: curTime
       });
+      saveState(true);
       renderChat();
       scrollChatToBottom();
+      updateRoomHead(room);
+      renderThreadList();
 
-      // Natural KakaoTalk-style staggered typing instead of dumping 3 bubbles at once!
+      if (recEp) {
+        await vnSleep(260);
+        if (syncTalkGen === myGen) {
+          startTrainerEpisode(room, recEp.id);
+        }
+        return room;
+      }
+
+      // Fallback only if room has zero episodes
+      const name = SYNC_TRAINER_NAMES[room] || '제미니';
       const openerLines = buildSyncTalkOpener(room, key);
       for (let i = 0; i < openerLines.length; i++) {
         if (syncTalkGen !== myGen) return room;
         activeTypingIndicator = { sender: room, name };
         renderChat();
         scrollChatToBottom();
-        await vnSleep(i === 0 ? 550 : 780 + Math.random() * 350);
+        await vnSleep(650);
         if (syncTalkGen !== myGen) return room;
         activeTypingIndicator = null;
-
         const entry = openerLines[i];
         const msg = typeof entry === 'string' ? { text: entry } : entry;
         state.chatHistory.push({
-          room, sender: room, name,
-          text: msg.text,
+          room, sender: room, name, text: msg.text,
           ...(msg.image ? { image: msg.image } : {}),
           ...(msg.caption ? { caption: msg.caption } : {}),
           time: getKakaoTimeStr()
         });
         renderChat();
         scrollChatToBottom();
-        playBeep(620 + i * 70, 0.045);
+        playBeep(660, 0.045);
       }
-
       saveState(true);
-      updateRoomHead(room);
-      renderThreadList();
-
-      // Interactive quick-reply chips so the user actually chats back!
-      if (syncTalkGen === myGen && ch) {
-        pendingSyncReplies = buildSyncQuickReplies(room, key);
-        const recEp = pickRecommendedEpisode(room, key);
-        ch.innerHTML = `
-          <div class="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2.5 space-y-1.5">
-            <div class="text-[10px] font-black text-slate-500 dark:text-slate-400">💬 ${name}에게 답장하기</div>
-            ${pendingSyncReplies.map((r, idx) => `
-              <button onclick="pickSyncQuickReply(${idx}, '${room}', '${key}')" class="w-full text-left px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-400 text-[11px] font-bold text-slate-700 dark:text-slate-200 active:scale-[0.99] transition-all">${r.label}</button>
-            `).join('')}
-            ${recEp ? `<button onclick="startTrainerEpisode('${room}', '${recEp.id}')" class="w-full text-center px-3 py-1.5 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-300 text-[10px] font-black hover:bg-sky-500/20 transition-all">🎬 바로 추천 톡 보기: ${recEp.icon || ''} ${recEp.title}</button>` : ''}
-          </div>`;
-        scrollChatToBottom();
-      }
       return room;
     }
 
@@ -8012,7 +8007,7 @@ ${err.message}
       }).join('');
     }
 
-    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.6.09) ----------
+    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.6.10) ----------
     const CARDIO_LABELS = { treadmill: '🏃‍♂️ 러닝머신', stair: '🪜 천국의 계단', outdoor: '🏃 야외 러닝' };
 
     function selectCardioMode(mode) {
@@ -12554,7 +12549,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.6.09 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.6.10 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
