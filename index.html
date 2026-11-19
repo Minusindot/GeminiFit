@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.02</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.03</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -889,8 +889,8 @@
       <div id="questHudCard" class="game-card px-3 py-2.5 space-y-2 border-l-4 border-l-indigo-500 transition-all">
         <div class="flex items-center justify-between gap-1.5">
           <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 p-0.5 rounded-xl border border-slate-200/70 dark:border-slate-700/60">
-            <button onclick="switchQuestTab('weekly')" id="questTabWeekly" class="px-2 py-1 rounded-lg text-[10px] font-black bg-indigo-500 text-white shadow-2xs transition-all">🎯 주간 <span id="questWeeklyProg" class="font-mono opacity-90">0/5</span></button>
-            <button onclick="switchQuestTab('daily')" id="questTabDaily" class="px-2 py-1 rounded-lg text-[10px] font-bold text-slate-500 dark:text-slate-400 transition-all">⚡ 일일 <span id="questDailyProg" class="font-mono opacity-80">0/4</span></button>
+            <button onclick="switchQuestTab('daily')" id="questTabDaily" class="px-2 py-1 rounded-lg text-[10px] font-black bg-amber-500 text-white shadow-2xs transition-all">⚡ 일일 <span id="questDailyProg" class="font-mono opacity-90">0/4</span></button>
+            <button onclick="switchQuestTab('weekly')" id="questTabWeekly" class="px-2 py-1 rounded-lg text-[10px] font-bold text-slate-500 dark:text-slate-400 transition-all">🎯 주간 <span id="questWeeklyProg" class="font-mono opacity-80">0/5</span></button>
           </div>
           <span id="questDeadlineBadge" class="text-[9px] font-black px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-400/30 whitespace-nowrap">수요일 마감 D-6</span>
         </div>
@@ -7400,7 +7400,7 @@ ${err.message}
     // MOBILE-GAME QUEST HUD ENGINE (주간 퀘스트 · 일일 퀘스트, v4.6.0)
     // Synced with Wednesday weekly report cycle & live user progress!
     // ============================================================================
-    let activeQuestTab = 'weekly';
+    let activeQuestTab = 'daily';
 
     function switchQuestTab(tab) {
       activeQuestTab = tab === 'daily' ? 'daily' : 'weekly';
@@ -12099,7 +12099,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.6.02 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.6.03 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
