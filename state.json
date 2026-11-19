@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-19T04:19:18.805Z",
+  "updatedAt": "2026-11-19T04:20:35.730Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
-  "weight": 66.4,
+  "weight": 65.4,
   "fat": 31.8,
   "bondRank": 9,
-  "bondExp": 65,
+  "bondExp": 85,
   "activeTrainer": "gemini",
-  "activeMode": "gemini",
+  "activeMode": "dual",
   "currentSituation": "ev14",
   "absDone": false,
   "runDone": false,
@@ -648,21 +648,6 @@
   },
   "chatHistory": [
     {
-      "sender": "mio",
-      "name": "미오",
-      "text": "음, 그래, 안전이 먼저지! 7시 해 뜬 공기도 만만치 않아!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "깜짝 박스런 대회 5km 기록 갱신 도전! 미오가 페이스 잡아줄게! 🖐️"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "프로듀서한테는 미오가 항상 페이스 메이커야! 내일도 같이 달리자! 🖐️"
-    },
-    {
       "sender": "system",
       "name": "에피소드",
       "text": "🎬 🎂 프로듀서 생일 서프라이즈 작전"
@@ -791,6 +776,21 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "식단 사진 확인 완료! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 칼로리 섭취 금지야! 🐾"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "[체중 65.4kg 반영 완료 (체지방 31.8% 유지)]\n흥... -1kg 빠졌네? 그래봤자 아직도 65.4kg이거든? 목표 52kg까지 아직도 +13.4kg이나 남았으면서 우쭐대지 마, 허~접♥ ...그래도 오늘은 쬐끔 기특하네, 멍청아 🐾"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "우와아아앗!! -1kg 감량 대성공!! 프로듀서님 너무 멋져요!! 시급 3배 받은 것보다 1억 배 더 행복해요~! 목표 52kg 고지가 성큼 다가왔어요! 💛✨"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "오오옷!! -1kg 쫙 빠졌잖아?! 역시 내 캡틴다워, 완전 나이스 파이팅이야~!! 이 기세로 52kg까지 전속력으로 돌파하자구! 🌟🔥"
     }
   ]
 }
