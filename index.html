@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.08</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.09</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -1459,7 +1459,7 @@
           <button onclick="quickAddMeal('일반식 밥 반공기', 450, 20, '조절')" class="shrink-0 px-2 py-1 rounded-full bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-400/30 text-[10px] font-black active:scale-95 transition-all">🍚 일반식 반공기</button>
         </div>
 
-        <!-- Today's Meal Add Toggle Button (Collapsible Composer, v4.6.08) -->
+        <!-- Today's Meal Add Toggle Button (Collapsible Composer, v4.6.09) -->
         <button type="button" id="btnToggleMealComposer" onclick="toggleMealComposer()" class="w-full py-2 rounded-xl border border-dashed border-pink-400/60 bg-pink-500/5 hover:bg-pink-500/10 text-pink-600 dark:text-pink-300 text-xs font-black flex items-center justify-center gap-1.5 active:scale-[0.99] transition-all">
           <span id="mealComposerToggleIcon" class="w-4 h-4 rounded-full bg-pink-500 text-white text-[11px] flex items-center justify-center leading-none">+</span>
           <span id="mealComposerToggleText">식단 직접 추가 / 사진 인증</span>
@@ -1479,7 +1479,7 @@
           </div>
           <!-- Row 2: 메뉴명 + 사진 첨부 -->
           <div class="flex items-center gap-1.5">
-            <input type="text" id="mealInputName" placeholder="먹은 메뉴 입력 (예: 제육 반접시 + 쌈채소)" class="flex-1 min-w-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-pink-400" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomMealLog();}">
+            <input type="text" id="mealInputName" placeholder="메뉴 + 구성품 입력 (예: 오야꼬동 + 잡곡밥 2/3공기)" class="flex-1 min-w-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-pink-400" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomMealLog();}">
             <label for="mealFlexPhotoInput" class="shrink-0 px-2.5 py-1.5 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-400/30 text-xs font-black cursor-pointer hover:bg-sky-500/25 active:scale-95 transition-all" title="사진으로 메뉴/영양 자동 추정 및 첨부">
               📷 사진
             </label>
@@ -7566,52 +7566,116 @@ ${err.message}
       const ib = state.latestInbody || state.latestInBody || {};
       const t = state.teaLog || {};
 
-      // 1. Body & InBody trend within range (plus latest 2 for delta)
+      // 1. Body & InBody trend within range
       const allIb = Array.isArray(state.inbodyHistory) ? state.inbodyHistory : [];
       const rangeIb = allIb.filter(h => h && h.date >= startStr && h.date <= endStr);
       const ibLines = (rangeIb.length ? rangeIb : allIb.slice(-3)).map(h =>
         `  - ${h.date}: 체중 ${h.weight}kg / 골격근 ${h.skeletalMuscle ?? '-'}kg / 체지방률 ${h.fat ?? '-'}%`
       );
 
-      // 2. Gym sessions in range
-      const gymInRange = (state.gymHistory || []).filter(g => g && g.fullDate >= startStr && g.fullDate <= endStr);
+      // 2. Gym sessions in range — STRICTLY filter only actually performed exercises (done > 0)!
+      const formatGymPerformed = (g) => {
+        const parts = [];
+        if ((g.upper1Done || 0) > 0) parts.push(`${g.upper1Name || '상체1'} ${g.upper1Done}세트(${g.upper1Reps || 0}회)`);
+        if ((g.upper2Done || 0) > 0) parts.push(`${g.upper2Name || '상체2'} ${g.upper2Done}세트(${g.upper2Reps || 0}회)`);
+        if ((g.lowerDone || 0) > 0) parts.push(`${g.lowerName || '하체'} ${g.lowerDone}세트(${g.lowerReps || 0}회)`);
+        if ((g.legRaiseDone || 0) > 0) parts.push(`레그레이즈 ${g.legRaiseDone}세트(${g.legRaiseReps || 0}회)`);
+        if ((g.crunchDone || 0) > 0) parts.push(`크런치 ${g.crunchDone}세트(${g.crunchReps || 0}회)`);
+        return parts.join(', ');
+      };
+
+      const gymInRange = (state.gymHistory || []).filter(g => g && g.fullDate >= startStr && g.fullDate <= endStr && (Number(g.totalSets) || 0) > 0);
       const gymLines = gymInRange.map(g => {
-        const names = [g.upper1Name, g.upper2Name, g.lowerName].filter(Boolean).join('·') || '근력 루틴';
-        return `  - ${g.fullDate}: ${names} (${g.totalSets || 0}세트 · ${g.totalReps || 0}회)`;
+        const detail = formatGymPerformed(g) || '기록된 세트 없음';
+        return `  - ${g.fullDate}: [실제 수행] ${detail} (합계 ${g.totalSets || 0}세트 · ${g.totalReps || 0}회)`;
       });
-      if (todayStr >= startStr && todayStr <= endStr && isGymRoutineDone(state.gymRoutine) && !gymInRange.some(g => g.fullDate === todayStr)) {
-        gymLines.push(`  - ${todayStr} (오늘): ${ctx.gymExercises} (${ctx.gymTotalSets}세트 · ${ctx.gymTotalReps}회)`);
+      if (todayStr >= startStr && todayStr <= endStr && !gymInRange.some(g => g.fullDate === todayStr)) {
+        const gr = state.gymRoutine || {};
+        const liveParts = [];
+        let liveSets = 0, liveReps = 0;
+        ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'].forEach(k => {
+          const ex = gr[k];
+          if (!ex) return;
+          const done = (ex.sets || []).filter(Boolean).length;
+          if (done > 0) {
+            const reps = done * (ex.reps || 20);
+            liveSets += done;
+            liveReps += reps;
+            liveParts.push(`${ex.name || k} ${done}세트(${reps}회${ex.weight ? '·' + ex.weight : ''})`);
+          }
+        });
+        if (liveSets > 0) {
+          gymLines.push(`  - ${todayStr} (오늘): [실제 수행] ${liveParts.join(', ')} (합계 ${liveSets}세트 · ${liveReps}회)`);
+        }
       }
 
-      // 3. Running sessions in range
+      // 3. Cardio/Running sessions in range
       const runInRange = (state.runningLogs || []).filter(r => r && r.date >= startStr && r.date <= endStr);
       const totalRunKm = runInRange.reduce((s, r) => s + (Number(r.distance) || 0), 0);
       const runLines = runInRange.map(r =>
-        `  - ${r.date}: ${r.distance}km (${r.duration || '-'}, 페이스 ${r.pace || '-'}, 심박 ${r.heartRate || '-'}bpm, ${r.calories || '-'}kcal)`
+        `  - ${r.date} [${r.source || '유산소'}]: ${r.distance}km (${r.duration || '-'}, 페이스 ${r.pace || '-'}, 심박 ${r.heartRate || '-'}bpm, ${r.calories || '-'}kcal)`
       );
 
-      // 4. Daily logs (meals, hydration, weight) in range
-      const dl = state.dailyLogs || {};
+      // 4. Today's detailed meal timeline + auto-merge unlogged protein drinks (teaLog.tea)!
+      const logs = getMealLogs();
+      const loggedProteinCnt = logs.filter(m => /단백질|프로틴|쉐이크/i.test(m.name || '')).length;
+      const extraProteinDrinks = Math.max(0, (Number(t.tea) || 0) - loggedProteinCnt);
+      const mergedMeals = [
+        ...logs,
+        ...Array.from({ length: extraProteinDrinks }, (_, i) => ({
+          slot: '보충',
+          time: '오늘',
+          name: `단백질 음료 #${i + 1} (음료 로그 자동 합산)`,
+          kcal: 150,
+          protein: 22,
+          tag: '단백질'
+        }))
+      ];
+
+      const totalKcal = mergedMeals.reduce((s, m) => s + (Number(m.kcal) || 0), 0);
+      const totalPro = mergedMeals.reduce((s, m) => s + (Number(m.protein) || 0), 0);
+      const unmeasuredCnt = mergedMeals.filter(m => !(Number(m.kcal) > 0) && !(Number(m.protein) > 0)).length;
+      const mealDetailLines = mergedMeals.length
+        ? mergedMeals.map(m => {
+            const hasMacro = (Number(m.kcal) > 0) || (Number(m.protein) > 0);
+            const macroStr = hasMacro
+              ? `(${m.kcal || 0}kcal / P ${m.protein || 0}g)`
+              : '(매크로 미입력 — 메뉴·구성품 기준 추정 필요)';
+            return `  - [${m.slot || '식사'} ${m.time || ''}] ${m.name} [${m.tag || '일반'}] ${macroStr}`;
+          })
+        : ['  - 오늘 기록된 식단 없음'];
+
+      // 5. Daily logs in range — ALWAYS merge live state for todayStr so teaLog/meals never contradict!
+      const dl = { ...(state.dailyLogs || {}) };
+      if (todayStr >= startStr && todayStr <= endStr) {
+        dl[todayStr] = {
+          ...(dl[todayStr] || {}),
+          weight: state.weight,
+          fat: state.fat,
+          mealsDone: Math.max((state.meals || []).filter(Boolean).length, mergedMeals.length),
+          gymDone: isGymRoutineDone(state.gymRoutine) || gymInRange.some(g => g.fullDate === todayStr),
+          runDone: Boolean(state.runDone) || runInRange.some(r => r.date === todayStr),
+          absDone: Boolean(state.absDone),
+          rehabDone: (state.rehab || []).filter(Boolean).length,
+          teaLog: { water: t.water || 0, espresso: t.espresso || 0, matcha: t.matcha || 0, tea: t.tea || 0 }
+        };
+      }
       const dayKeys = Object.keys(dl).filter(d => d >= startStr && d <= endStr).sort();
       const daySummaryLines = dayKeys.map(d => {
         const x = dl[d] || {};
         const tl = x.teaLog || {};
         const flags = [
           x.gymDone ? '헬스✓' : '',
-          x.runDone ? '러닝✓' : '',
+          x.runDone ? '유산소✓' : '',
           x.absDone ? '복근✓' : '',
           (x.rehabDone || 0) > 0 ? '재활✓' : ''
         ].filter(Boolean).join(' ') || '휴식';
-        return `  - ${d}: ${x.weight || '-'}kg / 식단 ${x.mealsDone || 0}회 / 물${tl.water || 0}·말차${tl.matcha || 0}·커피${tl.espresso || 0}·단백질${tl.tea || 0} / [${flags}]`;
+        return `  - ${d}: ${x.weight || '-'}kg / 식단 ${x.mealsDone || 0}건 / 물${tl.water || 0}·커피${tl.espresso || 0}·말차${tl.matcha || 0}·단백질${tl.tea || 0} / [${flags}]`;
       });
 
-      // 5. Today's detailed meal timeline
-      const logs = getMealLogs();
-      const totalKcal = logs.reduce((s, m) => s + (Number(m.kcal) || 0), 0);
-      const totalPro = logs.reduce((s, m) => s + (Number(m.protein) || 0), 0);
-      const mealDetailLines = logs.length
-        ? logs.map(m => `  - [${m.slot || '식사'} ${m.time || ''}] ${m.name} (${m.tag})${m.kcal ? ` · ${m.kcal}kcal, P${m.protein || 0}g` : ''}`)
-        : ['  - 오늘 기록된 식단 없음'];
+      const macroSummaryLabel = unmeasuredCnt > 0
+        ? `확인된 ${totalKcal}kcal+ / P ${totalPro}g+ (매크로 미입력 ${unmeasuredCnt}건 별도 추정 필요)`
+        : `총 ${totalKcal}kcal / 단백질 ${totalPro}g`;
 
       return [
         `[GeminiFit 종합 피트니스·식단·신체 리포트 (${startStr} ~ ${endStr})]`,
@@ -7621,16 +7685,16 @@ ${err.message}
         `- 최근 인바디(${ib.date || '-'}): 점수 ${ib.inbodyScore || ib.score || '-'}점 · 골격근 ${ib.skeletalMuscle || ib.smm || '-'}kg · 체지방량 ${ib.bodyFatMass || '-'}kg · 기초대사량 ${ib.bmr || '-'}kcal · 권장섭취 ${ib.recommendedCal || 1946}kcal`,
         ...(ibLines.length ? ['- 인바디 추이:', ...ibLines] : []),
         '',
-        `2. 기간 내 운동 기록 (헬스 ${gymLines.length}회 · 러닝 ${runLines.length}회 / 총 ${totalRunKm.toFixed(2)}km)`,
-        ...(gymLines.length ? ['- 헬스장 근력:', ...gymLines] : ['- 헬스장 근력: 기간 내 기록 없음']),
-        ...(runLines.length ? ['- 러닝/유산소:', ...runLines] : ['- 러닝/유산소: 기간 내 기록 없음']),
+        `2. 기간 내 실제 수행 운동 기록 (헬스 ${gymLines.length}회 · 유산소 ${runLines.length}회 / 총 ${totalRunKm.toFixed(2)}km)`,
+        ...(gymLines.length ? ['- 헬스장 근력 (완료 세트 > 0 종목만 표기):', ...gymLines] : ['- 헬스장 근력: 기간 내 기록 없음']),
+        ...(runLines.length ? ['- 유산소:', ...runLines] : ['- 유산소: 기간 내 기록 없음']),
         `- 손목 재활(테니스 엘보 관리): 오늘 ${ctx.rehabStatus}`,
         '',
         '3. 식단 & 수분/음료 기록',
-        `- 오늘(${todayStr}) 식단 (${logs.length}건 · ${totalKcal}kcal / 단백질 ${totalPro}g / 목표 1,600kcal·P110g):`,
+        `- 오늘(${todayStr}) 식단·보충 통합 (${mergedMeals.length}건 · ${macroSummaryLabel} / 목표 1,600kcal·P110g):`,
         ...mealDetailLines,
         `- 오늘 수분/음료: 물 ${t.water || 0}잔 · 커피 ${t.espresso || 0}회 · 말차 ${t.matcha || 0}회 · 단백질 음료 ${t.tea || 0}회 (17:00 단식 마감)`,
-        ...(daySummaryLines.length ? ['- 기간 일별 요약:', ...daySummaryLines] : []),
+        ...(daySummaryLines.length ? ['- 기간 일별 요약 (오늘 실시간 반영):', ...daySummaryLines] : []),
         '',
         '4. Gemini 코칭 요청',
         '위 기간 동안의 신체 변화, 운동 볼륨, 식단/단백질 섭취 흐름을 종합 분석해서:',
@@ -7948,7 +8012,7 @@ ${err.message}
       }).join('');
     }
 
-    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.6.08) ----------
+    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.6.09) ----------
     const CARDIO_LABELS = { treadmill: '🏃‍♂️ 러닝머신', stair: '🪜 천국의 계단', outdoor: '🏃 야외 러닝' };
 
     function selectCardioMode(mode) {
@@ -12490,7 +12554,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.6.08 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.6.09 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
