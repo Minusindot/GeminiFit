@@ -1,5 +1,5 @@
-// Gemini Fit Progressive Web App (PWA) Service Worker v4.6.12
-const CACHE_NAME = 'geminifit-pwa-v4.6.12';
+// Gemini Fit Progressive Web App (PWA) Service Worker v4.6.13
+const CACHE_NAME = 'geminifit-pwa-v4.6.13';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
@@ -38,7 +38,25 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Assets (images, fonts): Network-first with cache fallback
+  // Static media (images, audio, fonts): Cache-first for 0ms BG/CG/SCG playback
+  const isStaticMedia = /\.(png|jpg|jpeg|webp|gif|svg|mp3|wav|ogg|woff2?)$/i.test(url.pathname);
+  if (isStaticMedia) {
+    e.respondWith(
+      caches.match(e.request).then((cached) => {
+        if (cached) return cached;
+        return fetch(e.request).then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+          }
+          return response;
+        });
+      })
+    );
+    return;
+  }
+
+  // Other assets: Network-first with cache fallback
   e.respondWith(
     fetch(e.request)
       .then((response) => {
