@@ -2051,12 +2051,12 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.5.1"></script>
-  <script src="./dialogue_pool.js?v=4.5.1"></script>
-  <script src="./trainer_episodes.js?v=4.5.1"></script>
-  <script src="./kotonoha_data.js?v=4.5.1"></script>
-  <script src="./kotonoha_engine.js?v=4.5.1"></script>
-  <script src="./ocr_pipeline.js?v=4.5.1"></script>
+  <script src="./weekly_reports.js?v=4.5.2"></script>
+  <script src="./dialogue_pool.js?v=4.5.2"></script>
+  <script src="./trainer_episodes.js?v=4.5.2"></script>
+  <script src="./kotonoha_data.js?v=4.5.2"></script>
+  <script src="./kotonoha_engine.js?v=4.5.2"></script>
+  <script src="./ocr_pipeline.js?v=4.5.2"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -7952,7 +7952,7 @@ ${err.message}
     // InBody tables the safest "next number" is the one on the SAME baseline row
     // to the RIGHT of the label token (text order alone mixes columns/rows).
     // ------------------------------------------------------------------------
-    function extractRowAnchoredNumber(words, labels) {
+    function extractRowAnchoredNumber(words, labels, excludeWords = []) {
       if (!words || !words.length) return null;
       const getBox = (w) => {
         if (w && w.bbox && w.bbox.x0 !== undefined) return w.bbox;
@@ -7969,26 +7969,66 @@ ${err.message}
       if (!norm.length) return null;
 
       for (const label of labels) {
-        const lab = norm.find((w) => w.t.includes(label));
-        if (!lab) continue;
-        const cy = (lab.box.y0 + lab.box.y1) / 2;
-        const h = Math.max(8, lab.box.y1 - lab.box.y0);
-        const sameRow = norm
-          .filter((w) => w.box.x0 > lab.box.x1 + 2 && Math.abs((w.box.y0 + w.box.y1) / 2 - cy) < h * 0.65)
-          .sort((a, b) => a.box.x0 - b.box.x0);
-        for (const w of sameRow) {
-          const tok = w.t.trim();
-          // Skip unit/range tokens: (48.5~65.6), kg, %
-          if (/^\(|^~|~/.test(tok)) continue;
-          if (/^(kg|kcal|%|점|보|l)$/i.test(tok)) continue;
-          const m = tok.match(/[0-9]{1,3}[.,][0-9]{1,2}|[0-9]{2,4}/);
-          if (m) {
-            const v = parseFloat(m[0].replace(',', '.'));
-            if (!isNaN(v)) return v;
+        const candidates = norm.filter((w) =>
+          w.t.includes(label) && !excludeWords.some((ex) => w.t.includes(ex))
+        );
+        for (const lab of candidates) {
+          const cy = (lab.box.y0 + lab.box.y1) / 2;
+          const h = Math.max(8, lab.box.y1 - lab.box.y0);
+          const sameRow = norm
+            .filter((w) => w.box.x0 > lab.box.x1 + 2 && Math.abs((w.box.y0 + w.box.y1) / 2 - cy) < h * 0.65)
+            .sort((a, b) => a.box.x0 - b.box.x0);
+          // Skip bar-chart axis rows that have 4+ numeric tick labels (e.g. 0.0 5.0 10.0 ... 50.0)
+          const numericCount = sameRow.filter((w) => /^[0-9]{1,3}(?:[.,][0-9])?$/.test(w.t.trim())).length;
+          if (numericCount >= 4) continue;
+          for (const w of sameRow) {
+            const tok = w.t.trim();
+            if (/^\(|^~|~/.test(tok)) continue;
+            if (/^(kg|kcal|%|점|보|l)$/i.test(tok)) continue;
+            const m = tok.match(/[0-9]{1,3}[.,][0-9]{1,2}|[0-9]{2,4}/);
+            if (m) {
+              const v = parseFloat(m[0].replace(',', '.'));
+              if (!isNaN(v)) return v;
+            }
           }
         }
       }
       return null;
+    }
+
+    // Dedicated Zone 1 (체성분분석) parser using InBody's "VALUE ( LOW~HIGH )" row structure
+    // and mathematical identity: 체수분 + 단백질 + 무기질 + 체지방량 = 체중.
+    function parseInbodyCompositionTable(text) {
+      const cleaned = String(text || '').replace(/,/g, '.');
+      const rows = [];
+      const re = /(\d{1,3}(?:\.\d{1,2})?)\s*[\(\[]\s*(\d{1,3}(?:\.\d{1,2})?)\s*[~\-–—]\s*(\d{1,3}(?:\.\d{1,2})?)\s*[\)\]]/g;
+      let m;
+      while ((m = re.exec(cleaned)) !== null) {
+        const val = parseFloat(m[1]);
+        const low = parseFloat(m[2]);
+        const high = parseFloat(m[3]);
+        if (Number.isFinite(val) && Number.isFinite(low) && Number.isFinite(high) && high > low) {
+          rows.push({ val, low, high });
+        }
+      }
+      if (!rows.length) return null;
+      const out = { weight: null, fatMass: null, fat: null, bodyWater: null, protein: null, mineral: null };
+      for (const r of rows) {
+        if (r.low >= 40 && r.high >= 55 && r.val >= 35 && r.val <= 160) out.weight = r.val;
+        else if (r.low >= 22 && r.high >= 30 && r.high <= 55 && r.val >= 18 && r.val <= 65) out.bodyWater = r.val;
+        else if (r.low >= 5 && r.high <= 15 && r.val >= 4 && r.val <= 20 && r.high - r.low < 5) out.protein = r.val;
+        else if (r.low >= 1.5 && r.high <= 6 && r.val >= 1 && r.val <= 8) out.mineral = r.val;
+        else if (r.low >= 4 && r.high <= 28 && r.val >= 2 && r.val <= 80 && r.high - r.low >= 4) out.fatMass = r.val;
+      }
+      // Mathematical self-check: if 체중 missed, sum the 4 components
+      if (out.weight === null && out.bodyWater && out.protein && out.mineral && out.fatMass) {
+        out.weight = Math.round((out.bodyWater + out.protein + out.mineral + out.fatMass) * 10) / 10;
+      }
+      if (out.weight && out.fatMass) {
+        const calcFat = Math.round((out.fatMass / out.weight) * 1000) / 10;
+        if (calcFat >= 4 && calcFat <= 60) out.fat = calcFat;
+      }
+      return (out.weight !== null || out.fatMass !== null) ? out : null;
     }
 
     // ------------------------------------------------------------------------
@@ -7996,42 +8036,70 @@ ${err.message}
     // ============================================================================
     async function scanInbodyImageWithTesseract(file) {
       try {
-        // Primary: Top 78% of sheet ONLY — excludes bottom "신체변화(Body Composition History)"
-        // line chart so old historical weights/body-fat never pollute today's measurement!
-        let mainTarget = file;
+        let merged = {
+          isRunning: false, hasWeightKeywords: true, source: '인바디',
+          weight: null, fat: null, bmi: null, score: null, skeletalMuscle: null, fatMass: null, bmr: null
+        };
+        let combinedText = '';
+
+        // 1) Zone 1 FIRST: 체성분분석 표 (top-left, NO 적정체중, NO bar-chart axis ticks!)
         try {
-          mainTarget = await cropImageBlob(file, 0.0, 0.0, 1.0, 0.78, 1.5);
-        } catch (e) { mainTarget = file; }
+          const z1Blob = await cropImageBlob(file, 0.02, 0.11, 0.61, 0.17, 2.2);
+          const z1Res = await Tesseract.recognize(z1Blob, 'kor+eng');
+          const z1Text = z1Res.data.text || '';
+          combinedText += '--- ZONE [체성분분석] ---\n' + z1Text;
+          const comp = parseInbodyCompositionTable(z1Text);
+          if (comp) {
+            if (comp.weight !== null) merged.weight = comp.weight;
+            if (comp.fatMass !== null) merged.fatMass = comp.fatMass;
+            if (comp.fat !== null) merged.fat = comp.fat;
+          }
+          const z1Parsed = parseHealthImageText(z1Text, '', '', '', '', z1Res.data.words || null);
+          merged = mergeParsed(merged, z1Parsed);
+        } catch (e) { console.warn('Zone 1 OCR skipped:', e); }
 
-        const fullRes = await Tesseract.recognize(mainTarget, 'kor+eng');
-        const fullText = fullRes.data.text || "";
-        const fullWords = fullRes.data.words || null;
-        let merged = parseHealthImageText(fullText, '', '', '', '', fullWords);
-        let combinedText = fullText;
+        // 2) Zone 2: 골격근·지방분석 + 비만분석 (skeletalMuscle, BMI, fat cross-check)
+        try {
+          const z2Blob = await cropImageBlob(file, 0.02, 0.28, 0.61, 0.28, 2.2);
+          const z2Res = await Tesseract.recognize(z2Blob, 'kor+eng');
+          const z2Text = z2Res.data.text || '';
+          combinedText += '\n--- ZONE [골격근·비만분석] ---\n' + z2Text;
+          const z2Parsed = parseHealthImageText(z2Text, '', '', '', '', z2Res.data.words || null);
+          if (merged.skeletalMuscle === null && z2Parsed.skeletalMuscle !== null) merged.skeletalMuscle = z2Parsed.skeletalMuscle;
+          if (merged.bmi === null && z2Parsed.bmi !== null) merged.bmi = z2Parsed.bmi;
+          if (merged.weight === null && z2Parsed.weight !== null) merged.weight = z2Parsed.weight;
+          if (merged.fat === null && z2Parsed.fat !== null) merged.fat = z2Parsed.fat;
+        } catch (e) { console.warn('Zone 2 OCR skipped:', e); }
 
-        // Targeted 3-zone 2x upscale crops for Korean InBody270/370/570/770 layout:
-        //   Zone 1: 체성분분석 표 (체수분/단백질/무기질/체지방량/체중)
-        //   Zone 2: 골격근·지방분석 + 비만분석 (체중/골격근량/체지방량/BMI/체지방률%)
-        //   Zone 3: 인바디점수 + 내장지방 + 연구항목(기초대사량)
-        const zones = [
-          { name: '체성분분석', x: 0.02, y: 0.12, w: 0.59, h: 0.17 },
-          { name: '골격근·비만분석', x: 0.02, y: 0.28, w: 0.61, h: 0.28 },
-          { name: '인바디점수·연구항목', x: 0.62, y: 0.12, w: 0.36, h: 0.46 }
-        ];
-        for (const z of zones) {
-          // Skip extra zones if core fields are already populated
-          if (merged.weight !== null && merged.fat !== null && merged.skeletalMuscle !== null && merged.score !== null && merged.bmr !== null) break;
-          try {
-            const cropBlob = await cropImageBlob(file, z.x, z.y, z.w, z.h, 2);
-            const cropRes = await Tesseract.recognize(cropBlob, 'kor+eng');
-            const cropText = cropRes.data.text || "";
-            if (cropText.trim().length >= 6) {
-              const cropParsed = parseHealthImageText(cropText, '', '', '', '', cropRes.data.words || null);
-              merged = mergeParsed(merged, cropParsed);
-              combinedText += `\n--- ZONE [${z.name}] ---\n` + cropText;
+        // 3) Zone 3: 인바디점수 + 연구항목 (score, bmr) — NEVER overwrite weight from 적정체중 here!
+        try {
+          const z3Blob = await cropImageBlob(file, 0.62, 0.11, 0.37, 0.47, 2.0);
+          const z3Res = await Tesseract.recognize(z3Blob, 'kor+eng');
+          const z3Text = z3Res.data.text || '';
+          combinedText += '\n--- ZONE [인바디점수·연구항목] ---\n' + z3Text;
+          const z3Parsed = parseHealthImageText(z3Text, '', '', '', '', z3Res.data.words || null);
+          if (merged.score === null && z3Parsed.score !== null) merged.score = z3Parsed.score;
+          if (merged.bmr === null && z3Parsed.bmr !== null) merged.bmr = z3Parsed.bmr;
+        } catch (e) { console.warn('Zone 3 OCR skipped:', e); }
+
+        // 4) Fallback full top-78% scan if non-InBody270 screenshot (e.g. Samsung Health app)
+        if (merged.weight === null || (merged.fat === null && merged.score === null && merged.skeletalMuscle === null)) {
+          let mainTarget = file;
+          try { mainTarget = await cropImageBlob(file, 0.0, 0.0, 1.0, 0.78, 1.5); } catch (e) {}
+          const fullRes = await Tesseract.recognize(mainTarget, 'kor+eng');
+          const fullText = fullRes.data.text || '';
+          combinedText += '\n--- FULL PASS ---\n' + fullText;
+          const fullParsed = parseHealthImageText(fullText, '', '', '', '', fullRes.data.words || null);
+          merged = mergeParsed(merged, fullParsed);
+        }
+
+        // Final consistency: if weight + fatMass exist, trust fatMass/weight*100 over noisy bar-axis ticks
+        if (merged.weight && merged.fatMass) {
+          const expectedFat = Math.round((merged.fatMass / merged.weight) * 1000) / 10;
+          if (expectedFat >= 4 && expectedFat <= 60) {
+            if (merged.fat === null || Math.abs(merged.fat - expectedFat) > 4.0) {
+              merged.fat = expectedFat;
             }
-          } catch (cropErr) {
-            console.warn(`InBody zone [${z.name}] OCR skipped:`, cropErr);
           }
         }
 
@@ -8039,14 +8107,13 @@ ${err.message}
           return { parsed: merged, text: combinedText };
         }
 
-        // Final fallback: preprocessed contrast scan
         const processedBlob = await preprocessOcrImage(file);
         const res2 = await Tesseract.recognize(processedBlob, 'kor+eng');
-        const text2 = res2.data.text || "";
+        const text2 = res2.data.text || '';
         const parsed2 = parseHealthImageText(text2);
-        return { parsed: mergeParsed(merged, parsed2), text: text2 + "\n--- RAW PASS ---\n" + combinedText };
+        return { parsed: mergeParsed(merged, parsed2), text: text2 + '\n--- RAW PASS ---\n' + combinedText };
       } catch (err) {
-        console.error("InBody OCR error:", err);
+        console.error('InBody OCR error:', err);
         return { parsed: {}, text: '' };
       }
     }
@@ -8101,7 +8168,7 @@ ${err.message}
 
     function parseHealthImageText(rawText, topText = '', leftText = '', rightText = '', midText = '', words = null) {
       // Word-box anchoring takes priority when coordinates are available (dense tables).
-      const anchoredWeight = extractRowAnchoredNumber(words, ['체중', '몸무게', 'weight']);
+      const anchoredWeight = extractRowAnchoredNumber(words, ['체중', '몸무게', 'weight'], ['적정', '표준', '조절', '목표']);
       const anchoredMuscle = extractRowAnchoredNumber(words, ['골격근량']);
       const anchoredFat = extractRowAnchoredNumber(words, ['체지방률', '체지방율']);
       const anchoredBmi = extractRowAnchoredNumber(words, ['bmi']);
@@ -8453,28 +8520,35 @@ ${err.message}
       // =========================================================================
       // 9. BODY FAT PERCENTAGE (%) & SKELETAL MUSCLE (kg)
       // =========================================================================
-      // Fat % (체지방률) - strictly distinguish % from kg (체지방량)
-      // InBody sheet layout: "체지방률 (%) 32.6" (the % can appear BEFORE the number!)
-      const fatPctExplicit = cleanCurrent.match(/(?:체지방률|체지방율|PBF)[^\d]{0,14}([1-5]?\d(?:\.\d)?)\b/i)
-        || cleanCurrent.match(/([1-5]?\d\.\d)\s*%/);
+      // Strip InBody bar-chart axis tick runs & 적정체중 lines so regexes never read axis ticks (e.g. 50.0, 70 80 90...)
+      const noAxisText = cleanCurrent
+        .replace(/(?:적정체중|표준체중|체중조절|지방조절|근육조절)[^\n]*/g, ' ')
+        .replace(/0\.0\s+5\.0\s+10\.0[\s\d.]+/g, ' ')
+        .replace(/10\.0\s+15\.0\s+18\.5[\s\d.]+/g, ' ')
+        .replace(/55\s+70\s+85\s+100[\s\d.%]+/g, ' ')
+        .replace(/70\s+80\s+90\s+100[\s\d.%]+/g, ' ')
+        .replace(/40\s+60\s+80\s+100[\s\d.%]+/g, ' ');
+
+      // Fat % (체지방률) - prefer decimal values (e.g. 31.8) and skip bare axis multiples like 50.0
+      const fatPctExplicit = noAxisText.match(/(?:체지방률|체지방율|PBF)[\s\S]{0,40}?\b([1-5]\d\.\d)\b/i)
+        || noAxisText.match(/([1-5]\d\.\d)\s*%/);
       if (fatPctExplicit) {
         let fv = parseFloat(fatPctExplicit[1]);
-        if (fv > 100) fv = Math.round(fv) / 10.0;
-        if (fv >= 4.0 && fv <= 58.0) fat = fv;
+        if (fv >= 4.0 && fv <= 58.0 && fv !== 50.0) fat = fv;
       } else {
-        const fatFallback = cleanCurrent.match(/(?:체지방)[^\d]*([1-5]?\d(?:\.\d)?)\s*(?:%)/i);
+        const fatFallback = noAxisText.match(/(?:체지방)[^\d]*([1-5]?\d(?:\.\d)?)\s*(?:%)/i);
         if (fatFallback) {
           let fv = parseFloat(fatFallback[1]);
-          if (fv > 100) fv = Math.round(fv) / 10.0;
-          if (fv >= 4.0 && fv <= 58.0) fat = fv;
+          if (fv >= 4.0 && fv <= 58.0 && fv !== 50.0) fat = fv;
         }
       }
 
-      // Skeletal Muscle (골격근량)
-      const smmMatch = cleanCurrent.match(/골격근량[^\d\n]*(\d{1,2}(?:\.\d)?)\s*(?:[(（]|\b)/i)
-        || cleanCurrent.match(/골격근량[\s\S]{0,25}?\b([1-4]\d?(?:\.\d)?)\b/i);
+      // Skeletal Muscle (골격근량) - look for realistic decimal (12.0~55.0) after label, skipping integer bar ticks (70~170)
+      const smmMatch = noAxisText.match(/(?:골격근량|Skeletal\s*Muscle)[\s\S]{0,70}?\b([1-5]\d\.\d)\b/i)
+        || noAxisText.match(/골격근량[^\d\n]*([1-5]\d(?:\.\d)?)\b/i);
       if (smmMatch) {
-        skeletalMuscle = parseFloat(smmMatch[1]);
+        const sv = parseFloat(smmMatch[1]);
+        if (sv >= 10 && sv <= 58) skeletalMuscle = sv;
       }
 
       // InBody Score
