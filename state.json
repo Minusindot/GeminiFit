@@ -1,60 +1,41 @@
 {
-  "updatedAt": "2026-11-19T14:51:45.293Z",
-  "lastActiveDate": "2026-11-19",
+  "updatedAt": "2026-11-19T15:22:49.821Z",
+  "lastActiveDate": "2026-11-20",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 14,
-  "bondExp": 15,
+  "bondExp": 25,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
   "currentSituation": "ev3",
   "absDone": false,
-  "runDone": true,
+  "runDone": false,
   "runDist": 1.2,
   "rehab": [
-    true
+    false
   ],
   "rehabSets": 1,
   "meals": [
-    true,
-    true,
+    false,
+    false,
     false
   ],
-  "mealLogs": [
-    {
-      "id": "meal-1795092565559",
-      "slot": "점심",
-      "time": "12:48",
-      "name": "사과 계란",
-      "kcal": 0,
-      "protein": 0,
-      "tag": "클린"
-    },
-    {
-      "id": "meal-1795092601787",
-      "slot": "저녁",
-      "time": "16:49",
-      "name": "에프 오야꼬동",
-      "kcal": 0,
-      "protein": 0,
-      "tag": "단백질"
-    }
-  ],
+  "mealLogs": [],
   "teaLog": {
+    "water": 0,
     "matcha": 0,
-    "espresso": 1,
-    "tea": 1,
-    "water": 3
+    "espresso": 0,
+    "tea": 0
   },
   "gymRoutine": {
     "upper1": {
       "name": "사이드 레터럴 레이즈",
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "weight": "4kg × 20회",
       "reps": 20,
@@ -63,10 +44,10 @@
     "upper2": {
       "name": "로우 머신",
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "weight": "20kg × 4회",
       "reps": 20,
@@ -75,10 +56,10 @@
     "lower": {
       "name": "시티드 레그 프레스",
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "weight": "45kg 20회",
       "reps": 20,
@@ -87,7 +68,7 @@
     "legRaise": {
       "name": "캡틴스 체어 레그레이즈",
       "sets": [
-        true
+        false
       ],
       "target": "15회",
       "reps": 50,
@@ -96,14 +77,14 @@
     "crunch": {
       "name": "크런치",
       "sets": [
-        true,
-        true
+        false,
+        false
       ],
       "target": "20회",
       "reps": 50,
       "targetSets": 2
     },
-    "allDone": true
+    "allDone": false
   },
   "gymHistory": [
     {
@@ -297,8 +278,8 @@
     }
   ],
   "kotonoha": {
-    "coins": 1915,
-    "kotodama": 837,
+    "coins": 1930,
+    "kotodama": 847,
     "streak": 4,
     "lastStudyDate": "2026-11-18",
     "completedLessons": [
@@ -311,8 +292,8 @@
     "activeLessonIdx": 3,
     "showPron": true,
     "quizStats": {
-      "total": 49,
-      "correct": 48,
+      "total": 50,
+      "correct": 49,
       "wrongWords": [
         "傘"
       ]
