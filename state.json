@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-19T12:48:36.819Z",
+  "updatedAt": "2026-11-19T12:49:25.562Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 11,
-  "bondExp": 0,
+  "bondExp": 15,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev1",
@@ -17,11 +17,21 @@
   ],
   "rehabSets": 1,
   "meals": [
-    false,
     true,
-    true
+    false,
+    false
   ],
-  "mealLogs": [],
+  "mealLogs": [
+    {
+      "id": "meal-1795092565559",
+      "slot": "점심",
+      "time": "12:48",
+      "name": "사과 계란",
+      "kcal": 0,
+      "protein": 0,
+      "tag": "클린"
+    }
+  ],
   "teaLog": {
     "matcha": 0,
     "espresso": 1,
