@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-19T14:48:58.327Z",
+  "updatedAt": "2026-11-19T14:49:31.150Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
-  "bondRank": 13,
-  "bondExp": 75,
+  "bondRank": 14,
+  "bondExp": 0,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev3",
@@ -325,7 +325,8 @@
     "k2": true,
     "m1": true,
     "d1": true,
-    "k7": true
+    "k7": true,
+    "m6": true
   },
   "questClaims": {},
   "latestInbody": null,
@@ -792,52 +793,6 @@
   },
   "chatHistory": [
     {
-      "sender": "mio",
-      "name": "미오",
-      "text": "수분 보충 나이스!! 오늘 벌써 물 2잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "수분 보충 나이스!! 오늘 벌써 물 3잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
-    },
-    {
-      "sender": "dual",
-      "name": "제미니 · 코토네 · 미오",
-      "text": "⚡ [오후 09:50 실시간 기록 동기화 완료!]\n\n💛 코토네: \"2끼 식사 기록 확인 완료! 💛 16:30 마감까지 이 기세로 예쁘게 달려봐요 프로듀서님~\"\n\n🌟 미오: \"6.01km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 완주라니 참으로 훌륭하옵니다! 🌸 근성 하나는 정말 멋지시와요, 프로듀서님 🐾\"",
-      "room": "all"
-    },
-    {
-      "sender": "system",
-      "name": "새 대화",
-      "text": "🔄 오후 09:50 기록 동기화 · 새 대화 시작",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "프로듀서님, 오늘 식단 2/3끼 인증 확인했어요~! 💛 (현재 65.4kg)",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "이전 기록(66.4kg)보다 1.0kg 감량한 거 진심으로 축하해요! 🎉",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "오늘은 아직 단백질 음료 기록이 비어 있네요! 근손실 방지를 위해 한 잔 꼭 챙겨요 🥛 17시 마감까지 코토네가 같이 챙겨드릴게요! ☕",
-      "room": "kotone",
-      "image": "./image/02 kotone/kotone_39_salad_bowl_fork_smile.png",
-      "caption": "📷 코토네 · 오늘의 클린 식단 응원"
-    },
-    {
       "sender": "system",
       "name": "에피소드",
       "text": "🎬 🥛 식단 & 단백질 긴급 검문 톡!",
@@ -960,6 +915,56 @@
       "sender": "mio",
       "name": "미오",
       "text": "지금은 다리 힘 쭉 빼고 물 한 잔 마시면서 천천히 쉬어~ 💧",
+      "room": "mio"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 🏃‍♀️ 러닝 완주 리포트 & 쿨다운",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "프로듀서!! 러닝 기록 올라온 거 봤어! 최근 1.2km (페이스 스텝밀), 이번 주 러닝 3회!! 🌟",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "나도 방금 트랙 뛰고 잔디밭에 누워서 하늘 보는 중이야~ 땀 식는 바람이 진짜 최고다! 🍃",
+      "room": "mio",
+      "image": "./image/01 mio/mio_40_post_run_grass_lie_down.png",
+      "caption": "📷 미오가 보낸 사진 · 러닝 후 잔디밭 쿨다운"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "달리고 나서 바로 앉지 말고 5분만 걸으면서 심박수 천천히 내려줘! 그리고 물이랑 오늘 단백질 음료 1잔 야무지게 챙겨 마신 거 확인했어요! 기특해요 🥛✨",
+      "room": "mio"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "종아리랑 발목이 좀 뻐근해 🦵",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "그럼 오늘은 무조건 스트레칭 + 폼롤러 데이야! 벽 밀면서 종아리 30초씩 좌우 3세트!",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "안 다쳐야 다음 주에도 신나게 뛰지! 미오가 꼼꼼하게 체크할게 🌟",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "프로듀서의 발걸음이 쌓여서 결국 목표를 뚫는 거야! 다음 러닝도 같이 가자! 🌟",
       "room": "mio"
     }
   ]
