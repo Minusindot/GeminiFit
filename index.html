@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.04</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.05</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -1413,7 +1413,7 @@
               <span class="text-[9px] text-pink-500 font-bold block">매일 달라지는 메뉴 기록 · 사진 AI 추정 · Gemini 상담 복사</span>
             </div>
           </div>
-          <button onclick="copyDietConsultPrompt()" class="shrink-0 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-[10px] font-black shadow-xs hover:opacity-95 active:scale-95 transition-all" title="오늘 식단·운동·체중을 Gemini 식단 상담용 텍스트로 복사">
+          <button onclick="openConsultCopyModal(7)" class="shrink-0 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-[10px] font-black shadow-xs hover:opacity-95 active:scale-95 transition-all" title="지난 7일(기간 조절 가능) 식단·운동·신체 기록을 Gemini 코칭용으로 정리 복사">
             📋 Gemini 상담 복사
           </button>
         </div>
@@ -6362,11 +6362,148 @@
       ];
     }
 
-    function openSyncTalkConversation(room, key) {
+    let syncTalkGen = 0;
+
+    function buildSyncQuickReplies(room, key) {
+      const ctx = buildTalkContext();
+      if (room === 'mio') {
+        return [
+          {
+            label: '오늘 꽤 힘들었는데 끝까지 해냈어! 😮‍💨',
+            replies: [
+              { text: `그 마지막 한 걸음이 진짜 실력 되는 거 알지?! 오늘 ${ctx.runDist} 완전 리스펙이야! 🌟` },
+              { text: '지금은 다리 힘 쭉 빼고 물 한 잔 마시면서 천천히 쉬어~ 💧' }
+            ]
+          },
+          {
+            label: '단백질 챙기고 푹 쉴게! 🥛',
+            replies: [
+              { text: `완벽한 마무리!! ${ctx.proteinStatus}` },
+              { text: '푹 자고 나면 내일 컨디션 120%로 돌아올 거야! 하이파이브~! 🖐️' }
+            ]
+          },
+          {
+            label: '다음 운동은 뭐에 집중하면 좋을까? 🤔',
+            replies: [
+              { text: `이번 주 헬스 ${ctx.gymCountWeek}회 · 러닝 ${ctx.runCountWeek}회 페이스 좋으니까, 다음엔 무리 없이 30분 조깅이나 코어 위주로 가보자!` },
+              { text: '미오가 언제든 페이스 맞춰줄게! 🏃‍♀️💨' }
+            ]
+          }
+        ];
+      }
+      if (room === 'kotone') {
+        return [
+          {
+            label: '단백질 꼭 챙겨 먹을게 약속! 🥛',
+            replies: [
+              { text: '헤헤~ 새끼손가락 걸었어요! 💛 단백질 챙기면 배도 덜 고프고 근육도 지켜진다구요~' },
+              { text: `현재 ${ctx.weight}에서 목표까지 ${ctx.targetLeft}, 코토네가 끝까지 응원할게요! ✨` }
+            ]
+          },
+          {
+            label: '오늘 식단 어땠어? 잘 맞춘 거 같아? 🍱',
+            replies: [
+              { text: `오늘 식단 기록 ${ctx.mealsDone}! 기록을 남기는 순간부터 이미 반은 성공이에요~ 💛` },
+              { text: '17시 단식 마감만 깔끔하게 지키면 내일 아침 체중계가 웃어줄 거예요! ☕' }
+            ]
+          },
+          {
+            label: '조금 배고픈데 뭐 마실까? 🍵',
+            replies: [
+              { text: '따뜻한 말차나 물 한 잔 천천히 마셔보세요! 10분만 지나면 가짜 배고픔이 싹 사라진대요~ 💧' },
+              { text: '코토네랑 수다 떨면서 같이 버텨봐요! 💛' }
+            ]
+          }
+        ];
+      }
+      return [
+        {
+          label: '오늘 진짜 땀 뺐어, 고생했지? 💪',
+          replies: [
+            { text: `어머나, ${ctx.gymExercises} (${ctx.gymTotalSets}세트) 완주하신 거 소녀가 다 지켜보았사옵니다 🌸` },
+            { text: `자극 들어간 ${ctx.targetMuscles} 부위 뭉치지 않게 어깨부터 천천히 풀어주시와요 🍵` }
+          ]
+        },
+        {
+          label: '단백질 챙기고 재활도 마무리할게 🥛',
+          replies: [
+            { text: `우후후, 그 말씀이 제일 듣기 좋사옵니다! 현재 재활은 [${ctx.rehabStatus}] 상태라지요.` },
+            { text: '무리하지 않고 꾸준히 이어가는 프로듀서항, 참으로 기특하시와요 🐾' }
+          ]
+        },
+        {
+          label: '내일은 어떤 루틴으로 갈까? 🤔',
+          replies: [
+            { text: `현재 ${ctx.weight}(${ctx.fat}) — 이번 주 헬스 ${ctx.gymCountWeek}회, 러닝 ${ctx.runCountWeek}회 흐름이 아주 좋사옵니다.` },
+            { text: '내일은 피로도 보면서 가벼운 유산소나 안 쓴 부위 위주로 정갈하게 잡아보시지요 🌸' }
+          ]
+        }
+      ];
+    }
+
+    function renderSyncEpisodeBridge(room, key) {
+      const recEp = pickRecommendedEpisode(room, key);
+      const dualRec = pickRecommendedEpisode('dual', key);
+      const ch = document.getElementById('choicesContainer');
+      if (!ch || !recEp) return;
+      ch.innerHTML = `
+        <div class="rounded-xl bg-gradient-to-r from-pink-500/10 via-sky-500/10 to-amber-500/10 border border-sky-400/40 p-2.5 space-y-1.5">
+          <div class="text-[10px] font-black text-sky-600 dark:text-sky-300">✨ 이어서 나눌 추천 트레이닝 톡</div>
+          <button onclick="startTrainerEpisode('${room}', '${recEp.id}')" class="w-full flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400 text-left shadow-xs active:scale-[0.99] transition-all">
+            <span class="min-w-0">
+              <span class="block text-[11px] font-black text-slate-800 dark:text-slate-100 truncate">${recEp.icon || '🎬'} ${recEp.title}</span>
+              <span class="block text-[9px] font-bold text-slate-400 truncate">${recEp.sub || ''}</span>
+            </span>
+            <span class="shrink-0 px-2 py-0.5 rounded-full bg-sky-500 text-white text-[9px] font-black">바로 시작 ▶</span>
+          </button>
+          ${dualRec ? `<button onclick="enterTrainerRoom('dual', true); setTimeout(() => startTrainerEpisode('dual', '${dualRec.id}'), 200)" class="w-full text-left px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 hover:border-purple-400 text-[10px] font-bold text-slate-600 dark:text-slate-300 transition-all">💬 3인 단톡으로 이동: ${dualRec.icon || ''} ${dualRec.title}</button>` : ''}
+        </div>`;
+    }
+
+    let pendingSyncReplies = [];
+    async function pickSyncQuickReply(idx, room, key) {
+      const item = pendingSyncReplies[idx];
+      if (!item) return;
+      const myGen = ++syncTalkGen;
+      const ch = document.getElementById('choicesContainer');
+      if (ch) ch.innerHTML = '';
+
+      state.chatHistory.push({ room, sender: 'user', name: '프로듀서', text: item.label, time: getKakaoTimeStr() });
+      renderChat();
+      scrollChatToBottom();
+      playBeep(520, 0.05);
+
+      const name = SYNC_TRAINER_NAMES[room] || '제미니';
+      for (const r of (item.replies || [])) {
+        if (syncTalkGen !== myGen) return;
+        activeTypingIndicator = { sender: room, name };
+        renderChat();
+        scrollChatToBottom();
+        await vnSleep(680 + Math.random() * 320);
+        if (syncTalkGen !== myGen) return;
+        activeTypingIndicator = null;
+        state.chatHistory.push({ room, sender: room, name, text: r.text, time: getKakaoTimeStr() });
+        renderChat();
+        scrollChatToBottom();
+        playBeep(660 + Math.floor(Math.random() * 120), 0.04);
+      }
+
+      addBondExp(10);
+      saveState(true);
+      updateRoomHead(room);
+      renderThreadList();
+      if (syncTalkGen === myGen) renderSyncEpisodeBridge(room, key);
+    }
+
+    async function openSyncTalkConversation(room, key) {
+      const myGen = ++syncTalkGen;
       startFreshSyncConversation(room);
       messengerUnlocked = true;
       switchMainTab('talk');
       enterTrainerRoom(room, true);
+
+      const ch = document.getElementById('choicesContainer');
+      if (ch) ch.innerHTML = '';
 
       const curTime = getKakaoTimeStr();
       const name = SYNC_TRAINER_NAMES[room] || '제미니';
@@ -6375,42 +6512,52 @@
         text: `🔄 ${curTime} 기록 동기화 · 새 대화 시작`,
         time: curTime
       });
-      buildSyncTalkOpener(room, key).forEach(entry => {
+      renderChat();
+      scrollChatToBottom();
+
+      // Natural KakaoTalk-style staggered typing instead of dumping 3 bubbles at once!
+      const openerLines = buildSyncTalkOpener(room, key);
+      for (let i = 0; i < openerLines.length; i++) {
+        if (syncTalkGen !== myGen) return room;
+        activeTypingIndicator = { sender: room, name };
+        renderChat();
+        scrollChatToBottom();
+        await vnSleep(i === 0 ? 550 : 780 + Math.random() * 350);
+        if (syncTalkGen !== myGen) return room;
+        activeTypingIndicator = null;
+
+        const entry = openerLines[i];
         const msg = typeof entry === 'string' ? { text: entry } : entry;
         state.chatHistory.push({
           room, sender: room, name,
           text: msg.text,
           ...(msg.image ? { image: msg.image } : {}),
           ...(msg.caption ? { caption: msg.caption } : {}),
-          time: curTime
+          time: getKakaoTimeStr()
         });
-      });
+        renderChat();
+        scrollChatToBottom();
+        playBeep(620 + i * 70, 0.045);
+      }
 
       saveState(true);
-      renderChat();
-      scrollChatToBottom();
       updateRoomHead(room);
       renderThreadList();
 
-      // Natural post-workout -> Training Talk bridge button!
-      const recEp = pickRecommendedEpisode(room, key);
-      const dualRec = pickRecommendedEpisode('dual', key);
-      const ch = document.getElementById('choicesContainer');
-      if (ch && recEp) {
+      // Interactive quick-reply chips so the user actually chats back!
+      if (syncTalkGen === myGen && ch) {
+        pendingSyncReplies = buildSyncQuickReplies(room, key);
+        const recEp = pickRecommendedEpisode(room, key);
         ch.innerHTML = `
-          <div class="rounded-xl bg-gradient-to-r from-pink-500/10 via-sky-500/10 to-amber-500/10 border border-sky-400/40 p-2.5 space-y-1.5">
-            <div class="text-[10px] font-black text-sky-600 dark:text-sky-300">✨ 운동 완료! 이어서 나눌 추천 트레이닝 톡</div>
-            <button onclick="startTrainerEpisode('${room}', '${recEp.id}')" class="w-full flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400 text-left shadow-xs active:scale-[0.99] transition-all">
-              <span class="min-w-0">
-                <span class="block text-[11px] font-black text-slate-800 dark:text-slate-100 truncate">${recEp.icon || '🎬'} ${recEp.title}</span>
-                <span class="block text-[9px] font-bold text-slate-400 truncate">${recEp.sub || ''}</span>
-              </span>
-              <span class="shrink-0 px-2 py-0.5 rounded-full bg-sky-500 text-white text-[9px] font-black">바로 시작 ▶</span>
-            </button>
-            ${dualRec ? `<button onclick="enterTrainerRoom('dual', true); setTimeout(() => startTrainerEpisode('dual', '${dualRec.id}'), 200)" class="w-full text-left px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 hover:border-purple-400 text-[10px] font-bold text-slate-600 dark:text-slate-300 transition-all">💬 3인 단톡으로 이동: ${dualRec.icon || ''} ${dualRec.title}</button>` : ''}
+          <div class="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2.5 space-y-1.5">
+            <div class="text-[10px] font-black text-slate-500 dark:text-slate-400">💬 ${name}에게 답장하기</div>
+            ${pendingSyncReplies.map((r, idx) => `
+              <button onclick="pickSyncQuickReply(${idx}, '${room}', '${key}')" class="w-full text-left px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-400 text-[11px] font-bold text-slate-700 dark:text-slate-200 active:scale-[0.99] transition-all">${r.label}</button>
+            `).join('')}
+            ${recEp ? `<button onclick="startTrainerEpisode('${room}', '${recEp.id}')" class="w-full text-center px-3 py-1.5 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-300 text-[10px] font-black hover:bg-sky-500/20 transition-all">🎬 바로 추천 톡 보기: ${recEp.icon || ''} ${recEp.title}</button>` : ''}
           </div>`;
+        scrollChatToBottom();
       }
-      playBeep(880, 0.08);
       return room;
     }
 
@@ -7367,33 +7514,174 @@ ${err.message}
       }).join('');
     }
 
-    function copyDietConsultPrompt() {
+    let consultRangeDays = 7;
+
+    function buildComprehensiveConsultPrompt(startStr, endStr) {
+      const todayStr = getLocalDateString();
       const ctx = buildTalkContext();
+      const ib = state.latestInbody || state.latestInBody || {};
+      const t = state.teaLog || {};
+
+      // 1. Body & InBody trend within range (plus latest 2 for delta)
+      const allIb = Array.isArray(state.inbodyHistory) ? state.inbodyHistory : [];
+      const rangeIb = allIb.filter(h => h && h.date >= startStr && h.date <= endStr);
+      const ibLines = (rangeIb.length ? rangeIb : allIb.slice(-3)).map(h =>
+        `  - ${h.date}: 체중 ${h.weight}kg / 골격근 ${h.skeletalMuscle ?? '-'}kg / 체지방률 ${h.fat ?? '-'}%`
+      );
+
+      // 2. Gym sessions in range
+      const gymInRange = (state.gymHistory || []).filter(g => g && g.fullDate >= startStr && g.fullDate <= endStr);
+      const gymLines = gymInRange.map(g => {
+        const names = [g.upper1Name, g.upper2Name, g.lowerName].filter(Boolean).join('·') || '근력 루틴';
+        return `  - ${g.fullDate}: ${names} (${g.totalSets || 0}세트 · ${g.totalReps || 0}회)`;
+      });
+      if (todayStr >= startStr && todayStr <= endStr && isGymRoutineDone(state.gymRoutine) && !gymInRange.some(g => g.fullDate === todayStr)) {
+        gymLines.push(`  - ${todayStr} (오늘): ${ctx.gymExercises} (${ctx.gymTotalSets}세트 · ${ctx.gymTotalReps}회)`);
+      }
+
+      // 3. Running sessions in range
+      const runInRange = (state.runningLogs || []).filter(r => r && r.date >= startStr && r.date <= endStr);
+      const totalRunKm = runInRange.reduce((s, r) => s + (Number(r.distance) || 0), 0);
+      const runLines = runInRange.map(r =>
+        `  - ${r.date}: ${r.distance}km (${r.duration || '-'}, 페이스 ${r.pace || '-'}, 심박 ${r.heartRate || '-'}bpm, ${r.calories || '-'}kcal)`
+      );
+
+      // 4. Daily logs (meals, hydration, weight) in range
+      const dl = state.dailyLogs || {};
+      const dayKeys = Object.keys(dl).filter(d => d >= startStr && d <= endStr).sort();
+      const daySummaryLines = dayKeys.map(d => {
+        const x = dl[d] || {};
+        const tl = x.teaLog || {};
+        const flags = [
+          x.gymDone ? '헬스✓' : '',
+          x.runDone ? '러닝✓' : '',
+          x.absDone ? '복근✓' : '',
+          (x.rehabDone || 0) > 0 ? '재활✓' : ''
+        ].filter(Boolean).join(' ') || '휴식';
+        return `  - ${d}: ${x.weight || '-'}kg / 식단 ${x.mealsDone || 0}회 / 물${tl.water || 0}·말차${tl.matcha || 0}·커피${tl.espresso || 0}·단백질${tl.tea || 0} / [${flags}]`;
+      });
+
+      // 5. Today's detailed meal timeline
       const logs = getMealLogs();
       const totalKcal = logs.reduce((s, m) => s + (Number(m.kcal) || 0), 0);
       const totalPro = logs.reduce((s, m) => s + (Number(m.protein) || 0), 0);
-      const remainKcal = Math.max(0, DAILY_KCAL_GOAL - totalKcal);
-      const remainPro = Math.max(0, DAILY_PROTEIN_GOAL - totalPro);
-      const t = state.teaLog || {};
-      const mealList = logs.length
-        ? logs.map(m => `- [${m.slot || '식사'} ${m.time || ''}] ${m.name} (${m.tag})${m.kcal ? ` · ${m.kcal}kcal, P${m.protein || 0}g` : ''}`).join('\n')
-        : '- 아직 기록된 식사 없음';
-      const prompt = [
-        `[오늘 피트니스 & 식단 현황 · ${getLocalDateString()}]`,
-        `• 체중/체지방: ${ctx.weight} / ${ctx.fat} (목표까지 ${ctx.targetLeft})`,
-        `• 운동 현황: 헬스 ${ctx.gymExercises} (${ctx.gymTotalSets}세트), 최근 러닝 ${ctx.runDist}`,
-        `• 수분/음료: 물 ${t.water || 0}잔 · 말차 ${t.matcha || 0}회 · 커피 ${t.espresso || 0}회 · 단백질 음료 ${t.tea || 0}회`,
-        `• 오늘 식단 (${logs.length}건 · 총 ${totalKcal}kcal / 단백질 ${totalPro}g):`,
-        mealList,
-        `• 남은 목표: 약 ${remainKcal}kcal / 단백질 ${remainPro}g (17:00 단식 마감 기준)`,
-        '',
-        '위 현황 기준으로 다음 끼니 메뉴와 양을 딱 맞게 추천해줘!'
-      ].join('\n');
+      const mealDetailLines = logs.length
+        ? logs.map(m => `  - [${m.slot || '식사'} ${m.time || ''}] ${m.name} (${m.tag})${m.kcal ? ` · ${m.kcal}kcal, P${m.protein || 0}g` : ''}`)
+        : ['  - 오늘 기록된 식단 없음'];
 
-      copyTextToClipboard(prompt).then(ok => {
-        playBeep(880, 0.08);
-        showFloatingToast(ok ? '📋 Gemini 식단 상담용 현황을 복사했어요! 바로 붙여넣기 하세요' : '복사 실패 — 브라우저 권한을 확인해주세요', ok ? '📋' : '⚠️');
+      return [
+        `[GeminiFit 종합 피트니스·식단·신체 리포트 (${startStr} ~ ${endStr})]`,
+        '',
+        '1. 신체 & 인바디 현황',
+        `- 현재 체중/체지방률: ${ctx.weight} / ${ctx.fat} (적정체중 ${ib.targetWeight || 57.1}kg까지 ${ctx.targetLeft})`,
+        `- 최근 인바디(${ib.date || '-'}): 점수 ${ib.inbodyScore || ib.score || '-'}점 · 골격근 ${ib.skeletalMuscle || ib.smm || '-'}kg · 체지방량 ${ib.bodyFatMass || '-'}kg · 기초대사량 ${ib.bmr || '-'}kcal · 권장섭취 ${ib.recommendedCal || 1946}kcal`,
+        ...(ibLines.length ? ['- 인바디 추이:', ...ibLines] : []),
+        '',
+        `2. 기간 내 운동 기록 (헬스 ${gymLines.length}회 · 러닝 ${runLines.length}회 / 총 ${totalRunKm.toFixed(2)}km)`,
+        ...(gymLines.length ? ['- 헬스장 근력:', ...gymLines] : ['- 헬스장 근력: 기간 내 기록 없음']),
+        ...(runLines.length ? ['- 러닝/유산소:', ...runLines] : ['- 러닝/유산소: 기간 내 기록 없음']),
+        `- 손목 재활(테니스 엘보 관리): 오늘 ${ctx.rehabStatus}`,
+        '',
+        '3. 식단 & 수분/음료 기록',
+        `- 오늘(${todayStr}) 식단 (${logs.length}건 · ${totalKcal}kcal / 단백질 ${totalPro}g / 목표 1,600kcal·P110g):`,
+        ...mealDetailLines,
+        `- 오늘 수분/음료: 물 ${t.water || 0}잔 · 커피 ${t.espresso || 0}회 · 말차 ${t.matcha || 0}회 · 단백질 음료 ${t.tea || 0}회 (17:00 단식 마감)`,
+        ...(daySummaryLines.length ? ['- 기간 일별 요약:', ...daySummaryLines] : []),
+        '',
+        '4. Gemini 코칭 요청',
+        '위 기간 동안의 신체 변화, 운동 볼륨, 식단/단백질 섭취 흐름을 종합 분석해서:',
+        '① 잘 유지되고 있는 점 & 당장 보완할 점 2가지',
+        '② 남은 오늘 ~ 향후 며칠간의 구체적인 식단·단백질·탄수화물 조절 가이드',
+        '③ 손목 재활을 고려한 다음 헬스/러닝 루틴 추천',
+        '을 핵심 위주로 실전적으로 알려줘!'
+      ].join('\n');
+    }
+
+    function openConsultCopyModal(days = 7) {
+      consultRangeDays = days;
+      let modal = document.getElementById('consultCopyModal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'consultCopyModal';
+        modal.className = 'fixed inset-0 z-[9500] bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 hidden';
+        modal.onclick = (e) => { if (e.target === modal) modal.classList.add('hidden'); };
+        modal.innerHTML = `
+          <div class="game-card w-full max-w-md max-h-[88vh] flex flex-col overflow-hidden border-2 border-indigo-400/50 shadow-2xl p-4 space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700">
+              <div>
+                <h3 class="text-sm font-black text-slate-800 dark:text-slate-100">📋 Gemini 종합 식단·운동 상담 복사</h3>
+                <p class="text-[10px] text-slate-400 font-bold">기간을 고르면 식단·운동·신체 기록을 한 번에 정리해 드려요</p>
+              </div>
+              <button onclick="document.getElementById('consultCopyModal').classList.add('hidden')" class="w-7 h-7 rounded-lg sub-box text-xs font-black text-slate-400 hover:text-rose-500">✕</button>
+            </div>
+            <div class="flex items-center gap-1 flex-wrap">
+              <button onclick="setConsultPresetDays(1)" id="cPreset_1" class="px-2.5 py-1 rounded-full text-[10px] font-black border transition-all">오늘(1일)</button>
+              <button onclick="setConsultPresetDays(7)" id="cPreset_7" class="px-2.5 py-1 rounded-full text-[10px] font-black border transition-all">지난 7일</button>
+              <button onclick="setConsultPresetDays(14)" id="cPreset_14" class="px-2.5 py-1 rounded-full text-[10px] font-black border transition-all">지난 14일</button>
+              <button onclick="setConsultPresetDays(30)" id="cPreset_30" class="px-2.5 py-1 rounded-full text-[10px] font-black border transition-all">지난 30일</button>
+            </div>
+            <div class="flex items-center gap-1.5 text-[10px]">
+              <input type="date" id="consultStartDate" onchange="refreshConsultPreview()" class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 font-mono font-bold text-slate-700 dark:text-slate-200">
+              <span class="font-black text-slate-400">~</span>
+              <input type="date" id="consultEndDate" onchange="refreshConsultPreview()" class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 font-mono font-bold text-slate-700 dark:text-slate-200">
+            </div>
+            <textarea id="consultPreviewBox" rows="11" class="w-full flex-1 bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-[10.5px] font-mono leading-relaxed text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-400 resize-none"></textarea>
+            <div class="flex gap-2">
+              <button onclick="document.getElementById('consultCopyModal').classList.add('hidden')" class="px-4 py-2.5 rounded-xl sub-box text-xs font-black text-slate-500">닫기</button>
+              <button onclick="executeConsultCopy()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-xs font-black shadow-md active:scale-[0.99] transition-all">📋 이 내용 복사해서 Gemini에 붙여넣기</button>
+            </div>
+          </div>`;
+        document.body.appendChild(modal);
+      }
+      modal.classList.remove('hidden');
+      setConsultPresetDays(days);
+      playBeep(720, 0.05);
+    }
+
+    function setConsultPresetDays(days) {
+      consultRangeDays = days;
+      const end = new Date();
+      const start = new Date();
+      start.setDate(end.getDate() - Math.max(0, days - 1));
+      const sEl = document.getElementById('consultStartDate');
+      const eEl = document.getElementById('consultEndDate');
+      if (sEl) sEl.value = getLocalDateString(start);
+      if (eEl) eEl.value = getLocalDateString(end);
+      [1, 7, 14, 30].forEach(d => {
+        const b = document.getElementById('cPreset_' + d);
+        if (!b) return;
+        b.className = (d === days)
+          ? 'px-2.5 py-1 rounded-full text-[10px] font-black bg-indigo-500 text-white border border-indigo-500 shadow-xs transition-all'
+          : 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-all';
       });
+      refreshConsultPreview();
+    }
+
+    function refreshConsultPreview() {
+      const sEl = document.getElementById('consultStartDate');
+      const eEl = document.getElementById('consultEndDate');
+      const box = document.getElementById('consultPreviewBox');
+      if (!box) return;
+      const startStr = (sEl && sEl.value) || getLocalDateString();
+      const endStr = (eEl && eEl.value) || getLocalDateString();
+      box.value = buildComprehensiveConsultPrompt(startStr, endStr);
+    }
+
+    function executeConsultCopy() {
+      const box = document.getElementById('consultPreviewBox');
+      const text = box ? box.value : '';
+      copyTextToClipboard(text).then(ok => {
+        playBeep(880, 0.08);
+        showFloatingToast(ok ? '📋 종합 상담 리포트를 복사했어요! Gemini 채팅에 바로 붙여넣으세요' : '복사 실패 — 텍스트를 직접 선택해 복사해주세요', ok ? '📋' : '⚠️');
+        if (ok) {
+          const modal = document.getElementById('consultCopyModal');
+          if (modal) modal.classList.add('hidden');
+        }
+      });
+    }
+
+    function copyDietConsultPrompt() {
+      openConsultCopyModal(7);
     }
 
     // ============================================================================
@@ -12105,7 +12393,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.6.04 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.6.05 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
