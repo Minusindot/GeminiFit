@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-19T14:50:24.431Z",
+  "updatedAt": "2026-11-19T14:50:37.752Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 14,
-  "bondExp": 0,
+  "bondExp": 15,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
   "currentSituation": "ev3",
@@ -326,7 +326,8 @@
     "m1": true,
     "d1": true,
     "k7": true,
-    "m6": true
+    "m6": true,
+    "g15": true
   },
   "questClaims": {},
   "latestInbody": null,
@@ -794,30 +795,6 @@
   "chatHistory": [
     {
       "sender": "user",
-      "name": "프로듀서",
-      "text": "약속! 오늘 단백질 음료 꼭 챙겨 마실게 🥛",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "헤헤~ 역시 프로듀서님 최고예요! 💛 바로 음료 기록 버튼 꾹 눌러주세요!",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "단백질 20g만 챙겨도 포만감이 오래가서 야식 방어력도 2배 올라간다구요~ ✨",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "프로듀서님 근육도 지갑도 코토네가 다 지켜드릴게요! 오늘도 화이팅~ 💖",
-      "room": "kotone"
-    },
-    {
-      "sender": "user",
       "text": "[음료 기록] 단백질 음료 🥛 1잔을 챙겨 마셨어!"
     },
     {
@@ -965,6 +942,30 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "무작정 굶어서 체중만 빼면 근육이 같이 빠져서 금방 요요가 오지만, 지금처럼 근력이랑 단백질을 챙기면서 체지방률만 깎아내는 게 진짜 고수의 방식이옵니다.",
+      "room": "gemini"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "제미니가 옆에서 잔소리해 준 덕분이야 😊",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "…! 자, 잔소리라니요! 정갈한 코칭이라고 불러주시와요!",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "흥, 그래도 프로듀서항이 잘 따라와 주신 덕분에 소녀도 보람이 크옵니다 🌸",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "천천히 가도 방향이 맞으면 결국 도착하는 법이옵니다. 소녀가 끝까지 동행하겠사와요 🌸",
       "room": "gemini"
     }
   ]
