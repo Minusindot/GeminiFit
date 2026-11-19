@@ -535,8 +535,8 @@
     },
     "2026-11-11": {
       "date": "2026-11-11",
-      "weight": 64.1,
-      "fat": 21.5,
+      "weight": 66,
+      "fat": 32.5,
       "mealsDone": 0,
       "mealPhotosCount": 0,
       "runDone": true,
@@ -552,8 +552,8 @@
     },
     "2026-11-12": {
       "date": "2026-11-12",
-      "weight": 64.1,
-      "fat": 21.5,
+      "weight": 66,
+      "fat": 32.5,
       "mealsDone": 0,
       "mealPhotosCount": 0,
       "runDone": true,
@@ -569,8 +569,8 @@
     },
     "2026-11-13": {
       "date": "2026-11-13",
-      "weight": 64.1,
-      "fat": 21.5,
+      "weight": 66,
+      "fat": 32.5,
       "mealsDone": 0,
       "mealPhotosCount": 0,
       "runDone": false,
@@ -586,8 +586,8 @@
     },
     "2026-11-16": {
       "date": "2026-11-16",
-      "weight": 64.1,
-      "fat": 21.5,
+      "weight": 66,
+      "fat": 32.5,
       "mealsDone": 0,
       "mealPhotosCount": 0,
       "runDone": false,
@@ -603,8 +603,8 @@
     },
     "2026-11-17": {
       "date": "2026-11-17",
-      "weight": 64.1,
-      "fat": 21.5,
+      "weight": 66,
+      "fat": 32.5,
       "mealsDone": 0,
       "mealPhotosCount": 0,
       "runDone": false,
@@ -789,6 +789,89 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "식단 인증 확인 완료! 정성껏 챙겨 드시는 모습 너무 보기 좋아요 프로듀서님~! 💛"
+    }
+  ],
+  "latestInbody": {
+    "date": "2026-11-18",
+    "time": "19:09",
+    "device": "InBody270",
+    "weight": 66.4,
+    "fat": 31.8,
+    "skeletalMuscle": 25.2,
+    "bodyFatMass": 21.1,
+    "inbodyScore": 64,
+    "bmi": 25.6,
+    "bmr": 1349,
+    "visceralFatLevel": 8,
+    "waistHipRatio": 0.87,
+    "leanBodyMass": 45.3,
+    "bodyWater": 33.2,
+    "protein": 9,
+    "mineral": 3.14,
+    "targetWeight": 57.1,
+    "recommendedCal": 1946
+  },
+  "inbodyHistory": [
+    {
+      "date": "2026-07-01",
+      "time": "07:25",
+      "weight": 61.7,
+      "skeletalMuscle": 24.5,
+      "fat": 28.7
+    },
+    {
+      "date": "2026-08-01",
+      "time": "14:33",
+      "weight": 64.9,
+      "skeletalMuscle": 25.1,
+      "fat": 30.7
+    },
+    {
+      "date": "2026-08-05",
+      "time": "15:02",
+      "weight": 63.3,
+      "skeletalMuscle": 24.9,
+      "fat": 29.8
+    },
+    {
+      "date": "2026-10-24",
+      "time": "17:28",
+      "weight": 65.6,
+      "skeletalMuscle": 24.8,
+      "fat": 32.2
+    },
+    {
+      "date": "2026-10-29",
+      "time": "09:15",
+      "weight": 65.1,
+      "skeletalMuscle": 24.2,
+      "fat": 33.2
+    },
+    {
+      "date": "2026-11-05",
+      "time": "18:43",
+      "weight": 65.9,
+      "skeletalMuscle": 24.8,
+      "fat": 32.6
+    },
+    {
+      "date": "2026-11-11",
+      "time": "17:24",
+      "weight": 66,
+      "skeletalMuscle": 24.9,
+      "fat": 32.5
+    },
+    {
+      "date": "2026-11-18",
+      "time": "19:09",
+      "weight": 66.4,
+      "skeletalMuscle": 25.2,
+      "fat": 31.8,
+      "bodyFatMass": 21.1,
+      "inbodyScore": 64,
+      "bmr": 1349,
+      "bmi": 25.6,
+      "visceralFatLevel": 8
     }
   ]
 }

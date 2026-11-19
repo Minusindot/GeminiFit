@@ -1866,6 +1866,9 @@
           <button onclick="closeRunningModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold px-1">✕</button>
         </div>
 
+        <div id="ocrRunScanInfo" class="text-[10px] text-slate-500 font-bold leading-relaxed"></div>
+        <div id="ocrRunWarnBox" class="hidden rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 p-2.5 space-y-1 text-[11px] text-amber-700 dark:text-amber-300 font-semibold"></div>
+
         <!-- Running Metric Inputs Grid -->
         <div class="grid grid-cols-2 gap-2 text-xs">
           <div class="p-2.5 rounded-xl sub-box">
@@ -1942,6 +1945,9 @@
           <button onclick="closeOcrModal()" class="text-slate-400 hover:text-slate-600 text-base">✕</button>
         </div>
 
+        <div id="ocrScanInfo" class="text-[10px] text-slate-500 font-bold leading-relaxed"></div>
+        <div id="ocrWarnBox" class="hidden rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 p-2.5 space-y-1 text-[11px] text-amber-700 dark:text-amber-300 font-semibold"></div>
+
         <div class="space-y-3">
           <div class="sub-box p-3">
             <label class="text-[11px] font-bold text-slate-500 flex justify-between">
@@ -1970,21 +1976,21 @@
             <div>
               <label class="text-[9px] font-bold text-slate-500 block">🏆 인바디 점수</label>
               <div class="flex items-center gap-1 mt-0.5">
-                <input type="number" id="ocrScoreInput" placeholder="63" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-black font-mono">
+                <input type="number" id="ocrScoreInput" placeholder="미감지" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-black font-mono">
                 <span class="text-[10px] text-slate-400">점</span>
               </div>
             </div>
             <div>
               <label class="text-[9px] font-bold text-slate-500 block">💪 골격근량</label>
               <div class="flex items-center gap-1 mt-0.5">
-                <input type="number" id="ocrSmmInput" step="0.1" placeholder="24.8" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-black font-mono">
+                <input type="number" id="ocrSmmInput" step="0.1" placeholder="미감지" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-black font-mono">
                 <span class="text-[10px] text-slate-400">kg</span>
               </div>
             </div>
             <div>
               <label class="text-[9px] font-bold text-slate-500 block">🔥 기초대사량</label>
               <div class="flex items-center gap-1 mt-0.5">
-                <input type="number" id="ocrBmrInput" placeholder="1330" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-black font-mono">
+                <input type="number" id="ocrBmrInput" placeholder="미감지" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-xs font-black font-mono">
                 <span class="text-[9px] text-slate-400">kcal</span>
               </div>
             </div>
@@ -1995,6 +2001,8 @@
             <pre id="ocrRawText" class="mt-2 text-[10px] text-slate-500 whitespace-pre-wrap max-h-28 overflow-y-auto font-mono bg-slate-100 dark:bg-slate-900 p-2 rounded"></pre>
           </details>
         </div>
+
+        <button onclick="copyScanReport()" class="w-full py-1.5 rounded-lg text-[10px] font-bold text-slate-500 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">📋 이 스캔 결과 복사 (판독 점검용)</button>
 
         <div class="flex gap-2 pt-1">
           <button onclick="closeOcrModal()" class="flex-1 py-2.5 rounded-xl sub-box text-xs font-bold">
@@ -2009,11 +2017,12 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.3.52"></script>
-  <script src="./dialogue_pool.js?v=4.3.52"></script>
-  <script src="./trainer_episodes.js?v=4.3.52"></script>
-  <script src="./kotonoha_data.js?v=4.3.52"></script>
-  <script src="./kotonoha_engine.js?v=4.3.52"></script>
+  <script src="./weekly_reports.js?v=4.4.0"></script>
+  <script src="./dialogue_pool.js?v=4.4.0"></script>
+  <script src="./trainer_episodes.js?v=4.4.0"></script>
+  <script src="./kotonoha_data.js?v=4.4.0"></script>
+  <script src="./kotonoha_engine.js?v=4.4.0"></script>
+  <script src="./ocr_pipeline.js?v=4.4.0"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -4340,9 +4349,19 @@
       };
 
       if (remoteDate && local.lastActiveDate && remoteDate < local.lastActiveDate) {
-        // Remote copy is from a previous day: archive it, but keep today's local progress.
+        // Remote copy is from a previous day: archive it, keep today's local progress,
+        // and still merge cumulative progress (Kotonoha, episodes, InBody history).
         mergedHistory.dailyLogs[remoteDate] = buildDailySnapshot(remote, remoteDate);
-        state = { ...local, ...mergedHistory };
+        state = {
+          ...local,
+          ...mergedHistory,
+          kotonoha: mergeKotonohaProgress(local.kotonoha, remote.kotonoha),
+          trainerEpisodesDone: { ...(remote.trainerEpisodesDone || {}), ...(local.trainerEpisodesDone || {}) },
+          latestInbody: local.latestInbody || remote.latestInbody || null,
+          inbodyHistory: (local.inbodyHistory && local.inbodyHistory.length >= (remote.inbodyHistory || []).length)
+            ? local.inbodyHistory
+            : (remote.inbodyHistory || [])
+        };
       } else {
         state = {
           ...local,
@@ -4355,6 +4374,11 @@
           rehabSets: Number.isFinite(parseInt(remote.rehabSets, 10)) ? parseInt(remote.rehabSets, 10) : local.rehabSets,
           mealPhotos: (remoteDate === local.lastActiveDate) ? (local.mealPhotos || ['', '', '']) : ['', '', ''],
           kotonoha: mergeKotonohaProgress(local.kotonoha, remote.kotonoha),
+          trainerEpisodesDone: { ...(remote.trainerEpisodesDone || {}), ...(local.trainerEpisodesDone || {}) },
+          latestInbody: remote.latestInbody || local.latestInbody || null,
+          inbodyHistory: (remote.inbodyHistory && remote.inbodyHistory.length >= (local.inbodyHistory || []).length)
+            ? remote.inbodyHistory
+            : (local.inbodyHistory || []),
           webhookUrl: local.webhookUrl || remote.webhookUrl || '',
           updatedAt: remote.updatedAt || local.updatedAt
         };
@@ -4500,11 +4524,21 @@
           gymRoutine: state.gymRoutine,
           gymHistory: state.gymHistory,
           kotonoha: state.kotonoha,
+          trainerEpisodesDone: state.trainerEpisodesDone || {},
+          latestInbody: state.latestInbody || null,
+          inbodyHistory: state.inbodyHistory || [],
           latestRun: state.latestRun,
           runningLogs: state.runningLogs,
           absVideoUrl: state.absVideoUrl,
           dailyLogs: state.dailyLogs,
-          chatHistory: (state.chatHistory || []).slice(-30).map(m => ({ sender: m.sender, name: m.name, text: m.text }))
+          chatHistory: (state.chatHistory || []).slice(-30).map(m => ({
+            sender: m.sender,
+            name: m.name,
+            text: m.text,
+            ...(m.room ? { room: m.room } : {}),
+            ...(m.image && String(m.image).startsWith('./image/') ? { image: m.image } : {}),
+            ...(m.caption ? { caption: m.caption } : {})
+          }))
         };
 
         const content = utf8ToBase64(JSON.stringify(cloudPayload, null, 2));
@@ -5173,18 +5207,189 @@
       }
     }
 
-    function epSpeakerEntry(room, line, epId) {
+    // ============================================================================
+    // DYNAMIC TALK CONTEXT ENGINE (v4.4.0)
+    // Injects real workout / body / meal / protein / Japanese data into Training Talk!
+    // ============================================================================
+    function inferTargetMusclesFromNames(names) {
+      const joined = (names || []).join(' ');
+      const tags = [];
+      if (/랫|풀|로우|등|풀업|백/.test(joined)) tags.push('등');
+      if (/EZ|이두|컬|암|바이셉|삼두|트라이/.test(joined)) tags.push('팔(이두·전완)');
+      if (/어깨|레터럴|숄더|프레스|사이드/.test(joined)) tags.push('어깨');
+      if (/가슴|벤치|체스트|플라이|푸시업/.test(joined)) tags.push('가슴');
+      if (/스쿼트|레그|런지|하체|힙|데드/.test(joined)) tags.push('하체');
+      if (/크런치|레그레이즈|복근|플랭크|코어/.test(joined)) tags.push('복근·코어');
+      return tags.length ? tags.join(' · ') : '전신 근력';
+    }
+
+    function buildTalkContext() {
+      const today = getLocalDateString();
+      const now = new Date();
+      const hr = now.getHours();
+      const timeGreeting = hr < 11 ? '아침' : hr < 15 ? '점심' : hr < 18 ? '오후' : hr < 22 ? '저녁' : '늦은 밤';
+
+      const curW = (typeof state.weight === 'number' && state.weight > 0) ? state.weight : 66.4;
+      const curF = (typeof state.fat === 'number' && state.fat > 0) ? state.fat : 31.8;
+
+      // Previous weight from inbodyHistory or dailyLogs (strictly excluding today and fake 64.1 sample)
+      let prevW = null;
+      const hist = Array.isArray(state.inbodyHistory) ? state.inbodyHistory : [];
+      for (let i = hist.length - 1; i >= 0; i--) {
+        if (hist[i] && hist[i].date !== today && typeof hist[i].weight === 'number' && hist[i].weight > 0) {
+          prevW = hist[i].weight;
+          break;
+        }
+      }
+      if (prevW === null && state.dailyLogs) {
+        const dates = Object.keys(state.dailyLogs).filter(d => d < today).sort().reverse();
+        for (const d of dates) {
+          const w = state.dailyLogs[d] && state.dailyLogs[d].weight;
+          if (typeof w === 'number' && w > 0 && w !== 64.1) { prevW = w; break; }
+        }
+      }
+
+      let weightDelta = '유지 중';
+      let weightComment = '꾸준히 기록하고 계신 것만으로도 절반은 성공이에요!';
+      if (prevW !== null) {
+        const diff = Math.round((curW - prevW) * 10) / 10;
+        if (diff <= -0.1) {
+          weightDelta = `${diff.toFixed(1)}kg`;
+          weightComment = `이전 기록(${prevW.toFixed(1)}kg)보다 ${Math.abs(diff).toFixed(1)}kg 감량한 거 진심으로 축하해요! 🎉`;
+        } else if (diff >= 0.1) {
+          weightDelta = `+${diff.toFixed(1)}kg`;
+          weightComment = `이전(${prevW.toFixed(1)}kg)보다 +${diff.toFixed(1)}kg 올라왔지만, 수분이나 근육량 변화일 수 있으니 너무 걱정 마세요!`;
+        } else {
+          weightDelta = '±0.0kg';
+          weightComment = `이전(${prevW.toFixed(1)}kg)과 똑같이 안정적으로 유지 중이네요!`;
+        }
+      }
+
+      const goalW = (state.latestInbody && state.latestInbody.targetWeight) ? state.latestInbody.targetWeight : 57.1;
+      const targetLeft = `${Math.max(0, curW - goalW).toFixed(1)}kg`;
+
+      // Weekly workout counts (last 7 days)
+      const weekAgoMs = Date.now() - 7 * 86400000;
+      const gymHist = (state.gymHistory || []).filter(g => g && g.fullDate && new Date(g.fullDate).getTime() >= weekAgoMs);
+      const runHist = (state.runningLogs || []).filter(r => r && r.date && new Date(r.date).getTime() >= weekAgoMs);
+      const gymCountWeek = String(gymHist.length);
+      const runCountWeek = String(runHist.length);
+
+      // Today or latest gym session details
+      const gr = state.gymRoutine || {};
+      const exNames = [];
+      let totalSets = 0;
+      let totalReps = 0;
+      ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'].forEach(k => {
+        const ex = gr[k];
+        if (!ex) return;
+        const done = (ex.sets || []).filter(Boolean).length;
+        if (done > 0) {
+          if (ex.name) exNames.push(ex.name);
+          totalSets += done;
+          totalReps += done * (ex.reps || 20);
+        }
+      });
+      if (totalSets === 0 && gymHist.length > 0) {
+        const lastG = gymHist[gymHist.length - 1];
+        totalSets = lastG.totalSets || 0;
+        totalReps = lastG.totalReps || 0;
+        [lastG.upper1Name, lastG.upper2Name, lastG.lowerName].filter(Boolean).forEach(n => exNames.push(n));
+      }
+      const gymExercises = exNames.length ? exNames.slice(0, 3).join(' · ') : '전신 근력 루틴';
+      const targetMuscles = inferTargetMusclesFromNames(exNames.length ? exNames : ['랫 풀 다운', 'EZ바', 'V 스쿼트', '크런치']);
+      const gymIntensity = totalSets >= 12 ? '풀코스 고강도 🔥' : totalSets >= 6 ? '집중 중강도 💪' : '가벼운 컨디셔닝 🌱';
+
+      // Running details
+      const lr = state.latestRun || (state.runningLogs && state.runningLogs[0]) || null;
+      const runDist = lr && lr.distance ? `${lr.distance}km` : `${state.runDist || 5.0}km`;
+      const runPace = (lr && lr.pace) ? lr.pace : "09'15\"";
+
+      // Meals & Protein drink status (teaLog.tea = 단백질 음료)
+      const mealsDoneCount = (state.meals || []).filter(Boolean).length;
+      const mealsDone = `${mealsDoneCount}/3끼`;
+      const todayProtein = (state.teaLog && state.teaLog.tea) || 0;
+      const yDate = new Date(Date.now() - 86400000);
+      const yStr = `${yDate.getFullYear()}-${String(yDate.getMonth() + 1).padStart(2, '0')}-${String(yDate.getDate()).padStart(2, '0')}`;
+      const yLog = (state.dailyLogs && state.dailyLogs[yStr]) || null;
+      const yProtein = (yLog && yLog.teaLog && yLog.teaLog.tea) || 0;
+
+      let proteinStatus = '';
+      if (todayProtein > 0) {
+        proteinStatus = `오늘 단백질 음료 ${todayProtein}잔 야무지게 챙겨 마신 거 확인했어요! 기특해요 🥛✨`;
+      } else if (yLog && yProtein === 0) {
+        proteinStatus = '어제 단백질 음료 안 마신 것 같던데, 오늘은 꼬박꼬박 챙기기로 약속해요 우리! 🥛🤙';
+      } else {
+        proteinStatus = '오늘은 아직 단백질 음료 기록이 비어 있네요! 근손실 방지를 위해 한 잔 꼭 챙겨요 🥛';
+      }
+
+      const rehabDone = (state.rehab || []).filter(Boolean).length;
+      const rehabTotal = (state.rehab || []).length || 1;
+      const rehabStatus = rehabDone >= rehabTotal ? '완료 ✅' : `${rehabDone}/${rehabTotal} 진행 중`;
+
+      const kotonohaCount = String(((state.kotonoha && state.kotonoha.completedLessons) || []).length);
+
+      return {
+        weight: `${curW.toFixed(1)}kg`,
+        fat: `${curF.toFixed(1)}%`,
+        weightDelta,
+        weightComment,
+        targetLeft,
+        gymCountWeek,
+        runCountWeek,
+        gymTotalSets: String(totalSets || 15),
+        gymTotalReps: String(totalReps || 390),
+        gymExercises,
+        gymIntensity,
+        targetMuscles,
+        runDist,
+        runPace,
+        mealsDone,
+        proteinStatus,
+        rehabStatus,
+        kotonohaCount,
+        timeGreeting
+      };
+    }
+
+    function interpolateTalk(text, ctx) {
+      if (!text || typeof text !== 'string') return '';
+      const c = ctx || buildTalkContext();
+      return text.replace(/\{\{(\w+)\}\}/g, (_, k) => (c[k] !== undefined ? c[k] : ''));
+    }
+
+    function pickRecommendedEpisode(room, triggerKey) {
+      const eps = (trainerEpisodes()[room] || []);
+      if (!eps.length) return null;
+      const want = triggerKey === 'abs' ? 'gym' : triggerKey;
+      // 1. Unwatched matching trigger
+      let pick = eps.find(e => e.trigger === want && !getTrainerEpisodeDone(e.id));
+      // 2. Any unwatched in room
+      if (!pick) pick = eps.find(e => !getTrainerEpisodeDone(e.id));
+      // 3. Matching trigger even if watched
+      if (!pick) pick = eps.find(e => e.trigger === want);
+      // 4. Random fallback
+      if (!pick) pick = eps[Math.floor(Math.random() * eps.length)];
+      return pick;
+    }
+
+    function epSpeakerEntry(room, lineText, epId, extra) {
+      const ex = extra || {};
+      const imgFields = {
+        ...(ex.image ? { image: ex.image } : {}),
+        ...(ex.caption ? { caption: ex.caption } : {})
+      };
       // Dual rooms: split by emoji+name prefix lines into per-speaker entries
       if (room === 'dual') {
-        const m = line.match(/^(💛|🌟|🐾)\s*(코토네|미오|제미니)\s*[:-]?\s*([\s\S]*)$/);
+        const m = lineText.match(/^(💛|🌟|🐾)\s*(코토네|미오|제미니)\s*[:-]?\s*([\s\S]*)$/);
         if (m) {
           const sender = m[2] === '코토네' ? 'kotone' : m[2] === '미오' ? 'mio' : 'gemini';
-          return { room: 'dual', sender, name: m[2], text: m[3], time: getKakaoTimeStr(), ep: epId };
+          return { room: 'dual', sender, name: m[2], text: m[3], time: getKakaoTimeStr(), ep: epId, ...imgFields };
         }
-        return { room: 'dual', sender: 'dual', name: '제미니 · 코토네 · 미오', text: line, time: getKakaoTimeStr(), ep: epId };
+        return { room: 'dual', sender: 'dual', name: '제미니 · 코토네 · 미오', text: lineText, time: getKakaoTimeStr(), ep: epId, ...imgFields };
       }
       const nameMap = { gemini: '제미니', kotone: '코토네', mio: '미오' };
-      return { room, sender: room, name: nameMap[room] || '제미니', text: line, time: getKakaoTimeStr(), ep: epId };
+      return { room, sender: room, name: nameMap[room] || '제미니', text: lineText, time: getKakaoTimeStr(), ep: epId, ...imgFields };
     }
 
     function startTrainerEpisode(room, epId) {
@@ -5224,14 +5429,19 @@
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    function normalizeEpisodeLine(line) {
-      if (typeof line === 'string') return { text: line, expr: '', cg: false, speaker: '', bg: '' };
+    function normalizeEpisodeLine(line, ctx) {
+      const c = ctx || buildTalkContext();
+      if (typeof line === 'string') {
+        return { text: interpolateTalk(line, c), expr: '', cg: false, speaker: '', bg: '', image: '', caption: '' };
+      }
       return {
-        text: String(line.text || ''),
+        text: interpolateTalk(String(line.text || ''), c),
         expr: line.expr || '',
         cg: line.cg || false,
         speaker: line.speaker || '',
-        bg: line.bg || ''
+        bg: line.bg || '',
+        image: line.image || '',
+        caption: line.caption ? interpolateTalk(line.caption, c) : ''
       };
     }
 
@@ -5469,7 +5679,7 @@
         await vnSleep(vnSkipMode ? 40 : 560);
         if (!epRuntime || epRuntime.gen !== gen || epRuntime.room !== room) return;
         activeTypingIndicator = null;
-        state.chatHistory.push(epSpeakerEntry(room, line.text, epId));
+        state.chatHistory.push(epSpeakerEntry(room, line.text, epId, { image: line.image, caption: line.caption }));
         renderChat();
         scrollChatToBottom();
         playBeep(560 + Math.floor(Math.random() * 120), 0.04);
@@ -5490,11 +5700,13 @@
       const room = epRuntime.room;
       const ch = document.getElementById('choicesContainer');
       const nameMap = { gemini: '제미니', kotone: '코토네', mio: '미오', dual: '세 사람' };
+      const ctx = buildTalkContext();
+      const qTitle = ep.choice && ep.choice.question ? interpolateTalk(ep.choice.question, ctx) : '이 순간, 어떻게 답할래요?';
       if (ch) {
         ch.innerHTML = `<div class="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2.5 space-y-1.5">
-          <div class="text-[11px] font-black text-slate-600 dark:text-slate-300">이 순간, 어떻게 답할래요? <span class="text-slate-400 font-bold">(${nameMap[room] || '트레이너'}이 기다리고 있어요)</span></div>
+          <div class="text-[11px] font-black text-slate-600 dark:text-slate-300">${qTitle} <span class="text-slate-400 font-bold">(${nameMap[room] || '트레이너'}이 기다리고 있어요)</span></div>
           ${ep.choice.options.map((o, i) => `
-            <button onclick="chooseTrainerEpisodeOption(${i}, event)" class="w-full text-left px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-[11px] font-bold text-slate-700 dark:text-slate-200 hover:border-sky-400 active:scale-[0.99] transition-all">${i + 1}. ${o.t}</button>
+            <button onclick="chooseTrainerEpisodeOption(${i}, event)" class="w-full text-left px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-[11px] font-bold text-slate-700 dark:text-slate-200 hover:border-sky-400 active:scale-[0.99] transition-all">${i + 1}. ${interpolateTalk(o.t, ctx)}</button>
           `).join('')}
           <button onclick="cancelTrainerEpisode()" class="w-full text-center px-3 py-1.5 rounded-xl text-[10px] font-bold text-slate-400 hover:text-rose-400 transition-all">에피소드 종료</button>
         </div>`;
@@ -5523,7 +5735,7 @@
       if (ch) ch.innerHTML = '';
       const body = document.getElementById('messengerRoomBody');
       if (body) body.classList.remove('vn-choices');
-      state.chatHistory.push({ room, sender: 'user', name: '프로듀서', text: opt.t, time: getKakaoTimeStr(), ep: ep.id });
+      state.chatHistory.push({ room, sender: 'user', name: '프로듀서', text: interpolateTalk(opt.t), time: getKakaoTimeStr(), ep: ep.id });
       renderChat();
       scrollChatToBottom();
       playBeep(480, 0.05);
@@ -5633,13 +5845,19 @@
     function renderInbodyCardUI() {
       const card = document.getElementById('inbodyReportCard');
       if (!card) return;
-      const ib = state.latestInBody || {
-        date: state.lastActiveDate || getLocalDateString(),
-        score: state.inbodyScore || 63,
-        smm: state.skeletalMuscle || 24.8,
-        fatMass: Math.round(((state.weight || 65.6) * (state.fat || 32.2) / 100) * 10) / 10,
-        bmr: state.bmr || 1330
-      };
+
+      // 기록이 없으면 "—". 63점/24.8kg/1330kcal 같은 기본값을 실제 측정처럼 보여주지 않는다.
+      const num = (v) => (typeof v === 'number' && isFinite(v)) ? v : null;
+      const ib = state.latestInBody || {};
+      const realWeight = prevRealValue('weight');
+      const realFat = prevRealValue('fat');
+
+      const score = num(ib.score) !== null ? num(ib.score) : num(state.inbodyScore);
+      const smm = num(ib.smm) !== null ? num(ib.smm) : num(state.skeletalMuscle);
+      const bmr = num(ib.bmr) !== null ? num(ib.bmr) : num(state.bmr);
+      const fatMass = num(ib.fatMass) !== null
+        ? num(ib.fatMass)
+        : ((realWeight !== null && realFat !== null) ? Math.round(realWeight * realFat / 100 * 10) / 10 : null);
 
       const dateEl = document.getElementById('inbodyReportDate');
       const scoreBadge = document.getElementById('inbodyScoreBadge');
@@ -5647,14 +5865,11 @@
       const fatMassEl = document.getElementById('inbodyCardFatMass');
       const bmrEl = document.getElementById('inbodyCardBmr');
 
-      if (dateEl) dateEl.textContent = `최근 측정: ${ib.date || getLocalDateString()}`;
-      if (scoreBadge) scoreBadge.textContent = `인바디 ${ib.score || 63}점`;
-      if (smmEl) smmEl.textContent = ib.smm || 24.8;
-      if (fatMassEl) {
-        const fm = ib.fatMass || (Math.round(((state.weight || 65.6) * (state.fat || 32.2) / 100) * 10) / 10);
-        fatMassEl.textContent = fm;
-      }
-      if (bmrEl) bmrEl.textContent = Number(ib.bmr || 1330).toLocaleString();
+      if (dateEl) dateEl.textContent = ib.date ? `최근 측정: ${ib.date}` : '최근 측정: 기록 없음';
+      if (scoreBadge) scoreBadge.textContent = score !== null ? `인바디 ${score}점` : '인바디 —';
+      if (smmEl) smmEl.textContent = smm !== null ? smm : '—';
+      if (fatMassEl) fatMassEl.textContent = fatMass !== null ? fatMass : '—';
+      if (bmrEl) bmrEl.textContent = bmr !== null ? Number(bmr).toLocaleString() : '—';
     }
 
     function syncUI() {
@@ -5928,14 +6143,7 @@
     }
 
     function buildSyncTalkOpener(room, key) {
-      const today = getLocalDateString();
-      const latestRun = state.latestRun;
-      const dist = (latestRun && latestRun.date === today && latestRun.distance)
-        ? latestRun.distance
-        : (state.runDist || 0);
-      const mealsDone = (state.meals || []).filter(Boolean).length;
-      const photoCount = (state.mealPhotos || []).filter(Boolean).length;
-      const mealCount = Math.max(mealsDone, photoCount);
+      const ctx = buildTalkContext();
       const gymDone = isGymRoutineDone(state.gymRoutine);
       const absDone = Boolean(state.absDone);
       const runDone = Boolean(state.runDone);
@@ -5943,50 +6151,59 @@
       if (room === 'mio') {
         if (runDone) {
           return [
-            `${dist}km 러닝 완주 기록, 방금 확인했어! 🌟`,
-            '오늘 페이스 진짜 좋았어. 다리 쿨다운 스트레칭부터 천천히 풀어주자!',
-            '내일은 인터벌 한 세트만 더 얹어볼까? 내가 180bpm 맞춰줄게 🖐️'
+            { text: `${ctx.runDist} 러닝 완주(페이스 ${ctx.runPace}), 방금 확인했어! 🌟` },
+            { text: `이번 주 벌써 러닝 ${ctx.runCountWeek}회째야! ${ctx.weightComment}` },
+            {
+              text: `${ctx.proteinStatus} 시원하게 스트레칭하고 잠깐 쉬면서 얘기할래? 🖐️`,
+              image: './image/01 mio/mio_40_post_run_grass_lie_down.png',
+              caption: '📷 미오 · 러닝 후 잔디밭 쿨다운'
+            }
           ];
         }
         return [
-          '어? 오늘은 아직 러닝 기록이 없네! 🌟',
-          '가볍게 3km만 나가볼까? 내가 페이스 맞춰줄게!'
+          { text: `프로듀서, 현재 체중 ${ctx.weight}! 아직 오늘 러닝 기록은 비어 있네~ 🌟` },
+          { text: `가볍게 3km만 같이 뛸까? ${ctx.proteinStatus}` }
         ];
       }
 
       if (room === 'kotone') {
         return [
-          `프로듀서님, 오늘 식단 ${mealCount}/3 인증 확인했어요~! 💛`,
-          '이 흐름이면 16:30 마감도 거뜬하답니다! 다음 끼니도 코토네가 같이 챙겨드릴게요.',
-          '단백질은 꼭 넣어주시고, 17시 이후엔 물이나 차만 마셔요~ ☕'
+          { text: `프로듀서님, 오늘 식단 ${ctx.mealsDone} 인증 확인했어요~! 💛 (현재 ${ctx.weight})` },
+          { text: `${ctx.weightComment}` },
+          {
+            text: `${ctx.proteinStatus} 17시 마감까지 코토네가 같이 챙겨드릴게요! ☕`,
+            image: './image/02 kotone/kotone_39_salad_bowl_fork_smile.png',
+            caption: '📷 코토네 · 오늘의 클린 식단 응원'
+          }
         ];
       }
 
       if (key === 'gym' || gymDone) {
         return [
-          '어머나, 오늘 근력 루틴 풀코스 완주하셨사와요 🌸',
-          '세트마다 무게를 정확히 쌓아 올리신 거, 소녀가 다 보고 있었사옵니다 🐾',
-          '고생하셨사오니 어깨부터 정성껏 풀어드리겠사와요. 남은 재활 2kg 세트도 함께 하시지요 🍵'
+          { text: `어머나, ${ctx.gymExercises} (${ctx.gymTotalSets}세트 · ${ctx.gymTotalReps}회 / ${ctx.gymIntensity}) 완주하셨사와요 🌸` },
+          { text: `자극 들어간 ${ctx.targetMuscles} 부위가 기분 좋게 뻐근하시지요? 현재 ${ctx.weight}(${ctx.fat}) — ${ctx.weightComment}` },
+          {
+            text: `${ctx.proteinStatus} 손목 재활(${ctx.rehabStatus})도 잊지 마시고, 잠깐 소녀와 대화 나누시와요 🍵`,
+            image: './image/03 gemini/gemini_25_post_workout_smoothie.png',
+            caption: '📷 제미니 · 오운완 회복 스무디'
+          }
         ];
       }
       if (key === 'abs' || absDone) {
         return [
-          '14분 복근 루틴까지 클리어하셨사와요 🔥',
-          '지금 코어에 긴장이 남아 있으니, 소녀와 함께 천천히 스트레칭하시와요 🌸',
-          '오늘 기록은 정갈하게 동기화해 두었사옵니다 🍵'
+          { text: `14분 복근 루틴 클리어하셨사와요 🔥 코어에 힘이 딱 붙는 느낌이시지요?` },
+          { text: `현재 ${ctx.weight}, ${ctx.proteinStatus} 천천히 숨 고르며 스트레칭하시와요 🌸` }
         ];
       }
       return [
-        '오늘 기록 동기화를 확인했사옵니다 🍵',
-        `현재 ${state.weight || 64.1}kg, 목표 52kg까지 소녀가 곁에서 함께 덜어드리겠사와요 🌸`,
-        '물 한 잔 드시고, 오늘 남은 루틴도 무리 없이 정리해 보시지요 🐾'
+        { text: `오늘 기록 동기화를 확인했사옵니다 🍵 현재 ${ctx.weight} (체지방 ${ctx.fat})!` },
+        { text: `${ctx.weightComment} 목표까지 ${ctx.targetLeft}, 소녀가 곁에서 함께 덜어드리겠사와요 🌸` },
+        { text: `${ctx.proteinStatus}` }
       ];
     }
 
     function openSyncTalkConversation(room, key) {
       startFreshSyncConversation(room);
-      // We land in the room straight from the health tab, so mark the messenger
-      // as unlocked to avoid showing the tap-to-unlock screen on the way back.
       messengerUnlocked = true;
       switchMainTab('talk');
       enterTrainerRoom(room, true);
@@ -5998,8 +6215,15 @@
         text: `🔄 ${curTime} 기록 동기화 · 새 대화 시작`,
         time: curTime
       });
-      buildSyncTalkOpener(room, key).forEach(text => {
-        state.chatHistory.push({ room, sender: room, name, text, time: curTime });
+      buildSyncTalkOpener(room, key).forEach(entry => {
+        const msg = typeof entry === 'string' ? { text: entry } : entry;
+        state.chatHistory.push({
+          room, sender: room, name,
+          text: msg.text,
+          ...(msg.image ? { image: msg.image } : {}),
+          ...(msg.caption ? { caption: msg.caption } : {}),
+          time: curTime
+        });
       });
 
       saveState(true);
@@ -6007,6 +6231,25 @@
       scrollChatToBottom();
       updateRoomHead(room);
       renderThreadList();
+
+      // Natural post-workout -> Training Talk bridge button!
+      const recEp = pickRecommendedEpisode(room, key);
+      const dualRec = pickRecommendedEpisode('dual', key);
+      const ch = document.getElementById('choicesContainer');
+      if (ch && recEp) {
+        ch.innerHTML = `
+          <div class="rounded-xl bg-gradient-to-r from-pink-500/10 via-sky-500/10 to-amber-500/10 border border-sky-400/40 p-2.5 space-y-1.5">
+            <div class="text-[10px] font-black text-sky-600 dark:text-sky-300">✨ 운동 완료! 이어서 나눌 추천 트레이닝 톡</div>
+            <button onclick="startTrainerEpisode('${room}', '${recEp.id}')" class="w-full flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-sky-400 text-left shadow-xs active:scale-[0.99] transition-all">
+              <span class="min-w-0">
+                <span class="block text-[11px] font-black text-slate-800 dark:text-slate-100 truncate">${recEp.icon || '🎬'} ${recEp.title}</span>
+                <span class="block text-[9px] font-bold text-slate-400 truncate">${recEp.sub || ''}</span>
+              </span>
+              <span class="shrink-0 px-2 py-0.5 rounded-full bg-sky-500 text-white text-[9px] font-black">바로 시작 ▶</span>
+            </button>
+            ${dualRec ? `<button onclick="enterTrainerRoom('dual', true); setTimeout(() => startTrainerEpisode('dual', '${dualRec.id}'), 200)" class="w-full text-left px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 hover:border-purple-400 text-[10px] font-bold text-slate-600 dark:text-slate-300 transition-all">💬 3인 단톡으로 이동: ${dualRec.icon || ''} ${dualRec.title}</button>` : ''}
+          </div>`;
+      }
       playBeep(880, 0.08);
       return room;
     }
@@ -6715,6 +6958,25 @@ ${err.message}
       showFloatingToast('이 대화방 기록을 정리했어요', '🧹');
     }
 
+    function openChatImageLightbox(src, caption) {
+      if (!src) return;
+      let lb = document.getElementById('chatImageLightbox');
+      if (!lb) {
+        lb = document.createElement('div');
+        lb.id = 'chatImageLightbox';
+        lb.className = 'fixed inset-0 z-[9999] bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 hidden';
+        lb.onclick = () => lb.classList.add('hidden');
+        lb.innerHTML = `
+          <img id="chatLightboxImg" src="" class="max-h-[78vh] max-w-[92vw] rounded-2xl shadow-2xl object-contain border border-white/20">
+          <div id="chatLightboxCap" class="mt-3 text-xs font-bold text-white/90 text-center max-w-md"></div>
+          <div class="mt-2 text-[10px] text-white/50 font-bold">화면을 탭하면 닫힙니다</div>`;
+        document.body.appendChild(lb);
+      }
+      document.getElementById('chatLightboxImg').src = src;
+      document.getElementById('chatLightboxCap').textContent = caption || '';
+      lb.classList.remove('hidden');
+    }
+
     function renderChat() {
       const container = document.getElementById('chatContainer');
       if (!container) return;
@@ -6772,7 +7034,12 @@ ${err.message}
 
       let chatHtml = roomMessages.map(msg => {
         const timeStr = msg.time || fallbackTime;
-        const imgBlock = msg.image ? `<img src="${msg.image}" class="mt-2 rounded-xl max-h-36 w-auto object-cover border border-white/25">` : '';
+        const safeImgSrc = msg.image ? String(msg.image).replace(/'/g, "\\'") : '';
+        const imgBlock = msg.image ? `
+          <div class="mt-2 rounded-xl overflow-hidden border border-black/10 dark:border-white/15 bg-slate-900/10 cursor-pointer group" onclick="openChatImageLightbox('${safeImgSrc}', '${(msg.caption || '').replace(/'/g, "\\'")}')">
+            <img src="${msg.image}" alt="채팅 사진" class="max-h-48 w-full object-cover group-hover:scale-[1.02] transition-transform duration-200" loading="lazy">
+            ${msg.caption ? `<div class="px-2 py-1 text-[9px] font-bold text-slate-600 dark:text-slate-300 bg-white/85 dark:bg-slate-900/80 truncate">${msg.caption}</div>` : ''}
+          </div>` : '';
 
         // KakaoTalk multi-bubble divider: split by || for natural rhythm
         const rawText = msg.text || '';
@@ -7181,53 +7448,76 @@ ${err.message}
     }
 
     // Direct Gemini Vision API Parser for 100% Precision Multimodal Extraction
+    // ------------------------------------------------------------------------
+    // Gemini Vision: 인바디/삼성헬스 판독
+    //   - 프롬프트/검증/정규화는 ocr_pipeline.js 로 분리 (tools/test_ocr_pipeline.js 로 검증)
+    //   - responseMimeType: application/json 으로 JSON-only 응답을 강제
+    //   - "못 읽으면 null" 이 기본값. 63점/24.8kg/1330kcal 채우기는 제거됨
+    // ------------------------------------------------------------------------
+    function extractJsonObject(text) {
+      const s = String(text || '');
+      const start = s.indexOf('{');
+      const end = s.lastIndexOf('}');
+      if (start === -1 || end <= start) return '';
+      return s.slice(start, end + 1);
+    }
+
     async function parseFitnessImageWithGemini(file, apiKey) {
+      const OC = window.OcrPipeline;
+      if (!OC) throw new Error('ocr_pipeline.js 가 로드되지 않았습니다.');
+
       const base64Data = await fileToBase64(file);
       const mimeType = file.type || 'image/jpeg';
-      const prompt = `당신은 피트니스 & 러닝 기록 및 체성분 데이터 분석 전문가입니다.
-사용자가 업로드한 스크린샷(삼성헬스, 나이키런 NRC, 애플 피트니스, 가민, 인바디 등)을 정밀하게 읽고 아래 JSON 형식으로만 응답하세요. 백틱(\`\`\`json) 없이 오직 유효한 JSON 문자열만 출력하세요.
-
-{
-  "is_running": true 또는 false,
-  "source": "삼성헬스" | "나이키런" | "애플피트니스" | "인바디",
-  "distance": 숫자 (킬로미터 km, 예: 6.32),
-  "duration": 문자열 ("mm:ss" 또는 "hh:mm:ss", 예: "58:48"),
-  "pace": 문자열 ("mm'ss\"", 예: "09'17\""),
-  "calories": 정수 (소모 칼로리 kcal, 예: 401),
-  "heartRate": 정수 (평균 심박수 bpm, 예: 115),
-  "cadence": 정수 (평균 케이던스 spm, 예: 125),
-  "steps": 정수 (총 걸음수, 예: 7380),
-  "weight": 숫자 (체중 kg, 없으면 null),
-  "fat": 숫자 (체지방률 %, 없으면 null)
-}`;
 
       const data = await fetchGeminiWithFallback(apiKey, {
         contents: [{
           role: 'user',
           parts: [
-            { text: prompt },
+            { text: OC.GEMINI_PROMPT },
             { inline_data: { mime_type: mimeType, data: base64Data } }
           ]
         }],
-        generationConfig: { temperature: 0.1, maxOutputTokens: 600 }
+        generationConfig: {
+          temperature: 0,
+          maxOutputTokens: 800,
+          responseMimeType: 'application/json'
+        }
       });
 
       const raw = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim();
-      const cleaned = raw.replace(/```json/gi, '').replace(/```/g, '').trim();
-      const p = JSON.parse(cleaned);
+      const jsonText = extractJsonObject(raw);
+      if (!jsonText) throw new Error('AI가 JSON을 반환하지 않았습니다: ' + raw.slice(0, 60));
+      let parsedRaw;
+      try {
+        parsedRaw = JSON.parse(jsonText);
+      } catch (e) {
+        throw new Error('AI JSON 해석 실패: ' + jsonText.slice(0, 80));
+      }
+
+      const scan = OC.normalizeFitnessScan(parsedRaw, 'gemini');
+      scan.rawAiText = raw;
+      // 기존 호출부 호환용 별칭
+      scan.isRunning = scan.kind === 'running';
+      scan.hasWeightKeywords = scan.weight !== null || scan.fat !== null;
+      scan.score = scan.inbodyScore;
+      scan.fatMass = scan.bodyFatMass;
+      return scan;
+    }
+
+    // Tesseract 파서(parseHealthImageText)의 반환 형태를 파이프라인 스키마로 변환
+    function fromTesseractParsed(p) {
+      if (!p) return {};
+      const hasBody = (p.weight !== null && p.weight !== undefined) ||
+        (p.fat !== null && p.fat !== undefined) ||
+        (p.score !== null && p.score !== undefined);
       return {
-        isRunning: Boolean(p.is_running || (p.distance !== null && p.distance !== undefined)),
-        hasWeightKeywords: Boolean(p.weight !== null && p.weight !== undefined),
-        source: p.source || '삼성헬스',
-        distance: (p.distance !== undefined && p.distance !== null) ? Number(p.distance) : null,
-        duration: p.duration || null,
-        pace: p.pace || null,
-        calories: (p.calories !== undefined && p.calories !== null) ? Math.round(Number(p.calories)) : null,
-        heartRate: (p.heartRate !== undefined && p.heartRate !== null) ? Math.round(Number(p.heartRate)) : null,
-        cadence: (p.cadence !== undefined && p.cadence !== null) ? Math.round(Number(p.cadence)) : null,
-        steps: (p.steps !== undefined && p.steps !== null) ? Math.round(Number(p.steps)) : null,
-        weight: (p.weight !== undefined && p.weight !== null) ? Number(p.weight) : null,
-        fat: (p.fat !== undefined && p.fat !== null) ? Number(p.fat) : null
+        kind: p.isRunning ? 'running' : (hasBody ? 'inbody' : 'unknown'),
+        source: p.source,
+        weight: p.weight, fat: p.fat, bmi: p.bmi,
+        inbodyScore: p.score, skeletalMuscle: p.skeletalMuscle,
+        bodyFatMass: p.fatMass, bmr: p.bmr,
+        distance: p.distance, duration: p.duration, pace: p.pace,
+        calories: p.calories, heartRate: p.heartRate, cadence: p.cadence, steps: p.steps
       };
     }
 
@@ -7280,45 +7570,55 @@ ${err.message}
     // ============================================================================
     async function scanInbodyImageWithTesseract(file) {
       try {
-        // Primary: Full-body composition sheet OCR
-        let best = null;
-        const fullRes = await Tesseract.recognize(file, 'kor+eng');
+        // Primary: Top 78% of sheet ONLY — excludes bottom "신체변화(Body Composition History)"
+        // line chart so old historical weights/body-fat never pollute today's measurement!
+        let mainTarget = file;
+        try {
+          mainTarget = await cropImageBlob(file, 0.0, 0.0, 1.0, 0.78, 1.5);
+        } catch (e) { mainTarget = file; }
+
+        const fullRes = await Tesseract.recognize(mainTarget, 'kor+eng');
         const fullText = fullRes.data.text || "";
         const fullWords = fullRes.data.words || null;
-        const fullParsed = parseHealthImageText(fullText, '', '', '', '', fullWords);
-        best = { parsed: fullParsed, text: fullText };
+        let merged = parseHealthImageText(fullText, '', '', '', '', fullWords);
+        let combinedText = fullText;
 
-        try {
-          // Secondary: Crop the 체성분분석 table (top-left block of InBody sheets) 2x upscale and scan again.
-          // Korean labels often garble at full-sheet scale; cropped big text OCRs far better.
-          const cropBlob = await cropImageBlob(file, 0.02, 0.13, 0.58, 0.24, 2);
-          const cropRes = await Tesseract.recognize(cropBlob, 'kor+eng');
-          const cropText = cropRes.data.text || "";
-          const cropWords = cropRes.data.words || null;
-          if (cropText.trim().length >= 8) {
-            const cropParsed = parseHealthImageText(cropText, '', '', '', '', cropWords);
-            // Merge: crop parse wins for composition fields when it has label-anchored info,
-            // otherwise keep the fuller parse. Prefer weight from the parse with more corroboration.
-            const score = (p) => weightFieldScore(p);
-            const cur = best.parsed;
-            if (score(cropParsed) > score(cur) || (cropParsed.weight !== null && cur.weight === null)) {
-              best = { parsed: mergeParsed(cur, cropParsed), text: cropText + "\n--- CROP PASS ---\n" + fullText };
+        // Targeted 3-zone 2x upscale crops for Korean InBody270/370/570/770 layout:
+        //   Zone 1: 체성분분석 표 (체수분/단백질/무기질/체지방량/체중)
+        //   Zone 2: 골격근·지방분석 + 비만분석 (체중/골격근량/체지방량/BMI/체지방률%)
+        //   Zone 3: 인바디점수 + 내장지방 + 연구항목(기초대사량)
+        const zones = [
+          { name: '체성분분석', x: 0.02, y: 0.12, w: 0.59, h: 0.17 },
+          { name: '골격근·비만분석', x: 0.02, y: 0.28, w: 0.61, h: 0.28 },
+          { name: '인바디점수·연구항목', x: 0.62, y: 0.12, w: 0.36, h: 0.46 }
+        ];
+        for (const z of zones) {
+          // Skip extra zones if core fields are already populated
+          if (merged.weight !== null && merged.fat !== null && merged.skeletalMuscle !== null && merged.score !== null && merged.bmr !== null) break;
+          try {
+            const cropBlob = await cropImageBlob(file, z.x, z.y, z.w, z.h, 2);
+            const cropRes = await Tesseract.recognize(cropBlob, 'kor+eng');
+            const cropText = cropRes.data.text || "";
+            if (cropText.trim().length >= 6) {
+              const cropParsed = parseHealthImageText(cropText, '', '', '', '', cropRes.data.words || null);
+              merged = mergeParsed(merged, cropParsed);
+              combinedText += `\n--- ZONE [${z.name}] ---\n` + cropText;
             }
+          } catch (cropErr) {
+            console.warn(`InBody zone [${z.name}] OCR skipped:`, cropErr);
           }
-        } catch (cropErr) {
-          console.warn("InBody crop OCR skipped:", cropErr);
         }
 
-        if (best && best.parsed && (best.parsed.weight !== null || best.parsed.fat !== null || best.parsed.score !== null)) {
-          return best;
+        if (merged && (merged.weight !== null || merged.fat !== null || merged.score !== null)) {
+          return { parsed: merged, text: combinedText };
         }
 
-        // Final fallback: full preprocessed/inverted scan
+        // Final fallback: preprocessed contrast scan
         const processedBlob = await preprocessOcrImage(file);
         const res2 = await Tesseract.recognize(processedBlob, 'kor+eng');
         const text2 = res2.data.text || "";
         const parsed2 = parseHealthImageText(text2);
-        return { parsed: parsed2, text: text2 + "\n--- RAW PASS ---\n" + (best ? best.text : "") };
+        return { parsed: mergeParsed(merged, parsed2), text: text2 + "\n--- RAW PASS ---\n" + combinedText };
       } catch (err) {
         console.error("InBody OCR error:", err);
         return { parsed: {}, text: '' };
@@ -7801,6 +8101,7 @@ ${err.message}
       const file = e.target.files[0];
       if (!file) return;
 
+      const OC = window.OcrPipeline;
       const scanBtnText = document.getElementById('inbodyScanBtnText');
       if (scanBtnText) scanBtnText.textContent = "⌛ 분석중...";
       showFloatingToast('체성분 & 러닝 이미지 정밀 분석중...', '🔍');
@@ -7809,28 +8110,53 @@ ${err.message}
         const localApiKey = (localStorage.getItem('GEMINI_API_KEY') || '').trim();
         let parsed = null;
         let rawText = '';
+        const enginesTried = [];
+        let aiError = '';
 
         // Priority 1: Gemini AI Multimodal Vision (if API key available)
         if (localApiKey) {
           try {
             parsed = await parseFitnessImageWithGemini(file, localApiKey);
-            rawText = "[Gemini AI 비전 정밀 추출]\n" + JSON.stringify(parsed, null, 2);
+            enginesTried.push('Gemini Vision');
+            rawText = "[Gemini AI 비전 응답]\n" + (parsed.rawAiText || '');
           } catch (gemErr) {
-            console.warn("Gemini vision scan error, falling back to local OCR:", gemErr);
+            aiError = gemErr.message || String(gemErr);
+            enginesTried.push('Gemini 실패');
+            console.warn("Gemini vision scan error:", gemErr);
+          }
+        } else {
+          aiError = 'Gemini API 키 없음 — 로컬 OCR만 사용합니다';
+          enginesTried.push('키 없음');
+        }
+
+        // Priority 2: 로컬 Tesseract.
+        //   AI가 핵심 4개(체중/체지방률/점수/골격근)를 전부 비웠을 때만 돈다.
+        //   AI가 뭔가 읽었으면 시간을 아끼고, 교차검증은 "빈 칸 채우기 + 불일치 경고"로만 한다.
+        const aiEmpty = !parsed || (
+          parsed.weight === null && parsed.fat === null &&
+          parsed.inbodyScore === null && parsed.skeletalMuscle === null
+        );
+        if (aiEmpty) {
+          const tRes = await scanInbodyImageWithTesseract(file);
+          const tessScan = OC.normalizeFitnessScan(fromTesseractParsed(tRes.parsed), 'tesseract');
+          enginesTried.push('Tesseract');
+          if (!parsed) {
+            parsed = tessScan;
+            rawText = tRes.text || '';
+          } else {
+            parsed = OC.mergeScanResults(parsed, tessScan);
+            rawText += "\n\n--- 로컬 OCR 교차검증 ---\n" + (tRes.text || '');
           }
         }
+        if (!parsed) parsed = OC.normalizeFitnessScan({}, 'none');
 
-        // Priority 2: Local Layout-Aware Tesseract Scanner
-        if (!parsed) {
-          const tRes = await scanInbodyImageWithTesseract(file);
-          parsed = tRes.parsed;
-          rawText = tRes.text;
-        }
+        parsed.enginesTried = enginesTried;
+        if (aiError) parsed.aiError = aiError;
 
-        if (parsed.isRunning && parsed.weight === null && !parsed.hasWeightKeywords) {
+        if (parsed.kind === 'running' || (parsed.isRunning && parsed.weight === null && !parsed.hasWeightKeywords)) {
           openRunningResultFromOcr(parsed, rawText);
         } else {
-          openInbodyResultFromOcr(parsed, rawText);
+          openInbodyResultFromOcr(parsed, rawText, { aiError, enginesTried });
         }
         playBeep(880, 0.15);
       } catch (err) {
@@ -7880,55 +8206,138 @@ ${err.message}
       }
     }
 
-    function openInbodyResultFromOcr(parsed, rawText) {
-      const weightInput = document.getElementById('ocrWeightInput');
-      const wBadge = document.getElementById('ocrWeightConfidence');
-      if (parsed.weight !== null) {
-        weightInput.value = parsed.weight;
-        weightInput.placeholder = `${state.weight || 64.1}kg`;
-        if (wBadge) {
-          wBadge.textContent = `✨ 감지 성공 (${parsed.weight}kg)`;
-          wBadge.className = "text-[10px] text-emerald-500 font-extrabold";
+    // --- 스캔 결과 표시 도우미 ------------------------------------------------
+    // "0" / "못 읽음" / "이전값 유지" 를 시각적으로 구분하는 것이 목적이다.
+    let lastScanResult = null;
+
+    function fillScanInput(id, value, opts) {
+      const el = document.getElementById(id);
+      if (!el) return false;
+      const o = opts || {};
+      el.classList.remove('ring-2', 'ring-amber-400/70');
+      if (value !== null && value !== undefined && value !== '') {
+        el.value = value;
+        el.dataset.ocrStatus = 'detected';
+        return true;
+      }
+      el.value = '';
+      el.dataset.ocrStatus = 'missing';
+      el.placeholder = o.missingHint || '미감지 — 직접 입력';
+      el.classList.add('ring-2', 'ring-amber-400/70');
+      return false;
+    }
+
+    function setScanBadge(id, text, tone) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = text;
+      el.className = tone === 'ok'
+        ? 'text-[10px] text-emerald-500 font-extrabold'
+        : tone === 'warn'
+          ? 'text-[10px] text-amber-500 font-extrabold'
+          : 'text-[10px] text-slate-400 font-bold';
+    }
+
+    // 샘플값(64.1 / 21.5)은 "이전 값"으로 쓰지 않는다.
+    function prevRealValue(field) {
+      if (isStatePristine(state)) return null;
+      const v = state[field];
+      return (typeof v === 'number' && isFinite(v)) ? v : null;
+    }
+
+    function renderScanFeedback(result, meta) {
+      const info = document.getElementById('ocrScanInfo');
+      const warnBox = document.getElementById('ocrWarnBox');
+      const m = meta || {};
+      const p = result.parsed || {};
+
+      if (info) {
+        const engineLabel = (m.enginesTried || []).join(' → ') || '?';
+        const missing = [];
+        if (p.weight === null || p.weight === undefined) missing.push('체중');
+        if (p.fat === null || p.fat === undefined) missing.push('체지방률');
+        if (p.inbodyScore === null || p.inbodyScore === undefined) missing.push('인바디 점수');
+        if (p.skeletalMuscle === null || p.skeletalMuscle === undefined) missing.push('골격근량');
+        if (p.bmr === null || p.bmr === undefined) missing.push('기초대사량');
+        let txt = `엔진: ${engineLabel} · 판독: ${p.kind || 'unknown'}${p.source ? ' / ' + p.source : ''}`;
+        if (missing.length) txt += ` · 미감지 ${missing.length}개 (${missing.join(', ')})`;
+        if (m.aiError && m.aiError.includes('키 없음')) {
+          info.innerHTML = `<div>${txt}</div><div class="mt-1 text-amber-600 dark:text-amber-400">💡 <b>스캔 정확도 99% 팁:</b> 상단 ⚙️ 설정에서 무료 Gemini API 키를 1회 등록하면 인바디 표를 AI 비전으로 완벽 판독합니다!</div>`;
+        } else {
+          info.textContent = txt;
         }
-      } else {
-        weightInput.value = '';
-        weightInput.placeholder = `${state.weight || 64.1}kg (직접 입력 / 이전값 유지)`;
-        if (wBadge) {
-          wBadge.textContent = "직접 입력 (이전값 유지)";
-          wBadge.className = "text-[10px] text-amber-500 font-extrabold";
-        }
+        info.className = 'text-[10px] font-bold leading-relaxed ' + (m.aiError ? 'text-rose-500' : 'text-slate-500');
       }
 
-      // Body fat: if not detected, leave BLANK as requested by user!
-      const fatInput = document.getElementById('ocrFatInput');
-      const fBadge = document.getElementById('ocrFatConfidence');
-      if (parsed.fat !== null) {
-        fatInput.value = parsed.fat;
-        fatInput.placeholder = `${state.fat || 21.5}%`;
-        if (fBadge) {
-          fBadge.textContent = `✨ 감지 성공 (${parsed.fat}%)`;
-          fBadge.className = "text-[10px] text-purple-500 font-extrabold";
-        }
-      } else {
-        // LEAVE BLANK!
-        fatInput.value = '';
-        fatInput.placeholder = `${state.fat || 21.5}% (미입력시 이전값 유지)`;
-        if (fBadge) {
-          fBadge.textContent = "미감지 (이전값 유지)";
-          fBadge.className = "text-[10px] text-slate-400 font-bold";
+      if (warnBox) {
+        const list = (result.warnings || []).filter(w => w.level !== 'info');
+        if (!list.length) {
+          warnBox.classList.add('hidden');
+          warnBox.innerHTML = '';
+        } else {
+          warnBox.classList.remove('hidden');
+          warnBox.innerHTML = list.map(w => {
+            const icon = w.level === 'error' ? '⛔' : '⚠️';
+            return `<div class="flex gap-1.5"><span>${icon}</span><span>${w.msg}</span></div>`;
+          }).join('');
         }
       }
+    }
 
-      // Populate extended InBody metrics
-      const scoreIn = document.getElementById('ocrScoreInput');
-      const smmIn = document.getElementById('ocrSmmInput');
-      const bmrIn = document.getElementById('ocrBmrInput');
-      if (scoreIn) scoreIn.value = parsed.score || state.inbodyScore || 63;
-      if (smmIn) smmIn.value = parsed.skeletalMuscle || state.skeletalMuscle || 24.8;
-      if (bmrIn) bmrIn.value = parsed.bmr || state.bmr || 1330;
+    function openInbodyResultFromOcr(parsed, rawText, meta) {
+      const OC = window.OcrPipeline;
+      const prevW = prevRealValue('weight');
+      const prevF = prevRealValue('fat');
 
-      document.getElementById('ocrRawText').textContent = rawText.trim() || "(인식된 텍스트가 없습니다. 직접 수치를 입력하거나 수정할 수 있습니다.)";
+      const result = OC.validateFitnessScan(parsed, {
+        prevWeight: prevW, prevWeightIsReal: prevW !== null,
+        prevFat: prevF, prevFatIsReal: prevF !== null
+      });
+      const p = result.parsed;
+
+      lastScanResult = {
+        at: new Date().toLocaleString('ko-KR'),
+        parsed: p,
+        warnings: result.warnings,
+        rawText: rawText || '',
+        enginesTried: (meta && meta.enginesTried) || p.enginesTried || []
+      };
+
+      const wOk = fillScanInput('ocrWeightInput', p.weight, {
+        missingHint: prevW !== null ? `미감지 (기존 ${prevW}kg 유지)` : '미감지 — 직접 입력'
+      });
+      setScanBadge('ocrWeightConfidence',
+        wOk ? `✨ 인식 ${p.weight}kg` : (prevW !== null ? `미감지 (기존 ${prevW}kg 유지)` : '미감지 — 직접 입력'),
+        wOk ? 'ok' : 'warn');
+
+      const fOk = fillScanInput('ocrFatInput', p.fat, {
+        missingHint: prevF !== null ? `미감지 (기존 ${prevF}% 유지)` : '미감지 — 직접 입력'
+      });
+      setScanBadge('ocrFatConfidence',
+        fOk ? `✨ 인식 ${p.fat}%` : (prevF !== null ? `미감지 (기존 ${prevF}% 유지)` : '미감지 — 직접 입력'),
+        fOk ? 'ok' : 'warn');
+
+      // 확장 지표: 못 읽으면 빈칸. 63점 / 24.8kg / 1330kcal 기본값은 이제 넣지 않는다.
+      fillScanInput('ocrScoreInput', p.inbodyScore);
+      fillScanInput('ocrSmmInput', p.skeletalMuscle);
+      fillScanInput('ocrBmrInput', p.bmr);
+
+      const rawEl = document.getElementById('ocrRawText');
+      if (rawEl) rawEl.textContent = (rawText || '').trim() || "(인식된 텍스트가 없습니다. 직접 수치를 입력하거나 수정할 수 있습니다.)";
+
+      renderScanFeedback(result, meta);
       document.getElementById('ocrResultModal').classList.remove('hidden');
+    }
+
+    function copyScanReport() {
+      if (!lastScanResult) {
+        showFloatingToast('복사할 스캔 결과가 없습니다', '📋');
+        return;
+      }
+      const text = window.OcrPipeline.buildScanReport(lastScanResult);
+      copyTextToClipboard(text).then(ok => {
+        showFloatingToast(ok ? '스캔 리포트를 복사했습니다' : '복사 실패 — 아래 원문을 직접 선택해 주세요', ok ? '📋' : '⚠️');
+      });
     }
 
     function openRunningResultFromOcr(parsed, rawText = '') {
@@ -9476,7 +9885,7 @@ ${err.message}
     function applyOcrResult() {
       closeOcrModal(); // 1. Immediately close modal for instant responsive feedback
       try {
-        const prevWeight = state.weight || 64.1;
+        const prevWeight = prevRealValue('weight');
         const wInput = (document.getElementById('ocrWeightInput')?.value || '').trim();
         const fInput = (document.getElementById('ocrFatInput')?.value || '').trim();
 
@@ -9487,7 +9896,7 @@ ${err.message}
         let fatUpdated = false;
 
         // Weight: if entered/detected, update; otherwise keep previous state.weight
-        if (!isNaN(wVal) && wVal >= 35 && wVal <= 150) {
+        if (wInput !== '' && !isNaN(wVal) && wVal >= 30 && wVal <= 200) {
           state.weight = wVal;
           const cw = document.getElementById('currentWeightInput');
           if (cw) cw.value = state.weight;
@@ -9495,41 +9904,43 @@ ${err.message}
         }
 
         // Fat: if entered/detected, update; if BLANK, keep previous state.fat!
-        if (fInput !== '' && !isNaN(fVal) && fVal >= 5 && fVal <= 60) {
+        if (fInput !== '' && !isNaN(fVal) && fVal >= 3 && fVal <= 65) {
           state.fat = fVal;
           const cf = document.getElementById('currentFatInput');
           if (cf) cf.value = state.fat;
           fatUpdated = true;
         }
 
-        // Save extended InBody metrics
-        const scoreVal = parseInt(document.getElementById('ocrScoreInput')?.value, 10);
-        const smmVal = parseFloat(document.getElementById('ocrSmmInput')?.value);
-        const bmrVal = parseInt(document.getElementById('ocrBmrInput')?.value, 10);
+        // 확장 지표: 빈칸이면 아무것도 하지 않는다 (기본값 주입 금지)
+        const readNum = (id, isInt) => {
+          const el = document.getElementById(id);
+          if (!el) return null;
+          const raw = (el.value || '').trim();
+          if (raw === '') return null;
+          const n = isInt ? parseInt(raw, 10) : parseFloat(raw);
+          return isFinite(n) ? n : null;
+        };
+        const scoreVal = readNum('ocrScoreInput', true);
+        const smmVal = readNum('ocrSmmInput', false);
+        const bmrVal = readNum('ocrBmrInput', true);
 
-        if (!isNaN(scoreVal) && scoreVal >= 10 && scoreVal <= 120) state.inbodyScore = scoreVal;
-        if (!isNaN(smmVal) && smmVal >= 10 && smmVal <= 60) state.skeletalMuscle = smmVal;
-        if (!isNaN(bmrVal) && bmrVal >= 800 && bmrVal <= 3000) state.bmr = bmrVal;
+        if (scoreVal !== null && scoreVal >= 40 && scoreVal <= 100) state.inbodyScore = scoreVal;
+        if (smmVal !== null && smmVal >= 8 && smmVal <= 60) state.skeletalMuscle = smmVal;
+        if (bmrVal !== null && bmrVal >= 700 && bmrVal <= 3500) state.bmr = bmrVal;
 
-        if (!state.inbodyHistory) state.inbodyHistory = [];
-        state.inbodyHistory.push({
+        // 스냅샷은 "아는 값만" 담는다. 모르는 칸은 null 로 남겨서 나중에 구분할 수 있게 한다.
+        const snapshot = {
           date: getLocalDateString(),
           time: getKakaoTimeStr(),
-          weight: state.weight,
-          fat: state.fat,
-          score: state.inbodyScore || 63,
-          smm: state.skeletalMuscle || 24.8,
-          bmr: state.bmr || 1330
-        });
-
-        state.latestInBody = {
-          date: getLocalDateString(),
-          weight: state.weight,
-          fat: state.fat,
-          score: state.inbodyScore || 63,
-          smm: state.skeletalMuscle || 24.8,
-          bmr: state.bmr || 1330
+          weight: (typeof state.weight === 'number') ? state.weight : null,
+          fat: (typeof state.fat === 'number') ? state.fat : null,
+          score: (typeof state.inbodyScore === 'number') ? state.inbodyScore : null,
+          smm: (typeof state.skeletalMuscle === 'number') ? state.skeletalMuscle : null,
+          bmr: (typeof state.bmr === 'number') ? state.bmr : null
         };
+        if (!state.inbodyHistory) state.inbodyHistory = [];
+        state.inbodyHistory.push(Object.assign({}, snapshot));
+        state.latestInBody = snapshot;
 
         renderInbodyCardUI();
 
@@ -9545,13 +9956,19 @@ ${err.message}
         const wedBonusNote = isWed ? " (수요일 보너스 EXP 2배!)" : "";
         const curTime = getKakaoTimeStr();
         const distToGoal = Math.round((state.weight - 52.0) * 10) / 10.0;
-        const deltaW = Math.round((state.weight - prevWeight) * 10) / 10.0;
+        // 이전 실제 기록이 없으면(새 기기/샘플 상태) 증감 코멘트를 만들지 않는다.
+        const deltaW = (typeof prevWeight === 'number') ? Math.round((state.weight - prevWeight) * 10) / 10.0 : null;
 
         let gemText = "";
         let kotoneText = "";
         let mioText = "";
 
-        if (deltaW > 0.1) {
+        if (deltaW === null) {
+          // 첫 실제 체중 기록: 증감을 단정하지 않는다
+          gemText = `오? 체중 ${state.weight}kg, 확실히 적어뒀어. 이전 기록이 없으니까 늘었는지 줄었는지는 아직 몰라~ 다음 측정부터 제대로 보여줄 테니까 기대해, 허~접♥ 🐾`;
+          kotoneText = `프로듀서님, 첫 체중 기록이에요! ${state.weight}kg 잘 적어뒀어요~! 이제 코토네가 같이 추이를 지켜볼게요! 💛`;
+          mioText = `좋아, 캡틴! 이제 기준점이 생겼어. ${state.weight}kg에서 다음 기록이 어떻게 움직이는지 같이 보자구~! 👟`;
+        } else if (deltaW > 0.1) {
           // 1) 체중 증가 시
           gemText = `히익?! +${deltaW}kg 늘어났잖아?! 💢 어제 밤에 몰래 뭘 주워 먹은 거야?! 돼지 회원님, 배때지 쥐어짜 봐! 기름이 좔좔 흐르네 허~접♥ 당장 트랙으로 튀어나와! 🐾`;
           kotoneText = `히에에엑?! 프로듀서님, 몸무게가 +${deltaW}kg 늘었어요?! 앙대요오~! 제가 야식 방어 알바 실패한 것 같아서 맘이 찢어져요 ㅠㅠ 오늘 밤엔 얼음물만 마시기 코토네랑 무조건 약속해요! 😭💛`;
@@ -9575,9 +9992,11 @@ ${err.message}
           mioText = `오오옷!! -${loss}kg 쫙 빠졌잖아?! 역시 내 캡틴다워, 완전 나이스 파이팅이야~!! 이 기세로 52kg까지 전속력으로 돌파하자구! 🌟🔥`;
         }
 
-        const updateMsg = fatUpdated
-          ? `[체중 ${state.weight}kg / 체지방 ${state.fat}% 반영 완료]`
-          : `[체중 ${state.weight}kg 반영 완료 (체지방 ${state.fat}% 유지)]`;
+        const wTxt = weightUpdated ? `체중 ${state.weight}kg` : null;
+        const fTxt = fatUpdated ? `체지방 ${state.fat}%` : null;
+        const updateMsg = (wTxt || fTxt)
+          ? `[${[wTxt, fTxt].filter(Boolean).join(' / ')} 반영 완료]`
+          : '[변경된 수치 없음]';
 
         state.chatHistory.push({ room: 'all', sender: 'gemini', name: '제미니', text: `${updateMsg}\n${gemText}${wedBonusNote}`, time: curTime });
         state.chatHistory.push({ room: 'all', sender: 'kotone', name: '코토네', text: kotoneText, time: curTime });

@@ -1369,6 +1369,21 @@ function submitKotonohaQuizAnswer(optionIdx) {
       }
     }
   }
+  // 마지막 퀴즈 답안을 제출하는 즉시 레슨 완료를 기록 (TTS 대기 중 이탈해도 기록 보존)
+  if (qIdx + 1 >= lesson.quizzes.length) {
+    const todayStr = getLocalDateString();
+    if (state.kotonoha.lastStudyDate !== todayStr) {
+      state.kotonoha.streak = (state.kotonoha.streak || 0) + 1;
+      state.kotonoha.lastStudyDate = todayStr;
+    }
+    if (!Array.isArray(state.kotonoha.completedLessons)) state.kotonoha.completedLessons = [];
+    if (!state.kotonoha.completedLessons.includes(lesson.id)) {
+      state.kotonoha.completedLessons.push(lesson.id);
+      state.kotonoha.coins = (state.kotonoha.coins || 655) + 50;
+      state.kotonoha.kotodama = (state.kotonoha.kotodama || 65) + 25;
+      addBondExp(30);
+    }
+  }
   saveState(true);
 
   // 2. Gemini reaction bubble + Green explanation card
@@ -1411,19 +1426,12 @@ function submitKotonohaQuizAnswer(optionIdx) {
         renderKotonohaView();
         scrollKotonohaQuizBottom();
       } else {
-        // 모든 퀴즈 완료!
-        const todayStr = getLocalDateString();
-        if (state.kotonoha.lastStudyDate !== todayStr) {
-          state.kotonoha.streak = (state.kotonoha.streak || 0) + 1;
-          state.kotonoha.lastStudyDate = todayStr;
-        }
+        // 모든 퀴즈 완료! (완료 마킹/보상은 답안 제출 시점에 이미 저장 완료)
+        if (!Array.isArray(state.kotonoha.completedLessons)) state.kotonoha.completedLessons = [];
         if (!state.kotonoha.completedLessons.includes(lesson.id)) {
           state.kotonoha.completedLessons.push(lesson.id);
+          saveState(true);
         }
-        state.kotonoha.coins += 50;
-        state.kotonoha.kotodama += 25;
-        addBondExp(30);
-        saveState(true);
 
         kotonohaRuntime.quizChatMessages.push({
           role: 'lesson_complete',
