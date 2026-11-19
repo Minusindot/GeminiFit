@@ -1,38 +1,39 @@
 {
-  "updatedAt": "2026-11-18T12:59:30.543Z",
-  "lastActiveDate": "2026-11-18",
+  "updatedAt": "2026-11-19T04:19:18.805Z",
+  "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 66.4,
   "fat": 31.8,
   "bondRank": 9,
-  "bondExp": 50,
+  "bondExp": 65,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
-  "currentSituation": "ev3",
+  "currentSituation": "ev14",
   "absDone": false,
   "runDone": false,
   "runDist": 6.01,
   "rehab": [
-    true
+    false
   ],
+  "rehabSets": 1,
   "meals": [
     false,
-    false,
+    true,
     false
   ],
   "teaLog": {
-    "matcha": 1,
-    "espresso": 2,
-    "tea": 1
+    "matcha": 0,
+    "espresso": 0,
+    "tea": 0
   },
   "gymRoutine": {
     "upper1": {
       "name": "랫 풀 다운",
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "weight": "25kg × 20회",
       "reps": 20,
@@ -41,10 +42,10 @@
     "upper2": {
       "name": "EZ바",
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "weight": "10kg",
       "reps": 20,
@@ -53,10 +54,10 @@
     "lower": {
       "name": "V 스쿼트",
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "weight": "맨몸 × 20회",
       "reps": 20,
@@ -65,7 +66,7 @@
     "legRaise": {
       "name": "캡틴스 체어 레그레이즈",
       "sets": [
-        true
+        false
       ],
       "target": "15회",
       "reps": 50,
@@ -74,14 +75,14 @@
     "crunch": {
       "name": "크런치",
       "sets": [
-        true,
-        true
+        false,
+        false
       ],
       "target": "20회",
       "reps": 50,
       "targetSets": 2
     },
-    "allDone": true
+    "allDone": false
   },
   "gymHistory": [
     {
@@ -251,6 +252,29 @@
       "totalReps": 390
     }
   ],
+  "kotonoha": {
+    "coins": 1915,
+    "kotodama": 837,
+    "streak": 4,
+    "lastStudyDate": "2026-11-18",
+    "completedLessons": [
+      "day1",
+      "day2",
+      "day3",
+      "day6"
+    ],
+    "customAiLessons": [],
+    "activeLessonIdx": 6,
+    "showPron": true,
+    "quizStats": {
+      "total": 49,
+      "correct": 48,
+      "wrongWords": [
+        "傘"
+      ]
+    },
+    "selectedSeason": 1
+  },
   "latestRun": {
     "id": "run-1794460852153",
     "date": "2026-11-12",
@@ -626,16 +650,6 @@
     {
       "sender": "mio",
       "name": "미오",
-      "text": "미오가 템포 메트로놈이 되어줄게. 템포 180bpm 맞춰서 같이 미친 듯이 달려보자! 🖐️"
-    },
-    {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "7시쯤으로 미뤄줘요 🕖"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
       "text": "음, 그래, 안전이 먼저지! 7시 해 뜬 공기도 만만치 않아!"
     },
     {
@@ -768,6 +782,15 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "고생하셨사오니 어깨부터 정성껏 풀어드리겠사와요. 남은 재활 2kg 세트도 함께 하시지요 🍵"
+    },
+    {
+      "sender": "user",
+      "text": "📸 [14:00 단백질 간식 인증 사진]"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "식단 사진 확인 완료! 클린하게 챙겨 먹어서 기특하네. 17시 이후에는 절대 칼로리 섭취 금지야! 🐾"
     }
   ]
 }
