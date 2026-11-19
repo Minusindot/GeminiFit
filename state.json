@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-19T12:49:25.562Z",
+  "updatedAt": "2026-11-19T12:50:01.788Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 11,
-  "bondExp": 15,
+  "bondExp": 30,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev1",
@@ -18,7 +18,7 @@
   "rehabSets": 1,
   "meals": [
     true,
-    false,
+    true,
     false
   ],
   "mealLogs": [
@@ -30,6 +30,15 @@
       "kcal": 0,
       "protein": 0,
       "tag": "클린"
+    },
+    {
+      "id": "meal-1795092601787",
+      "slot": "저녁",
+      "time": "16:49",
+      "name": "에프 오야꼬동",
+      "kcal": 0,
+      "protein": 0,
+      "tag": "단백질"
     }
   ],
   "teaLog": {
