@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.10</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.11</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -1459,7 +1459,7 @@
           <button onclick="quickAddMeal('일반식 밥 반공기', 450, 20, '조절')" class="shrink-0 px-2 py-1 rounded-full bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-400/30 text-[10px] font-black active:scale-95 transition-all">🍚 일반식 반공기</button>
         </div>
 
-        <!-- Today's Meal Add Toggle Button (Collapsible Composer, v4.6.10) -->
+        <!-- Today's Meal Add Toggle Button (Collapsible Composer, v4.6.11) -->
         <button type="button" id="btnToggleMealComposer" onclick="toggleMealComposer()" class="w-full py-2 rounded-xl border border-dashed border-pink-400/60 bg-pink-500/5 hover:bg-pink-500/10 text-pink-600 dark:text-pink-300 text-xs font-black flex items-center justify-center gap-1.5 active:scale-[0.99] transition-all">
           <span id="mealComposerToggleIcon" class="w-4 h-4 rounded-full bg-pink-500 text-white text-[11px] flex items-center justify-center leading-none">+</span>
           <span id="mealComposerToggleText">식단 직접 추가 / 사진 인증</span>
@@ -5800,14 +5800,15 @@
         if (!epRuntime || epRuntime.gen !== gen || epRuntime.room !== room) return;
         const line = normalizeEpisodeLine(lines[idx]);
 
-        // Typing indicator (room-scoped), then message
+        // Typing indicator duration scales naturally with upcoming line length (520ms ~ 1450ms)
+        const typingMs = Math.max(520, Math.min(1450, 480 + line.text.length * 14));
         activeTypingIndicator = {
           sender: room === 'dual' ? 'dual' : room,
           name: room === 'dual' ? '제미니 · 코토네 · 미오' : (room === 'kotone' ? '코토네' : room === 'mio' ? '미오' : '제미니')
         };
         renderChat();
         scrollChatToBottom();
-        await vnSleep(vnSkipMode ? 40 : 560);
+        await vnSleep(vnSkipMode ? 40 : typingMs);
         if (!epRuntime || epRuntime.gen !== gen || epRuntime.room !== room) return;
         activeTypingIndicator = null;
         state.chatHistory.push(epSpeakerEntry(room, line.text, epId, { image: line.image, caption: line.caption }));
@@ -5819,8 +5820,13 @@
           setVnSceneVisual(line, idx, total);
           typeVnLine(line.text, gen);
           await waitVnAdvance(gen, line.text.length);
+        } else if (idx < total - 1) {
+          // Reading pause scales with just-sent message length + extra time for photo bubbles (900ms ~ 3200ms)
+          const readMs = Math.max(900, Math.min(3200, 700 + line.text.length * 26 + (line.image ? 900 : 0)));
+          await vnSleep(vnSkipMode ? 40 : readMs);
         } else {
-          await vnSleep(vnSkipMode ? 40 : 520 + Math.random() * 480);
+          // Short beat before showing choices or finishing
+          await vnSleep(vnSkipMode ? 40 : 480);
         }
       }
       if (epRuntime && epRuntime.gen === gen && done) done();
@@ -6532,7 +6538,7 @@
       const ctx = buildTalkContext();
       const recEp = pickRecommendedEpisode(room, key);
 
-      // Single streamlined flow (v4.6.10):
+      // Single streamlined flow (v4.6.11):
       // Sync pill -> immediately launch the best-matching unwatched Training Talk episode
       // (which already embeds live weight/workout/protein/meal variables + photos),
       // so there's no awkward double-conversation!
@@ -8007,7 +8013,7 @@ ${err.message}
       }).join('');
     }
 
-    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.6.10) ----------
+    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.6.11) ----------
     const CARDIO_LABELS = { treadmill: '🏃‍♂️ 러닝머신', stair: '🪜 천국의 계단', outdoor: '🏃 야외 러닝' };
 
     function selectCardioMode(mode) {
@@ -12549,7 +12555,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.6.10 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.6.11 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
