@@ -1954,8 +1954,10 @@ function renderKotonohaView() {
                 return `
                   <button onclick="selectKotonohaLesson(${item.globalIdx})" data-ep-active="${isActive ? '1' : '0'}" class="w-full p-2 sm:p-2.5 rounded-xl border text-left transition-all flex items-center justify-between group ${isActive ? 'bg-[#3b232c] border-[#e0465a] text-white shadow-md ring-1 ring-[#e0465a]/50' : 'bg-[#20181c] border-[#34262c] text-[#ab948f] hover:border-[#5e3846] hover:bg-[#281c22]'}">
                     <div class="flex items-center gap-2.5 min-w-0">
-                      <span class="px-2 py-0.5 rounded-lg text-[10px] font-black shrink-0 ${isActive ? 'bg-[#e0465a] text-white shadow' : 'bg-[#2b1c22] text-[#f28b9b] border border-[#482e37]'}">
-                        ${isDone ? '✅ ' : '🍵 '}${epBadge}
+                      <span class="px-2 py-0.5 rounded-lg text-[10px] font-black shrink-0 ${isDone
+                        ? (isActive ? 'bg-emerald-500 text-white shadow' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/50')
+                        : (isActive ? 'bg-[#e0465a] text-white shadow' : 'bg-[#2b1c22] text-[#f7b2be] border border-[#5e3846]')}">
+                        ${isDone ? '✓ ' : '▶ '}${epBadge}
                       </span>
                       <div class="min-w-0">
                         <div class="text-xs font-bold ${isActive ? 'text-white' : 'text-[#e6d6d2]'} truncate">${item.titleKo}</div>
