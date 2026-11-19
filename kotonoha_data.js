@@ -623,7 +623,7 @@ window.KOTONOHA_LESSONS = [
         "type": "교토·간사이 연애 표현",
         "promptJp": "「うちはプロデューサーはんが<ruby>好<rt>す</rt></ruby>きや」の「うち」は？",
         "promptPron": "우치와 푸로듀-사-항가 스키야노 우치와?",
-        "promptKo": "간사이 여성이 쓰는 1인칭 대명사 「うち」의 뜻은?",
+        "promptKo": "「うち」가 가리키는 사람은 누구일까요?",
         "targetWord": "うち",
         "targetSub": "제가 저 자신을 가리킬 때 쓰는 말도스 🌸",
         "options": [
@@ -1405,7 +1405,7 @@ window.KOTONOHA_LESSONS = [
         "type": "간사이 방언 · 형용사",
         "promptJp": "간사이에서 '좋다(いい)'를 뜻하는 대표적인 단어는?",
         "promptPron": "에에",
-        "promptKo": "좋은 날씨 = ええ天気!",
+        "promptKo": "표준어 いい(이이)를 간사이식으로 줄인 말이에요 ✨",
         "targetWord": "ええ",
         "targetSub": "표준어 いい(이이)의 방언 ✨",
         "options": [
@@ -1761,7 +1761,7 @@ window.KOTONOHA_LESSONS = [
         "type": "간사이 방언 · 부사",
         "promptJp": "'빨리, 얼른(早く)'을 뜻하는 간사이 사투리는?",
         "promptPron": "하요",
-        "promptKo": "はよ行こ！(얼른 가자!)",
+        "promptKo": "早く(하야쿠)가 줄어든 부사예요 🏃",
         "targetWord": "はよ",
         "targetSub": "早く(하야쿠)의 간사이 줄임말 🏃",
         "options": [
@@ -2105,7 +2105,7 @@ window.KOTONOHA_LESSONS = [
         "type": "교토 방언 · 권유",
         "promptJp": "'~합시다(〜ましょう)'를 뜻하는 교토 아가씨 말투는?",
         "promptPron": "~마효",
-        "promptKo": "함께 차를 마십시다 -> お茶を飲みまひょ 🍵",
+        "promptKo": "권유의 뜻을 담은 교토 특유의 어미예요 🍵",
         "targetWord": "〜まひょ",
         "targetSub": "부드러운 교토식 권유 표현",
         "options": [
@@ -2709,7 +2709,7 @@ window.KOTONOHA_LESSONS = [
         "type": "N4 시설 명사 · 역",
         "promptJp": "전철역에서 표나 교통카드를 찍고 드나드는 '개찰구'의 일본어는?",
         "promptPron": "카이사츠구치",
-        "promptKo": "한자: 改札口 🎟️",
+        "promptKo": "역에서 표나 교통카드를 찍고 지나가는 곳이에요 🎟️",
         "targetWord": "改札口",
         "targetSub": "음독: かいさつぐち",
         "options": [
@@ -2847,7 +2847,7 @@ window.KOTONOHA_LESSONS = [
         "type": "N3 명사 · 증상",
         "promptJp": "현대인의 고질병인 '어깨 결림'을 일컫는 일본어는?",
         "promptPron": "카타코리",
-        "promptKo": "한자: 肩こり 🩹",
+        "promptKo": "목과 어깨가 뭉칠 때 쓰는 말이에요 🩹",
         "targetWord": "肩こり",
         "targetSub": "肩(어깨) + こり(결림)",
         "options": [
@@ -2966,7 +2966,7 @@ window.KOTONOHA_LESSONS = [
         "type": "N3 심리 어휘 · 동사",
         "promptJp": "칭찬받거나 시선을 받아 '쑥스러워하다 / 부끄러워하다'를 뜻하는 동사는?",
         "promptPron": "테레루",
-        "promptKo": "한자: 照れる 😳",
+        "promptKo": "칭찬받으면 얼굴이 빨개지는 그 감정이에요 😳",
         "targetWord": "照れる",
         "targetSub": "부끄러워 붉어지는 모습",
         "options": [
@@ -3004,7 +3004,7 @@ window.KOTONOHA_LESSONS = [
         "type": "N4 필수 동사 · 학습",
         "promptJp": "단어나 지식을 머릿속에 '외우다 / 기억하다'를 뜻하는 단어는?",
         "promptPron": "오보에루",
-        "promptKo": "한자: 覚える 🧠",
+        "promptKo": "머릿속에 넣는다는 느낌의 동사예요 🧠",
         "targetWord": "覚える",
         "targetSub": "하일단 동사 (2그룹)",
         "options": [
@@ -3130,7 +3130,7 @@ window.KOTONOHA_LESSONS = [
         "type": "N3 명사 · 모습 및 차림새",
         "promptJp": "특정한 복장이나 옷차림을 한 모습을 뜻하는 단어는?",
         "promptPron": "스가타",
-        "promptKo": "한자: 姿 (에프론 스가타 등) 👗",
+        "promptKo": "사람의 차림새나 겉모습을 가리키는 명사예요 👗",
         "targetWord": "姿",
         "targetSub": "훈독: すがた",
         "options": [
@@ -3149,7 +3149,7 @@ window.KOTONOHA_LESSONS = [
         "type": "축하 · 연회 표현",
         "promptJp": "축하 자리에서 잔을 부딪히며 외치는 '건배!'는?",
         "promptPron": "칸파이",
-        "promptKo": "한자: 乾杯 🥂",
+        "promptKo": "잔을 마주치며 외치는 짧은 감탄사예요 🥂",
         "targetWord": "乾杯",
         "targetSub": "음독: かんぱい",
         "options": [
@@ -3283,7 +3283,7 @@ window.KOTONOHA_LESSONS = [
         "type": "N4 명사 · 성적",
         "promptJp": "시험에서 하나도 맞히지 못한 '0점'을 뜻하는 단어는?",
         "promptPron": "레이텐",
-        "promptKo": "한자: 零点 📝",
+        "promptKo": "시험지에 맞힌 표시가 하나도 없을 때의 점수예요 📝",
         "targetWord": "零点",
         "targetSub": "음독: れいてん",
         "options": [
@@ -3302,7 +3302,7 @@ window.KOTONOHA_LESSONS = [
         "type": "N3 명사 · 백지",
         "promptJp": "아무것도 쓰이지 않은 '백지'를 뜻하는 단어는?",
         "promptPron": "하쿠시",
-        "promptKo": "한자: 白紙 📄",
+        "promptKo": "아무것도 쓰이지 않은 하얀 종이예요 📄",
         "targetWord": "白紙",
         "targetSub": "음독: はくし",
         "options": [
@@ -3321,7 +3321,7 @@ window.KOTONOHA_LESSONS = [
         "type": "N3 명사 · 성장 여지",
         "promptJp": "앞으로 더 성장할 수 있는 '성장 여지'를 뜻하는 말은?",
         "promptPron": "노비시로",
-        "promptKo": "한자: 伸びしろ 🌱",
+        "promptKo": "앞으로 더 성장할 수 있는 여지를 뜻하는 요즘 말이에요 🌱",
         "targetWord": "伸びしろ",
         "targetSub": "훈독: のびしろ",
         "options": [
@@ -3340,7 +3340,7 @@ window.KOTONOHA_LESSONS = [
         "type": "N3 명사 · 재출발",
         "promptJp": "실패한 뒤 마음을 고쳐 다시 시작하는 '재출발'은?",
         "promptPron": "사이슈츠파츠",
-        "promptKo": "한자: 再出発 🚩",
+        "promptKo": "실패한 뒤 마음을 고쳐 다시 첫걸음을 떼는 일이에요 🚩",
         "targetWord": "再出発",
         "targetSub": "음독: さいしゅつぱつ",
         "options": [
@@ -3359,7 +3359,7 @@ window.KOTONOHA_LESSONS = [
         "type": "N4 명사 · 약속",
         "promptJp": "상대와 굳게 정한 '약속'을 뜻하는 단어는?",
         "promptPron": "야쿠소쿠",
-        "promptKo": "한자: 約束 🤙",
+        "promptKo": "상대와 굳게 정한 것을 뜻하는 말이에요 🤙",
         "targetWord": "約束",
         "targetSub": "음독: やくそく",
         "options": [

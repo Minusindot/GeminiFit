@@ -1249,10 +1249,41 @@ function startKotonohaQuiz() {
   prepareAndStartKotonoha('quiz');
 }
 
+function kotonohaStripQuizReading(value) {
+  return String(value == null ? '' : value)
+    .replace(/<rt>.*?<\/rt>/gi, '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/（[^）]*）|\([^)]*\)/g, '')
+    .replace(/[\s\u3000~〜\-－·.。、/／]/g, '');
+}
+
+// True when the big "target" card would be identical to the correct option, e.g. showing
+// "お水をください" right above options that include "お水をください". Those quizzes ask for the
+// Japanese phrase itself, so the card must show the Korean cue instead of the answer.
+function kotonohaQuizExposesAnswer(q) {
+  if (!q) return false;
+  const target = kotonohaStripQuizReading(q.targetWord);
+  const answer = kotonohaStripQuizReading((q.options || [])[q.answerIndex]);
+  if (!target || !answer) return false;
+  return answer.includes(target) || target.includes(answer);
+}
+
+// Pull the Korean cue out of the question text ("식당에서 '물 주세요'라고 …" → "물 주세요").
+// Only quoted Korean is trusted: `promptKo` sometimes carried the answer itself, so a vague UI
+// (prompt bubble only) is safer than showing a spoiler.
+function kotonohaQuizCueKo(q) {
+  if (!q) return '';
+  const plain = String(q.promptJp || '').replace(/<ruby>.*?<\/ruby>/gi, '');
+  const quoted = plain.match(/[''""「『]([^''""」』]{1,24})[''""」』]/);
+  if (quoted && /[가-힣]/.test(quoted[1])) return quoted[1].trim();
+  return '';
+}
+
 function pushQuizQuestionToChat(qIdx) {
   const lesson = getCurrentKotonohaLesson();
   if (!lesson || !lesson.quizzes[qIdx]) return;
   const q = lesson.quizzes[qIdx];
+  const exposesAnswer = kotonohaQuizExposesAnswer(q);
 
   kotonohaRuntime.quizChatMessages.push({
     role: 'question',
@@ -1262,10 +1293,13 @@ function pushQuizQuestionToChat(qIdx) {
     promptPron: q.promptPron,
     promptKo: q.promptKo,
     targetWord: q.targetWord,
-    targetSub: q.targetSub
+    targetSub: q.targetSub,
+    exposesAnswer: exposesAnswer,
+    cueKo: exposesAnswer ? kotonohaQuizCueKo(q) : ''
   });
   setTimeout(() => {
-    speakJapanese(q.targetWord || q.promptJp, 'gemini');
+    // Speaking the target card would read the answer aloud before the user picks.
+    if (!exposesAnswer) speakJapanese(q.targetWord || q.promptJp, 'gemini');
     scrollKotonohaQuizBottom();
   }, 450);
 }
@@ -2110,19 +2144,38 @@ function renderKotonohaView() {
         <div id="kotonohaQuizScroll" class="p-4 space-y-3.5 max-h-[430px] overflow-y-auto clean-scroll bg-[#171214]">
           ${kotonohaRuntime.quizChatMessages.map(msg => {
             if (msg.role === 'question') {
-              return `
-                <div class="flex items-start gap-2.5">
-                  <img src="./image/03 gemini/avatar_gemini.png" class="w-8 h-8 rounded-full object-cover ring-1 ring-[#e0465a] shrink-0 mt-1">
-                  <div class="space-y-2 max-w-[85%]">
-                    <div class="text-[11px] font-bold text-[#b89d97]">ジェミニ</div>
-                    <!-- Prompt Bubble -->
-                    <div onclick="speakJapanese('${(msg.targetWord || '').replace(/'/g, "\\'")}', 'gemini')" class="p-3 rounded-2xl bg-[#241c20] border border-[#382b31] cursor-pointer hover:border-[#634551] transition-all inline-block">
-                      <div class="text-sm font-black text-white">${msg.promptJp}</div>
-                      ${showPron && msg.promptPron ? `<div class="text-[11px] text-[#f29aa8] mt-0.5">${msg.promptPron}</div>` : ''}
-                      <div class="text-xs text-[#b89d97] mt-0.5">${msg.promptKo}</div>
-                    </div>
+              const hintBlock = msg.targetSub ? `
+                      <div class="text-center mt-2.5">
+                        ${kotonohaRuntime.revealedHints && kotonohaRuntime.revealedHints[msg.qIdx] ? `
+                          <div class="p-2 sm:p-2.5 rounded-xl bg-[#1b1417] border border-[#543340] text-xs text-[#ffdbe2] leading-relaxed text-left animate-fadeIn">
+                            <div class="flex items-center justify-between text-[10px] font-black text-[#f28b9b] mb-1">
+                              <span>💡 문제 힌트</span>
+                              <button onclick="event.stopPropagation(); toggleKotonohaQuizHint(${msg.qIdx})" class="text-[#ab908a] hover:text-[#ffd6de] text-[10px]">숨기기 ▴</button>
+                            </div>
+                            ${msg.targetSub}
+                          </div>
+                        ` : `
+                          <button onclick="event.stopPropagation(); toggleKotonohaQuizHint(${msg.qIdx})" class="px-3 py-1 rounded-full bg-[#2c1d23] hover:bg-[#3d2630] border border-[#52333f] hover:border-[#e0465a] text-[11px] font-black text-[#f2a6b2] hover:text-white transition-all shadow-xs inline-flex items-center gap-1.5 active:scale-95">
+                            <span>💡 힌트 보기</span>
+                            <span class="text-[9px] text-[#ab8a83]">(터치하여 확인)</span>
+                          </button>
+                        `}
+                      </div>` : '';
 
-                    <!-- Big Target Kanji / Phrase Card (Screenshot 4 Q2 style) -->
+              // Quizzes that ask for the Japanese phrase must not print it on the big card:
+              // show the Korean cue and keep the answer only inside the options.
+              const bigCard = msg.exposesAnswer ? (msg.cueKo ? `
+                    <div class="p-4 rounded-2xl bg-[#241c20] border border-[#3d2d35]">
+                      <div class="flex items-center justify-between text-[11px] font-black text-[#e0465a] mb-2">
+                        <span>Q${msg.qIdx + 1} · ${msg.type}</span>
+                        <span class="text-[10px] text-[#a88e88]">이 뜻에 맞는 일본어를 고르세요</span>
+                      </div>
+                      <div class="text-center py-2">
+                        <span class="text-2xl sm:text-3xl font-black text-white border-b-2 border-[#e0465a] pb-1 px-2">${msg.cueKo}</span>
+                      </div>
+                      ${hintBlock}
+                    </div>
+              ` : '') : `
                     <div onclick="speakJapanese('${(msg.targetWord || '').replace(/'/g, "\\'")}', 'gemini')" class="p-4 rounded-2xl bg-[#241c20] border border-[#3d2d35] cursor-pointer hover:border-[#e0465a] transition-all">
                       <div class="flex items-center justify-between text-[11px] font-black text-[#e0465a] mb-2">
                         <span>Q${msg.qIdx + 1} · ${msg.type}</span>
@@ -2131,25 +2184,24 @@ function renderKotonohaView() {
                       <div class="text-center py-2">
                         <span class="text-2xl sm:text-3xl font-black text-white border-b-2 border-[#e0465a] pb-1 px-2">${msg.targetWord}</span>
                       </div>
-                      ${msg.targetSub ? `
-                        <div class="text-center mt-2.5">
-                          ${kotonohaRuntime.revealedHints && kotonohaRuntime.revealedHints[msg.qIdx] ? `
-                            <div class="p-2 sm:p-2.5 rounded-xl bg-[#1b1417] border border-[#543340] text-xs text-[#ffdbe2] leading-relaxed text-left animate-fadeIn">
-                              <div class="flex items-center justify-between text-[10px] font-black text-[#f28b9b] mb-1">
-                                <span>💡 문제 힌트</span>
-                                <button onclick="event.stopPropagation(); toggleKotonohaQuizHint(${msg.qIdx})" class="text-[#ab908a] hover:text-[#ffd6de] text-[10px]">숨기기 ▴</button>
-                              </div>
-                              ${msg.targetSub}
-                            </div>
-                          ` : `
-                            <button onclick="event.stopPropagation(); toggleKotonohaQuizHint(${msg.qIdx})" class="px-3 py-1 rounded-full bg-[#2c1d23] hover:bg-[#3d2630] border border-[#52333f] hover:border-[#e0465a] text-[11px] font-black text-[#f2a6b2] hover:text-white transition-all shadow-xs inline-flex items-center gap-1.5 active:scale-95">
-                              <span>💡 힌트 보기</span>
-                              <span class="text-[9px] text-[#ab8a83]">(터치하여 확인)</span>
-                            </button>
-                          `}
-                        </div>
-                      ` : ''}
+                      ${hintBlock}
                     </div>
+              `;
+
+              return `
+                <div class="flex items-start gap-2.5">
+                  <img src="./image/03 gemini/avatar_gemini.png" class="w-8 h-8 rounded-full object-cover ring-1 ring-[#e0465a] shrink-0 mt-1">
+                  <div class="space-y-2 max-w-[85%]">
+                    <div class="text-[11px] font-bold text-[#b89d97]">ジェミニ</div>
+                    <!-- Prompt Bubble -->
+                    <div ${msg.exposesAnswer ? '' : `onclick="speakJapanese('${(msg.targetWord || '').replace(/'/g, "\\'")}', 'gemini')"`} class="p-3 rounded-2xl bg-[#241c20] border border-[#382b31] ${msg.exposesAnswer ? '' : 'cursor-pointer hover:border-[#634551]'} transition-all inline-block">
+                      <div class="text-sm font-black text-white">${msg.promptJp}</div>
+                      ${showPron && msg.promptPron && !msg.exposesAnswer ? `<div class="text-[11px] text-[#f29aa8] mt-0.5">${msg.promptPron}</div>` : ''}
+                      <div class="text-xs text-[#b89d97] mt-0.5">${msg.promptKo}</div>
+                    </div>
+
+                    ${bigCard}
+                    ${msg.exposesAnswer && !msg.cueKo ? hintBlock : ''}
                   </div>
                 </div>
               `;
