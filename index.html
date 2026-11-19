@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.06</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.07</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -1051,8 +1051,8 @@
           <div class="flex items-center gap-1.5">
             <span class="text-base">🏃</span>
             <div>
-              <span class="text-xs font-black text-slate-800 dark:text-slate-100">러닝 & 유산소 완주 대시보드</span>
-              <span class="text-[9px] text-orange-500 font-bold block">삼성헬스 · 나이키런(NRC) 캡처 자동 연동</span>
+              <span class="text-xs font-black text-slate-800 dark:text-slate-100">유산소</span>
+              <span class="text-[9px] text-orange-500 font-bold block">러닝머신 · 천국의 계단 · 야외 러닝 · 캡처 연동</span>
             </div>
           </div>
           <div class="flex items-center gap-1">
@@ -1110,17 +1110,29 @@
           </div>
         </div>
 
-        <!-- Safe Running Check & Tennis Elbow Protection Note -->
-        <label class="flex items-center justify-between p-2.5 rounded-xl sub-box cursor-pointer hover:border-orange-400 transition-all">
-          <div class="flex items-center gap-2.5">
-            <input type="checkbox" id="chkRun" class="w-4 h-4 rounded accent-orange-500" onchange="updateRoutine()">
-            <div>
-              <div class="text-xs font-bold text-slate-800 dark:text-slate-200">오늘 5km+ 야외 러닝 완주 체크</div>
-              <div class="text-[10px] text-slate-400">미오 전담 유산소 파트너 코칭 완료</div>
+        <!-- Flexible Cardio Check (러닝머신 / 천국의 계단 / 야외 러닝) -->
+        <div class="p-2.5 rounded-xl sub-box space-y-2 hover:border-orange-400 transition-all">
+          <label class="flex items-center justify-between cursor-pointer">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <input type="checkbox" id="chkRun" class="w-4 h-4 rounded accent-orange-500 shrink-0" onchange="updateRoutine()">
+              <div class="min-w-0">
+                <div id="cardioCheckTitle" class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">오늘 유산소 완주 체크</div>
+                <div class="text-[10px] text-slate-400 truncate">러닝머신 · 천국의 계단 · 야외 러닝 모두 인정</div>
+              </div>
+            </div>
+            <span class="text-[10px] font-mono text-orange-500 font-extrabold shrink-0">+50 EXP</span>
+          </label>
+          <div class="flex items-center gap-1 flex-wrap pt-1 border-t border-slate-200/60 dark:border-slate-700/50">
+            <button type="button" onclick="selectCardioMode('treadmill')" id="cardioBtn_treadmill" class="px-2 py-1 rounded-lg text-[10px] font-black border transition-all">🏃‍♂️ 러닝머신</button>
+            <button type="button" onclick="selectCardioMode('stair')" id="cardioBtn_stair" class="px-2 py-1 rounded-lg text-[10px] font-black border transition-all">🪜 천국의 계단</button>
+            <button type="button" onclick="selectCardioMode('outdoor')" id="cardioBtn_outdoor" class="px-2 py-1 rounded-lg text-[10px] font-black border transition-all">🏃 야외 러닝</button>
+            <div class="ml-auto flex items-center gap-1">
+              <button type="button" onclick="quickLogIndoorCardio(20)" class="px-1.5 py-0.5 rounded-md bg-orange-500/15 hover:bg-orange-500/25 text-orange-600 dark:text-orange-300 text-[9px] font-black active:scale-95">20분</button>
+              <button type="button" onclick="quickLogIndoorCardio(30)" class="px-1.5 py-0.5 rounded-md bg-orange-500/15 hover:bg-orange-500/25 text-orange-600 dark:text-orange-300 text-[9px] font-black active:scale-95">30분</button>
+              <button type="button" onclick="quickLogIndoorCardio(45)" class="px-1.5 py-0.5 rounded-md bg-orange-500/15 hover:bg-orange-500/25 text-orange-600 dark:text-orange-300 text-[9px] font-black active:scale-95">45분</button>
             </div>
           </div>
-          <span class="text-[10px] font-mono text-orange-500 font-extrabold">+50 EXP</span>
-        </label>
+        </div>
 
         <!-- 14분 아이돌 복근 만들기 (YouTube 영상 연동 체크리스트) -->
         <div class="flex items-center justify-between p-2.5 rounded-xl sub-box hover:border-rose-400 transition-all">
@@ -1150,34 +1162,32 @@
       <!-- 5. 🏋️ 헬스장 풀코스 체크 (상체2 + 하체1 + 캡틴스 체어 레그레이즈 + 크런치) -->
       <!-- 4. Gym Full-Course Routine (보통 20회 x 4세트 / 레그레이즈 50회 1세트 / 크런치 50회 2세트) -->
       <div class="game-card p-3.5 space-y-3 border-l-4 border-l-sky-500">
-        <div class="flex flex-wrap items-start justify-between gap-x-2 gap-y-2 pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
-          <div class="flex items-center gap-1.5 min-w-[170px] flex-1">
-            <span class="text-base shrink-0">🏋️</span>
-            <div class="min-w-0">
-              <span class="text-xs font-black text-slate-800 dark:text-slate-100">헬스장 루틴 & 세트 기록</span>
-              <span class="text-[9px] text-sky-500 font-bold block">기본 20회×4세트 · 레그레이즈 50회×1세트 · 크런치 50회×2세트</span>
+        <div class="space-y-2 pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5 min-w-0 flex-1">
+              <span class="text-base shrink-0">🏋️</span>
+              <div class="min-w-0">
+                <span class="text-xs font-black text-slate-800 dark:text-slate-100 block truncate">헬스장 루틴 & 세트 기록</span>
+                <span class="text-[9px] text-sky-500 font-bold block truncate">기본 20회×4세트 · 레그레이즈 50회×1 · 크런치 50회×2</span>
+              </div>
             </div>
-          </div>
-          <div class="flex items-center gap-1.5 shrink-0 flex-wrap justify-end">
-            <button onclick="openWorkoutRecommendModal()" class="px-2.5 py-1 rounded-lg bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-pink-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-700 dark:text-amber-300 border border-amber-400/40 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all active:scale-[0.98] whitespace-nowrap shrink-0" title="최근 1주일 운동 분석 기반 오늘 맞춤 루틴 자동 추천">
-              <span>✨</span>
-              <span>오늘 운동 추천받기</span>
-            </button>
-            <button onclick="openExerciseManageModal()" class="px-2 py-1 rounded-lg sub-box text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all hover:border-sky-400 whitespace-nowrap shrink-0" title="운동 종목 목록 추가 및 관리">
-              <span>⚙️</span>
-              <span>종목 관리</span>
-            </button>
-            <button onclick="startRestTimer(60)" class="px-2 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border border-emerald-400/30 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all whitespace-nowrap shrink-0" title="세트 간 휴식 타이머 시작">
-              <span>⏱️</span>
-              <span>휴식 60초</span>
-            </button>
-            <button onclick="openWorkoutGraphModal()" class="px-2 py-1 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-600 dark:text-sky-300 border border-sky-400/30 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all whitespace-nowrap shrink-0" title="운동 세트 & 횟수 비교 그래프">
-              <span>📊</span>
-              <span>세트 그래프</span>
-            </button>
             <span id="gymProgressBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 font-black border border-sky-400/30 whitespace-nowrap shrink-0">
               0 / 5 완료
             </span>
+          </div>
+          <div class="grid grid-cols-4 gap-1.5 w-full">
+            <button onclick="openWorkoutRecommendModal()" class="px-1.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-pink-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-700 dark:text-amber-300 border border-amber-400/40 text-[10px] font-black flex items-center justify-center gap-1 shadow-xs transition-all active:scale-[0.98] min-w-0 truncate" title="최근 1주일 운동 분석 기반 오늘 맞춤 루틴 자동 추천">
+              <span>✨</span><span class="truncate">추천</span>
+            </button>
+            <button onclick="openExerciseManageModal()" class="px-1.5 py-1.5 rounded-lg sub-box text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700 text-[10px] font-black flex items-center justify-center gap-1 shadow-xs transition-all hover:border-sky-400 min-w-0 truncate" title="운동 종목 목록 추가 및 관리">
+              <span>⚙️</span><span class="truncate">종목</span>
+            </button>
+            <button onclick="startRestTimer(60)" class="px-1.5 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border border-emerald-400/30 text-[10px] font-black flex items-center justify-center gap-1 shadow-xs transition-all min-w-0 truncate" title="세트 간 휴식 타이머 시작">
+              <span>⏱️</span><span class="truncate">휴식</span>
+            </button>
+            <button onclick="openWorkoutGraphModal()" class="px-1.5 py-1.5 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-600 dark:text-sky-300 border border-sky-400/30 text-[10px] font-black flex items-center justify-center gap-1 shadow-xs transition-all min-w-0 truncate" title="운동 세트 & 횟수 비교 그래프">
+              <span>📊</span><span class="truncate">그래프</span>
+            </button>
           </div>
         </div>
 
@@ -6071,6 +6081,7 @@
       renderGymUI();
       if (typeof renderMealTimelineUI === 'function') renderMealTimelineUI();
       if (typeof renderQuestHudUI === 'function') renderQuestHudUI();
+      if (typeof renderCardioModeUI === 'function') renderCardioModeUI();
       updateBondUI();
       setTrainerMode(state.activeMode || state.activeTrainer || 'gemini', state.currentSituation || 'ev1', false);
 
@@ -7756,7 +7767,7 @@ ${err.message}
       const jpDone = Math.max(0, kNow.completedLessons - (Number(kBase.completedLessons) || 0)) || Math.min(3, kNow.completedLessons);
 
       return [
-        { key: `w_${win.endStr}_run`, icon: '🏃', title: '러닝 3회', cur: m.runDays, target: 3, unit: '회', exp: 30, jump: 'run' },
+        { key: `w_${win.endStr}_run`, icon: '🏃', title: '유산소 3회', cur: m.runDays, target: 3, unit: '회', exp: 30, jump: 'run' },
         { key: `w_${win.endStr}_gym`, icon: '🏋️', title: '헬스 3회', cur: m.gymDays, target: 3, unit: '회', exp: 30, jump: 'gym' },
         { key: `w_${win.endStr}_rehab`, icon: '🩹', title: '손목 재활', cur: m.rehabDays, target: 4, unit: '회', exp: 25, jump: 'rehab' },
         { key: `w_${win.endStr}_meal`, icon: '🍱', title: '식단 기록', cur: m.mealTotal, target: 10, unit: '건', exp: 25, jump: 'meal' },
@@ -7902,6 +7913,59 @@ ${err.message}
             <span class="w-11 text-right font-mono text-[10px] font-black shrink-0 ${cleared ? 'text-emerald-600 dark:text-emerald-400' : isUrgent ? 'text-rose-500' : 'text-slate-500 dark:text-slate-400'}">${cleared ? 'CLEAR ✓' : `${q.cur}/${q.target}${q.unit}`}</span>
           </button>`;
       }).join('');
+    }
+
+    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.6.07) ----------
+    const CARDIO_LABELS = { treadmill: '🏃‍♂️ 러닝머신', stair: '🪜 천국의 계단', outdoor: '🏃 야외 러닝' };
+
+    function selectCardioMode(mode) {
+      state.cardioMode = CARDIO_LABELS[mode] ? mode : 'treadmill';
+      playBeep(640, 0.04);
+      saveState(true);
+      renderCardioModeUI();
+    }
+
+    function renderCardioModeUI() {
+      const mode = state.cardioMode || 'treadmill';
+      ['treadmill', 'stair', 'outdoor'].forEach(k => {
+        const b = document.getElementById('cardioBtn_' + k);
+        if (!b) return;
+        b.className = (k === mode)
+          ? 'px-2 py-1 rounded-lg text-[10px] font-black bg-orange-500 text-white border border-orange-500 shadow-2xs transition-all'
+          : 'px-2 py-1 rounded-lg text-[10px] font-bold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-all';
+      });
+      const titleEl = document.getElementById('cardioCheckTitle');
+      if (titleEl) titleEl.textContent = `오늘 유산소 완주 체크 (${CARDIO_LABELS[mode] || '유산소'})`;
+    }
+
+    function quickLogIndoorCardio(minutes) {
+      const mode = state.cardioMode || 'treadmill';
+      const label = mode === 'stair' ? '천국의 계단' : mode === 'treadmill' ? '러닝머신' : '야외 러닝';
+      const todayStr = getLocalDateString();
+      const estKcal = Math.round(minutes * (mode === 'stair' ? 9.5 : 8.0));
+      const estDist = mode === 'stair' ? Number((minutes * 0.06).toFixed(2)) : Number((minutes * 0.11).toFixed(2));
+      const entry = {
+        id: 'run-' + Date.now(),
+        date: todayStr,
+        distance: estDist,
+        duration: `${minutes}:00`,
+        pace: mode === 'stair' ? '스텝밀' : "09'00\"",
+        calories: estKcal,
+        heartRate: 132,
+        steps: Math.round(minutes * (mode === 'stair' ? 65 : 135)),
+        source: label
+      };
+      if (!Array.isArray(state.runningLogs)) state.runningLogs = [];
+      state.runningLogs.unshift(entry);
+      state.latestRun = entry;
+      state.runDone = true;
+      state.runDist = estDist;
+      markWorkoutFocus('run');
+      addBondExp(50);
+      playBeep(820, 0.08);
+      saveState(true);
+      syncUI();
+      showFloatingToast(`${CARDIO_LABELS[mode]} ${minutes}분 완주 기록! (약 ${estKcal}kcal · +50 EXP)`, '🔥');
     }
 
     function openChatImageLightbox(src, caption) {
@@ -12393,7 +12457,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.6.06 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.6.07 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
