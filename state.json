@@ -1,17 +1,17 @@
 {
-  "updatedAt": "2026-11-19T14:47:24.291Z",
+  "updatedAt": "2026-11-19T14:48:08.689Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
-  "bondRank": 11,
-  "bondExp": 95,
+  "bondRank": 13,
+  "bondExp": 45,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
   "currentSituation": "ev3",
   "absDone": false,
-  "runDone": false,
-  "runDist": 6.01,
+  "runDone": true,
+  "runDist": 1.2,
   "rehab": [
     true
   ],
@@ -359,17 +359,50 @@
     }
   ],
   "latestRun": {
-    "id": "run-1794460852153",
-    "date": "2026-11-12",
-    "distance": 6.01,
-    "duration": "55:32",
-    "pace": "09'13\"",
-    "calories": 421,
-    "heartRate": 127,
-    "steps": 7434,
-    "source": "삼성헬스"
+    "id": "run-1795099686492",
+    "date": "2026-11-19",
+    "distance": 1.2,
+    "duration": "20:00",
+    "pace": "스텝밀",
+    "calories": 190,
+    "heartRate": 132,
+    "steps": 1300,
+    "source": "천국의 계단"
   },
   "runningLogs": [
+    {
+      "id": "run-1795099686492",
+      "date": "2026-11-19",
+      "distance": 1.2,
+      "duration": "20:00",
+      "pace": "스텝밀",
+      "calories": 190,
+      "heartRate": 132,
+      "steps": 1300,
+      "source": "천국의 계단"
+    },
+    {
+      "id": "run-1795099684803",
+      "date": "2026-11-19",
+      "distance": 1.8,
+      "duration": "30:00",
+      "pace": "스텝밀",
+      "calories": 285,
+      "heartRate": 132,
+      "steps": 1950,
+      "source": "천국의 계단"
+    },
+    {
+      "id": "run-1795099682006",
+      "date": "2026-11-19",
+      "distance": 1.2,
+      "duration": "20:00",
+      "pace": "스텝밀",
+      "calories": 190,
+      "heartRate": 132,
+      "steps": 1300,
+      "source": "천국의 계단"
+    },
     {
       "id": "run-1794460852153",
       "date": "2026-11-12",
