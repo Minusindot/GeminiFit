@@ -885,6 +885,18 @@
         </div>
       </button>
 
+      <!-- 0.5 🎯 주간 · 일일 퀘스트 모바게 HUD (v4.6.0) -->
+      <div id="questHudCard" class="game-card px-3 py-2.5 space-y-2 border-l-4 border-l-indigo-500 transition-all">
+        <div class="flex items-center justify-between gap-1.5">
+          <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 p-0.5 rounded-xl border border-slate-200/70 dark:border-slate-700/60">
+            <button onclick="switchQuestTab('weekly')" id="questTabWeekly" class="px-2 py-1 rounded-lg text-[10px] font-black bg-indigo-500 text-white shadow-2xs transition-all">🎯 주간 <span id="questWeeklyProg" class="font-mono opacity-90">0/5</span></button>
+            <button onclick="switchQuestTab('daily')" id="questTabDaily" class="px-2 py-1 rounded-lg text-[10px] font-bold text-slate-500 dark:text-slate-400 transition-all">⚡ 일일 <span id="questDailyProg" class="font-mono opacity-80">0/4</span></button>
+          </div>
+          <span id="questDeadlineBadge" class="text-[9px] font-black px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-400/30 whitespace-nowrap">수요일 마감 D-6</span>
+        </div>
+        <div id="questGridContainer" class="grid grid-cols-2 sm:grid-cols-3 gap-1.5"></div>
+      </div>
+
       <!-- 1. 💧 수분 · 홈카페 4종 컴팩트 바 (v4.5.1) -->
       <div class="game-card px-3 py-2.5 space-y-2 border-l-4 border-l-emerald-400">
         <div class="flex items-center justify-between gap-2">
@@ -2051,12 +2063,12 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.5.2"></script>
-  <script src="./dialogue_pool.js?v=4.5.2"></script>
-  <script src="./trainer_episodes.js?v=4.5.2"></script>
-  <script src="./kotonoha_data.js?v=4.5.2"></script>
-  <script src="./kotonoha_engine.js?v=4.5.2"></script>
-  <script src="./ocr_pipeline.js?v=4.5.2"></script>
+  <script src="./weekly_reports.js?v=4.6.0"></script>
+  <script src="./dialogue_pool.js?v=4.6.0"></script>
+  <script src="./trainer_episodes.js?v=4.6.0"></script>
+  <script src="./kotonoha_data.js?v=4.6.0"></script>
+  <script src="./kotonoha_engine.js?v=4.6.0"></script>
+  <script src="./ocr_pipeline.js?v=4.6.0"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -4410,6 +4422,7 @@
           mealPhotos: (remoteDate === local.lastActiveDate) ? (local.mealPhotos || ['', '', '']) : ['', '', ''],
           kotonoha: mergeKotonohaProgress(local.kotonoha, remote.kotonoha),
           trainerEpisodesDone: { ...(remote.trainerEpisodesDone || {}), ...(local.trainerEpisodesDone || {}) },
+          questClaims: { ...(remote.questClaims || {}), ...(local.questClaims || {}) },
           latestInbody: remote.latestInbody || local.latestInbody || null,
           inbodyHistory: (remote.inbodyHistory && remote.inbodyHistory.length >= (local.inbodyHistory || []).length)
             ? remote.inbodyHistory
@@ -4561,6 +4574,7 @@
           gymHistory: state.gymHistory,
           kotonoha: state.kotonoha,
           trainerEpisodesDone: state.trainerEpisodesDone || {},
+          questClaims: state.questClaims || {},
           latestInbody: state.latestInbody || null,
           inbodyHistory: state.inbodyHistory || [],
           latestRun: state.latestRun,
@@ -6056,6 +6070,7 @@
       renderInbodyCardUI();
       renderGymUI();
       if (typeof renderMealTimelineUI === 'function') renderMealTimelineUI();
+      if (typeof renderQuestHudUI === 'function') renderQuestHudUI();
       updateBondUI();
       setTrainerMode(state.activeMode || state.activeTrainer || 'gemini', state.currentSituation || 'ev1', false);
 
@@ -7379,6 +7394,224 @@ ${err.message}
         playBeep(880, 0.08);
         showFloatingToast(ok ? '📋 Gemini 식단 상담용 현황을 복사했어요! 바로 붙여넣기 하세요' : '복사 실패 — 브라우저 권한을 확인해주세요', ok ? '📋' : '⚠️');
       });
+    }
+
+    // ============================================================================
+    // MOBILE-GAME QUEST HUD ENGINE (주간 퀘스트 · 일일 퀘스트, v4.6.0)
+    // Synced with Wednesday weekly report cycle & live user progress!
+    // ============================================================================
+    let activeQuestTab = 'weekly';
+
+    function switchQuestTab(tab) {
+      activeQuestTab = tab === 'daily' ? 'daily' : 'weekly';
+      playBeep(660, 0.04);
+      renderQuestHudUI();
+    }
+
+    function getWeeklyQuestWindow() {
+      const targetDay = (typeof getWeeklyReportUpdateDay === 'function') ? getWeeklyReportUpdateDay() : 3; // Wed
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const dow = today.getDay();
+      // Days since most recent update day (0..6): new week starts ON update day or day after; deadline is NEXT update day
+      const daysUntil = (targetDay - dow + 7) % 7; // 0 = today is deadline!
+      const periodEnd = new Date(today);
+      periodEnd.setDate(today.getDate() + daysUntil);
+      const periodStart = new Date(periodEnd);
+      periodStart.setDate(periodEnd.getDate() - 6);
+      const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+      return {
+        startStr: getLocalDateString(periodStart),
+        endStr: getLocalDateString(periodEnd),
+        daysLeft: daysUntil,
+        dayName: dayNames[targetDay] + '요일'
+      };
+    }
+
+    function jumpToQuestTarget(target) {
+      if (target === 'kotonoha') {
+        switchMainTab('kotonoha');
+        return;
+      }
+      const selectorMap = {
+        run: '#latestRunCard',
+        gym: '#gymProgressBadge',
+        rehab: '#rehabContainer',
+        meal: '#mealTimelineList',
+        water: '#waterCount'
+      };
+      const el = document.querySelector(selectorMap[target] || '');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        playBeep(560, 0.04);
+      }
+    }
+
+    function claimQuestReward(claimKey, exp, title) {
+      if (!state.questClaims) state.questClaims = {};
+      if (state.questClaims[claimKey]) return;
+      state.questClaims[claimKey] = true;
+      addBondExp(exp);
+      playBeep(880, 0.09);
+      setTimeout(() => playBeep(1175, 0.13), 110);
+      saveState(true);
+      renderQuestHudUI();
+      showFloatingToast(`🎉 [${title}] 퀘스트 클리어! +${exp} EXP 획득!`, '🏆');
+    }
+
+    function buildWeeklyQuestItems(win) {
+      const m = (typeof collectWeeklyMetrics === 'function')
+        ? collectWeeklyMetrics(win.startStr, win.endStr)
+        : { runDays: 0, gymDays: 0, rehabDays: 0, mealTotal: 0 };
+      const kBase = (typeof getWeeklyReportBaseline === 'function' && getWeeklyReportBaseline()) || { completedLessons: 0 };
+      const kNow = (typeof getKotonohaWeeklyStats === 'function') ? getKotonohaWeeklyStats() : { completedLessons: ((state.kotonoha && state.kotonoha.completedLessons) || []).length };
+      const jpDone = Math.max(0, kNow.completedLessons - (Number(kBase.completedLessons) || 0)) || Math.min(3, kNow.completedLessons);
+
+      return [
+        { key: `w_${win.endStr}_run`, icon: '🏃', title: '러닝 3회', cur: m.runDays, target: 3, unit: '회', exp: 30, jump: 'run' },
+        { key: `w_${win.endStr}_gym`, icon: '🏋️', title: '헬스 3회', cur: m.gymDays, target: 3, unit: '회', exp: 30, jump: 'gym' },
+        { key: `w_${win.endStr}_rehab`, icon: '🩹', title: '손목 재활', cur: m.rehabDays, target: 4, unit: '회', exp: 25, jump: 'rehab' },
+        { key: `w_${win.endStr}_meal`, icon: '🍱', title: '식단 기록', cur: m.mealTotal, target: 10, unit: '건', exp: 25, jump: 'meal' },
+        { key: `w_${win.endStr}_jp`, icon: '🍵', title: '일본어 3화', cur: jpDone, target: 3, unit: '화', exp: 25, jump: 'kotonoha' }
+      ];
+    }
+
+    function buildDailyQuestItems() {
+      const today = getLocalDateString();
+      const t = state.teaLog || {};
+      const mealCnt = Math.max((state.meals || []).filter(Boolean).length, (state.mealLogs || []).length);
+      const workoutDone = (state.runDone || state.absDone || isGymRoutineDone(state.gymRoutine)) ? 1 : 0;
+      return [
+        { key: `d_${today}_water`, icon: '💧', title: '물 3잔', cur: t.water || 0, target: 3, unit: '잔', exp: 10, jump: 'water' },
+        { key: `d_${today}_pro`, icon: '🥛', title: '단백질 1잔', cur: t.tea || 0, target: 1, unit: '잔', exp: 15, jump: 'water' },
+        { key: `d_${today}_meal`, icon: '🍱', title: '식단 1건+', cur: mealCnt, target: 1, unit: '건', exp: 15, jump: 'meal' },
+        { key: `d_${today}_work`, icon: '🔥', title: '오늘 운동', cur: workoutDone, target: 1, unit: '회', exp: 20, jump: 'gym' }
+      ];
+    }
+
+    function renderQuestHudUI() {
+      const grid = document.getElementById('questGridContainer');
+      if (!grid) return;
+      const win = getWeeklyQuestWindow();
+      const wItems = buildWeeklyQuestItems(win);
+      const dItems = buildDailyQuestItems();
+      const claims = state.questClaims || {};
+
+      const wDone = wItems.filter(q => q.cur >= q.target).length;
+      const dDone = dItems.filter(q => q.cur >= q.target).length;
+
+      const wProg = document.getElementById('questWeeklyProg');
+      const dProg = document.getElementById('questDailyProg');
+      if (wProg) wProg.textContent = `${wDone}/${wItems.length}`;
+      if (dProg) dProg.textContent = `${dDone}/${dItems.length}`;
+
+      const tabW = document.getElementById('questTabWeekly');
+      const tabD = document.getElementById('questTabDaily');
+      if (tabW && tabD) {
+        tabW.className = activeQuestTab === 'weekly'
+          ? 'px-2 py-1 rounded-lg text-[10px] font-black bg-indigo-500 text-white shadow-2xs transition-all'
+          : 'px-2 py-1 rounded-lg text-[10px] font-bold text-slate-500 dark:text-slate-400 transition-all';
+        tabD.className = activeQuestTab === 'daily'
+          ? 'px-2 py-1 rounded-lg text-[10px] font-black bg-amber-500 text-white shadow-2xs transition-all'
+          : 'px-2 py-1 rounded-lg text-[10px] font-bold text-slate-500 dark:text-slate-400 transition-all';
+      }
+
+      // Deadline urgency styling (card left accent + badge)
+      const card = document.getElementById('questHudCard');
+      const badge = document.getElementById('questDeadlineBadge');
+      const isUrgent = activeQuestTab === 'weekly' && win.daysLeft <= 1 && wDone < wItems.length;
+      const isWarn = activeQuestTab === 'weekly' && win.daysLeft === 2 && wDone < wItems.length;
+
+      if (card) {
+        card.classList.remove('border-l-indigo-500', 'border-l-amber-500', 'border-l-rose-500', 'border-l-emerald-500');
+        if ((activeQuestTab === 'weekly' && wDone === wItems.length) || (activeQuestTab === 'daily' && dDone === dItems.length)) {
+          card.classList.add('border-l-emerald-500');
+        } else if (isUrgent) {
+          card.classList.add('border-l-rose-500');
+        } else if (isWarn) {
+          card.classList.add('border-l-amber-500');
+        } else {
+          card.classList.add(activeQuestTab === 'weekly' ? 'border-l-indigo-500' : 'border-l-amber-500');
+        }
+      }
+
+      if (badge) {
+        if (activeQuestTab === 'weekly') {
+          if (wDone === wItems.length) {
+            badge.textContent = '🏆 주간 올클리어!';
+            badge.className = 'text-[9px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border border-emerald-400/40 whitespace-nowrap';
+          } else if (win.daysLeft === 0) {
+            badge.textContent = `🔥 오늘(${win.dayName}) 마감!`;
+            badge.className = 'text-[9px] font-black px-2 py-0.5 rounded-full bg-rose-500 text-white shadow-xs animate-pulse whitespace-nowrap';
+          } else if (win.daysLeft === 1) {
+            badge.textContent = `⏳ 내일(${win.dayName}) 마감 D-1`;
+            badge.className = 'text-[9px] font-black px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-300 border border-rose-400/50 animate-pulse whitespace-nowrap';
+          } else if (win.daysLeft === 2) {
+            badge.textContent = `⚡ ${win.dayName} 마감 D-2`;
+            badge.className = 'text-[9px] font-black px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-400/40 whitespace-nowrap';
+          } else {
+            badge.textContent = `${win.dayName} 마감 D-${win.daysLeft}`;
+            badge.className = 'text-[9px] font-black px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-400/30 whitespace-nowrap';
+          }
+        } else {
+          if (dDone === dItems.length) {
+            badge.textContent = '✨ 일일 올클리어!';
+            badge.className = 'text-[9px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border border-emerald-400/40 whitespace-nowrap';
+          } else {
+            badge.textContent = '⏰ 오늘 자정 리셋';
+            badge.className = 'text-[9px] font-black px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-400/30 whitespace-nowrap';
+          }
+        }
+      }
+
+      const items = activeQuestTab === 'weekly' ? wItems : dItems;
+      grid.className = activeQuestTab === 'weekly'
+        ? 'grid grid-cols-2 sm:grid-cols-5 gap-1.5'
+        : 'grid grid-cols-2 sm:grid-cols-4 gap-1.5';
+
+      grid.innerHTML = items.map(q => {
+        const pct = Math.min(100, Math.round((q.cur / Math.max(1, q.target)) * 100));
+        const cleared = q.cur >= q.target;
+        const claimed = !!claims[q.key];
+
+        if (cleared && !claimed) {
+          return `
+            <button onclick="claimQuestReward('${q.key}', ${q.exp}, '${q.title}')" class="p-2 rounded-xl bg-gradient-to-br from-emerald-500/20 to-amber-500/15 border border-emerald-400/70 text-left space-y-1 shadow-xs active:scale-95 transition-all animate-pulse">
+              <div class="flex items-center justify-between gap-1 text-[10px] font-black text-emerald-700 dark:text-emerald-300">
+                <span class="truncate">${q.icon} ${q.title}</span>
+                <span class="shrink-0">🎁</span>
+              </div>
+              <div class="text-[9px] font-black text-amber-600 dark:text-amber-300">+${q.exp} EXP 받기!</div>
+            </button>`;
+        }
+
+        const boxCls = cleared
+          ? 'bg-emerald-500/10 border-emerald-400/40'
+          : isUrgent
+            ? 'bg-rose-500/5 border-rose-400/50 hover:border-rose-400'
+            : isWarn
+              ? 'bg-amber-500/5 border-amber-400/40 hover:border-amber-400'
+              : 'sub-box hover:border-indigo-400';
+
+        const barCls = cleared
+          ? 'bg-emerald-500'
+          : isUrgent
+            ? 'bg-gradient-to-r from-rose-500 to-amber-500'
+            : isWarn
+              ? 'bg-amber-500'
+              : 'bg-gradient-to-r from-indigo-500 to-sky-400';
+
+        return `
+          <button onclick="jumpToQuestTarget('${q.jump}')" class="p-2 rounded-xl border text-left space-y-1 active:scale-95 transition-all ${boxCls}">
+            <div class="flex items-center justify-between gap-1 text-[10px] font-black">
+              <span class="truncate ${cleared ? 'text-emerald-700 dark:text-emerald-300' : 'text-slate-700 dark:text-slate-200'}">${q.icon} ${q.title}</span>
+              <span class="font-mono text-[9px] shrink-0 ${cleared ? 'text-emerald-600 dark:text-emerald-400' : isUrgent ? 'text-rose-500' : 'text-slate-400'}">${cleared ? '✓' : `${q.cur}/${q.target}`}</span>
+            </div>
+            <div class="h-1.5 rounded-full bg-slate-200 dark:bg-slate-700/80 overflow-hidden">
+              <div class="h-full rounded-full ${barCls} transition-all duration-300" style="width:${pct}%"></div>
+            </div>
+          </button>`;
+      }).join('');
     }
 
     function openChatImageLightbox(src, caption) {
