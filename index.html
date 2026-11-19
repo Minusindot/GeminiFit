@@ -885,27 +885,60 @@
         </div>
       </button>
 
-      <!-- 1. 🍵 홈카페 · 음료 슬림 1줄 바 (v4.5.0 컴팩트 리디자인) -->
-      <div class="game-card px-3 py-2 border-l-4 border-l-emerald-400">
-        <div class="flex items-center justify-between gap-1.5 flex-wrap">
-          <div class="flex items-center gap-1.5 flex-1 min-w-0 flex-wrap">
-            <div class="flex items-center gap-1 px-2 py-1 rounded-xl sub-box border-emerald-400/30">
-              <button onclick="logTea('matcha', 1)" class="text-[11px] font-black text-emerald-700 dark:text-emerald-300 active:scale-95 transition-all" title="말차 +1">🍵 <span id="matchaCount" class="font-mono">0회</span></button>
-              <button onclick="logTea('matcha', -1)" class="w-4 h-4 rounded bg-slate-200/80 dark:bg-slate-700 text-[10px] font-black text-slate-500 dark:text-slate-300 flex items-center justify-center active:scale-90" title="말차 -1">−</button>
-            </div>
-            <div class="flex items-center gap-1 px-2 py-1 rounded-xl sub-box border-amber-400/30">
-              <button onclick="logTea('espresso', 1)" class="text-[11px] font-black text-amber-700 dark:text-amber-300 active:scale-95 transition-all" title="커피 +1">☕ <span id="espressoCount" class="font-mono">0회</span></button>
-              <button onclick="logTea('espresso', -1)" class="w-4 h-4 rounded bg-slate-200/80 dark:bg-slate-700 text-[10px] font-black text-slate-500 dark:text-slate-300 flex items-center justify-center active:scale-90" title="커피 -1">−</button>
-            </div>
-            <div class="flex items-center gap-1 px-2 py-1 rounded-xl sub-box border-sky-400/30">
-              <button onclick="logTea('tea', 1)" class="text-[11px] font-black text-sky-700 dark:text-sky-300 active:scale-95 transition-all" title="단백질 음료 +1">🥛 <span id="teaCount" class="font-mono">0회</span></button>
-              <button onclick="logTea('tea', -1)" class="w-4 h-4 rounded bg-slate-200/80 dark:bg-slate-700 text-[10px] font-black text-slate-500 dark:text-slate-300 flex items-center justify-center active:scale-90" title="단백질 -1">−</button>
-            </div>
+      <!-- 1. 💧 수분 · 홈카페 4종 컴팩트 바 (v4.5.1) -->
+      <div class="game-card px-3 py-2.5 space-y-2 border-l-4 border-l-emerald-400">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs">💧</span>
+            <span class="text-[11px] font-black text-slate-700 dark:text-slate-200">수분 & 홈카페</span>
+            <span class="text-[9px] text-emerald-600 dark:text-emerald-400 font-bold">· 17시 이후 단식 허용</span>
           </div>
-          <label for="teaPhotoInput" class="shrink-0 px-2 py-1 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 text-[10px] font-black cursor-pointer hover:bg-emerald-500/25 active:scale-95 transition-all" title="음료 인증 사진 첨부">
-            📸
+          <label for="teaPhotoInput" class="shrink-0 px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 text-[10px] font-black cursor-pointer hover:bg-emerald-500/25 active:scale-95 transition-all" title="음료 인증 사진 첨부">
+            📸 인증
           </label>
           <input type="file" id="teaPhotoInput" accept="image/*" class="hidden" onchange="handleTeaPhoto(event)">
+        </div>
+        <div class="grid grid-cols-4 gap-1.5">
+          <div class="px-1.5 py-1.5 rounded-xl sub-box border-cyan-400/30 text-center space-y-1">
+            <button onclick="logTea('water', 1)" class="w-full active:scale-95 transition-all" title="물 +1컵">
+              <div class="text-[10px] font-black text-cyan-600 dark:text-cyan-300">💧 물</div>
+            </button>
+            <div class="flex items-center justify-center gap-1">
+              <button onclick="logTea('water', -1)" class="w-4 h-4 rounded bg-slate-200/80 dark:bg-slate-700 text-[10px] font-black text-slate-500 dark:text-slate-300 flex items-center justify-center active:scale-90">−</button>
+              <span id="waterCount" class="text-[10px] font-black font-mono">0잔</span>
+              <button onclick="logTea('water', 1)" class="w-4 h-4 rounded bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 text-[10px] font-black flex items-center justify-center active:scale-90">+</button>
+            </div>
+          </div>
+          <div class="px-1.5 py-1.5 rounded-xl sub-box border-emerald-400/30 text-center space-y-1">
+            <button onclick="logTea('matcha', 1)" class="w-full active:scale-95 transition-all" title="말차 +1">
+              <div class="text-[10px] font-black text-emerald-700 dark:text-emerald-300">🍵 말차</div>
+            </button>
+            <div class="flex items-center justify-center gap-1">
+              <button onclick="logTea('matcha', -1)" class="w-4 h-4 rounded bg-slate-200/80 dark:bg-slate-700 text-[10px] font-black text-slate-500 dark:text-slate-300 flex items-center justify-center active:scale-90">−</button>
+              <span id="matchaCount" class="text-[10px] font-black font-mono">0회</span>
+              <button onclick="logTea('matcha', 1)" class="w-4 h-4 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-[10px] font-black flex items-center justify-center active:scale-90">+</button>
+            </div>
+          </div>
+          <div class="px-1.5 py-1.5 rounded-xl sub-box border-amber-400/30 text-center space-y-1">
+            <button onclick="logTea('espresso', 1)" class="w-full active:scale-95 transition-all" title="커피 +1">
+              <div class="text-[10px] font-black text-amber-700 dark:text-amber-300">☕ 커피</div>
+            </button>
+            <div class="flex items-center justify-center gap-1">
+              <button onclick="logTea('espresso', -1)" class="w-4 h-4 rounded bg-slate-200/80 dark:bg-slate-700 text-[10px] font-black text-slate-500 dark:text-slate-300 flex items-center justify-center active:scale-90">−</button>
+              <span id="espressoCount" class="text-[10px] font-black font-mono">0회</span>
+              <button onclick="logTea('espresso', 1)" class="w-4 h-4 rounded bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[10px] font-black flex items-center justify-center active:scale-90">+</button>
+            </div>
+          </div>
+          <div class="px-1.5 py-1.5 rounded-xl sub-box border-sky-400/30 text-center space-y-1">
+            <button onclick="logTea('tea', 1)" class="w-full active:scale-95 transition-all" title="단백질 음료 +1">
+              <div class="text-[10px] font-black text-sky-700 dark:text-sky-300">🥛 단백질</div>
+            </button>
+            <div class="flex items-center justify-center gap-1">
+              <button onclick="logTea('tea', -1)" class="w-4 h-4 rounded bg-slate-200/80 dark:bg-slate-700 text-[10px] font-black text-slate-500 dark:text-slate-300 flex items-center justify-center active:scale-90">−</button>
+              <span id="teaCount" class="text-[10px] font-black font-mono">0회</span>
+              <button onclick="logTea('tea', 1)" class="w-4 h-4 rounded bg-sky-500/20 text-sky-700 dark:text-sky-300 text-[10px] font-black flex items-center justify-center active:scale-90">+</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1407,8 +1440,15 @@
         <!-- Flexible Meal Composer -->
         <div class="p-2.5 rounded-xl sub-box space-y-2">
           <div class="flex items-center gap-1.5">
-            <input type="text" id="mealInputName" placeholder="먹은 메뉴 입력 (예: 제육 조금 + 쌈채소)" class="flex-1 min-w-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-pink-400" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomMealLog();}">
-            <label for="mealFlexPhotoInput" class="shrink-0 px-2.5 py-1.5 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-400/30 text-[11px] font-black cursor-pointer hover:bg-sky-500/25 active:scale-95 transition-all" title="사진으로 메뉴/영양 자동 추정 및 첨부">
+            <select id="mealInputSlot" class="shrink-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-1.5 py-1.5 text-[10px] font-black text-slate-700 dark:text-slate-200 focus:outline-none focus:border-pink-400" title="끼니 구분">
+              <option value="아침">🌅 아침</option>
+              <option value="점심">☀️ 점심</option>
+              <option value="저녁">🌙 저녁</option>
+              <option value="간식">🍪 간식</option>
+            </select>
+            <input type="time" id="mealInputTime" class="shrink-0 w-[86px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-1.5 py-1.5 text-[10px] font-mono font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-pink-400" title="식사 시간">
+            <input type="text" id="mealInputName" placeholder="먹은 메뉴 입력" class="flex-1 min-w-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-pink-400" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomMealLog();}">
+            <label for="mealFlexPhotoInput" class="shrink-0 px-2 py-1.5 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-400/30 text-[11px] font-black cursor-pointer hover:bg-sky-500/25 active:scale-95 transition-all" title="사진으로 메뉴/영양 자동 추정 및 첨부">
               📷
             </label>
             <input type="file" id="mealFlexPhotoInput" accept="image/*" class="hidden" onchange="handleFlexibleMealPhoto(event)">
@@ -2011,12 +2051,12 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.5.0"></script>
-  <script src="./dialogue_pool.js?v=4.5.0"></script>
-  <script src="./trainer_episodes.js?v=4.5.0"></script>
-  <script src="./kotonoha_data.js?v=4.5.0"></script>
-  <script src="./kotonoha_engine.js?v=4.5.0"></script>
-  <script src="./ocr_pipeline.js?v=4.5.0"></script>
+  <script src="./weekly_reports.js?v=4.5.1"></script>
+  <script src="./dialogue_pool.js?v=4.5.1"></script>
+  <script src="./trainer_episodes.js?v=4.5.1"></script>
+  <script src="./kotonoha_data.js?v=4.5.1"></script>
+  <script src="./kotonoha_engine.js?v=4.5.1"></script>
+  <script src="./ocr_pipeline.js?v=4.5.1"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -2174,7 +2214,7 @@
       rehabSets: 1,
       meals: [false, false, false],
       mealPhotos: ['', '', ''],
-      teaLog: { matcha: 0, espresso: 0, tea: 0 },
+      teaLog: { water: 0, matcha: 0, espresso: 0, tea: 0 },
       webhookUrl: '',
       chatHistory: [
         { sender: 'kotone', name: '코토네', text: '프로듀서님~! 오늘 삼성헬스로 잰 체중 64.1kg 찍힌 거 코토네가 확인했어요! 💛 수요일 인바디 측정 데이라 보너스 경험치도 2배인 거 아시죠? 목표인 52kg 슬림핏까지 코토네가 특급 인센티브 애교로 꽉 붙어서 서포트해 드릴게요! 💸✨' },
@@ -3950,7 +3990,7 @@
         state.absDone = false;
         const rehabLen = initRehabSets();
         state.rehab = Array(rehabLen).fill(false);
-        state.teaLog = { matcha: 0, espresso: 0, tea: 0 };
+        state.teaLog = { water: 0, matcha: 0, espresso: 0, tea: 0 };
 
         if (state.gymRoutine) {
           ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'].forEach(k => {
@@ -4515,7 +4555,7 @@
           rehab: state.rehab,
           rehabSets: state.rehabSets,
           meals: state.meals,
-          mealLogs: (state.mealLogs || []).map(m => ({ id: m.id, time: m.time, name: m.name, kcal: m.kcal, protein: m.protein, tag: m.tag })),
+          mealLogs: (state.mealLogs || []).map(m => ({ id: m.id, slot: m.slot || '', time: m.time, name: m.name, kcal: m.kcal, protein: m.protein, tag: m.tag })),
           teaLog: state.teaLog,
           gymRoutine: state.gymRoutine,
           gymHistory: state.gymHistory,
@@ -5994,6 +6034,7 @@
       setChk('chkMeal2', state.meals ? state.meals[1] : false);
       setChk('chkMeal3', state.meals ? state.meals[2] : false);
 
+      setTxt('waterCount', `${state.teaLog.water || 0}잔`);
       setTxt('matchaCount', `${state.teaLog.matcha || 0}회`);
       setTxt('espressoCount', `${state.teaLog.espresso || 0}회`);
       setTxt('teaCount', `${state.teaLog.tea || 0}회`);
@@ -7079,11 +7120,36 @@ ${err.message}
       state.meals = [n >= 1, n >= 2, n >= 3];
     }
 
+    function getDefaultMealSlot(hour) {
+      const h = (typeof hour === 'number') ? hour : new Date().getHours();
+      if (h < 11) return '아침';
+      if (h < 15) return '점심';
+      if (h < 17) return '저녁';
+      return '저녁';
+    }
+
+    function getCurrentHHMM() {
+      const d = new Date();
+      return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    }
+
+    function syncMealComposerDefaults() {
+      const slotEl = document.getElementById('mealInputSlot');
+      const timeEl = document.getElementById('mealInputTime');
+      if (slotEl && !slotEl.dataset.touched) slotEl.value = getDefaultMealSlot();
+      if (timeEl && !timeEl.value) timeEl.value = getCurrentHHMM();
+    }
+
     function quickAddMeal(name, kcal, protein, tag) {
+      const slotEl = document.getElementById('mealInputSlot');
+      const timeEl = document.getElementById('mealInputTime');
+      const slot = (slotEl && slotEl.value) || getDefaultMealSlot();
+      const timeVal = (timeEl && timeEl.value) || getCurrentHHMM();
       const logs = getMealLogs();
       logs.push({
         id: 'meal-' + Date.now() + '-' + Math.floor(Math.random() * 100),
-        time: getKakaoTimeStr(),
+        slot,
+        time: timeVal,
         name,
         kcal: Number(kcal) || 0,
         protein: Number(protein) || 0,
@@ -7176,6 +7242,8 @@ ${err.message}
     }
 
     function addCustomMealLog() {
+      const slotEl = document.getElementById('mealInputSlot');
+      const timeEl = document.getElementById('mealInputTime');
       const nameEl = document.getElementById('mealInputName');
       const kcalEl = document.getElementById('mealInputKcal');
       const proEl = document.getElementById('mealInputProtein');
@@ -7185,6 +7253,8 @@ ${err.message}
         showFloatingToast('먹은 메뉴를 한 줄 입력하거나 퀵칩을 눌러주세요!', '🍱');
         return;
       }
+      const slot = (slotEl && slotEl.value) || getDefaultMealSlot();
+      const timeVal = (timeEl && timeEl.value) || getCurrentHHMM();
       const kcal = parseInt(kcalEl && kcalEl.value, 10) || 0;
       const protein = parseInt(proEl && proEl.value, 10) || 0;
       const tag = (tagEl && tagEl.value) || '클린';
@@ -7192,13 +7262,15 @@ ${err.message}
       const logs = getMealLogs();
       logs.push({
         id: 'meal-' + Date.now(),
-        time: getKakaoTimeStr(),
+        slot,
+        time: timeVal,
         name,
         kcal,
         protein,
         tag,
         photo: draftMealPhotoDataUrl || ''
       });
+      if (timeEl) timeEl.value = getCurrentHHMM();
       syncMealsArrayFromLogs();
       markWorkoutFocus('meal');
       addBondExp(15);
@@ -7223,6 +7295,7 @@ ${err.message}
     }
 
     function renderMealTimelineUI() {
+      syncMealComposerDefaults();
       const listEl = document.getElementById('mealTimelineList');
       if (!listEl) return;
       const logs = getMealLogs();
@@ -7250,21 +7323,33 @@ ${err.message}
         return;
       }
 
-      listEl.innerHTML = logs.map(m => `
+      const slotIcons = { '아침': '🌅', '점심': '☀️', '저녁': '🌙', '간식': '🍪' };
+      const slotColors = {
+        '아침': 'bg-amber-500/15 text-amber-700 dark:text-amber-300',
+        '점심': 'bg-orange-500/15 text-orange-700 dark:text-orange-300',
+        '저녁': 'bg-indigo-500/15 text-indigo-700 dark:text-indigo-300',
+        '간식': 'bg-pink-500/15 text-pink-600 dark:text-pink-300'
+      };
+      listEl.innerHTML = logs.map(m => {
+        const sl = m.slot || '식사';
+        const slIcon = slotIcons[sl] || '🍽️';
+        const slCls = slotColors[sl] || 'bg-slate-500/15 text-slate-600 dark:text-slate-300';
+        return `
         <div class="flex items-center gap-2 p-2 rounded-xl sub-box">
-          ${m.photo ? `<img src="${m.photo}" onclick="openChatImageLightbox('${m.photo}', '${(m.name || '').replace(/'/g, '')}')" class="w-10 h-10 rounded-lg object-cover shrink-0 cursor-pointer border border-slate-200 dark:border-slate-700">` : `<span class="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-sm shrink-0">🍽️</span>`}
+          ${m.photo ? `<img src="${m.photo}" onclick="openChatImageLightbox('${m.photo}', '${(m.name || '').replace(/'/g, '')}')" class="w-10 h-10 rounded-lg object-cover shrink-0 cursor-pointer border border-slate-200 dark:border-slate-700">` : `<span class="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-sm shrink-0">${slIcon}</span>`}
           <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-1.5">
+            <div class="flex items-center gap-1 flex-wrap">
+              <span class="text-[9px] font-black px-1.5 py-0.5 rounded-md shrink-0 ${slCls}">${sl} ${m.time || ''}</span>
               <span class="text-[11px] font-black text-slate-800 dark:text-slate-100 truncate">${m.name}</span>
               <span class="text-[8px] font-black px-1.5 py-0.5 rounded-full shrink-0 ${tagColors[m.tag] || tagColors['클린']}">${m.tag || '클린'}</span>
             </div>
             <div class="text-[9px] font-mono text-slate-400 mt-0.5">
-              ${m.time || ''}${m.kcal ? ` · ${m.kcal}kcal` : ''}${m.protein ? ` · 단백질 ${m.protein}g` : ''}
+              ${m.kcal ? `${m.kcal}kcal` : '칼로리 미입력'}${m.protein ? ` · 단백질 ${m.protein}g` : ''}
             </div>
           </div>
           <button onclick="deleteMealLog('${m.id}')" class="w-6 h-6 rounded-lg text-slate-400 hover:text-rose-500 text-xs font-black shrink-0" title="삭제">×</button>
-        </div>
-      `).join('');
+        </div>`;
+      }).join('');
     }
 
     function copyDietConsultPrompt() {
@@ -7274,13 +7359,15 @@ ${err.message}
       const totalPro = logs.reduce((s, m) => s + (Number(m.protein) || 0), 0);
       const remainKcal = Math.max(0, DAILY_KCAL_GOAL - totalKcal);
       const remainPro = Math.max(0, DAILY_PROTEIN_GOAL - totalPro);
+      const t = state.teaLog || {};
       const mealList = logs.length
-        ? logs.map(m => `- ${m.time} ${m.name} [${m.tag}]${m.kcal ? ` (${m.kcal}kcal, P${m.protein || 0}g)` : ''}`).join('\n')
+        ? logs.map(m => `- [${m.slot || '식사'} ${m.time || ''}] ${m.name} (${m.tag})${m.kcal ? ` · ${m.kcal}kcal, P${m.protein || 0}g` : ''}`).join('\n')
         : '- 아직 기록된 식사 없음';
       const prompt = [
         `[오늘 피트니스 & 식단 현황 · ${getLocalDateString()}]`,
         `• 체중/체지방: ${ctx.weight} / ${ctx.fat} (목표까지 ${ctx.targetLeft})`,
         `• 운동 현황: 헬스 ${ctx.gymExercises} (${ctx.gymTotalSets}세트), 최근 러닝 ${ctx.runDist}`,
+        `• 수분/음료: 물 ${t.water || 0}잔 · 말차 ${t.matcha || 0}회 · 커피 ${t.espresso || 0}회 · 단백질 음료 ${t.tea || 0}회`,
         `• 오늘 식단 (${logs.length}건 · 총 ${totalKcal}kcal / 단백질 ${totalPro}g):`,
         mealList,
         `• 남은 목표: 약 ${remainKcal}kcal / 단백질 ${remainPro}g (17:00 단식 마감 기준)`,
@@ -7582,7 +7669,7 @@ ${err.message}
     function logTea(type, delta = 1) {
       checkAndResetDayChange();
       playBeep(delta > 0 ? 700 : 450, 0.1);
-      if (!state.teaLog) state.teaLog = { matcha: 0, espresso: 0, tea: 0 };
+      if (!state.teaLog) state.teaLog = { water: 0, matcha: 0, espresso: 0, tea: 0 };
       const cur = state.teaLog[type] || 0;
       const next = Math.max(0, cur + delta);
       state.teaLog[type] = next;
@@ -7590,12 +7677,15 @@ ${err.message}
       syncUI();
 
       if (delta > 0) {
-        const name = type === 'matcha' ? '말차 🍵' : type === 'espresso' ? '커피 ☕' : '단백질 음료 🥛';
+        const name = type === 'water' ? '물 💧' : type === 'matcha' ? '말차 🍵' : type === 'espresso' ? '커피 ☕' : '단백질 음료 🥛';
         state.chatHistory.push({ sender: 'user', text: `[음료 기록] ${name} 1잔을 챙겨 마셨어!` });
         renderChat();
 
         setTimeout(() => {
-          if (type === 'matcha') {
+          if (type === 'water') {
+            setTrainerMode('mio', 'ev1');
+            state.chatHistory.push({ sender: 'mio', name: '미오', text: `수분 보충 나이스!! 오늘 벌써 물 ${next}잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟` });
+          } else if (type === 'matcha') {
             setTrainerMode('gemini', 'ev2');
             state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '오... 말차 챙겨 마셨네? 카테킨 성분이 체지방 연소를 확실히 도와줄 거야! 🍵🐾' });
           } else if (type === 'espresso') {
@@ -7605,7 +7695,7 @@ ${err.message}
             setTrainerMode('gemini', 'ev14');
             state.chatHistory.push({ sender: 'gemini', name: '제미니', text: '단백질 음료 야무지게 챙겼네! 근손실 없이 슬림 탄탄 라인 만들려면 단백질 충전은 필수지, 기특해! 🥛💪' });
           }
-          addBondExp(10);
+          addBondExp(type === 'water' ? 5 : 10);
           saveState();
           renderChat();
         }, 450);
