@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.07</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.6.08</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -1459,37 +1459,52 @@
           <button onclick="quickAddMeal('일반식 밥 반공기', 450, 20, '조절')" class="shrink-0 px-2 py-1 rounded-full bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-400/30 text-[10px] font-black active:scale-95 transition-all">🍚 일반식 반공기</button>
         </div>
 
-        <!-- Flexible Meal Composer -->
-        <div class="p-2.5 rounded-xl sub-box space-y-2">
-          <div class="flex items-center gap-1.5">
-            <select id="mealInputSlot" class="shrink-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-1.5 py-1.5 text-[10px] font-black text-slate-700 dark:text-slate-200 focus:outline-none focus:border-pink-400" title="끼니 구분">
+        <!-- Today's Meal Add Toggle Button (Collapsible Composer, v4.6.08) -->
+        <button type="button" id="btnToggleMealComposer" onclick="toggleMealComposer()" class="w-full py-2 rounded-xl border border-dashed border-pink-400/60 bg-pink-500/5 hover:bg-pink-500/10 text-pink-600 dark:text-pink-300 text-xs font-black flex items-center justify-center gap-1.5 active:scale-[0.99] transition-all">
+          <span id="mealComposerToggleIcon" class="w-4 h-4 rounded-full bg-pink-500 text-white text-[11px] flex items-center justify-center leading-none">+</span>
+          <span id="mealComposerToggleText">식단 직접 추가 / 사진 인증</span>
+        </button>
+
+        <!-- Collapsible Roomy Meal Composer -->
+        <div id="mealComposerBox" class="hidden p-3 rounded-xl sub-box space-y-2 border border-pink-400/40">
+          <!-- Row 1: 끼니 구분 + 식사 시간 (넉넉한 폭) -->
+          <div class="grid grid-cols-2 gap-2">
+            <select id="mealInputSlot" onchange="this.dataset.touched='1'" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-black text-slate-700 dark:text-slate-200 focus:outline-none focus:border-pink-400" title="끼니 구분">
               <option value="아침">🌅 아침</option>
               <option value="점심">☀️ 점심</option>
               <option value="저녁">🌙 저녁</option>
               <option value="간식">🍪 간식</option>
             </select>
-            <input type="time" id="mealInputTime" class="shrink-0 w-[86px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-1.5 py-1.5 text-[10px] font-mono font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-pink-400" title="식사 시간">
-            <input type="text" id="mealInputName" placeholder="먹은 메뉴 입력" class="flex-1 min-w-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-pink-400" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomMealLog();}">
-            <label for="mealFlexPhotoInput" class="shrink-0 px-2 py-1.5 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-400/30 text-[11px] font-black cursor-pointer hover:bg-sky-500/25 active:scale-95 transition-all" title="사진으로 메뉴/영양 자동 추정 및 첨부">
-              📷
+            <input type="time" id="mealInputTime" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-pink-400" title="식사 시간">
+          </div>
+          <!-- Row 2: 메뉴명 + 사진 첨부 -->
+          <div class="flex items-center gap-1.5">
+            <input type="text" id="mealInputName" placeholder="먹은 메뉴 입력 (예: 제육 반접시 + 쌈채소)" class="flex-1 min-w-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-pink-400" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomMealLog();}">
+            <label for="mealFlexPhotoInput" class="shrink-0 px-2.5 py-1.5 rounded-lg bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-400/30 text-xs font-black cursor-pointer hover:bg-sky-500/25 active:scale-95 transition-all" title="사진으로 메뉴/영양 자동 추정 및 첨부">
+              📷 사진
             </label>
             <input type="file" id="mealFlexPhotoInput" accept="image/*" class="hidden" onchange="handleFlexibleMealPhoto(event)">
           </div>
-          <div class="flex items-center gap-1.5 flex-wrap">
-            <input type="number" id="mealInputKcal" placeholder="kcal" class="w-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-amber-400">
-            <input type="number" id="mealInputProtein" placeholder="단백질g" class="w-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-sky-400">
-            <select id="mealInputTag" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-[10px] font-black text-slate-700 dark:text-slate-200 focus:outline-none">
+          <!-- Row 3: 칼로리 + 단백질 + 태그 (3열 균등, 글자 안 잘림) -->
+          <div class="grid grid-cols-3 gap-1.5">
+            <input type="number" id="mealInputKcal" placeholder="칼로리(kcal)" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-amber-400">
+            <input type="number" id="mealInputProtein" placeholder="단백질(g)" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-sky-400">
+            <select id="mealInputTag" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 text-[11px] font-black text-slate-700 dark:text-slate-200 focus:outline-none">
               <option value="클린">🥗 클린</option>
               <option value="단백질">🍗 고단백</option>
-              <option value="조절">🍚 일반식 조절</option>
+              <option value="조절">🍚 조절</option>
               <option value="치팅">🍜 치팅</option>
             </select>
-            <button onclick="addCustomMealLog()" class="ml-auto px-3 py-1 rounded-lg bg-pink-500 hover:bg-pink-600 text-white text-[11px] font-black shadow-xs active:scale-95 transition-all">+ 기록</button>
           </div>
           <div id="mealDraftPhotoPreview" class="hidden flex items-center gap-2 pt-1">
             <img id="mealDraftPhotoImg" src="" class="w-12 h-12 rounded-lg object-cover border border-slate-300 dark:border-slate-600">
             <span id="mealDraftPhotoStatus" class="text-[10px] font-bold text-sky-600 dark:text-sky-300 flex-1">사진 첨부됨</span>
             <button onclick="clearDraftMealPhoto()" class="text-[10px] font-black text-rose-500 px-1.5">취소</button>
+          </div>
+          <!-- Row 4: 닫기 + 기록 저장 -->
+          <div class="flex gap-1.5 pt-0.5">
+            <button type="button" onclick="toggleMealComposer(false)" class="px-3 py-1.5 rounded-lg bg-slate-200/70 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[11px] font-black">닫기</button>
+            <button type="button" onclick="addCustomMealLog()" class="flex-1 py-1.5 rounded-lg bg-pink-500 hover:bg-pink-600 text-white text-xs font-black shadow-xs active:scale-[0.99] transition-all">✅ 식단 기록 저장</button>
           </div>
         </div>
 
@@ -7313,6 +7328,23 @@ ${err.message}
       if (timeEl && !timeEl.value) timeEl.value = getCurrentHHMM();
     }
 
+    function toggleMealComposer(forceState) {
+      const box = document.getElementById('mealComposerBox');
+      const icon = document.getElementById('mealComposerToggleIcon');
+      const txt = document.getElementById('mealComposerToggleText');
+      if (!box) return;
+      const open = (typeof forceState === 'boolean') ? forceState : box.classList.contains('hidden');
+      box.classList.toggle('hidden', !open);
+      if (icon) icon.textContent = open ? '−' : '+';
+      if (txt) txt.textContent = open ? '입력창 접기' : '식단 직접 추가 / 사진 인증';
+      if (open) {
+        syncMealComposerDefaults();
+        const nameEl = document.getElementById('mealInputName');
+        if (nameEl) setTimeout(() => nameEl.focus(), 50);
+      }
+      playBeep(open ? 700 : 480, 0.04);
+    }
+
     function quickAddMeal(name, kcal, protein, tag) {
       const slotEl = document.getElementById('mealInputSlot');
       const timeEl = document.getElementById('mealInputTime');
@@ -7454,6 +7486,7 @@ ${err.message}
       clearDraftMealPhoto();
 
       playBeep(820, 0.08);
+      toggleMealComposer(false);
       saveState(true);
       syncUI();
       showFloatingToast(`🍱 "${name}" 기록 완료! (+15 EXP)`, '✨');
@@ -7915,7 +7948,7 @@ ${err.message}
       }).join('');
     }
 
-    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.6.07) ----------
+    // ---------- Flexible Indoor/Outdoor Cardio Mode (러닝머신 / 천국의 계단 / 야외 러닝, v4.6.08) ----------
     const CARDIO_LABELS = { treadmill: '🏃‍♂️ 러닝머신', stair: '🪜 천국의 계단', outdoor: '🏃 야외 러닝' };
 
     function selectCardioMode(mode) {
@@ -12457,7 +12490,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.6.07 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.6.08 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
