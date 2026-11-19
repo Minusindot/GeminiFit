@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T12:31:36.419Z",
+  "updatedAt": "2026-11-19T12:32:16.138Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 65.4,
@@ -40,14 +40,14 @@
       "targetSets": 4
     },
     "upper2": {
-      "name": "EZ바",
+      "name": "로우 머신",
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ],
-      "weight": "10kg",
+      "weight": "20kg × 4회",
       "reps": 20,
       "targetSets": 4
     },
@@ -255,13 +255,13 @@
       "id": "gym-1795091486627",
       "date": "11/19",
       "fullDate": "2026-11-19",
-      "time": "오후 09:31",
+      "time": "오후 09:32",
       "upper1Done": 4,
       "upper1Reps": 80,
       "upper1Name": "사이드 레터럴 레이즈",
-      "upper2Done": 0,
-      "upper2Reps": 0,
-      "upper2Name": "EZ바",
+      "upper2Done": 4,
+      "upper2Reps": 80,
+      "upper2Name": "로우 머신",
       "lowerDone": 0,
       "lowerReps": 0,
       "lowerName": "V 스쿼트",
@@ -271,8 +271,8 @@
       "crunchDone": 0,
       "crunchReps": 0,
       "crunchTarget": 2,
-      "totalSets": 4,
-      "totalReps": 80
+      "totalSets": 8,
+      "totalReps": 160
     }
   ],
   "kotonoha": {
