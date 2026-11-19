@@ -1,19 +1,19 @@
 {
-  "updatedAt": "2026-11-19T12:34:04.270Z",
+  "updatedAt": "2026-11-19T12:48:03.297Z",
   "lastActiveDate": "2026-11-19",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 10,
-  "bondExp": 10,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
-  "currentSituation": "ev5",
+  "bondExp": 85,
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev3",
   "absDone": false,
   "runDone": false,
   "runDist": 6.01,
   "rehab": [
-    false
+    true
   ],
   "rehabSets": 1,
   "meals": [
@@ -54,10 +54,10 @@
     "lower": {
       "name": "시티드 레그 프레스",
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ],
       "weight": "45kg 20회",
       "reps": 20,
@@ -66,7 +66,7 @@
     "legRaise": {
       "name": "캡틴스 체어 레그레이즈",
       "sets": [
-        false
+        true
       ],
       "target": "15회",
       "reps": 50,
@@ -75,14 +75,14 @@
     "crunch": {
       "name": "크런치",
       "sets": [
-        false,
-        false
+        true,
+        true
       ],
       "target": "20회",
       "reps": 50,
       "targetSets": 2
     },
-    "allDone": false
+    "allDone": true
   },
   "gymHistory": [
     {
@@ -255,24 +255,24 @@
       "id": "gym-1795091486627",
       "date": "11/19",
       "fullDate": "2026-11-19",
-      "time": "오후 09:34",
+      "time": "오후 09:48",
       "upper1Done": 4,
       "upper1Reps": 80,
       "upper1Name": "사이드 레터럴 레이즈",
       "upper2Done": 4,
       "upper2Reps": 80,
       "upper2Name": "로우 머신",
-      "lowerDone": 0,
-      "lowerReps": 0,
+      "lowerDone": 4,
+      "lowerReps": 80,
       "lowerName": "시티드 레그 프레스",
-      "legRaiseDone": 0,
-      "legRaiseReps": 0,
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
       "legRaiseTarget": 1,
-      "crunchDone": 0,
-      "crunchReps": 0,
+      "crunchDone": 2,
+      "crunchReps": 100,
       "crunchTarget": 2,
-      "totalSets": 8,
-      "totalReps": 160
+      "totalSets": 15,
+      "totalReps": 390
     }
   ],
   "kotonoha": {
@@ -667,38 +667,36 @@
         "tea": 1
       },
       "lastUpdated": "2026-11-18T12:42:33.121Z"
+    },
+    "2026-11-19": {
+      "date": "2026-11-19",
+      "weight": 65.4,
+      "fat": 31.8,
+      "mealsDone": 2,
+      "mealPhotosCount": 2,
+      "runDone": false,
+      "absDone": false,
+      "gymDone": true,
+      "latestRun": {
+        "id": "run-1794460852153",
+        "date": "2026-11-12",
+        "distance": 6.01,
+        "duration": "55:32",
+        "pace": "09'13\"",
+        "calories": 421,
+        "heartRate": 127,
+        "steps": 7434,
+        "source": "삼성헬스"
+      },
+      "teaLog": {
+        "matcha": 0,
+        "espresso": 1,
+        "tea": 0
+      },
+      "lastUpdated": "2026-11-19T12:48:03.225Z"
     }
   },
   "chatHistory": [
-    {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "레스토랑 예약해요! 🍽️"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "헤헤헤~ 레스토랑 코스로 압수 완! 맛있는 거부터 잔뜩 드세요!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "예약 확인! 생일 코스 제대로 즐겨보자!"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "단식만 안 깨면 돼요. 먹을 만큼 좋은 거 먹어요."
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "생일 준비 완료! 프로듀서님 최고의 하루가 되도록 챙길게요!"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 말차 🍵 1잔을 챙겨 마셨어!"
-    },
     {
       "sender": "gemini",
       "name": "제미니",
@@ -812,6 +810,36 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "식단 인증 확인 완료! 정성껏 챙겨 드시는 모습 너무 보기 좋아요 프로듀서님~! 💛"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "2kg 덤벨 편심성 재활 1세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 09:48 실시간 기록 동기화 완료!]\n\n💛 코토네: \"2끼 식사 기록 확인 완료! 💛 16:30 마감까지 이 기세로 예쁘게 달려봐요 프로듀서님~\"\n\n🌟 미오: \"6.01km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 완주라니 참으로 훌륭하옵니다! 🌸 근성 하나는 정말 멋지시와요, 프로듀서님 🐾\""
+    },
+    {
+      "sender": "system",
+      "name": "새 대화",
+      "text": "🔄 오후 09:48 기록 동기화 · 새 대화 시작"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "어머나, 오늘 근력 루틴 풀코스 완주하셨사와요 🌸"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "세트마다 무게를 정확히 쌓아 올리신 거, 소녀가 다 보고 있었사옵니다 🐾"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "고생하셨사오니 어깨부터 정성껏 풀어드리겠사와요. 남은 재활 2kg 세트도 함께 하시지요 🍵"
     }
   ]
 }
