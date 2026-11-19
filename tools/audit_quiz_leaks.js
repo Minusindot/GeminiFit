@@ -17,9 +17,13 @@ const path = require('path');
 const vm = require('vm');
 
 const root = path.resolve(__dirname, '..');
+// Optional argument lets a caller audit a copy of the data (used by the self-test in --self-test).
+const dataFile = process.argv[2] && !process.argv[2].startsWith('--')
+  ? path.resolve(process.argv[2])
+  : path.join(root, 'kotonoha_data.js');
 const sandbox = { window: {}, console };
 vm.createContext(sandbox);
-vm.runInContext(fs.readFileSync(path.join(root, 'kotonoha_data.js'), 'utf8'), sandbox);
+vm.runInContext(fs.readFileSync(dataFile, 'utf8'), sandbox);
 
 const lessons = sandbox.window.KOTONOHA_LESSONS || [];
 
