@@ -742,6 +742,12 @@
                 <button onclick="lockMessenger()" class="px-2 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-[10px] font-black text-slate-500 dark:text-slate-300 hover:border-rose-400 transition-all" title="잠금화면으로">🔒</button>
               </div>
             </div>
+            <div id="messengerFilterBar" class="flex items-center gap-1 px-2.5 pt-2 pb-1 bg-[var(--chat-bg)] overflow-x-auto clean-scroll">
+              <button onclick="setEpisodeFilter('all')" id="epFilter_all" class="px-2.5 py-1 rounded-full text-[10px] font-black bg-sky-500 text-white shadow-2xs shrink-0 transition-all">전체</button>
+              <button onclick="setEpisodeFilter('unwatched')" id="epFilter_unwatched" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shrink-0 transition-all">✨ 안 본 톡</button>
+              <button onclick="setEpisodeFilter('photo')" id="epFilter_photo" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shrink-0 transition-all">📷 사진 톡</button>
+              <button onclick="startRandomUnwatchedEpisode()" class="ml-auto px-2.5 py-1 rounded-full text-[10px] font-black bg-gradient-to-r from-pink-500 to-amber-500 text-white shadow-xs active:scale-95 shrink-0 transition-all">🎲 랜덤 톡</button>
+            </div>
             <div id="messengerThreadList" class="p-2.5 space-y-1.5 bg-[var(--chat-bg)]"></div>
             <div class="px-3 py-2 text-center text-[9px] font-bold text-slate-400 dark:text-slate-500 bg-[var(--chat-bg)]">캐릭터를 탭하면 에피소드 목록이 펼쳐져요</div>
           </div>
@@ -1025,10 +1031,12 @@
           </div>
           <div class="sub-box p-2">
             <span class="text-[10px] text-slate-400 font-bold block">🔥 기초대사량</span>
-            <span id="inbodyCardBmr" class="text-sm font-black text-amber-500 font-mono">1,330</span>
+            <span id="inbodyCardBmr" class="text-sm font-black text-amber-500 font-mono">1,349</span>
             <span class="text-[9px] text-slate-400">kcal</span>
           </div>
         </div>
+        <!-- Real InBody270 History Sparkline (Weight & Body Fat Trend) -->
+        <div id="inbodyTrendBox" class="hidden pt-2 border-t border-slate-200/70 dark:border-slate-700/50 space-y-1.5"></div>
       </div>
 
       <!-- 4. 🏃 러닝 & 유산소 완주 대시보드 (삼성헬스 & 나이키런 연동) -->
@@ -1152,6 +1160,10 @@
             <button onclick="openExerciseManageModal()" class="px-2 py-1 rounded-lg sub-box text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all hover:border-sky-400 whitespace-nowrap shrink-0" title="운동 종목 목록 추가 및 관리">
               <span>⚙️</span>
               <span>종목 관리</span>
+            </button>
+            <button onclick="startRestTimer(60)" class="px-2 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border border-emerald-400/30 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all whitespace-nowrap shrink-0" title="세트 간 휴식 타이머 시작">
+              <span>⏱️</span>
+              <span>휴식 60초</span>
             </button>
             <button onclick="openWorkoutGraphModal()" class="px-2 py-1 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-600 dark:text-sky-300 border border-sky-400/30 text-[10px] font-black flex items-center gap-1 shadow-xs transition-all whitespace-nowrap shrink-0" title="운동 세트 & 횟수 비교 그래프">
               <span>📊</span>
@@ -2017,12 +2029,12 @@
 
   </div>
 
-  <script src="./weekly_reports.js?v=4.4.0"></script>
-  <script src="./dialogue_pool.js?v=4.4.0"></script>
-  <script src="./trainer_episodes.js?v=4.4.0"></script>
-  <script src="./kotonoha_data.js?v=4.4.0"></script>
-  <script src="./kotonoha_engine.js?v=4.4.0"></script>
-  <script src="./ocr_pipeline.js?v=4.4.0"></script>
+  <script src="./weekly_reports.js?v=4.4.1"></script>
+  <script src="./dialogue_pool.js?v=4.4.1"></script>
+  <script src="./trainer_episodes.js?v=4.4.1"></script>
+  <script src="./kotonoha_data.js?v=4.4.1"></script>
+  <script src="./kotonoha_engine.js?v=4.4.1"></script>
+  <script src="./ocr_pipeline.js?v=4.4.1"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -4973,7 +4985,15 @@
       const contact = TRAINER_CONTACTS.find(x => x.room === room) || TRAINER_CONTACTS[0];
       const pool = MESSENGER_WALLPAPERS[room] || [];
       const wallpaper = pool[Math.floor(Math.random() * pool.length)] || './image/03 gemini/gemini_26_kyoto_teahouse.png';
-      const greet = LOCK_GREETINGS[room] || LOCK_GREETINGS.gemini;
+      const baseGreet = LOCK_GREETINGS[room] || LOCK_GREETINGS.gemini;
+      let liveMsg = baseGreet.msg;
+      try {
+        const ctx = buildTalkContext();
+        if (room === 'gemini') liveMsg = `현재 ${ctx.weight} · ${ctx.weightComment}`;
+        else if (room === 'kotone') liveMsg = ctx.proteinStatus;
+        else liveMsg = `최근 러닝 ${ctx.runDist} · 이번 주 헬스 ${ctx.gymCountWeek}회, 오늘도 파이팅! 🌟`;
+      } catch (e) {}
+      const greet = { label: baseGreet.label, msg: liveMsg };
       const now = new Date();
       const days = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -5080,6 +5100,47 @@
       setTimeout(() => startTrainerEpisode(room, epId), 240);
     }
 
+    let currentEpisodeFilter = 'all';
+
+    function episodeHasPhoto(ep) {
+      if (!ep) return false;
+      return (ep.intro || []).some(l => l && typeof l === 'object' && l.image) ||
+             (ep.outro || []).some(l => l && typeof l === 'object' && l.image);
+    }
+
+    function setEpisodeFilter(mode) {
+      currentEpisodeFilter = mode;
+      ['all', 'unwatched', 'photo'].forEach(k => {
+        const btn = document.getElementById('epFilter_' + k);
+        if (!btn) return;
+        btn.className = (k === mode)
+          ? 'px-2.5 py-1 rounded-full text-[10px] font-black bg-sky-500 text-white shadow-2xs shrink-0 transition-all'
+          : 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shrink-0 transition-all';
+      });
+      // Auto-expand first room with matching episodes when filtering
+      if (mode !== 'all' && !expandedThreadRoom) expandedThreadRoom = 'gemini';
+      playBeep(640, 0.04);
+      renderThreadList();
+    }
+
+    function startRandomUnwatchedEpisode() {
+      const allEps = trainerEpisodes();
+      const pool = [];
+      ['gemini', 'kotone', 'mio', 'dual'].forEach(room => {
+        (allEps[room] || []).forEach(ep => {
+          if (!getTrainerEpisodeDone(ep.id)) pool.push({ room, ep });
+        });
+      });
+      if (!pool.length) {
+        ['gemini', 'kotone', 'mio', 'dual'].forEach(room => {
+          (allEps[room] || []).forEach(ep => pool.push({ room, ep }));
+        });
+      }
+      if (!pool.length) return;
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      openEpisodeFromList(pick.room, pick.ep.id);
+    }
+
     function renderThreadList() {
       const list = document.getElementById('messengerThreadList');
       if (!list) return;
@@ -5087,6 +5148,11 @@
       list.innerHTML = TRAINER_CONTACTS.map(c => {
         const eps = allEps[c.room] || [];
         const doneCount = eps.filter(e => getTrainerEpisodeDone(e.id)).length;
+        const filteredEps = eps.filter(e => {
+          if (currentEpisodeFilter === 'unwatched') return !getTrainerEpisodeDone(e.id);
+          if (currentEpisodeFilter === 'photo') return episodeHasPhoto(e);
+          return true;
+        });
         const expanded = expandedThreadRoom === c.room;
         const last = roomLastMessage(c.room);
         const rawPreview = last ? String(last.text || '') : '';
@@ -5094,8 +5160,9 @@
           ? rawPreview.replace(/\|\|/g, ' ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 46)
           : '아직 나눈 대화가 없어요';
 
-        const episodeRows = eps.map(e => {
+        const episodeRows = filteredEps.map(e => {
           const done = getTrainerEpisodeDone(e.id);
+          const hasPic = episodeHasPhoto(e);
           const sceneThumb = e.scene && e.scene.bg
             ? `<span class="w-9 h-9 rounded-lg overflow-hidden shrink-0 bg-slate-800 ring-1 ring-white/15"><img src="./image/bg/bg_${e.scene.bg}.png" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'"></span>`
             : `<span class="w-5 h-5 rounded-full flex items-center justify-center text-[9px] shrink-0 ${done ? 'bg-emerald-500 text-white' : 'bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-400'}">${done ? '✓' : '▶'}</span>`;
@@ -5106,6 +5173,7 @@
                 <span class="block text-[11px] font-black text-slate-800 dark:text-slate-100 truncate">${e.icon || '🎬'} ${e.title}</span>
                 <span class="block text-[9px] font-bold text-slate-400 dark:text-slate-500 truncate">${e.sub || ''}</span>
               </span>
+              ${hasPic ? '<span class="text-[9px] px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300 font-black shrink-0" title="사진 포함">📷</span>' : ''}
               ${done ? '<span class="text-[8px] font-black text-emerald-500 shrink-0">완료</span>' : '<span class="text-[8px] font-black text-pink-500 shrink-0">NEW</span>'}
             </button>
           `;
@@ -5785,6 +5853,15 @@
             <button onclick="rateTrainerEpisode('normal')" class="py-2 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-600 dark:text-sky-400 border border-sky-500/30 text-[11px] font-black active:scale-95 transition-all">😐 보통</button>
             <button onclick="rateTrainerEpisode('bad')" class="py-2 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-600 dark:text-rose-400 border border-rose-500/30 text-[11px] font-black active:scale-95 transition-all">👎 아쉬움</button>
           </div>
+          ${(() => {
+            const room = trainerMessengerRoom || state.activeTrainer || 'gemini';
+            const nextEp = (trainerEpisodes()[room] || []).find(e => e.id !== ep.id && !getTrainerEpisodeDone(e.id));
+            if (!nextEp) return '';
+            return `<button onclick="startTrainerEpisode('${room}', '${nextEp.id}')" class="w-full py-2 px-3 rounded-xl bg-sky-500/10 hover:bg-sky-500/20 border border-sky-400/40 text-sky-600 dark:text-sky-300 text-[11px] font-black flex items-center justify-between transition-all active:scale-[0.99]">
+              <span class="truncate">▶ 다음 안 본 톡: ${nextEp.icon || ''} ${nextEp.title}</span>
+              <span class="shrink-0 text-[9px]">이어하기</span>
+            </button>`;
+          })()}
         </div>`;
     }
 
@@ -5848,16 +5925,17 @@
 
       // 기록이 없으면 "—". 63점/24.8kg/1330kcal 같은 기본값을 실제 측정처럼 보여주지 않는다.
       const num = (v) => (typeof v === 'number' && isFinite(v)) ? v : null;
-      const ib = state.latestInBody || {};
+      const ib = state.latestInbody || state.latestInBody || {};
       const realWeight = prevRealValue('weight');
       const realFat = prevRealValue('fat');
 
-      const score = num(ib.score) !== null ? num(ib.score) : num(state.inbodyScore);
-      const smm = num(ib.smm) !== null ? num(ib.smm) : num(state.skeletalMuscle);
-      const bmr = num(ib.bmr) !== null ? num(ib.bmr) : num(state.bmr);
-      const fatMass = num(ib.fatMass) !== null
-        ? num(ib.fatMass)
-        : ((realWeight !== null && realFat !== null) ? Math.round(realWeight * realFat / 100 * 10) / 10 : null);
+      const score = num(ib.inbodyScore) ?? num(ib.score) ?? num(state.inbodyScore);
+      const smm = num(ib.skeletalMuscle) ?? num(ib.smm) ?? num(state.skeletalMuscle);
+      const bmr = num(ib.bmr) ?? num(state.bmr);
+      let fatMass = num(ib.bodyFatMass) ?? num(ib.fatMass) ?? num(state.bodyFatMass);
+      if (fatMass === null && realWeight !== null && realFat !== null) {
+        fatMass = Number((realWeight * (realFat / 100)).toFixed(1));
+      }
 
       const dateEl = document.getElementById('inbodyReportDate');
       const scoreBadge = document.getElementById('inbodyScoreBadge');
@@ -5870,6 +5948,47 @@
       if (smmEl) smmEl.textContent = smm !== null ? smm : '—';
       if (fatMassEl) fatMassEl.textContent = fatMass !== null ? fatMass : '—';
       if (bmrEl) bmrEl.textContent = bmr !== null ? Number(bmr).toLocaleString() : '—';
+
+      // Render real InBody history sparkline if >= 2 points exist
+      const trendBox = document.getElementById('inbodyTrendBox');
+      const hist = Array.isArray(state.inbodyHistory) ? state.inbodyHistory.filter(h => h && typeof h.weight === 'number') : [];
+      if (trendBox && hist.length >= 2) {
+        const pts = hist.slice(-8);
+        const wVals = pts.map(p => p.weight);
+        const fVals = pts.map(p => p.fat || 0);
+        const wMin = Math.min(...wVals) - 0.8, wMax = Math.max(...wVals) + 0.8;
+        const fMin = Math.min(...fVals) - 1.0, fMax = Math.max(...fVals) + 1.0;
+        const W = 280, H = 46, pad = 10;
+        const toX = (i) => pad + (i / (pts.length - 1)) * (W - pad * 2);
+        const toYW = (v) => H - pad - ((v - wMin) / Math.max(0.1, wMax - wMin)) * (H - pad * 2);
+        const toYF = (v) => H - pad - ((v - fMin) / Math.max(0.1, fMax - fMin)) * (H - pad * 2);
+        const wPath = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${toX(i).toFixed(1)},${toYW(p.weight).toFixed(1)}`).join(' ');
+        const fPath = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${toX(i).toFixed(1)},${toYF(p.fat || fMin).toFixed(1)}`).join(' ');
+        const last = pts[pts.length - 1], prev = pts[pts.length - 2];
+        const fatDiff = (typeof last.fat === 'number' && typeof prev.fat === 'number') ? (last.fat - prev.fat).toFixed(1) : null;
+        const smmDiff = (typeof last.skeletalMuscle === 'number' && typeof prev.skeletalMuscle === 'number') ? (last.skeletalMuscle - prev.skeletalMuscle).toFixed(1) : null;
+
+        trendBox.classList.remove('hidden');
+        trendBox.innerHTML = `
+          <div class="flex items-center justify-between text-[9px] font-bold text-slate-400">
+            <span>📈 인바디 추이 (${pts[0].date.slice(5)} ~ ${last.date.slice(5)})</span>
+            <span class="flex items-center gap-2">
+              ${smmDiff !== null ? `<span class="${Number(smmDiff) >= 0 ? 'text-emerald-500' : 'text-rose-400'}">근육 ${Number(smmDiff) >= 0 ? '+' : ''}${smmDiff}kg</span>` : ''}
+              ${fatDiff !== null ? `<span class="${Number(fatDiff) <= 0 ? 'text-sky-500' : 'text-amber-500'}">체지방 ${Number(fatDiff) > 0 ? '+' : ''}${fatDiff}%p</span>` : ''}
+            </span>
+          </div>
+          <svg viewBox="0 0 ${W} ${H}" class="w-full h-11 overflow-visible">
+            <path d="${fPath}" fill="none" stroke="#c084fc" stroke-width="1.6" stroke-dasharray="3 2" opacity="0.75"/>
+            <path d="${wPath}" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            ${pts.map((p, i) => `<circle cx="${toX(i).toFixed(1)}" cy="${toYW(p.weight).toFixed(1)}" r="${i === pts.length - 1 ? 3.2 : 2}" fill="#38bdf8"/>`).join('')}
+          </svg>
+          <div class="flex items-center justify-between text-[9px] font-mono text-slate-400">
+            <span><span class="inline-block w-2 h-0.5 bg-sky-400 align-middle mr-1"></span>체중 ${pts[0].weight}→${last.weight}kg</span>
+            <span><span class="inline-block w-2 h-0.5 bg-purple-400 align-middle mr-1"></span>체지방 ${pts[0].fat}→${last.fat}%</span>
+          </div>`;
+      } else if (trendBox) {
+        trendBox.classList.add('hidden');
+      }
     }
 
     function syncUI() {
@@ -9380,11 +9499,73 @@ ${err.message}
       syncUI();
     }
 
+    // ---------- Floating Gym Rest Timer (v4.4.1) ----------
+    let restTimerInterval = null;
+    let restTimerRemain = 0;
+
+    function renderRestTimerPill() {
+      let pill = document.getElementById('floatingRestTimer');
+      if (!pill) {
+        pill = document.createElement('div');
+        pill.id = 'floatingRestTimer';
+        pill.className = 'fixed bottom-4 right-4 z-[9000] rounded-2xl bg-slate-900/95 dark:bg-slate-800/95 text-white border border-emerald-400/50 shadow-2xl backdrop-blur-md px-3.5 py-2.5 flex items-center gap-2.5 transition-all';
+        document.body.appendChild(pill);
+      }
+      if (restTimerRemain <= 0) {
+        pill.classList.add('hidden');
+        return;
+      }
+      pill.classList.remove('hidden');
+      const m = Math.floor(restTimerRemain / 60);
+      const sec = String(restTimerRemain % 60).padStart(2, '0');
+      pill.innerHTML = `
+        <span class="text-base animate-pulse">⏱️</span>
+        <div class="leading-tight">
+          <div class="text-[9px] font-bold text-emerald-300">세트 휴식 타이머</div>
+          <div class="text-base font-black font-mono tabular-nums">${m}:${sec}</div>
+        </div>
+        <button onclick="adjustRestTimer(15)" class="px-2 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-[10px] font-black active:scale-95">+15초</button>
+        <button onclick="stopRestTimer()" class="px-2 py-1 rounded-lg bg-rose-500/80 hover:bg-rose-500 text-[10px] font-black active:scale-95">종료</button>`;
+    }
+
+    function startRestTimer(seconds = 60) {
+      if (restTimerInterval) clearInterval(restTimerInterval);
+      restTimerRemain = seconds;
+      renderRestTimerPill();
+      restTimerInterval = setInterval(() => {
+        restTimerRemain -= 1;
+        if (restTimerRemain <= 0) {
+          stopRestTimer();
+          playBeep(880, 0.12);
+          setTimeout(() => playBeep(1175, 0.16), 140);
+          showFloatingToast('휴식 끝! 다음 세트 바로 가시지요 💪', '⏱️');
+        } else {
+          renderRestTimerPill();
+        }
+      }, 1000);
+    }
+
+    function adjustRestTimer(delta) {
+      restTimerRemain = Math.max(5, restTimerRemain + delta);
+      playBeep(640, 0.04);
+      renderRestTimerPill();
+    }
+
+    function stopRestTimer() {
+      if (restTimerInterval) { clearInterval(restTimerInterval); restTimerInterval = null; }
+      restTimerRemain = 0;
+      renderRestTimerPill();
+    }
+
     function toggleGymSet(exKey, setIdx) {
       initGymRoutine();
       if (!state.gymRoutine[exKey] || !state.gymRoutine[exKey].sets) return;
       state.gymRoutine[exKey].sets[setIdx] = !state.gymRoutine[exKey].sets[setIdx];
-      playBeep(state.gymRoutine[exKey].sets[setIdx] ? 750 : 380, 0.08);
+      const checkedOn = state.gymRoutine[exKey].sets[setIdx];
+      playBeep(checkedOn ? 750 : 380, 0.08);
+      if (checkedOn && !isGymRoutineDone(state.gymRoutine)) {
+        startRestTimer(60);
+      }
 
       const gr = state.gymRoutine;
       const isDone = isGymRoutineDone(gr);
