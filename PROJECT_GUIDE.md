@@ -23,4 +23,4 @@
 ## 3. 작업 시 기본 규칙
 1. 수정 후 배포 확인은 `main` 푸시 → https://minusindot.github.io/GeminiFit/ (필요 시 캐시/강력 새로고침 및 `sw.js` 버전 확인).
 2. `state.json`은 앱에서 자동 동기화되는 사용자 실데이터이므로, 코드 수정 시 사용자 데이터를 덮어쓰지 않도록 주의 (`git pull --rebase` 습관화).
-3. 버전 업 시 커밋 메시지에 `v4.x.xx: 요약` 형식을 유지.
+3. 버전 업 시 커밋 메시지에 `v4.x.xx: 요약` 형식을 유지하고, **반드시 3곳(`sw.js` CACHE_NAME, `index.html` 헤더 배지, `index.html` 하단 `현재 앱 버전`)**을 함께 올릴 것.
