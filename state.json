@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-19T15:30:28.963Z",
+  "updatedAt": "2026-11-20T12:04:42.650Z",
   "lastActiveDate": "2026-11-20",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 15,
-  "bondExp": 75,
-  "activeTrainer": "gemini",
-  "activeMode": "gemini",
-  "currentSituation": "ev3",
+  "bondExp": 95,
+  "activeTrainer": "mio",
+  "activeMode": "mio",
+  "currentSituation": "ev1",
   "absDone": false,
   "runDone": false,
   "runDist": 1.2,
@@ -17,13 +17,23 @@
   ],
   "rehabSets": 1,
   "meals": [
-    false,
+    true,
     false,
     false
   ],
-  "mealLogs": [],
+  "mealLogs": [
+    {
+      "id": "meal-1795176275479",
+      "slot": "저녁",
+      "time": "16:50",
+      "name": "에프 닭가슴살 오야꼬동",
+      "kcal": 0,
+      "protein": 0,
+      "tag": "단백질"
+    }
+  ],
   "teaLog": {
-    "water": 0,
+    "water": 1,
     "matcha": 0,
     "espresso": 0,
     "tea": 0
@@ -778,15 +788,6 @@
   "chatHistory": [
     {
       "sender": "user",
-      "text": "[음료 기록] 단백질 음료 🥛 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "단백질 음료 야무지게 챙겼네! 근손실 없이 슬림 탄탄 라인 만들려면 단백질 충전은 필수지, 기특해! 🥛💪"
-    },
-    {
-      "sender": "user",
       "text": "[음료 기록] 말차 🍵 1잔을 챙겨 마셨어!"
     },
     {
@@ -950,6 +951,15 @@
       "name": "제미니",
       "text": "천천히 가도 방향이 맞으면 결국 도착하는 법이옵니다. 소녀가 끝까지 동행하겠사와요 🌸",
       "room": "gemini"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "수분 보충 나이스!! 오늘 벌써 물 1잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
     }
   ]
 }
