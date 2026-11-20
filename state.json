@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-20T14:05:43.069Z",
+  "updatedAt": "2026-11-20T14:05:52.375Z",
   "lastActiveDate": "2026-11-20",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 17,
-  "bondExp": 25,
-  "activeTrainer": "gemini",
-  "activeMode": "gemini",
+  "bondExp": 45,
+  "activeTrainer": "mio",
+  "activeMode": "mio",
   "currentSituation": "ev3",
   "absDone": false,
   "runDone": true,
@@ -817,41 +817,51 @@
         "water": 3
       },
       "lastUpdated": "2026-11-19T14:48:37.757Z"
+    },
+    "2026-11-20": {
+      "date": "2026-11-20",
+      "weight": 65.4,
+      "fat": 31.8,
+      "mealsDone": 1,
+      "mealPhotosCount": 0,
+      "mealLogs": [
+        {
+          "slot": "저녁",
+          "time": "16:50",
+          "name": "에프 닭가슴살 오야꼬동",
+          "kcal": 0,
+          "protein": 0,
+          "tag": "단백질"
+        }
+      ],
+      "mealKcal": 0,
+      "mealProtein": 0,
+      "runDone": true,
+      "absDone": false,
+      "rehabDone": 1,
+      "gymDone": false,
+      "teaLog": {
+        "water": 2,
+        "matcha": 0,
+        "espresso": 1,
+        "tea": 0
+      },
+      "autoArchived": false,
+      "latestRun": {
+        "id": "cardio-2026-11-20",
+        "date": "2026-11-20",
+        "distance": 0.6,
+        "duration": "10:00",
+        "pace": "스텝밀",
+        "calories": 95,
+        "heartRate": 132,
+        "steps": 650,
+        "source": "천국의 계단"
+      },
+      "lastUpdated": "2026-11-20T14:05:52.225Z"
     }
   },
   "chatHistory": [
-    {
-      "sender": "system",
-      "name": "새 대화",
-      "text": "🔄 오후 11:48 기록 동기화 · 새 대화 시작",
-      "room": "mio"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "1.2km 러닝 완주(페이스 스텝밀), 방금 확인했어! 🌟",
-      "room": "mio"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "이번 주 벌써 러닝 3회째야! 이전 기록(66.4kg)보다 1.0kg 감량한 거 진심으로 축하해요! 🎉",
-      "room": "mio"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "오늘 단백질 음료 1잔 야무지게 챙겨 마신 거 확인했어요! 기특해요 🥛✨ 시원하게 스트레칭하고 잠깐 쉬면서 얘기할래? 🖐️",
-      "room": "mio",
-      "image": "./image/01 mio/mio_40_post_run_grass_lie_down.png",
-      "caption": "📷 미오 · 러닝 후 잔디밭 쿨다운"
-    },
-    {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "오늘 꽤 힘들었는데 끝까지 해냈어! 😮‍💨",
-      "room": "mio"
-    },
     {
       "sender": "mio",
       "name": "미오",
@@ -994,6 +1004,38 @@
       "name": "제미니",
       "text": "2kg 덤벨 편심성 재활 1세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾",
       "room": "all"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 11:05 실시간 기록 동기화 완료!]\n\n💛 코토네: \"첫 식사 인증 나이스예요! 💛 단백질 든든하게 챙기시는 모습 너무 보기 좋아요~\"\n\n🌟 미오: \"0.6km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"기록 갱신을 확인했사옵니다 🍵 목표 52kg까지 소녀와 함께 정갈하게 달려보시와요, 프로듀서님 🐾\"",
+      "room": "all"
+    },
+    {
+      "sender": "system",
+      "name": "기록 동기화",
+      "text": "🔄 오후 11:05 동기화 완료 · 65.4kg · 유산소 0.6km",
+      "room": "mio"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 🌇 노을 트랙 9분대 저강도 러닝의 맛",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "프로듀서! 최근 러닝 기록(0.6km · 페이스 스텝밀) 봤는데, 심박수 안정적으로 잡고 오래 뛰는 거 진짜 교과서적이더라! 👏",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "나도 방금 노을 지는 트랙에서 천천히 존2 페이스 조깅하고 왔어! 숨 안 차고 대화할 수 있는 속도가 체지방 제일 잘 태우는 거 알지? 🌇",
+      "room": "mio",
+      "image": "./image/01 mio/mio_36_autumn_sunset_track_jacket.png",
+      "caption": "📷 미오가 보낸 사진 · 노을 지는 트랙 조깅"
     }
   ]
 }
