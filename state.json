@@ -1,19 +1,19 @@
 {
-  "updatedAt": "2026-11-20T13:52:24.307Z",
+  "updatedAt": "2026-11-20T14:05:43.069Z",
   "lastActiveDate": "2026-11-20",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 17,
-  "bondExp": 10,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
-  "currentSituation": "ev5",
+  "bondExp": 25,
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev3",
   "absDone": false,
   "runDone": true,
   "runDist": 0.6,
   "rehab": [
-    false
+    true
   ],
   "rehabSets": 1,
   "meals": [
@@ -66,10 +66,10 @@
     "lower": {
       "name": "힙 어브덕션",
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ],
       "weight": "55kg × 20회",
       "reps": 20,
@@ -78,7 +78,7 @@
     "legRaise": {
       "name": "캡틴스 체어 레그레이즈",
       "sets": [
-        false
+        true
       ],
       "target": "15회",
       "reps": 50,
@@ -87,8 +87,8 @@
     "crunch": {
       "name": "크런치",
       "sets": [
-        false,
-        false
+        true,
+        true
       ],
       "target": "20회",
       "reps": 50,
@@ -285,6 +285,29 @@
       "crunchTarget": 2,
       "totalSets": 15,
       "totalReps": 390
+    },
+    {
+      "id": "gym-1795183538988",
+      "date": "11/20",
+      "fullDate": "2026-11-20",
+      "time": "오후 11:05",
+      "upper1Done": 0,
+      "upper1Reps": 0,
+      "upper1Name": "사이드 레터럴 레이즈",
+      "upper2Done": 0,
+      "upper2Reps": 0,
+      "upper2Name": "로우 머신",
+      "lowerDone": 4,
+      "lowerReps": 80,
+      "lowerName": "힙 어브덕션",
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
+      "legRaiseTarget": 1,
+      "crunchDone": 2,
+      "crunchReps": 100,
+      "crunchTarget": 2,
+      "totalSets": 7,
+      "totalReps": 230
     }
   ],
   "kotonoha": {
@@ -798,12 +821,6 @@
   },
   "chatHistory": [
     {
-      "sender": "dual",
-      "name": "제미니 · 코토네 · 미오",
-      "text": "⚡ [오후 11:48 실시간 기록 동기화 완료!]\n\n💛 코토네: \"2끼 식사 기록 확인 완료! 💛 16:30 마감까지 이 기세로 예쁘게 달려봐요 프로듀서님~\"\n\n🌟 미오: \"1.2km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 완주라니 참으로 훌륭하옵니다! 🌸 근성 하나는 정말 멋지시와요, 프로듀서님 🐾\"",
-      "room": "all"
-    },
-    {
       "sender": "system",
       "name": "새 대화",
       "text": "🔄 오후 11:48 기록 동기화 · 새 대화 시작",
@@ -971,6 +988,12 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "2kg 덤벨 편심성 재활 1세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾",
+      "room": "all"
     }
   ]
 }
