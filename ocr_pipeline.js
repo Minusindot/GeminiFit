@@ -440,9 +440,140 @@
     return lines.join('\n');
   }
 
+  const SLEEP_GEMINI_PROMPT = [
+    '당신은 삼성헬스(Samsung Health) / 애플건강 / 가민 수면 화면 스크린샷을 읽는 정밀 데이터 추출기입니다.',
+    '화면에 실제로 보이는 수면 기록 숫자만 JSON으로 옮기세요.',
+    '',
+    '[규칙]',
+    '1. 보이지 않거나 확실하지 않은 값은 null 입니다. 추측 금지.',
+    '2. 취침 시각(bedtime)과 기상 시각(wakeup)은 반드시 24시간제 "HH:mm" 문자열로 변환하세요.',
+    '   - 예: "오전 1:15" -> "01:15", "오후 11:40" -> "23:40", "오전 12:20" -> "00:20", "오후 12:10" -> "12:10".',
+    '3. 총 수면 시간(durationMin)은 분 단위 정수입니다. (예: "6시간 24분" -> 384).',
+    '4. 날짜(date)가 보이면 "YYYY-MM-DD" 형식으로 적으세요. 연도가 생략된 "11월 21일" 등은 null 대신 월-일만 쓰지 말고 오늘 연도를 추정하지 말아 null로 두어도 됩니다.',
+    '5. 출력은 JSON 객체 하나만. 코드펜스·설명 금지.',
+    '',
+    '[출력 스키마]',
+    '{',
+    '  "source": "삼성헬스" | "애플건강" | "기타",',
+    '  "date": "YYYY-MM-DD" | null,',
+    '  "bedtime": "HH:mm" | null,',
+    '  "wakeup": "HH:mm" | null,',
+    '  "durationMin": 정수 | null,',
+    '  "score": 정수 | null,',
+    '  "deepMin": 정수 | null,',
+    '  "remMin": 정수 | null,',
+    '  "notes": "한 줄 메모 또는 null"',
+    '}'
+  ].join('\n');
+
+  function normalizeTimeHHMM(val) {
+    if (val === null || val === undefined) return null;
+    const s = String(val).trim();
+    if (!s) return null;
+    const ampm = s.match(/(오전|오후|AM|PM)\s*(\d{1,2})\s*[:시]\s*(\d{1,2})/i);
+    if (ampm) {
+      let h = parseInt(ampm[2], 10);
+      const m = parseInt(ampm[3], 10);
+      const tag = ampm[1].toUpperCase();
+      if ((tag === '오후' || tag === 'PM') && h < 12) h += 12;
+      if ((tag === '오전' || tag === 'AM') && h === 12) h = 0;
+      if (h >= 0 && h <= 23 && m >= 0 && m <= 59) {
+        return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+      }
+    }
+    const hm = s.match(/(\d{1,2})\s*[:시]\s*(\d{1,2})/);
+    if (hm) {
+      const h = parseInt(hm[1], 10);
+      const m = parseInt(hm[2], 10);
+      if (h >= 0 && h <= 23 && m >= 0 && m <= 59) {
+        return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+      }
+    }
+    return null;
+  }
+
+  function calcSleepDurationMin(bedtime, wakeup) {
+    if (!bedtime || !wakeup) return null;
+    const [bh, bm] = bedtime.split(':').map(Number);
+    const [wh, wm] = wakeup.split(':').map(Number);
+    if ([bh, bm, wh, wm].some(n => !Number.isFinite(n))) return null;
+    let diff = (wh * 60 + wm) - (bh * 60 + bm);
+    if (diff <= 0) diff += 24 * 60;
+    return (diff >= 30 && diff <= 18 * 60) ? diff : null;
+  }
+
+  function formatSleepDuration(min) {
+    if (!Number.isFinite(min) || min <= 0) return '-';
+    const h = Math.floor(min / 60);
+    const m = Math.round(min % 60);
+    return h > 0 ? (m > 0 ? `${h}시간 ${m}분` : `${h}시간`) : `${m}분`;
+  }
+
+  function normalizeSleepScan(raw) {
+    const r = raw || {};
+    const bedtime = normalizeTimeHHMM(r.bedtime);
+    const wakeup = normalizeTimeHHMM(r.wakeup);
+    let durationMin = toNumber(r.durationMin);
+    if (durationMin !== null) durationMin = Math.round(durationMin);
+    if (durationMin === null || durationMin < 30 || durationMin > 18 * 60) {
+      durationMin = calcSleepDurationMin(bedtime, wakeup);
+    }
+    let score = toNumber(r.score);
+    if (score !== null) {
+      score = Math.round(score);
+      if (score < 1 || score > 100) score = null;
+    }
+    const deepMin = toNumber(r.deepMin);
+    const remMin = toNumber(r.remMin);
+    const dateStr = (typeof r.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(r.date.trim())) ? r.date.trim() : null;
+    return {
+      source: r.source || '삼성헬스',
+      date: dateStr,
+      bedtime,
+      wakeup,
+      durationMin,
+      durationText: formatSleepDuration(durationMin),
+      score,
+      deepMin: deepMin !== null && deepMin >= 0 && deepMin <= 600 ? Math.round(deepMin) : null,
+      remMin: remMin !== null && remMin >= 0 && remMin <= 600 ? Math.round(remMin) : null,
+      notes: r.notes || null
+    };
+  }
+
+  function parseSleepTextFallback(text) {
+    const s = String(text || '');
+    let durationMin = null;
+    const durMatch = s.match(/(\d{1,2})\s*시간\s*(\d{1,2})?\s*분?/);
+    if (durMatch) {
+      const h = parseInt(durMatch[1], 10);
+      const m = durMatch[2] ? parseInt(durMatch[2], 10) : 0;
+      if (h >= 0 && h <= 18 && m >= 0 && m <= 59) durationMin = h * 60 + m;
+    }
+    const timeMatches = [];
+    const re = /(?:(오전|오후|AM|PM)\s*)?(\d{1,2})\s*:\s*(\d{2})/gi;
+    let m;
+    while ((m = re.exec(s)) !== null) {
+      const t = normalizeTimeHHMM(m[0]);
+      if (t) timeMatches.push(t);
+    }
+    let bedtime = null, wakeup = null;
+    if (timeMatches.length >= 2) {
+      bedtime = timeMatches[0];
+      wakeup = timeMatches[1];
+    }
+    let score = null;
+    const scoreMatch = s.match(/수면\s*점수[^\d]{0,12}(\d{2,3})|(\d{2,3})\s*점/);
+    if (scoreMatch) {
+      const v = parseInt(scoreMatch[1] || scoreMatch[2], 10);
+      if (v >= 20 && v <= 100) score = v;
+    }
+    return normalizeSleepScan({ source: '삼성헬스(OCR)', bedtime, wakeup, durationMin, score });
+  }
+
   const API = {
     PIPELINE_VERSION,
     GEMINI_PROMPT,
+    SLEEP_GEMINI_PROMPT,
     INBODY_FIELDS,
     RUN_FIELDS,
     LABELS,
@@ -453,6 +584,11 @@
     normalizeFitnessScan,
     validateFitnessScan,
     mergeScanResults,
+    normalizeTimeHHMM,
+    calcSleepDurationMin,
+    formatSleepDuration,
+    normalizeSleepScan,
+    parseSleepTextFallback,
     parseDuration,
     formatDuration,
     parsePace,

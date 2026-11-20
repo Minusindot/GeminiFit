@@ -926,7 +926,7 @@
             </div>
           </div>
           <div class="px-1.5 py-1.5 rounded-xl sub-box border-amber-400/30 text-center space-y-1">
-            <button onclick="logTea('espresso', 1)" class="w-full active:scale-95 transition-all" title="커피 +1">
+            <button onclick="logTea('espresso', 1)" class="w-full active:scale-95 transition-all" title="커피 +1 (시각 자동 기록)">
               <div class="text-[10px] font-black text-amber-700 dark:text-amber-300">☕ 커피</div>
             </button>
             <div class="flex items-center justify-center gap-1">
@@ -934,9 +934,10 @@
               <span id="espressoCount" class="text-[10px] font-black font-mono">0회</span>
               <button onclick="logTea('espresso', 1)" class="w-4 h-4 rounded bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[10px] font-black flex items-center justify-center active:scale-90">+</button>
             </div>
+            <div id="espressoLastTime" class="text-[8.5px] font-mono text-amber-600/80 dark:text-amber-400/80 leading-none min-h-[10px]"></div>
           </div>
           <div class="px-1.5 py-1.5 rounded-xl sub-box border-emerald-400/30 text-center space-y-1">
-            <button onclick="logTea('matcha', 1)" class="w-full active:scale-95 transition-all" title="말차 +1">
+            <button onclick="logTea('matcha', 1)" class="w-full active:scale-95 transition-all" title="말차 +1 (시각 자동 기록)">
               <div class="text-[10px] font-black text-emerald-700 dark:text-emerald-300">🍵 말차</div>
             </button>
             <div class="flex items-center justify-center gap-1">
@@ -944,6 +945,7 @@
               <span id="matchaCount" class="text-[10px] font-black font-mono">0회</span>
               <button onclick="logTea('matcha', 1)" class="w-4 h-4 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-[10px] font-black flex items-center justify-center active:scale-90">+</button>
             </div>
+            <div id="matchaLastTime" class="text-[8.5px] font-mono text-emerald-600/80 dark:text-emerald-400/80 leading-none min-h-[10px]"></div>
           </div>
           <div class="px-1.5 py-1.5 rounded-xl sub-box border-sky-400/30 text-center space-y-1">
             <button onclick="logTea('tea', 1)" class="w-full active:scale-95 transition-all" title="단백질 음료 +1">
@@ -1532,6 +1534,82 @@
         </div>
       </div>
 
+      <!-- 5.5 🌙 수면(삼성헬스 스샷) · 컨디션 · PC/폰 일상 리듬 (v4.7.04) -->
+      <div class="game-card p-3.5 space-y-3 border-l-4 border-l-indigo-400">
+        <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
+          <div class="flex items-center gap-1.5 min-w-0">
+            <span class="text-base">🌙</span>
+            <div class="min-w-0">
+              <span class="text-xs font-black text-slate-800 dark:text-slate-100 block">수면 · 컨디션 · PC/폰 일상 리듬</span>
+              <span class="text-[9px] text-indigo-500 font-bold block">삼성헬스 수면 스샷 OCR · 3초 컨디션 태그 · Gemini 상담 자동 반영</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <label for="sleepScreenshotInput" class="px-2 py-1 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white text-[10px] font-black cursor-pointer shadow-xs active:scale-95 transition-all" title="삼성헬스 수면 스크린샷 업로드로 자동 기록">
+              📸 수면 스샷
+            </label>
+            <input type="file" id="sleepScreenshotInput" accept="image/*" class="hidden" onchange="handleSleepScreenshot(event)">
+            <button type="button" onclick="toggleSleepManualBox()" class="px-2 py-1 rounded-lg sub-box text-[10px] font-black text-slate-600 dark:text-slate-300 active:scale-95 transition-all" title="수면 시간 직접 입력/수정">✏️</button>
+          </div>
+        </div>
+
+        <!-- Sleep Latest Summary -->
+        <div id="sleepSummaryBox" class="p-2.5 rounded-xl sub-box flex items-center justify-between gap-2">
+          <div class="min-w-0">
+            <div id="sleepSummaryMain" class="text-xs font-black text-slate-800 dark:text-slate-100">아직 기록된 수면이 없어요</div>
+            <div id="sleepSummarySub" class="text-[10px] text-slate-500 dark:text-slate-400 font-bold">삼성헬스 취침 스샷을 올리거나 ✏️ 버튼으로 기록해 보세요</div>
+          </div>
+          <span id="sleepScoreBadge" class="hidden shrink-0 px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 text-[10px] font-black font-mono border border-indigo-400/30"></span>
+        </div>
+
+        <!-- Collapsible Manual / Edit Sleep Box -->
+        <div id="sleepManualBox" class="hidden p-2.5 rounded-xl sub-box border border-indigo-400/40 space-y-2">
+          <div class="grid grid-cols-3 gap-1.5">
+            <div>
+              <label class="text-[9px] font-bold text-slate-400 block mb-0.5">날짜</label>
+              <input type="date" id="sleepDateInput" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-1.5 py-1 text-[10px] font-mono font-bold text-slate-700 dark:text-slate-200">
+            </div>
+            <div>
+              <label class="text-[9px] font-bold text-slate-400 block mb-0.5">취침</label>
+              <input type="time" id="sleepBedInput" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-1.5 py-1 text-[10px] font-mono font-bold text-slate-700 dark:text-slate-200">
+            </div>
+            <div>
+              <label class="text-[9px] font-bold text-slate-400 block mb-0.5">기상</label>
+              <input type="time" id="sleepWakeInput" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-1.5 py-1 text-[10px] font-mono font-bold text-slate-700 dark:text-slate-200">
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <input type="number" id="sleepScoreInput" min="1" max="100" placeholder="수면 점수 (선택)" class="w-28 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-[10px] font-mono font-bold text-slate-700 dark:text-slate-200">
+            <button type="button" onclick="saveManualSleepLog()" class="flex-1 py-1.5 rounded-lg bg-indigo-500 hover:bg-indigo-600 text-white text-[11px] font-black active:scale-95 transition-all">✅ 수면 기록 저장</button>
+          </div>
+        </div>
+
+        <!-- 3-Second Condition Tags & Daily Memo -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-black text-slate-500 dark:text-slate-400">🩺 오늘 컨디션 · 몸 상태 태그</span>
+            <span id="conditionSavedHint" class="text-[9px] font-bold text-emerald-500 hidden">저장됨 ✓</span>
+          </div>
+          <div id="conditionTagBar" class="flex flex-wrap gap-1">
+            <button type="button" data-ctag="⚡집중됨" onclick="toggleConditionTag('⚡집중됨')" class="ctag-btn px-2 py-1 rounded-full text-[10px] font-black border border-slate-200 dark:border-slate-700 sub-box text-slate-600 dark:text-slate-300 active:scale-95 transition-all">⚡집중됨</button>
+            <button type="button" data-ctag="🧘컨디션굿" onclick="toggleConditionTag('🧘컨디션굿')" class="ctag-btn px-2 py-1 rounded-full text-[10px] font-black border border-slate-200 dark:border-slate-700 sub-box text-slate-600 dark:text-slate-300 active:scale-95 transition-all">🧘컨디션굿</button>
+            <button type="button" data-ctag="🥱졸림" onclick="toggleConditionTag('🥱졸림')" class="ctag-btn px-2 py-1 rounded-full text-[10px] font-black border border-slate-200 dark:border-slate-700 sub-box text-slate-600 dark:text-slate-300 active:scale-95 transition-all">🥱졸림</button>
+            <button type="button" data-ctag="😣어깨·허리" onclick="toggleConditionTag('😣어깨·허리')" class="ctag-btn px-2 py-1 rounded-full text-[10px] font-black border border-slate-200 dark:border-slate-700 sub-box text-slate-600 dark:text-slate-300 active:scale-95 transition-all">😣어깨·허리</button>
+            <button type="button" data-ctag="🔥작업과다" onclick="toggleConditionTag('🔥작업과다')" class="ctag-btn px-2 py-1 rounded-full text-[10px] font-black border border-slate-200 dark:border-slate-700 sub-box text-slate-600 dark:text-slate-300 active:scale-95 transition-all">🔥작업과다</button>
+            <button type="button" data-ctag="🍺음주/야식" onclick="toggleConditionTag('🍺음주/야식')" class="ctag-btn px-2 py-1 rounded-full text-[10px] font-black border border-slate-200 dark:border-slate-700 sub-box text-slate-600 dark:text-slate-300 active:scale-95 transition-all">🍺음주/야식</button>
+          </div>
+          <input type="text" id="conditionNoteInput" placeholder="오늘 한 줄 컨디션 메모 (예: 작업 길어져서 늦게 잠, 오후에 졸림)" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-[11px] font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-indigo-400" onchange="saveConditionNote()" onkeydown="if(event.key==='Enter'){this.blur();}">
+        </div>
+
+        <!-- PC / Phone Activity Mini Bar + 60m Stretch Reminder -->
+        <div class="flex items-center justify-between gap-2 pt-1.5 border-t border-slate-200/70 dark:border-slate-700/50 text-[10px]">
+          <div id="deviceActivityMini" class="text-slate-500 dark:text-slate-400 font-mono font-bold truncate">💻 PC · 📱 폰 활동 기록 대기중</div>
+          <button type="button" id="btnStretchReminder" onclick="toggleStretchReminder()" class="shrink-0 px-2 py-1 rounded-lg sub-box border border-slate-200 dark:border-slate-700 text-[9.5px] font-black text-slate-600 dark:text-slate-300 active:scale-95 transition-all" title="60분마다 물 마시기 & 목/어깨 스트레칭 알림">
+            ⏰ 60분 알림 OFF
+          </button>
+        </div>
+      </div>
+
       <!-- 6. ⚡ 오늘 기록 동기화 & 트레이닝 톡 반영 -->
       <div class="game-card p-3.5 space-y-3 border-2 border-indigo-500/40 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10 shadow-sm">
         <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
@@ -2107,7 +2185,7 @@
   <script src="./trainer_episodes.js?v=4.6.02"></script>
   <script src="./kotonoha_data.js?v=4.6.02"></script>
   <script src="./kotonoha_engine.js?v=4.6.02"></script>
-  <script src="./ocr_pipeline.js?v=4.6.02"></script>
+  <script src="./ocr_pipeline.js?v=4.7.04"></script>
   <script>
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, duration = 0.07) {
@@ -4020,6 +4098,9 @@
         rehabDone: (s.rehab || []).filter(Boolean).length,
         gymDone: isGymRoutineDone(s.gymRoutine),
         teaLog: { water: t.water || 0, matcha: t.matcha || 0, espresso: t.espresso || 0, tea: t.tea || 0 },
+        teaTimes: s.teaTimes ? JSON.parse(JSON.stringify(s.teaTimes)) : { water: [], matcha: [], espresso: [], tea: [] },
+        conditionTags: Array.isArray(s.conditionTags) ? [...s.conditionTags] : [],
+        conditionNote: s.conditionNote || '',
         autoArchived: true
       };
     }
@@ -4055,6 +4136,9 @@
         const rehabLen = initRehabSets();
         state.rehab = Array(rehabLen).fill(false);
         state.teaLog = { water: 0, matcha: 0, espresso: 0, tea: 0 };
+        state.teaTimes = { water: [], matcha: [], espresso: [], tea: [] };
+        state.conditionTags = [];
+        state.conditionNote = '';
 
         if (state.gymRoutine) {
           ['upper1', 'upper2', 'lower', 'legRaise', 'crunch'].forEach(k => {
@@ -4441,10 +4525,34 @@
         return;
       }
 
+      const mergeDeviceActivity = (a, b) => {
+        const out = { ...(b || {}), ...(a || {}) };
+        const keys = new Set([...Object.keys(a || {}), ...Object.keys(b || {})]);
+        keys.forEach(k => {
+          const x = (a || {})[k] || {};
+          const y = (b || {})[k] || {};
+          const minT = (t1, t2) => (t1 && t2 ? (t1 < t2 ? t1 : t2) : (t1 || t2 || null));
+          const maxT = (t1, t2) => (t1 && t2 ? (t1 > t2 ? t1 : t2) : (t1 || t2 || null));
+          out[k] = {
+            pcFirstSeen: minT(x.pcFirstSeen, y.pcFirstSeen),
+            pcLastSeen: maxT(x.pcLastSeen, y.pcLastSeen),
+            pcHeartbeats: Math.max(Number(x.pcHeartbeats) || 0, Number(y.pcHeartbeats) || 0),
+            phoneFirstSeen: minT(x.phoneFirstSeen, y.phoneFirstSeen),
+            phoneLastSeen: maxT(x.phoneLastSeen, y.phoneLastSeen),
+            lateNightPc: Boolean(x.lateNightPc || y.lateNightPc),
+            lateNightPhone: Boolean(x.lateNightPhone || y.lateNightPhone),
+            lateNightLast: maxT(x.lateNightLast, y.lateNightLast)
+          };
+        });
+        return out;
+      };
+
       const mergedHistory = {
         dailyLogs: { ...(remote.dailyLogs || {}), ...(local.dailyLogs || {}) },
         gymHistory: mergeById(local.gymHistory, remote.gymHistory, h => h.fullDate || h.id),
-        runningLogs: mergeById(local.runningLogs, remote.runningLogs, r => r.id || `${r.date}-${r.distance}`)
+        runningLogs: mergeById(local.runningLogs, remote.runningLogs, r => r.id || `${r.date}-${r.distance}`),
+        sleepLogs: mergeById(local.sleepLogs, remote.sleepLogs, s => s.date || s.id),
+        deviceActivity: mergeDeviceActivity(local.deviceActivity, remote.deviceActivity)
       };
 
       if (remoteDate && local.lastActiveDate && remoteDate < local.lastActiveDate) {
@@ -6152,6 +6260,16 @@
       setTxt('espressoCount', `${state.teaLog.espresso || 0}회`);
       setTxt('teaCount', `${state.teaLog.tea || 0}회`);
 
+      const tt = state.teaTimes || {};
+      const formatLastCaf = (arr) => {
+        if (!Array.isArray(arr) || !arr.length) return '';
+        const last = arr[arr.length - 1];
+        const hr = parseInt(String(last).split(':')[0], 10);
+        return (Number.isFinite(hr) && hr >= 15) ? `⚠️${last}` : last;
+      };
+      setTxt('espressoLastTime', formatLastCaf(tt.espresso));
+      setTxt('matchaLastTime', formatLastCaf(tt.matcha));
+
       renderRehabUI();
       for (let i = 1; i <= 3; i++) {
         const prevBox = document.getElementById(`prevBox${i}`);
@@ -6169,6 +6287,7 @@
       renderInbodyCardUI();
       renderGymUI();
       if (typeof renderMealTimelineUI === 'function') renderMealTimelineUI();
+      if (typeof renderLifestyleCardUI === 'function') renderLifestyleCardUI();
       if (typeof renderQuestHudUI === 'function') renderQuestHudUI();
       if (typeof renderCardioModeUI === 'function') renderCardioModeUI();
       updateBondUI();
@@ -7725,9 +7844,16 @@ ${err.message}
           runDone: Boolean(state.runDone) || runInRange.some(r => r.date === todayStr),
           absDone: Boolean(state.absDone),
           rehabDone: (state.rehab || []).filter(Boolean).length,
-          teaLog: { water: t.water || 0, espresso: t.espresso || 0, matcha: t.matcha || 0, tea: t.tea || 0 }
+          teaLog: { water: t.water || 0, espresso: t.espresso || 0, matcha: t.matcha || 0, tea: t.tea || 0 },
+          teaTimes: state.teaTimes || {},
+          conditionTags: Array.isArray(state.conditionTags) ? state.conditionTags : [],
+          conditionNote: state.conditionNote || ''
         };
       }
+      const sleepByDate = {};
+      (Array.isArray(state.sleepLogs) ? state.sleepLogs : []).forEach(sl => {
+        if (sl && sl.date) sleepByDate[sl.date] = sl;
+      });
       const dayKeys = Object.keys(dl).filter(d => d >= startStr && d <= endStr).sort();
       const daySummaryLines = dayKeys.map(d => {
         const x = dl[d] || {};
@@ -7749,15 +7875,60 @@ ${err.message}
           x.absDone ? '복근✓' : '',
           (x.rehabDone || 0) > 0 ? '재활✓' : ''
         ].filter(Boolean).join(' ') || '휴식';
-        return `  - ${d}: ${x.weight || '-'}kg / 식단 ${Math.max(x.mealsDone || 0, dLogs.length)}건${macroPart}${menuPreview} / 물${tl.water || 0}·커피${tl.espresso || 0}·말차${tl.matcha || 0}·단백질${tl.tea || 0} / [${flags}]`;
+        const sl = sleepByDate[d];
+        const sleepPart = sl && sl.durationMin ? ` / 수면 ${(sl.durationMin / 60).toFixed(1)}h` : '';
+        const cTags = Array.isArray(x.conditionTags) && x.conditionTags.length ? ` / 컨디션[${x.conditionTags.join(',')}]` : '';
+        return `  - ${d}: ${x.weight || '-'}kg / 식단 ${Math.max(x.mealsDone || 0, dLogs.length)}건${macroPart}${menuPreview} / 물${tl.water || 0}·커피${tl.espresso || 0}·말차${tl.matcha || 0}·단백질${tl.tea || 0}${sleepPart}${cTags} / [${flags}]`;
       });
+
+      // 6. Lifestyle: Sleep, Caffeine Timestamps, Condition Tags/Memo, PC/Phone Activity (v4.7.04)
+      const sleepInRange = (Array.isArray(state.sleepLogs) ? state.sleepLogs : [])
+        .filter(s => s && s.date >= startStr && s.date <= endStr)
+        .sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+      const validSleep = sleepInRange.filter(s => Number(s.durationMin) > 0);
+      const avgSleepMin = validSleep.length
+        ? Math.round(validSleep.reduce((sum, s) => sum + Number(s.durationMin), 0) / validSleep.length)
+        : 0;
+      const fmtSleepMin = (m) => m > 0 ? `${Math.floor(m / 60)}시간 ${m % 60}분` : '-';
+      const sleepLines = sleepInRange.map(s => {
+        const rangeStr = (s.bedtime && s.wakeup) ? ` (${s.bedtime}~${s.wakeup})` : '';
+        const scoreStr = s.score ? ` · 점수 ${s.score}점` : '';
+        return `  - ${s.date}: ${s.durationText || fmtSleepMin(s.durationMin)}${rangeStr}${scoreStr} [${s.source || '수면'}]`;
+      });
+
+      const tt = state.teaTimes || {};
+      const espTimes = Array.isArray(tt.espresso) && tt.espresso.length ? ` [${tt.espresso.join(', ')}]` : '';
+      const matTimes = Array.isArray(tt.matcha) && tt.matcha.length ? ` [${tt.matcha.join(', ')}]` : '';
+      const allCafTimes = [...(tt.espresso || []), ...(tt.matcha || [])];
+      const lateCaf = allCafTimes.filter(tm => parseInt(String(tm).split(':')[0], 10) >= 15);
+      const lateCafWarning = lateCaf.length ? ` (⚠️15시 이후 카페인: ${lateCaf.join(', ')})` : '';
+
+      const todayCondTags = Array.isArray(state.conditionTags) ? state.conditionTags : [];
+      const todayCondNote = (state.conditionNote || '').trim();
+      const condSummary = [
+        todayCondTags.length ? todayCondTags.join(', ') : '',
+        todayCondNote ? `메모: "${todayCondNote}"` : ''
+      ].filter(Boolean).join(' / ') || '기록 없음';
+
+      const devAct = state.deviceActivity || {};
+      const actDates = Object.keys(devAct).filter(d => d >= startStr && d <= endStr).sort();
+      let lateNightDays = 0;
+      const actLines = actDates.map(d => {
+        const a = devAct[d] || {};
+        if (a.lateNightPc || a.lateNightPhone) lateNightDays++;
+        const parts = [];
+        if (a.pcFirstSeen || a.pcLastSeen) parts.push(`PC ${a.pcFirstSeen || '?'}~${a.pcLastSeen || '?'}`);
+        if (a.phoneFirstSeen || a.phoneLastSeen) parts.push(`폰 ${a.phoneFirstSeen || '?'}~${a.phoneLastSeen || '?'}`);
+        if (a.lateNightPc || a.lateNightPhone) parts.push(`야간활동(${a.lateNightLast || '00시 이후'})`);
+        return parts.length ? `  - ${d}: ${parts.join(' · ')}` : null;
+      }).filter(Boolean);
 
       const macroSummaryLabel = unmeasuredCnt > 0
         ? `확인된 ${totalKcal}kcal+ / P ${totalPro}g+ (매크로 미입력 ${unmeasuredCnt}건 별도 추정 필요)`
         : `총 ${totalKcal}kcal / 단백질 ${totalPro}g`;
 
       return [
-        `[GeminiFit 종합 피트니스·식단·신체 리포트 (${startStr} ~ ${endStr})]`,
+        `[GeminiFit 종합 피트니스·식단·신체·일상 리포트 (${startStr} ~ ${endStr})]`,
         '',
         '1. 신체 & 인바디 현황',
         `- 현재 체중/체지방률: ${ctx.weight} / ${ctx.fat} (적정체중 ${ib.targetWeight || 57.1}kg까지 ${ctx.targetLeft})`,
@@ -7772,14 +7943,24 @@ ${err.message}
         '3. 식단 & 수분/음료 기록',
         `- 오늘(${todayStr}) 식단·보충 통합 (${mergedMeals.length}건 · ${macroSummaryLabel} / 목표 1,600kcal·P110g):`,
         ...mealDetailLines,
-        `- 오늘 수분/음료: 물 ${t.water || 0}잔 · 커피 ${t.espresso || 0}회 · 말차 ${t.matcha || 0}회 · 단백질 음료 ${t.tea || 0}회 (17:00 단식 마감)`,
+        `- 오늘 수분/음료: 물 ${t.water || 0}잔 · 커피 ${t.espresso || 0}회${espTimes} · 말차 ${t.matcha || 0}회${matTimes} · 단백질 음료 ${t.tea || 0}회 (17:00 단식 마감)${lateCafWarning}`,
         ...(daySummaryLines.length ? ['- 기간 일별 요약 (오늘 실시간 반영):', ...daySummaryLines] : []),
         '',
-        '4. Gemini 코칭 요청',
-        '위 기간 동안의 신체 변화, 운동 볼륨, 식단/단백질 섭취 흐름을 종합 분석해서:',
+        '4. 수면 · 컨디션 · PC/폰 일상 리듬',
+        ...(sleepLines.length
+          ? [`- 기간 수면 (${sleepLines.length}일 · 평균 ${fmtSleepMin(avgSleepMin)}):`, ...sleepLines]
+          : ['- 수면 기록: 기간 내 기록 없음']),
+        `- 오늘 컨디션/메모: ${condSummary}`,
+        ...(actLines.length
+          ? [`- PC/폰 활동 패턴 (${actLines.length}일 · 자정~새벽5시 야간 활동 ${lateNightDays}일):`, ...actLines]
+          : ['- PC/폰 활동 패턴: 기록 수집 중']),
+        '',
+        '5. Gemini 코칭 요청',
+        '위 기간 동안의 신체 변화, 운동 볼륨, 식단/단백질 섭취, 수면·카페인·생활 리듬을 종합 분석해서:',
         '① 잘 유지되고 있는 점 & 당장 보완할 점 2가지',
         '② 남은 오늘 ~ 향후 며칠간의 구체적인 식단·단백질·탄수화물 조절 가이드',
         '③ 손목 재활을 고려한 다음 헬스/러닝 루틴 추천',
+        '④ 수면·카페인 섭취 시각·PC/폰 야간 활동 패턴을 고려한 생활 리듬 및 피로 회복 조언',
         '을 핵심 위주로 실전적으로 알려줘!'
       ].join('\n');
     }
@@ -7869,6 +8050,311 @@ ${err.message}
 
     function copyDietConsultPrompt() {
       openConsultCopyModal(7);
+    }
+
+    // ============================================================================
+    // LIFESTYLE ENGINE: Samsung Health Sleep OCR · Condition · PC/Phone Activity (v4.7.04)
+    // ============================================================================
+    let stretchReminderInterval = null;
+
+    function detectIsMobileDevice() {
+      return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || '');
+    }
+
+    function recordDeviceHeartbeat(shouldSave = false) {
+      try {
+        const todayStr = getLocalDateString();
+        const now = new Date();
+        const hhmm = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        const hour = now.getHours();
+        const isMobile = detectIsMobileDevice();
+        if (!state.deviceActivity || typeof state.deviceActivity !== 'object') state.deviceActivity = {};
+        const cur = state.deviceActivity[todayStr] || {
+          pcFirstSeen: null, pcLastSeen: null, pcHeartbeats: 0,
+          phoneFirstSeen: null, phoneLastSeen: null,
+          lateNightPc: false, lateNightPhone: false, lateNightLast: null
+        };
+        if (isMobile) {
+          if (!cur.phoneFirstSeen || hhmm < cur.phoneFirstSeen) cur.phoneFirstSeen = hhmm;
+          if (!cur.phoneLastSeen || hhmm > cur.phoneLastSeen) cur.phoneLastSeen = hhmm;
+          if (hour >= 0 && hour < 5) {
+            cur.lateNightPhone = true;
+            if (!cur.lateNightLast || hhmm > cur.lateNightLast) cur.lateNightLast = hhmm;
+          }
+        } else {
+          if (!cur.pcFirstSeen || hhmm < cur.pcFirstSeen) cur.pcFirstSeen = hhmm;
+          if (!cur.pcLastSeen || hhmm > cur.pcLastSeen) cur.pcLastSeen = hhmm;
+          cur.pcHeartbeats = (Number(cur.pcHeartbeats) || 0) + 1;
+          if (hour >= 0 && hour < 5) {
+            cur.lateNightPc = true;
+            if (!cur.lateNightLast || hhmm > cur.lateNightLast) cur.lateNightLast = hhmm;
+          }
+        }
+        state.deviceActivity[todayStr] = cur;
+        // Trim to last 35 days
+        const keys = Object.keys(state.deviceActivity).sort();
+        if (keys.length > 35) {
+          keys.slice(0, keys.length - 35).forEach(k => delete state.deviceActivity[k]);
+        }
+        persistLocal();
+        if (shouldSave) saveState();
+      } catch (e) {}
+    }
+
+    function upsertSleepLog(entry) {
+      if (!Array.isArray(state.sleepLogs)) state.sleepLogs = [];
+      const todayStr = getLocalDateString();
+      const rec = {
+        date: entry.date || todayStr,
+        bedtime: entry.bedtime || null,
+        wakeup: entry.wakeup || null,
+        durationMin: Number(entry.durationMin) || null,
+        durationText: entry.durationText || (window.OcrPipeline ? window.OcrPipeline.formatSleepDuration(entry.durationMin) : '-'),
+        score: entry.score || null,
+        source: entry.source || '삼성헬스'
+      };
+      const idx = state.sleepLogs.findIndex(s => s && s.date === rec.date);
+      if (idx >= 0) state.sleepLogs[idx] = { ...state.sleepLogs[idx], ...rec };
+      else state.sleepLogs.push(rec);
+      state.sleepLogs.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+      if (state.sleepLogs.length > 60) state.sleepLogs = state.sleepLogs.slice(-60);
+      return rec;
+    }
+
+    function toggleSleepManualBox(forceOpen) {
+      const box = document.getElementById('sleepManualBox');
+      if (!box) return;
+      const show = (typeof forceOpen === 'boolean') ? forceOpen : box.classList.contains('hidden');
+      box.classList.toggle('hidden', !show);
+      if (show) {
+        const todayStr = getLocalDateString();
+        const latest = (state.sleepLogs || []).find(s => s && s.date === todayStr) || (state.sleepLogs || []).slice(-1)[0];
+        const dEl = document.getElementById('sleepDateInput');
+        const bEl = document.getElementById('sleepBedInput');
+        const wEl = document.getElementById('sleepWakeInput');
+        const sEl = document.getElementById('sleepScoreInput');
+        if (dEl) dEl.value = (latest && latest.date) || todayStr;
+        if (bEl) bEl.value = (latest && latest.bedtime) || '01:00';
+        if (wEl) wEl.value = (latest && latest.wakeup) || '07:30';
+        if (sEl) sEl.value = (latest && latest.score) || '';
+      }
+    }
+
+    function saveManualSleepLog() {
+      const date = (document.getElementById('sleepDateInput')?.value || getLocalDateString()).trim();
+      const bedtime = (document.getElementById('sleepBedInput')?.value || '').trim();
+      const wakeup = (document.getElementById('sleepWakeInput')?.value || '').trim();
+      const scoreRaw = document.getElementById('sleepScoreInput')?.value;
+      const score = scoreRaw ? Math.min(100, Math.max(1, parseInt(scoreRaw, 10))) : null;
+      const OC = window.OcrPipeline;
+      const durationMin = OC ? OC.calcSleepDurationMin(bedtime, wakeup) : null;
+      if (!bedtime || !wakeup || !durationMin) {
+        showFloatingToast('취침·기상 시각을 정확히 입력해 주세요!', '⚠️');
+        return;
+      }
+      const saved = upsertSleepLog({
+        date, bedtime, wakeup, durationMin,
+        durationText: OC.formatSleepDuration(durationMin),
+        score, source: '직접입력'
+      });
+      saveState();
+      syncUI();
+      toggleSleepManualBox(false);
+      playBeep(820, 0.08);
+      showFloatingToast(`🌙 수면 기록 저장: ${saved.durationText} (${saved.bedtime}~${saved.wakeup})`, '🌙');
+    }
+
+    async function handleSleepScreenshot(event) {
+      const file = event && event.target && event.target.files && event.target.files[0];
+      if (!file) return;
+      event.target.value = '';
+      const OC = window.OcrPipeline;
+      if (!OC) {
+        showFloatingToast('OCR 모듈이 로드되지 않았습니다.', '⚠️');
+        return;
+      }
+      showFloatingToast('🌙 삼성헬스 수면 스샷 판독 중...', '🔍');
+      let parsed = null;
+      const apiKey = (localStorage.getItem('geminiApiKey') || state.geminiApiKey || '').trim();
+      if (apiKey) {
+        try {
+          const base64Data = await fileToBase64(file);
+          const mimeType = file.type || 'image/jpeg';
+          const data = await fetchGeminiWithFallback(apiKey, {
+            contents: [{
+              role: 'user',
+              parts: [
+                { text: OC.SLEEP_GEMINI_PROMPT },
+                { inline_data: { mime_type: mimeType, data: base64Data } }
+              ]
+            }],
+            generationConfig: { temperature: 0, maxOutputTokens: 400, responseMimeType: 'application/json' }
+          });
+          const raw = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim();
+          const jsonText = extractJsonObject(raw);
+          if (jsonText) parsed = OC.normalizeSleepScan(JSON.parse(jsonText));
+        } catch (e) {
+          console.warn('Gemini sleep OCR fallback to Tesseract:', e);
+        }
+      }
+      if (!parsed || (!parsed.durationMin && !parsed.bedtime)) {
+        try {
+          if (window.Tesseract) {
+            const res = await window.Tesseract.recognize(file, 'kor+eng');
+            parsed = OC.parseSleepTextFallback(res?.data?.text || '');
+          }
+        } catch (e) {
+          console.warn('Tesseract sleep OCR error:', e);
+        }
+      }
+      if (!parsed || (!parsed.durationMin && !parsed.bedtime)) {
+        showFloatingToast('수면 시간을 읽지 못했어요 — ✏️ 직접 입력으로 기록해 주세요', '⚠️');
+        toggleSleepManualBox(true);
+        return;
+      }
+      const saved = upsertSleepLog(parsed);
+      state.chatHistory.push({
+        sender: 'user',
+        text: `[수면 스샷 기록] ${saved.date} 수면 ${saved.durationText}${saved.bedtime && saved.wakeup ? ` (${saved.bedtime}~${saved.wakeup})` : ''}${saved.score ? ` · 수면점수 ${saved.score}점` : ''}`
+      });
+      setTrainerMode('kotone', 'ev1');
+      const reply = (saved.durationMin && saved.durationMin < 360)
+        ? `프로듀서님 ${saved.durationText}밖에 못 주무셨네요 ㅠㅠ 오늘은 무리하지 말고 카페인 일찍 끊고 푹 쉬기로 약속해요! 🌙💛`
+        : `${saved.durationText} 수면 기록 완료! 오늘 컨디션 챙기면서 건강하게 달려봐요 프로듀서님~! 🌙✨`;
+      state.chatHistory.push({ sender: 'kotone', name: '코토네', text: reply });
+      addBondExp(10);
+      saveState();
+      syncUI();
+      renderChat();
+      playBeep(880, 0.1);
+      showFloatingToast(`🌙 수면 기록 완료: ${saved.durationText}`, '🌙');
+    }
+
+    function toggleConditionTag(tag) {
+      checkAndResetDayChange();
+      if (!Array.isArray(state.conditionTags)) state.conditionTags = [];
+      const idx = state.conditionTags.indexOf(tag);
+      if (idx >= 0) state.conditionTags.splice(idx, 1);
+      else state.conditionTags.push(tag);
+      playBeep(idx >= 0 ? 520 : 740, 0.05);
+      saveState();
+      renderLifestyleCardUI();
+    }
+
+    function saveConditionNote() {
+      checkAndResetDayChange();
+      const el = document.getElementById('conditionNoteInput');
+      if (!el) return;
+      state.conditionNote = el.value.trim();
+      saveState();
+      const hint = document.getElementById('conditionSavedHint');
+      if (hint) {
+        hint.classList.remove('hidden');
+        setTimeout(() => hint.classList.add('hidden'), 1500);
+      }
+    }
+
+    function toggleStretchReminder() {
+      state.stretchReminderOn = !state.stretchReminderOn;
+      if (state.stretchReminderOn) {
+        if ('Notification' in window && Notification.permission === 'default') {
+          try { Notification.requestPermission(); } catch (e) {}
+        }
+        startStretchReminderTimer();
+        showFloatingToast('⏰ 60분마다 물 마시기 & 목/어깨 스트레칭 알림을 켰어요!', '💧');
+      } else {
+        if (stretchReminderInterval) clearInterval(stretchReminderInterval);
+        stretchReminderInterval = null;
+        showFloatingToast('⏰ 60분 스트레칭 알림을 껐어요', '🔕');
+      }
+      persistLocal();
+      renderLifestyleCardUI();
+    }
+
+    function startStretchReminderTimer() {
+      if (stretchReminderInterval) clearInterval(stretchReminderInterval);
+      if (!state.stretchReminderOn) return;
+      stretchReminderInterval = setInterval(() => {
+        playBeep(780, 0.1);
+        showFloatingToast('💧 60분 경과! 물 한 잔 마시고 목·어깨 스트레칭 1분 해주세요!', '🧘');
+        if ('Notification' in window && Notification.permission === 'granted') {
+          try {
+            new Notification('GeminiFit 일상 리마인더', {
+              body: '💧 물 한 잔 마시고 목·어깨 스트레칭 할 시간이에요!'
+            });
+          } catch (e) {}
+        }
+      }, 60 * 60 * 1000);
+    }
+
+    function renderLifestyleCardUI() {
+      // 1. Sleep summary
+      const logs = Array.isArray(state.sleepLogs) ? state.sleepLogs : [];
+      const todayStr = getLocalDateString();
+      const latest = logs.find(s => s && s.date === todayStr) || logs.slice(-1)[0];
+      const mainEl = document.getElementById('sleepSummaryMain');
+      const subEl = document.getElementById('sleepSummarySub');
+      const badgeEl = document.getElementById('sleepScoreBadge');
+      if (mainEl && subEl) {
+        if (latest) {
+          const isToday = latest.date === todayStr;
+          mainEl.textContent = `${isToday ? '오늘' : latest.date} 수면 · ${latest.durationText || '-'}`;
+          const rangeStr = (latest.bedtime && latest.wakeup) ? `${latest.bedtime} ~ ${latest.wakeup}` : '시각 미입력';
+          subEl.textContent = `${rangeStr} · ${latest.source || '삼성헬스'}`;
+          if (badgeEl) {
+            if (latest.score) {
+              badgeEl.textContent = `${latest.score}점`;
+              badgeEl.classList.remove('hidden');
+            } else {
+              badgeEl.classList.add('hidden');
+            }
+          }
+        } else {
+          mainEl.textContent = '아직 기록된 수면이 없어요';
+          subEl.textContent = '삼성헬스 취침 스샷을 올리거나 ✏️ 버튼으로 기록해 보세요';
+          if (badgeEl) badgeEl.classList.add('hidden');
+        }
+      }
+
+      // 2. Condition tags & memo
+      const activeTags = Array.isArray(state.conditionTags) ? state.conditionTags : [];
+      document.querySelectorAll('#conditionTagBar .ctag-btn').forEach(btn => {
+        const tag = btn.getAttribute('data-ctag');
+        const active = activeTags.includes(tag);
+        btn.className = active
+          ? 'ctag-btn px-2 py-1 rounded-full text-[10px] font-black border border-indigo-500 bg-indigo-500 text-white shadow-xs active:scale-95 transition-all'
+          : 'ctag-btn px-2 py-1 rounded-full text-[10px] font-black border border-slate-200 dark:border-slate-700 sub-box text-slate-600 dark:text-slate-300 active:scale-95 transition-all';
+      });
+      const noteEl = document.getElementById('conditionNoteInput');
+      if (noteEl && document.activeElement !== noteEl) {
+        noteEl.value = state.conditionNote || '';
+      }
+
+      // 3. PC/Phone activity mini bar
+      const actEl = document.getElementById('deviceActivityMini');
+      const todayAct = (state.deviceActivity && state.deviceActivity[todayStr]) || null;
+      if (actEl) {
+        const parts = [];
+        if (todayAct && (todayAct.pcFirstSeen || todayAct.pcLastSeen)) {
+          parts.push(`💻 ${todayAct.pcFirstSeen || '?'}~${todayAct.pcLastSeen || '?'}`);
+        }
+        if (todayAct && (todayAct.phoneFirstSeen || todayAct.phoneLastSeen)) {
+          parts.push(`📱 ${todayAct.phoneFirstSeen || '?'}~${todayAct.phoneLastSeen || '?'}`);
+        }
+        actEl.textContent = parts.length ? parts.join('  ·  ') : '💻 PC · 📱 폰 활동 자동 수집 중';
+      }
+
+      // 4. Stretch reminder button
+      const remBtn = document.getElementById('btnStretchReminder');
+      if (remBtn) {
+        if (state.stretchReminderOn) {
+          remBtn.textContent = '⏰ 60분 알림 ON';
+          remBtn.className = 'shrink-0 px-2 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/40 text-[9.5px] font-black text-emerald-600 dark:text-emerald-300 active:scale-95 transition-all';
+        } else {
+          remBtn.textContent = '⏰ 60분 알림 OFF';
+          remBtn.className = 'shrink-0 px-2 py-1 rounded-lg sub-box border border-slate-200 dark:border-slate-700 text-[9.5px] font-black text-slate-600 dark:text-slate-300 active:scale-95 transition-all';
+        }
+      }
     }
 
     // ============================================================================
@@ -8505,9 +8991,18 @@ ${err.message}
       checkAndResetDayChange();
       playBeep(delta > 0 ? 700 : 450, 0.1);
       if (!state.teaLog) state.teaLog = { water: 0, matcha: 0, espresso: 0, tea: 0 };
+      if (!state.teaTimes) state.teaTimes = { water: [], matcha: [], espresso: [], tea: [] };
+      if (!Array.isArray(state.teaTimes[type])) state.teaTimes[type] = [];
       const cur = state.teaLog[type] || 0;
       const next = Math.max(0, cur + delta);
       state.teaLog[type] = next;
+      if (delta > 0) {
+        const now = new Date();
+        const hhmm = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        state.teaTimes[type].push(hhmm);
+      } else if (delta < 0 && state.teaTimes[type].length > 0) {
+        state.teaTimes[type].pop();
+      }
       saveState();
       syncUI();
 
@@ -11922,7 +12417,7 @@ ${err.message}
       const photoCnt = (state.mealPhotos || []).filter(Boolean).length;
       const baseUrl = (window.location.origin && window.location.origin.startsWith('http'))
         ? window.location.origin
-        : 'https://git-hub-private-psi.vercel.app';
+        : 'https://minusindot.github.io/GeminiFit';
 
       const geminiAvatar = `${baseUrl}/avatar_gemini.png`;
       const kotoneAvatar = `${baseUrl}/avatar_kotone.png`;
@@ -12530,7 +13025,17 @@ ${err.message}
       showFloatingToast('📊 이번 주 데이터로 주간 총평을 새로 작성했사옵니다!', '🍵');
     }
 
-    window.addEventListener('DOMContentLoaded', loadState);
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      setTimeout(() => {
+        recordDeviceHeartbeat(false);
+        renderLifestyleCardUI();
+        startStretchReminderTimer();
+      }, 600);
+      setInterval(() => {
+        if (!document.hidden) recordDeviceHeartbeat(false);
+      }, 15 * 60 * 1000);
+    });
   </script>
   <!-- ========================================================
        MODAL: AI Agent Weekly Content Update Reminder Modal
