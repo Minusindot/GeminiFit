@@ -1,17 +1,17 @@
 {
-  "updatedAt": "2026-11-20T12:04:42.650Z",
+  "updatedAt": "2026-11-20T13:50:23.592Z",
   "lastActiveDate": "2026-11-20",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
-  "bondRank": 15,
-  "bondExp": 95,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
-  "currentSituation": "ev1",
+  "bondRank": 17,
+  "bondExp": 10,
+  "activeTrainer": "kotone",
+  "activeMode": "kotone",
+  "currentSituation": "ev5",
   "absDone": false,
-  "runDone": false,
-  "runDist": 1.2,
+  "runDone": true,
+  "runDist": 0.6,
   "rehab": [
     false
   ],
@@ -33,9 +33,9 @@
     }
   ],
   "teaLog": {
-    "water": 1,
+    "water": 2,
     "matcha": 0,
-    "espresso": 0,
+    "espresso": 1,
     "tea": 0
   },
   "gymRoutine": {
@@ -354,17 +354,28 @@
     }
   ],
   "latestRun": {
-    "id": "run-1795099686492",
-    "date": "2026-11-19",
-    "distance": 1.2,
-    "duration": "20:00",
+    "id": "cardio-2026-11-20",
+    "date": "2026-11-20",
+    "distance": 0.6,
+    "duration": "10:00",
     "pace": "스텝밀",
-    "calories": 190,
+    "calories": 95,
     "heartRate": 132,
-    "steps": 1300,
+    "steps": 650,
     "source": "천국의 계단"
   },
   "runningLogs": [
+    {
+      "id": "cardio-2026-11-20",
+      "date": "2026-11-20",
+      "distance": 0.6,
+      "duration": "10:00",
+      "pace": "스텝밀",
+      "calories": 95,
+      "heartRate": 132,
+      "steps": 650,
+      "source": "천국의 계단"
+    },
     {
       "id": "run-1795099686492",
       "date": "2026-11-19",
@@ -787,24 +798,6 @@
   },
   "chatHistory": [
     {
-      "sender": "user",
-      "text": "[음료 기록] 말차 🍵 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "오... 말차 챙겨 마셨네? 카테킨 성분이 체지방 연소를 확실히 도와줄 거야! 🍵🐾"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 커피 ☕ 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
-    },
-    {
       "sender": "dual",
       "name": "제미니 · 코토네 · 미오",
       "text": "⚡ [오후 11:48 실시간 기록 동기화 완료!]\n\n💛 코토네: \"2끼 식사 기록 확인 완료! 💛 16:30 마감까지 이 기세로 예쁘게 달려봐요 프로듀서님~\"\n\n🌟 미오: \"1.2km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 완주라니 참으로 훌륭하옵니다! 🌸 근성 하나는 정말 멋지시와요, 프로듀서님 🐾\"",
@@ -960,6 +953,24 @@
       "sender": "mio",
       "name": "미오",
       "text": "수분 보충 나이스!! 오늘 벌써 물 1잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "수분 보충 나이스!! 오늘 벌써 물 2잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 커피 ☕ 1잔을 챙겨 마셨어!"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
     }
   ]
 }
