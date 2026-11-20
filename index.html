@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.7.05</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.7.06</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -870,8 +870,16 @@
          ======================================================== -->
     <div id="viewHealth" class="space-y-3">
 
+      <!-- Sub-Navigation Tabs inside 루틴·식단 (v4.7.06) -->
+      <div id="healthSubTabBar" class="grid grid-cols-4 gap-1 p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/70 sticky top-1 z-20 backdrop-blur-md shadow-xs">
+        <button type="button" onclick="switchHealthSubTab('diet')" id="hSubTab_diet" class="py-1.5 rounded-xl text-[11px] font-black transition-all">🍱 식단·일상</button>
+        <button type="button" onclick="switchHealthSubTab('workout')" id="hSubTab_workout" class="py-1.5 rounded-xl text-[11px] font-black transition-all">🏋️ 운동</button>
+        <button type="button" onclick="switchHealthSubTab('body')" id="hSubTab_body" class="py-1.5 rounded-xl text-[11px] font-black transition-all">📊 신체·리포트</button>
+        <button type="button" onclick="switchHealthSubTab('all')" id="hSubTab_all" class="py-1.5 rounded-xl text-[11px] font-black transition-all">📋 전체</button>
+      </div>
+
       <!-- 0. 📊 Weekly Evaluation Report (제미니 주간 총평) -->
-      <button type="button" onclick="openWeeklyReportModal()" class="report-card game-card w-full p-0 overflow-hidden text-left border-l-4 border-l-[#e0465a] group hover:border-[#e0465a] transition-all">
+      <button type="button" data-hsec="body" onclick="openWeeklyReportModal()" class="report-card game-card w-full p-0 overflow-hidden text-left border-l-4 border-l-[#e0465a] group hover:border-[#e0465a] transition-all">
         <div class="flex items-center gap-3 p-3">
           <img id="weeklyReportCardHero" src="./image/03 gemini/gemini_48_zero_point_restart.png" alt="" class="w-14 h-14 rounded-2xl object-cover object-[center_22%] ring-2 ring-[#e0465a]/30 shrink-0 group-hover:scale-105 transition-transform">
           <div class="min-w-0 flex-1">
@@ -887,7 +895,7 @@
       </button>
 
       <!-- 0.5 🎯 주간 · 일일 퀘스트 모바게 HUD (v4.6.0) -->
-      <div id="questHudCard" class="game-card px-3 py-2.5 space-y-2 border-l-4 border-l-indigo-500 transition-all">
+      <div id="questHudCard" data-hsec="diet" class="game-card px-3 py-2.5 space-y-2 border-l-4 border-l-indigo-500 transition-all">
         <div class="flex items-center justify-between gap-1.5">
           <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 p-0.5 rounded-xl border border-slate-200/70 dark:border-slate-700/60">
             <button onclick="switchQuestTab('daily')" id="questTabDaily" class="px-2 py-1 rounded-lg text-[10px] font-black bg-amber-500 text-white shadow-2xs transition-all">⚡ 일일 <span id="questDailyProg" class="font-mono opacity-90">0/4</span></button>
@@ -902,7 +910,7 @@
       </div>
 
       <!-- 1. 💧 수분 · 홈카페 4종 컴팩트 바 (v4.5.1) -->
-      <div class="game-card px-3 py-2.5 space-y-2 border-l-4 border-l-emerald-400">
+      <div data-hsec="diet" class="game-card px-3 py-2.5 space-y-2 border-l-4 border-l-emerald-400">
         <div class="flex items-center justify-between gap-2">
           <div class="flex items-center gap-1.5">
             <span class="text-xs">☕</span>
@@ -960,33 +968,8 @@
         </div>
       </div>
 
-      <!-- 2. 17:7 Intermittent Fasting Live Clock -->
-      <div class="game-card p-3.5 space-y-2.5 border-l-4 border-l-sky-400">
-        <div class="flex justify-between items-center">
-          <span class="text-xs font-extrabold text-slate-500 uppercase tracking-wider">⏱️ 17:7 간헐적 단식 타이머</span>
-          <span id="fastingBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-            계산 중...
-          </span>
-        </div>
-
-        <div class="flex items-baseline justify-between">
-          <div>
-            <div class="text-[11px] text-slate-500" id="fastingTimerLabel">17:00 셧다운까지 남은 시간</div>
-            <div id="fastingCountdown" class="text-2xl font-black font-mono text-sky-600 dark:text-sky-400 mt-0.5">00:00:00</div>
-          </div>
-          <div class="text-right">
-            <span class="text-[10px] text-slate-400">단식 달성도</span>
-            <div id="fastingPctText" class="text-sm font-black text-sky-500 font-mono">0%</div>
-          </div>
-        </div>
-
-        <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-          <div id="fastingProgressBar" class="h-full rounded-full bg-gradient-to-r from-sky-400 to-indigo-500 transition-all duration-500" style="width: 50%"></div>
-        </div>
-      </div>
-
       <!-- 3. Weight & Body Fat Goal Input -->
-      <div class="grid grid-cols-2 gap-2.5">
+      <div data-hsec="body" class="grid grid-cols-2 gap-2.5">
         <div class="game-card p-3">
           <div class="flex items-center justify-between gap-1">
             <div class="text-[11px] text-slate-500 font-bold">현재 체중 (목표 49~52kg)</div>
@@ -1016,7 +999,7 @@
       </div>
 
       <!-- 3-B. 🎯 인바디 상세 체성분 리포트 카드 (InBody Full Report) -->
-      <div id="inbodyReportCard" class="game-card p-3.5 space-y-2.5 border-l-4 border-l-indigo-500 shadow-xs">
+      <div id="inbodyReportCard" data-hsec="body" class="game-card p-3.5 space-y-2.5 border-l-4 border-l-indigo-500 shadow-xs">
         <div class="flex items-center justify-between pb-1.5 border-b border-slate-200/80 dark:border-slate-700/60">
           <div class="flex items-center gap-1.5">
             <span class="text-base">🎯</span>
@@ -1052,7 +1035,7 @@
       </div>
 
       <!-- 4. 🏃 러닝 & 유산소 완주 대시보드 (삼성헬스 & 나이키런 연동) -->
-      <div class="game-card p-3.5 space-y-3 border-l-4 border-l-orange-400">
+      <div data-hsec="workout" class="game-card p-3.5 space-y-3 border-l-4 border-l-orange-400">
         <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
           <div class="flex items-center gap-1.5">
             <span class="text-base">🏃</span>
@@ -1177,7 +1160,7 @@
 
       <!-- 5. 🏋️ 헬스장 풀코스 체크 (상체2 + 하체1 + 캡틴스 체어 레그레이즈 + 크런치) -->
       <!-- 4. Gym Full-Course Routine (보통 20회 x 4세트 / 레그레이즈 50회 1세트 / 크런치 50회 2세트) -->
-      <div class="game-card p-3.5 space-y-3 border-l-4 border-l-sky-500">
+      <div data-hsec="workout" class="game-card p-3.5 space-y-3 border-l-4 border-l-sky-500">
         <div class="space-y-2 pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
           <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-1.5 min-w-0 flex-1">
@@ -1430,7 +1413,7 @@
       </div>
 
       <!-- 5. 🍱 자유 식단 타임라인 & 칼로리·단백질 게이지 (v4.5.0) -->
-      <div class="game-card p-3.5 space-y-3 border-l-4 border-l-pink-400">
+      <div data-hsec="diet" class="game-card p-3.5 space-y-3 border-l-4 border-l-pink-400">
         <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
           <div class="flex items-center gap-1.5 min-w-0">
             <span class="text-base">🍱</span>
@@ -1536,7 +1519,7 @@
       </div>
 
       <!-- 5.5 🌙 수면(삼성헬스 스샷) · 컨디션 · PC/폰 일상 리듬 (v4.7.04) -->
-      <div class="game-card p-3.5 space-y-3 border-l-4 border-l-indigo-400">
+      <div data-hsec="diet" class="game-card p-3.5 space-y-3 border-l-4 border-l-indigo-400">
         <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
           <div class="flex items-center gap-1.5 min-w-0">
             <span class="text-base">🌙</span>
@@ -1611,8 +1594,33 @@
         </div>
       </div>
 
+      <!-- 2. 17:7 Intermittent Fasting Live Clock -->
+      <div data-hsec="diet" class="game-card p-3.5 space-y-2.5 border-l-4 border-l-sky-400">
+        <div class="flex justify-between items-center">
+          <span class="text-xs font-extrabold text-slate-500 uppercase tracking-wider">⏱️ 17:7 간헐적 단식 타이머</span>
+          <span id="fastingBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+            계산 중...
+          </span>
+        </div>
+
+        <div class="flex items-baseline justify-between">
+          <div>
+            <div class="text-[11px] text-slate-500" id="fastingTimerLabel">17:00 셧다운까지 남은 시간</div>
+            <div id="fastingCountdown" class="text-2xl font-black font-mono text-sky-600 dark:text-sky-400 mt-0.5">00:00:00</div>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] text-slate-400">단식 달성도</span>
+            <div id="fastingPctText" class="text-sm font-black text-sky-500 font-mono">0%</div>
+          </div>
+        </div>
+
+        <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+          <div id="fastingProgressBar" class="h-full rounded-full bg-gradient-to-r from-sky-400 to-indigo-500 transition-all duration-500" style="width: 50%"></div>
+        </div>
+      </div>
+
       <!-- 6. ⚡ 오늘 기록 동기화 & 트레이닝 톡 반영 -->
-      <div class="game-card p-3.5 space-y-3 border-2 border-indigo-500/40 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10 shadow-sm">
+      <div data-hsec="diet,workout,body" class="game-card p-3.5 space-y-3 border-2 border-indigo-500/40 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10 shadow-sm">
         <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
           <div class="flex items-center gap-2">
             <span class="text-xl">⚡</span>
@@ -8406,10 +8414,40 @@ ${err.message}
       };
     }
 
+    let activeHealthSubTab = 'diet';
+
+    function switchHealthSubTab(subTab, silent = false) {
+      const valid = ['diet', 'workout', 'body', 'all'];
+      activeHealthSubTab = valid.includes(subTab) ? subTab : 'diet';
+      try { localStorage.setItem('geminifit_health_subtab', activeHealthSubTab); } catch (e) {}
+
+      valid.forEach(t => {
+        const btn = document.getElementById(`hSubTab_${t}`);
+        if (!btn) return;
+        const active = t === activeHealthSubTab;
+        btn.className = active
+          ? 'py-1.5 rounded-xl text-[11px] font-black bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-300 shadow-xs border border-indigo-400/40 transition-all'
+          : 'py-1.5 rounded-xl text-[11px] font-bold text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-all';
+      });
+
+      document.querySelectorAll('#viewHealth [data-hsec]').forEach(el => {
+        const secs = (el.getAttribute('data-hsec') || '').split(',').map(s => s.trim());
+        const show = activeHealthSubTab === 'all' || secs.includes(activeHealthSubTab);
+        el.classList.toggle('hidden', !show);
+      });
+
+      if (!silent) playBeep(640, 0.04);
+    }
+
     function jumpToQuestTarget(target) {
       if (target === 'kotonoha') {
         switchMainTab('kotonoha');
         return;
+      }
+      if (target === 'run' || target === 'gym' || target === 'rehab') {
+        switchHealthSubTab('workout', true);
+      } else if (target === 'meal' || target === 'water') {
+        switchHealthSubTab('diet', true);
       }
       const selectorMap = {
         run: '#latestRunCard',
@@ -8473,7 +8511,27 @@ ${err.message}
       const win = getWeeklyQuestWindow();
       const wItems = buildWeeklyQuestItems(win);
       const dItems = buildDailyQuestItems();
-      const claims = state.questClaims || {};
+      if (!state.questClaims) state.questClaims = {};
+      const claims = state.questClaims;
+
+      // Auto-claim completed quests immediately (no manual click needed, v4.7.06)
+      const autoClaimed = [];
+      [...dItems, ...wItems].forEach(q => {
+        if (q.cur >= q.target && !claims[q.key]) {
+          claims[q.key] = true;
+          addBondExp(q.exp);
+          autoClaimed.push(q);
+        }
+      });
+      if (autoClaimed.length > 0) {
+        const totalExp = autoClaimed.reduce((s, q) => s + (q.exp || 0), 0);
+        const label = autoClaimed.map(q => q.title).join(', ');
+        persistLocal();
+        if (typeof saveState === 'function') {
+          setTimeout(() => { try { saveState(false); } catch (e) {} }, 250);
+        }
+        showFloatingToast(`🏆 [${label}] 퀘스트 자동 완료! (+${totalExp} EXP)`, '🏆');
+      }
 
       const wDone = wItems.filter(q => q.cur >= q.target).length;
       const dDone = dItems.filter(q => q.cur >= q.target).length;
@@ -8569,18 +8627,6 @@ ${err.message}
       grid.innerHTML = items.map(q => {
         const pct = Math.min(100, Math.round((q.cur / Math.max(1, q.target)) * 100));
         const cleared = q.cur >= q.target;
-        const claimed = !!claims[q.key];
-
-        if (cleared && !claimed) {
-          return `
-            <button onclick="claimQuestReward('${q.key}', ${q.exp}, '${q.title}')" class="w-full px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-amber-500/15 border border-emerald-400/70 flex items-center gap-2 text-left shadow-xs active:scale-[0.99] transition-all animate-pulse">
-              <span class="text-[11px] font-black text-emerald-700 dark:text-emerald-300 whitespace-nowrap shrink-0">${q.icon} ${q.title}</span>
-              <div class="flex-1 h-1.5 rounded-full bg-emerald-200/60 dark:bg-slate-700 overflow-hidden">
-                <div class="h-full rounded-full bg-emerald-500" style="width:100%"></div>
-              </div>
-              <span class="shrink-0 px-2 py-0.5 rounded-full bg-amber-500 text-white text-[9px] font-black">🎁 +${q.exp} EXP</span>
-            </button>`;
-        }
 
         const boxCls = cleared
           ? 'bg-emerald-500/10 border-emerald-400/40'
@@ -13035,6 +13081,12 @@ ${err.message}
 
     window.addEventListener('DOMContentLoaded', () => {
       loadState();
+      try {
+        const savedSub = localStorage.getItem('geminifit_health_subtab') || 'diet';
+        switchHealthSubTab(savedSub, true);
+      } catch (e) {
+        switchHealthSubTab('diet', true);
+      }
       setTimeout(() => {
         recordDeviceHeartbeat(false);
         renderLifestyleCardUI();
@@ -13218,7 +13270,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.7.05 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.7.06 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
