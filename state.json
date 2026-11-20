@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T13:51:06.336Z",
+  "updatedAt": "2026-11-20T13:51:42.664Z",
   "lastActiveDate": "2026-11-20",
   "theme": "light",
   "weight": 65.4,
@@ -64,7 +64,7 @@
       "targetSets": 4
     },
     "lower": {
-      "name": "시티드 레그 프레스",
+      "name": "힙 어브덕션",
       "sets": [
         false,
         false,
