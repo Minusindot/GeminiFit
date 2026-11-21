@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-21T01:22:14.840Z",
+  "updatedAt": "2026-11-21T01:38:01.590Z",
   "lastActiveDate": "2026-11-21",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 19,
-  "bondExp": 10,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
+  "bondExp": 15,
+  "activeTrainer": "mio",
+  "activeMode": "mio",
   "currentSituation": "ev1",
   "absDone": false,
   "runDone": false,
@@ -33,7 +33,7 @@
     }
   ],
   "teaLog": {
-    "water": 0,
+    "water": 1,
     "matcha": 0,
     "espresso": 0,
     "tea": 0
@@ -940,18 +940,6 @@
     {
       "sender": "gemini",
       "name": "제미니",
-      "text": "프로듀서항, 잠깐 차 한 잔 드시면서 소녀 얘기 좀 들어보시와요 🍵",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "현재 65.4kg / 체지방률 31.8%! 이전 기록(66.4kg)보다 1.0kg 감량한 거 진심으로 축하해요! 🎉",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
       "text": "무작정 굶어서 체중만 빼면 근육이 같이 빠져서 금방 요요가 오지만, 지금처럼 근력이랑 단백질을 챙기면서 체지방률만 깎아내는 게 진짜 고수의 방식이옵니다.",
       "room": "gemini"
     },
@@ -1100,6 +1088,15 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "7시간 30분 수면 기록 완료! 오늘 컨디션 챙기면서 건강하게 달려봐요 프로듀서님~! 🌙✨"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "수분 보충 나이스!! 오늘 벌써 물 1잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
     }
   ]
 }
