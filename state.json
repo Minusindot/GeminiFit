@@ -1,19 +1,19 @@
 {
-  "updatedAt": "2026-11-20T14:34:19.894Z",
-  "lastActiveDate": "2026-11-20",
+  "updatedAt": "2026-11-21T01:21:28.659Z",
+  "lastActiveDate": "2026-11-21",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
-  "bondRank": 18,
-  "bondExp": 45,
+  "bondRank": 19,
+  "bondExp": 0,
   "activeTrainer": "mio",
   "activeMode": "mio",
-  "currentSituation": "ev1",
+  "currentSituation": "ev2",
   "absDone": false,
-  "runDone": true,
+  "runDone": false,
   "runDist": 0.6,
   "rehab": [
-    true
+    false
   ],
   "rehabSets": 1,
   "meals": [
@@ -23,20 +23,20 @@
   ],
   "mealLogs": [
     {
-      "id": "meal-1795176275479",
-      "slot": "저녁",
-      "time": "16:50",
-      "name": "에프 닭가슴살 오야꼬동",
+      "id": "meal-1795224088395",
+      "slot": "아침",
+      "time": "10:20",
+      "name": "사과 1개",
       "kcal": 0,
       "protein": 0,
-      "tag": "단백질"
+      "tag": "클린"
     }
   ],
   "teaLog": {
-    "water": 3,
+    "water": 0,
     "matcha": 0,
-    "espresso": 1,
-    "tea": 1
+    "espresso": 0,
+    "tea": 0
   },
   "gymRoutine": {
     "upper1": {
@@ -66,10 +66,10 @@
     "lower": {
       "name": "힙 어브덕션",
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "weight": "55kg × 20회",
       "reps": 20,
@@ -78,7 +78,7 @@
     "legRaise": {
       "name": "캡틴스 체어 레그레이즈",
       "sets": [
-        true
+        false
       ],
       "target": "15회",
       "reps": 50,
@@ -87,14 +87,81 @@
     "crunch": {
       "name": "크런치",
       "sets": [
-        true,
-        true
+        false,
+        false
       ],
       "target": "20회",
       "reps": 50,
       "targetSets": 2
     },
-    "allDone": false
+    "allDone": false,
+    "items": [
+      {
+        "id": "ex_upper1",
+        "part": "upper",
+        "name": "사이드 레터럴 레이즈",
+        "weight": "4kg × 20회",
+        "reps": 20,
+        "targetSets": 4,
+        "sets": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        "id": "ex_upper2",
+        "part": "upper",
+        "name": "로우 머신",
+        "weight": "20kg × 4회",
+        "reps": 20,
+        "targetSets": 4,
+        "sets": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        "id": "ex_lower1",
+        "part": "lower",
+        "name": "힙 어브덕션",
+        "weight": "55kg × 20회",
+        "reps": 20,
+        "targetSets": 4,
+        "sets": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        "id": "ex_core1",
+        "part": "core",
+        "name": "캡틴스 체어 레그레이즈",
+        "weight": "맨몸 × 50회",
+        "reps": 50,
+        "targetSets": 1,
+        "sets": [
+          false
+        ]
+      },
+      {
+        "id": "ex_core2",
+        "part": "core",
+        "name": "크런치",
+        "weight": "맨몸 × 50회",
+        "reps": 50,
+        "targetSets": 2,
+        "sets": [
+          false,
+          false
+        ]
+      }
+    ]
   },
   "gymHistory": [
     {
@@ -350,7 +417,9 @@
     "d_2026-11-20_meal": true,
     "d_2026-11-20_pro": true,
     "d_2026-11-20_work": true,
-    "d_2026-11-20_water": true
+    "d_2026-11-20_water": true,
+    "w_2026-11-25_jp": true,
+    "d_2026-11-21_meal": true
   },
   "latestInbody": null,
   "inbodyHistory": [
