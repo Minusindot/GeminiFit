@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-21T14:05:24.447Z",
+  "updatedAt": "2026-11-21T14:05:49.159Z",
   "lastActiveDate": "2026-11-21",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 20,
-  "bondExp": 35,
+  "bondExp": 70,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev1",
@@ -18,7 +18,7 @@
   "rehabSets": 1,
   "meals": [
     true,
-    false,
+    true,
     false
   ],
   "mealLogs": [
@@ -30,6 +30,15 @@
       "kcal": 0,
       "protein": 0,
       "tag": "클린"
+    },
+    {
+      "id": "meal-1795269949159-28",
+      "slot": "저녁",
+      "time": "23:05",
+      "name": "에프 닭가슴살 오야꼬동",
+      "kcal": 550,
+      "protein": 48,
+      "tag": "단백질"
     }
   ],
   "teaLog": {
