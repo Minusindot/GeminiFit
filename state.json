@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-21T01:21:28.659Z",
+  "updatedAt": "2026-11-21T01:22:14.840Z",
   "lastActiveDate": "2026-11-21",
   "theme": "light",
   "weight": 65.4,
   "fat": 31.8,
   "bondRank": 19,
-  "bondExp": 0,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
-  "currentSituation": "ev2",
+  "bondExp": 10,
+  "activeTrainer": "kotone",
+  "activeMode": "kotone",
+  "currentSituation": "ev1",
   "absDone": false,
   "runDone": false,
   "runDist": 0.6,
@@ -938,18 +938,6 @@
   },
   "chatHistory": [
     {
-      "sender": "mio",
-      "name": "미오",
-      "text": "프로듀서의 발걸음이 쌓여서 결국 목표를 뚫는 거야! 다음 러닝도 같이 가자! 🌟",
-      "room": "mio"
-    },
-    {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 📈 근육은 오르고 지방은 빠지는 정석",
-      "room": "gemini"
-    },
-    {
       "sender": "gemini",
       "name": "제미니",
       "text": "프로듀서항, 잠깐 차 한 잔 드시면서 소녀 얘기 좀 들어보시와요 🍵",
@@ -1103,6 +1091,15 @@
       "sender": "mio",
       "name": "미오",
       "text": "수분 보충 나이스!! 오늘 벌써 물 3잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
+    },
+    {
+      "sender": "user",
+      "text": "[수면 스샷 기록] 2026-11-21 수면 7시간 30분"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "7시간 30분 수면 기록 완료! 오늘 컨디션 챙기면서 건강하게 달려봐요 프로듀서님~! 🌙✨"
     }
   ]
 }
