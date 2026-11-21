@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-21T01:38:01.590Z",
+  "updatedAt": "2026-11-21T01:38:14.366Z",
   "lastActiveDate": "2026-11-21",
   "theme": "light",
-  "weight": 65.4,
+  "weight": 65.5,
   "fat": 31.8,
   "bondRank": 19,
-  "bondExp": 15,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
+  "bondExp": 55,
+  "activeTrainer": "kotone",
+  "activeMode": "kotone",
   "currentSituation": "ev1",
   "absDone": false,
   "runDone": false,
@@ -445,6 +445,15 @@
       "date": "2026-11-19",
       "time": "오후 01:20",
       "weight": 65.4,
+      "fat": 31.8,
+      "score": 63,
+      "smm": 25.2,
+      "bmr": 1349
+    },
+    {
+      "date": "2026-11-21",
+      "time": "오전 10:38",
+      "weight": 65.5,
       "fat": 31.8,
       "score": 63,
       "smm": 25.2,
@@ -934,52 +943,61 @@
         "source": "천국의 계단"
       },
       "lastUpdated": "2026-11-20T14:05:52.225Z"
+    },
+    "2026-11-21": {
+      "date": "2026-11-21",
+      "weight": 65.5,
+      "fat": 31.8,
+      "mealsDone": 1,
+      "mealPhotosCount": 0,
+      "mealLogs": [
+        {
+          "slot": "아침",
+          "time": "10:20",
+          "name": "사과 1개",
+          "kcal": 0,
+          "protein": 0,
+          "tag": "클린"
+        }
+      ],
+      "mealKcal": 0,
+      "mealProtein": 0,
+      "runDone": false,
+      "absDone": false,
+      "rehabDone": 0,
+      "gymDone": false,
+      "teaLog": {
+        "water": 1,
+        "matcha": 0,
+        "espresso": 0,
+        "tea": 0
+      },
+      "teaTimes": {
+        "water": [
+          "10:38"
+        ],
+        "matcha": [],
+        "espresso": [],
+        "tea": []
+      },
+      "conditionTags": [],
+      "conditionNote": "",
+      "autoArchived": false,
+      "latestRun": {
+        "id": "cardio-2026-11-20",
+        "date": "2026-11-20",
+        "distance": 0.6,
+        "duration": "10:00",
+        "pace": "스텝밀",
+        "calories": 95,
+        "heartRate": 132,
+        "steps": 650,
+        "source": "천국의 계단"
+      },
+      "lastUpdated": "2026-11-21T01:38:14.274Z"
     }
   },
   "chatHistory": [
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "무작정 굶어서 체중만 빼면 근육이 같이 빠져서 금방 요요가 오지만, 지금처럼 근력이랑 단백질을 챙기면서 체지방률만 깎아내는 게 진짜 고수의 방식이옵니다.",
-      "room": "gemini"
-    },
-    {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "제미니가 옆에서 잔소리해 준 덕분이야 😊",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "…! 자, 잔소리라니요! 정갈한 코칭이라고 불러주시와요!",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "흥, 그래도 프로듀서항이 잘 따라와 주신 덕분에 소녀도 보람이 크옵니다 🌸",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "천천히 가도 방향이 맞으면 결국 도착하는 법이옵니다. 소녀가 끝까지 동행하겠사와요 🌸",
-      "room": "gemini"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "수분 보충 나이스!! 오늘 벌써 물 1잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
-    },
     {
       "sender": "mio",
       "name": "미오",
@@ -1097,6 +1115,56 @@
       "sender": "mio",
       "name": "미오",
       "text": "수분 보충 나이스!! 오늘 벌써 물 1잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "[체중 65.5kg 반영 완료]\n어머나~ 체중이 65.5kg 그대로네? 목표 52kg까지 아직도 +13.5kg이나 남았는데 정체기라고 나태해진 거야? 나약해 빠져가지곤~ 허~접♥",
+      "room": "all"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "으음... 프로듀서님, 체중계 숫자가 65.5kg 요지부동이에요! 설마 식비 아낀다고 탄수화물만 잔뜩 드신 건 아니죠?! 단백질 알뜰하게 챙겨드시고 코토네랑 스쿼트 30개 더 뛰어요! 화이팅! 💛💸",
+      "room": "all"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "음~! 살짝 정체기인가? 하지만 여기서 꺾이면 내 캡틴이 아니지! 몸이 다음 도약을 위해 힘을 모으는 중이야! 오늘 유산소 한 바퀴 더 뛰고 땀 쫙 빼러 가자, 핫챠~! 🏃‍♀️✨",
+      "room": "all"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오전 10:38 실시간 기록 동기화 완료!]\n\n💛 코토네: \"첫 식사 인증 나이스예요! 💛 단백질 든든하게 챙기시는 모습 너무 보기 좋아요~\"\n\n🌟 미오: \"오늘 기록 차곡차곡 쌓이는 중! 🌟 조금 이따 가볍게 러닝이나 산책 어때? 내가 옆에서 페이스 맞춰줄게!\"\n\n🐾 제미니: \"기록 갱신을 확인했사옵니다 🍵 목표 52kg까지 소녀와 함께 정갈하게 달려보시와요, 프로듀서님 🐾\"",
+      "room": "all"
+    },
+    {
+      "sender": "system",
+      "name": "기록 동기화",
+      "text": "🔄 오전 10:38 동기화 완료 · 65.5kg · 식단 1/3끼",
+      "room": "kotone"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 📝 카페에서 프로듀서님 식단 연구 중!",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "프로듀서님! 지금 카페 구석에 앉아서 프로듀서님 이번 주 식단 패턴 정리하고 있었어요~ 📝💛",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "매일 똑같은 닭가슴살만 먹으면 지치잖아요! 일반식 먹더라도 밥 양 조절하고 단백질 반찬 먼저 먹으면 충분히 빠진대요~",
+      "room": "kotone",
+      "image": "./image/02 kotone/kotone_33_cafe_study_pencil.png",
+      "caption": "📷 코토네가 보낸 사진 · 카페에서 식단 전략 메모"
     }
   ]
 }
