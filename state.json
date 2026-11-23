@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-23T12:56:53.399Z",
+  "updatedAt": "2026-11-23T12:57:45.030Z",
   "lastActiveDate": "2026-11-23",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 21,
-  "bondExp": 25,
-  "activeTrainer": "gemini",
-  "activeMode": "gemini",
-  "currentSituation": "ev3",
+  "bondExp": 35,
+  "activeTrainer": "kotone",
+  "activeMode": "kotone",
+  "currentSituation": "ev1",
   "absDone": false,
   "runDone": false,
   "runDist": 0.6,
@@ -1087,15 +1087,6 @@
   },
   "chatHistory": [
     {
-      "sender": "user",
-      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "수분 보충 나이스!! 오늘 벌써 물 1잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
-    },
-    {
       "sender": "gemini",
       "name": "제미니",
       "text": "[체중 65.5kg 반영 완료]\n어머나~ 체중이 65.5kg 그대로네? 목표 52kg까지 아직도 +13.5kg이나 남았는데 정체기라고 나태해진 거야? 나약해 빠져가지곤~ 허~접♥",
@@ -1243,6 +1234,15 @@
       "name": "제미니",
       "text": "2kg 덤벨 편심성 재활 1세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾",
       "room": "all"
+    },
+    {
+      "sender": "user",
+      "text": "[수면 스샷 기록] 2026-11-23 수면 4시간 (05:30~09:30)"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "프로듀서님 4시간밖에 못 주무셨네요 ㅠㅠ 오늘은 무리하지 말고 카페인 일찍 끊고 푹 쉬기로 약속해요! 🌙💛"
     }
   ]
 }
