@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-21T14:05:49.159Z",
-  "lastActiveDate": "2026-11-21",
+  "updatedAt": "2026-11-23T12:28:09.865Z",
+  "lastActiveDate": "2026-11-23",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 20,
-  "bondExp": 70,
+  "bondExp": 80,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev1",
@@ -17,35 +17,16 @@
   ],
   "rehabSets": 1,
   "meals": [
-    true,
-    true,
+    false,
+    false,
     false
   ],
-  "mealLogs": [
-    {
-      "id": "meal-1795224088395",
-      "slot": "아침",
-      "time": "10:20",
-      "name": "사과 1개",
-      "kcal": 0,
-      "protein": 0,
-      "tag": "클린"
-    },
-    {
-      "id": "meal-1795269949159-28",
-      "slot": "저녁",
-      "time": "23:05",
-      "name": "에프 닭가슴살 오야꼬동",
-      "kcal": 550,
-      "protein": 48,
-      "tag": "단백질"
-    }
-  ],
+  "mealLogs": [],
   "teaLog": {
-    "water": 3,
+    "water": 2,
     "matcha": 0,
-    "espresso": 2,
-    "tea": 1
+    "espresso": 0,
+    "tea": 0
   },
   "gymRoutine": {
     "upper1": {
@@ -1007,27 +988,38 @@
         "source": "천국의 계단"
       },
       "lastUpdated": "2026-11-21T01:38:14.274Z"
+    },
+    "2026-11-22": {
+      "date": "2026-11-22",
+      "weight": 65.5,
+      "fat": 31.8,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "mealLogs": [],
+      "mealKcal": 0,
+      "mealProtein": 0,
+      "runDone": false,
+      "absDone": false,
+      "rehabDone": 0,
+      "gymDone": false,
+      "teaLog": {
+        "water": 0,
+        "matcha": 0,
+        "espresso": 0,
+        "tea": 0
+      },
+      "teaTimes": {
+        "water": [],
+        "matcha": [],
+        "espresso": [],
+        "tea": []
+      },
+      "conditionTags": [],
+      "conditionNote": "",
+      "autoArchived": true
     }
   },
   "chatHistory": [
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "단백질 음료 야무지게 챙겼네! 근손실 없이 슬림 탄탄 라인 만들려면 단백질 충전은 필수지, 기특해! 🥛💪"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "수분 보충 나이스!! 오늘 벌써 물 3잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
-    },
-    {
-      "sender": "user",
-      "text": "[수면 스샷 기록] 2026-11-21 수면 7시간 30분"
-    },
     {
       "sender": "kotone",
       "name": "코토네",
@@ -1166,6 +1158,24 @@
       "sender": "mio",
       "name": "미오",
       "text": "수분 보충 나이스!! 오늘 벌써 물 3잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "수분 보충 나이스!! 오늘 벌써 물 1잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "수분 보충 나이스!! 오늘 벌써 물 2잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
     }
   ]
 }
