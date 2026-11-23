@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-23T13:18:00.500Z",
+  "updatedAt": "2026-11-23T13:18:19.810Z",
   "lastActiveDate": "2026-11-23",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 22,
-  "bondExp": 55,
+  "bondExp": 80,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev1",
@@ -463,7 +463,8 @@
     "m6": true,
     "g15": true,
     "m14": true,
-    "k15": true
+    "k15": true,
+    "m15": true
   },
   "questClaims": {
     "d_2026-11-20_meal": true,
@@ -1142,26 +1143,6 @@
   },
   "chatHistory": [
     {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "프로듀서님! 지금 카페 구석에 앉아서 프로듀서님 이번 주 식단 패턴 정리하고 있었어요~ 📝💛",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "매일 똑같은 닭가슴살만 먹으면 지치잖아요! 일반식 먹더라도 밥 양 조절하고 단백질 반찬 먼저 먹으면 충분히 빠진대요~",
-      "room": "kotone",
-      "image": "./image/02 kotone/kotone_33_cafe_study_pencil.png",
-      "caption": "📷 코토네가 보낸 사진 · 카페에서 식단 전략 메모"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "오늘 식단 기록은 1/3끼, 체중은 65.5kg! 다음 끼니는 어떤 메뉴로 가볼까요?",
-      "room": "kotone"
-    },
-    {
       "sender": "user",
       "name": "프로듀서",
       "text": "고기/생선 반찬 위주로 밥은 반 공기만! 🍚",
@@ -1299,6 +1280,24 @@
       "sender": "mio",
       "name": "미오",
       "text": "날 추울 땐 처음 5분은 꼭 빠르게 걷기로 발목이랑 무릎 데우고 시작해야 해! 알지?",
+      "room": "mio"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "뛰고 나서 땀 식기 전에 바로 씻어야겠다 🚿",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "맞아맞아! 감기 걸리면 일주일 쉬어야 하니까, 쿨다운 끝나자마자 따뜻한 물로 직행해! 🖐️",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "계절이 바뀌어도 프로듀서의 러닝 열정은 안 식는다! 오늘도 안전 러닝! ❄️🌟",
       "room": "mio"
     }
   ]
