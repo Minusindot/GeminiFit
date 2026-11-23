@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-23T13:18:19.810Z",
+  "updatedAt": "2026-11-23T13:18:39.479Z",
   "lastActiveDate": "2026-11-23",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 22,
-  "bondExp": 80,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
-  "currentSituation": "ev1",
+  "bondExp": 90,
+  "activeTrainer": "kotone",
+  "activeMode": "kotone",
+  "currentSituation": "ev3",
   "absDone": false,
   "runDone": true,
   "runDist": 0.6,
@@ -25,7 +25,7 @@
   "teaLog": {
     "water": 2,
     "matcha": 0,
-    "espresso": 0,
+    "espresso": 1,
     "tea": 0
   },
   "gymRoutine": {
@@ -1143,18 +1143,6 @@
   },
   "chatHistory": [
     {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "고기/생선 반찬 위주로 밥은 반 공기만! 🍚",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "완벽해요!! 그게 제일 오래가고 스트레스 안 받는 다이어트 정석이에요! 👏💛",
-      "room": "kotone"
-    },
-    {
       "sender": "kotone",
       "name": "코토네",
       "text": "먹고 나서 타임라인에 한 줄만 딱 남겨주세요~",
@@ -1299,6 +1287,15 @@
       "name": "미오",
       "text": "계절이 바뀌어도 프로듀서의 러닝 열정은 안 식는다! 오늘도 안전 러닝! ❄️🌟",
       "room": "mio"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 커피 ☕ 1잔을 챙겨 마셨어!"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
     }
   ]
 }
