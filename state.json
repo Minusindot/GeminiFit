@@ -1,42 +1,32 @@
 {
-  "updatedAt": "2026-11-23T14:36:12.741Z",
-  "lastActiveDate": "2026-11-23",
+  "updatedAt": "2026-11-23T22:54:14.636Z",
+  "lastActiveDate": "2026-11-24",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
-  "bondRank": 24,
-  "bondExp": 5,
+  "bondRank": 23,
+  "bondExp": 95,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
-  "currentSituation": "ev1",
+  "currentSituation": "ev2",
   "absDone": false,
-  "runDone": true,
+  "runDone": false,
   "runDist": 0.6,
   "rehab": [
-    true
+    false
   ],
   "rehabSets": 1,
   "meals": [
-    true,
+    false,
     false,
     false
   ],
-  "mealLogs": [
-    {
-      "id": "meal-1795444544017",
-      "slot": "저녁",
-      "time": "16:55",
-      "name": "샌드위치",
-      "kcal": 0,
-      "protein": 0,
-      "tag": "클린"
-    }
-  ],
+  "mealLogs": [],
   "teaLog": {
-    "water": 3,
+    "water": 0,
     "matcha": 0,
-    "espresso": 1,
-    "tea": 1
+    "espresso": 0,
+    "tea": 0
   },
   "gymRoutine": {
     "upper1": {
@@ -47,10 +37,10 @@
       "reps": 20,
       "targetSets": 4,
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ]
     },
     "upper2": {
@@ -75,10 +65,10 @@
       "reps": 20,
       "targetSets": 4,
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ]
     },
     "legRaise": {
@@ -89,7 +79,7 @@
       "reps": 50,
       "targetSets": 1,
       "sets": [
-        true
+        false
       ]
     },
     "crunch": {
@@ -100,11 +90,11 @@
       "reps": 50,
       "targetSets": 2,
       "sets": [
-        true,
-        true
+        false,
+        false
       ]
     },
-    "allDone": true,
+    "allDone": false,
     "items": [
       {
         "id": "ex_upper1",
@@ -114,10 +104,10 @@
         "reps": 20,
         "targetSets": 4,
         "sets": [
-          true,
-          true,
-          true,
-          true
+          false,
+          false,
+          false,
+          false
         ]
       },
       {
@@ -128,10 +118,10 @@
         "reps": 20,
         "targetSets": 4,
         "sets": [
-          true,
-          true,
-          true,
-          true
+          false,
+          false,
+          false,
+          false
         ]
       },
       {
@@ -142,7 +132,7 @@
         "reps": 50,
         "targetSets": 1,
         "sets": [
-          true
+          false
         ]
       },
       {
@@ -153,8 +143,8 @@
         "reps": 50,
         "targetSets": 2,
         "sets": [
-          true,
-          true
+          false,
+          false
         ]
       }
     ]
@@ -452,7 +442,7 @@
       "day5"
     ],
     "customAiLessons": [],
-    "activeLessonIdx": 0,
+    "activeLessonIdx": 6,
     "showPron": true,
     "quizStats": {
       "total": 59,
