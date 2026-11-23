@@ -1,19 +1,19 @@
 {
-  "updatedAt": "2026-11-23T12:52:52.065Z",
+  "updatedAt": "2026-11-23T12:56:53.399Z",
   "lastActiveDate": "2026-11-23",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 21,
-  "bondExp": 10,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
-  "currentSituation": "ev1",
+  "bondExp": 25,
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev3",
   "absDone": false,
   "runDone": false,
   "runDist": 0.6,
   "rehab": [
-    false
+    true
   ],
   "rehabSets": 1,
   "meals": [
@@ -79,7 +79,7 @@
       "reps": 50,
       "targetSets": 1,
       "sets": [
-        false
+        true
       ]
     },
     "crunch": {
@@ -146,7 +146,7 @@
         "reps": 50,
         "targetSets": 1,
         "sets": [
-          false
+          true
         ]
       },
       {
@@ -380,7 +380,7 @@
       "id": "gym-1795437900390",
       "date": "11/23",
       "fullDate": "2026-11-23",
-      "time": "오후 09:52",
+      "time": "오후 09:56",
       "performedItems": [
         {
           "id": "ex_upper1",
@@ -401,6 +401,16 @@
           "targetSets": 4,
           "doneSets": 4,
           "totalReps": 80
+        },
+        {
+          "id": "ex_core1",
+          "part": "core",
+          "name": "캡틴스 체어 레그레이즈",
+          "weight": "맨몸 × 50회",
+          "reps": 50,
+          "targetSets": 1,
+          "doneSets": 1,
+          "totalReps": 50
         }
       ],
       "upper1Done": 4,
@@ -412,14 +422,14 @@
       "lowerDone": 4,
       "lowerReps": 80,
       "lowerName": "시티드 레그 프레스",
-      "legRaiseDone": 0,
-      "legRaiseReps": 0,
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
       "legRaiseTarget": 1,
       "crunchDone": 0,
       "crunchReps": 0,
       "crunchTarget": 2,
-      "totalSets": 8,
-      "totalReps": 160
+      "totalSets": 9,
+      "totalReps": 210
     }
   ],
   "kotonoha": {
@@ -1077,11 +1087,6 @@
   },
   "chatHistory": [
     {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "7시간 30분 수면 기록 완료! 오늘 컨디션 챙기면서 건강하게 달려봐요 프로듀서님~! 🌙✨"
-    },
-    {
       "sender": "user",
       "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
     },
@@ -1232,6 +1237,12 @@
       "sender": "mio",
       "name": "미오",
       "text": "수분 보충 나이스!! 오늘 벌써 물 2잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "2kg 덤벨 편심성 재활 1세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾",
+      "room": "all"
     }
   ]
 }
