@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-23T14:35:50.839Z",
+  "updatedAt": "2026-11-23T14:36:12.741Z",
   "lastActiveDate": "2026-11-23",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
-  "bondRank": 23,
-  "bondExp": 80,
+  "bondRank": 24,
+  "bondExp": 5,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
   "currentSituation": "ev1",
@@ -474,7 +474,8 @@
     "g15": true,
     "m14": true,
     "k15": true,
-    "m15": true
+    "m15": true,
+    "k20": true
   },
   "questClaims": {
     "d_2026-11-20_meal": true,
@@ -1170,19 +1171,6 @@
   },
   "chatHistory": [
     {
-      "sender": "user",
-      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "수분 보충 나이스!! 오늘 벌써 물 3잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
-    },
-    {
       "sender": "mio",
       "name": "미오",
       "text": "수분 보충 나이스!! 오늘 벌써 물 1잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
@@ -1328,6 +1316,24 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "히히… 이렇게 마주 앉아서 따뜻한 컵 쥐고 있으니까, 다이어트 힘든 것도 다 잊히는 기분이에요 💛",
+      "room": "kotone"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "따뜻하게 몸 녹이고 집 가서 푹 쉬자 🌙",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "네엣! 오늘도 정말 고생 많으셨어요 프로듀서님! 감기 조심하시고 푹 주무세요~ 💛",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "겨울이 추울수록 같이 나누는 온기가 더 달콤해요! 내일도 코토네가 응원할게요~ ☕❄️💛",
       "room": "kotone"
     }
   ]
