@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-23T12:44:25.177Z",
+  "updatedAt": "2026-11-23T12:45:15.982Z",
   "lastActiveDate": "2026-11-23",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
-  "bondRank": 20,
-  "bondExp": 80,
+  "bondRank": 21,
+  "bondExp": 10,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev1",
@@ -37,10 +37,10 @@
       "reps": 20,
       "targetSets": 4,
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ]
     },
     "upper2": {
@@ -58,14 +58,13 @@
       ]
     },
     "lower": {
-      "id": "ex_lower1",
+      "id": "ex_upper2",
       "part": "lower",
-      "name": "힙 어브덕션",
-      "weight": "55kg × 20회",
+      "name": "시티드 레그 프레스",
+      "weight": "45kg 20회",
       "reps": 20,
-      "targetSets": 4,
+      "targetSets": 3,
       "sets": [
-        false,
         false,
         false,
         false
@@ -104,21 +103,20 @@
         "reps": 20,
         "targetSets": 4,
         "sets": [
-          false,
-          false,
-          false,
-          false
+          true,
+          true,
+          true,
+          true
         ]
       },
       {
         "id": "ex_upper2",
-        "part": "upper",
-        "name": "로우 머신",
-        "weight": "20kg × 4회",
+        "part": "lower",
+        "name": "시티드 레그 프레스",
+        "weight": "45kg 20회",
         "reps": 20,
-        "targetSets": 4,
+        "targetSets": 3,
         "sets": [
-          false,
           false,
           false,
           false
@@ -127,8 +125,8 @@
       {
         "id": "ex_lower1",
         "part": "lower",
-        "name": "힙 어브덕션",
-        "weight": "55kg × 20회",
+        "name": "시티드 레그 프레스",
+        "weight": "45kg 20회",
         "reps": 20,
         "targetSets": 4,
         "sets": [
@@ -375,6 +373,41 @@
       "crunchTarget": 2,
       "totalSets": 7,
       "totalReps": 230
+    },
+    {
+      "id": "gym-1795437900390",
+      "date": "11/23",
+      "fullDate": "2026-11-23",
+      "time": "오후 09:45",
+      "performedItems": [
+        {
+          "id": "ex_upper1",
+          "part": "upper",
+          "name": "펙 덱 플라이",
+          "weight": "30kg × 20회",
+          "reps": 20,
+          "targetSets": 4,
+          "doneSets": 4,
+          "totalReps": 80
+        }
+      ],
+      "upper1Done": 4,
+      "upper1Reps": 80,
+      "upper1Name": "펙 덱 플라이",
+      "upper2Done": 0,
+      "upper2Reps": 0,
+      "upper2Name": "로우 머신",
+      "lowerDone": 0,
+      "lowerReps": 0,
+      "lowerName": "시티드 레그 프레스",
+      "legRaiseDone": 0,
+      "legRaiseReps": 0,
+      "legRaiseTarget": 1,
+      "crunchDone": 0,
+      "crunchReps": 0,
+      "crunchTarget": 2,
+      "totalSets": 4,
+      "totalReps": 80
     }
   ],
   "kotonoha": {
@@ -422,7 +455,8 @@
     "w_2026-11-25_jp": true,
     "d_2026-11-21_meal": true,
     "d_2026-11-21_pro": true,
-    "d_2026-11-21_water": true
+    "d_2026-11-21_water": true,
+    "w_2026-11-25_gym": true
   },
   "latestInbody": null,
   "inbodyHistory": [
