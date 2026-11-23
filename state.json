@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T12:45:15.982Z",
+  "updatedAt": "2026-11-23T12:45:27.736Z",
   "lastActiveDate": "2026-11-23",
   "theme": "light",
   "weight": 65.5,
@@ -63,8 +63,9 @@
       "name": "시티드 레그 프레스",
       "weight": "45kg 20회",
       "reps": 20,
-      "targetSets": 3,
+      "targetSets": 4,
       "sets": [
+        false,
         false,
         false,
         false
@@ -115,8 +116,9 @@
         "name": "시티드 레그 프레스",
         "weight": "45kg 20회",
         "reps": 20,
-        "targetSets": 3,
+        "targetSets": 4,
         "sets": [
+          false,
           false,
           false,
           false
