@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-23T13:03:38.279Z",
+  "updatedAt": "2026-11-23T13:18:00.500Z",
   "lastActiveDate": "2026-11-23",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
-  "bondRank": 21,
+  "bondRank": 22,
   "bondExp": 55,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
+  "activeTrainer": "mio",
+  "activeMode": "mio",
   "currentSituation": "ev1",
   "absDone": false,
-  "runDone": false,
+  "runDone": true,
   "runDist": 0.6,
   "rehab": [
     true
@@ -475,7 +475,8 @@
     "d_2026-11-21_pro": true,
     "d_2026-11-21_water": true,
     "w_2026-11-25_gym": true,
-    "d_2026-11-23_work": true
+    "d_2026-11-23_work": true,
+    "w_2026-11-25_run": true
   },
   "latestInbody": null,
   "inbodyHistory": [
@@ -517,8 +518,8 @@
     }
   ],
   "latestRun": {
-    "id": "cardio-2026-11-20",
-    "date": "2026-11-20",
+    "id": "cardio-2026-11-23",
+    "date": "2026-11-23",
     "distance": 0.6,
     "duration": "10:00",
     "pace": "스텝밀",
@@ -528,6 +529,17 @@
     "source": "천국의 계단"
   },
   "runningLogs": [
+    {
+      "id": "cardio-2026-11-23",
+      "date": "2026-11-23",
+      "distance": 0.6,
+      "duration": "10:00",
+      "pace": "스텝밀",
+      "calories": 95,
+      "heartRate": 132,
+      "steps": 650,
+      "source": "천국의 계단"
+    },
     {
       "id": "cardio-2026-11-20",
       "date": "2026-11-20",
@@ -1080,45 +1092,55 @@
       "conditionTags": [],
       "conditionNote": "",
       "autoArchived": true
+    },
+    "2026-11-23": {
+      "date": "2026-11-23",
+      "weight": 65.5,
+      "fat": 31.8,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "mealLogs": [],
+      "mealKcal": 0,
+      "mealProtein": 0,
+      "runDone": true,
+      "absDone": false,
+      "rehabDone": 1,
+      "gymDone": true,
+      "teaLog": {
+        "water": 2,
+        "matcha": 0,
+        "espresso": 0,
+        "tea": 0
+      },
+      "teaTimes": {
+        "water": [
+          "21:28",
+          "21:28"
+        ],
+        "matcha": [],
+        "espresso": [],
+        "tea": []
+      },
+      "conditionTags": [
+        "🧘컨디션굿"
+      ],
+      "conditionNote": "",
+      "autoArchived": false,
+      "latestRun": {
+        "id": "cardio-2026-11-23",
+        "date": "2026-11-23",
+        "distance": 0.6,
+        "duration": "10:00",
+        "pace": "스텝밀",
+        "calories": 95,
+        "heartRate": 132,
+        "steps": 650,
+        "source": "천국의 계단"
+      },
+      "lastUpdated": "2026-11-23T13:18:00.413Z"
     }
   },
   "chatHistory": [
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "[체중 65.5kg 반영 완료]\n어머나~ 체중이 65.5kg 그대로네? 목표 52kg까지 아직도 +13.5kg이나 남았는데 정체기라고 나태해진 거야? 나약해 빠져가지곤~ 허~접♥",
-      "room": "all"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "으음... 프로듀서님, 체중계 숫자가 65.5kg 요지부동이에요! 설마 식비 아낀다고 탄수화물만 잔뜩 드신 건 아니죠?! 단백질 알뜰하게 챙겨드시고 코토네랑 스쿼트 30개 더 뛰어요! 화이팅! 💛💸",
-      "room": "all"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "음~! 살짝 정체기인가? 하지만 여기서 꺾이면 내 캡틴이 아니지! 몸이 다음 도약을 위해 힘을 모으는 중이야! 오늘 유산소 한 바퀴 더 뛰고 땀 쫙 빼러 가자, 핫챠~! 🏃‍♀️✨",
-      "room": "all"
-    },
-    {
-      "sender": "dual",
-      "name": "제미니 · 코토네 · 미오",
-      "text": "⚡ [오전 10:38 실시간 기록 동기화 완료!]\n\n💛 코토네: \"첫 식사 인증 나이스예요! 💛 단백질 든든하게 챙기시는 모습 너무 보기 좋아요~\"\n\n🌟 미오: \"오늘 기록 차곡차곡 쌓이는 중! 🌟 조금 이따 가볍게 러닝이나 산책 어때? 내가 옆에서 페이스 맞춰줄게!\"\n\n🐾 제미니: \"기록 갱신을 확인했사옵니다 🍵 목표 52kg까지 소녀와 함께 정갈하게 달려보시와요, 프로듀서님 🐾\"",
-      "room": "all"
-    },
-    {
-      "sender": "system",
-      "name": "기록 동기화",
-      "text": "🔄 오전 10:38 동기화 완료 · 65.5kg · 식단 1/3끼",
-      "room": "kotone"
-    },
-    {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 📝 카페에서 프로듀서님 식단 연구 중!",
-      "room": "kotone"
-    },
     {
       "sender": "kotone",
       "name": "코토네",
@@ -1240,6 +1262,44 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "프로듀서님 4시간밖에 못 주무셨네요 ㅠㅠ 오늘은 무리하지 말고 카페인 일찍 끊고 푹 쉬기로 약속해요! 🌙💛"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 10:18 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"0.6km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 완주라니 참으로 훌륭하옵니다! 🌸 근성 하나는 정말 멋지시와요, 프로듀서님 🐾\"",
+      "room": "all"
+    },
+    {
+      "sender": "system",
+      "name": "기록 동기화",
+      "text": "🔄 오후 10:18 동기화 완료 · 65.5kg · 유산소 0.6km",
+      "room": "mio"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 ❄️ 입김 하얗게 나오는 날의 워밍업",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "푸하아~ 프로듀서! 오늘 아침에 나가니까 입김이 하얗게 나오더라! 완전 겨울 느낌이야! ❄️",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "장갑 끼고 천천히 몸 데우면서 뛰니까 오히려 여름보다 덜 지치고 상쾌하더라구! 🧤",
+      "room": "mio",
+      "image": "./image/01 mio/mio_37_winter_breath_jogging_gloves.png",
+      "caption": "📷 미오가 보낸 사진 · 쌀쌀한 날 조깅 워밍업"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "날 추울 땐 처음 5분은 꼭 빠르게 걷기로 발목이랑 무릎 데우고 시작해야 해! 알지?",
+      "room": "mio"
     }
   ]
 }
