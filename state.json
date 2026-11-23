@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-23T12:57:45.030Z",
+  "updatedAt": "2026-11-23T13:03:38.279Z",
   "lastActiveDate": "2026-11-23",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 21,
-  "bondExp": 35,
+  "bondExp": 55,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
   "currentSituation": "ev1",
@@ -90,11 +90,11 @@
       "reps": 50,
       "targetSets": 2,
       "sets": [
-        false,
-        false
+        true,
+        true
       ]
     },
-    "allDone": false,
+    "allDone": true,
     "items": [
       {
         "id": "ex_upper1",
@@ -125,20 +125,6 @@
         ]
       },
       {
-        "id": "ex_lower1",
-        "part": "lower",
-        "name": "시티드 레그 프레스",
-        "weight": "45kg 20회",
-        "reps": 20,
-        "targetSets": 4,
-        "sets": [
-          false,
-          false,
-          false,
-          false
-        ]
-      },
-      {
         "id": "ex_core1",
         "part": "core",
         "name": "캡틴스 체어 레그레이즈",
@@ -157,8 +143,8 @@
         "reps": 50,
         "targetSets": 2,
         "sets": [
-          false,
-          false
+          true,
+          true
         ]
       }
     ]
@@ -380,7 +366,7 @@
       "id": "gym-1795437900390",
       "date": "11/23",
       "fullDate": "2026-11-23",
-      "time": "오후 09:56",
+      "time": "오후 10:03",
       "performedItems": [
         {
           "id": "ex_upper1",
@@ -411,6 +397,16 @@
           "targetSets": 1,
           "doneSets": 1,
           "totalReps": 50
+        },
+        {
+          "id": "ex_core2",
+          "part": "core",
+          "name": "크런치",
+          "weight": "맨몸 × 50회",
+          "reps": 50,
+          "targetSets": 2,
+          "doneSets": 2,
+          "totalReps": 100
         }
       ],
       "upper1Done": 4,
@@ -425,11 +421,11 @@
       "legRaiseDone": 1,
       "legRaiseReps": 50,
       "legRaiseTarget": 1,
-      "crunchDone": 0,
-      "crunchReps": 0,
+      "crunchDone": 2,
+      "crunchReps": 100,
       "crunchTarget": 2,
-      "totalSets": 9,
-      "totalReps": 210
+      "totalSets": 11,
+      "totalReps": 310
     }
   ],
   "kotonoha": {
@@ -478,7 +474,8 @@
     "d_2026-11-21_meal": true,
     "d_2026-11-21_pro": true,
     "d_2026-11-21_water": true,
-    "w_2026-11-25_gym": true
+    "w_2026-11-25_gym": true,
+    "d_2026-11-23_work": true
   },
   "latestInbody": null,
   "inbodyHistory": [
