@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T12:28:09.865Z",
+  "updatedAt": "2026-11-23T12:44:25.177Z",
   "lastActiveDate": "2026-11-23",
   "theme": "light",
   "weight": 65.5,
@@ -30,67 +30,77 @@
   },
   "gymRoutine": {
     "upper1": {
-      "name": "사이드 레터럴 레이즈",
+      "id": "ex_upper1",
+      "part": "upper",
+      "name": "펙 덱 플라이",
+      "weight": "30kg × 20회",
+      "reps": 20,
+      "targetSets": 4,
       "sets": [
         false,
         false,
         false,
         false
-      ],
-      "weight": "4kg × 20회",
-      "reps": 20,
-      "targetSets": 4
+      ]
     },
     "upper2": {
+      "id": "ex_upper2",
+      "part": "upper",
       "name": "로우 머신",
-      "sets": [
-        false,
-        false,
-        false,
-        false
-      ],
       "weight": "20kg × 4회",
       "reps": 20,
-      "targetSets": 4
+      "targetSets": 4,
+      "sets": [
+        false,
+        false,
+        false,
+        false
+      ]
     },
     "lower": {
+      "id": "ex_lower1",
+      "part": "lower",
       "name": "힙 어브덕션",
-      "sets": [
-        false,
-        false,
-        false,
-        false
-      ],
       "weight": "55kg × 20회",
       "reps": 20,
-      "targetSets": 4
+      "targetSets": 4,
+      "sets": [
+        false,
+        false,
+        false,
+        false
+      ]
     },
     "legRaise": {
+      "id": "ex_core1",
+      "part": "core",
       "name": "캡틴스 체어 레그레이즈",
+      "weight": "맨몸 × 50회",
+      "reps": 50,
+      "targetSets": 1,
       "sets": [
         false
-      ],
-      "target": "15회",
-      "reps": 50,
-      "targetSets": 1
+      ]
     },
     "crunch": {
+      "id": "ex_core2",
+      "part": "core",
       "name": "크런치",
+      "weight": "맨몸 × 50회",
+      "reps": 50,
+      "targetSets": 2,
       "sets": [
         false,
         false
-      ],
-      "target": "20회",
-      "reps": 50,
-      "targetSets": 2
+      ]
     },
     "allDone": false,
     "items": [
       {
         "id": "ex_upper1",
         "part": "upper",
-        "name": "사이드 레터럴 레이즈",
-        "weight": "4kg × 20회",
+        "name": "펙 덱 플라이",
+        "weight": "30kg × 20회",
         "reps": 20,
         "targetSets": 4,
         "sets": [
