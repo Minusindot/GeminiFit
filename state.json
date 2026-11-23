@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T22:55:00.403Z",
+  "updatedAt": "2026-11-23T22:55:18.707Z",
   "lastActiveDate": "2026-11-24",
   "theme": "light",
   "weight": 65.5,
@@ -429,8 +429,8 @@
     }
   ],
   "kotonoha": {
-    "coins": 2180,
-    "kotodama": 997,
+    "coins": 2185,
+    "kotodama": 999,
     "streak": 5,
     "lastStudyDate": "2026-11-20",
     "completedLessons": [
@@ -445,10 +445,11 @@
     "activeLessonIdx": 6,
     "showPron": true,
     "quizStats": {
-      "total": 60,
+      "total": 61,
       "correct": 59,
       "wrongWords": [
-        "傘"
+        "傘",
+        "ええ"
       ]
     },
     "selectedSeason": 1
