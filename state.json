@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T22:56:22.069Z",
+  "updatedAt": "2026-11-23T22:56:32.096Z",
   "lastActiveDate": "2026-11-24",
   "theme": "light",
   "weight": 65.5,
@@ -443,7 +443,7 @@
       "day7"
     ],
     "customAiLessons": [],
-    "activeLessonIdx": 7,
+    "activeLessonIdx": 12,
     "showPron": true,
     "quizStats": {
       "total": 64,
@@ -453,7 +453,7 @@
         "ええ"
       ]
     },
-    "selectedSeason": 1
+    "selectedSeason": 2
   },
   "trainerEpisodesDone": {
     "k1": true,
