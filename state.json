@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-23T14:35:14.441Z",
+  "updatedAt": "2026-11-23T14:35:50.839Z",
   "lastActiveDate": "2026-11-23",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 23,
-  "bondExp": 30,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
+  "bondExp": 80,
+  "activeTrainer": "kotone",
+  "activeMode": "kotone",
   "currentSituation": "ev1",
   "absDone": false,
   "runDone": true,
@@ -17,11 +17,21 @@
   ],
   "rehabSets": 1,
   "meals": [
-    false,
+    true,
     false,
     false
   ],
-  "mealLogs": [],
+  "mealLogs": [
+    {
+      "id": "meal-1795444544017",
+      "slot": "저녁",
+      "time": "16:55",
+      "name": "샌드위치",
+      "kcal": 0,
+      "protein": 0,
+      "tag": "클린"
+    }
+  ],
   "teaLog": {
     "water": 3,
     "matcha": 0,
@@ -479,7 +489,8 @@
     "d_2026-11-23_work": true,
     "w_2026-11-25_run": true,
     "d_2026-11-23_pro": true,
-    "d_2026-11-23_water": true
+    "d_2026-11-23_water": true,
+    "d_2026-11-23_meal": true
   },
   "latestInbody": null,
   "inbodyHistory": [
@@ -1100,29 +1111,43 @@
       "date": "2026-11-23",
       "weight": 65.5,
       "fat": 31.8,
-      "mealsDone": 0,
+      "mealsDone": 1,
       "mealPhotosCount": 0,
-      "mealLogs": [],
-      "mealKcal": 0,
-      "mealProtein": 0,
+      "mealLogs": [
+        {
+          "slot": "저녁",
+          "time": "16:55",
+          "name": "샌드위치",
+          "kcal": 0,
+          "protein": 0,
+          "tag": "클린"
+        }
+      ],
+      "mealKcal": 150,
+      "mealProtein": 22,
       "runDone": true,
       "absDone": false,
       "rehabDone": 1,
       "gymDone": true,
       "teaLog": {
-        "water": 2,
+        "water": 3,
         "matcha": 0,
-        "espresso": 0,
-        "tea": 0
+        "espresso": 1,
+        "tea": 1
       },
       "teaTimes": {
         "water": [
           "21:28",
-          "21:28"
+          "21:28",
+          "23:35"
         ],
         "matcha": [],
-        "espresso": [],
-        "tea": []
+        "espresso": [
+          "22:18"
+        ],
+        "tea": [
+          "23:35"
+        ]
       },
       "conditionTags": [
         "🧘컨디션굿"
@@ -1140,38 +1165,10 @@
         "steps": 650,
         "source": "천국의 계단"
       },
-      "lastUpdated": "2026-11-23T13:18:00.413Z"
+      "lastUpdated": "2026-11-23T14:35:50.769Z"
     }
   },
   "chatHistory": [
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 단백질 음료 🥛 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "단백질 음료 야무지게 챙겼네! 근손실 없이 슬림 탄탄 라인 만들려면 단백질 충전은 필수지, 기특해! 🥛💪"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "수분 보충 나이스!! 오늘 벌써 물 2잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
-    },
     {
       "sender": "user",
       "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
@@ -1296,6 +1293,42 @@
       "sender": "mio",
       "name": "미오",
       "text": "수분 보충 나이스!! 오늘 벌써 물 3잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 11:35 실시간 기록 동기화 완료!]\n\n💛 코토네: \"첫 식사 인증 나이스예요! 💛 단백질 든든하게 챙기시는 모습 너무 보기 좋아요~\"\n\n🌟 미오: \"0.6km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 완주라니 참으로 훌륭하옵니다! 🌸 근성 하나는 정말 멋지시와요, 프로듀서님 🐾\"",
+      "room": "all"
+    },
+    {
+      "sender": "system",
+      "name": "기록 동기화",
+      "text": "🔄 오후 11:35 동기화 완료 · 65.5kg · 식단 1/3끼",
+      "room": "kotone"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 ☕ 눈 오는 겨울 창가, 코코아 한 잔의 온기",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "으으~ 밖에는 눈이 오는데 카페 안은 포근해서 천국 같아요! 프로듀서님, 손 안 시려우세요? ❄️",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "오늘은 설탕 쫙 뺀 따뜻한 무가당 코코아랑 물 챙겨왔어요! 식단 기록(1/3끼)도 잘 챙기셨으니 이 정도 여유는 필수죠~",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "히히… 이렇게 마주 앉아서 따뜻한 컵 쥐고 있으니까, 다이어트 힘든 것도 다 잊히는 기분이에요 💛",
+      "room": "kotone"
     }
   ]
 }
