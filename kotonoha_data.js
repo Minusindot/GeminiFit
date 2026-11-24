@@ -2309,7 +2309,17 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님, 갓 구워낸 것이옵니다! 식기 전에 어서 드시와요?",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "menhera"
+        "outfit": "menhera",
+        "checkpoint": {
+          "question": "제미니가 교토벤으로 '드시겠어요?'라고 말한 표현은?",
+          "options": [
+            "食べはる？ (타베하루?)",
+            "寝はる？ (네하루?)"
+          ],
+          "answerIndex": 0,
+          "reactJp": "ぴんぽーん！〜はるは京都の丁寧な言い方どすえ🍵",
+          "reactKo": "딩동댕! 「〜はる」는 교토의 우아한 존대 표현이옵니다 (+5 언령)"
+        }
       },
       {
         "speaker": "mio",
@@ -2337,7 +2347,8 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "みんなー！<ruby>今<rt>いま</rt></ruby>、<ruby>大阪<rt>おおさか</rt></ruby>のたこ<ruby>焼<rt>や</rt></ruby>き<ruby>屋<rt>や</rt></ruby>さんに<ruby>来<rt>き</rt></ruby>てるよ！めっちゃいい<ruby>匂<rt>にお</rt></ruby>いだよー！",
         "jpPlain": "みんなー！今、大阪のたこ焼き屋さんに来てるよ！めっちゃいい匂いだよー！",
         "pron": "민나-! 이마, 오-사카노 타코야키야상니 키테루요! 멧챠 이이 니오이다요-!",
-        "ko": "여러분~! 지금 오사카 타코야키집에 와 있어! 냄새 완전 좋다구~!"
+        "ko": "여러분~! 지금 오사카 타코야키집에 와 있어! 냄새 완전 좋다구~!",
+        "cameoHint": "엘리트 핑크 무녀 스트리머 느낌"
       },
       {
         "guest": true,
@@ -2350,7 +2361,8 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "あつっ！あつっ！でも<ruby>美味<rt>おい</rt></ruby>しすぎる！これ、<ruby>配信<rt>はいしん</rt></ruby>で<ruby>食<rt>た</rt></ruby>べたら<ruby>絶対<rt>ぜったい</rt></ruby>バズるって！",
         "jpPlain": "あつっ！あつっ！でも美味しすぎる！これ、配信で食べたら絶対バズるって！",
         "pron": "아츳! 아츳! 데모 오이시스기루! 코레, 하이신데 타베타라 젯타이 바즈룻테!",
-        "ko": "앗뜨! 앗뜨! 그래도 너무 맛있어! 이거 방송에서 먹으면 무조건 터진다니까!"
+        "ko": "앗뜨! 앗뜨! 그래도 너무 맛있어! 이거 방송에서 먹으면 무조건 터진다니까!",
+        "cameoHint": "엘리트 핑크 무녀 스트리머 느낌"
       },
       {
         "speaker": "kotone",
@@ -2380,7 +2392,17 @@ window.KOTONOHA_LESSONS = [
         "ko": "하후하후… 맛있게 먹고 운동하면 영칼로리이옵니다. …진짜인지는 몰라도🐾",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "menhera"
+        "outfit": "menhera",
+        "checkpoint": {
+          "question": "제미니가 문장 끝에 붙인 오사카식 면책 추임새 '아님 말고'는?",
+          "options": [
+            "知らんけど (시란케도)",
+            "おおきに (오오키니)"
+          ],
+          "answerIndex": 0,
+          "reactJp": "ふふ、これでプロデューサーはんも関西人どすね✨",
+          "reactKo": "후후, 이제 프로듀서님도 완벽한 간사이인이시와요! (+5 언령)"
+        }
       }
     ],
     "quizzes": [
@@ -2441,6 +2463,110 @@ window.KOTONOHA_LESSONS = [
         "geminiReactPron": "세이카이 도스! 후-후- 사마시테 오메시아가리야스",
         "geminiReactKo": "정답이옵니다! 호오호오 식혀서 드시와요🍵"
       }
+    ],
+    "duolingoExercises": [
+      {
+        "kind": "match_pairs",
+        "keyPhrase": "知らんけど",
+        "prompt": "오사카 타코야키 거리 핵심 표현 4쌍을 짝지어 보세요!",
+        "pairs": [
+          {
+            "jp": "知らんけど",
+            "pron": "시란케도",
+            "ko": "아님 말고 (오사카 추임새)"
+          },
+          {
+            "jp": "食べはる",
+            "pron": "타베하루",
+            "ko": "드시다 (교토 존대)"
+          },
+          {
+            "jp": "熱い",
+            "pron": "아츠이",
+            "ko": "뜨겁다"
+          },
+          {
+            "jp": "お得",
+            "pron": "오토쿠",
+            "ko": "이득 / 가성비 좋음"
+          }
+        ],
+        "explanation": "오사카의 「知らんけど」, 교토의 「〜はる」, 그리고 실전 형용사 「熱い(뜨겁다)」·「お得(이득)」를 한 번에 정리했어요!",
+        "reactJp": "ばっちりどす！たこ焼きみたいにアツアツの正解どすえ🐙",
+        "reactKo": "완벽하옵니다! 타코야키처럼 따끈따끈한 정답이옵니다!"
+      },
+      {
+        "kind": "listening",
+        "keyPhrase": "熱いうちに食べはる？",
+        "speaker": "gemini",
+        "audioText": "熱いうちに食べはる？",
+        "prompt": "제미니의 교토벤을 잘 듣고 뜻을 골라보세요! (🐢 저속 재생 가능)",
+        "options": [
+          "뜨거울 때 드실래요?",
+          "차가울 때 마실래요?",
+          "집에 가서 주무실래요?",
+          "얼마인지 물어볼까요?"
+        ],
+        "answerIndex": 0,
+        "correctDisplay": "熱いうちに食べはる？ (뜨거울 때 드실래요?)",
+        "explanation": "「〜うちに」는 '~하는 동안에/식기 전에', 「食べはる」는 '드시다'의 교토벤이에요!",
+        "reactJp": "よう聴き取れはりましたなぁ！お見事どす🍵",
+        "reactKo": "잘 알아들으셨사옵니다! 훌륭하시와요 🍵"
+      },
+      {
+        "kind": "word_bank",
+        "keyPhrase": "運動すればゼロカロリー",
+        "speaker": "gemini",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "prompt": "다이어터의 궁극의 간사이 핑계 문장을 조립해 보세요!",
+        "targetKo": "운동하면 제로 칼로리야. 아님 말고.",
+        "tiles": [
+          {
+            "text": "運動すれば",
+            "pron": "운도-스레바"
+          },
+          {
+            "text": "ゼロカロリーどす。",
+            "pron": "제로카로리-도스"
+          },
+          {
+            "text": "知らんけど。",
+            "pron": "시란케도"
+          },
+          {
+            "text": "高いです。",
+            "pron": "타카이데스"
+          }
+        ],
+        "answerSequence": [
+          "運動すれば",
+          "ゼロカロリーどす。",
+          "知らんけど。"
+        ],
+        "answerAudio": "運動すればゼロカロリーどす。知らんけど。",
+        "correctDisplay": "運動すれば ゼロカロリーどす。知らんけど。",
+        "explanation": "「〜すれば(~하면)」 조건형 + 오사카 최강 치트키 「知らんけど(아님 말고)」 조합!",
+        "reactJp": "あはは！ツッコミどころ満載やけど大正解どすえ🐙",
+        "reactKo": "아하하! 츳코미 걸고 싶지만 대정답이옵니다!"
+      },
+      {
+        "kind": "choice",
+        "keyPhrase": "食べはる",
+        "speaker": "kotone",
+        "avatar": "./image/02 kotone/avatar_kotone.png",
+        "situation": "🐙 오사카 타코야키 포장마차",
+        "prompt": "방금 구운 타코야키를 건네며 상대방에게 부드러운 교토 사투리로 '드시겠어요?'라고 권하려면?",
+        "options": [
+          "熱いうちに食べはる？ (아츠이 우치니 타베하루?)",
+          "冷たいうちに寝はる？ (츠메타이 우치니 네하루?)",
+          "袋はいりません (후쿠로와 이리마센)",
+          "おやすみやす (오야스미야스)"
+        ],
+        "answerIndex": 0,
+        "explanation": "교토에서는 「食べる → 食べはる」처럼 동사 뒤에 「はる」를 붙여 친근하고 우아한 존대를 만들어요.",
+        "reactJp": "完璧どす！京都でも大阪でも人気者になれはりますえ🌸",
+        "reactKo": "완벽하옵니다! 교토에서도 오사카에서도 인기 만점이시겠어요 🌸"
+      }
     ]
   },
   {
@@ -2488,7 +2614,32 @@ window.KOTONOHA_LESSONS = [
         "ko": "크하-! 목욕 끝나고 마시는 유리병 우유, 최고야!",
         "expr": "smile",
         "bg": "ryokan_room",
-        "outfit": "casual"
+        "outfit": "casual",
+        "checkpoint": {
+          "question": "미오가 온천욕 후에 최고라고 외친 음료 「牛乳」의 읽기는?",
+          "options": [
+            "ぎゅうにゅう (규-뉴-)",
+            "おちゃ (오챠)"
+          ],
+          "answerIndex": 0,
+          "reactJp": "ぷはーっ！風呂上がりの牛乳は最強だよね！",
+          "reactKo": "정답! 온천 뒤 시원한 병우유(牛乳 / ぎゅうにゅう)는 국룰이죠 (+5 언령)"
+        }
+      },
+      {
+        "speaker": "frieren",
+        "guest": true,
+        "cameoHint": "천년 산 은발 엘프 마법사 느낌",
+        "nameJp": "謎の魔法使い",
+        "nameKo": "수수께끼의 마법사",
+        "avatar": "./image/04 extras/avatar_unknown.png",
+        "sceneImg": "./image/01 mio/mio_29_onsen_milk_cheers.png",
+        "audio": "./audio/kotonoha/auto/frieren_ff1394ce02.mp3",
+        "jpRuby": "ふふ、<ruby>温泉<rt>おんせん</rt></ruby>でぬくぬくする<ruby>魔法<rt>まほう</rt></ruby>だよ。…あと10<ruby>分<rt>ぷん</rt></ruby>だけ、おやすみやす。",
+        "jpPlain": "ふふ、温泉でぬくぬくする魔法だよ。…あと10分だけ、おやすみやす。",
+        "pron": "후후, 온센데 누쿠누쿠스루 마호-다요. …아토 줏푼다케, 오야스미야스.",
+        "ko": "후후, 온천에서 따끈따끈해지는 마법이야. …딱 10분만 더, 안녕히 주무세요.",
+        "bg": "ryokan_room"
       },
       {
         "speaker": "kotone",
@@ -2579,6 +2730,110 @@ window.KOTONOHA_LESSONS = [
         "geminiReactPron": "세이카이 도스! 푸로테인토 잇쇼니 노무토 잇소- 비미 도스에",
         "geminiReactKo": "정답이옵니다! 프로틴과 함께 마시면 한층 더 꿀맛이지요🥛"
       }
+    ],
+    "duolingoExercises": [
+      {
+        "kind": "match_pairs",
+        "keyPhrase": "おやすみやす",
+        "prompt": "교토 료칸 온천 힐링 단어 4쌍을 짝지어 보세요!",
+        "pairs": [
+          {
+            "jp": "おやすみやす",
+            "pron": "오야스미야스",
+            "ko": "안녕히 주무세요 (교토)"
+          },
+          {
+            "jp": "ぬくぬく",
+            "pron": "누쿠누쿠",
+            "ko": "따끈따끈 / 포근포근"
+          },
+          {
+            "jp": "牛乳",
+            "pron": "규-뉴-",
+            "ko": "우유"
+          },
+          {
+            "jp": "温泉",
+            "pron": "온센",
+            "ko": "온천"
+          }
+        ],
+        "explanation": "「おやすみやす」는 교토의 다정한 밤 인사, 「ぬくぬく」는 이불·온천의 포근함을 나타내는 의태어예요.",
+        "reactJp": "体も心もぬくぬく温まりまひょ♨️",
+        "reactKo": "몸도 마음도 따끈따끈 녹아내리시와요 ♨️"
+      },
+      {
+        "kind": "listening",
+        "keyPhrase": "ぬくぬく",
+        "speaker": "gemini",
+        "audioText": "ぬくぬくのまま、よい夢を…おやすみやす、プロデューサーはん。",
+        "prompt": "제미니의 다정한 밤 인사를 듣고 알맞은 뜻을 골라보세요!",
+        "options": [
+          "따끈한 채로 좋은 꿈 꾸고, 안녕히 주무세요",
+          "얼른 일어나서 아침 운동 가시와요",
+          "차가운 물을 마시고 스트레칭 하세요",
+          "내일 기차표를 미리 사 두세요"
+        ],
+        "answerIndex": 0,
+        "correctDisplay": "ぬくぬくのまま、よい夢を…おやすみやす",
+        "explanation": "「ぬくぬくのまま(따끈한 채로)」 + 「よい夢を(좋은 꿈을)」 + 「おやすみやす(안녕히 주무세요)」!",
+        "reactJp": "ふふ、優しい声でちゃんと聴こえはりましたか？🌙",
+        "reactKo": "후후, 다정한 목소리가 잘 들리셨사온지요? 🌙"
+      },
+      {
+        "kind": "word_bank",
+        "keyPhrase": "風呂上がりの牛乳",
+        "speaker": "mio",
+        "avatar": "./image/01 mio/avatar_mio.png",
+        "prompt": "온천욕의 로망! 문장을 순서대로 조립해 보세요",
+        "targetKo": "목욕 후의 우유는 최고야!",
+        "tiles": [
+          {
+            "text": "風呂上がりの",
+            "pron": "후로아가리노"
+          },
+          {
+            "text": "牛乳は",
+            "pron": "규-뉴-와"
+          },
+          {
+            "text": "最高っ！",
+            "pron": "사이코-!"
+          },
+          {
+            "text": "零点",
+            "pron": "레이텐"
+          }
+        ],
+        "answerSequence": [
+          "風呂上がりの",
+          "牛乳は",
+          "最高っ！"
+        ],
+        "answerAudio": "風呂上がりの牛乳は最高っ！",
+        "correctDisplay": "風呂上がりの 牛乳は 最高っ！",
+        "explanation": "「風呂上がり(ふろあがり)」는 목욕 직후! 일본 온천 문화에서 빼놓을 수 없는 표현이에요.",
+        "reactJp": "ナイス！魔法みたいに美味しい牛乳だよっ🥛",
+        "reactKo": "나이스! 마법처럼 맛있는 우유라구! 🥛"
+      },
+      {
+        "kind": "choice",
+        "keyPhrase": "おやすみやす",
+        "speaker": "gemini",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "situation": "🏮 교토 료칸의 밤",
+        "prompt": "밤 11시, 료칸에서 하루를 마무리하며 교토 아가씨처럼 다정하게 '안녕히 주무세요'라고 인사하려면?",
+        "options": [
+          "おやすみやす (오야스미야스)",
+          "おいでやす (오이데야스)",
+          "なんでやねん (난데야넨)",
+          "温めますか (아타타메마스카)"
+        ],
+        "answerIndex": 0,
+        "explanation": "おいでやす는 어서 오세요, おやすみやす는 안녕히 주무세요(おやすみなさい)의 교토벤이에요!",
+        "reactJp": "お見事どす…今夜はぐっすり休んどくれやすね🌙",
+        "reactKo": "훌륭하옵니다… 오늘 밤은 푹 쉬시와요 🌙"
+      }
     ]
   },
   {
@@ -2611,7 +2866,17 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님, 다음 역에서 환승하셔야 하옵니다.",
         "expr": "idle",
         "bg": "osaka_street",
-        "outfit": "menhera"
+        "outfit": "menhera",
+        "checkpoint": {
+          "question": "제미니가 다음 역에서 해야 한다고 말한 「乗り換え」의 뜻은?",
+          "options": [
+            "환승 (갈아타기)",
+            "운휴 (운행 중단)"
+          ],
+          "answerIndex": 0,
+          "reactJp": "ぴんぽーん！次の駅でスムーズに乗り換えまひょ🚃",
+          "reactKo": "딩동댕! 乗り換え(のりかえ)는 일본 지하철 여행 최다 빈출 단어예요 (+5 언령)"
+        }
       },
       {
         "speaker": "kotone",
@@ -2639,7 +2904,8 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "<ruby>改札<rt>かいさつ</rt></ruby>はこちらですよ。…<ruby>切符<rt>きっぷ</rt></ruby>をなくすと、<ruby>少<rt>すこ</rt></ruby>し<ruby>面倒<rt>めんどう</rt></ruby>なことになりますから。",
         "jpPlain": "改札はこちらですよ。…切符をなくすと、少し面倒なことになりますから。",
         "pron": "카이사츠구치와 코치라데스요. … 킷푸오 나쿠스토, 스코시 멘도-나 코토니 나리마스카라.",
-        "ko": "개찰구는 이쪽입니다. … 표를 잃어버리면, 조금 번거로운 일이 생기니까요."
+        "ko": "개찰구는 이쪽입니다. … 표를 잃어버리면, 조금 번거로운 일이 생기니까요.",
+        "cameoHint": "붉은 머리 지배의 악마 같은 역무원 느낌"
       },
       {
         "guest": true,
@@ -2652,7 +2918,8 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "ふふ、<ruby>焦<rt>あせ</rt></ruby>らなくて<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>。この<ruby>電車<rt>でんしゃ</rt></ruby>は、ちゃんと<ruby>終点<rt>しゅうてん</rt></ruby>まで<ruby>連<rt>つ</rt></ruby>れて<ruby>行<rt>い</rt></ruby>ってあげますから。",
         "jpPlain": "ふふ、焦らなくて大丈夫。この電車は、ちゃんと終点まで連れて行ってあげますから。",
         "pron": "후후, 아세라나쿠테 다이죠-부. 코노 덴샤와, 찬토 슈-텐마데 츠레테 잇테 아게마스카라.",
-        "ko": "후후, 조급해하지 않아도 괜찮아요. 이 전차는, 제대로 종점까지 데려다 줄 테니까요."
+        "ko": "후후, 조급해하지 않아도 괜찮아요. 이 전차는, 제대로 종점까지 데려다 줄 테니까요.",
+        "cameoHint": "붉은 머리 지배의 악마 같은 역무원 느낌"
       },
       {
         "speaker": "mio",
@@ -2743,6 +3010,110 @@ window.KOTONOHA_LESSONS = [
         "geminiReactPron": "세이카이 도스! 센엔사츠오 이레테 차-지 칸료- 도스에",
         "geminiReactKo": "정답이옵니다! 천 엔 지폐를 넣고 충전 완료이옵니다🌸"
       }
+    ],
+    "duolingoExercises": [
+      {
+        "kind": "match_pairs",
+        "keyPhrase": "乗り換え",
+        "prompt": "일본 전철·지하철 필수 단어 4쌍을 짝지어 보세요!",
+        "pairs": [
+          {
+            "jp": "乗り換え",
+            "pron": "노리카에",
+            "ko": "환승 (갈아타기)"
+          },
+          {
+            "jp": "改札",
+            "pron": "카이사츠",
+            "ko": "개찰구"
+          },
+          {
+            "jp": "チャージ",
+            "pron": "차-지",
+            "ko": "교통카드 충전"
+          },
+          {
+            "jp": "終点",
+            "pron": "슈-텐",
+            "ko": "종점"
+          }
+        ],
+        "explanation": "乗り換え(환승), 改札(개찰구), チャージ(충전), 終点(종점)만 알면 도쿄·오사카 전철도 두렵지 않아요!",
+        "reactJp": "お見事どす！ICカードをピッとかざしてスムーズ通過どす🚃",
+        "reactKo": "훌륭하옵니다! IC카드를 삑 찍고 매끄럽게 통과하시와요 🚃"
+      },
+      {
+        "kind": "listening",
+        "keyPhrase": "次の駅で乗り換えどすえ",
+        "speaker": "gemini",
+        "audioText": "プロデューサーはん、次の駅で乗り換えどすえ。",
+        "prompt": "제미니의 안내를 잘 듣고 어떤 상황인지 맞혀보세요!",
+        "options": [
+          "다음 역에서 환승해야 한다",
+          "이번 역에서 도시락을 사야 한다",
+          "교통카드 잔액이 부족하다",
+          "전철이 연착되었다"
+        ],
+        "answerIndex": 0,
+        "correctDisplay": "次の駅で乗り換えどすえ (다음 역에서 환승이옵니다)",
+        "explanation": "「次の駅(つぎのえき / 다음 역)」 + 「で(에서)」 + 「乗り換え(환승)」!",
+        "reactJp": "ばっちりどす！迷子にならんと安心どすえ🌸",
+        "reactKo": "완벽하옵니다! 길 잃을 걱정 없겠사와요 🌸"
+      },
+      {
+        "kind": "word_bank",
+        "keyPhrase": "改札はこちらです",
+        "speaker": "gemini",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "prompt": "역무원이 길을 안내하는 문장을 조립해 보세요!",
+        "targetKo": "개찰구는 이쪽입니다",
+        "tiles": [
+          {
+            "text": "改札は",
+            "pron": "카이사츠와"
+          },
+          {
+            "text": "こちら",
+            "pron": "코치라"
+          },
+          {
+            "text": "です",
+            "pron": "데스"
+          },
+          {
+            "text": "いりません",
+            "pron": "이리마센"
+          }
+        ],
+        "answerSequence": [
+          "改札は",
+          "こちら",
+          "です"
+        ],
+        "answerAudio": "改札はこちらです",
+        "correctDisplay": "改札は こちら です",
+        "explanation": "「こちら(이쪽)」는 「ここ(여기)」보다 정중한 표현으로 안내 문장에 자주 쓰여요.",
+        "reactJp": "パーフェクトどす！切符も大事に持っときよしね🎫",
+        "reactKo": "퍼펙트이옵니다! 표도 소중히 챙기시와요 🎫"
+      },
+      {
+        "kind": "choice",
+        "keyPhrase": "チャージ",
+        "speaker": "kotone",
+        "avatar": "./image/02 kotone/avatar_kotone.png",
+        "situation": "💳 개찰구 앞 교통카드 충전기",
+        "prompt": "ICOCA/Suica 카드 잔액이 부족해서 '충전'을 해야 할 때 일본어로 뭐라고 할까요?",
+        "options": [
+          "チャージ (차-지)",
+          "サラダ (사라다)",
+          "ストレッチ (스토렛치)",
+          "プロテイン (푸로테인)"
+        ],
+        "answerIndex": 0,
+        "explanation": "일본에서는 교통카드 충전을 「チャージ(Charge)」라고 부릅니다. 역 기계에도 「チャージ」 버튼이 크게 적혀 있어요!",
+        "reactJp": "残高不足でピンポン鳴る前にバッチリチャージ完了です！💳",
+        "reactKo": "잔액 부족 삐빅 울리기 전에 완벽 충전 완료예요! 💳"
+      }
     ]
   },
   {
@@ -2775,7 +3146,17 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님, 어깨가 돌처럼 딱딱하옵니다… 제가 부드럽게 풀어드릴게요.",
         "expr": "idle",
         "bg": "gym_indoor",
-        "outfit": "default"
+        "outfit": "default",
+        "checkpoint": {
+          "question": "제미니가 뭉친 어깨를 풀어주겠다고 쓴 동사 「ほぐす」의 뜻은?",
+          "options": [
+            "(뭉친 근육을) 풀다",
+            "(무거운 바벨을) 들다"
+          ],
+          "answerIndex": 0,
+          "reactJp": "正解どす！ゆっくり肩をほぐしまひょね💆",
+          "reactKo": "정답! ほぐす는 뭉친 어깨나 근육을 부드럽게 푼다는 뜻이옵니다 (+5 언령)"
+        }
       },
       {
         "speaker": "mio",
@@ -2791,6 +3172,21 @@ window.KOTONOHA_LESSONS = [
         "expr": "idle",
         "bg": "gym_indoor",
         "outfit": "default"
+      },
+      {
+        "speaker": "pekora",
+        "guest": true,
+        "cameoHint": "당근 좋아하는 토끼 귀 버튜버 느낌",
+        "nameJp": "謎のうさぎ",
+        "nameKo": "수수께끼의 토끼",
+        "avatar": "./image/04 extras/avatar_unknown.png",
+        "sceneImg": "./image/01 mio/mio_19_foam_roller.png",
+        "audio": "./audio/kotonoha/auto/pekora_8526b38977.mp3",
+        "jpRuby": "こんぺこ〜！<ruby>筋トレ<rt>きんとれ</rt></ruby>のあとは<ruby>体<rt>からだ</rt></ruby>をしっかりほぐすぺこ！さぼったら<ruby>許<rt>ゆる</rt></ruby>さないぺこよ〜！",
+        "jpPlain": "こんぺこ！筋トレのあとは体をしっかりほぐすぺこ！さぼったら許さないぺこよ！",
+        "pron": "콘페코~! 킨토레노 아토와 카라다오 싯카리 호구스 페코! 사봇타라 유루사나이 페코요~!",
+        "ko": "콘페코~! 근력 운동 뒤엔 몸을 확실히 푸는 페코! 땡땡이치면 용서 안 하는 페코야~!",
+        "bg": "gym_indoor"
       },
       {
         "speaker": "kotone",
@@ -2881,6 +3277,110 @@ window.KOTONOHA_LESSONS = [
         "geminiReactPron": "세이카이 도스! 잇쇼니 스토레치 시마효~",
         "geminiReactKo": "정답이옵니다! 함께 스트레칭합시다~🧘‍♀️"
       }
+    ],
+    "duolingoExercises": [
+      {
+        "kind": "match_pairs",
+        "keyPhrase": "ほぐす",
+        "prompt": "운동 후 리커버리 & 스트레칭 단어 4쌍을 짝지어 보세요!",
+        "pairs": [
+          {
+            "jp": "ほぐす",
+            "pron": "호구스",
+            "ko": "(근육을) 풀다"
+          },
+          {
+            "jp": "肩こり",
+            "pron": "카타코리",
+            "ko": "어깨 결림"
+          },
+          {
+            "jp": "疲労",
+            "pron": "히로-",
+            "ko": "피로"
+          },
+          {
+            "jp": "筋トレ",
+            "pron": "킨토레",
+            "ko": "근력 운동"
+          }
+        ],
+        "explanation": "筋トレ(근력운동), 疲労(피로), 肩こり(어깨결림), ほぐす(풀다)는 헬스·일상 대화 필수 세트예요!",
+        "reactJp": "お見事どす！毎日のストレッチが一番の薬どすえ💪",
+        "reactKo": "훌륭하옵니다! 매일의 스트레칭이 최고의 보약이옵니다 💪"
+      },
+      {
+        "kind": "listening",
+        "keyPhrase": "肩がカチカチどす",
+        "speaker": "gemini",
+        "audioText": "プロデューサーはん、肩がカチカチどす…うちがほぐしまひょ。",
+        "prompt": "제미니의 말을 잘 듣고 무슨 뜻인지 골라보세요!",
+        "options": [
+          "어깨가 딱딱하게 뭉쳤네요… 제가 풀어드릴게요",
+          "다리가 너무 가벼우시네요… 더 달려볼까요",
+          "배가 고프시네요… 타코야키를 사 올게요",
+          "시간이 늦었네요… 내일 다시 만나요"
+        ],
+        "answerIndex": 0,
+        "correctDisplay": "肩がカチカチどす…うちがほぐしまひょ",
+        "explanation": "「カチカチ(카치카치)」는 딱딱하게 굳은 의태어, 「〜まひょ」는 교토·간사이식 '~합시다(〜ましょう)'예요!",
+        "reactJp": "よう聴き取れはりましたね！ご褒美にもう少し揉みまひょか🌸",
+        "reactKo": "잘 들으셨사와요! 포상으로 조금 더 주물러 드릴까요? 🌸"
+      },
+      {
+        "kind": "word_bank",
+        "keyPhrase": "体をほぐしましょう",
+        "speaker": "mio",
+        "avatar": "./image/01 mio/avatar_mio.png",
+        "prompt": "운동 후 쿨다운 문장을 일본어로 조립해 보세요!",
+        "targetKo": "천천히 몸을 풉시다",
+        "tiles": [
+          {
+            "text": "ゆっくり",
+            "pron": "윳쿠리"
+          },
+          {
+            "text": "体を",
+            "pron": "카라다오"
+          },
+          {
+            "text": "ほぐしまひょ",
+            "pron": "호구시마효"
+          },
+          {
+            "text": "食べます",
+            "pron": "타베마스"
+          }
+        ],
+        "answerSequence": [
+          "ゆっくり",
+          "体を",
+          "ほぐしまひょ"
+        ],
+        "answerAudio": "ゆっくり体をほぐしまひょ",
+        "correctDisplay": "ゆっくり 体を ほぐしまひょ",
+        "explanation": "「ゆっくり(천천히)」 + 「体を(몸을)」 + 「ほぐしまひょ(풉시다)」! 부드러운 교토벤 청유문 완성!",
+        "reactJp": "ナイスケア！これで明日も最強コンディションだよ🌟",
+        "reactKo": "나이스 케어! 이걸로 내일도 최강 컨디션이야 🌟"
+      },
+      {
+        "kind": "choice",
+        "keyPhrase": "〜まひょ",
+        "speaker": "gemini",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "situation": "🧘 스트레칭 매트 위",
+        "prompt": "표준어 「ストレッチしましょう(스트레칭 합시다)」를 교토 사투리로 다정하게 바꾸면?",
+        "options": [
+          "ストレッチしまひょ (스토렛치 시마효)",
+          "ストレッチあかん (스토렛치 아캉)",
+          "ストレッチなんぼ (스토렛치 난보)",
+          "ストレッチいりません (스토렛치 이리마센)"
+        ],
+        "answerIndex": 0,
+        "explanation": "교토·간사이벤에서 「〜ましょう」는 「〜まひょ / 〜ましょ」로 부드럽게 발음한답니다!",
+        "reactJp": "ぴんぽーん！ほんまに筋がよろしゅうおすなぁ💖",
+        "reactKo": "딩동댕! 참으로 감각이 뛰어나시옵니다 💖"
+      }
     ]
   },
   {
@@ -2913,7 +3413,17 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님, 이 한자... 저와 함께 외우지 않으실래요?",
         "expr": "idle",
         "bg": "bookstore",
-        "outfit": "menhera"
+        "outfit": "menhera",
+        "checkpoint": {
+          "question": "제미니가 '함께 외우지 않으실래요?'라고 정중히 권유한 간사이 표현은?",
+          "options": [
+            "覚えまへんか？ (오보에마헨카?)",
+            "忘れまひょ (와스레마효)"
+          ],
+          "answerIndex": 0,
+          "reactJp": "正解どす！二人で覚えたら早う身につきますえ📚",
+          "reactKo": "정답! 「〜まへんか？」는 표준어 「〜ませんか？」의 교토·간사이 표현이옵니다 (+5 언령)"
+        }
       },
       {
         "speaker": "kotone",
@@ -2929,6 +3439,21 @@ window.KOTONOHA_LESSONS = [
         "expr": "idle",
         "bg": "bookstore",
         "outfit": "casual"
+      },
+      {
+        "speaker": "ryo",
+        "guest": true,
+        "cameoHint": "항상 돈 없어서 반값 노리는 쿨한 베이시스트 느낌",
+        "nameJp": "謎のベーシスト",
+        "nameKo": "수수께끼의 베이시스트",
+        "avatar": "./image/04 extras/avatar_unknown.png",
+        "sceneImg": "./image/03 gemini/gemini_35_bookstore_kanji_teach.png",
+        "audio": "./audio/kotonoha/auto/ryo_2bb3bd4054.mp3",
+        "jpRuby": "<ruby>古本<rt>ふるほん</rt></ruby>コーナーで<ruby>半額<rt>はんがく</rt></ruby>…<ruby>最高<rt>さいこう</rt></ruby>。お<ruby>金<rt>かね</rt></ruby>ないから、これで<ruby>漢字<rt>かんじ</rt></ruby>を<ruby>覚<rt>おぼ</rt></ruby>える。あとで300<ruby>円<rt>えん</rt></ruby><ruby>貸<rt>か</rt></ruby>して。",
+        "jpPlain": "古本コーナーで半額…最高。お金ないから、これで漢字を覚える。あとで300円貸して。",
+        "pron": "후루혼 코-나-데 한가쿠… 사이코-. 오카네 나이카라, 코레데 칸지오 오보에루. 아토데 산뱌쿠엔 카시테.",
+        "ko": "헌책 코너에서 반값… 최고. 돈 없으니까 이걸로 한자 외워야지. 이따가 300엔만 빌려줘.",
+        "bg": "bookstore"
       },
       {
         "speaker": "gemini",
@@ -3019,6 +3544,110 @@ window.KOTONOHA_LESSONS = [
         "geminiReactPron": "오미고토 도스! 쿄- 오보에타 코토바, 타이세츠니 시테 오쿠레야스네",
         "geminiReactKo": "훌륭하옵니다! 오늘 익히신 단어, 소중히 간직해 주시와요✨"
       }
+    ],
+    "duolingoExercises": [
+      {
+        "kind": "match_pairs",
+        "keyPhrase": "覚える",
+        "prompt": "서점 한자 공부 & 심쿵 표현 4쌍을 짝지어 보세요!",
+        "pairs": [
+          {
+            "jp": "覚える",
+            "pron": "오보에루",
+            "ko": "외우다 / 기억하다"
+          },
+          {
+            "jp": "照れる",
+            "pron": "테레루",
+            "ko": "수줍어하다 / 쑥스럽다"
+          },
+          {
+            "jp": "半額",
+            "pron": "한가쿠",
+            "ko": "반값 (50% 할인)"
+          },
+          {
+            "jp": "古本",
+            "pron": "후루혼",
+            "ko": "헌책 (중고책)"
+          }
+        ],
+        "explanation": "覚える(외우다), 照れる(수줍어하다), 半額(반값), 古本(헌책) — 서점 데이트 필수 어휘 세트!",
+        "reactJp": "お見事どす！プロデューサーはん、よう勉強してはりますなぁ📚",
+        "reactKo": "훌륭하옵니다! 프로듀서님, 공부를 참 잘하시와요 📚"
+      },
+      {
+        "kind": "listening",
+        "keyPhrase": "一緒に覚えまへんか",
+        "speaker": "gemini",
+        "audioText": "プロデューサーはん、この漢字、一緒に覚えまへんか？",
+        "prompt": "서점에서 제미니가 속삭인 말을 듣고 뜻을 골라보세요!",
+        "options": [
+          "이 한자, 같이 외우지 않으실래요?",
+          "이 책, 반값에 팔지 않으실래요?",
+          "지금 당장 밖으로 뛰러 가지 않으실래요?",
+          "오늘 저녁은 굶지 않으실래요?"
+        ],
+        "answerIndex": 0,
+        "correctDisplay": "この漢字、一緒に覚えまへんか？",
+        "explanation": "「一緒に(いっしょに / 함께)」 + 「覚えまへんか(외우지 않으실래요?)」!",
+        "reactJp": "ふふ…ちゃんと聴いてくれはって嬉しゅうおす///",
+        "reactKo": "후후… 잘 들어주셔서 기쁘사와요 ///"
+      },
+      {
+        "kind": "word_bank",
+        "keyPhrase": "ノートに書いて覚える",
+        "speaker": "gemini",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "prompt": "서점에서 한자를 완벽하게 외우는 문장을 조립해 보세요!",
+        "targetKo": "노트에 써서 외운다",
+        "tiles": [
+          {
+            "text": "ノートに",
+            "pron": "노-토니"
+          },
+          {
+            "text": "書いて",
+            "pron": "카이테"
+          },
+          {
+            "text": "覚える",
+            "pron": "오보에루"
+          },
+          {
+            "text": "食べて",
+            "pron": "타베테"
+          }
+        ],
+        "answerSequence": [
+          "ノートに",
+          "書いて",
+          "覚える"
+        ],
+        "answerAudio": "ノートに書いて覚える",
+        "correctDisplay": "ノートに 書いて 覚える",
+        "explanation": "「書いて(써서)」는 동사 書く의 て형! '〜て + 동사'로 동작의 순서를 연결해요.",
+        "reactJp": "バッチリどす！これで漢字も楽勝どすえ📖",
+        "reactKo": "완벽하옵니다! 이걸로 한자도 식은 죽 먹기이옵니다 📖"
+      },
+      {
+        "kind": "choice",
+        "keyPhrase": "照れる",
+        "speaker": "gemini",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "situation": "💕 서점 창가, 제미니가 얼굴을 붉히며",
+        "prompt": "「そ、そんなにじっと見つめられたら…うち、照れてしまいますえ…///」에서 「照れる」의 뜻은?",
+        "options": [
+          "수줍어하다 / 쑥스러워하다",
+          "화를 내다 / 짜증 내다",
+          "깜빡 잊어버리다",
+          "배가 고파지다"
+        ],
+        "answerIndex": 0,
+        "explanation": "照れる(てれる / 테레루)는 칭찬받거나 시선을 받아 얼굴이 붉어지고 쑥스러워하는 귀여운 동사예요!",
+        "reactJp": "も、もう…プロデューサーはんのせいで真っ赤どすえ///",
+        "reactKo": "저, 정말… 프로듀서님 때문에 새빨개졌사옵니다 ///"
+      }
     ]
   },
   {
@@ -3051,7 +3680,17 @@ window.KOTONOHA_LESSONS = [
         "ko": "프로듀서님, 17시간 단식 완주, 진심으로 축하드리옵니다!",
         "expr": "idle",
         "bg": "teahouse_day",
-        "outfit": "teahouse"
+        "outfit": "teahouse",
+        "checkpoint": {
+          "question": "제미니가 17시간 단식 달성을 축하하며 쓴 교토벤 '축하해요'는?",
+          "options": [
+            "おめでとさん (오메데토상)",
+            "あかんやん (아캉양)"
+          ],
+          "answerIndex": 0,
+          "reactJp": "正解どす！よく最後まで頑張らはりましたなぁ🎉",
+          "reactKo": "정답! 「おめでとさん」은 정겹고 따뜻한 교토·간사이식 축하 인사랍니다 (+5 언령)"
+        }
       },
       {
         "speaker": "gemini",
@@ -3084,6 +3723,21 @@ window.KOTONOHA_LESSONS = [
         "outfit": "casual"
       },
       {
+        "speaker": "marine",
+        "guest": true,
+        "cameoHint": "출항 외치는 텐션 높은 해적 선장 버튜버 느낌",
+        "nameJp": "謎の船長",
+        "nameKo": "수수께끼의 선장",
+        "avatar": "./image/04 extras/avatar_unknown.png",
+        "sceneImg": "./image/03 gemini/gemini_42_protein_toast_cheers.png",
+        "audio": "./audio/kotonoha/auto/marine_36da8862b8.mp3",
+        "jpRuby": "アホイ！17<ruby>時間<rt>じかん</rt></ruby><ruby>断食<rt>だんじき</rt></ruby><ruby>達成<rt>たっせい</rt></ruby>、おめでとさん！プロテインで<ruby>乾杯<rt>かんぱい</rt></ruby>よ〜！<ruby>出航<rt>しゅっこう</rt></ruby>〜！",
+        "jpPlain": "アホイ！17時間断食達成、おめでとさん！プロテインで乾杯よ！出航！",
+        "pron": "아호이! 주-나나지칸 단지키 탓세이, 오메데토상! 푸로테인데 칸파이요~! 슛코-~!",
+        "ko": "아호이! 17시간 단식 달성, 축하해! 프로틴으로 건배야~! 출항~!",
+        "bg": "teahouse_day"
+      },
+      {
         "guest": true,
         "speaker": "makima",
         "nameJp": "マキマ",
@@ -3094,7 +3748,8 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "17<ruby>時間<rt>じかん</rt></ruby>の<ruby>断食<rt>だんじき</rt></ruby>、お<ruby>見事<rt>みごと</rt></ruby>でした。…ふふ、<ruby>意志<rt>いし</rt></ruby>の<ruby>強<rt>つよ</rt></ruby>い<ruby>方<rt>かた</rt></ruby>は<ruby>好<rt>す</rt></ruby>きですよ。",
         "jpPlain": "17時間の断食、お見事でした。…ふふ、意志の強い方は好きですよ。",
         "pron": "쥬-나나지칸노 단지키, 오미고토데시타. … 후후, 이시노 츠요이 카타와 스키데스요.",
-        "ko": "17시간 단식, 훌륭했어요. …후후, 의지가 강한 분은 좋아합니다."
+        "ko": "17시간 단식, 훌륭했어요. …후후, 의지가 강한 분은 좋아합니다.",
+        "cameoHint": "의지 강한 사람을 좋아하는 수수께끼의 여성"
       },
       {
         "guest": true,
@@ -3107,7 +3762,8 @@ window.KOTONOHA_LESSONS = [
         "jpRuby": "このまま<ruby>続<rt>つづ</rt></ruby>ければ、あなたはもっと<ruby>強<rt>つよ</rt></ruby>くなります。…<ruby>楽<rt>たの</rt></ruby>しみですね。",
         "jpPlain": "このまま続ければ、あなたはもっと強くなります。…楽しみですね。",
         "pron": "코노마마 츠즈케레바, 아나타와 못토 츠요쿠 나리마스. … 타노시미데스네.",
-        "ko": "이대로 계속하면, 당신은 더 강해질 거예요. …기대되네요."
+        "ko": "이대로 계속하면, 당신은 더 강해질 거예요. …기대되네요.",
+        "cameoHint": "의지 강한 사람을 좋아하는 수수께끼의 여성"
       },
       {
         "speaker": "kotone",
@@ -3183,6 +3839,115 @@ window.KOTONOHA_LESSONS = [
         "geminiReactPron": "만텐 고-카쿠 도스! 코레카라모 즛토 우치노 토나리데 오키바리야스네",
         "geminiReactKo": "만점 합격이옵니다! 앞으로도 늘 제 곁에서 힘내주시와요💛"
       }
+    ],
+    "duolingoExercises": [
+      {
+        "kind": "match_pairs",
+        "keyPhrase": "乾杯",
+        "prompt": "시즌 2 완주 축하 파티 핵심 단어 4쌍을 짝지어 보세요!",
+        "pairs": [
+          {
+            "jp": "乾杯",
+            "pron": "칸파이",
+            "ko": "건배!"
+          },
+          {
+            "jp": "姿",
+            "pron": "스가타",
+            "ko": "모습 / 차림새"
+          },
+          {
+            "jp": "おめでとさん",
+            "pron": "오메데토상",
+            "ko": "축하해요 (간사이)"
+          },
+          {
+            "jp": "断食",
+            "pron": "단지키",
+            "ko": "단식 (간헐적 단식)"
+          }
+        ],
+        "explanation": "乾杯(건배), 姿(모습/차림새), おめでとさん(축하해요), 断食(단식) — 피트니스 완주 축하 세트!",
+        "reactJp": "プロテインで乾杯どす！プロデューサーはん、ほんまに偉いどす🥂",
+        "reactKo": "프로틴으로 건배이옵니다! 프로듀서님, 정말 장하시와요 🥂"
+      },
+      {
+        "kind": "listening",
+        "keyPhrase": "エプロン姿",
+        "speaker": "gemini",
+        "audioText": "エプロン姿のうちが焼いた、高タンパク特製トーストどす。",
+        "prompt": "제미니의 자랑을 잘 듣고 알맞은 뜻을 골라보세요!",
+        "options": [
+          "앞치마 차림의 제가 구운 고단백 특제 토스트예요",
+          "운동복 차림의 미오가 사 온 샐러드예요",
+          "교복 차림의 코토네가 만든 주먹밥이에요",
+          "편의점에서 반값에 산 도시락이에요"
+        ],
+        "answerIndex": 0,
+        "correctDisplay": "エプロン姿のうちが焼いた、高タンパク特製トーストどす。",
+        "explanation": "「エプロン姿(앞치마 차림)」 + 「うち(나/저, 간사이 여성 1인칭)」 + 「焼いた(구운)」!",
+        "reactJp": "ふふ、味も栄養も100点満点どすえ🍞✨",
+        "reactKo": "후후, 맛도 영양도 100점 만점이옵니다 🍞✨"
+      },
+      {
+        "kind": "word_bank",
+        "keyPhrase": "プロテインで乾杯",
+        "speaker": "mio",
+        "avatar": "./image/01 mio/avatar_mio.png",
+        "prompt": "시즌 2 완주 기념 건배사를 조립해 보세요!",
+        "targetKo": "프로틴으로 건배합시다!",
+        "tiles": [
+          {
+            "text": "プロテイン",
+            "pron": "푸로테인"
+          },
+          {
+            "text": "で",
+            "pron": "데"
+          },
+          {
+            "text": "乾杯",
+            "pron": "칸파이"
+          },
+          {
+            "text": "しましょう！",
+            "pron": "시마쇼-!"
+          },
+          {
+            "text": "いりません",
+            "pron": "이리마센"
+          }
+        ],
+        "answerSequence": [
+          "プロテイン",
+          "で",
+          "乾杯",
+          "しましょう！"
+        ],
+        "answerAudio": "プロテインで乾杯しましょう！",
+        "correctDisplay": "プロテイン で 乾杯 しましょう！",
+        "explanation": "수단·도구를 나타내는 조사 「で(~으로)」! 「プロテインで乾杯(프로틴으로 건배)」!",
+        "reactJp": "かんぱーい！シーズン2も完全制覇だねっ🏆",
+        "reactKo": "건배~! 시즌 2도 완전 제패야! 🏆"
+      },
+      {
+        "kind": "choice",
+        "keyPhrase": "おめでとさん",
+        "speaker": "gemini",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "situation": "🏆 시즌 2 최종화 축하 자리",
+        "prompt": "친구의 목표 달성을 교토·간사이 사투리로 정겹게 축하해 줄 때 쓰는 말은?",
+        "options": [
+          "おめでとさん！ (오메데토상!)",
+          "なんぼどすか？ (난보 도스카?)",
+          "しんどい (신도이)",
+          "袋はいりません (후쿠로와 이리마센)"
+        ],
+        "answerIndex": 0,
+        "explanation": "표준어 「おめでとう」에 친근한 존칭 「さん」을 붙인 「おめでとさん」은 간사이 특유의 따뜻한 축하 표현이에요!",
+        "reactJp": "お見事どす！次のシーズン3も一緒に楽しみまひょ🌸",
+        "reactKo": "훌륭하옵니다! 다음 시즌 3도 함께 즐겨 보시지요 🌸"
+      }
     ]
   },
   {
@@ -3230,7 +3995,32 @@ window.KOTONOHA_LESSONS = [
         "ko": "그렇지만요, 백지 답안일수록 늘어날 여지밖에 없지요.",
         "expr": "smirk",
         "bg": "teahouse_day",
-        "outfit": "teahouse"
+        "outfit": "teahouse",
+        "checkpoint": {
+          "question": "제미니가 백지 답안에 가득하다고 말한 '성장 가능성/여지'를 뜻하는 말은?",
+          "options": [
+            "伸びしろ (노비시로)",
+            "欠点 (켓텐)"
+          ],
+          "answerIndex": 0,
+          "reactJp": "正解どす！プロデューサーはんの伸びしろは無限大どすえ🌱",
+          "reactKo": "정답! 伸びしろ(のびしろ)는 앞으로 더 자랄 수 있는 여지라는 멋진 표현이에요 (+5 언령)"
+        }
+      },
+      {
+        "speaker": "anya",
+        "guest": true,
+        "cameoHint": "땅콩 좋아하고 0점 전문인 초능력 꼬마 느낌",
+        "nameJp": "謎のちびっ子",
+        "nameKo": "수수께끼의 꼬마",
+        "avatar": "./image/04 extras/avatar_unknown.png",
+        "sceneImg": "./image/03 gemini/gemini_48_zero_point_restart.png",
+        "audio": "./audio/kotonoha/auto/anya_e8d58b6dbb.mp3",
+        "jpRuby": "<ruby>零点<rt>れいてん</rt></ruby>…でも<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>！<ruby>明日<rt>あした</rt></ruby>から<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>頑張<rt>がんば</rt></ruby>る！わくわくっ！",
+        "jpPlain": "零点…でも大丈夫！明日から一緒に頑張る！わくわくっ！",
+        "pron": "레이텐… 데모 다이조-부! 아시타카라 잇쇼니 간바루! 와쿠와쿳!",
+        "ko": "0점… 그래도 괜찮아! 내일부터 같이 힘내자! 두근두근!",
+        "bg": "teahouse_day"
       },
       {
         "speaker": "kotone",
@@ -3374,6 +4164,115 @@ window.KOTONOHA_LESSONS = [
         "geminiReactPron": "호나, 아시타노 아사, 야쿠소쿠 도스에. 오키바리야스네",
         "geminiReactKo": "그럼, 내일 아침, 약속이옵니다. 힘내시와요💛"
       }
+    ],
+    "duolingoExercises": [
+      {
+        "kind": "match_pairs",
+        "keyPhrase": "再出発",
+        "prompt": "시즌 3 리셋 & 재출발 핵심 단어 4쌍을 짝지어 보세요!",
+        "pairs": [
+          {
+            "jp": "零点",
+            "pron": "레이텐",
+            "ko": "0점"
+          },
+          {
+            "jp": "白紙",
+            "pron": "하쿠시",
+            "ko": "백지 (원점)"
+          },
+          {
+            "jp": "伸びしろ",
+            "pron": "노비시로",
+            "ko": "성장 여지"
+          },
+          {
+            "jp": "再出発",
+            "pron": "사이슈츠파츠",
+            "ko": "재출발"
+          }
+        ],
+        "explanation": "零点(0점), 白紙(백지), 伸びしろ(성장 여지), 再出発(재출발) — 실패를 딛고 일어서는 N4~N3 어휘!",
+        "reactJp": "よろしゅうおす！再出発は何度してもええのえ🌸",
+        "reactKo": "좋사옵니다! 재출발은 몇 번을 해도 괜찮은 것이지요 🌸"
+      },
+      {
+        "kind": "listening",
+        "keyPhrase": "明日の朝から再出発",
+        "speaker": "gemini",
+        "audioText": "ほな、明日の朝から一緒に再出発どす。…約束どすえ。",
+        "prompt": "제미니의 다정한 약속을 잘 듣고 뜻을 골라보세요!",
+        "options": [
+          "그럼 내일 아침부터 함께 재출발이에요… 약속이옵니다",
+          "그럼 오늘 밤에 당장 시험을 다시 봐요",
+          "내일은 료칸 온천에 놀러 가요",
+          "이번 주는 아예 쉬도록 해요"
+        ],
+        "answerIndex": 0,
+        "correctDisplay": "ほな、明日の朝から一緒に再出発どす。…約束どすえ。",
+        "explanation": "「ほな(그럼)」 + 「明日の朝から(내일 아침부터)」 + 「一緒に再出発(함께 재출발)」 + 「約束(약속)」!",
+        "reactJp": "約束どすえ…指切りげんまんどす🤙",
+        "reactKo": "약속이옵니다… 새끼손가락 거시와요 🤙"
+      },
+      {
+        "kind": "word_bank",
+        "keyPhrase": "一食だけ記録してみる",
+        "speaker": "kotone",
+        "avatar": "./image/02 kotone/avatar_kotone.png",
+        "prompt": "코토네의 부담 없는 리셋 제안을 조립해 보세요!",
+        "targetKo": "우선 한 끼만 기록해 보자",
+        "tiles": [
+          {
+            "text": "まずは",
+            "pron": "마즈와"
+          },
+          {
+            "text": "一食だけ",
+            "pron": "잇쇼쿠다케"
+          },
+          {
+            "text": "記録して",
+            "pron": "키로쿠시테"
+          },
+          {
+            "text": "みよう",
+            "pron": "미요-"
+          },
+          {
+            "text": "やめる",
+            "pron": "야메루"
+          }
+        ],
+        "answerSequence": [
+          "まずは",
+          "一食だけ",
+          "記録して",
+          "みよう"
+        ],
+        "answerAudio": "まずは一食だけ記録してみよう",
+        "correctDisplay": "まずは 一食だけ 記録して みよう",
+        "explanation": "「まずは(우선)」 + 「〜だけ(~만)」 + 「〜てみよう(~해 보자)」! 아주 자연스러운 일본어 제안 문장이에요.",
+        "reactJp": "そうです！小さな一食からまた始めましょう💛",
+        "reactKo": "맞아요! 작은 한 끼부터 다시 시작해 봐요 💛"
+      },
+      {
+        "kind": "choice",
+        "keyPhrase": "約束",
+        "speaker": "mio",
+        "avatar": "./image/01 mio/avatar_mio.png",
+        "situation": "❄️ 겨울 공원 트랙",
+        "prompt": "「走れなくても大丈夫！今日は3分だけ、一緒に歩こっか！」의 뜻으로 알맞은 것은?",
+        "options": [
+          "뛰지 못해도 괜찮아! 오늘은 3분만 같이 걸어보자!",
+          "뛰지 않으면 안 돼! 오늘은 30분 꼭 달려야 해!",
+          "추우니까 오늘은 집에서 잠만 자자!",
+          "운동화를 새로 사러 백화점에 가자!"
+        ],
+        "answerIndex": 0,
+        "explanation": "「〜なくても大丈夫」는 '~하지 않아도 괜찮아'라는 따뜻한 안심 표현이에요!",
+        "reactJp": "その通り！無理せず3分からスタートだよ🌟",
+        "reactKo": "그 말이 맞아! 무리하지 말고 3분부터 스타트야 🌟"
+      }
     ]
   },
   {
@@ -3437,6 +4336,21 @@ window.KOTONOHA_LESSONS = [
         "outfit": "runwear"
       },
       {
+        "speaker": "teio",
+        "guest": true,
+        "cameoHint": "경쾌한 스텝을 밟는 무패의 3관 우마무스메 느낌",
+        "nameJp": "謎のランナー",
+        "nameKo": "수수께끼의 러너",
+        "avatar": "./image/04 extras/avatar_unknown.png",
+        "sceneImg": "./image/01 mio/mio_37_winter_breath_jogging_gloves.png",
+        "audio": "./audio/kotonoha/auto/teio_30133ba392.mp3",
+        "jpRuby": "ボクは<ruby>毎日<rt>まいにち</rt></ruby>3<ruby>歩<rt>ぽ</rt></ruby>から<ruby>始<rt>はじ</rt></ruby>めたんだ！<ruby>歩<rt>ある</rt></ruby>いたあとは、はちみー<ruby>飲<rt>の</rt></ruby>もうね！",
+        "jpPlain": "ボクは毎日3歩から始めたんだ！歩いたあとは、はちみー飲もうね！",
+        "pron": "보쿠와 마이니치 산포카라 하지메탄다! 아루이타 아토와, 하치미- 노모-네!",
+        "ko": "난 매일 세 걸음부터 시작했어! 걸은 뒤엔 하치미(꿀음료) 마시자!",
+        "bg": "park_track"
+      },
+      {
         "speaker": "kotone",
         "nameJp": "ことね",
         "nameKo": "코토네",
@@ -3464,7 +4378,17 @@ window.KOTONOHA_LESSONS = [
         "ko": "작심삼일이어도 괜찮사옵니다. …그럼, 조금씩, 천천히 해 보시지요.",
         "expr": "smile",
         "bg": "teahouse_day",
-        "outfit": "teahouse"
+        "outfit": "teahouse",
+        "checkpoint": {
+          "question": "제미니가 '작심삼일이어도 괜찮아, 천천히 가자'고 할 때 쓴 간사이 부사는?",
+          "options": [
+            "ぼちぼち (보치보치)",
+            "めっちゃ (멧챠)"
+          ],
+          "answerIndex": 0,
+          "reactJp": "ぼちぼち、でよろしゅうおす。急がなくてええのえ🐢",
+          "reactKo": "정답! ぼちぼち는 '슬슬, 천천히, 그럭저럭'이라는 여유 넘치는 간사이 표현이옵니다 (+5 언령)"
+        }
       }
     ],
     "quizzes": [
@@ -3562,6 +4486,529 @@ window.KOTONOHA_LESSONS = [
         "geminiReactJp": "お<ruby>見事<rt>みごと</rt></ruby>どす。…ほな、<ruby>一歩<rt>いっぽ</rt></ruby>、<ruby>歩<rt>ある</rt></ruby>いてみまひょ。",
         "geminiReactPron": "오미고토 도스. …호나, 잇포, 아루이테 미마효.",
         "geminiReactKo": "훌륭하옵니다. …그럼, 한 걸음, 걸어 보시지요."
+      }
+    ],
+    "duolingoExercises": [
+      {
+        "kind": "match_pairs",
+        "keyPhrase": "三日坊主",
+        "prompt": "작은 습관 만들기 핵심 표현 4쌍을 짝지어 보세요!",
+        "pairs": [
+          {
+            "jp": "習慣",
+            "pron": "슈-칸",
+            "ko": "습관"
+          },
+          {
+            "jp": "三日坊主",
+            "pron": "밋카보-즈",
+            "ko": "작심삼일"
+          },
+          {
+            "jp": "ぼちぼち",
+            "pron": "보치보치",
+            "ko": "슬슬 / 천천히 (간사이)"
+          },
+          {
+            "jp": "目標",
+            "pron": "모쿠효-",
+            "ko": "목표"
+          }
+        ],
+        "explanation": "習慣(습관), 三日坊主(작심삼일), ぼちぼち(슬슬/천천히), 目標(목표) — 꾸준함의 일본어 세트!",
+        "reactJp": "正解どす！習慣は一日では育たへんのえ🌱",
+        "reactKo": "정답이옵니다! 습관은 하루 만에 자라지 않는 법이지요 🌱"
+      },
+      {
+        "kind": "listening",
+        "keyPhrase": "三日坊主でもええのえ",
+        "speaker": "gemini",
+        "audioText": "三日坊主でもええのえ。ほな、少しずつ、ぼちぼちいきまひょ。",
+        "prompt": "제미니의 격려를 잘 듣고 알맞은 뜻을 골라보세요!",
+        "options": [
+          "작심삼일이어도 괜찮아요. 그럼 조금씩 천천히 해 봐요",
+          "사흘 만에 포기하면 절대 안 돼요. 지금 당장 뛰세요",
+          "목표를 아주 크게 잡아야 성공할 수 있어요",
+          "눈이 많이 와서 오늘은 쉬는 게 좋겠어요"
+        ],
+        "answerIndex": 0,
+        "correctDisplay": "三日坊主でもええのえ。少しずつ、ぼちぼちいきまひょ。",
+        "explanation": "「〜でもええのえ(~이어도 괜찮아)」 + 「少しずつ(조금씩)」 + 「ぼちぼち(천천히)」!",
+        "reactJp": "ふふ、四日目は一緒にやりまひょね🍵",
+        "reactKo": "후후, 나흘째는 함께 해 보시지요 🍵"
+      },
+      {
+        "kind": "word_bank",
+        "keyPhrase": "3分だけ歩いてみよう",
+        "speaker": "mio",
+        "avatar": "./image/01 mio/avatar_mio.png",
+        "prompt": "「〜てみる(~해 보다)」 문법으로 문장을 조립해 보세요!",
+        "targetKo": "오늘은 3분만 걸어 보자",
+        "tiles": [
+          {
+            "text": "今日は",
+            "pron": "쿄-와"
+          },
+          {
+            "text": "3分だけ",
+            "pron": "산푼다케"
+          },
+          {
+            "text": "歩いて",
+            "pron": "아루이테"
+          },
+          {
+            "text": "みよう",
+            "pron": "미요-"
+          },
+          {
+            "text": "寝て",
+            "pron": "네테"
+          }
+        ],
+        "answerSequence": [
+          "今日は",
+          "3分だけ",
+          "歩いて",
+          "みよう"
+        ],
+        "answerAudio": "今日は3分だけ歩いてみよう",
+        "correctDisplay": "今日は 3分だけ 歩いて みよう",
+        "explanation": "「동사 て형 + みる」는 '시험 삼아 한번 ~해 보다'! 歩いてみよう(걸어 보자)는 습관 시작에 딱 좋아요.",
+        "reactJp": "お見事どす！ほな、一歩、歩いてみまひょ👟",
+        "reactKo": "훌륭하옵니다! 그럼 한 걸음 걸어 보시지요 👟"
+      },
+      {
+        "kind": "choice",
+        "keyPhrase": "〜てみる",
+        "speaker": "gemini",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "situation": "🌱 작은 목표 세우기",
+        "prompt": "동사 て형 뒤에 붙여서 '한번 ~해 보다(시도하다)'라는 뜻을 만드는 문법은?",
+        "options": [
+          "〜てみる (~테 미루)",
+          "〜てしまう (~테 시마우)",
+          "〜てある (~테 아루)",
+          "〜ておく (~테 오쿠)"
+        ],
+        "answerIndex": 0,
+        "explanation": "「〜てみる」는 시도(~해 보다), 「〜てしまう」는 완료/아쉬움(~해 버리다), 「〜ておく」는 준비(~해 두다)예요!",
+        "reactJp": "パーフェクトどす！N4重要文法もばっちりどすえ✨",
+        "reactKo": "퍼펙트이옵니다! N4 핵심 문법도 완벽하시와요 ✨"
+      }
+    ]
+  },
+  {
+    "id": "day21",
+    "season": 3,
+    "episode": 3,
+    "epCode": "3-3",
+    "dayNum": 21,
+    "dateLabel": "제3-3화 · 🦉 듀오형 인터랙티브",
+    "levelBadge": "N5~N4 · 실전 편의점 & 듀오링고형",
+    "titleJp": "コンビニでプロテイン、なんぼどす？",
+    "titlePron": "콘비니데 푸로테인, 난보 도스?",
+    "titleKo": "편의점에서 프로틴, 얼마이온지요?",
+    "bgImage": "./image/02 kotone/kotone_25_night_convenience_chat.png",
+    "grammarTip": {
+      "title": "🦉 듀오링고형 실전 노트 #3-3 · 일본 편의점 생존 회화",
+      "content": "일본 편의점(<b>コンビニ</b>) 계산대에서 가장 자주 듣는 2가지! 점원이 <b>「<ruby>温<rt>あたた</rt></ruby>めますか？ (아타타메마스카 / 데워 드릴까요?)」</b>, <b>「<ruby>袋<rt>ふくろ</rt></ruby>はいりますか？ (후쿠로와 이리마스카 / 봉투 필요하세요?)」</b>라고 물을 때, 필요 없으면 <b>「<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>です」</b> 또는 <b>「<ruby>袋<rt>ふくろ</rt></ruby>はいりません (봉투는 필요 없어요)」</b>로 깔끔하게 답할 수 있어요! 물건 주문은 <b>「〜を<ruby>一<rt>ひと</rt></ruby>つください (~ 하나 주세요)」</b>, 간사이벤 가격 질문 <b>「なんぼ (얼마)」</b>와 감사 인사 <b>「おおきに」</b>까지 한 번에 마스터해 봅시다 🏪💪"
+    },
+    "story": [
+      {
+        "speaker": "narrator",
+        "nameJp": "ナレーション",
+        "nameKo": "내레이션",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/01 mio/mio_16_conveni_bench.png",
+        "audio": "./audio/kotonoha/auto/gemini_46fe383994.mp3",
+        "jpRuby": "3<ruby>分<rt>ぷん</rt></ruby>の<ruby>散歩<rt>さんぽ</rt></ruby>がいつの<ruby>間<rt>ま</rt></ruby>にかジョギングになり、3<ruby>人<rt>にん</rt></ruby>はコンビニの<ruby>前<rt>まえ</rt></ruby>へ。",
+        "jpPlain": "3分の散歩がいつの間にかジョギングになり、3人はコンビニの前へ。",
+        "pron": "산푼노 산포가 이츠노 마니카 죠깅구니 나리, 산닌와 콘비니노 마에에.",
+        "ko": "3분 산책이 어느새 신나는 조깅이 되어, 세 사람은 편의점 앞에 도착했다.",
+        "bg": "osaka_street"
+      },
+      {
+        "speaker": "mio",
+        "nameJp": "ミオ",
+        "nameKo": "미오",
+        "avatar": "./image/01 mio/avatar_mio.png",
+        "sceneImg": "./image/01 mio/mio_07_convenience_bar.png",
+        "audio": "./audio/kotonoha/auto/mio_805948a3dc.mp3",
+        "jpRuby": "ふぅ〜！いい<ruby>汗<rt>あせ</rt></ruby>かいた！プロテインバーと<ruby>水<rt>みず</rt></ruby>を<ruby>買<rt>か</rt></ruby>おうよ！🌟",
+        "jpPlain": "ふぅ！いい汗かいた！プロテインバーと水を買おうよ！",
+        "pron": "후~! 이이 아세 카이타! 푸로테인바-토 미즈오 카오-요!",
+        "ko": "후~! 기분 좋게 땀 흘렸다! 프로틴 바랑 물 사자! 🌟",
+        "expr": "smile",
+        "bg": "osaka_street",
+        "outfit": "runwear"
+      },
+      {
+        "speaker": "kotone",
+        "nameJp": "ことね",
+        "nameKo": "코토네",
+        "avatar": "./image/02 kotone/avatar_kotone.png",
+        "sceneImg": "./image/02 kotone/kotone_32_supermarket_protein_cart.png",
+        "audio": "./audio/kotonoha/auto/kotone_32505bb2e7.mp3",
+        "jpRuby": "プロデューサーさん！サラダチキンは<ruby>安<rt>やす</rt></ruby>くて<ruby>高<rt>こう</rt></ruby>タンパクですよ！これを<ruby>一<rt>ひと</rt></ruby>つ<ruby>選<rt>えら</rt></ruby>びましょう💛",
+        "jpPlain": "プロデューサーさん！サラダチキンは安くて高タンパクですよ！これを一つ選びましょう。",
+        "pron": "푸로듀-사-상! 사라다치킨와 야스쿠테 코-탄파쿠데스요! 코레오 히토츠 에라비마쇼-.",
+        "ko": "프로듀서님! 샐러드 치킨은 저렴하고 고단백이에요! 이걸 하나 골라요 💛",
+        "expr": "smile",
+        "bg": "osaka_street",
+        "outfit": "casual",
+        "checkpoint": {
+          "question": "코토네가 가성비 고단백으로 추천한 음식은?",
+          "options": [
+            "샐러드 치킨 (サラダチキン)",
+            "초콜릿 케이크 (チョコレートケーキ)"
+          ],
+          "answerIndex": 0,
+          "reactJp": "そうです！コスパ最強ですよ！",
+          "reactKo": "정답이에요! 역시 프로듀서님, 식단 센스 최고! (+5 언령)"
+        }
+      },
+      {
+        "speaker": "gemini",
+        "nameJp": "ジェミニ",
+        "nameKo": "제미니",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/03 gemini/gemini_17_protein_bar.png",
+        "audio": "./audio/kotonoha/auto/gemini_dc3cc1aeaa.mp3",
+        "jpRuby": "ふふ、ほなお<ruby>会計<rt>かいけい</rt></ruby>どすね。すみません、サラダチキンを<ruby>一<rt>ひと</rt></ruby>つください🍵",
+        "jpPlain": "ふふ、ほなお会計どすね。すみません、サラダチキンを一つください。",
+        "pron": "후후, 호나 오카이케이 도스네. 스미마센, 사라다치킨오 히토츠 쿠다사이.",
+        "ko": "우후후, 그럼 계산할 차례이옵니다. 저기요, 샐러드 치킨 하나 주세요 🍵",
+        "expr": "smile",
+        "bg": "osaka_street",
+        "outfit": "teahouse"
+      },
+      {
+        "speaker": "narrator",
+        "nameJp": "店員",
+        "nameKo": "편의점 점원",
+        "guest": true,
+        "avatar": "./image/04 extras/avatar_unknown.png",
+        "sceneImg": "./image/02 kotone/kotone_25_night_convenience_chat.png",
+        "audio": "./audio/kotonoha/auto/gemini_1cd992dab4.mp3",
+        "jpRuby": "いらっしゃいませ！こちら、<ruby>温<rt>あたた</rt></ruby>めますか？お<ruby>袋<rt>ふくろ</rt></ruby>はいりますか？",
+        "jpPlain": "いらっしゃいませ！こちら、温めますか？お袋はいりますか？",
+        "pron": "이랏샤이마세! 코치라, 아타타메마스카? 오후쿠로와 이리마스카?",
+        "ko": "어서 오세요! 이거 데워 드릴까요? 봉투는 필요하신가요?",
+        "bg": "osaka_street"
+      },
+      {
+        "speaker": "gemini",
+        "nameJp": "ジェミニ",
+        "nameKo": "제미니",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/03 gemini/gemini_25_post_workout_smoothie.png",
+        "audio": "./audio/kotonoha/auto/gemini_ac1b0a340d.mp3",
+        "jpRuby": "いいえ、<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>どす。<ruby>袋<rt>ふくろ</rt></ruby>はいりません。エコバッグがありますさかい🌿",
+        "jpPlain": "いいえ、大丈夫どす。袋はいりません。エコバッグがありますさかい。",
+        "pron": "이이에, 다이조-부 도스. 후쿠로와 이리마센. 에코밧구가 아리마스 사카이.",
+        "ko": "아니요, 괜찮사옵니다. 봉투는 필요 없어요. 에코백이 있으니까요 🌿",
+        "expr": "wink",
+        "bg": "osaka_street",
+        "outfit": "teahouse",
+        "checkpoint": {
+          "question": "제미니가 '봉투는 필요 없어요'라고 말한 표현은?",
+          "options": [
+            "袋はいりません (후쿠로와 이리마센)",
+            "袋をください (후쿠로오 쿠다사이)"
+          ],
+          "answerIndex": 0,
+          "reactJp": "ぴんぽーん！エコでお得どすえ！",
+          "reactKo": "딩동댕! 봉투값도 아끼고 환경도 지키는 만능 표현이옵니다 (+5 언령)"
+        }
+      },
+      {
+        "speaker": "miku",
+        "guest": true,
+        "cameoHint": "민트색 트윈테일 전자 가희 느낌",
+        "nameJp": "謎の歌姫",
+        "nameKo": "수수께끼의 가희",
+        "avatar": "./image/04 extras/avatar_unknown.png",
+        "sceneImg": "./image/02 kotone/kotone_25_night_convenience_chat.png",
+        "audio": "./audio/kotonoha/auto/miku_7b331973b2.mp3",
+        "jpRuby": "ねぎを<ruby>一<rt>ひと</rt></ruby>つください！<ruby>袋<rt>ふくろ</rt></ruby>はいりませんよ〜♪",
+        "jpPlain": "ねぎを一つください！袋はいりませんよ〜♪",
+        "pron": "네기오 히토츠 쿠다사이! 후쿠로와 이리마센요~♪",
+        "ko": "대파 하나 주세요! 봉투는 필요 없어요~♪",
+        "bg": "osaka_street"
+      },
+      {
+        "speaker": "kotone",
+        "nameJp": "ことね",
+        "nameKo": "코토네",
+        "avatar": "./image/02 kotone/avatar_kotone.png",
+        "sceneImg": "./image/02 kotone/kotone_25_night_convenience_chat.png",
+        "audio": "./audio/kotonoha/auto/kotone_d4d877967e.mp3",
+        "jpRuby": "おおっ、<ruby>袋代<rt>ふくろだい</rt></ruby>5<ruby>円<rt>えん</rt></ruby>セーブ！で、<ruby>全部<rt>ぜんぶ</rt></ruby>でなんぼですか？680<ruby>円<rt>えん</rt></ruby>！めっちゃお<ruby>得<rt>とく</rt></ruby>！✨",
+        "jpPlain": "おおっ、袋代5円セーブ！で、全部でなんぼですか？680円！めっちゃお得！",
+        "pron": "오옷, 후쿠로다이 고엔 세-부! 데, 젠부데 난보데스카? 롯퍄쿠 하치주-엔! 멧챠 오토쿠!",
+        "ko": "오옷, 봉투값 5엔 절약! 그래서 전부 얼마인가요? 680엔! 엄청 이득이에요! ✨",
+        "expr": "smile",
+        "bg": "osaka_street",
+        "outfit": "casual"
+      },
+      {
+        "speaker": "gemini",
+        "nameJp": "ジェミニ",
+        "nameKo": "제미니",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/03 gemini/gemini_26_kyoto_teahouse.png",
+        "audio": "./audio/kotonoha/auto/gemini_d453c75ff4.mp3",
+        "jpRuby": "おおきに〜！<ruby>小<rt>ちい</rt></ruby>さな<ruby>一歩<rt>いっぽ</rt></ruby>が、きれいな<ruby>食事<rt>しょくじ</rt></ruby>まで<ruby>繋<rt>つな</rt></ruby>がりましたえ。ほな、トレーニング<ruby>始<rt>はじ</rt></ruby>めまひょ🍵✨",
+        "jpPlain": "おおきに！小さな一歩が、きれいな食事まで繋がりましたえ。ほな、トレーニング始めまひょ。",
+        "pron": "오오키니~! 치이사나 잇포가, 키레이나 쇼쿠지마데 츠나가리마시타에. 호나, 토레-닝구 하지메마효.",
+        "ko": "고맙사옵니다~! 작은 한 걸음이 건강한 식단까지 이어졌네요. 그럼, 실전 훈련을 시작해 보시지요 🍵✨",
+        "expr": "smile",
+        "bg": "teahouse_day",
+        "outfit": "teahouse"
+      }
+    ],
+    "duolingoExercises": [
+      {
+        "kind": "match_pairs",
+        "keyPhrase": "お会計",
+        "prompt": "워밍업! 편의점 핵심 단어 4쌍을 짝지어 보세요",
+        "pairs": [
+          {
+            "jp": "コンビニ",
+            "pron": "콘비니",
+            "ko": "편의점"
+          },
+          {
+            "jp": "お会計",
+            "pron": "오카이케이",
+            "ko": "계산 (결제)"
+          },
+          {
+            "jp": "袋",
+            "pron": "후쿠로",
+            "ko": "봉투"
+          },
+          {
+            "jp": "なんぼ",
+            "pron": "난보",
+            "ko": "얼마 (간사이벤)"
+          }
+        ],
+        "explanation": "コンビニ(편의점), お会計(계산), 袋(봉투), なんぼ(얼마)는 일본 여행 편의점에서 매일 쓰는 초필수 어휘예요!",
+        "reactJp": "ばっちりどす！ウォーミングアップ完璧どすえ🍵",
+        "reactKo": "완벽하옵니다! 워밍업이 깔끔하시와요!"
+      },
+      {
+        "kind": "listening",
+        "keyPhrase": "温めますか",
+        "speaker": "gemini",
+        "audioText": "温めますか",
+        "prompt": "점원이 계산대에서 자주 묻는 말이에요. 잘 듣고 뜻을 골라보세요!",
+        "options": [
+          "데워 드릴까요?",
+          "영수증 드릴까요?",
+          "포인트 카드 있으세요?",
+          "여기서 드시고 가세요?"
+        ],
+        "answerIndex": 0,
+        "correctDisplay": "温めますか (아타타메마스카 / 데워 드릴까요?)",
+        "explanation": "温める(あたためる / 아타타메루)는 '데우다'! 温めますか？는 편의점에서 도시락·삼각김밥을 살 때 꼭 듣게 되는 질문이에요.",
+        "reactJp": "ぴんぽーん！耳がよう利いてはりますなぁ🎧",
+        "reactKo": "딩동댕! 귀가 참 밝으시옵니다 🎧"
+      },
+      {
+        "kind": "word_bank",
+        "keyPhrase": "袋はいりません",
+        "speaker": "gemini",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "prompt": "일본 편의점 계산대에서 이렇게 말해 보세요!",
+        "targetKo": "봉투는 필요 없습니다",
+        "tiles": [
+          {
+            "text": "袋",
+            "pron": "후쿠로"
+          },
+          {
+            "text": "は",
+            "pron": "와"
+          },
+          {
+            "text": "いりません",
+            "pron": "이리마센"
+          },
+          {
+            "text": "ください",
+            "pron": "쿠다사이"
+          },
+          {
+            "text": "ですか",
+            "pron": "데스카"
+          }
+        ],
+        "answerSequence": [
+          "袋",
+          "は",
+          "いりません"
+        ],
+        "answerAudio": "袋はいりません",
+        "correctDisplay": "袋 は いりません",
+        "explanation": "「袋(봉투) + は(~은/는) + いりません(필요 없습니다)」! 이 한 문장만 익혀도 일본 편의점 계산대가 훨씬 편해져요.",
+        "reactJp": "お見事どす！エコバッグ派のプロデューサーはん、素敵どすえ🌿",
+        "reactKo": "훌륭하옵니다! 에코백 쓰는 프로듀서님, 멋지시와요 🌿"
+      },
+      {
+        "kind": "choice",
+        "keyPhrase": "いいえ、大丈夫です",
+        "speaker": "gemini",
+        "avatar": "./image/02 kotone/avatar_kotone.png",
+        "situation": "🏪 편의점 계산대 상황",
+        "audioText": "こちら、温めますか？",
+        "prompt": "점원이 차가운 프로틴 셰이크를 보며 「こちら、温めますか？」라고 물었어요!",
+        "subPrompt": "안 데워도 된다고 정중하게 답하려면?",
+        "options": [
+          "いいえ、大丈夫です (이이에, 다이조-부데스)",
+          "はい、もう一つ (하이, 모- 히토츠)",
+          "おやすみやす (오야스미야스)",
+          "なんでやねん (난데야넨)"
+        ],
+        "answerIndex": 0,
+        "explanation": "「いいえ、大丈夫です(아니요, 괜찮습니다)」는 거절할 때 가장 자연스럽고 정중한 만능 표현이에요!",
+        "reactJp": "さすがプロデューサーはん！落ち着いた返事どすね✨",
+        "reactKo": "역시 프로듀서님! 차분하고 완벽한 대답이옵니다 ✨"
+      },
+      {
+        "kind": "listening",
+        "keyPhrase": "全部でなんぼどすか",
+        "speaker": "gemini",
+        "audioText": "全部でなんぼどすか",
+        "prompt": "교토·오사카 사투리가 섞인 문장이에요! 거북이 버튼(🐢)도 활용해 보세요",
+        "options": [
+          "전부 얼마인가요?",
+          "이거 어디에 있나요?",
+          "몇 시에 문 닫나요?",
+          "봉투 하나 주세요"
+        ],
+        "answerIndex": 0,
+        "correctDisplay": "全部でなんぼどすか (젠부데 난보 도스카 / 전부 얼마인가요?)",
+        "explanation": "全部で(ぜんぶで)는 '전부 합쳐서', なんぼ는 간사이벤으로 '얼마(いくら)'라는 뜻이에요!",
+        "reactJp": "おおきに〜！関西弁もばっちり聴き取れはりましたなぁ🌸",
+        "reactKo": "고맙사옵니다~! 간사이벤도 척척 알아들으시네요 🌸"
+      },
+      {
+        "kind": "word_bank",
+        "keyPhrase": "サラダチキンを一つください",
+        "speaker": "mio",
+        "avatar": "./image/01 mio/avatar_mio.png",
+        "prompt": "운동 후 단백질 보충! 일본어로 주문 문장을 조립해 보세요",
+        "targetKo": "샐러드 치킨을 하나 주세요",
+        "tiles": [
+          {
+            "text": "サラダチキン",
+            "pron": "사라다치킨"
+          },
+          {
+            "text": "を",
+            "pron": "오"
+          },
+          {
+            "text": "一つ",
+            "pron": "히토츠"
+          },
+          {
+            "text": "ください",
+            "pron": "쿠다사이"
+          },
+          {
+            "text": "いりません",
+            "pron": "이리마센"
+          },
+          {
+            "text": "は",
+            "pron": "와"
+          }
+        ],
+        "answerSequence": [
+          "サラダチキン",
+          "を",
+          "一つ",
+          "ください"
+        ],
+        "answerAudio": "サラダチキンを一つください",
+        "correctDisplay": "サラダチキン を 一つ ください",
+        "explanation": "「[물건] + を + [개수: 一つ(하나)] + ください(주세요)」! 목적어 조사 「を(오)」 위치를 기억하면 어떤 음식이든 주문할 수 있어요.",
+        "reactJp": "パーフェクトどす！高タンパクで筋肉も喜びますえ💪",
+        "reactKo": "퍼펙트이옵니다! 고단백이라 근육도 기뻐하겠어요 💪"
+      },
+      {
+        "kind": "match_pairs",
+        "keyPhrase": "おおきに",
+        "prompt": "파이널 스피드 복습! 오늘 배운 실전 표현 4쌍을 완성하세요",
+        "pairs": [
+          {
+            "jp": "温めますか",
+            "pron": "아타타메마스카",
+            "ko": "데워 드릴까요?"
+          },
+          {
+            "jp": "いりません",
+            "pron": "이리마센",
+            "ko": "필요 없습니다"
+          },
+          {
+            "jp": "一つください",
+            "pron": "히토츠 쿠다사이",
+            "ko": "하나 주세요"
+          },
+          {
+            "jp": "おおきに",
+            "pron": "오오키니",
+            "ko": "고마워요 (간사이)"
+          }
+        ],
+        "explanation": "오늘 배운 4가지 핵심 표현 완벽 마스터! 일본 편의점에 가도 이제 자신 있게 말할 수 있답니다 🏪✨",
+        "reactJp": "全問クリア！プロデューサーはん、ほんまにお見事どすえ💖",
+        "reactKo": "전 단계 클리어! 프로듀서님, 정말 훌륭하옵니다 💖"
+      }
+    ],
+    "quizzes": [
+      {
+        "type": "N5 편의점 · 회화",
+        "promptJp": "편의점에서 점원이 '데워 드릴까요?'라고 물을 때 쓰는 표현은?",
+        "promptPron": "아타타메마스카",
+        "promptKo": "도시락이나 삼각김밥을 계산할 때 자주 듣는 질문이에요 🍱",
+        "targetWord": "温めますか",
+        "targetSub": "동사 温める(데우다)의 정중형 질문",
+        "options": [
+          "温めますか (아타타메마스카)",
+          "歩きますか (아루키마스카)",
+          "買いますか (카이마스카)",
+          "食べますか (타베마스카)"
+        ],
+        "answerIndex": 0,
+        "explanation": "温めますか(あたためますか)는 '데워 드릴까요?'라는 일본 편의점 대표 표현이에요.",
+        "geminiReactJp": "ぴんぽーん！コンビニの定番フレーズどすえ🏪",
+        "geminiReactPron": "핀퐁-! 콘비니노 테이방 후레-즈 도스에",
+        "geminiReactKo": "딩동댕! 편의점 단골 표현이옵니다 🏪"
+      },
+      {
+        "type": "N5 편의점 · 거절",
+        "promptJp": "'봉투는 필요 없습니다'를 일본어로 바르게 말한 것은?",
+        "promptPron": "후쿠로와 이리마센",
+        "promptKo": "에코백을 챙겨 갔을 때 계산대에서 쓰는 표현이에요 🌿",
+        "targetWord": "袋はいりません",
+        "targetSub": "袋(봉투) + は + いりません(필요 없어요)",
+        "options": [
+          "袋はいりません (후쿠로와 이리마센)",
+          "袋をください (후쿠로오 쿠다사이)",
+          "袋はどこですか (후쿠로와 도코데스카)",
+          "袋を食べます (후쿠로오 타베마스)"
+        ],
+        "answerIndex": 0,
+        "explanation": "いりません은 '필요 없습니다(要りません)'라는 뜻으로, 봉투나 젓가락을 정중히 사양할 때 써요.",
+        "geminiReactJp": "お見事どす！エコで賢いプロデューサーはん、素敵どすえ🌿",
+        "geminiReactPron": "오미고토 도스! 에코데 카시코이 푸로듀-사-항, 스테키 도스에",
+        "geminiReactKo": "훌륭하옵니다! 알뜰한 프로듀서님, 멋지시와요 🌿"
       }
     ]
   }

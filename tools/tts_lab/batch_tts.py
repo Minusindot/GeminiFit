@@ -52,9 +52,16 @@ ROLE_FOR_SPEAKER = {
     "kotone": "kotone",
     "mio": "mio",
     "narrator": "gemini",
-    # Guest cameos: voiced, but they only appear as a dialogue bubble.
+    # Guest cameos (100% female roster): voiced, appearing as mystery dialogue bubbles.
     "makima": "makima",
     "miko": "miko",
+    "frieren": "frieren",
+    "pekora": "pekora",
+    "ryo": "ryo",
+    "marine": "marine",
+    "anya": "anya",
+    "teio": "teio",
+    "miku": "miku",
 }
 CORE_ROLES = ("gemini", "kotone", "mio")
 

@@ -285,7 +285,27 @@
     "ふふ、三日坊主でもええのえ。…四日目は一緒にどす。": "./audio/kotonoha/auto/gemini_e43dd3b412.mp3",
     "ぼちぼち、でよろしゅうおす。…急がなくてええのえ。": "./audio/kotonoha/auto/gemini_c762c791ed.mp3",
     "目標は小さうてええのえ。…書いたら叶うて。": "./audio/kotonoha/auto/gemini_007d99214a.mp3",
-    "お見事どす。…ほな、一歩、歩いてみまひょ。": "./audio/kotonoha/auto/gemini_bb4d6dcce1.mp3"
+    "お見事どす。…ほな、一歩、歩いてみまひょ。": "./audio/kotonoha/auto/gemini_bb4d6dcce1.mp3",
+    "ボクは毎日3歩から始めたんだ！歩いたあとは、はちみー飲もうね！": "./audio/kotonoha/auto/teio_30133ba392.mp3",
+    "3分の散歩がいつの間にかジョギングになり、3人はコンビニの前へ。": "./audio/kotonoha/auto/gemini_46fe383994.mp3",
+    "ふぅ！いい汗かいた！プロテインバーと水を買おうよ！": "./audio/kotonoha/auto/mio_805948a3dc.mp3",
+    "プロデューサーさん！サラダチキンは安くて高タンパクですよ！これを一つ選びましょう。": "./audio/kotonoha/auto/kotone_32505bb2e7.mp3",
+    "ふふ、ほなお会計どすね。すみません、サラダチキンを一つください。": "./audio/kotonoha/auto/gemini_dc3cc1aeaa.mp3",
+    "いらっしゃいませ！こちら、温めますか？お袋はいりますか？": "./audio/kotonoha/auto/gemini_1cd992dab4.mp3",
+    "いいえ、大丈夫どす。袋はいりません。エコバッグがありますさかい。": "./audio/kotonoha/auto/gemini_ac1b0a340d.mp3",
+    "ねぎを一つください！袋はいりませんよ〜♪": "./audio/kotonoha/auto/miku_7b331973b2.mp3",
+    "おおっ、袋代5円セーブ！で、全部でなんぼですか？680円！めっちゃお得！": "./audio/kotonoha/auto/kotone_d4d877967e.mp3",
+    "おおきに！小さな一歩が、きれいな食事まで繋がりましたえ。ほな、トレーニング始めまひょ。": "./audio/kotonoha/auto/gemini_d453c75ff4.mp3",
+    "温めますか": "./audio/kotonoha/auto/gemini_1198fe760c.mp3",
+    "袋はいりません": "./audio/kotonoha/auto/gemini_65b0a1c881.mp3",
+    "コンビニでプロテイン、なんぼどす？": "./audio/kotonoha/auto/gemini_9f6e00ce60.mp3",
+    "ぴんぽーん！コンビニの定番フレーズどすえ": "./audio/kotonoha/auto/gemini_4a935e86fb.mp3",
+    "お見事どす！エコで賢いプロデューサーはん、素敵どすえ": "./audio/kotonoha/auto/gemini_54fbcd6618.mp3",
+    "ふふ、温泉でぬくぬくする魔法だよ。…あと10分だけ、おやすみやす。": "./audio/kotonoha/auto/frieren_ff1394ce02.mp3",
+    "こんぺこ！筋トレのあとは体をしっかりほぐすぺこ！さぼったら許さないぺこよ！": "./audio/kotonoha/auto/pekora_8526b38977.mp3",
+    "古本コーナーで半額…最高。お金ないから、これで漢字を覚える。あとで300円貸して。": "./audio/kotonoha/auto/ryo_2bb3bd4054.mp3",
+    "アホイ！17時間断食達成、おめでとさん！プロテインで乾杯よ！出航！": "./audio/kotonoha/auto/marine_36da8862b8.mp3",
+    "零点…でも大丈夫！明日から一緒に頑張る！わくわくっ！": "./audio/kotonoha/auto/anya_e8d58b6dbb.mp3"
   },
   "remap": {},
   "voices": {
@@ -322,6 +342,55 @@
       "name": "みこちVTuber",
       "provider": "fish",
       "voiceId": "9767b8872dc946beab4431861653dd94",
+      "stars": 5
+    },
+    "frieren": {
+      "id": "fish_c174516c799a42e7be88b96c86cfbd3e",
+      "name": "frieren",
+      "provider": "fish",
+      "voiceId": "c174516c799a42e7be88b96c86cfbd3e",
+      "stars": 5
+    },
+    "pekora": {
+      "id": "fish_b647868b818341998af459c2ce91d8dc",
+      "name": "Usada Pekora",
+      "provider": "fish",
+      "voiceId": "b647868b818341998af459c2ce91d8dc",
+      "stars": 5
+    },
+    "ryo": {
+      "id": "fish_0785d6732191409792641c70dec8c733",
+      "name": "Ryo Yamada (Bocchi the Rock!)",
+      "provider": "fish",
+      "voiceId": "0785d6732191409792641c70dec8c733",
+      "stars": 5
+    },
+    "marine": {
+      "id": "fish_7eda069b5d32491f982680be4cdaaabd",
+      "name": "Marine Hololive",
+      "provider": "fish",
+      "voiceId": "7eda069b5d32491f982680be4cdaaabd",
+      "stars": 5
+    },
+    "anya": {
+      "id": "fish_c3c5599aec5c45e1a4c826baae1e08f8",
+      "name": "Anya",
+      "provider": "fish",
+      "voiceId": "c3c5599aec5c45e1a4c826baae1e08f8",
+      "stars": 5
+    },
+    "teio": {
+      "id": "fish_d1a1a920956c40c0bac4ef6a92c92a20",
+      "name": "Tokai Teio",
+      "provider": "fish",
+      "voiceId": "d1a1a920956c40c0bac4ef6a92c92a20",
+      "stars": 5
+    },
+    "miku": {
+      "id": "fish_6717a74323274cb296ea9a0da654c977",
+      "name": "Hatsune Miku",
+      "provider": "fish",
+      "voiceId": "6717a74323274cb296ea9a0da654c977",
       "stars": 5
     }
   }

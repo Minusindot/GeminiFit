@@ -35,6 +35,55 @@
       "provider": "fish",
       "voiceId": "9767b8872dc946beab4431861653dd94",
       "stars": 5
+    },
+    "frieren": {
+      "id": "fish_c174516c799a42e7be88b96c86cfbd3e",
+      "name": "frieren",
+      "provider": "fish",
+      "voiceId": "c174516c799a42e7be88b96c86cfbd3e",
+      "stars": 5
+    },
+    "pekora": {
+      "id": "fish_b647868b818341998af459c2ce91d8dc",
+      "name": "Usada Pekora",
+      "provider": "fish",
+      "voiceId": "b647868b818341998af459c2ce91d8dc",
+      "stars": 5
+    },
+    "ryo": {
+      "id": "fish_0785d6732191409792641c70dec8c733",
+      "name": "Ryo Yamada (Bocchi the Rock!)",
+      "provider": "fish",
+      "voiceId": "0785d6732191409792641c70dec8c733",
+      "stars": 5
+    },
+    "marine": {
+      "id": "fish_7eda069b5d32491f982680be4cdaaabd",
+      "name": "Marine Hololive",
+      "provider": "fish",
+      "voiceId": "7eda069b5d32491f982680be4cdaaabd",
+      "stars": 5
+    },
+    "anya": {
+      "id": "fish_c3c5599aec5c45e1a4c826baae1e08f8",
+      "name": "Anya",
+      "provider": "fish",
+      "voiceId": "c3c5599aec5c45e1a4c826baae1e08f8",
+      "stars": 5
+    },
+    "teio": {
+      "id": "fish_d1a1a920956c40c0bac4ef6a92c92a20",
+      "name": "Tokai Teio",
+      "provider": "fish",
+      "voiceId": "d1a1a920956c40c0bac4ef6a92c92a20",
+      "stars": 5
+    },
+    "miku": {
+      "id": "fish_6717a74323274cb296ea9a0da654c977",
+      "name": "Hatsune Miku",
+      "provider": "fish",
+      "voiceId": "6717a74323274cb296ea9a0da654c977",
+      "stars": 5
     }
   }
 }
