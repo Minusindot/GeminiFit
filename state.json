@@ -1,19 +1,19 @@
 {
-  "updatedAt": "2026-11-24T08:40:07.363Z",
-  "lastActiveDate": "2026-11-24",
+  "updatedAt": "2026-11-25T12:29:41.182Z",
+  "lastActiveDate": "2026-11-25",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 25,
-  "bondExp": 5,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
-  "currentSituation": "ev1",
+  "bondExp": 80,
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev3",
   "absDone": false,
   "runDone": false,
   "runDist": 0.6,
   "rehab": [
-    false
+    true
   ],
   "rehabSets": 1,
   "meals": [
@@ -23,9 +23,9 @@
   ],
   "mealLogs": [],
   "teaLog": {
-    "water": 2,
+    "water": 0,
     "matcha": 0,
-    "espresso": 2,
+    "espresso": 0,
     "tea": 0
   },
   "gymRoutine": {
@@ -33,14 +33,14 @@
       "id": "ex_upper1",
       "part": "upper",
       "name": "펙 덱 플라이",
-      "weight": "30kg × 20회",
+      "weight": "25kg × 20회",
       "reps": 20,
       "targetSets": 4,
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ]
     },
     "upper2": {
@@ -60,15 +60,15 @@
     "lower": {
       "id": "ex_upper2",
       "part": "lower",
-      "name": "시티드 레그 프레스",
-      "weight": "45kg 20회",
+      "name": "레그 컬",
+      "weight": "25kg × 20회",
       "reps": 20,
       "targetSets": 4,
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ]
     },
     "legRaise": {
@@ -79,7 +79,7 @@
       "reps": 50,
       "targetSets": 1,
       "sets": [
-        false
+        true
       ]
     },
     "crunch": {
@@ -90,38 +90,38 @@
       "reps": 50,
       "targetSets": 2,
       "sets": [
-        false,
-        false
+        true,
+        true
       ]
     },
-    "allDone": false,
+    "allDone": true,
     "items": [
       {
         "id": "ex_upper1",
         "part": "upper",
         "name": "펙 덱 플라이",
-        "weight": "30kg × 20회",
+        "weight": "25kg × 20회",
         "reps": 20,
         "targetSets": 4,
         "sets": [
-          false,
-          false,
-          false,
-          false
+          true,
+          true,
+          true,
+          true
         ]
       },
       {
         "id": "ex_upper2",
         "part": "lower",
-        "name": "시티드 레그 프레스",
-        "weight": "45kg 20회",
+        "name": "레그 컬",
+        "weight": "25kg × 20회",
         "reps": 20,
         "targetSets": 4,
         "sets": [
-          false,
-          false,
-          false,
-          false
+          true,
+          true,
+          true,
+          true
         ]
       },
       {
@@ -132,7 +132,7 @@
         "reps": 50,
         "targetSets": 1,
         "sets": [
-          false
+          true
         ]
       },
       {
@@ -143,8 +143,8 @@
         "reps": 50,
         "targetSets": 2,
         "sets": [
-          false,
-          false
+          true,
+          true
         ]
       }
     ]
@@ -426,6 +426,71 @@
       "crunchTarget": 2,
       "totalSets": 11,
       "totalReps": 310
+    },
+    {
+      "id": "gym-1795609750571",
+      "date": "11/25",
+      "fullDate": "2026-11-25",
+      "time": "오후 09:29",
+      "performedItems": [
+        {
+          "id": "ex_upper1",
+          "part": "upper",
+          "name": "펙 덱 플라이",
+          "weight": "25kg × 20회",
+          "reps": 20,
+          "targetSets": 4,
+          "doneSets": 4,
+          "totalReps": 80
+        },
+        {
+          "id": "ex_upper2",
+          "part": "lower",
+          "name": "레그 컬",
+          "weight": "25kg × 20회",
+          "reps": 20,
+          "targetSets": 4,
+          "doneSets": 4,
+          "totalReps": 80
+        },
+        {
+          "id": "ex_core1",
+          "part": "core",
+          "name": "캡틴스 체어 레그레이즈",
+          "weight": "맨몸 × 50회",
+          "reps": 50,
+          "targetSets": 1,
+          "doneSets": 1,
+          "totalReps": 50
+        },
+        {
+          "id": "ex_core2",
+          "part": "core",
+          "name": "크런치",
+          "weight": "맨몸 × 50회",
+          "reps": 50,
+          "targetSets": 2,
+          "doneSets": 2,
+          "totalReps": 100
+        }
+      ],
+      "upper1Done": 4,
+      "upper1Reps": 80,
+      "upper1Name": "펙 덱 플라이",
+      "upper2Done": 0,
+      "upper2Reps": 0,
+      "upper2Name": "로우 머신",
+      "lowerDone": 4,
+      "lowerReps": 80,
+      "lowerName": "레그 컬",
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
+      "legRaiseTarget": 1,
+      "crunchDone": 2,
+      "crunchReps": 100,
+      "crunchTarget": 2,
+      "totalSets": 11,
+      "totalReps": 310
     }
   ],
   "kotonoha": {
@@ -483,7 +548,8 @@
     "w_2026-11-25_run": true,
     "d_2026-11-23_pro": true,
     "d_2026-11-23_water": true,
-    "d_2026-11-23_meal": true
+    "d_2026-11-23_meal": true,
+    "d_2026-11-25_work": true
   },
   "latestInbody": null,
   "inbodyHistory": [
@@ -1159,17 +1225,47 @@
         "source": "천국의 계단"
       },
       "lastUpdated": "2026-11-23T14:35:50.769Z"
+    },
+    "2026-11-24": {
+      "date": "2026-11-24",
+      "weight": 65.5,
+      "fat": 31.8,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "mealLogs": [],
+      "mealKcal": 0,
+      "mealProtein": 0,
+      "runDone": false,
+      "absDone": false,
+      "rehabDone": 0,
+      "gymDone": false,
+      "teaLog": {
+        "water": 2,
+        "matcha": 0,
+        "espresso": 2,
+        "tea": 0
+      },
+      "teaTimes": {
+        "water": [
+          "17:40",
+          "17:40"
+        ],
+        "matcha": [],
+        "espresso": [
+          "08:33",
+          "17:40"
+        ],
+        "tea": []
+      },
+      "conditionTags": [
+        "🥱졸림",
+        "🔥작업과다"
+      ],
+      "conditionNote": "",
+      "autoArchived": true
     }
   },
   "chatHistory": [
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "장갑 끼고 천천히 몸 데우면서 뛰니까 오히려 여름보다 덜 지치고 상쾌하더라구! 🧤",
-      "room": "mio",
-      "image": "./image/01 mio/mio_37_winter_breath_jogging_gloves.png",
-      "caption": "📷 미오가 보낸 사진 · 쌀쌀한 날 조깅 워밍업"
-    },
     {
       "sender": "mio",
       "name": "미오",
@@ -1319,6 +1415,12 @@
       "sender": "mio",
       "name": "미오",
       "text": "수분 보충 나이스!! 오늘 벌써 물 2잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "2kg 덤벨 편심성 재활 1세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾",
+      "room": "all"
     }
   ]
 }
