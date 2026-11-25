@@ -1,0 +1,82 @@
+name: GeminiFit Discord Notifier
+
+on:
+  schedule:
+    # GitHub Actions cron은 UTC 기준 (KST = UTC + 9)
+    # 1) 매일 아침 08:30 KST (UTC 23:30) — 모닝 브리핑 + 10초 일본어
+    - cron: '30 23 * * *'
+    # 2) 매일 밤 22:00 KST (UTC 13:00) — 스트릭 보호 스마트 넛지 (조건부 발송)
+    - cron: '0 13 * * *'
+    # 3) 매주 일요일 20:00 KST (UTC 11:00) — 주간 결산 + 다크 테마 미니 그래프
+    - cron: '0 11 * * 0'
+
+  # GitHub Actions 탭에서 언제든 수동 테스트 가능
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '실행할 알림 모드 선택'
+        required: true
+        default: 'morning'
+        type: choice
+        options:
+          - morning
+          - evening
+          - weekly
+      force:
+        description: 'evening 모드 강제 발송 (오늘 기록 있어도 테스트 전송)'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Determine notification mode
+        id: pick_mode
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "30 23 * * *" ]; then
+            echo "mode=morning" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 13 * * *" ]; then
+            echo "mode=evening" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 11 * * 0" ]; then
+            echo "mode=weekly" >> "$GITHUB_OUTPUT"
+          else
+            echo "mode=morning" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install Korean font for weekly chart
+        if: steps.pick_mode.outputs.mode == 'weekly'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-nanum
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip --quiet
+          if [ "${{ steps.pick_mode.outputs.mode }}" = "weekly" ]; then
+            pip install --quiet requests matplotlib
+          else
+            pip install --quiet requests
+          fi
+
+      - name: Run GeminiFit Discord Notifier
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          EXTRA_ARGS=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force }}" = "true" ]; then
+            EXTRA_ARGS="--force"
+          fi
+          python tools/discord_bot.py --mode "${{ steps.pick_mode.outputs.mode }}" $EXTRA_ARGS
