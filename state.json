@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-26T12:39:12.250Z",
+  "updatedAt": "2026-11-26T12:39:28.676Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 34,
-  "bondExp": 30,
+  "bondExp": 75,
   "activeTrainer": "gemini",
   "activeMode": "dual",
   "currentSituation": "ev1",
@@ -559,8 +559,8 @@
     }
   ],
   "kotonoha": {
-    "coins": 2915,
-    "kotodama": 1432,
+    "coins": 2995,
+    "kotodama": 1475,
     "streak": 7,
     "lastStudyDate": "2026-11-26",
     "completedLessons": [
@@ -575,14 +575,15 @@
       "day9",
       "day10",
       "day11",
-      "day12"
+      "day12",
+      "day13"
     ],
     "customAiLessons": [],
     "activeLessonIdx": 12,
     "showPron": true,
     "quizStats": {
-      "total": 88,
-      "correct": 86,
+      "total": 89,
+      "correct": 87,
       "wrongWords": [
         "傘",
         "ええ"
@@ -604,8 +605,8 @@
           "total": 1
         },
         "choice": {
-          "ok": 0,
-          "total": 0
+          "ok": 1,
+          "total": 1
         },
         "checkpoint": {
           "ok": 2,
@@ -614,14 +615,28 @@
       },
       "slowListens": 0,
       "pronHiddenSolves": 0,
-      "totalTrackedSolves": 5,
+      "totalTrackedSolves": 6,
       "masteredPhrases": [
         "知らんけど",
         "熱いうちに食べはる？",
-        "運動すればゼロカロリー"
+        "運動すればゼロカロリー",
+        "食べはる"
       ],
       "weakPhrases": {},
-      "episodeLogs": []
+      "episodeLogs": [
+        {
+          "id": "day13",
+          "epCode": "2-1",
+          "titleKo": "타코야키는 식기 전에 드시와요?",
+          "levelBadge": "N4 + 오사카 타코야키 & 츳코미",
+          "accuracy": 100,
+          "maxCombo": 4,
+          "mistakes": 0,
+          "slowListens": 0,
+          "pronOn": true,
+          "date": "2026-11-26"
+        }
+      ]
     }
   },
   "trainerEpisodesDone": {
