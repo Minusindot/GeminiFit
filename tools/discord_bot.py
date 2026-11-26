@@ -13,6 +13,7 @@ import argparse
 import io
 import json
 import os
+import random
 import re
 import sys
 from datetime import date, datetime, timedelta, timezone
@@ -276,7 +277,19 @@ def select_daily_quiz(state: dict[str, Any], lessons: list[dict[str, Any]], toda
     return f"{tag} · 제{ep}화", lesson, quiz
 
 
-def format_quiz_block(badge: str, lesson: dict[str, Any], quiz: dict[str, Any]) -> str:
+def _strip_quiz_reading(text: str) -> str:
+    s = re.sub(r"<[^>]+>", "", str(text or ""))
+    s = re.sub(r"（[^）]*）|\([^)]*\)", "", s)
+    s = re.sub(r"[\s\u3000~〜\-－·.。、/／!?！？]", "", s)
+    return s
+
+
+def format_quiz_block(
+    badge: str,
+    lesson: dict[str, Any],
+    quiz: dict[str, Any],
+    today: date | None = None,
+) -> str:
     q_type = str(quiz.get("type") or "퀴즈")
     is_reading_quiz = "읽기" in q_type
     prompt_jp = strip_ruby(str(quiz.get("promptJp") or ""), keep_reading=not is_reading_quiz)
@@ -284,13 +297,29 @@ def format_quiz_block(badge: str, lesson: dict[str, Any], quiz: dict[str, Any]) 
     target_word = str(quiz.get("targetWord") or "")
     target_sub = strip_ruby(str(quiz.get("targetSub") or ""), keep_reading=not is_reading_quiz)
 
-    options = quiz.get("options") or []
-    ans_idx = int(quiz.get("answerIndex") or 0)
+    raw_options = list(quiz.get("options") or [])
+    raw_ans_idx = int(quiz.get("answerIndex") or 0)
+    if raw_options:
+        tagged = [(opt, i == raw_ans_idx) for i, opt in enumerate(raw_options)]
+        seed_str = f"{today.isoformat() if today else ''}|{lesson.get('id', '')}|{prompt_jp}|{target_word}"
+        rng = random.Random(seed_str)
+        rng.shuffle(tagged)
+        options = [opt for opt, _ in tagged]
+        ans_idx = next((i for i, (_, is_ans) in enumerate(tagged) if is_ans), 0)
+    else:
+        options = []
+        ans_idx = 0
+
     ans_text = options[ans_idx] if 0 <= ans_idx < len(options) else ""
     explanation = strip_ruby(str(quiz.get("explanation") or ""), keep_reading=True)
 
+    # Avoid leaking the answer when targetWord is identical to or contained in the correct option
+    tw_clean = _strip_quiz_reading(target_word)
+    ans_clean = _strip_quiz_reading(ans_text)
+    keyword_exposes_answer = bool(tw_clean and ans_clean and (tw_clean in ans_clean or ans_clean in tw_clean))
+
     lines = [f"**[{badge} · {q_type}]**"]
-    if target_word and target_word not in prompt_jp and target_word not in prompt_ko:
+    if target_word and not keyword_exposes_answer and target_word not in prompt_jp and target_word not in prompt_ko:
         lines.append(f"> 키워드: **{target_word}**")
     if prompt_jp and prompt_jp != prompt_ko:
         lines.append(f"> {prompt_jp}")
@@ -415,7 +444,7 @@ def build_morning_payload(state: dict[str, Any], lessons: list[dict[str, Any]], 
     wrong_cnt = len(q_stats.get("wrongWords") or [])
 
     badge, lesson, quiz = select_daily_quiz(state, lessons, today)
-    quiz_text = format_quiz_block(badge, lesson, quiz)
+    quiz_text = format_quiz_block(badge, lesson, quiz, today=today)
 
     greeting = trainer["morning_greetings"][today.toordinal() % len(trainer["morning_greetings"])]
     bond_rank = state.get("bondRank", 1)
