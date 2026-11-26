@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T12:14:18.865Z",
+  "updatedAt": "2026-11-26T12:14:52.294Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.3,
@@ -573,7 +573,7 @@
       "day7"
     ],
     "customAiLessons": [],
-    "activeLessonIdx": 12,
+    "activeLessonIdx": 7,
     "showPron": true,
     "quizStats": {
       "total": 64,
@@ -583,7 +583,37 @@
         "ええ"
       ]
     },
-    "selectedSeason": 2
+    "selectedSeason": 1,
+    "learningProfile": {
+      "byKind": {
+        "match_pairs": {
+          "ok": 0,
+          "total": 0
+        },
+        "listening": {
+          "ok": 0,
+          "total": 0
+        },
+        "word_bank": {
+          "ok": 0,
+          "total": 0
+        },
+        "choice": {
+          "ok": 0,
+          "total": 0
+        },
+        "checkpoint": {
+          "ok": 0,
+          "total": 0
+        }
+      },
+      "slowListens": 0,
+      "pronHiddenSolves": 0,
+      "totalTrackedSolves": 0,
+      "masteredPhrases": [],
+      "weakPhrases": {},
+      "episodeLogs": []
+    }
   },
   "trainerEpisodesDone": {
     "k1": true,
