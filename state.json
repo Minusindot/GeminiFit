@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-26T12:23:19.169Z",
+  "updatedAt": "2026-11-26T12:38:28.151Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 34,
-  "bondExp": 0,
+  "bondExp": 10,
   "activeTrainer": "gemini",
   "activeMode": "dual",
   "currentSituation": "ev1",
@@ -559,8 +559,8 @@
     }
   ],
   "kotonoha": {
-    "coins": 2865,
-    "kotodama": 1399,
+    "coins": 2880,
+    "kotodama": 1409,
     "streak": 7,
     "lastStudyDate": "2026-11-26",
     "completedLessons": [
@@ -581,8 +581,8 @@
     "activeLessonIdx": 12,
     "showPron": true,
     "quizStats": {
-      "total": 85,
-      "correct": 83,
+      "total": 86,
+      "correct": 84,
       "wrongWords": [
         "傘",
         "ええ"
@@ -592,8 +592,8 @@
     "learningProfile": {
       "byKind": {
         "match_pairs": {
-          "ok": 0,
-          "total": 0
+          "ok": 1,
+          "total": 1
         },
         "listening": {
           "ok": 0,
@@ -614,8 +614,10 @@
       },
       "slowListens": 0,
       "pronHiddenSolves": 0,
-      "totalTrackedSolves": 2,
-      "masteredPhrases": [],
+      "totalTrackedSolves": 3,
+      "masteredPhrases": [
+        "知らんけど"
+      ],
       "weakPhrases": {},
       "episodeLogs": []
     }
