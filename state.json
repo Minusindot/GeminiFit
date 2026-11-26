@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T12:21:29.531Z",
+  "updatedAt": "2026-11-26T12:22:17.030Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.3,
@@ -559,8 +559,8 @@
     }
   ],
   "kotonoha": {
-    "coins": 2845,
-    "kotodama": 1389,
+    "coins": 2855,
+    "kotodama": 1394,
     "streak": 7,
     "lastStudyDate": "2026-11-26",
     "completedLessons": [
@@ -608,13 +608,13 @@
           "total": 0
         },
         "checkpoint": {
-          "ok": 0,
-          "total": 0
+          "ok": 1,
+          "total": 1
         }
       },
       "slowListens": 0,
       "pronHiddenSolves": 0,
-      "totalTrackedSolves": 0,
+      "totalTrackedSolves": 1,
       "masteredPhrases": [],
       "weakPhrases": {},
       "episodeLogs": []
