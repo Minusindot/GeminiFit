@@ -455,14 +455,25 @@
       to { transform: scale(1.13) translate(-1%, -1.5%); }
     }
     .vn-scg {
+      left: 50%;
+      top: 24px;
+      height: 158%;
+      width: auto;
+      max-width: none;
+      object-fit: contain;
+      object-position: top center;
       opacity: 0;
-      transform: translateY(14px) scale(0.985);
+      transform: translate(-50%, 16px) scale(0.985);
       transition: opacity 0.32s ease, transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
-      filter: drop-shadow(0 10px 24px rgba(2, 6, 23, 0.55));
+      filter: drop-shadow(0 12px 28px rgba(2, 6, 23, 0.6));
     }
     .vn-scg.vn-in {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translate(-50%, 0) scale(1);
+    }
+    #messengerRoomBody.vn-mode.vn-choices .vn-scg {
+      top: 18px;
+      height: 165%;
     }
     #trainerSceneCg {
       object-position: center 16%;
@@ -551,7 +562,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.7.11</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.7.12</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -775,7 +786,7 @@
               <img id="trainerSceneBg" class="vn-bg absolute inset-0 w-full h-full object-cover" alt="">
               <img id="trainerSceneCg" class="hidden absolute inset-0 w-full h-full object-cover" alt="">
               <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/10 to-slate-950/45 pointer-events-none"></div>
-              <img id="trainerSceneScg" class="vn-scg absolute right-[2%] bottom-0 max-w-[62%] object-contain object-bottom pointer-events-none" style="height: 100%;" alt="">
+              <img id="trainerSceneScg" class="vn-scg absolute pointer-events-none" alt="">
 
               <div class="absolute top-2 left-2 z-10 flex items-center gap-1.5 pointer-events-none">
                 <span id="vnEpisodeChip" class="max-w-[190px] truncate px-2 py-0.5 rounded-full bg-black/45 border border-white/20 backdrop-blur-md text-[9px] font-black text-white/90">EPISODE</span>
@@ -4577,6 +4588,11 @@
           meals: state.meals,
           mealLogs: (state.mealLogs || []).map(m => ({ id: m.id, slot: m.slot || '', time: m.time, name: m.name, kcal: m.kcal, protein: m.protein, tag: m.tag })),
           teaLog: state.teaLog,
+          teaTimes: state.teaTimes || [],
+          conditionTags: state.conditionTags || [],
+          conditionNote: state.conditionNote || '',
+          sleepLogs: state.sleepLogs || [],
+          deviceActivity: state.deviceActivity || {},
           gymRoutine: state.gymRoutine,
           gymHistory: state.gymHistory,
           kotonoha: state.kotonoha,
@@ -12309,6 +12325,20 @@ ${err.message}
       const quizTotal = (k.quizStats && k.quizStats.total) || 0;
       const quizCorrect = (k.quizStats && k.quizStats.correct) || 0;
       const wrongList = (k.quizStats && k.quizStats.wrongWords && k.quizStats.wrongWords.join(', ')) || '없음';
+      const kotonohaAdaptiveBlock = (typeof buildKotonohaFeedbackPrompt === 'function')
+        ? `\n\n${buildKotonohaFeedbackPrompt()}`
+        : '';
+
+      // Recent Sleep Logs (last 7 entries)
+      const recentSleeps = (Array.isArray(state.sleepLogs) ? state.sleepLogs : []).slice(-7);
+      const sleepSummaryBlock = recentSleeps.length
+        ? recentSleeps.map(sl => {
+            const dur = sl.durationMin ? `${Math.floor(sl.durationMin / 60)}시간 ${sl.durationMin % 60}분` : (sl.durationText || '미상');
+            const score = sl.score != null ? ` · 점수 ${sl.score}` : '';
+            const span = (sl.bedTime && sl.wakeTime) ? ` (${sl.bedTime}~${sl.wakeTime})` : '';
+            return `  - ${sl.date}: ${dur}${span}${score}`;
+          }).join('\n')
+        : '  - 최근 수면 기록 없음';
 
       // Recent Chat reactions
       const recentChats = (state.chatHistory || [])
@@ -12350,11 +12380,14 @@ ${err.message}
 - 식단 기록: 3끼 중 ${mealsDone}회 완료
 - 홈카페 다도 섭취(말차/단백질): ${teaCount}회
 
+🌙 [최근 수면 기록]
+${sleepSummaryBlock}
+
 🍵 [일본어 다실 학습 진행도 & 퀴즈 분석]
 - 완료한 레슨: 총 ${completedCount}개 (${completedList})
 - 연속 출석일: ${streak}일차 | 보유 언령(言霊): ${kotodama}개
 - 퀴즈 정답률: ${quizTotal > 0 ? Math.round((quizCorrect / quizTotal) * 100) + '%' : '신규 학습 시작'} (${quizCorrect}/${quizTotal})
-- 최근 틀린 취약 어휘: ${wrongList}
+- 최근 틀린 취약 어휘: ${wrongList}${kotonohaAdaptiveBlock}
 
 💬 [최근 내 반응 및 피드백 요약]
 - 최근 메시지: "${recentChats}"
@@ -13301,7 +13334,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.7.11 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.7.12 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>

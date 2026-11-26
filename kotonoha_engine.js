@@ -782,29 +782,62 @@ function speakJapaneseFallback(clean, speaker = 'gemini', customRate = null, onE
   }
 }
 
+// Audio generation guard & helper to prevent overlapping speech when advancing quickly
+let kotonohaSpeechGen = 0;
+let kotonohaAutoPlayTimer = null;
+
+function stopKotonohaAudio() {
+  kotonohaSpeechGen += 1;
+  if (kotonohaAutoPlayTimer) {
+    clearTimeout(kotonohaAutoPlayTimer);
+    kotonohaAutoPlayTimer = null;
+  }
+  if (currentKotonohaAudio) {
+    try {
+      currentKotonohaAudio.onended = null;
+      currentKotonohaAudio.onerror = null;
+      currentKotonohaAudio.pause();
+      currentKotonohaAudio.currentTime = 0;
+    } catch (_) {}
+    currentKotonohaAudio = null;
+  }
+  if ('speechSynthesis' in window) {
+    try { window.speechSynthesis.cancel(); } catch (_) {}
+  }
+}
+
+function shuffleKotonohaOptions(options, answerIndex) {
+  const list = Array.isArray(options) ? options : [];
+  const tagged = list.map((text, idx) => ({ text, isAnswer: idx === answerIndex }));
+  for (let i = tagged.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [tagged[i], tagged[j]] = [tagged[j], tagged[i]];
+  }
+  const newAnswerIndex = tagged.findIndex(item => item.isAnswer);
+  return {
+    options: tagged.map(item => item.text),
+    answerIndex: newAnswerIndex >= 0 ? newAnswerIndex : 0
+  };
+}
+
 // Main High-Quality VOICEVOX Anime Speech Player
 async function speakJapanese(text, speaker = 'gemini', customRate = null, onEndCallback = null) {
   const clean = cleanKotonohaTtsText(text);
+  stopKotonohaAudio();
+  const myGen = kotonohaSpeechGen;
   try {
-    // Stop currently playing audio or speech
-    if (currentKotonohaAudio) {
-      try {
-        currentKotonohaAudio.pause();
-        currentKotonohaAudio.currentTime = 0;
-      } catch (_) {}
-      currentKotonohaAudio = null;
-    }
-    if ('speechSynthesis' in window) {
-      try { window.speechSynthesis.cancel(); } catch (_) {}
-    }
-
     if (!clean && !(typeof text === 'string' && text.endsWith('.mp3'))) {
-      if (typeof onEndCallback === 'function') setTimeout(onEndCallback, 300);
+      if (typeof onEndCallback === 'function') {
+        setTimeout(() => {
+          if (myGen === kotonohaSpeechGen) onEndCallback();
+        }, 300);
+      }
       return;
     }
 
     const cacheKey = getKotonohaCacheKey(text, speaker);
     const executeFallback = () => {
+      if (myGen !== kotonohaSpeechGen) return;
       speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
     };
 
@@ -812,17 +845,23 @@ async function speakJapanese(text, speaker = 'gemini', customRate = null, onEndC
     let audioUrl = kotonohaAudioCache[cacheKey];
     if (!audioUrl) {
       audioUrl = await synthesizeAndBufferVoicevox(text, speaker);
+      if (myGen !== kotonohaSpeechGen) return;
     }
 
     if (audioUrl) {
       try {
         const preloaded = kotonohaPreloadedAudio[cacheKey];
         const audio = preloaded || new Audio(audioUrl);
+        if (myGen !== kotonohaSpeechGen) return;
+        audio.onended = null;
+        audio.onerror = null;
+        audio.pause();
         audio.currentTime = 0;
         audio.playbackRate = customRate || 1.0;
         currentKotonohaAudio = audio;
         let finished = false;
         const done = () => {
+          if (myGen !== kotonohaSpeechGen) return;
           if (!finished) {
             finished = true;
             if (typeof onEndCallback === 'function') onEndCallback();
@@ -846,7 +885,9 @@ async function speakJapanese(text, speaker = 'gemini', customRate = null, onEndC
 
     executeFallback();
   } catch (err) {
-    speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
+    if (myGen === kotonohaSpeechGen) {
+      speakJapaneseFallback(clean, speaker, customRate, onEndCallback);
+    }
   }
 }
 
@@ -1028,15 +1069,31 @@ function skipKotonohaTtsPreload() {
 }
 
 function launchKotonohaStoryImmediate() {
+  stopKotonohaAudio();
   kotonohaRuntime.currentMode = 'story';
   kotonohaRuntime.storyStepIdx = 0;
   kotonohaRuntime.storyCheckpoints = {};
+  kotonohaRuntime.shuffledCheckpoints = {};
+
+  const lesson = getCurrentKotonohaLesson();
+  if (lesson && Array.isArray(lesson.story)) {
+    lesson.story.forEach((st, idx) => {
+      if (st && st.checkpoint && Array.isArray(st.checkpoint.options)) {
+        kotonohaRuntime.shuffledCheckpoints[idx] = shuffleKotonohaOptions(st.checkpoint.options, st.checkpoint.answerIndex);
+      }
+    });
+  }
+
   playBeep(720, 0.08);
   renderKotonohaView();
 
-  const lesson = getCurrentKotonohaLesson();
   if (lesson && lesson.story && lesson.story[0]) {
-    setTimeout(() => speakJapanese(lesson.story[0].audio || lesson.story[0].jpPlain || lesson.story[0].jpRuby, lesson.story[0].speaker || 'gemini'), 150);
+    kotonohaAutoPlayTimer = setTimeout(() => {
+      kotonohaAutoPlayTimer = null;
+      if (kotonohaRuntime.currentMode === 'story' && kotonohaRuntime.storyStepIdx === 0) {
+        speakJapanese(lesson.story[0].audio || lesson.story[0].jpPlain || lesson.story[0].jpRuby, lesson.story[0].speaker || 'gemini');
+      }
+    }, 150);
   }
 }
 
@@ -1087,6 +1144,7 @@ function toggleSingleOptionPron(idx, event) {
 }
 
 function launchKotonohaQuizImmediate() {
+  stopKotonohaAudio();
   const lesson = getCurrentKotonohaLesson();
   if (!lesson) return;
   if (Array.isArray(lesson.duolingoExercises) && lesson.duolingoExercises.length > 0) {
@@ -1100,6 +1158,10 @@ function launchKotonohaQuizImmediate() {
   kotonohaRuntime.quizChatMessages = [];
   kotonohaRuntime.revealedHints = {};
   kotonohaRuntime.revealedOptionPron = {};
+  kotonohaRuntime.shuffledQuizzes = lesson.quizzes.map(q => {
+    const sh = shuffleKotonohaOptions(q.options, q.answerIndex);
+    return { ...q, options: sh.options, answerIndex: sh.answerIndex };
+  });
 
   pushQuizQuestionToChat(0);
   playBeep(760, 0.08);
@@ -1285,6 +1347,7 @@ function stepKotonohaStory(delta) {
   }
   const nextIdx = kotonohaRuntime.storyStepIdx + delta;
   if (nextIdx < 0) return;
+  stopKotonohaAudio();
   if (nextIdx >= lesson.story.length) {
     // Transition directly to Daily Chat Quiz or Duolingo Interactive Drill!
     launchKotonohaQuizImmediate();
@@ -1307,7 +1370,8 @@ function answerStoryCheckpoint(stepIdx, optIdx, event) {
   const lesson = getCurrentKotonohaLesson();
   if (!lesson || !lesson.story || !lesson.story[stepIdx] || !lesson.story[stepIdx].checkpoint) return;
   const cp = lesson.story[stepIdx].checkpoint;
-  const isCorrect = optIdx === cp.answerIndex;
+  const shCp = (kotonohaRuntime.shuffledCheckpoints && kotonohaRuntime.shuffledCheckpoints[stepIdx]) || cp;
+  const isCorrect = optIdx === shCp.answerIndex;
   if (!kotonohaRuntime.storyCheckpoints) kotonohaRuntime.storyCheckpoints = {};
   const prev = kotonohaRuntime.storyCheckpoints[stepIdx];
   if (prev && prev.isCorrect) return;
@@ -1369,10 +1433,18 @@ function kotonohaQuizCueKo(q) {
   return '';
 }
 
+function getActiveKotonohaQuizzes(lesson) {
+  if (Array.isArray(kotonohaRuntime.shuffledQuizzes) && kotonohaRuntime.shuffledQuizzes.length > 0) {
+    return kotonohaRuntime.shuffledQuizzes;
+  }
+  return (lesson && lesson.quizzes) || [];
+}
+
 function pushQuizQuestionToChat(qIdx) {
   const lesson = getCurrentKotonohaLesson();
-  if (!lesson || !lesson.quizzes[qIdx]) return;
-  const q = lesson.quizzes[qIdx];
+  const quizzes = getActiveKotonohaQuizzes(lesson);
+  if (!lesson || !quizzes[qIdx]) return;
+  const q = quizzes[qIdx];
   const exposesAnswer = kotonohaQuizExposesAnswer(q);
 
   kotonohaRuntime.quizChatMessages.push({
@@ -1387,9 +1459,12 @@ function pushQuizQuestionToChat(qIdx) {
     exposesAnswer: exposesAnswer,
     cueKo: exposesAnswer ? kotonohaQuizCueKo(q) : ''
   });
-  setTimeout(() => {
+  kotonohaAutoPlayTimer = setTimeout(() => {
+    kotonohaAutoPlayTimer = null;
     // Speaking the target card would read the answer aloud before the user picks.
-    if (!exposesAnswer) speakJapanese(q.targetWord || q.promptJp, 'gemini');
+    if (kotonohaRuntime.currentMode === 'quiz' && kotonohaRuntime.quizIdx === qIdx && !exposesAnswer) {
+      speakJapanese(q.targetWord || q.promptJp, 'gemini');
+    }
     scrollKotonohaQuizBottom();
   }, 450);
 }
@@ -1406,7 +1481,8 @@ function submitKotonohaQuizAnswer(optionIdx) {
   const lesson = getCurrentKotonohaLesson();
   if (!lesson) return;
   const qIdx = kotonohaRuntime.quizIdx;
-  const q = lesson.quizzes[qIdx];
+  const quizzes = getActiveKotonohaQuizzes(lesson);
+  const q = quizzes[qIdx];
   if (!q) return;
 
   kotonohaRuntime.quizAnswered = true;
@@ -2188,6 +2264,9 @@ function renderKotonohaView() {
             ${(() => {
               if (!step.checkpoint) return '';
               const cp = step.checkpoint;
+              const shCp = (kotonohaRuntime.shuffledCheckpoints && kotonohaRuntime.shuffledCheckpoints[curIdx]) || cp;
+              const cpOptions = shCp.options || cp.options || [];
+              const cpAnswerIdx = shCp.answerIndex !== undefined ? shCp.answerIndex : cp.answerIndex;
               const cpState = kotonohaRuntime.storyCheckpoints && kotonohaRuntime.storyCheckpoints[curIdx];
               const solved = Boolean(cpState && cpState.isCorrect);
               const wrongTried = (cpState && cpState.wrongTried) || [];
@@ -2198,8 +2277,8 @@ function renderKotonohaView() {
                     ${solved ? '<span class="text-[10px] font-black text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full">✓ +5 언령</span>' : '<span class="text-[10px] text-emerald-200/70 font-bold">맞히고 계속 진행!</span>'}
                   </div>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                    ${cp.options.map((opt, oIdx) => {
-                      const isRightOpt = solved && oIdx === cp.answerIndex;
+                    ${cpOptions.map((opt, oIdx) => {
+                      const isRightOpt = solved && oIdx === cpAnswerIdx;
                       const isWrongOpt = wrongTried.includes(oIdx);
                       const cls = isRightOpt
                         ? 'bg-emerald-600 border-emerald-300 text-white shadow'
@@ -2251,7 +2330,7 @@ function renderKotonohaView() {
 
   // MODE 3: INTERACTIVE CHAT QUIZ (Screenshot 4 exact match!)
   if (kotonohaRuntime.currentMode === 'quiz') {
-    const quizzes = lesson.quizzes || [];
+    const quizzes = getActiveKotonohaQuizzes(lesson);
     const qIdx = kotonohaRuntime.quizIdx;
     const currentQ = quizzes[qIdx];
     const isAllDone = kotonohaRuntime.quizChatMessages.some(m => m.role === 'lesson_complete');
@@ -2649,14 +2728,18 @@ function initDuoExerciseState(ex) {
     };
   }
   if (ex.kind === 'listening' || ex.kind === 'choice') {
+    const sh = shuffleKotonohaOptions(ex.options, ex.answerIndex);
     return {
-      pickedIdx: null
+      pickedIdx: null,
+      options: sh.options,
+      answerIndex: sh.answerIndex
     };
   }
   return {};
 }
 
 function launchDuolingoDrillImmediate() {
+  stopKotonohaAudio();
   const lesson = getCurrentKotonohaLesson();
   if (!lesson || !Array.isArray(lesson.duolingoExercises) || lesson.duolingoExercises.length === 0) return;
 
@@ -2694,9 +2777,15 @@ function duoGetCurrentExercise() {
 function duoAutoPlayCurrentAudio() {
   const ex = duoGetCurrentExercise();
   if (!ex) return;
+  if (kotonohaAutoPlayTimer) {
+    clearTimeout(kotonohaAutoPlayTimer);
+    kotonohaAutoPlayTimer = null;
+  }
   if (ex.kind === 'listening' && ex.audioText) {
-    setTimeout(() => {
-      if (kotonohaRuntime.currentMode === 'duolingo_drill') {
+    const expectedIdx = kotonohaRuntime.duolingo ? kotonohaRuntime.duolingo.currentIdx : -1;
+    kotonohaAutoPlayTimer = setTimeout(() => {
+      kotonohaAutoPlayTimer = null;
+      if (kotonohaRuntime.currentMode === 'duolingo_drill' && kotonohaRuntime.duolingo && kotonohaRuntime.duolingo.currentIdx === expectedIdx && !kotonohaRuntime.duolingo.feedback) {
         speakJapanese(ex.audioText, ex.speaker || 'gemini', 1.0);
       }
     }, 260);
@@ -2901,14 +2990,17 @@ function duoSubmitOption(optIdx) {
   const ex = duoGetCurrentExercise();
   if (!d || !ex || (ex.kind !== 'listening' && ex.kind !== 'choice') || d.feedback) return;
   d.exState.pickedIdx = optIdx;
-  const isCorrect = optIdx === ex.answerIndex;
+  const opts = Array.isArray(d.exState.options) ? d.exState.options : (ex.options || []);
+  const ansIdx = d.exState.answerIndex !== undefined ? d.exState.answerIndex : ex.answerIndex;
+  const isCorrect = optIdx === ansIdx;
   duoRecordOutcome(isCorrect, ex, {
-    correctDisplay: (ex.options || [])[ex.answerIndex] || ''
+    correctDisplay: opts[ansIdx] || ''
   });
 }
 
 // 4. ADVANCE TO NEXT EXERCISE / MISTAKE REVIEW / FINISH
 function duoAdvanceNext() {
+  stopKotonohaAudio();
   const d = kotonohaRuntime.duolingo;
   const lesson = getCurrentKotonohaLesson();
   if (!d || !lesson) return;
@@ -3030,13 +3122,13 @@ function renderDuolingoDrillView(container, lesson, showPron) {
           </div>
         ` : ''}
 
-        <div class="grid grid-cols-2 gap-2.5 pt-1">
-          <button onclick="openKotonohaHub()" class="py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-[#0c1d15] text-xs font-black shadow-lg transition-all">
-            🍵 다실 로비로
+        <div class="pt-1 space-y-2">
+          <button onclick="stopKotonohaAudio(); openKotonohaHub()" class="w-full py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-[#0c1d15] text-xs font-black shadow-lg transition-all">
+            🍵 다실 로비로 돌아가기
           </button>
-          <button onclick="copyKotonohaFeedbackPrompt()" class="py-3 rounded-2xl bg-[#272235] hover:bg-[#352d4a] border border-violet-400/50 text-xs font-black text-violet-200 transition-all">
-            📋 맞춤 학습 리포트 복사
-          </button>
+          <p class="text-[10px] text-center text-[#a99bc0] font-bold">
+            📅 오늘 학습 데이터는 자동 누적되어 매주 수요일 정기 업데이트 요청문에 함께 포함됩니다.
+          </p>
         </div>
       </div>
     `;
@@ -3133,11 +3225,12 @@ function renderDuolingoDrillView(container, lesson, showPron) {
         </div>
 
         <div class="space-y-2">
-          ${(ex.options || []).map((opt, idx) => {
+          ${(Array.isArray(st.options) ? st.options : (ex.options || [])).map((opt, idx) => {
             const parsed = parseKotonohaOptionText(opt);
             const isPicked = st.pickedIdx === idx;
             const showResult = Boolean(d.feedback);
-            const isRight = idx === ex.answerIndex;
+            const ansIdx = st.answerIndex !== undefined ? st.answerIndex : ex.answerIndex;
+            const isRight = idx === ansIdx;
             const cls = showResult
               ? (isRight
                   ? 'bg-emerald-900/60 border-emerald-400 text-white'
@@ -3223,11 +3316,12 @@ function renderDuolingoDrillView(container, lesson, showPron) {
           </div>
         </div>
         <div class="space-y-2">
-          ${(ex.options || []).map((opt, idx) => {
+          ${(Array.isArray(st.options) ? st.options : (ex.options || [])).map((opt, idx) => {
             const parsed = parseKotonohaOptionText(opt);
             const isPicked = st.pickedIdx === idx;
             const showResult = Boolean(d.feedback);
-            const isRight = idx === ex.answerIndex;
+            const ansIdx = st.answerIndex !== undefined ? st.answerIndex : ex.answerIndex;
+            const isRight = idx === ansIdx;
             const cls = showResult
               ? (isRight
                   ? 'bg-emerald-900/60 border-emerald-400 text-white'
@@ -3511,9 +3605,9 @@ function renderKotonohaAdaptiveReportCard() {
             <span class="font-black text-violet-300">🎯 AI 진단:</span> ${s.recommendation}
           </div>
 
-          <button onclick="copyKotonohaFeedbackPrompt()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:opacity-95 text-white text-xs font-black shadow-md transition-all active:scale-[0.99]">
-            📋 다음 시즌 맞춤 커리큘럼 생성용 리포트 복사
-          </button>
+          <div class="p-2.5 rounded-xl bg-violet-950/30 border border-violet-400/25 text-[10px] font-bold text-violet-200/90 text-center leading-relaxed">
+            📅 이 학습 데이터는 매주 수요일 정기 업데이트 요청문(<span class="text-white">⚙️ 설정 → 알림 미리보기</span>)에 자동으로 합쳐져요!
+          </div>
         </div>
       ` : ''}
     </div>
