@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-26T12:12:34.165Z",
+  "updatedAt": "2026-11-26T12:13:06.244Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 29,
-  "bondExp": 60,
-  "activeTrainer": "gemini",
-  "activeMode": "gemini",
-  "currentSituation": "ev14",
+  "bondExp": 70,
+  "activeTrainer": "kotone",
+  "activeMode": "kotone",
+  "currentSituation": "ev1",
   "absDone": false,
   "runDone": true,
   "runDist": 6.41,
@@ -1435,18 +1435,6 @@
   },
   "chatHistory": [
     {
-      "sender": "system",
-      "name": "기록 동기화",
-      "text": "🔄 오후 06:49 동기화 완료 · 65.5kg · 유산소 6.41km",
-      "room": "mio"
-    },
-    {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 🌅 황금빛 새벽 강변, 내민 손과 첫 걸음",
-      "room": "mio"
-    },
-    {
       "sender": "mio",
       "name": "미오",
       "text": "프로듀서!! 해 뜨기 직전 강변 공기 냄새 맡아봤어?! 이 시간에만 느낄 수 있는 상쾌함이 있다니까! 🌅",
@@ -1612,6 +1600,15 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "단백질 음료 야무지게 챙겼네! 근손실 없이 슬림 탄탄 라인 만들려면 단백질 충전은 필수지, 기특해! 🥛💪"
+    },
+    {
+      "sender": "user",
+      "text": "[수면 스샷 기록] 2026-11-26 수면 6시간 20분 (03:30~09:50)"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "6시간 20분 수면 기록 완료! 오늘 컨디션 챙기면서 건강하게 달려봐요 프로듀서님~! 🌙✨"
     }
   ]
 }
