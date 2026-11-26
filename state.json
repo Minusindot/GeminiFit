@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-26T12:13:18.123Z",
+  "updatedAt": "2026-11-26T12:13:43.535Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 30,
-  "bondExp": 5,
+  "bondExp": 20,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
   "currentSituation": "ev1",
@@ -600,7 +600,8 @@
     "k20": true,
     "m18": true,
     "m19": true,
-    "g7": true
+    "g7": true,
+    "g11": true
   },
   "questClaims": {
     "d_2026-11-20_meal": true,
@@ -1441,36 +1442,6 @@
   },
   "chatHistory": [
     {
-      "sender": "system",
-      "name": "기록 동기화",
-      "text": "🔄 오후 06:50 동기화 완료 · 65.5kg · 유산소 6.41km",
-      "room": "mio"
-    },
-    {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 🪜 천국의 계단 정복! 땀방울의 엄지 척",
-      "room": "mio"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "후아아~ 프로듀서!! 밖이 추워도 실내 헬스장 천국의 계단 앞에서는 추위 따위 3분 만에 증발이지?! 🔥",
-      "room": "mio"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "20분, 30분 한 계단씩 밟고 올라가다 보면 허벅지랑 엉덩이, 심폐까지 한 번에 쫙 불타오르잖아!",
-      "room": "mio"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "크으~ 끝까지 완주한 프로듀서에게 미오 특급 엄지 척!! 자, 시원한 물부터 한 모금 들이켜! 💧👍",
-      "room": "mio"
-    },
-    {
       "sender": "user",
       "name": "프로듀서",
       "text": "물 마시고 단백질까지 챙기면 완벽하겠네 🥛",
@@ -1611,6 +1582,38 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "열심히 당기고 밀어 올리는 것도 좋지만, 뭉친 근육을 안 풀고 주무시면 내일 아침에 몸이 천근만근이 된답니다.",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "자, 이쪽으로 오시와요. 소녀가 어깨랑 전완근부터 천천히 풀어드릴 테니까 힘 쭉 빼시지요 🍵",
+      "room": "gemini",
+      "image": "./image/03 gemini/gemini_40_shoulder_massage_care.png",
+      "caption": "📷 제미니의 쿨다운 케어 타임"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "따뜻한 샤워하고 바로 뻗을래 🚿",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "후후, 오늘 11세트나 하셨으니 그것도 좋은 회복이옵니다.",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "미지근한 물로 피로 씻어내시고, 수분 한 컵만 꼭 마시고 주무시와요 🌙",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "운동은 땀 흘릴 때 끝나는 게 아니라, 잘 쉬고 잘 회복할 때 완성되는 것이옵니다. 오늘도 고생하셨사와요 🍵",
       "room": "gemini"
     }
   ]
