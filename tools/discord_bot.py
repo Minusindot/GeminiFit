@@ -27,6 +27,7 @@ import requests
 KST = timezone(timedelta(hours=9))
 REPO_ROOT = Path(__file__).resolve().parent.parent
 STATE_PATH = REPO_ROOT / "state.json"
+NOTIFY_STATE_PATH = REPO_ROOT / "tools" / "discord_notify_state.json"
 KOTONOHA_PATH = REPO_ROOT / "kotonoha_data.js"
 APP_URL = "https://minusindot.github.io/GeminiFit/"
 
@@ -971,11 +972,33 @@ def send_webhook(webhook_url: str, payload: dict[str, Any], image_bytes: bytes |
 # ---------------------------------------------------------------------------
 # CLI Entrypoint
 # ---------------------------------------------------------------------------
+def load_notify_state() -> dict[str, str]:
+    if not NOTIFY_STATE_PATH.exists():
+        return {}
+    try:
+        with NOTIFY_STATE_PATH.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def save_notify_state(mode: str, date_str: str) -> None:
+    data = load_notify_state()
+    data[mode] = date_str
+    NOTIFY_STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with NOTIFY_STATE_PATH.open("w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="GeminiFit Discord Webhook Notifier")
     parser.add_argument("--mode", choices=["morning", "evening", "weekly"], required=True)
     parser.add_argument("--date", help="Override KST date (YYYY-MM-DD) for testing")
     parser.add_argument("--force", action="store_true", help="Force sending evening nudge even if today is complete")
+    parser.add_argument("--skip-if-sent", action="store_true", help="Skip if this mode was already sent today (for backup crons)")
+    parser.add_argument("--record-state", action="store_true", help="Record today's date in discord_notify_state.json after sending")
     parser.add_argument("--dry-run", action="store_true", help="Print payload instead of sending to Discord")
     parser.add_argument("--chart-out", help="Optional path to save generated weekly PNG chart")
     args = parser.parse_args()
@@ -984,6 +1007,12 @@ def main() -> int:
     if today is None:
         print(f"Invalid --date format: {args.date} (expected YYYY-MM-DD)", file=sys.stderr)
         return 2
+
+    if args.skip_if_sent:
+        notify_state = load_notify_state()
+        if notify_state.get(args.mode) == today.isoformat():
+            print(f"[{args.mode}] {today.isoformat()}: 이미 오늘 발송 완료됨 -> 백업 크론 스킵!")
+            return 0
 
     state = load_state()
     image_bytes: bytes | None = None
@@ -1016,6 +1045,8 @@ def main() -> int:
         return 1
 
     send_webhook(webhook_url, payload, image_bytes=image_bytes)
+    if args.record_state:
+        save_notify_state(args.mode, today.isoformat())
     print(f"[{args.mode}] Successfully dispatched Discord notification for {today.isoformat()}!")
     return 0
 

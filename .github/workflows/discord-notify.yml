@@ -3,12 +3,18 @@ name: GeminiFit Discord Notifier
 on:
   schedule:
     # GitHub Actions cron은 UTC 기준 (KST = UTC + 9)
-    # 1) 매일 아침 08:30 KST (UTC 23:30) — 모닝 브리핑 + 10초 일본어
-    - cron: '30 23 * * *'
-    # 2) 매일 밤 22:00 KST (UTC 13:00) — 스트릭 보호 스마트 넛지 (조건부 발송)
-    - cron: '0 13 * * *'
-    # 3) 매주 일요일 20:00 KST (UTC 11:00) — 주간 결산 + 다크 테마 미니 그래프
-    - cron: '0 11 * * 0'
+    # 정각/30분 크론 폭주를 피해 비정각 + 다중 백업 크론 구성 (중복 발송은 discord_notify_state.json으로 차단)
+    # 1) 모닝 브리핑 + 10초 일본어: 08:23 KST (1차) / 09:17 KST (2차 백업) / 10:41 KST (3차 백업) / 14:07 KST (오전 장애 복구 백업)
+    - cron: '23 23 * * *'
+    - cron: '17 0 * * *'
+    - cron: '41 1 * * *'
+    - cron: '7 5 * * *'
+    # 2) 밤 스트릭 보호 스마트 넛지: 22:07 KST (1차) / 22:43 KST (2차 백업)
+    - cron: '7 13 * * *'
+    - cron: '43 13 * * *'
+    # 3) 매주 일요일 주간 결산: 20:11 KST (1차) / 20:47 KST (2차 백업)
+    - cron: '11 11 * * 0'
+    - cron: '47 11 * * 0'
 
   # GitHub Actions 탭에서 언제든 수동 테스트 가능
   workflow_dispatch:
@@ -31,6 +37,8 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -46,14 +54,21 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event.schedule }}" = "30 23 * * *" ]; then
-            echo "mode=morning" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event.schedule }}" = "0 13 * * *" ]; then
-            echo "mode=evening" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event.schedule }}" = "0 11 * * 0" ]; then
-            echo "mode=weekly" >> "$GITHUB_OUTPUT"
           else
-            echo "mode=morning" >> "$GITHUB_OUTPUT"
+            case "${{ github.event.schedule }}" in
+              "23 23 * * *"|"17 0 * * *"|"41 1 * * *"|"7 5 * * *")
+                echo "mode=morning" >> "$GITHUB_OUTPUT"
+                ;;
+              "7 13 * * *"|"43 13 * * *")
+                echo "mode=evening" >> "$GITHUB_OUTPUT"
+                ;;
+              "11 11 * * 0"|"47 11 * * 0")
+                echo "mode=weekly" >> "$GITHUB_OUTPUT"
+                ;;
+              *)
+                echo "mode=morning" >> "$GITHUB_OUTPUT"
+                ;;
+            esac
           fi
 
       - name: Install Korean font for weekly chart
@@ -76,7 +91,21 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           EXTRA_ARGS=""
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force }}" = "true" ]; then
-            EXTRA_ARGS="--force"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ "${{ inputs.force }}" = "true" ]; then
+              EXTRA_ARGS="--force"
+            fi
+          else
+            EXTRA_ARGS="--skip-if-sent --record-state"
           fi
           python tools/discord_bot.py --mode "${{ steps.pick_mode.outputs.mode }}" $EXTRA_ARGS
+
+      - name: Commit notification state (prevent duplicate backup runs)
+        if: github.event_name == 'schedule'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -f tools/discord_notify_state.json ]; then
+            git add tools/discord_notify_state.json
+            git diff --staged --quiet || (git commit -m "chore: record discord notify state [skip ci]" && git push)
+          fi
