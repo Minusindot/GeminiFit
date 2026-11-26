@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-26T09:49:13.302Z",
+  "updatedAt": "2026-11-26T09:49:34.698Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 27,
-  "bondExp": 60,
-  "activeTrainer": "gemini",
-  "activeMode": "gemini",
+  "bondExp": 80,
+  "activeTrainer": "mio",
+  "activeMode": "mio",
   "currentSituation": "ev3",
   "absDone": false,
   "runDone": true,
@@ -1361,39 +1361,55 @@
       "conditionTags": [],
       "conditionNote": "",
       "autoArchived": true
+    },
+    "2026-11-26": {
+      "date": "2026-11-26",
+      "weight": 65.5,
+      "fat": 31.8,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "mealLogs": [],
+      "mealKcal": 0,
+      "mealProtein": 0,
+      "runDone": true,
+      "absDone": false,
+      "rehabDone": 1,
+      "gymDone": false,
+      "teaLog": {
+        "water": 2,
+        "matcha": 0,
+        "espresso": 1,
+        "tea": 0
+      },
+      "teaTimes": {
+        "water": [
+          "18:32",
+          "18:32"
+        ],
+        "matcha": [],
+        "espresso": [
+          "18:32"
+        ],
+        "tea": []
+      },
+      "conditionTags": [],
+      "conditionNote": "",
+      "autoArchived": false,
+      "latestRun": {
+        "id": "run-1795686522348",
+        "date": "2026-11-26",
+        "distance": 6.41,
+        "duration": "59:59",
+        "pace": "09'20\"",
+        "calories": 394,
+        "heartRate": 134,
+        "steps": 8333,
+        "source": "삼성헬스"
+      },
+      "lastUpdated": "2026-11-26T09:49:34.625Z"
     }
   },
   "chatHistory": [
-    {
-      "sender": "dual",
-      "name": "제미니 · 코토네 · 미오",
-      "text": "⚡ [오후 11:35 실시간 기록 동기화 완료!]\n\n💛 코토네: \"첫 식사 인증 나이스예요! 💛 단백질 든든하게 챙기시는 모습 너무 보기 좋아요~\"\n\n🌟 미오: \"0.6km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 완주라니 참으로 훌륭하옵니다! 🌸 근성 하나는 정말 멋지시와요, 프로듀서님 🐾\"",
-      "room": "all"
-    },
-    {
-      "sender": "system",
-      "name": "기록 동기화",
-      "text": "🔄 오후 11:35 동기화 완료 · 65.5kg · 식단 1/3끼",
-      "room": "kotone"
-    },
-    {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 ☕ 눈 오는 겨울 창가, 코코아 한 잔의 온기",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "으으~ 밖에는 눈이 오는데 카페 안은 포근해서 천국 같아요! 프로듀서님, 손 안 시려우세요? ❄️",
-      "room": "kotone"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "오늘은 설탕 쫙 뺀 따뜻한 무가당 코코아랑 물 챙겨왔어요! 식단 기록(1/3끼)도 잘 챙기셨으니 이 정도 여유는 필수죠~",
-      "room": "kotone"
-    },
     {
       "sender": "kotone",
       "name": "코토네",
@@ -1519,6 +1535,36 @@
       "name": "제미니",
       "text": "2kg 덤벨 편심성 재활 1세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾",
       "room": "all"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 06:49 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.41km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"기록 갱신을 확인했사옵니다 🍵 목표 52kg까지 소녀와 함께 정갈하게 달려보시와요, 프로듀서님 🐾\"",
+      "room": "all"
+    },
+    {
+      "sender": "system",
+      "name": "기록 동기화",
+      "text": "🔄 오후 06:49 동기화 완료 · 65.5kg · 유산소 6.41km",
+      "room": "mio"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 🌅 황금빛 새벽 강변, 내민 손과 첫 걸음",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "프로듀서!! 해 뜨기 직전 강변 공기 냄새 맡아봤어?! 이 시간에만 느낄 수 있는 상쾌함이 있다니까! 🌅",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "최근 유산소 6.41km (페이스 09'20\") — 이 페이스면 오늘 컨디션 완전 날아다닐 것 같은데?!",
+      "room": "mio"
     }
   ]
 }
