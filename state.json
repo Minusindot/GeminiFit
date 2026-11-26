@@ -1,19 +1,19 @@
 {
-  "updatedAt": "2026-11-26T12:41:04.405Z",
-  "lastActiveDate": "2026-11-26",
+  "updatedAt": "2026-11-26T21:40:05.625Z",
+  "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
-  "bondRank": 34,
-  "bondExp": 95,
-  "activeTrainer": "gemini",
-  "activeMode": "gemini",
-  "currentSituation": "ev1",
+  "bondRank": 35,
+  "bondExp": 5,
+  "activeTrainer": "kotone",
+  "activeMode": "kotone",
+  "currentSituation": "ev3",
   "absDone": false,
-  "runDone": true,
+  "runDone": false,
   "runDist": 6.41,
   "rehab": [
-    true
+    false
   ],
   "rehabSets": 1,
   "meals": [
@@ -23,10 +23,130 @@
   ],
   "mealLogs": [],
   "teaLog": {
-    "water": 3,
+    "water": 0,
     "matcha": 0,
     "espresso": 1,
-    "tea": 1
+    "tea": 0
+  },
+  "teaTimes": {
+    "water": [],
+    "matcha": [],
+    "espresso": [
+      "06:40"
+    ],
+    "tea": []
+  },
+  "conditionTags": [],
+  "conditionNote": "",
+  "sleepLogs": [
+    {
+      "date": "2026-11-21",
+      "bedtime": null,
+      "wakeup": null,
+      "durationMin": 450,
+      "durationText": "7시간 30분",
+      "score": null,
+      "source": "삼성헬스(OCR)"
+    },
+    {
+      "date": "2026-11-23",
+      "bedtime": "05:30",
+      "wakeup": "09:30",
+      "durationMin": 240,
+      "durationText": "4시간",
+      "score": null,
+      "source": "삼성헬스(OCR)"
+    },
+    {
+      "date": "2026-11-24",
+      "bedtime": "03:30",
+      "wakeup": "07:30",
+      "durationMin": 240,
+      "durationText": "4시간",
+      "score": null,
+      "source": "삼성헬스(OCR)"
+    },
+    {
+      "date": "2026-11-26",
+      "bedtime": "03:30",
+      "wakeup": "09:50",
+      "durationMin": 380,
+      "durationText": "6시간 20분",
+      "score": null,
+      "source": "삼성헬스(OCR)"
+    }
+  ],
+  "deviceActivity": {
+    "2026-11-21": {
+      "pcFirstSeen": null,
+      "pcLastSeen": null,
+      "pcHeartbeats": 0,
+      "phoneFirstSeen": "10:20",
+      "phoneLastSeen": "23:05",
+      "lateNightPc": false,
+      "lateNightPhone": false,
+      "lateNightLast": null
+    },
+    "2026-11-22": {
+      "pcFirstSeen": null,
+      "pcLastSeen": null,
+      "pcHeartbeats": 0,
+      "phoneFirstSeen": "01:37",
+      "phoneLastSeen": "01:37",
+      "lateNightPc": false,
+      "lateNightPhone": true,
+      "lateNightLast": "01:37"
+    },
+    "2026-11-23": {
+      "pcFirstSeen": null,
+      "pcLastSeen": null,
+      "pcHeartbeats": 0,
+      "phoneFirstSeen": "21:28",
+      "phoneLastSeen": "23:35",
+      "lateNightPc": false,
+      "lateNightPhone": false,
+      "lateNightLast": null
+    },
+    "2026-11-24": {
+      "pcFirstSeen": null,
+      "pcLastSeen": null,
+      "pcHeartbeats": 0,
+      "phoneFirstSeen": "07:54",
+      "phoneLastSeen": "17:40",
+      "lateNightPc": false,
+      "lateNightPhone": false,
+      "lateNightLast": null
+    },
+    "2026-11-25": {
+      "pcFirstSeen": null,
+      "pcLastSeen": null,
+      "pcHeartbeats": 0,
+      "phoneFirstSeen": "19:12",
+      "phoneLastSeen": "21:28",
+      "lateNightPc": false,
+      "lateNightPhone": false,
+      "lateNightLast": null
+    },
+    "2026-11-26": {
+      "pcFirstSeen": null,
+      "pcLastSeen": null,
+      "pcHeartbeats": 0,
+      "phoneFirstSeen": "00:39",
+      "phoneLastSeen": "21:41",
+      "lateNightPc": false,
+      "lateNightPhone": true,
+      "lateNightLast": "01:14"
+    },
+    "2026-11-27": {
+      "pcFirstSeen": null,
+      "pcLastSeen": null,
+      "pcHeartbeats": 0,
+      "phoneFirstSeen": "06:40",
+      "phoneLastSeen": "06:40",
+      "lateNightPc": false,
+      "lateNightPhone": false,
+      "lateNightLast": null
+    }
   },
   "gymRoutine": {
     "upper1": {
@@ -37,10 +157,10 @@
       "reps": 20,
       "targetSets": 4,
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ]
     },
     "upper2": {
@@ -65,10 +185,10 @@
       "reps": 5,
       "targetSets": 4,
       "sets": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ]
     },
     "legRaise": {
@@ -79,7 +199,7 @@
       "reps": 50,
       "targetSets": 1,
       "sets": [
-        true
+        false
       ]
     },
     "crunch": {
@@ -90,11 +210,11 @@
       "reps": 50,
       "targetSets": 2,
       "sets": [
-        true,
-        true
+        false,
+        false
       ]
     },
-    "allDone": true,
+    "allDone": false,
     "items": [
       {
         "id": "ex_upper1",
@@ -104,10 +224,10 @@
         "reps": 20,
         "targetSets": 4,
         "sets": [
-          true,
-          true,
-          true,
-          true
+          false,
+          false,
+          false,
+          false
         ]
       },
       {
@@ -118,10 +238,10 @@
         "reps": 5,
         "targetSets": 4,
         "sets": [
-          true,
-          true,
-          true,
-          true
+          false,
+          false,
+          false,
+          false
         ]
       },
       {
@@ -132,7 +252,7 @@
         "reps": 50,
         "targetSets": 1,
         "sets": [
-          true
+          false
         ]
       },
       {
@@ -143,8 +263,8 @@
         "reps": 50,
         "targetSets": 2,
         "sets": [
-          true,
-          true
+          false,
+          false
         ]
       }
     ]
@@ -1507,6 +1627,12 @@
     {
       "sender": "gemini",
       "name": "제미니",
+      "text": "오늘 기록을 보니 펙 덱 플라이 · V 스쿼트 · 캡틴스 체어 레그레이즈 중심으로 11세트(250회), 강도는 [집중 중강도 💪]로 깔끔하게 끝내셨군요.",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
       "text": "자극이 들어간 가슴 · 하체 · 복근·코어 부위가 지금 한창 회복을 기다리는 중이라지요. 그리고 어제 단백질 음료 안 마신 것 같던데, 오늘은 꼬박꼬박 챙기기로 약속해요 우리! 🥛🤙",
       "room": "gemini"
     },
@@ -1662,22 +1788,13 @@
       "room": "gemini"
     },
     {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 💪 오운완 거울 앞, 수건 건네는 거리",
-      "room": "gemini"
+      "sender": "user",
+      "text": "[음료 기록] 커피 ☕ 1잔을 챙겨 마셨어!"
     },
     {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "후우… 프로듀서항, 오늘 펙 덱 플라이 · V 스쿼트 · 캡틴스 체어 레그레이즈 (11세트 · 집중 중강도 💪) 정말 깔끔하게 끝내셨사옵니다!",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "땀이 이마까지 송골송골 맺히셨네요. 멍하니 서 계시면 금방 식어서 감기 걸리신다지요.",
-      "room": "gemini"
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
     }
   ]
 }
