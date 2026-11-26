@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-26T22:17:21.166Z",
+  "updatedAt": "2026-11-26T22:46:58.588Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 35,
-  "bondExp": 40,
+  "bondExp": 45,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev1",
@@ -23,14 +23,15 @@
   ],
   "mealLogs": [],
   "teaLog": {
-    "water": 1,
+    "water": 2,
     "matcha": 0,
     "espresso": 1,
     "tea": 0
   },
   "teaTimes": {
     "water": [
-      "07:17"
+      "07:17",
+      "07:46"
     ],
     "matcha": [],
     "espresso": [
@@ -155,7 +156,7 @@
       "pcLastSeen": null,
       "pcHeartbeats": 0,
       "phoneFirstSeen": "06:40",
-      "phoneLastSeen": "07:17",
+      "phoneLastSeen": "07:46",
       "lateNightPc": false,
       "lateNightPhone": false,
       "lateNightLast": null
@@ -170,10 +171,10 @@
       "reps": 20,
       "targetSets": 4,
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ]
     },
     "upper2": {
@@ -237,10 +238,10 @@
         "reps": 20,
         "targetSets": 4,
         "sets": [
-          false,
-          false,
-          false,
-          false
+          true,
+          true,
+          true,
+          true
         ]
       },
       {
@@ -689,6 +690,41 @@
       "crunchTarget": 2,
       "totalSets": 11,
       "totalReps": 250
+    },
+    {
+      "id": "gym-1795733217011",
+      "date": "11/27",
+      "fullDate": "2026-11-27",
+      "time": "오전 07:46",
+      "performedItems": [
+        {
+          "id": "ex_upper1",
+          "part": "upper",
+          "name": "펙 덱 플라이",
+          "weight": "25kg × 20회",
+          "reps": 20,
+          "targetSets": 4,
+          "doneSets": 4,
+          "totalReps": 80
+        }
+      ],
+      "upper1Done": 4,
+      "upper1Reps": 80,
+      "upper1Name": "펙 덱 플라이",
+      "upper2Done": 0,
+      "upper2Reps": 0,
+      "upper2Name": "로우 머신",
+      "lowerDone": 0,
+      "lowerReps": 0,
+      "lowerName": "V 스쿼트",
+      "legRaiseDone": 0,
+      "legRaiseReps": 0,
+      "legRaiseTarget": 1,
+      "crunchDone": 0,
+      "crunchReps": 0,
+      "crunchTarget": 2,
+      "totalSets": 4,
+      "totalReps": 80
     }
   ],
   "kotonoha": {
@@ -1683,18 +1719,6 @@
   },
   "chatHistory": [
     {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "오늘 가슴 · 하체 · 복근·코어에 준 자극이 내일 근육으로 예쁘게 자리 잡을 거예요. 기특하시와요 🐾",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "현재 체중 65.5kg, 체지방률 31.8%. 이전(65.5kg)과 똑같이 안정적으로 유지 중이네요! 오늘의 땀이 분명 숫자를 바꿔줄 것이옵니다 🌸",
-      "room": "gemini"
-    },
-    {
       "sender": "user",
       "text": "[음료 기록] 단백질 음료 🥛 1잔을 챙겨 마셨어!"
     },
@@ -1845,6 +1869,15 @@
       "sender": "mio",
       "name": "미오",
       "text": "수분 보충 나이스!! 오늘 벌써 물 1잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "수분 보충 나이스!! 오늘 벌써 물 2잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
     }
   ]
 }
