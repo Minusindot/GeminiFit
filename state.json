@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-26T12:13:06.244Z",
+  "updatedAt": "2026-11-26T12:13:18.123Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
-  "bondRank": 29,
-  "bondExp": 70,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
+  "bondRank": 30,
+  "bondExp": 5,
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
   "currentSituation": "ev1",
   "absDone": false,
   "runDone": true,
@@ -23,7 +23,7 @@
   ],
   "mealLogs": [],
   "teaLog": {
-    "water": 2,
+    "water": 3,
     "matcha": 0,
     "espresso": 1,
     "tea": 1
@@ -620,7 +620,8 @@
     "d_2026-11-25_work": true,
     "w_2026-12-02_jp": true,
     "d_2026-11-26_work": true,
-    "d_2026-11-26_pro": true
+    "d_2026-11-26_pro": true,
+    "d_2026-11-26_water": true
   },
   "latestInbody": null,
   "inbodyHistory": [
@@ -1393,30 +1394,35 @@
       "mealsDone": 0,
       "mealPhotosCount": 0,
       "mealLogs": [],
-      "mealKcal": 0,
-      "mealProtein": 0,
+      "mealKcal": 150,
+      "mealProtein": 22,
       "runDone": true,
       "absDone": false,
       "rehabDone": 1,
       "gymDone": true,
       "teaLog": {
-        "water": 2,
+        "water": 3,
         "matcha": 0,
         "espresso": 1,
-        "tea": 0
+        "tea": 1
       },
       "teaTimes": {
         "water": [
           "18:32",
-          "18:32"
+          "18:32",
+          "21:13"
         ],
         "matcha": [],
         "espresso": [
           "18:32"
         ],
-        "tea": []
+        "tea": [
+          "21:12"
+        ]
       },
-      "conditionTags": [],
+      "conditionTags": [
+        "🧘컨디션굿"
+      ],
       "conditionNote": "",
       "autoArchived": false,
       "latestRun": {
@@ -1430,52 +1436,10 @@
         "steps": 8333,
         "source": "삼성헬스"
       },
-      "lastUpdated": "2026-11-26T10:00:43.926Z"
+      "lastUpdated": "2026-11-26T12:13:18.051Z"
     }
   },
   "chatHistory": [
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "프로듀서!! 해 뜨기 직전 강변 공기 냄새 맡아봤어?! 이 시간에만 느낄 수 있는 상쾌함이 있다니까! 🌅",
-      "room": "mio"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "최근 유산소 6.41km (페이스 09'20\") — 이 페이스면 오늘 컨디션 완전 날아다닐 것 같은데?!",
-      "room": "mio"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "자, 망설이지 말고 내 손 잡아! 황금빛 아침 해 보면서 오늘도 기분 좋게 첫 걸음 떼보자고! 🖐️🌟",
-      "room": "mio"
-    },
-    {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "무리하지 말고 오늘은 천천히 걸으면서 시작하자 👟",
-      "room": "mio"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "완전 좋아! 걷기랑 조깅 섞는 것도 체지방 태우는 데는 최고야! 프로듀서 페이스에 딱 맞출게! 🖐️",
-      "room": "mio"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "아침을 이긴 사람은 하루 전체를 이기는 법! 오늘도 멋진 하루 만들어보자 프로듀서! 🌅🌟",
-      "room": "mio"
-    },
-    {
-      "sender": "dual",
-      "name": "제미니 · 코토네 · 미오",
-      "text": "⚡ [오후 06:50 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.41km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"기록 갱신을 확인했사옵니다 🍵 목표 52kg까지 소녀와 함께 정갈하게 달려보시와요, 프로듀서님 🐾\"",
-      "room": "all"
-    },
     {
       "sender": "system",
       "name": "기록 동기화",
@@ -1609,6 +1573,45 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "6시간 20분 수면 기록 완료! 오늘 컨디션 챙기면서 건강하게 달려봐요 프로듀서님~! 🌙✨"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "수분 보충 나이스!! 오늘 벌써 물 3잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 09:13 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.41km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 완주라니 참으로 훌륭하옵니다! 🌸 근성 하나는 정말 멋지시와요, 프로듀서님 🐾\"",
+      "room": "all"
+    },
+    {
+      "sender": "system",
+      "name": "기록 동기화",
+      "text": "🔄 오후 09:13 동기화 완료 · 65.5kg · 펙 덱 플라이 · V 스쿼트 · 캡틴스 체어 레그레이즈",
+      "room": "gemini"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 💆 운동 후 어깨·손목 케어 타임",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "프로듀서항, 오늘 펙 덱 플라이 · V 스쿼트 · 캡틴스 체어 레그레이즈 하시느라 가슴 · 하체 · 복근·코어 쪽이 꽤 뻐근하시지요?",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "열심히 당기고 밀어 올리는 것도 좋지만, 뭉친 근육을 안 풀고 주무시면 내일 아침에 몸이 천근만근이 된답니다.",
+      "room": "gemini"
     }
   ]
 }
