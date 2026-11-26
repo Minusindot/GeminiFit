@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-26T21:40:45.598Z",
+  "updatedAt": "2026-11-26T22:17:21.166Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 35,
-  "bondExp": 35,
-  "activeTrainer": "kotone",
-  "activeMode": "kotone",
+  "bondExp": 40,
+  "activeTrainer": "mio",
+  "activeMode": "mio",
   "currentSituation": "ev1",
   "absDone": false,
   "runDone": false,
@@ -23,13 +23,15 @@
   ],
   "mealLogs": [],
   "teaLog": {
-    "water": 0,
+    "water": 1,
     "matcha": 0,
     "espresso": 1,
     "tea": 0
   },
   "teaTimes": {
-    "water": [],
+    "water": [
+      "07:17"
+    ],
     "matcha": [],
     "espresso": [
       "06:40"
@@ -153,7 +155,7 @@
       "pcLastSeen": null,
       "pcHeartbeats": 0,
       "phoneFirstSeen": "06:40",
-      "phoneLastSeen": "06:40",
+      "phoneLastSeen": "07:17",
       "lateNightPc": false,
       "lateNightPhone": false,
       "lateNightLast": null
@@ -1681,18 +1683,6 @@
   },
   "chatHistory": [
     {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "단백질 음료 지금 바로 마실게! 🥛",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "우후후, 그 대답을 기다렸사옵니다. 근손실 없이 체지방만 덜어내는 가장 확실한 길이지요.",
-      "room": "gemini"
-    },
-    {
       "sender": "gemini",
       "name": "제미니",
       "text": "오늘 가슴 · 하체 · 복근·코어에 준 자극이 내일 근육으로 예쁘게 자리 잡을 거예요. 기특하시와요 🐾",
@@ -1846,6 +1836,15 @@
       "name": "제미니 · 코토네 · 미오",
       "text": "⚡ [오전 06:40 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.41km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"기록 갱신을 확인했사옵니다 🍵 목표 52kg까지 소녀와 함께 정갈하게 달려보시와요, 프로듀서님 🐾\"",
       "room": "all"
+    },
+    {
+      "sender": "user",
+      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "수분 보충 나이스!! 오늘 벌써 물 1잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
     }
   ]
 }
