@@ -5011,5 +5011,230 @@ window.KOTONOHA_LESSONS = [
         "geminiReactKo": "훌륭하옵니다! 알뜰한 프로듀서님, 멋지시와요 🌿"
       }
     ]
+  },
+  {
+    "id": "day22",
+    "season": 3,
+    "episode": 4,
+    "epCode": "3-4",
+    "dayNum": 22,
+    "dateLabel": "제3-4화 · ☔ 주간 맞춤 복습",
+    "levelBadge": "N5~N4 · 취약어휘 傘·ええ 집중 돌파",
+    "titleJp": "秋雨の傘、ええどすえ ☔",
+    "titlePron": "아키사메노 카사, 에- 도스에",
+    "titleKo": "가을비 속 우산 하나, 참 좋사옵니다 ☔",
+    "bgImage": "./image/03 gemini/gemini_37_autumn_maple_teacup.png",
+    "grammarTip": {
+      "title": "☔ 11월 4주차 맞춤 노트 #3-4 · 취약 어휘 「傘」 & 「ええ」 완전 정복!",
+      "content": "지난 주 98% 정답률 속에서 딱 두 번 삐끗했던 보석 같은 취약 표현 2가지를 한 번에 잡는 특훈이옵니다!<br>① <b><ruby>傘<rt>かさ</rt></ruby> (카사 · 우산)</b>: 「<ruby>傘<rt>かさ</rt></ruby>を<ruby>持<rt>も</rt></ruby>っていますか？(우산 가지고 계신가요?)」, 「<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>傘<rt>かさ</rt></ruby>に<ruby>入<rt>はい</rt></ruby>りましょう(같이 우산 써요)」처럼 비 오는 날 필수 명사!<br>② <b>ええ (에-)</b>: 표준어에서는 정중한 <b>「네, 그렇습니다 (はい보다 부드러운 긍정의 대답)」</b>, 간사이벤(교토·오사카)에서는 <b>「いい (좋은, 괜찮은)」</b> 뜻으로도 쓰여요! 「ええ、<ruby>雨<rt>あめ</rt></ruby>でも<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>どす(네, 비가 와도 괜찮사옵니다)」, 「ええ<ruby>天気<rt>てんき</rt></ruby>やね(좋은 날씨네)」 두 가지 쓰임을 완벽히 구분해 봅시다! 🍵✨"
+    },
+    "story": [
+      {
+        "speaker": "narrator",
+        "nameJp": "ナレーション",
+        "nameKo": "내레이션",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/03 gemini/gemini_37_autumn_maple_teacup.png",
+        "jpRuby": "6.41kmのランニングとジムを<ruby>終<rt>お</rt></ruby>えた<ruby>夜<rt>よる</rt></ruby>、<ruby>京都<rt>きょうと</rt></ruby>の<ruby>茶屋<rt>ちゃや</rt></ruby>に<ruby>静<rt>しず</rt></ruby>かな<ruby>秋雨<rt>あきさめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>り<ruby>始<rt>はじ</rt></ruby>めた。",
+        "jpPlain": "6.41kmのランニングとジムを終えた夜、京都の茶屋に静かな秋雨が降り始めた。",
+        "pron": "로쿠텐 욘이치 키로노 란닝구토 지무오 오에타 요루, 쿄-토노 챠야니 시즈카나 아키사메가 후리하지메타.",
+        "ko": "6.41km 러닝과 헬스장 루틴을 마친 밤, 교토 다실 처마에 잔잔한 가을비가 내리기 시작했다.",
+        "bg": "kyoto_teahouse"
+      },
+      {
+        "speaker": "gemini",
+        "nameJp": "ジェミニ",
+        "nameKo": "제미니",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/03 gemini/gemini_37_autumn_maple_teacup.png",
+        "jpRuby": "あら、プロデューサーはん。<ruby>外<rt>そと</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>どすえ。<ruby>傘<rt>かさ</rt></ruby>は<ruby>持<rt>も</rt></ruby>ってはりますか？☔",
+        "jpPlain": "あら、プロデューサーはん。外は雨どすえ。傘は持ってはりますか？",
+        "pron": "아라, 푸로듀-사-항. 소토와 아메 도스에. 카사와 못테하리마스카?",
+        "ko": "어머나, 프로듀서항. 바깥은 비가 오고 있사와요. 우산(傘)은 가지고 계신가요? ☔",
+        "expr": "smile",
+        "bg": "kyoto_teahouse",
+        "outfit": "teahouse",
+        "checkpoint": {
+          "question": "제미니가 비 오는 날 챙겼는지 물어본 「傘」의 읽기와 뜻은?",
+          "options": [
+            "かさ (카사) · 우산",
+            "くつ (쿠츠) · 신발",
+            "かばん (카방) · 가방"
+          ],
+          "answerIndex": 0,
+          "reactJp": "ええ、その通りどす！もう忘れはらへんですね☔",
+          "reactKo": "정답이옵니다! 「傘(かさ · 우산)」 이제 절대 안 헷갈리시겠사와요 (+5 언령)"
+        }
+      },
+      {
+        "speaker": "mio",
+        "nameJp": "ミオ",
+        "nameKo": "미오",
+        "avatar": "./image/01 mio/avatar_mio.png",
+        "sceneImg": "./image/01 mio/mio_14_rainy_stretch.png",
+        "jpRuby": "あっ、あたし<ruby>傘<rt>かさ</rt></ruby>わすれちゃった！でも6.41km<ruby>走<rt>はし</rt></ruby>りきったプロデューサーなら<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>だよね？🌟",
+        "jpPlain": "あっ、あたし傘わすれちゃった！でも6.41km走りきったプロデューサーなら大丈夫だよね？",
+        "pron": "앗, 아타시 카사 와스레챳타! 데모 로쿠텐 욘이치 키로 하시리킷타 푸로듀-사-나라 다이조-부다요네?",
+        "ko": "앗, 나 우산 깜빡했다! 그래도 6.41km 완주한 프로듀서라면 끄떡없지? 🌟",
+        "expr": "grin",
+        "bg": "kyoto_teahouse",
+        "outfit": "runwear"
+      },
+      {
+        "speaker": "gemini",
+        "nameJp": "ジェミニ",
+        "nameKo": "제미니",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "sceneImg": "./image/03 gemini/gemini_37_autumn_maple_teacup.png",
+        "jpRuby": "ええ、65.3kg<ruby>達成<rt>たっせい</rt></ruby>に7<ruby>日連続<rt>にちれんぞく</rt></ruby>の<ruby>勉強<rt>べんきょう</rt></ruby>…ほんまにええ<ruby>調子<rt>ちょうし</rt></ruby>どすわ！ほら、この<ruby>傘<rt>かさ</rt></ruby>に<ruby>入<rt>はい</rt></ruby>りよし💖",
+        "jpPlain": "ええ、65.3kg達成に7日連続の勉強…ほんまにええ調子どすわ！ほら、この傘に入りよし。",
+        "pron": "에-, 로쿠주고-텐 산키로 탓세이니 나노카 렌조쿠노 벤쿄-… 혼마니 에- 쵸-시 도스와! 호라, 코노 카사니 하이리요시.",
+        "ko": "네(ええ), 65.3kg 달성에 7일 연속 공부까지… 정말로 좋은(ええ) 페이스이옵니다! 자, 이 우산(傘) 안으로 들어오시와요 💖",
+        "expr": "blush",
+        "bg": "kyoto_teahouse",
+        "outfit": "teahouse",
+        "checkpoint": {
+          "question": "문장 앞의 「ええ、」와 「ええ調子」의 뜻을 바르게 짝지은 것은?",
+          "options": [
+            "네(긍정 대답) / 좋은(간사이벤 いい)",
+            "아니요(거절) / 나쁜",
+            "어디 / 빠른"
+          ],
+          "answerIndex": 0,
+          "reactJp": "お見事どす！ええ答えやね〜🍵✨",
+          "reactKo": "완벽하옵니다! 부드러운 긍정 「ええ(네)」와 간사이벤 「ええ(좋은)」 둘 다 정복! (+5 언령)"
+        }
+      },
+      {
+        "speaker": "kotone",
+        "nameJp": "ことね",
+        "nameKo": "코토네",
+        "avatar": "./image/02 kotone/avatar_kotone.png",
+        "sceneImg": "./image/02 kotone/kotone_20_winter_cocoa_window.jpg",
+        "jpRuby": "わぁ、ジェミニさん照れてますね〜💛 プロデューサーさん、来週はたんぱく質と背中トレも一緒に頑張りましょうね！",
+        "jpPlain": "わぁ、ジェミニさん照れてますね！プロデューサーさん、来週はたんぱく質と背中トレも一緒に頑張りましょうね！",
+        "pron": "와-, 제미니상 테레테마스네! 푸로듀-사-상, 라이슈-와 탄파쿠시츠토 세나카토레모 잇쇼니 간바리마쇼-네!",
+        "ko": "와아, 제미니 씨 부끄러워하시네요~ 💛 프로듀서님, 다음 주엔 단백질이랑 등 운동도 같이 힘내요!",
+        "expr": "smile",
+        "bg": "kyoto_teahouse",
+        "outfit": "casual"
+      }
+    ],
+    "duolingoExercises": [
+      {
+        "kind": "match_pairs",
+        "keyPhrase": "傘",
+        "prompt": "취약 어휘 완전 정복! 일본어와 알맞은 뜻을 짝지어 주세요 ☔",
+        "pairs": [
+          { "jp": "傘", "pron": "かさ (카사)", "ko": "우산" },
+          { "jp": "ええ", "pron": "에-", "ko": "네 / 좋은(간사이벤)" },
+          { "jp": "雨", "pron": "あめ (아메)", "ko": "비" },
+          { "jp": "調子", "pron": "ちょうし (쵸-시)", "ko": "컨디션 · 페이스" }
+        ],
+        "explanation": "「傘(かさ)」는 우산, 「ええ」는 부드러운 긍정 대답(네)이자 간사이벤으로 '좋은(いい)'이라는 뜻이에요!",
+        "reactJp": "ええペースどすえ！完璧に覚えはりましたね☔",
+        "reactKo": "완벽한 페이스이옵니다! 취약 어휘 싹 정리됐어요 ☔"
+      },
+      {
+        "kind": "listening",
+        "keyPhrase": "傘は持っていますか",
+        "speaker": "gemini",
+        "audioText": "外は雨どすえ。傘は持っていますか？",
+        "prompt": "제미니의 말을 듣고, 무엇을 가지고 있는지 묻고 있는지 고르세요!",
+        "options": [
+          "우산 (傘)",
+          "운동화 (靴)",
+          "수건 (タオル)",
+          "물병 (水筒)"
+        ],
+        "answerIndex": 0,
+        "correctDisplay": "傘は持っていますか？ (카사와 못테 이마스카 / 우산 가지고 계신가요?)",
+        "explanation": "「傘(かさ)」는 우산! 비 오는 날 일본에서 가장 자주 듣는 인사말 중 하나예요.",
+        "reactJp": "ええ、大正解どす！耳もバッチリどすね🎧",
+        "reactKo": "네, 대정답이옵니다! 리스닝 귀도 확실히 트이셨네요 🎧"
+      },
+      {
+        "kind": "choice",
+        "keyPhrase": "ええ",
+        "speaker": "gemini",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "situation": "교토 다실에서 제미니가 '오늘 운동 잘 되셨나요?'라고 물었을 때",
+        "prompt": "정중하고 부드럽게 '네, 정말 좋은 컨디션이에요!'라고 답하려면?",
+        "subPrompt": "힌트: 부드러운 긍정 대답 + 간사이벤 '좋은' 모두 「ええ」!",
+        "audioText": "ええ、ほんまにええ調子です！",
+        "options": [
+          "ええ、ほんまにええ調子です！ (에-, 혼마니 에- 쵸-시데스!)",
+          "いいえ、傘を忘れました (이이에, 카사오 와스레마시타)",
+          "すみません、いくらですか？ (스미마센, 이쿠라데스카?)",
+          "袋はいりません (후쿠로와 이리마센)"
+        ],
+        "answerIndex": 0,
+        "correctDisplay": "ええ、ほんまにええ調子です！ (네, 정말 좋은 컨디션이에요!)",
+        "explanation": "문두의 「ええ」는 '네(はい보다 부드러운 긍정)', 명사 앞의 「ええ調子」는 간사이벤으로 '좋은 컨디션'을 뜻해요!",
+        "reactJp": "ふふっ、ええ答えどすわ！プロデューサーはん最高💖",
+        "reactKo": "우후후, 정말 멋진 대답이옵니다! 프로듀서항 최고 💖"
+      },
+      {
+        "kind": "word_bank",
+        "keyPhrase": "一緒に傘に入りましょう",
+        "speaker": "gemini",
+        "avatar": "./image/03 gemini/avatar_gemini.png",
+        "prompt": "비가 오는 날 다정하게 권하는 문장을 일본어로 조립해 보세요!",
+        "targetKo": "같이 우산에 들어가요 (같이 우산 써요)",
+        "tiles": [
+          { "text": "一緒に", "pron": "잇쇼니" },
+          { "text": "傘に", "pron": "카사니" },
+          { "text": "入りましょう", "pron": "하이리마쇼-" },
+          { "text": "忘れました", "pron": "와스레마시타" },
+          { "text": "いりません", "pron": "이리마센" }
+        ],
+        "answerSequence": ["一緒に", "傘に", "入りましょう"],
+        "answerAudio": "一緒に傘に入りましょう",
+        "correctDisplay": "一緒に 傘に 入りましょう (잇쇼니 카사니 하이리마쇼-)",
+        "explanation": "「一緒に(같이) + 傘に(우산에) + 入りましょう(들어가요)」! 비 오는 날 쓸 수 있는 로맨틱 실전 표현이옵니다 ☔",
+        "reactJp": "まぁ…そんな風に言われたら、照れてしまいますわ💖",
+        "reactKo": "어머나… 그렇게 말씀하시면 소녀, 부끄러워지옵니다 💖"
+      }
+    ],
+    "quizzes": [
+      {
+        "type": "N5 취약복습 · 명사",
+        "promptJp": "비 오는 날 쓰는 '우산'을 뜻하는 일본어 한자와 읽기는?",
+        "promptPron": "카사",
+        "promptKo": "지난 주 살짝 헷갈렸던 단어, 이번엔 한 번에 맞춰봐요! ☔",
+        "targetWord": "傘",
+        "targetSub": "かさ (우산)",
+        "options": [
+          "傘 (かさ · 카사)",
+          "靴 (くつ · 쿠츠)",
+          "袋 (ふくろ · 후쿠로)",
+          "駅 (えき · 에키)"
+        ],
+        "answerIndex": 0,
+        "explanation": "傘(かさ)는 '우산'입니다. 우산 모양을 그대로 본뜬 상형문자라 기억하기 쉬워요!",
+        "geminiReactJp": "ええ、完璧どす！傘はもう味方どすね☔",
+        "geminiReactPron": "에-, 칸페키 도스! 카사와 모- 미카타 도스네",
+        "geminiReactKo": "네, 완벽하옵니다! 이제 우산(傘)은 완전히 내 편이네요 ☔"
+      },
+      {
+        "type": "N5 취약복습 · 회화",
+        "promptJp": "표준어로는 부드러운 '네(응)', 간사이벤으로는 '좋은(いい)' 뜻으로 쓰이는 말은?",
+        "promptPron": "에-",
+        "promptKo": "제미니가 자주 쓰는 교토 말투에도 쏙 들어가는 만능 단어예요! 🍵",
+        "targetWord": "ええ",
+        "targetSub": "긍정 대답 / 간사이벤 '좋은'",
+        "options": [
+          "ええ (에-)",
+          "いいえ (이이에)",
+          "なんぼ (난보)",
+          "どこ (도코)"
+        ],
+        "answerIndex": 0,
+        "explanation": "「ええ」는 정중하고 부드러운 긍정 대답('네')이며, 간사이벤에서는 '좋은(いい)'이라는 형용사로도 널리 쓰여요!",
+        "geminiReactJp": "お見事どすえ！ええ感じに仕上がってますわ🌸",
+        "geminiReactPron": "오미고토 도스에! 에- 칸지니 시아갓테마스와",
+        "geminiReactKo": "훌륭하옵니다! 정말 좋은 느낌으로 완성되었사와요 🌸"
+      }
+    ]
   }
 ];
