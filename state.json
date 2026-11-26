@@ -1,19 +1,19 @@
 {
-  "updatedAt": "2026-11-26T09:48:42.357Z",
+  "updatedAt": "2026-11-26T09:49:13.302Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 27,
-  "bondExp": 45,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
-  "currentSituation": "ev1",
+  "bondExp": 60,
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
+  "currentSituation": "ev3",
   "absDone": false,
   "runDone": true,
   "runDist": 6.41,
   "rehab": [
-    false
+    true
   ],
   "rehabSets": 1,
   "meals": [
@@ -61,14 +61,14 @@
       "id": "ex_upper2",
       "part": "lower",
       "name": "V 스쿼트",
-      "weight": "20회 × 4세트",
+      "weight": "맨몸 × 5회",
       "reps": 5,
       "targetSets": 4,
       "sets": [
-        false,
-        false,
-        false,
-        false
+        true,
+        true,
+        true,
+        true
       ]
     },
     "legRaise": {
@@ -114,14 +114,14 @@
         "id": "ex_upper2",
         "part": "lower",
         "name": "V 스쿼트",
-        "weight": "20회 × 4세트",
+        "weight": "맨몸 × 5회",
         "reps": 5,
         "targetSets": 4,
         "sets": [
-          false,
-          false,
-          false,
-          false
+          true,
+          true,
+          true,
+          true
         ]
       },
       {
@@ -496,7 +496,7 @@
       "id": "gym-1795685548547",
       "date": "11/26",
       "fullDate": "2026-11-26",
-      "time": "오후 06:32",
+      "time": "오후 06:49",
       "performedItems": [
         {
           "id": "ex_upper1",
@@ -507,6 +507,16 @@
           "targetSets": 4,
           "doneSets": 4,
           "totalReps": 80
+        },
+        {
+          "id": "ex_upper2",
+          "part": "lower",
+          "name": "V 스쿼트",
+          "weight": "맨몸 × 5회",
+          "reps": 5,
+          "targetSets": 4,
+          "doneSets": 4,
+          "totalReps": 20
         }
       ],
       "upper1Done": 4,
@@ -515,8 +525,8 @@
       "upper2Done": 0,
       "upper2Reps": 0,
       "upper2Name": "로우 머신",
-      "lowerDone": 0,
-      "lowerReps": 0,
+      "lowerDone": 4,
+      "lowerReps": 20,
       "lowerName": "V 스쿼트",
       "legRaiseDone": 0,
       "legRaiseReps": 0,
@@ -524,8 +534,8 @@
       "crunchDone": 0,
       "crunchReps": 0,
       "crunchTarget": 2,
-      "totalSets": 4,
-      "totalReps": 80
+      "totalSets": 8,
+      "totalReps": 100
     }
   ],
   "kotonoha": {
@@ -1355,11 +1365,6 @@
   },
   "chatHistory": [
     {
-      "sender": "mio",
-      "name": "미오",
-      "text": "수분 보충 나이스!! 오늘 벌써 물 3잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
-    },
-    {
       "sender": "dual",
       "name": "제미니 · 코토네 · 미오",
       "text": "⚡ [오후 11:35 실시간 기록 동기화 완료!]\n\n💛 코토네: \"첫 식사 인증 나이스예요! 💛 단백질 든든하게 챙기시는 모습 너무 보기 좋아요~\"\n\n🌟 미오: \"0.6km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 완주라니 참으로 훌륭하옵니다! 🌸 근성 하나는 정말 멋지시와요, 프로듀서님 🐾\"",
@@ -1507,6 +1512,12 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "헉! 394kcal 소모에 8,333걸음이라니 코토네 알바 시급보다... 아니, 지방이 어마어마하게 탔어요! 시원한 물이랑 수건 여기 대령했습니다~! 💛",
+      "room": "all"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "2kg 덤벨 편심성 재활 1세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾",
       "room": "all"
     }
   ]
