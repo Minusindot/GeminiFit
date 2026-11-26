@@ -1,17 +1,17 @@
 {
-  "updatedAt": "2026-11-26T09:32:46.710Z",
+  "updatedAt": "2026-11-26T09:47:27.108Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 26,
-  "bondExp": 25,
+  "bondExp": 95,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev1",
   "absDone": false,
   "runDone": false,
-  "runDist": 0.6,
+  "runDist": 6.6,
   "rehab": [
     false
   ],
@@ -585,7 +585,8 @@
     "d_2026-11-23_water": true,
     "d_2026-11-23_meal": true,
     "d_2026-11-25_work": true,
-    "w_2026-12-02_jp": true
+    "w_2026-12-02_jp": true,
+    "d_2026-11-26_work": true
   },
   "latestInbody": null,
   "inbodyHistory": [
@@ -627,17 +628,28 @@
     }
   ],
   "latestRun": {
-    "id": "cardio-2026-11-23",
-    "date": "2026-11-23",
-    "distance": 0.6,
-    "duration": "10:00",
-    "pace": "스텝밀",
-    "calories": 95,
+    "id": "cardio-2026-11-26",
+    "date": "2026-11-26",
+    "distance": 6.6,
+    "duration": "1:00:00",
+    "pace": "09'00\"",
+    "calories": 480,
     "heartRate": 132,
-    "steps": 650,
-    "source": "천국의 계단"
+    "steps": 8100,
+    "source": "야외 러닝"
   },
   "runningLogs": [
+    {
+      "id": "cardio-2026-11-26",
+      "date": "2026-11-26",
+      "distance": 6.6,
+      "duration": "1:00:00",
+      "pace": "09'00\"",
+      "calories": 480,
+      "heartRate": 132,
+      "steps": 8100,
+      "source": "야외 러닝"
+    },
     {
       "id": "cardio-2026-11-23",
       "date": "2026-11-23",
