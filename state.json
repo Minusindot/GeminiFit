@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T12:21:16.764Z",
+  "updatedAt": "2026-11-26T12:21:29.531Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.3,
@@ -578,7 +578,7 @@
       "day12"
     ],
     "customAiLessons": [],
-    "activeLessonIdx": 11,
+    "activeLessonIdx": 12,
     "showPron": true,
     "quizStats": {
       "total": 85,
@@ -588,7 +588,7 @@
         "ええ"
       ]
     },
-    "selectedSeason": 1,
+    "selectedSeason": 2,
     "learningProfile": {
       "byKind": {
         "match_pairs": {
