@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T21:40:25.917Z",
+  "updatedAt": "2026-11-26T21:40:36.086Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
@@ -36,7 +36,9 @@
     ],
     "tea": []
   },
-  "conditionTags": [],
+  "conditionTags": [
+    "⚡집중됨"
+  ],
   "conditionNote": "",
   "sleepLogs": [
     {
