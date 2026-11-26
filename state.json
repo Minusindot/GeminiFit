@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-11-26T21:40:05.625Z",
+  "updatedAt": "2026-11-26T21:40:25.917Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 35,
-  "bondExp": 5,
+  "bondExp": 15,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
-  "currentSituation": "ev3",
+  "currentSituation": "ev1",
   "absDone": false,
   "runDone": false,
   "runDist": 6.41,
@@ -72,6 +72,15 @@
       "wakeup": "09:50",
       "durationMin": 380,
       "durationText": "6시간 20분",
+      "score": null,
+      "source": "삼성헬스(OCR)"
+    },
+    {
+      "date": "2026-11-27",
+      "bedtime": "23:30",
+      "wakeup": "05:20",
+      "durationMin": 350,
+      "durationText": "5시간 50분",
       "score": null,
       "source": "삼성헬스(OCR)"
     }
@@ -1627,18 +1636,6 @@
     {
       "sender": "gemini",
       "name": "제미니",
-      "text": "오늘 기록을 보니 펙 덱 플라이 · V 스쿼트 · 캡틴스 체어 레그레이즈 중심으로 11세트(250회), 강도는 [집중 중강도 💪]로 깔끔하게 끝내셨군요.",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "자극이 들어간 가슴 · 하체 · 복근·코어 부위가 지금 한창 회복을 기다리는 중이라지요. 그리고 어제 단백질 음료 안 마신 것 같던데, 오늘은 꼬박꼬박 챙기기로 약속해요 우리! 🥛🤙",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
       "text": "소녀가 방금 운동 끝나고 마실 스무디를 챙겨두었사옵니다. 사진만 보지 마시고 진짜로 챙겨 드시와요 🥤",
       "room": "gemini",
       "image": "./image/03 gemini/gemini_25_post_workout_smoothie.png",
@@ -1795,6 +1792,15 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
+    },
+    {
+      "sender": "user",
+      "text": "[수면 스샷 기록] 2026-11-27 수면 5시간 50분 (23:30~05:20)"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "프로듀서님 5시간 50분밖에 못 주무셨네요 ㅠㅠ 오늘은 무리하지 말고 카페인 일찍 끊고 푹 쉬기로 약속해요! 🌙💛"
     }
   ]
 }
