@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-26T12:15:24.224Z",
+  "updatedAt": "2026-11-26T12:15:51.430Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 30,
-  "bondExp": 50,
+  "bondExp": 70,
   "activeTrainer": "gemini",
   "activeMode": "dual",
   "currentSituation": "ev1",
@@ -559,8 +559,8 @@
     }
   ],
   "kotonoha": {
-    "coins": 2295,
-    "kotodama": 1064,
+    "coins": 2325,
+    "kotodama": 1084,
     "streak": 6,
     "lastStudyDate": "2026-11-24",
     "completedLessons": [
@@ -576,8 +576,8 @@
     "activeLessonIdx": 7,
     "showPron": true,
     "quizStats": {
-      "total": 65,
-      "correct": 63,
+      "total": 67,
+      "correct": 65,
       "wrongWords": [
         "傘",
         "ええ"
