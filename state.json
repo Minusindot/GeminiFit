@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T23:00:37.476Z",
+  "updatedAt": "2026-11-26T23:04:42.848Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
@@ -213,7 +213,7 @@
       "reps": 50,
       "targetSets": 1,
       "sets": [
-        false
+        true
       ]
     },
     "crunch": {
@@ -266,7 +266,7 @@
         "reps": 50,
         "targetSets": 1,
         "sets": [
-          false
+          true
         ]
       },
       {
@@ -695,7 +695,7 @@
       "id": "gym-1795733217011",
       "date": "11/27",
       "fullDate": "2026-11-27",
-      "time": "오전 08:00",
+      "time": "오전 08:04",
       "performedItems": [
         {
           "id": "ex_upper1",
@@ -716,6 +716,16 @@
           "targetSets": 4,
           "doneSets": 4,
           "totalReps": 80
+        },
+        {
+          "id": "ex_core1",
+          "part": "core",
+          "name": "캡틴스 체어 레그레이즈",
+          "weight": "맨몸 × 50회",
+          "reps": 50,
+          "targetSets": 1,
+          "doneSets": 1,
+          "totalReps": 50
         }
       ],
       "upper1Done": 4,
@@ -727,14 +737,14 @@
       "lowerDone": 4,
       "lowerReps": 80,
       "lowerName": "힙 어브덕션",
-      "legRaiseDone": 0,
-      "legRaiseReps": 0,
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
       "legRaiseTarget": 1,
       "crunchDone": 0,
       "crunchReps": 0,
       "crunchTarget": 2,
-      "totalSets": 8,
-      "totalReps": 160
+      "totalSets": 9,
+      "totalReps": 210
     }
   ],
   "kotonoha": {
