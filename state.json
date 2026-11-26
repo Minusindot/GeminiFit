@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-26T21:40:36.086Z",
+  "updatedAt": "2026-11-26T21:40:45.598Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 35,
-  "bondExp": 15,
+  "bondExp": 35,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
   "currentSituation": "ev1",
@@ -1632,17 +1632,54 @@
         "source": "삼성헬스"
       },
       "lastUpdated": "2026-11-26T12:41:04.347Z"
+    },
+    "2026-11-27": {
+      "date": "2026-11-27",
+      "weight": 65.3,
+      "fat": 33.4,
+      "mealsDone": 0,
+      "mealPhotosCount": 0,
+      "mealLogs": [],
+      "mealKcal": 0,
+      "mealProtein": 0,
+      "runDone": false,
+      "absDone": false,
+      "rehabDone": 0,
+      "gymDone": false,
+      "teaLog": {
+        "water": 0,
+        "matcha": 0,
+        "espresso": 1,
+        "tea": 0
+      },
+      "teaTimes": {
+        "water": [],
+        "matcha": [],
+        "espresso": [
+          "06:40"
+        ],
+        "tea": []
+      },
+      "conditionTags": [
+        "⚡집중됨"
+      ],
+      "conditionNote": "",
+      "autoArchived": false,
+      "latestRun": {
+        "id": "run-1795686522348",
+        "date": "2026-11-26",
+        "distance": 6.41,
+        "duration": "59:59",
+        "pace": "09'20\"",
+        "calories": 394,
+        "heartRate": 134,
+        "steps": 8333,
+        "source": "삼성헬스"
+      },
+      "lastUpdated": "2026-11-26T21:40:45.598Z"
     }
   },
   "chatHistory": [
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "소녀가 방금 운동 끝나고 마실 스무디를 챙겨두었사옵니다. 사진만 보지 마시고 진짜로 챙겨 드시와요 🥤",
-      "room": "gemini",
-      "image": "./image/03 gemini/gemini_25_post_workout_smoothie.png",
-      "caption": "📷 제미니가 보낸 사진 · 운동 후 프로틴 스무디"
-    },
     {
       "sender": "user",
       "name": "프로듀서",
@@ -1803,6 +1840,12 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "프로듀서님 5시간 50분밖에 못 주무셨네요 ㅠㅠ 오늘은 무리하지 말고 카페인 일찍 끊고 푹 쉬기로 약속해요! 🌙💛"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오전 06:40 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.41km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"기록 갱신을 확인했사옵니다 🍵 목표 52kg까지 소녀와 함께 정갈하게 달려보시와요, 프로듀서님 🐾\"",
+      "room": "all"
     }
   ]
 }
