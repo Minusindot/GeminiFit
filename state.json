@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-11-26T09:50:26.667Z",
+  "updatedAt": "2026-11-26T10:00:43.965Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
-  "bondRank": 28,
-  "bondExp": 50,
-  "activeTrainer": "mio",
-  "activeMode": "mio",
+  "bondRank": 29,
+  "bondExp": 10,
+  "activeTrainer": "gemini",
+  "activeMode": "gemini",
   "currentSituation": "ev3",
   "absDone": false,
   "runDone": true,
@@ -79,7 +79,7 @@
       "reps": 50,
       "targetSets": 1,
       "sets": [
-        false
+        true
       ]
     },
     "crunch": {
@@ -90,11 +90,11 @@
       "reps": 50,
       "targetSets": 2,
       "sets": [
-        false,
-        false
+        true,
+        true
       ]
     },
-    "allDone": false,
+    "allDone": true,
     "items": [
       {
         "id": "ex_upper1",
@@ -132,7 +132,7 @@
         "reps": 50,
         "targetSets": 1,
         "sets": [
-          false
+          true
         ]
       },
       {
@@ -143,8 +143,8 @@
         "reps": 50,
         "targetSets": 2,
         "sets": [
-          false,
-          false
+          true,
+          true
         ]
       }
     ]
@@ -496,7 +496,7 @@
       "id": "gym-1795685548547",
       "date": "11/26",
       "fullDate": "2026-11-26",
-      "time": "오후 06:49",
+      "time": "오후 07:00",
       "performedItems": [
         {
           "id": "ex_upper1",
@@ -517,6 +517,26 @@
           "targetSets": 4,
           "doneSets": 4,
           "totalReps": 20
+        },
+        {
+          "id": "ex_core1",
+          "part": "core",
+          "name": "캡틴스 체어 레그레이즈",
+          "weight": "맨몸 × 50회",
+          "reps": 50,
+          "targetSets": 1,
+          "doneSets": 1,
+          "totalReps": 50
+        },
+        {
+          "id": "ex_core2",
+          "part": "core",
+          "name": "크런치",
+          "weight": "맨몸 × 50회",
+          "reps": 50,
+          "targetSets": 2,
+          "doneSets": 2,
+          "totalReps": 100
         }
       ],
       "upper1Done": 4,
@@ -528,14 +548,14 @@
       "lowerDone": 4,
       "lowerReps": 20,
       "lowerName": "V 스쿼트",
-      "legRaiseDone": 0,
-      "legRaiseReps": 0,
+      "legRaiseDone": 1,
+      "legRaiseReps": 50,
       "legRaiseTarget": 1,
-      "crunchDone": 0,
-      "crunchReps": 0,
+      "crunchDone": 2,
+      "crunchReps": 100,
       "crunchTarget": 2,
-      "totalSets": 8,
-      "totalReps": 100
+      "totalSets": 11,
+      "totalReps": 250
     }
   ],
   "kotonoha": {
@@ -1376,7 +1396,7 @@
       "runDone": true,
       "absDone": false,
       "rehabDone": 1,
-      "gymDone": false,
+      "gymDone": true,
       "teaLog": {
         "water": 2,
         "matcha": 0,
@@ -1408,39 +1428,10 @@
         "steps": 8333,
         "source": "삼성헬스"
       },
-      "lastUpdated": "2026-11-26T09:50:03.592Z"
+      "lastUpdated": "2026-11-26T10:00:43.926Z"
     }
   },
   "chatHistory": [
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "수분 보충 나이스!! 오늘 벌써 물 2잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "2kg 덤벨 편심성 재활 1세트 완벽 클리어! 이리 손목 줘봐, 내가 부드럽게 마사지해 줄게. 🩹🐾",
-      "room": "all"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "mio",
-      "name": "미오",
-      "text": "수분 보충 나이스!! 오늘 벌써 물 1잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 커피 ☕ 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
-    },
     {
       "sender": "user",
       "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
@@ -1581,6 +1572,42 @@
       "name": "미오",
       "text": "실내든 야외든 땀은 절대 배신 안 해! 오늘 유산소 정복 완전 축하해 프로듀서! 🪜👍🌟",
       "room": "mio"
+    },
+    {
+      "sender": "dual",
+      "name": "제미니 · 코토네 · 미오",
+      "text": "⚡ [오후 07:00 실시간 기록 동기화 완료!]\n\n💛 코토네: \"기록 업데이트 확인 완료! 💛 식사 드실 때 잊지 말고 사진 찰칵 남겨주세요~\"\n\n🌟 미오: \"6.41km 러닝 완주 확인! 🌟 땀 흠뻑 흘리고 진짜 멋있다 프로듀서! 수분 보충 꼭 챙겨줘!\"\n\n🐾 제미니: \"헬스장 풀코스 완주라니 참으로 훌륭하옵니다! 🌸 근성 하나는 정말 멋지시와요, 프로듀서님 🐾\"",
+      "room": "all"
+    },
+    {
+      "sender": "system",
+      "name": "기록 동기화",
+      "text": "🔄 오후 07:00 동기화 완료 · 65.5kg · 펙 덱 플라이 · V 스쿼트 · 캡틴스 체어 레그레이즈",
+      "room": "gemini"
+    },
+    {
+      "sender": "system",
+      "name": "에피소드",
+      "text": "🎬 💪 오운완 정밀 체크 & 단백질 약속",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "프로듀서항, 저녁 운동 수고 많으셨사옵니다 🍵",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "오늘 기록을 보니 펙 덱 플라이 · V 스쿼트 · 캡틴스 체어 레그레이즈 중심으로 11세트(250회), 강도는 [집중 중강도 💪]로 깔끔하게 끝내셨군요.",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "자극이 들어간 가슴 · 하체 · 복근·코어 부위가 지금 한창 회복을 기다리는 중이라지요. 그리고 어제 단백질 음료 안 마신 것 같던데, 오늘은 꼬박꼬박 챙기기로 약속해요 우리! 🥛🤙",
+      "room": "gemini"
     }
   ]
 }
