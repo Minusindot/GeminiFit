@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T12:16:08.054Z",
+  "updatedAt": "2026-11-26T12:16:16.680Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.3,
@@ -574,7 +574,7 @@
       "day8"
     ],
     "customAiLessons": [],
-    "activeLessonIdx": 7,
+    "activeLessonIdx": 8,
     "showPron": true,
     "quizStats": {
       "total": 69,
