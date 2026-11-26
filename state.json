@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-26T09:50:03.639Z",
+  "updatedAt": "2026-11-26T09:50:26.667Z",
   "lastActiveDate": "2026-11-26",
   "theme": "light",
   "weight": 65.5,
   "fat": 31.8,
   "bondRank": 28,
-  "bondExp": 25,
+  "bondExp": 50,
   "activeTrainer": "mio",
   "activeMode": "mio",
   "currentSituation": "ev3",
@@ -578,7 +578,8 @@
     "k15": true,
     "m15": true,
     "k20": true,
-    "m18": true
+    "m18": true,
+    "m19": true
   },
   "questClaims": {
     "d_2026-11-20_meal": true,
@@ -1412,19 +1413,6 @@
   },
   "chatHistory": [
     {
-      "sender": "user",
-      "text": "[음료 기록] 커피 ☕ 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 물 💧 1잔을 챙겨 마셨어!"
-    },
-    {
       "sender": "mio",
       "name": "미오",
       "text": "수분 보충 나이스!! 오늘 벌써 물 2잔째야! 대사율 쭉쭉 올라간다 프로듀서! 💧🌟"
@@ -1574,6 +1562,24 @@
       "sender": "mio",
       "name": "미오",
       "text": "크으~ 끝까지 완주한 프로듀서에게 미오 특급 엄지 척!! 자, 시원한 물부터 한 모금 들이켜! 💧👍",
+      "room": "mio"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "물 마시고 단백질까지 챙기면 완벽하겠네 🥛",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "정답!! 어제 단백질 음료 안 마신 것 같던데, 오늘은 꼬박꼬박 챙기기로 약속해요 우리! 🥛🤙 하체 근육 지키면서 지방만 쏙 빼는 최고의 조합이야! 🖐️",
+      "room": "mio"
+    },
+    {
+      "sender": "mio",
+      "name": "미오",
+      "text": "실내든 야외든 땀은 절대 배신 안 해! 오늘 유산소 정복 완전 축하해 프로듀서! 🪜👍🌟",
       "room": "mio"
     }
   ]
