@@ -551,7 +551,7 @@
         <div class="flex items-center gap-1 min-w-0">
           <h1 class="text-xs sm:text-sm font-black tracking-tight text-slate-800 dark:text-slate-100 whitespace-nowrap flex items-center gap-1">
             Gemini Fit
-            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.7.10</span>
+            <span class="text-[9px] font-black text-rose-500 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-full inline-block">v4.7.11</span>
           </h1>
           <span id="headerTodayDate" class="text-[9px] font-extrabold text-pink-500 dark:text-pink-400 bg-pink-500/10 px-1.5 py-0.5 rounded-full border border-pink-500/20 whitespace-nowrap inline-block">10.24 (토)</span>
         </div>
@@ -1443,7 +1443,7 @@
             <span class="text-xl">⚡</span>
             <div>
               <h4 class="text-xs font-black text-slate-800 dark:text-slate-100">오늘 기록 실시간 동기화</h4>
-              <span class="text-[9px] text-indigo-500 font-bold block">사진·기록을 추가할 때마다 눌러서 실시간 톡 업데이트</span>
+              <span class="text-[9px] text-indigo-500 font-bold block">먼저 동기화만 저장하고, 원할 때 트레이닝 톡에 반영하세요</span>
             </div>
           </div>
           <span id="dailyStatusBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-extrabold border border-emerald-500/30 whitespace-nowrap">
@@ -1452,7 +1452,7 @@
         </div>
 
         <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-          식단 사진을 올리거나 운동을 마칠 때마다 버튼을 눌러주세요! <strong>기록이 안전하게 동기화되고, 오늘 흐름에 가장 잘 맞는 트레이너가 새 톡으로 바로 찾아옵니다.</strong> (이전 대화는 채팅창 위 <strong>이전 대화 보기</strong>로 다시 꺼내볼 수 있어요.)
+          식단 사진을 올리거나 운동을 마칠 때마다 <strong>기록 동기화</strong>를 눌러 저장하세요! 동기화 후 <strong>트레이닝 톡 반영</strong> 버튼이 활성화되며, 원할 때 누르면 오늘 흐름에 맞는 트레이너와 새 톡을 시작할 수 있어요.
         </p>
 
         <div class="grid grid-cols-2 gap-2 text-center text-[10px]">
@@ -1466,10 +1466,15 @@
           </div>
         </div>
 
-        <button onclick="finalizeDailyRecordAndUpload()" id="btnFinalizeDaily" class="w-full py-3 rounded-2xl bg-gradient-to-r from-indigo-500 via-[#5b7cfa] to-pink-500 hover:opacity-95 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-[0.98]">
-          <span>⚡ 지금 기록 동기화 & 트레이닝 톡 반영</span>
-          <span class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold">+20 EXP</span>
-        </button>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="finalizeDailyRecordAndUpload()" id="btnFinalizeDaily" class="w-full py-3 px-2 rounded-2xl bg-gradient-to-r from-indigo-500 to-[#5b7cfa] hover:opacity-95 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]">
+            <span>⚡ 기록 동기화</span>
+            <span class="text-[9px] bg-white/20 px-1.5 py-0.5 rounded-full font-bold">+20</span>
+          </button>
+          <button onclick="reflectSyncedRecordToTalk()" id="btnReflectSyncTalk" disabled class="w-full py-3 px-2 rounded-2xl bg-slate-200/80 dark:bg-slate-800/80 text-slate-400 dark:text-slate-500 border border-slate-300/60 dark:border-slate-700/60 font-black text-xs transition-all flex items-center justify-center gap-1.5 cursor-not-allowed opacity-70" title="먼저 기록 동기화를 눌러주세요">
+            <span>💬 트레이닝 톡 반영</span>
+          </button>
+        </div>
       </div>
 
     <!-- Workout Progress & Set Comparison Graph Modal -->
@@ -6175,6 +6180,10 @@
         const days = ['일', '월', '화', '수', '목', '금', '토'];
         headerDateEl.textContent = `${d.getMonth() + 1}.${d.getDate()} (${days[d.getDay()]})`;
       }
+
+      if (typeof updateSyncTalkReflectButton === 'function') {
+        updateSyncTalkReflectButton();
+      }
     }
 
     
@@ -6306,14 +6315,47 @@
       // 6. DO NOT WIPE today's inputs! Keep them proud and visible for anytime updates
       addBondExp(20);
       saveState(true);
+
+      // 7. Enable [트레이닝 톡 반영] button instead of auto-jumping to Talk tab (v4.7.11)
+      const syncPick = pickSyncTalkRoom();
+      pendingSyncTalk = { room: syncPick.room, key: syncPick.key, time: curTime };
       syncUI();
       renderChat();
 
-      // 7. Open a brand-new talk with the trainer whose field fits today's flow
+      showFloatingToast(`오늘 기록 동기화 완료 (${curTime}) · 원할 때 [트레이닝 톡 반영]을 눌러주세요!`, '⚡');
+    }
+
+    let pendingSyncTalk = null;
+
+    function updateSyncTalkReflectButton() {
+      const btn = document.getElementById('btnReflectSyncTalk');
+      if (!btn) return;
+      if (pendingSyncTalk) {
+        const syncName = SYNC_TRAINER_NAMES[pendingSyncTalk.room] || '제미니';
+        btn.disabled = false;
+        btn.className = 'w-full py-3 px-2 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 hover:opacity-95 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-[0.98] cursor-pointer';
+        btn.title = `동기화된 기록으로 ${syncName}와 새 톡 시작`;
+      } else {
+        btn.disabled = true;
+        btn.className = 'w-full py-3 px-2 rounded-2xl bg-slate-200/80 dark:bg-slate-800/80 text-slate-400 dark:text-slate-500 border border-slate-300/60 dark:border-slate-700/60 font-black text-xs transition-all flex items-center justify-center gap-1.5 cursor-not-allowed opacity-70';
+        btn.title = '먼저 기록 동기화를 눌러주세요';
+      }
+    }
+
+    function reflectSyncedRecordToTalk() {
+      if (!pendingSyncTalk) {
+        showFloatingToast('먼저 [기록 동기화]를 눌러주세요!', '⚡');
+        return;
+      }
+      playBeep(988, 0.08);
       const syncPick = pickSyncTalkRoom();
-      openSyncTalkConversation(syncPick.room, syncPick.key);
-      const syncName = SYNC_TRAINER_NAMES[syncPick.room] || '제미니';
-      showFloatingToast(`오늘 기록 동기화 완료 (${curTime}) · ${syncName}와의 새 톡!`, '⚡');
+      const room = syncPick.room || pendingSyncTalk.room;
+      const key = syncPick.key || pendingSyncTalk.key;
+      pendingSyncTalk = null;
+      updateSyncTalkReflectButton();
+      openSyncTalkConversation(room, key);
+      const syncName = SYNC_TRAINER_NAMES[room] || '제미니';
+      showFloatingToast(`동기화된 기록 반영 완료 · ${syncName}와의 새 톡!`, '💬');
     }
 
     // ---------- Record sync -> recommended fresh conversation ----------
@@ -13220,9 +13262,9 @@ ${err.message}
             </div>
 
             <div class="p-2.5 rounded-2xl bg-[#2a1d24] border border-[#5a3440] text-[11px] space-y-1">
-              <div class="font-black text-[#ffd6de]">⚡ 기록 동기화가 오늘에 맞는 톡을 열어줘요</div>
+              <div class="font-black text-[#ffd6de]">⚡ 기록 동기화와 트레이닝 톡 반영이 분리되었어요</div>
               <div class="text-[#c9b1aa] leading-relaxed">
-                루틴·식단 탭에서 <strong>지금 기록 동기화</strong>를 누르면, 오늘 마친 운동에 맞는 트레이너(<strong>러닝 → 미오, 근력·복근 → 제미니, 식단 → 코토네</strong>)와의 <strong>새 톡</strong>이 바로 열립니다. 이전 대화는 <strong>이전 대화 보기</strong>로 다시 꺼내볼 수 있어요.
+                루틴·식단 탭에서 <strong>기록 동기화</strong>를 누르면 톡으로 바로 넘어가지 않고 안전하게 저장만 되며, 옆의 <strong>트레이닝 톡 반영</strong> 버튼이 활성화됩니다. 원할 때 눌러 오늘 마친 운동에 맞는 트레이너(<strong>러닝 → 미오, 근력·복근 → 제미니, 식단 → 코토네</strong>)와 새 톡을 시작하세요.
               </div>
             </div>
 
@@ -13259,7 +13301,7 @@ ${err.message}
 
         <div class="p-2.5 rounded-xl bg-[#22181d] border border-[#3b272f] text-[11px] text-[#e0cfca] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#f29aa8]">
-            <span>현재 앱 버전: v4.7.10 (言の葉茶屋)</span>
+            <span>현재 앱 버전: v4.7.11 (言の葉茶屋)</span>
             <span id="updateReminderDayBadge" class="text-[10px] text-[#b89d97]">매주 수요일</span>
           </div>
           <div class="text-[10px] text-[#9e847e]">아래 <strong>요청문 복사</strong>를 눌러 에이전트에 붙여넣으면 즉시 업데이트가 시작됩니다.</div>
