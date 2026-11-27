@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-27T12:57:31.499Z",
+  "updatedAt": "2026-11-27T12:57:59.774Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
-  "bondRank": 39,
-  "bondExp": 80,
+  "bondRank": 40,
+  "bondExp": 5,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
   "currentSituation": "ev2",
@@ -804,7 +804,7 @@
       "day14"
     ],
     "customAiLessons": [],
-    "activeLessonIdx": 13,
+    "activeLessonIdx": 14,
     "showPron": true,
     "quizStats": {
       "total": 93,
@@ -897,7 +897,8 @@
     "g7": true,
     "g11": true,
     "g21": true,
-    "k3": true
+    "k3": true,
+    "k4": true
   },
   "questClaims": {
     "d_2026-11-20_meal": true,
@@ -1833,30 +1834,6 @@
   },
   "chatHistory": [
     {
-      "sender": "system",
-      "name": "에피소드",
-      "text": "🎬 💪 오운완 거울 앞, 수건 건네는 거리",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "후우… 프로듀서항, 오늘 펙 덱 플라이 · 힙 어브덕션 · 캡틴스 체어 레그레이즈 (11세트 · 집중 중강도 💪) 정말 깔끔하게 끝내셨사옵니다!",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "땀이 이마까지 송골송골 맺히셨네요. 멍하니 서 계시면 금방 식어서 감기 걸리신다지요.",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "자, 가만히 계시와요. 소녀가 깨끗한 수건 챙겨왔사옵니다… 땀 닦고, 물부터 한 모금 드시지요 🌸",
-      "room": "gemini"
-    },
-    {
       "sender": "user",
       "name": "프로듀서",
       "text": "고마워! 덕분에 마지막 세트까지 버텼어 💪",
@@ -2001,6 +1978,30 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "기록만 해도 절반은 성공이에요. 나머지 절반은 코토네가 응원 댄스로 채워드릴게요! 💛",
+      "room": "kotone"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "점심만이라도 찍을게 🍱",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "충분해요! 점심 한 끼만 기록해도 식습관이 보여요~",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "사진 보내주시면 코토네가 밥 반 공기 빼기 같은 작은 팁도 알려드릴게요! 💛",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "한 끼의 기록이 한 주를 바꿔요! 코토네는 프로듀서님의 식탁 매니저니까요~ 💖",
       "room": "kotone"
     }
   ]
