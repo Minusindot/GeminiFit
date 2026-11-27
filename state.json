@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-27T01:12:04.745Z",
+  "updatedAt": "2026-11-27T01:12:49.301Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 38,
-  "bondExp": 55,
+  "bondExp": 65,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
   "currentSituation": "ev14",
@@ -779,8 +779,8 @@
     }
   ],
   "kotonoha": {
-    "coins": 3005,
-    "kotodama": 1480,
+    "coins": 3020,
+    "kotodama": 1490,
     "streak": 7,
     "lastStudyDate": "2026-11-26",
     "completedLessons": [
@@ -802,8 +802,8 @@
     "activeLessonIdx": 13,
     "showPron": true,
     "quizStats": {
-      "total": 89,
-      "correct": 87,
+      "total": 90,
+      "correct": 88,
       "wrongWords": [
         "傘",
         "ええ"
@@ -813,8 +813,8 @@
     "learningProfile": {
       "byKind": {
         "match_pairs": {
-          "ok": 1,
-          "total": 1
+          "ok": 2,
+          "total": 2
         },
         "listening": {
           "ok": 1,
@@ -835,12 +835,13 @@
       },
       "slowListens": 0,
       "pronHiddenSolves": 0,
-      "totalTrackedSolves": 7,
+      "totalTrackedSolves": 8,
       "masteredPhrases": [
         "知らんけど",
         "熱いうちに食べはる？",
         "運動すればゼロカロリー",
-        "食べはる"
+        "食べはる",
+        "おやすみやす"
       ],
       "weakPhrases": {},
       "episodeLogs": [
