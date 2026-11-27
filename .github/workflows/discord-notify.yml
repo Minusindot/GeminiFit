@@ -96,7 +96,7 @@ jobs:
               EXTRA_ARGS="--force"
             fi
           else
-            EXTRA_ARGS="--skip-if-sent --record-state"
+            EXTRA_ARGS="--skip-if-sent --record-state --enforce-window"
           fi
           python tools/discord_bot.py --mode "${{ steps.pick_mode.outputs.mode }}" $EXTRA_ARGS
 

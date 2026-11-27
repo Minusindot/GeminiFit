@@ -1021,6 +1021,18 @@ def save_notify_state(mode: str, date_str: str) -> None:
         f.write("\n")
 
 
+def is_within_time_window(mode: str, now_kst: datetime) -> tuple[bool, str]:
+    """Guard against severely delayed GitHub Actions schedule runs firing in the wrong time slot."""
+    hour = now_kst.hour
+    if mode == "morning":
+        return (6 <= hour <= 16), "06:00~16:59 KST"
+    if mode == "evening":
+        return (19 <= hour <= 23), "19:00~23:59 KST"
+    if mode == "weekly":
+        return (now_kst.weekday() == 6 and 18 <= hour <= 23), "일요일 18:00~23:59 KST"
+    return True, "제한 없음"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="GeminiFit Discord Webhook Notifier")
     parser.add_argument("--mode", choices=["morning", "evening", "weekly"], required=True)
@@ -1028,14 +1040,25 @@ def main() -> int:
     parser.add_argument("--force", action="store_true", help="Force sending evening nudge even if today is complete")
     parser.add_argument("--skip-if-sent", action="store_true", help="Skip if this mode was already sent today (for backup crons)")
     parser.add_argument("--record-state", action="store_true", help="Record today's date in discord_notify_state.json after sending")
+    parser.add_argument("--enforce-window", action="store_true", help="Skip if current KST time is outside the mode's allowed window (blocks delayed crons)")
     parser.add_argument("--dry-run", action="store_true", help="Print payload instead of sending to Discord")
     parser.add_argument("--chart-out", help="Optional path to save generated weekly PNG chart")
     args = parser.parse_args()
 
-    today = parse_ymd(args.date) if args.date else datetime.now(KST).date()
+    now_kst = datetime.now(KST)
+    today = parse_ymd(args.date) if args.date else now_kst.date()
     if today is None:
         print(f"Invalid --date format: {args.date} (expected YYYY-MM-DD)", file=sys.stderr)
         return 2
+
+    if args.enforce_window and not args.force:
+        allowed, window_desc = is_within_time_window(args.mode, now_kst)
+        if not allowed:
+            print(
+                f"[{args.mode}] 현재 시각 {now_kst.strftime('%Y-%m-%d %H:%M KST')}이(가) "
+                f"허용 시간대({window_desc}) 밖입니다 (지연 크론 차단) -> 스킵!"
+            )
+            return 0
 
     if args.skip_if_sent:
         notify_state = load_notify_state()
