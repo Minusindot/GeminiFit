@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-27T01:07:39.137Z",
+  "updatedAt": "2026-11-27T01:08:07.490Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 37,
-  "bondExp": 35,
+  "bondExp": 60,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
   "currentSituation": "ev14",
@@ -158,7 +158,7 @@
       "pcLastSeen": null,
       "pcHeartbeats": 0,
       "phoneFirstSeen": "06:40",
-      "phoneLastSeen": "10:07",
+      "phoneLastSeen": "10:08",
       "lateNightPc": false,
       "lateNightPhone": false,
       "lateNightLast": null
@@ -856,7 +856,8 @@
     "m18": true,
     "m19": true,
     "g7": true,
-    "g11": true
+    "g11": true,
+    "g21": true
   },
   "questClaims": {
     "d_2026-11-20_meal": true,
@@ -1771,38 +1772,6 @@
     {
       "sender": "gemini",
       "name": "제미니",
-      "text": "프로듀서항, 오늘 펙 덱 플라이 · V 스쿼트 · 캡틴스 체어 레그레이즈 하시느라 가슴 · 하체 · 복근·코어 쪽이 꽤 뻐근하시지요?",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "열심히 당기고 밀어 올리는 것도 좋지만, 뭉친 근육을 안 풀고 주무시면 내일 아침에 몸이 천근만근이 된답니다.",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "자, 이쪽으로 오시와요. 소녀가 어깨랑 전완근부터 천천히 풀어드릴 테니까 힘 쭉 빼시지요 🍵",
-      "room": "gemini",
-      "image": "./image/03 gemini/gemini_40_shoulder_massage_care.png",
-      "caption": "📷 제미니의 쿨다운 케어 타임"
-    },
-    {
-      "sender": "user",
-      "name": "프로듀서",
-      "text": "따뜻한 샤워하고 바로 뻗을래 🚿",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
-      "text": "후후, 오늘 11세트나 하셨으니 그것도 좋은 회복이옵니다.",
-      "room": "gemini"
-    },
-    {
-      "sender": "gemini",
-      "name": "제미니",
       "text": "미지근한 물로 피로 씻어내시고, 수분 한 컵만 꼭 마시고 주무시와요 🌙",
       "room": "gemini"
     },
@@ -1933,6 +1902,36 @@
       "sender": "gemini",
       "name": "제미니",
       "text": "땀이 이마까지 송골송골 맺히셨네요. 멍하니 서 계시면 금방 식어서 감기 걸리신다지요.",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "자, 가만히 계시와요. 소녀가 깨끗한 수건 챙겨왔사옵니다… 땀 닦고, 물부터 한 모금 드시지요 🌸",
+      "room": "gemini"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "고마워! 덕분에 마지막 세트까지 버텼어 💪",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "우후후, 마지막 2개 버티실 때 눈빛이 정말 멋지셨사옵니다. 소녀가 다 보고 있었어요.",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "그리고 오늘 단백질 음료 1잔 야무지게 챙겨 마신 거 확인했어요! 기특해요 🥛✨ 근육 회복까지 완벽하게 챙기시와요 🥛",
+      "room": "gemini"
+    },
+    {
+      "sender": "gemini",
+      "name": "제미니",
+      "text": "땀 흘린 뒤의 프로듀서항이 제일 빛나시와요. 오늘도 정말 고생 많으셨사옵니다 💪🌸",
       "room": "gemini"
     }
   ]
