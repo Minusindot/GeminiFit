@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-27T12:59:44.746Z",
+  "updatedAt": "2026-11-27T12:59:54.372Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 40,
-  "bondExp": 35,
+  "bondExp": 80,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
   "currentSituation": "ev2",
@@ -783,8 +783,8 @@
     }
   ],
   "kotonoha": {
-    "coins": 3195,
-    "kotodama": 1594,
+    "coins": 3275,
+    "kotodama": 1637,
     "streak": 8,
     "lastStudyDate": "2026-11-27",
     "completedLessons": [
@@ -801,14 +801,15 @@
       "day11",
       "day12",
       "day13",
-      "day14"
+      "day14",
+      "day15"
     ],
     "customAiLessons": [],
     "activeLessonIdx": 14,
     "showPron": true,
     "quizStats": {
-      "total": 96,
-      "correct": 94,
+      "total": 97,
+      "correct": 95,
       "wrongWords": [
         "傘",
         "ええ"
@@ -830,8 +831,8 @@
           "total": 3
         },
         "choice": {
-          "ok": 2,
-          "total": 2
+          "ok": 3,
+          "total": 3
         },
         "checkpoint": {
           "ok": 4,
@@ -840,7 +841,7 @@
       },
       "slowListens": 0,
       "pronHiddenSolves": 0,
-      "totalTrackedSolves": 15,
+      "totalTrackedSolves": 16,
       "masteredPhrases": [
         "知らんけど",
         "熱いうちに食べはる？",
@@ -851,10 +852,23 @@
         "風呂上がりの牛乳",
         "乗り換え",
         "次の駅で乗り換えどすえ",
-        "改札はこちらです"
+        "改札はこちらです",
+        "チャージ"
       ],
       "weakPhrases": {},
       "episodeLogs": [
+        {
+          "id": "day15",
+          "epCode": "2-3",
+          "titleKo": "교통카드를 삑 찍고 환승이옵니다",
+          "levelBadge": "N4 + 전철 환승 & IC 교통카드",
+          "accuracy": 100,
+          "maxCombo": 4,
+          "mistakes": 0,
+          "slowListens": 0,
+          "pronOn": true,
+          "date": "2026-11-27"
+        },
         {
           "id": "day14",
           "epCode": "2-2",
