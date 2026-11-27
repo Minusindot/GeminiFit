@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-27T01:13:37.069Z",
+  "updatedAt": "2026-11-27T01:13:51.601Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
-  "bondRank": 38,
-  "bondExp": 95,
+  "bondRank": 39,
+  "bondExp": 30,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
   "currentSituation": "ev14",
@@ -779,10 +779,10 @@
     }
   ],
   "kotonoha": {
-    "coins": 3075,
-    "kotodama": 1526,
-    "streak": 7,
-    "lastStudyDate": "2026-11-26",
+    "coins": 3135,
+    "kotodama": 1556,
+    "streak": 8,
+    "lastStudyDate": "2026-11-27",
     "completedLessons": [
       "day1",
       "day2",
@@ -796,7 +796,8 @@
       "day10",
       "day11",
       "day12",
-      "day13"
+      "day13",
+      "day14"
     ],
     "customAiLessons": [],
     "activeLessonIdx": 13,
@@ -847,6 +848,18 @@
       ],
       "weakPhrases": {},
       "episodeLogs": [
+        {
+          "id": "day14",
+          "epCode": "2-2",
+          "titleKo": "온천욕 후엔 시원한 우유이옵니다",
+          "levelBadge": "N4 + 료칸 온천 & 다정한 밤 인사",
+          "accuracy": 100,
+          "maxCombo": 4,
+          "mistakes": 0,
+          "slowListens": 0,
+          "pronOn": true,
+          "date": "2026-11-27"
+        },
         {
           "id": "day13",
           "epCode": "2-1",
