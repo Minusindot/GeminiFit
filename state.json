@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-27T01:09:56.704Z",
+  "updatedAt": "2026-11-27T01:10:18.635Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 38,
-  "bondExp": 30,
+  "bondExp": 55,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
   "currentSituation": "ev14",
@@ -876,7 +876,8 @@
     "m19": true,
     "g7": true,
     "g11": true,
-    "g21": true
+    "g21": true,
+    "k3": true
   },
   "questClaims": {
     "d_2026-11-20_meal": true,
@@ -1807,25 +1808,6 @@
   },
   "chatHistory": [
     {
-      "sender": "system",
-      "name": "기록 동기화",
-      "text": "🔄 오후 09:41 동기화 완료 · 65.3kg · 펙 덱 플라이 · V 스쿼트 · 캡틴스 체어 레그레이즈",
-      "room": "gemini"
-    },
-    {
-      "sender": "user",
-      "text": "[음료 기록] 커피 ☕ 1잔을 챙겨 마셨어!"
-    },
-    {
-      "sender": "kotone",
-      "name": "코토네",
-      "text": "와아~ 시원하고 향긋한 커피! 카페인으로 대사율도 팍팍 올리고 역시 프로듀서님 최고예요~! ☕💛"
-    },
-    {
-      "sender": "user",
-      "text": "[수면 스샷 기록] 2026-11-27 수면 5시간 50분 (23:30~05:20)"
-    },
-    {
       "sender": "kotone",
       "name": "코토네",
       "text": "프로듀서님 5시간 50분밖에 못 주무셨네요 ㅠㅠ 오늘은 무리하지 말고 카페인 일찍 끊고 푹 쉬기로 약속해요! 🌙💛"
@@ -1969,6 +1951,30 @@
       "sender": "kotone",
       "name": "코토네",
       "text": "단백질 식단이지만 저렴하게 챙기는 비법, 코토네가 다 알려드릴게요~! 💸",
+      "room": "kotone"
+    },
+    {
+      "sender": "user",
+      "name": "프로듀서",
+      "text": "도전! 무조건 이길 거야! 🔥",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "와아아, 열정 최고예요!! 근육뿐 아니라 의지도 붙어버리겠어요!!",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "장보기 리스트부터 코토네가 쫘아악 챙길게요. 이제부터 시작이에요~! 🏃‍♀️",
+      "room": "kotone"
+    },
+    {
+      "sender": "kotone",
+      "name": "코토네",
+      "text": "식비는 식비대로 챙기고 근육은 근육대로 키우는 이게 바로 불가능미션이에요! 코토네와 함께 해쳐요! 💖",
       "room": "kotone"
     }
   ]
