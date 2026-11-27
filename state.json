@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-27T01:08:07.490Z",
+  "updatedAt": "2026-11-27T01:08:45.578Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 37,
-  "bondExp": 60,
+  "bondExp": 85,
   "activeTrainer": "gemini",
   "activeMode": "gemini",
   "currentSituation": "ev14",
@@ -17,11 +17,21 @@
   ],
   "rehabSets": 1,
   "meals": [
-    false,
+    true,
     false,
     false
   ],
-  "mealLogs": [],
+  "mealLogs": [
+    {
+      "id": "meal-1795741725309-21",
+      "slot": "아침",
+      "time": "10:01",
+      "name": "삶은 계란 2개",
+      "kcal": 140,
+      "protein": 12,
+      "tag": "단백질"
+    }
+  ],
   "teaLog": {
     "water": 2,
     "matcha": 0,
@@ -880,7 +890,8 @@
     "d_2026-11-26_pro": true,
     "d_2026-11-26_water": true,
     "d_2026-11-27_pro": true,
-    "d_2026-11-27_work": true
+    "d_2026-11-27_work": true,
+    "d_2026-11-27_meal": true
   },
   "latestInbody": null,
   "inbodyHistory": [
