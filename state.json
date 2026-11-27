@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T12:57:59.774Z",
+  "updatedAt": "2026-11-27T12:58:17.931Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
@@ -783,8 +783,8 @@
     }
   ],
   "kotonoha": {
-    "coins": 3135,
-    "kotodama": 1556,
+    "coins": 3145,
+    "kotodama": 1561,
     "streak": 8,
     "lastStudyDate": "2026-11-27",
     "completedLessons": [
@@ -834,13 +834,13 @@
           "total": 2
         },
         "checkpoint": {
-          "ok": 3,
-          "total": 3
+          "ok": 4,
+          "total": 4
         }
       },
       "slowListens": 0,
       "pronHiddenSolves": 0,
-      "totalTrackedSolves": 11,
+      "totalTrackedSolves": 12,
       "masteredPhrases": [
         "知らんけど",
         "熱いうちに食べはる？",
