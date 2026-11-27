@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-27T12:59:18.132Z",
+  "updatedAt": "2026-11-27T12:59:44.746Z",
   "lastActiveDate": "2026-11-27",
   "theme": "light",
   "weight": 65.3,
   "fat": 33.4,
   "bondRank": 40,
-  "bondExp": 15,
+  "bondExp": 35,
   "activeTrainer": "kotone",
   "activeMode": "kotone",
   "currentSituation": "ev2",
@@ -783,8 +783,8 @@
     }
   ],
   "kotonoha": {
-    "coins": 3160,
-    "kotodama": 1571,
+    "coins": 3195,
+    "kotodama": 1594,
     "streak": 8,
     "lastStudyDate": "2026-11-27",
     "completedLessons": [
@@ -807,8 +807,8 @@
     "activeLessonIdx": 14,
     "showPron": true,
     "quizStats": {
-      "total": 94,
-      "correct": 92,
+      "total": 96,
+      "correct": 94,
       "wrongWords": [
         "傘",
         "ええ"
@@ -822,12 +822,12 @@
           "total": 3
         },
         "listening": {
-          "ok": 2,
-          "total": 2
+          "ok": 3,
+          "total": 3
         },
         "word_bank": {
-          "ok": 2,
-          "total": 2
+          "ok": 3,
+          "total": 3
         },
         "choice": {
           "ok": 2,
@@ -840,7 +840,7 @@
       },
       "slowListens": 0,
       "pronHiddenSolves": 0,
-      "totalTrackedSolves": 13,
+      "totalTrackedSolves": 15,
       "masteredPhrases": [
         "知らんけど",
         "熱いうちに食べはる？",
@@ -849,7 +849,9 @@
         "おやすみやす",
         "ぬくぬく",
         "風呂上がりの牛乳",
-        "乗り換え"
+        "乗り換え",
+        "次の駅で乗り換えどすえ",
+        "改札はこちらです"
       ],
       "weakPhrases": {},
       "episodeLogs": [
